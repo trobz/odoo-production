@@ -11,5 +11,4 @@ class StockPicking(models.Model):
 
     partner_ref = fields.Char(string="Partner Ref",
                               related="purchase_id.partner_ref",
-                              readonly=True,
-                              store=True)
+                              readonly=True)
