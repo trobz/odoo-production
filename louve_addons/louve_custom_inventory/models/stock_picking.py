@@ -8,7 +8,8 @@ from openerp import fields, models
 
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
-    
+
     partner_ref = fields.Char(string="Partner Ref",
                               related="purchase_id.partner_ref",
-                              readonly=True)
+                              readonly=True,
+                              store=True)
