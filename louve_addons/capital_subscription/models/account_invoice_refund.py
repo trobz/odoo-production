@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from openerp import api, fields, models, _
+from openerp.exceptions import Warning
 
 
 class AccountInvoiceRefund(models.TransientModel):
@@ -21,7 +22,7 @@ class AccountInvoiceRefund(models.TransientModel):
     @api.model
     def _default_refund_quantity(self):
         AccountInvoice = self.env['account.invoice']
-        origin_inv = AccountInvoice.browse(self._context.get('active_id'))[0]
+        origin_inv = AccountInvoice.browse(self._context.get('active_ids'))[0]
         qty = sum([line.quantity for line in origin_inv.invoice_line_ids if \
                    line.product_id and line.product_id.is_capital_fundraising])
         return qty
@@ -30,6 +31,15 @@ class AccountInvoiceRefund(models.TransientModel):
     refund_quantity = fields.Integer(string="Quantity Of Shares To Refund",
                                      default=_default_refund_quantity,
                                      required=True)
+
+    @api.constrains('refund_quantity')
+    def _check_refund_quantity_is_positive(self):
+        AccountInvoice = self.env['account.invoice']
+        origin_inv = AccountInvoice.browse(self._context.get('active_ids'))[0]
+        fundraising_categ = origin_inv.fundraising_category_id
+        if origin_inv.is_capital_fundraising and self.refund_quantity <= 0:
+            raise Warning("Error! The refund quantity must be greater than 0.")
+        return True
 
     @api.multi
     def compute_refund(self, mode='refund'):
