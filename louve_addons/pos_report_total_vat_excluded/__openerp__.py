@@ -9,6 +9,9 @@
     'summary': 'POS Report Total VAT Excluded',
     'author': 'La Louve',
     'website': 'http://www.lalouve.net',
+    'depends': [
+        'point_of_sale'
+    ],
     'data': [
         'report/report_pos_order_view.xml',
     ],

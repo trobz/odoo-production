@@ -12,7 +12,8 @@
     'author': 'La Louve',
     'website': 'http://www.lalouve.net',
     'depends': [
-        'point_of_sale', 'pos_report_total_vat_excluded'
+        'point_of_sale',
+        'pos_report_total_vat_excluded'
     ],
     'data': [
         'static/src/xml/templates.xml',

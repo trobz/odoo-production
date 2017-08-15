@@ -60,4 +60,3 @@ class ReportPosOrder(models.Model):
                     ps.config_id,pc.stock_location_id
                 having
                     sum(l.qty * u.factor) != 0)""")
-
