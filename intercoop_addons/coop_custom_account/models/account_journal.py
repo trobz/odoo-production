@@ -15,7 +15,7 @@ class AccountJournal(models.Model):
                 context=None, count=False, access_rights_uid=None):
         for arg in args:
             if 'deprecated' in arg[0]:
-                return super(AccountJournal), self)._search(cr, user, args,
+                return super(AccountJournal, self)._search(cr, user, args,
                                                             offset, limit,
                                                             order, context,
                                                             count,
