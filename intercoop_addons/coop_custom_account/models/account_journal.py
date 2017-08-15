@@ -1,30 +1,12 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Author La Louve
-#    Inspired by Smile (smile_export_sage_100)
-#    and GRAP (account_export_ebp)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright (C) 2016-Today: La Louve (<http://www.lalouve.net/>)
+# @author: La Louve
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html
 
 from openerp import api, fields, models
 
 
-class account_journal(models.Model):
+class AccountJournal(models.Model):
     _inherit = "account.journal"
 
     deprecated = fields.Boolean("Deprecated", index=True, default=False)
@@ -39,6 +21,6 @@ class account_journal(models.Model):
                                                             count,
                                                             access_rights_uid)
         args.append(['deprecated', '=', False])
-        return super(account_journal, self)._search(cr, user, args, offset,
-                                                    limit, order, context,
-                                                    count, access_rights_uid)
+        return super(AccountJournal, self)._search(cr, user, args, offset,
+                                                   limit, order, context,
+                                                   count, access_rights_uid)
