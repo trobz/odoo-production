@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import models, fields, api, exceptions, _
+from openerp.exceptions import Warning
 
 
 class AccountInvoice(models.Model):
@@ -180,6 +181,10 @@ class AccountInvoice(models.Model):
 
                 for inv_line in invoice.invoice_line_ids:
                     source_product = inv_line.product_id
+                    if not source_product.deficit_share_account_id:
+                        raise Warning(_("Deficit Share Account has not "
+                                        "been configured for %s.") %
+                                      source_product.display_name)
                     if source_product and \
                             source_product.is_capital_fundraising:
 
@@ -195,6 +200,7 @@ class AccountInvoice(models.Model):
                         # Create a new line
                         deficit_share_prod = \
                             fundraising_categ.deficit_product_id
+
                         deficit_line_val = {
                             'product_id':
                                 deficit_share_prod and
@@ -215,16 +221,3 @@ class AccountInvoice(models.Model):
 
                         self.env['account.invoice.line'].create(
                             deficit_line_val)
-
-    @api.multi
-    @api.returns('self')
-    def refund(self, date_invoice=None, date=None,
-               description=None, journal_id=None):
-        '''
-        @Overide function to trigger the computation of the refund
-        '''
-        new_invoice = super(AccountInvoice, self).refund(
-            date_invoice=date_invoice, date=date,
-            description=description, journal_id=journal_id)
-        new_invoice.apply_refund_deficit_share()
-        return new_invoice
