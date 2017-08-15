@@ -162,14 +162,15 @@ class AccountInvoice(models.Model):
                     self.fundraising_category_id.partner_account_id
 
     @api.multi
-    def apply_refund_deficit_share(self):
+    def apply_refund_deficit_share(self, quantity=0):
         '''
         @Function to apply the deficit share on customer refund
         '''
 
         for invoice in self:
             fundraising_categ = invoice.fundraising_category_id
-            if invoice.type == 'out_refund' and fundraising_categ:
+            if invoice.type == 'out_refund' and fundraising_categ \
+               and quantity >= 0:
                 # Change the customer account of the refund
                 if fundraising_categ.refund_account_id:
                     invoice.account_id = fundraising_categ.refund_account_id.id
@@ -181,17 +182,20 @@ class AccountInvoice(models.Model):
 
                 for inv_line in invoice.invoice_line_ids:
                     source_product = inv_line.product_id
-                    if not source_product.deficit_share_account_id:
-                        raise Warning(_("Deficit Share Account has not "
-                                        "been configured for %s.") %
-                                      source_product.display_name)
                     if source_product and \
                             source_product.is_capital_fundraising:
+                        if not source_product.deficit_share_account_id:
+                            raise Warning(_("Deficit Share Account has not "
+                                            "been configured for %s.") %
+                                          source_product.display_name)
+                        # Update quantity of source product line
+                        inv_line.write({'quantity': quantity})
 
                         # Adjust the Unit Price of the line
-                        deficit_price_unit = (inv_line.price_subtotal *
+                        deficit_price_unit = inv_line.price_unit * quantity
+                        deficit_price_unit = (deficit_price_unit *
                                               deficit_share_percentage) / 100
-                        deficit_price_unit_signed = -1 * deficit_price_unit
+                        deficit_price_unit_signed = -1.0 * deficit_price_unit
 
                         if fundraising_categ.capital_account_id:
                             inv_line.account_id = \
@@ -221,3 +225,10 @@ class AccountInvoice(models.Model):
 
                         self.env['account.invoice.line'].create(
                             deficit_line_val)
+
+                        # break because the quantity is total shares
+                        # and we don't have different capital fundraising
+                        # products in one invoice, therefore break when
+                        # we get the first one satisfy and update with total
+                        # quantity.
+                        break
