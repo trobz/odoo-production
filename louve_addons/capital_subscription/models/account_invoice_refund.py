@@ -27,14 +27,15 @@ class AccountInvoiceRefund(models.TransientModel):
         AccountInvoice = self.env['account.invoice']
         res = super(AccountInvoiceRefund, self).compute_refund(mode)
         if mode == 'refund':
-            domain = 'domain' in res and res.get('domain', [])
+            domain = isinstance(res, dict) and res.get('domain', [])
             if domain:
                 for record in self:
-                    if record.refund_quantity and record.refund_quantity > 0:
+                    if record.refund_quantity > 0:
                         invs = AccountInvoice.search(domain)
                         if invs:
-                            invs.invoice_line_ids.write(
-                                {'quantity': record.refund_quantity})
-                            invs.apply_refund_deficit_share()
+                            for inv in invs:
+                                inv.invoice_line_ids.write(
+                                    {'quantity': record.refund_quantity})
+                                inv.apply_refund_deficit_share()
         return res
 

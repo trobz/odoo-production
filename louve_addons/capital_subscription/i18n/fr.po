@@ -587,11 +587,6 @@ msgid "Quantity Of Shares To Refund"
 msgstr "Nombre d'actions à rembourser"
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_account_invoice_refund_refund_quantity
-msgid "Quantity Of Shares To Refund"
-msgstr "Nombre d'actions à rembourser"
-
-#. module: capital_subscription
 #: code:addons/capital_subscription/models/account_invoice.py:185
 #, python-format
 msgid "Deficit Share Account has not been configured for %s."
