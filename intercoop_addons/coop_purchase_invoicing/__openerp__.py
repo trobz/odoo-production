@@ -3,13 +3,14 @@
 # @author: La Louve
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html
 {
-    'name': 'Coop - Purchare Invoicing',
+    'name': 'Coop - Purchase Invoicing',
     'version': '9.0.1.0.0',
     'category': 'Custom',
-    'summary': 'Coop - Purchare Invoicing.',
+    'summary': 'Coop - Purchase Invoicing',
     'author': 'La Louve',
     'website': 'http://www.lalouve.net',
     'depends': [
+        'base',
         'account'
     ],
     'data': [
