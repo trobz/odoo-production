@@ -320,7 +320,7 @@ msgstr "Date de début"
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_shift_shift_begin_date_without_time_string
 msgid "Begin Date for mail without time"
-msgstr "Begin Date for mail without time"
+msgstr "Date de début pour courriels"
 
 #. module: coop_shift
 #: code:addons/coop_shift/model/shift_template_registration.py:150
@@ -407,7 +407,7 @@ msgstr "Modifications à reporter sur les shifts sélectionnés"
 #. module: coop_shift
 #: model:ir.model.fields,help:coop_shift.field_res_partner_is_blocked
 msgid "Check this box to manually block this user."
-msgstr "Check this box to manually block this user."
+msgstr "Cochez cette case pour bloquer manuellement cet utilisateur."
 
 #. module: coop_shift
 #: model:ir.model.fields,help:coop_shift.field_res_partner_is_unpayed
@@ -937,7 +937,7 @@ msgstr "Extensions"
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_res_partner_extension_qty
 msgid "Extensions Quantity"
-msgstr "Extensions Quantity"
+msgstr "Nombre d'extensions"
 
 #. module: coop_shift
 #: model:ir.actions.act_window,name:coop_shift.action_shift_extension_type
