@@ -45,6 +45,7 @@
         'coop_capital_certificate',
         'coop_shift',
         'coop_membership',
+        'coop_purchase_invoicing',
         'mail',
         'mass_mailing',
         'point_of_sale',
