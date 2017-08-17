@@ -1,0 +1,42 @@
+# -*- coding: utf-8 -*-
+###############################################################################
+#
+#    OpenERP, Open Source Management Solution
+#    Copyright (C) 2013-Today Julius Network Solutions SARL <contact@julius.fr>
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+###############################################################################
+
+from openerp import api, fields, models
+
+
+class AccountJournal(models.Model):
+    _inherit = "account.journal"
+
+    active = fields.Boolean("Active", index=True, default=True)
+
+    def _search(self, cr, user, args, offset=0, limit=None, order=None,
+                context=None, count=False, access_rights_uid=None):
+        for arg in args:
+            if 'active' in arg[0]:
+                return super(AccountJournal, self)._search(cr, user, args,
+                                                           offset, limit,
+                                                           order, context,
+                                                           count,
+                                                           access_rights_uid)
+        args.append(['active', '=', True])
+        return super(AccountJournal, self)._search(cr, user, args, offset,
+                                                   limit, order, context,
+                                                   count, access_rights_uid)
