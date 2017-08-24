@@ -174,10 +174,9 @@ class AccountInvoice(models.Model):
                 # Change the customer account of the refund
                 if fundraising_categ.refund_account_id:
                     invoice.account_id = fundraising_categ.refund_account_id.id
-
-                deficit_share_percentage = \
-                    fundraising_categ.get_deficit_share_percentage()
-                if not deficit_share_percentage:
+                deficit_share_amount = \
+                    fundraising_categ.get_deficit_share_amount()
+                if not deficit_share_amount:
                     continue
 
                 for inv_line in invoice.invoice_line_ids:
@@ -192,10 +191,7 @@ class AccountInvoice(models.Model):
                         inv_line.write({'quantity': quantity})
 
                         # Adjust the Unit Price of the line
-                        deficit_price_unit = inv_line.price_unit * quantity
-                        deficit_price_unit = (deficit_price_unit *
-                                              deficit_share_percentage) / 100
-                        deficit_price_unit_signed = -1.0 * deficit_price_unit
+                        deficit_price_unit_signed = -1.0 * deficit_share_amount
 
                         if fundraising_categ.capital_account_id:
                             inv_line.account_id = \
@@ -215,7 +211,7 @@ class AccountInvoice(models.Model):
                                 _('Deficit Share'),
                             'account_id':
                                 source_product.deficit_share_account_id.id,
-                            'quantity': 1,
+                            'quantity': quantity,
                             'price_unit': deficit_price_unit_signed,
                             'uom_id':
                                 inv_line.uom_id and inv_line.uom_id.id or
