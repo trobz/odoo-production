@@ -23,37 +23,36 @@ class CapitalFundraisingDeficit(models.Model):
         """
         @Function to check if date ranges in all deficit shares is overlap
         """
+        if self.fund_cate_id.id:
+            deficit_shares = self.env['capital.fundraising.deficit'].search([
+                ('fund_cate_id', '=', self.fund_cate_id.id)])
 
-        # Get dificit share records
-        deficit_shares = self.env['capital.fundraising.deficit'].search([
-                ('fund_cate_id', '=', self.env.context['params'].get('id'))])
-        if len(deficit_shares) <= 1:
-            return
+            for deficit in deficit_shares:
+                for deficit2 in deficit_shares:
+                    if deficit2.id == deficit.id:
+                        continue
 
-        is_overlap = False
+                    is_overlap = False
+                    # Constraint dates
+                    if deficit2.start_date and deficit2.end_date:
+                        if deficit2.start_date > deficit2.end_date:
+                            raise ValidationError(
+                                _("Stop Date should be greater than "
+                                  "Start Date."))
 
-        # Compare each pairs of deficit shares
-        for deficit in deficit_shares:
-            for line in self:
-                if line.id == deficit.id:
-                    continue
+                    if not deficit.end_date:
+                        if not deficit2.end_date or deficit2.end_date >= \
+                                deficit.start_date:
+                            is_overlap = True
+                    else:
+                        if (not deficit2.end_date and
+                            deficit2.start_date <= deficit.end_date) or \
+                            (deficit2.end_date and deficit2.end_date >=
+                             deficit.start_date and deficit2.start_date <=
+                             deficit.end_date):
+                                is_overlap = True
 
-                # Constraint dates
-                if line.start_date and line.end_date:
-                    if line.start_date > line.end_date:
+                    if is_overlap:
                         raise ValidationError(_(
-                            "Stop Date should be greater than Start Date."))
-
-                if not line.end_date:
-                    is_overlap = True
-                else:
-                    if (not deficit.end_date and line.end_date >=
-                        deficit.start_date) or (deficit.end_date and (
-                            line.start_date <= deficit.end_date and
-                            line.end_date >= deficit.start_date)):
-                        is_overlap = True
-
-                if is_overlap:
-                    raise ValidationError(_(
-                        "You cannot have two Capital Fundraising "
-                        "Deficit configuration lines that overlap"))
+                            "You cannot have two Capital Fundraising "
+                            "Deficit configuration lines that overlap"))

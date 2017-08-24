@@ -175,7 +175,8 @@ class AccountInvoice(models.Model):
                 if fundraising_categ.refund_account_id:
                     invoice.account_id = fundraising_categ.refund_account_id.id
                 deficit_share_amount = \
-                    fundraising_categ.get_deficit_share_amount()
+                    fundraising_categ.get_deficit_share_amount(
+                        invoice.date_invoice)
                 if not deficit_share_amount:
                     continue
 

@@ -92,27 +92,16 @@ class CapitalFundraisingCategory(models.Model):
         return minimum_qty - previous_qty
 
     @api.multi
-    def get_deficit_share_amount(self):
+    def get_deficit_share_amount(self, date_invoice):
         '''
         @Function to get the deficit share amount at the current time
         '''
         self.ensure_one()
-        current_date_utc = fields.Datetime.now()
-        current_date_utc_obj = datetime.strptime(
-            current_date_utc, '%Y-%m-%d %H:%M:%S')
-        tz_name = self._context.get('tz') or self.env.user.tz
-        utc_timestamp = pytz.utc.localize(
-            current_date_utc_obj, is_dst=False)
-        context_tz = pytz.timezone(tz_name)
-        current_date_local_obj = utc_timestamp.astimezone(context_tz)
-        current_date = current_date_local_obj.strftime('%Y-%m-%d')
-        print current_date
-
         for deficit_amount in self.deficit_share_amount_ids:
             if (not deficit_amount.start_date or
-                    deficit_amount.start_date <= current_date) and \
+                    deficit_amount.start_date <= date_invoice) and \
                     (not deficit_amount.end_date or
-                     deficit_amount.end_date >= current_date):
+                     deficit_amount.end_date >= date_invoice):
                 return deficit_amount.amount_by_share
 
         # Return zero in case no matched deficit amount found
