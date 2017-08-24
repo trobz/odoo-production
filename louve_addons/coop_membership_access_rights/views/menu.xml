@@ -63,5 +63,8 @@
         <field name="groups_id" eval="[(4, ref('coop_membership_access_rights.group_membership_access_user'))]"/>
     </record>
 
+	<record model="ir.ui.menu" id="coop_print_badge.menu_badge_to_print">
+		<field name="groups_id" eval="[(4, ref('coop_membership_access_rights.group_membership_access_photo'))]"/>
+	</record>
 
 </odoo>
