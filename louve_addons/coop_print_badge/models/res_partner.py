@@ -19,10 +19,11 @@ class ResPartner(models.Model):
                                          compute="_computed_updated_badges_info")
 
     @api.multi
-    @api.onchange('name', 'display_name', 'image', 'barcode', 'barcode_base')
+    @api.onchange('image', 'barcode')
     def onchange_badge_to_print(self):
         for record in self:
-            if record.image and record.name and record.barcode_base:
+            if record.image and record.name and record.barcode_base \
+               and record.barcode:
                 record.badge_to_print = True
             else:
                 record.badge_to_print = False
@@ -37,9 +38,17 @@ class ResPartner(models.Model):
                 record.updated_badges_info = True
             else:
                 record.updated_badges_info = False
+                record.badge_to_print = False
 
     @api.multi
     def untick_badges_to_print(self):
         for record in self:
             record.updated_badges_info = False
             record.badge_to_print = False
+
+    @api.multi
+    def write(self, vals):
+        if vals.get('barcode', False) or vals.get('name', False) or \
+           vals.get('image', False):
+            vals.update({'badge_to_print': True})
+        return super(ResPartner, self).write(vals)
