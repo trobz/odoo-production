@@ -352,8 +352,6 @@ class ResPartner(models.Model):
     def update_working_state(self):
         # Function Called by the CRON
         partners = self.search([])
-        partners.compute_date_alert_stop()
-        partners.compute_date_delay_stop()
 
         # Creating Jobs for updating the member working status
         # Split member list in multiple parts
@@ -389,4 +387,6 @@ class ResPartner(models.Model):
 def update_member_working_state(session, model_name, partner_ids):
     ''' Job for Updating Member Working State '''
     partners = session.env[model_name].browse(partner_ids)
+    partners.compute_date_alert_stop()
+    partners.compute_date_delay_stop()
     partners._compute_working_state()
