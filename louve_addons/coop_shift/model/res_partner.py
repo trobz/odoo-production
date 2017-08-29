@@ -283,14 +283,21 @@ class ResPartner(models.Model):
         """This function should be called in a daily CRON"""
         alert_duration = int(self.env['ir.config_parameter'].sudo().get_param(
             'coop.shift.state.delay.duration'))
+
+        # Read the current value of Date alert stop using read method as
+        # partner.date_alert_stop will not work in a compute function
+        current_partner_alert_date = {
+            d['id']: d['date_alert_stop']
+            for d in self.read(['date_alert_stop'])}
+
         for partner in self:
             # If all is OK, the date is deleted
             point = partner.shift_type == 'standard'\
                 and partner.final_standard_point\
                 or partner.final_ftop_point
-            if point > 0:
+            if point >= 0:
                 partner.date_alert_stop = False
-            elif not partner.date_alert_stop:
+            elif not current_partner_alert_date.get(partner.id):
                 partner.date_alert_stop =\
                     datetime.today() + relativedelta(days=alert_duration)
                 partner.date_alert_stop = partner.date_alert_stop
@@ -364,16 +371,19 @@ class ResPartner(models.Model):
                 session, 'res.partner', partner_list)
 
     @api.multi
-    def write(self,vals):
+    def write(self, vals):
         if 'default_addess_for_shifts' in vals:
             for record in self:
                 if record.parent_id:
                     if vals.get('default_addess_for_shifts'):
                         for child in record.parent_id.child_ids:
                             if child.id != record.id:
-                                child.write({'default_addess_for_shifts': False})
+                                child.write({
+                                    'default_addess_for_shifts': False
+                                })
 
         return super(ResPartner, self).write(vals)
+
 
 @job
 def update_member_working_state(session, model_name, partner_ids):
