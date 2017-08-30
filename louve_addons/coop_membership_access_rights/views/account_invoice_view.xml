@@ -30,4 +30,21 @@
         </field>
     </record>
 
+    <record model="ir.ui.view" id="view_account_invoice_form_supplier">
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_supplier_form"/>
+        <field name="arch" type="xml">
+            <!-- Hide classical refund button for capital subscription-->
+            <xpath expr="//button[@name='%(account.action_account_invoice_refund)d']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', '|', ('type', '=', 'out_refund'), ('state', 'not in', ('open','proforma2','paid')), ('is_capital_fundraising', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='%(account.action_account_invoice_refund)d']" position="after">
+                <field name="is_capital_fundraising" invisible="1"/>
+                <button name="%(action_account_invoice_refund_capital_subscription)d" type='action'
+                    string='Refund Capital Subscription' groups="coop_membership_access_rights.group_refund_capital_subscription"
+                    attrs="{'invisible': ['|', '|', ('type', '=', 'out_refund'), ('state', 'not in', ('paid')), ('is_capital_fundraising', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
 </odoo>
