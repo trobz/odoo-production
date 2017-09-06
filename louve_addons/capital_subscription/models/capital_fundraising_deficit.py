@@ -5,6 +5,7 @@
 
 from openerp import api, fields, models, _
 from openerp.exceptions import ValidationError
+from .date_tools import conflict_period
 
 
 class CapitalFundraisingDeficit(models.Model):
@@ -14,45 +15,42 @@ class CapitalFundraisingDeficit(models.Model):
     end_date = fields.Date("End Date")
     amount_by_share = fields.Float("Amount By Share", required=True)
     fund_cate_id = fields.Many2one(
-                    comodel_name="capital.fundraising.category",
-                    string="Fundraising Category")
+        comodel_name="capital.fundraising.category",
+        string="Fundraising Category")
+
+    @api.model
+    def create(self, vals):
+        res = super(CapitalFundraisingDeficit, self).create(vals)
+        res._check_overlap_dates()
+        return res
 
     @api.multi
-    @api.constrains('start_date', 'end_date')
+    def write(self, vals):
+        res = super(CapitalFundraisingDeficit, self).write(vals)
+        self._check_overlap_dates()
+        return res
+
+    @api.multi
     def _check_overlap_dates(self):
-        """
-        @Function to check if date ranges in all deficit shares is overlap
-        """
-        if self.fund_cate_id.id:
-            deficit_shares = self.env['capital.fundraising.deficit'].search([
-                ('fund_cate_id', '=', self.fund_cate_id.id)])
+        for deficit_line in self:
+            fund_cate = deficit_line.fund_cate_id
+            start_date = deficit_line.start_date
+            end_date = deficit_line.end_date
 
-            for deficit in deficit_shares:
-                for deficit2 in deficit_shares:
-                    if deficit2.id == deficit.id:
-                        continue
+            if start_date > end_date:
+                raise ValidationError(
+                    _("Stop Date should be greater than "
+                      "Start Date."))
 
-                    is_overlap = False
-                    # Constraint dates
-                    if deficit2.start_date and deficit2.end_date:
-                        if deficit2.start_date > deficit2.end_date:
-                            raise ValidationError(
-                                _("Stop Date should be greater than "
-                                  "Start Date."))
+            # Searching for deficit of the same category
+            same_categ_deficits = self.search(
+                [('fund_cate_id', '=', fund_cate.id),
+                 ('id', '!=', deficit_line.id)])
 
-                    if not deficit.end_date:
-                        if not deficit2.end_date or deficit2.end_date >= \
-                                deficit.start_date:
-                            is_overlap = True
-                    else:
-                        if (not deficit2.end_date and
-                            deficit2.start_date <= deficit.end_date) or \
-                            (deficit2.end_date and deficit2.end_date >=
-                             deficit.start_date and deficit2.start_date <=
-                             deficit.end_date):
-                                is_overlap = True
-
-                    if is_overlap:
-                        raise ValidationError(_(
-                            "You cannot have two Capital Fundraising "
-                            "Deficit configuration lines that overlap"))
+            for checking_deficit in same_categ_deficits:
+                if conflict_period(start_date, end_date,
+                                   checking_deficit.start_date,
+                                   checking_deficit.end_date)['conflict']:
+                    raise ValidationError(_(
+                        "You cannot have two Capital Fundraising "
+                        "Deficit configuration lines that overlap"))
