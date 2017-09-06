@@ -29,11 +29,22 @@ class ShiftShift(models.Model):
         @Function trigger to change the state from Confirm to Entry
         '''
         for shift in self:
-            if shift.state == 'confirm':
-                shift.state = 'entry'
-            elif shift.state == 'entry':
-                shift.standard_registration_ids.confirm_registration()
-                shift.ftop_registration_ids.confirm_registration()
+            shift.state = 'entry'
+            # When members are added to the list of attendees via the make-up
+            # "rattrapages" page, they should be automatically marked present
+            # when we come to the page for marking the attendance.
+            # Members entered for doing make-up are always present.
+            # These members are determined by:
+            # - They don't replace for anyone.
+            # - They are not registered for this shift's template before
+            for reg in shift.standard_registration_ids:
+                if reg.state == 'replacing' or reg.tmpl_reg_line_id:
+                    continue
+                reg.button_reg_close()
+            for reg in shift.ftop_registration_ids:
+                if reg.state == 'replacing' or reg.tmpl_reg_line_id:
+                    continue
+                reg.button_reg_close()
 
     @api.multi
     def button_done(self):

@@ -15,7 +15,7 @@
             </button>
 
             <button name="button_done" position="after">
-                <button name="button_makeupok" type="object" states="confirm,entry" class="oe_highlight" string="Make-ups OK"/>
+                <button name="button_makeupok" type="object" states="confirm" class="oe_highlight" string="Make-ups OK"/>
             </button>
         </field>
     </record>
@@ -69,16 +69,6 @@
                 <filter string="Entry" name="entry" domain="[('state','=','entry')]" help="Entry shift"/>
             </filter>
         </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_shift_attendance_entry_view">
-       <field name="name">Attendance Entry</field>
-       <field name="type">ir.actions.act_window</field>
-       <field name="res_model">shift.shift</field>
-       <field name="view_type">form</field>
-       <field name="view_mode">tree,form</field>
-       <field name="context">{"search_default_confirmed": 1, "search_default_entry": 1}</field>
-       <field name="search_view_id" ref="coop_shift.view_shift_search"/>
     </record>
 
     <record model="ir.actions.act_window" id="action_shift_attendance_entry_view">
