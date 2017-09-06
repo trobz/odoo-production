@@ -15,7 +15,7 @@
             </button>
 
             <button name="button_done" position="after">
-                <button name="button_makeupok" type="object" states="confirm" class="oe_highlight" string="Make-ups OK"/>
+                <button name="button_makeupok" type="object" states="confirm,entry" class="oe_highlight" string="Make-ups OK"/>
             </button>
         </field>
     </record>
@@ -51,10 +51,10 @@
             <!-- Adding new Tabs for Standard and FTOP -->
             <page name="registrations" position="before">
                 <page name="standard_attendance" string="Standard">
-                    <field name="standard_registration_ids" context="{'default_shift_id': active_id, 'is_standard_ticket': True}" />
+                    <field name="standard_registration_ids" context="{'default_shift_id': active_id, 'is_standard_ticket': True, 'tree_view_ref' : 'coop_membership_access_rights.view_shift_registration_tree_confirm_one2many'}"/>
                 </page>
                 <page name="ftop_attendance" string="FTOP">
-                    <field name="ftop_registration_ids" context="{'default_shift_id': active_id}"/>
+                    <field name="ftop_registration_ids" context="{'default_shift_id': active_id, 'tree_view_ref' : 'coop_membership_access_rights.view_shift_registration_tree_confirm_one2many'}}"/>
                 </page>
             </page>
         </field>
@@ -69,6 +69,16 @@
                 <filter string="Entry" name="entry" domain="[('state','=','entry')]" help="Entry shift"/>
             </filter>
         </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_shift_attendance_entry_view">
+       <field name="name">Attendance Entry</field>
+       <field name="type">ir.actions.act_window</field>
+       <field name="res_model">shift.shift</field>
+       <field name="view_type">form</field>
+       <field name="view_mode">tree,form</field>
+       <field name="context">{"search_default_confirmed": 1, "search_default_entry": 1}</field>
+       <field name="search_view_id" ref="coop_shift.view_shift_search"/>
     </record>
 
     <record model="ir.actions.act_window" id="action_shift_attendance_entry_view">

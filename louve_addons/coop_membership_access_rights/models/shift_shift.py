@@ -29,7 +29,11 @@ class ShiftShift(models.Model):
         @Function trigger to change the state from Confirm to Entry
         '''
         for shift in self:
-            shift.state = 'entry'
+            if shift.state == 'confirm':
+                shift.state = 'entry'
+            elif shift.state == 'entry':
+                shift.standard_registration_ids.confirm_registration()
+                shift.ftop_registration_ids.confirm_registration()
 
     @api.multi
     def button_done(self):
