@@ -5,7 +5,6 @@
 
 from openerp import api, fields, models, _
 from openerp.exceptions import ValidationError
-from .date_tools import conflict_period
 
 
 class CapitalFundraisingDeficit(models.Model):
@@ -37,7 +36,7 @@ class CapitalFundraisingDeficit(models.Model):
             start_date = deficit_line.start_date
             end_date = deficit_line.end_date
 
-            if start_date > end_date:
+            if end_date and start_date > end_date:
                 raise ValidationError(
                     _("Stop Date should be greater than "
                       "Start Date."))
@@ -47,10 +46,23 @@ class CapitalFundraisingDeficit(models.Model):
                 [('fund_cate_id', '=', fund_cate.id),
                  ('id', '!=', deficit_line.id)])
 
-            for checking_deficit in same_categ_deficits:
-                if conflict_period(start_date, end_date,
-                                   checking_deficit.start_date,
-                                   checking_deficit.end_date)['conflict']:
+            for check_deficit in same_categ_deficits:
+                is_overlap = False
+                if not deficit_line.end_date:
+                    if not check_deficit.end_date or \
+                        check_deficit.end_date >= \
+                            deficit_line.start_date:
+                        is_overlap = True
+                else:
+                    if (
+                        not check_deficit.end_date and
+                        check_deficit.start_date <= deficit_line.end_date
+                    ) or (
+                        check_deficit.end_date and
+                        check_deficit.end_date >= deficit_line.start_date and
+                            check_deficit.start_date <= deficit_line.end_date):
+                        is_overlap = True
+                if is_overlap:
                     raise ValidationError(_(
                         "You cannot have two Capital Fundraising "
                         "Deficit configuration lines that overlap"))

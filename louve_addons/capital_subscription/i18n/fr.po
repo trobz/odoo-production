@@ -393,13 +393,13 @@ msgid "Amount By Share"
 msgstr "Montant par action"
 
 #. module: capital_subscription
-#: code:addons/capital_subscription/models/capital_fundraising_deficit.py:21
+#: code:addons/capital_subscription/models/capital_fundraising_deficit.py:41
 #, python-format
 msgid "Stop Date should be greater than Start Date."
 msgstr "La date de fin doit être supérieur à la date de début"
 
 #. module: capital_subscription
-#: code:addons/capital_subscription/models/capital_fundraising_deficit.py:21
+#: code:addons/capital_subscription/models/capital_fundraising_deficit.py:66
 #, python-format
 msgid "You cannot have two Capital Fundraising Deficit configuration lines that overlap"
 msgstr "Deux lignes de configuration ne peuvent se chevaucher"
