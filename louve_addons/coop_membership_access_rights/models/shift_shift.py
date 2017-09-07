@@ -68,3 +68,18 @@ class ShiftShift(models.Model):
                         "for: \n\n%s") % '\n'.join(shift_ticket_partners))
 
         return super(ShiftShift, self).button_done()
+
+    @api.multi
+    def write(self, vals):
+        res = super(ShiftShift, self).write(vals)
+        # change to unconfirmed registrations to confirmed if this shift state
+        # is `entry`
+        for shift in self:
+            if shift.state == 'entry':
+                for reg in shift.standard_registration_ids:
+                    if reg.state == 'draft':
+                        reg.confirm_registration()
+                for reg in shift.ftop_registration_ids:
+                    if reg.state == 'draft':
+                        reg.confirm_registration()
+        return res
