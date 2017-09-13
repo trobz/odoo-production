@@ -76,7 +76,7 @@ class ShiftTemplateRegistrationLine(models.Model):
                 raise ValidationError(_(
                     "Stop Date should be greater than Start Date."))
 
-    @api.model
+    @api.multi
     def _compute_current(self):
         for line in self:
             now = fields.Datetime.now()
