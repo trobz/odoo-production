@@ -25,7 +25,10 @@ class ReportPricetag(models.AbstractModel):
         line_ids = data['form'].get('line_ids', [])
         fields = data['form'].get('fields', [])
 
-        product_res = self._get_products(line_ids, fields)
+        report_context = self._context.copy()
+        report_context.update(data['form'].get('used_context', {}))
+        product_res = self.with_context(report_context)._get_products(
+            line_ids, fields)
         pricetag_model = self.env['product.category.print'].browse(
             data['form']['category_print_id']).pricetag_model_id
         report_model = pricetag_model.report_model
