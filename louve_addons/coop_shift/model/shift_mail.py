@@ -129,20 +129,9 @@ class ShiftMailScheduler(models.Model):
                                   tools.DEFAULT_SERVER_DATETIME_FORMAT)
         schedulers = self.search([('done', '=', False),
                                   ('scheduled_date', '<=', today)])
-#         schedulers.execute()
+
         for scheduler in schedulers:
             scheduler.execute()
-#             if scheduler.shift_id.date_begin >= today or \
-#                 scheduler.type == 'after_event':
-#                 print "send email"
-#                 reg.write({'mail_ignored': False})
-#             else:
-#                 for reg in scheduler.mail_registration_ids:
-#                     print "not send email", reg
-#                     if not reg.mail_sent:
-#                         reg.write({'mail_ignored': True})
-#                     else:
-#                         reg.write({'mail_ignored': False})
             if autocommit:
                 self.env.cr.commit()
         return True
