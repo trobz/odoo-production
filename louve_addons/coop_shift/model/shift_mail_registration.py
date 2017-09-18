@@ -21,8 +21,9 @@
 #
 ##############################################################################
 
-from openerp import models, fields
-
+from openerp import api, models, fields, tools
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 class ShiftMailRegistration(models.Model):
     _inherit = 'event.mail.registration'
@@ -32,3 +33,13 @@ class ShiftMailRegistration(models.Model):
         'shift.mail', 'Mail Scheduler', required=True, ondelete='cascade')
     registration_id = fields.Many2one(
         'shift.registration', 'Attendee', required=True, ondelete='cascade')
+    mail_ignored = fields.Boolean('Ignored', default=False)
+
+    @api.one
+    def execute(self):
+        # when users is in vacation, no email is sent to them.
+        if self.registration_id.partner_id.cooperative_state in ['exempted',
+                                                                 'vacation']:
+            return self.write({'mail_sent': False})
+        else:
+            return super(ShiftMailRegistration, self).execute()

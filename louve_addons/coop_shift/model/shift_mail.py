@@ -102,11 +102,21 @@ class ShiftMailScheduler(models.Model):
                 if lines:
                     sm.write({'mail_registration_ids': lines})
                 # execute scheduler on registrations
+                today = datetime.strftime(fields.datetime.now(),
+                                          tools.DEFAULT_SERVER_DATETIME_FORMAT)
+
+                # only sent mails when the time for running scheduler is before
+                # shift beginning date which is not over.
                 sm.mail_registration_ids.filtered(
-                    lambda reg: reg.scheduled_date and reg.scheduled_date <=
-                    datetime.strftime(
-                        fields.datetime.now(),
-                        tools.DEFAULT_SERVER_DATETIME_FORMAT)).execute()
+                    lambda reg: reg.scheduled_date and \
+                        reg.scheduled_date <= today and \
+                        reg.registration_id.shift_id.date_begin >= today
+                    ).execute()
+
+                # mails, which are not sent, are marked with ignored = True
+                sm.mail_registration_ids.filtered(
+                   lambda reg: not reg.mail_sent).write({'mail_ignored': True})
+
             else:
                 if not sm.mail_sent:
                     sm.shift_id.mail_attendees(sm.template_id.id)
@@ -115,13 +125,24 @@ class ShiftMailScheduler(models.Model):
 
     @api.model
     def run(self, autocommit=False):
-        schedulers = self.search([
-            ('done', '=', False), (
-                'scheduled_date', '<=', datetime.strftime(
-                    fields.datetime.now(), tools.DEFAULT_SERVER_DATETIME_FORMAT
-                ))])
+        today = datetime.strftime(fields.datetime.now(),
+                                  tools.DEFAULT_SERVER_DATETIME_FORMAT)
+        schedulers = self.search([('done', '=', False),
+                                  ('scheduled_date', '<=', today)])
+#         schedulers.execute()
         for scheduler in schedulers:
             scheduler.execute()
+#             if scheduler.shift_id.date_begin >= today or \
+#                 scheduler.type == 'after_event':
+#                 print "send email"
+#                 reg.write({'mail_ignored': False})
+#             else:
+#                 for reg in scheduler.mail_registration_ids:
+#                     print "not send email", reg
+#                     if not reg.mail_sent:
+#                         reg.write({'mail_ignored': True})
+#                     else:
+#                         reg.write({'mail_ignored': False})
             if autocommit:
                 self.env.cr.commit()
         return True
