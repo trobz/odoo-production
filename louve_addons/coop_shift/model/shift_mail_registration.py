@@ -42,4 +42,5 @@ class ShiftMailRegistration(models.Model):
                                                                  'vacation']:
             return self.write({'mail_sent': False})
         else:
+            self.write({'mail_ignored': False})
             return super(ShiftMailRegistration, self).execute()
