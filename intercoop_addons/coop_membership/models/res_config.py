@@ -3,9 +3,6 @@
 # @author: La Louve (<http://www.lalouve.net/>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-# Some code from https://www.odoo.com/apps/modules/8.0/birth_date_age/
-# Copyright (C) Sythil
-
 
 from openerp import models, fields, api, _
 from openerp.exceptions import ValidationError
