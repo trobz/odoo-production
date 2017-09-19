@@ -470,3 +470,9 @@ msgstr "Méthode d'extension"
 #: model:ir.ui.view,arch_db:coop_membership.view_shift_registration_tree_inherit
 msgid "Create Extension until next regular shift"
 msgstr "Créer une extension jusqu'au prochain créneau"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/shift_shift.py:57
+#, python-format
+msgid "Shift Cloture"
+msgstr "Clôlturer le service"
