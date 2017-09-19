@@ -23,7 +23,6 @@
 
 from openerp import api, models, fields, tools
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
 
 class ShiftMailRegistration(models.Model):
     _inherit = 'event.mail.registration'
@@ -37,10 +36,17 @@ class ShiftMailRegistration(models.Model):
 
     @api.one
     def execute(self):
-        # when users is in vacation, no email is sent to them.
-        if self.registration_id.partner_id.cooperative_state in ['exempted',
+        today = datetime.strftime(fields.datetime.now(),
+                                  tools.DEFAULT_SERVER_DATETIME_FORMAT)
+        # send email for user if shift hasn't started
+        if self.registration_id.shift_id.date_begin >= today:
+            # when users is in vacation, no email is sent to them.
+            if self.registration_id.partner_id.working_state in ['exempted',
                                                                  'vacation']:
-            return self.write({'mail_sent': False})
-        else:
-            self.write({'mail_ignored': False})
+                return self.write({'mail_sent': False,
+                                   'mail_ignored': False})
             return super(ShiftMailRegistration, self).execute()
+        else:
+            # other case which not sending mail, marked ignore=True
+            # they won't be sent ever.
+            return self.write({'mail_ignored': True})

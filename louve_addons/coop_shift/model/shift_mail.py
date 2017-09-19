@@ -91,7 +91,9 @@ class ShiftMailScheduler(models.Model):
                 continue
             if sm.shift_id.state != 'confirm':
                 continue
-            if self.interval_type == 'after_sub':
+            # not only `after_sub`, `before_event` should be treated with same
+            # logic althought we're not using this type at now.
+            if self.interval_type in ['after_sub', 'before_event']:
                 # update registration lines
                 lines = []
                 for registration in filter(lambda item: item not in [
@@ -105,18 +107,12 @@ class ShiftMailScheduler(models.Model):
                 today = datetime.strftime(fields.datetime.now(),
                                           tools.DEFAULT_SERVER_DATETIME_FORMAT)
 
-                # only sent mails when the time for running scheduler is before
-                # shift beginning date which is not over.
+                # filter mails with ignoring conditions.
                 sm.mail_registration_ids.filtered(
                     lambda reg: reg.scheduled_date and \
                         reg.scheduled_date <= today and \
-                        reg.registration_id.shift_id.date_begin >= today
+                        not reg.mail_ignored
                     ).execute()
-
-                # mails, which are not sent, are marked with ignored = True
-                sm.mail_registration_ids.filtered(
-                   lambda reg: not reg.mail_sent).write({'mail_ignored': True})
-
             else:
                 if not sm.mail_sent:
                     sm.shift_id.mail_attendees(sm.template_id.id)
