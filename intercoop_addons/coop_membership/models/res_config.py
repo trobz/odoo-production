@@ -20,8 +20,8 @@ class MembersConfiguration(models.TransientModel):
 
     max_nb_associated_people = fields.Integer('Maximum Associated People')
     associated_people_available = fields.Selection([
-        ('limited', 'Limited'),
-        ('unlimited', 'Unlimited')], default='unlimited')
+        ('unlimited', 'Unlimited'),
+        ('limited', 'Limited')], default='unlimited')
 
     @api.multi
     @api.constrains('max_nb_associated_people')
@@ -47,7 +47,7 @@ class MembersConfiguration(models.TransientModel):
     def get_default_params(self):
         config_param_env = self.env['ir.config_parameter']
         key_max_nb = 'coop_membership.max_nb_associated_people'
-        max_nb = eval(config_param_env.get_param(key_max_nb, 0))
+        max_nb = eval(config_param_env.get_param(key_max_nb, '0'))
         key_avail_check = 'coop_membership.associated_people_available'
         avail_check = config_param_env.get_param(key_avail_check, 'unlimited')
         return {'max_nb_associated_people': max_nb,
