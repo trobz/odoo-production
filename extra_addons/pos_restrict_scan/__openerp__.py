@@ -4,11 +4,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html
 
 {
-    'name': 'POS Restrict Scanning Product on Payment Screen',
+    'name': 'POS Restrict Scanning Product',
     'version': '9.0.7.0.0',
     'category': 'Point of Sale',
     'description': '''
-        Prevent the cashier to scan product on Payment Screen
+        Prevent the cashier to scan product on the screen which is not products
     ''',
     'author': 'La Louve',
     'website': 'http://www.lalouve.net',
