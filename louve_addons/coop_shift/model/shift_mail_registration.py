@@ -43,8 +43,7 @@ class ShiftMailRegistration(models.Model):
             # when users is in vacation, no email is sent to them.
             if self.registration_id.partner_id.working_state in ['exempted',
                                                                  'vacation']:
-                return self.write({'mail_sent': False,
-                                   'mail_ignored': False})
+                return
             return super(ShiftMailRegistration, self).execute()
         else:
             # other case which not sending mail, marked ignore=True

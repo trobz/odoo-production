@@ -91,8 +91,6 @@ class ShiftMailScheduler(models.Model):
                 continue
             if sm.shift_id.state != 'confirm':
                 continue
-            # not only `after_sub`, `before_event` should be treated with same
-            # logic althought we're not using this type at now.
             if self.interval_type in ['after_sub', 'before_event']:
                 # update registration lines
                 lines = []
