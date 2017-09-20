@@ -21,4 +21,5 @@ class AccountJournal(models.Model):
 
     bank_acc_id = fields.Many2one('res.partner.bank', string="Bank Account")
     bank_acc_number = fields.Char(related="bank_acc_id.acc_number",
-                                  readonly=True)
+                                  readonly=True,
+                                  store=True)
