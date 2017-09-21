@@ -8,7 +8,7 @@
     'version': '9.0.7.0.0',
     'category': 'Point of Sale',
     'description': '''
-        Prevent the cashier to scan product on the screen which is not products
+        Restrict cashier from scanning product in non-product screen
     ''',
     'author': 'La Louve',
     'website': 'http://www.lalouve.net',
