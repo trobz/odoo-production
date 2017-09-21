@@ -318,9 +318,11 @@ class ResPartner(models.Model):
     @api.multi
     def _compute_number_of_associated_people(self):
         for partner in self:
-            if partner.is_member and partner.child_ids:
+            if (partner.is_member or partner.is_former_member) and \
+                partner.child_ids:
                 partner.nb_associated_people = \
-                    sum([p.is_associated_people and 1 or 0 \
+                    sum([(p.is_associated_people or \
+                         p.is_former_associated_people) and 1 or 0 \
                          for p in partner.child_ids])
             else:
                 partner.nb_associated_people = 0
