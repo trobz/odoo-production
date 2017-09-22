@@ -490,7 +490,7 @@ msgid "The maximum number of associated people must be a positive number !"
 msgstr "Le nombre maximal de personnes rattachées doit être un entier positif !"
 
 #. module: coop_membership
-#: code:addons/coop_membership/models/res_partner.py:165
+#: code:addons/coop_membership/models/res_partner.py:163
 #, python-format
 msgid "The maximum number of associated people has been exceeded."
 msgstr "Le nombre maximal de personnes rattachées a été dépassé."

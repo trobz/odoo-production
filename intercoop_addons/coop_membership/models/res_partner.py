@@ -126,11 +126,10 @@ class ResPartner(models.Model):
 
     # Constraint Section
     @api.multi
-    @api.constrains(
-        'is_member',
-        'parent_id',
-        'parent_id.is_member',
-        'total_partner_owned_share')
+    @api.constrains('is_member',
+                    'parent_id',
+                    'is_associated_people',
+                    'total_partner_owned_share')
     def _check_partner_type(self):
         '''
         @Function to add a constraint on partner type
@@ -147,8 +146,7 @@ class ResPartner(models.Model):
                       "to write others changes"))
 
     @api.multi
-    @api.constrains('nb_associated_people',
-                    'company_id.max_nb_associated_people')
+    @api.constrains('nb_associated_people')
     def _check_number_of_associated_people(self):
         '''
         @Function to add a constraint on member
