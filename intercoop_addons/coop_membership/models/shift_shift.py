@@ -23,9 +23,10 @@ class ShiftShift(models.Model):
             if shift.shift_type_id.is_ftop:
                 for registration in shift.registration_ids:
                     partner = registration.partner_id
-                    # do not deduct points in case member's working state is 
-                    # On Vacation or Exempted
-                    if partner.working_state in ('exempted', 'vacation'):
+                    # Registration's state is waiting means the member is on 
+                    # vacation or exempted at the current shift. So, we don't
+                    # deduct member's points
+                    if registration.state == 'waiting':
                         continue
                     current_point = partner.final_ftop_point
                     point = 0
