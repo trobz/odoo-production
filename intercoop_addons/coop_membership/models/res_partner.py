@@ -161,7 +161,7 @@ class ResPartner(models.Model):
             if avail_check == 'limited' and rec.is_member and \
                 rec.nb_associated_people > max_nb:
                 raise ValidationError(_("The maximum number of " +
-                    "associated people has been exceeded !"))
+                    "associated people has been exceeded."))
 
     # Compute Section
     @api.multi
