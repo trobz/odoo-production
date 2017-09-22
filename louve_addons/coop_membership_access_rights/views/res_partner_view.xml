@@ -593,7 +593,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="view_res_partner_form_base">
+    <record model="ir.ui.view" id="view_res_partner_form_base_see_associated_people_inherit">
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="coop_membership.view_res_partner_form_base"/>
         <field name="arch" type="xml">
