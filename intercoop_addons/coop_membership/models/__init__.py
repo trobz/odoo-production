@@ -12,4 +12,3 @@ from . import shift_template
 from . import shift_registration
 from . import shift_extension
 from . import shift_extension_type
-from . import shift_shift

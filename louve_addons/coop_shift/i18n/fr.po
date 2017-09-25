@@ -2281,6 +2281,12 @@ msgid "Shift"
 msgstr "Service"
 
 #. module: coop_shift
+#: code:addons/coop_shift/model/shift_shift.py:434
+#, python-format
+msgid "Shift Cloture"
+msgstr "Clôlturer le service"
+
+#. module: coop_shift
 #: model:ir.actions.act_window,name:coop_shift.action_res_partner_point_counter_view_ftop
 #: model:ir.actions.act_window,name:coop_shift.action_res_partner_point_counter_view_standard
 #: model:ir.ui.view,arch_db:coop_shift.view_shift_counter_event_search
