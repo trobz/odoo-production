@@ -202,7 +202,7 @@ class ResPartner(models.Model):
         for partner in self:
             if partner.total_partner_owned_share == 0:
                 fundraising_count = \
-                    self.env['account.invoice'].search_count(
+                    self.env['account.invoice'].sudo().search_count(
                         [('partner_id', '=', partner.id),
                          ('fundraising_category_id', '!=', False),
                          ('state', 'in', ('open', 'paid'))])
@@ -258,7 +258,7 @@ class ResPartner(models.Model):
         '''
         partner_owned_share_env = self.env['res.partner.owned.share']
         for partner in self:
-            worker_shares = partner_owned_share_env.search_count(
+            worker_shares = partner_owned_share_env.sudo().search_count(
                 [('partner_id', '=', partner.id),
                  ('category_id.is_worker_capital_category', '=', True),
                  ('owned_share', '>', 0)])
