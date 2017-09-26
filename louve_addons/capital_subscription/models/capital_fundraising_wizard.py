@@ -106,6 +106,7 @@ class CapitalFundraisingWizard(models.TransientModel):
             inbound_payment_method_ids
 
         if wizard.payment_journal_id:
+            wizard.onchange_payment_journal_id()
             # create one payment per line in the account move just created,
             # to have correct date
             for move_line in invoice.move_id.line_ids.filtered(
