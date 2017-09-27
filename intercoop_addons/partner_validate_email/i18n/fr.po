@@ -16,12 +16,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: partner_validate_email
-#: code:addons/partner_validate_email/models/res_partner.py:61
+#: code:addons/partner_validate_email/models/res_partner.py:64
 msgid "Email format is incorrect."
 msgstr "Le format de l'email est incorrect."
 
 #. module: partner_validate_email
-#: code:addons/partner_validate_email/models/res_partner.py:63
+#: code:addons/partner_validate_email/models/res_partner.py:66
 msgid "Email format is correct but domain doesn't seem to have any mail server."
 msgstr "Le format de l'email est correct mais le domaine ne semble pas avoir de serveur mail."
 
