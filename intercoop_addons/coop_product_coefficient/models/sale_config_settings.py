@@ -4,8 +4,8 @@ from openerp import api, fields, models, _
 from openerp.tools.safe_eval import safe_eval
 
 
-class PurchaseConfigSettings(models.TransientModel):
-    _inherit = 'purchase.config.settings'
+class SaleConfigSettings(models.TransientModel):
+    _inherit = 'sale.config.settings'
 
     auto_update_base_price = fields.Boolean(
         string='An update of Vendor Price updates Base Price automatically')
