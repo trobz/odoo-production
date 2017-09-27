@@ -415,27 +415,27 @@ class ProductTemplate(models.Model):
         val = param_env.get_param('auto_update_theorical_price')
         return val
 
-    @api.model
-    def auto_update_cost_price(self):
-        if self.has_theoritical_cost_different and \
-                self.get_auto_update_theorical_cost():
-            self.use_theoritical_cost()
+    @api.multi
+    def auto_update_theoritical_cost_price(self):
+        for obj in self:
+            if obj.has_theoritical_cost_different and \
+                    obj.get_auto_update_theorical_cost():
+                obj.use_theoritical_cost()
 
-        if self.has_theoritical_price_different and \
-                self.get_auto_update_theorical_price():
-            self.use_theoritical_price()
+            if obj.has_theoritical_price_different and \
+                    obj.get_auto_update_theorical_price():
+                obj.use_theoritical_price()
 
     @api.multi
     def write(self, vals):
         ret = super(ProductTemplate, self).write(vals)
-        for obj in self:
-            obj.auto_update_cost_price()
+        self.auto_update_theoritical_cost_price()
         return ret
 
     @api.model
     def create(self, vals):
         new_obj = super(ProductTemplate, self).create(vals)
-        new_obj.auto_update_cost_price()
+        new_obj.auto_update_theoritical_cost_price()
         return new_obj
 
 

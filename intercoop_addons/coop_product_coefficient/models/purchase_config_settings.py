@@ -15,40 +15,26 @@ class PurchaseConfigSettings(models.TransientModel):
         string='An update of Theorical Price updates Price automatically')
 
     @api.multi
-    def get_default_auto_update_base_price(self):
+    def get_default_auto_update_price(self):
+        # Get default values of Base Price, Theorical Cost, and Theorical Price
         param_env = self.env['ir.config_parameter']
-        val = param_env.get_param('auto_update_base_price')
-        return {'auto_update_base_price': val}
+        return {
+            'auto_update_base_price':
+            param_env.get_param('auto_update_base_price'),
+            'auto_update_theorical_cost':
+            param_env.get_param('auto_update_theorical_cost'),
+            'auto_update_theorical_price':
+            param_env.get_param('auto_update_theorical_price'),
+        }
 
     @api.multi
-    def set_auto_update_base_price(self):
+    def set_auto_update_price(self):
+        # Set values to Base Price, Theorical Cost, and Theorical Price
         param_env = self.env['ir.config_parameter']
         for rec in self:
-            config = rec.auto_update_base_price or False
-            param_env.set_param('auto_update_base_price', config)
-
-    @api.multi
-    def get_default_auto_update_theorical_cost(self):
-        param_env = self.env['ir.config_parameter']
-        val = param_env.get_param('auto_update_theorical_cost')
-        return {'auto_update_theorical_cost': val}
-
-    @api.multi
-    def set_auto_update_theorical_cost(self):
-        param_env = self.env['ir.config_parameter']
-        for rec in self:
-            config = rec.auto_update_theorical_cost or False
-            param_env.set_param('auto_update_theorical_cost', config)
-
-    @api.multi
-    def get_default_auto_update_theorical_price(self):
-        param_env = self.env['ir.config_parameter']
-        val = param_env.get_param('auto_update_theorical_price')
-        return {'auto_update_theorical_price': val}
-
-    @api.multi
-    def set_auto_update_theorical_price(self):
-        param_env = self.env['ir.config_parameter']
-        for rec in self:
-            config = rec.auto_update_theorical_price or False
-            param_env.set_param('auto_update_theorical_price', config)
+            param_env.set_param('auto_update_base_price',
+                                rec.auto_update_base_price or False)
+            param_env.set_param('auto_update_theorical_cost',
+                                rec.auto_update_theorical_cost or False)
+            param_env.set_param('auto_update_theorical_price',
+                                rec.auto_update_theorical_price or False)
