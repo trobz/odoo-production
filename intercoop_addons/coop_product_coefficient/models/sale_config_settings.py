@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from openerp import api, fields, models, _
+from openerp import api, fields, models
 from openerp.tools.safe_eval import safe_eval
 
 
@@ -20,11 +20,11 @@ class SaleConfigSettings(models.TransientModel):
         param_env = self.env['ir.config_parameter']
         return {
             'auto_update_base_price':
-            param_env.get_param('auto_update_base_price'),
+            safe_eval(param_env.get_param('auto_update_base_price')),
             'auto_update_theorical_cost':
-            param_env.get_param('auto_update_theorical_cost'),
+            safe_eval(param_env.get_param('auto_update_theorical_cost')),
             'auto_update_theorical_price':
-            param_env.get_param('auto_update_theorical_price'),
+            safe_eval(param_env.get_param('auto_update_theorical_price')),
         }
 
     @api.multi
@@ -33,8 +33,8 @@ class SaleConfigSettings(models.TransientModel):
         param_env = self.env['ir.config_parameter']
         for rec in self:
             param_env.set_param('auto_update_base_price',
-                                rec.auto_update_base_price or False)
+                                rec.auto_update_base_price or 'False')
             param_env.set_param('auto_update_theorical_cost',
-                                rec.auto_update_theorical_cost or False)
+                                rec.auto_update_theorical_cost or 'False')
             param_env.set_param('auto_update_theorical_price',
-                                rec.auto_update_theorical_price or False)
+                                rec.auto_update_theorical_price or 'False')

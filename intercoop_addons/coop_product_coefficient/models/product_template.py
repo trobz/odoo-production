@@ -5,6 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import models, fields, api, exceptions, _
+from openerp.tools.safe_eval import safe_eval
 import openerp.addons.decimal_precision as dp
 
 
@@ -398,21 +399,21 @@ class ProductTemplate(models.Model):
     def get_auto_update_base_price(self):
         # Get Purchase Configuration: Updates Base Price automatically
         param_env = self.env['ir.config_parameter']
-        val = param_env.get_param('auto_update_base_price')
+        val = safe_eval(param_env.get_param('auto_update_base_price'))
         return val
 
     @api.model
     def get_auto_update_theorical_cost(self):
         # Get Purchase Configuration: Updates Theorical Cost automatically
         param_env = self.env['ir.config_parameter']
-        val = param_env.get_param('auto_update_theorical_cost')
+        val = safe_eval(param_env.get_param('auto_update_theorical_cost'))
         return val
 
     @api.model
     def get_auto_update_theorical_price(self):
         # Get Purchase Configuration: Updates Theorical Price automatically
         param_env = self.env['ir.config_parameter']
-        val = param_env.get_param('auto_update_theorical_price')
+        val = safe_eval(param_env.get_param('auto_update_theorical_price'))
         return val
 
     @api.multi
