@@ -12,7 +12,7 @@
     width:46mm;
     height:59mm;
     float:left;
-    padding:0cm;
+    padding-top:1px;
     -ms-transform: translate(-2mm, -1mm);
     -webkit-transform: translate(-2mm, -1mm);
 }
