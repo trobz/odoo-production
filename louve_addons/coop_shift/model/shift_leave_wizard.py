@@ -108,8 +108,8 @@ class ShiftLeaveWizard(models.TransientModel):
                 ('state', '!=', 'waiting'),
                 ])
             if existed_line:
-                existed_line.write({'state': 'waiting',
-                                    'leave_id': leave.id})
+                existed_line.with_context(bypass_leave_change_check=True)\
+                    .write({'state': 'waiting', 'leave_id': leave.id})
             else:
                 # Create new registration lines (type 'waiting')
                 line_obj.create({
