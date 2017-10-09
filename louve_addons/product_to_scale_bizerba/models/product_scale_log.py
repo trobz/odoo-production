@@ -320,6 +320,8 @@ class product_scale_log(Model):
                     external_text_lst.append(log.external_text)
 
             # Push First Image for constrains reason
+            # Image extension will get on the line field suffix
+            # for default will be `png` if suffix empty.
             for product_line in scale_system.product_line_ids:
                 if product_line.type == 'product_image' and \
                     scale_system.send_images:
