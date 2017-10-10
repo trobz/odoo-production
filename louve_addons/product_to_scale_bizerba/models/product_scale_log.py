@@ -363,8 +363,7 @@ class product_scale_log(Model):
     def _generate_image_file_name(self, cr, uid, obj, field, extension,
                                   context=None):
         if getattr(obj, field.name):
-            model_name = obj._model._name.replace('.', '_')
-            return "%s__%s__%d%s" % (model_name, field.name, obj.id, extension)
+            return "%d%s" % (obj.id, extension)
         else:
             return ''
 
