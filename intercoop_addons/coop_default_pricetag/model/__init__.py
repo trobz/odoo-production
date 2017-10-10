@@ -25,3 +25,4 @@ from . import product_label
 from . import product_template
 from . import product_uom_categ
 from . import ir_action_report_xml
+from . import product_product

@@ -47,6 +47,7 @@ Functionnalities
         'data/report_paperformat.xml',
         'data/pricetag_model.xml',
         'data/product_category_print.xml',
+        'data/decimal_precision_data.xml',
         'report/coop_custom_product_report.xml',
         'report/report_pricetag.xml',
         'views/view_product_label.xml',
