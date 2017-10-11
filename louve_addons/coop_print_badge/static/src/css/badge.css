@@ -130,10 +130,10 @@
 
 .barcode_image {
     max-width: 80%;
-    max-height: 90%;
+    max-height: 85%;
     display: block;
     margin: auto;
-    padding-top: 4mm;
+    padding-top: 6mm;
     background-color: white;
 }
 
