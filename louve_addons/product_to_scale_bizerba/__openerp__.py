@@ -28,6 +28,7 @@ Roadmap / Know Issues
     'depends': [
         'product',
         'point_of_sale',
+        'coop_default_pricetag',
     ],
     'data': [
         'security/ir_module_category.xml',
