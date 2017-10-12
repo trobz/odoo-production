@@ -16,11 +16,12 @@ class AccountInvoiceLine(models.Model):
     @api.onchange('product_id')
     def _onchange_product_id(self):
         ret = super(AccountInvoiceLine, self)._onchange_product_id()
-        if self.product_id:
-            seller = self.product_id._select_seller(self.product_id)
-            if seller:
-                self.package_qty = seller.package_qty
-                self.discount = seller.discount
+        if self.invoice_id.type in ('in_invoice', 'in_refund') and \
+                self.product_id:
+            for supplier in self.product_id.seller_ids:
+                if self.partner_id and (supplier.name == self.partner_id):
+                    self.package_qty = supplier.package_qty
+                    self.discount = supplier.discount
         return ret
 
     @api.multi
