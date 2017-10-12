@@ -18,10 +18,11 @@ class AccountInvoiceLine(models.Model):
         ret = super(AccountInvoiceLine, self)._onchange_product_id()
         if self.invoice_id.type in ('in_invoice', 'in_refund') and \
                 self.product_id:
-            for supplier in self.product_id.seller_ids:
-                if self.partner_id and (supplier.name == self.partner_id):
-                    self.package_qty = supplier.package_qty
-                    self.discount = supplier.discount
+            suppliers = self.product_id.seller_ids.filtered(
+                lambda x: x.name == self.partner_id)
+            if suppliers:
+                self.package_qty = suppliers[0].package_qty
+                self.discount = suppliers[0].discount
         return ret
 
     @api.multi
