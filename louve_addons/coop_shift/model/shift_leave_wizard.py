@@ -26,7 +26,7 @@ class ShiftLeaveWizard(models.TransientModel):
             for line in leave.partner_id.tmpl_reg_line_ids:
                 if conflict_period(
                         leave.start_date, leave.stop_date,
-                        line.date_begin, line.date_end)['conflict']:
+                        line.date_begin, line.date_end, True)['conflict']:
                     line_ids.append(line.id)
         return line_ids
 
@@ -60,7 +60,8 @@ class ShiftLeaveWizard(models.TransientModel):
         self.ensure_one()
 
         leave = self.leave_id
-        if leave.state != 'draft':
+        if not self._context.get('bypass_non_draft_confirm', False) and \
+                leave.state != 'draft':
             raise ValidationError(_(
                 "You can not confirm a leave in a non draft state."))
 
