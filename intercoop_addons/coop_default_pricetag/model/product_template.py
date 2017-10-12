@@ -100,8 +100,7 @@ class ProductTemplate(models.Model):
         'Mercuriale Product', help="A product in mercuriale has price"
         " that changes very regularly.")
 
-    weight_net = fields.Float('Net Weight', default=0,
-                              digits=dp.get_precision('Net Weight'))
+    weight_net = fields.Float('Net Weight', default=0)
 
     price_volume = fields.Char(
         compute='_compute_price_volume', string='Price by liter')
@@ -156,7 +155,6 @@ class ProductTemplate(models.Model):
         compute=_compute_pricetag_coopinfos, string='Coop custom fields')
     category_print_id = fields.Many2one(
         comodel_name='product.category.print', string='Print Category')
-    volume = fields.Float(digits=dp.get_precision('Volume'))
 
     # Compute Section
     @api.depends('list_price', 'volume')
