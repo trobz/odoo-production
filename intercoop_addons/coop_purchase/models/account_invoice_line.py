@@ -10,8 +10,7 @@ from openerp import models, api, fields
 class AccountInvoiceLine(models.Model):
     _inherit = "account.invoice.line"
 
-    price_total = fields.Float("Total", compute="_compute_price_total",
-                               readonly=True)
+    base_price = fields.Monetary("Base Price", readonly=True)
 
     @api.onchange('product_id')
     def _onchange_product_id(self):
@@ -23,10 +22,5 @@ class AccountInvoiceLine(models.Model):
             if suppliers:
                 self.package_qty = suppliers[0].package_qty
                 self.discount = suppliers[0].discount
+                self.base_price = suppliers[0].base_price
         return ret
-
-    @api.multi
-    @api.depends('quantity', 'price_unit')
-    def _compute_price_total(self):
-        for rec in self:
-            rec.price_total = rec.quantity * rec.price_unit
