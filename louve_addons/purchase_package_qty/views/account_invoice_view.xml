@@ -30,7 +30,11 @@
                     <field name="product_qty_package"/>
                     <field name="package_qty"/>
                 </xpath>
+                <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='discount']" position="attributes">
+                    <attribute name="groups">account.group_account_invoice,sale.group_discount_per_so_line</attribute>
+                </xpath>
                 <xpath expr="//field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="after">
+                    <field name="base_price"/>
                     <field name="price_policy"/>
                 </xpath>
             </field>

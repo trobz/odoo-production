@@ -38,6 +38,10 @@ class AccountInvoice(models.Model):
                 line.package_qty = line.purchase_line_id.package_qty
                 line.product_qty_package = line.package_qty and\
                     line.quantity / line.package_qty or 0
+            suppliers = line.product_id.seller_ids.filtered(
+                lambda x: x.name == self.partner_id)
+            if suppliers:
+                line.base_price = suppliers[0].base_price
         return res
 
     @api.multi

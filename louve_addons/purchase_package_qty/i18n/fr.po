@@ -230,3 +230,8 @@ msgstr "par Colis"
 #: selection:purchase.order.line,price_policy:0
 msgid "per UOM"
 msgstr "par UdM"
+
+#. module: purchase_package_qty
+#: model:ir.model.fields,field_description:purchase_package_qty.field_account_invoice_line_base_price
+msgid "Base Price"
+msgstr "Prix de base"

@@ -35,6 +35,7 @@ class AccountInvoiceLine(models.Model):
     price_policy = fields.Selection(
         [('uom', 'per UOM'), ('package', 'per Package')], "Price Policy",
         default='uom', required=True)
+    base_price = fields.Float("Base Price")
 
     @api.onchange('quantity')
     def onchange_product_qty(self):
@@ -63,3 +64,16 @@ class AccountInvoiceLine(models.Model):
         # Restore the value of quantity
         if self.price_policy != 'uom':
             self.quantity = line_qty
+
+    @api.onchange('product_id')
+    def _onchange_product_id(self):
+        ret = super(AccountInvoiceLine, self)._onchange_product_id()
+        if self.invoice_id.type in ('in_invoice', 'in_refund') and \
+                self.product_id:
+            suppliers = self.product_id.seller_ids.filtered(
+                lambda x: x.name == self.partner_id)
+            if suppliers:
+                self.package_qty = suppliers[0].package_qty
+                self.discount = suppliers[0].discount
+                self.base_price = suppliers[0].base_price
+        return ret
