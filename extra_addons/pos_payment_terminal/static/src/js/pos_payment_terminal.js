@@ -58,6 +58,7 @@ odoo.define('pos_payment_terminal.pos_payment_terminal', function (require) {
             var line = order.selected_paymentline;
             var data = self.get_data_send(order, line, currency_iso);
             if (this.wait_terminal_answer()) {
+                screen.$('.delete-button').css('display', 'none');
                 this.message('payment_terminal_transaction_start_with_return', {'payment_info' : JSON.stringify(data)}, { timeout: 240000 }).then(function (answer) {
                     if (answer) {
                         var transaction_result = answer['transaction_result'];
@@ -65,6 +66,8 @@ odoo.define('pos_payment_terminal.pos_payment_terminal', function (require) {
                             // This means that the operation was not finished
                             // TODO : check what to do here. But I think this should do nothing.
                             screen.transaction_error();
+                            screen.$('.delete-button').css('display', 'block');
+                            //$('.back').show();
                         } else if (transaction_result == '0') {
                             // This means that the operation was a success
                             // We get amount and set the amount in this line
@@ -78,7 +81,7 @@ odoo.define('pos_payment_terminal.pos_payment_terminal', function (require) {
                                 var amount_in_formatted = screen.format_currency_no_symbol(amount_in);
                                 screen.$('.paymentline.selected .edit').text(amount_in_formatted);
                                 screen.$('.delete-button').css('display', 'none');
-                                screen.$('.automatic-cashdrawer-transaction-start').css('display', 'none');
+                                //screen.$('.automatic-cashdrawer-transaction-start').css('display', 'none');
                             }
                         }
                     } else {
