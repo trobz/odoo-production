@@ -19,7 +19,6 @@ class MemberConfigSettings(models.TransientModel):
     def set_params(self):
         self.ensure_one()
         value = self.reprint_change_field_ids.ids
-        # Trigger to recompute the badge to print
         self.env['ir.config_parameter'].set_param(
             'reprint_change_field_ids', value)
 
