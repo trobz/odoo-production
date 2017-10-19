@@ -60,8 +60,7 @@ class ResPartner(models.Model):
         for partner in self:
             partner_vals = vals.copy()
             for field_name in fields_trigger_badge_reprint:
-                if partner_vals.get(field_name) and \
-                        partner_vals.get(field_name) != partner[field_name]:
+                if partner_vals.get(field_name) != partner[field_name]:
                     partner_vals['badge_to_print'] = True
                     break
 
