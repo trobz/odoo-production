@@ -1,7 +1,7 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
-Coop Account
+Account Deprecated
 ================
 
-Manage custom behaviour for Account
+- Remove the accounts which marked as "deprecated" in the search result.

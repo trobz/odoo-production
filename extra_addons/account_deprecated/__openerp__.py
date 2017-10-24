@@ -1,18 +1,22 @@
 # -*- coding: utf-8 -*-
 # Copyright (C) 2016-Today: La Louve (<http://www.lalouve.net/>)
-# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
+# @author: La Louve
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html
 
 {
-    'name': 'Coop Account',
+    'name': 'Account Deprecated',
     'version': '9.0.0.0.0',
     'category': 'Custom',
-    'summary': 'Manage custom behaviour for Account',
+    'summary': 'Do not include deprecated accounts in search result',
     'author': 'La Louve',
     'website': 'http://www.lalouve.net',
     'depends': [
         'account',
     ],
+
+    'data': [
+        'views/actions.xml',
+    ],
+
     'installable': True,
 }

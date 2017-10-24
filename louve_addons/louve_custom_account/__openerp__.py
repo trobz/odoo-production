@@ -15,7 +15,7 @@
         'account',
         'barcodes_generate',
         'account_tax_balance',
-        'coop_account',
+        'account_deprecated',
     ],
     'data': [
         'views/view_account_payment.xml',
