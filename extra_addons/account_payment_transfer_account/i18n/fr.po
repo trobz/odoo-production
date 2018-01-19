@@ -1,4 +1,4 @@
-# Translation of Odoo Server.
+s# Translation of Odoo Server.
 # This file contains the translation of the following modules:
 #	* account_payment_transfer_account
 #
@@ -39,4 +39,10 @@ msgstr "Saisir un compte de transfert inter-bancaire ou laisser vide si vous sou
 #: model:ir.model.fields,field_description:account_payment_transfer_account.field_account_payment_transfer_account_id
 msgid "Transfer Account"
 msgstr "Compte de transferts"
+
+#. module: account_payment_transfer_account
+#: model:ir.actions.act_window,name:account_payment_transfer_account.inter_tranfer_payment_action
+#: model:ir.ui.menu,name:account_payment_transfer_account.menu_inter_tranfer_payment
+msgid "Inter Account Transfer"
+msgstr "Tranfert interne"
 
