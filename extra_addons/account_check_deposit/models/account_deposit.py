@@ -255,3 +255,9 @@ class AccountMoveLine(models.Model):
 
     check_deposit_id = fields.Many2one(
         'account.check.deposit', string='Check Deposit', copy=False)
+    check_holder_name = fields.Char(string="Cheque Holder")
+
+    @api.onchange('partner_id')
+    def onchange_partner_id(self):
+        if self.partner_id:
+            self.check_holder_name = self.partner_id.name_get()[0][1] or ''
