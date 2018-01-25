@@ -31,17 +31,41 @@ class AccountBankStatementImport(models.TransientModel):
             'line_opening_balance' : u"^Solde en début de période;;;(?P<balance>\d+(,\d{1,2})?);$",
             'line_credit' : u"^(?P<date>\d{2}/\d{2}/\d{4});(?P<name>.*);;(?P<credit>\d+(,\d{1,2})?);(?P<note>.*)$",
             'line_debit' : u"^(?P<date>\d{2}/\d{2}/\d{4});(?P<name>.*);(?P<debit>-\d+(,\d{1,2})?);;(?P<note>.*)$",
+            },
+        'version_C' : {
+            'line_1' : u"^Code de la banque : (?P<bank_group_code>\d{5});Date de début de téléchargement : (?P<opening_date>\d{2}/\d{2}/\d{4});Date de fin de téléchargement : (?P<closing_date>\d{2}/\d{2}/\d{4});$",
+            'line_2' : u"^Numéro de compte : (?P<bank_account_number>\d{11});Devise : (?P<currency>.{3});$",
+            'line_closing_balance' : u"^Solde en fin de période;;;(?P<balance>\d+(,\d{1,2})?)$",
+            'line_opening_balance' : u"^Solde en début de période;;;(?P<balance>\d+(,\d{1,2})?)$",
+            'line_credit' : u"^(?P<date>\d{2}/\d{2}/\d{4});(?P<name>.*);;+(?P<credit>\d+(,\d{1,2})?);(?P<note>.*);$",
+            'line_debit' : u"^(?P<date>\d{2}/\d{2}/\d{4});(?P<name>.*);(?P<debit>-\d+(,\d{1,2})?);;(?P<note>.*);$",
             }
     }
+
+    @api.model
+    def _find_bank_account_id(self, account_number):
+        """ Get res.partner.bank ID """
+        bank_account_id = None
+        if account_number and len(account_number) > 4:
+            bank_account_ids = self.env['res.partner.bank'].search(
+                [('acc_number', '=', account_number)], limit=1)
+            if bank_account_ids:
+                bank_account_id = bank_account_ids[0].id
+        return bank_account_id
+
     @api.model
     def _check_file(self, data_file):
         try:
             file_version = "version_A"
             #for files generated before june 2017
-            test_version = re.compile(u"^Code de la banque : (?P<bank_group_code>\d{5});Code de l'agence : (?P<bank_local_code>\d{5});Date de début de téléchargement : (?P<opening_date>\d{2}/\d{2}/\d{4});Date de fin de téléchargement : (?P<closing_date>\d{2}/\d{2}/\d{4});;$").search(data_file[0])
-            if (test_version == None):
-                #for files generated after june 2017
+            test_versionA = re.compile(self.regexp_version[file_version]['line_1']).search(data_file[0])
+            if (test_versionA == None):
+                #for files generated after june 2017 and before decembre 2017
                 file_version = "version_B"
+                test_versionB = re.compile(self.regexp_version[file_version]['line_1']).search(data_file[0])
+                if (test_versionB == None):
+                    #for files generated after december 2017
+                    file_version = "version_C"
 
             parse_line_1 = re.compile(self.regexp_version[file_version]['line_1']).search(data_file[0])
             bank_group_code = parse_line_1.group('bank_group_code')
@@ -81,14 +105,19 @@ class AccountBankStatementImport(models.TransientModel):
                     transaction = re.compile(self.regexp_version[file_version]['line_credit']).search(line)
                     transaction_amount = float(transaction.group('credit').replace(',','.'))
 
+                libelle = transaction.group('name')
+                if transaction.group('note') != "":
+                    libelle += " */* "+transaction.group('note')
                 vals_line = {
                     'date': datetime.datetime.strptime(transaction.group('date'), '%d/%m/%Y').strftime('%Y-%m-%d'),
-                    'name': transaction.group('name'),
+                    'name': libelle,
                     #'ref': transaction.group('unique_import_id'),
                     'amount': transaction_amount,
-                    'note': transaction.group('note'),
+                    #'note': transaction.group('note'),
                     'unique_import_id': str(index)+transaction.group('date')+transaction.group('name')+str(transaction_amount)+transaction.group('note'),
                     'account_number': bank_account_number,
+                    'partner_id': False,
+                    'bank_account_id': self._find_bank_account_id(bank_account_number),
                 }
                 total_amt += transaction_amount
                 transactions.append(vals_line)
