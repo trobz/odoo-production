@@ -255,3 +255,32 @@ class AccountMoveLine(models.Model):
 
     check_deposit_id = fields.Many2one(
         'account.check.deposit', string='Check Deposit', copy=False)
+    check_holder_name = fields.Char(string="Cheque Holder")
+
+    @api.onchange('partner_id')
+    def onchange_partner_id(self):
+        if self.partner_id:
+            self.check_holder_name = self.partner_id.name_get()[0][1] or ''
+
+    @api.model
+    def create(self, vals):
+        partner_id = vals.get('partner_id', False)
+        check_holder_name = vals.get('check_holder_name', False)
+        partner = self.env['res.partner'].browse(partner_id)
+        if partner and not check_holder_name:
+            vals.update({
+                'check_holder_name': partner.name_get()[0][1] or ''
+            })
+        return super(AccountMoveLine, self).create(vals)
+
+    @api.multi
+    def write(self, vals):
+        if 'partner_id' in vals and 'check_holder_name' not in vals:
+            partner_id = vals.get('partner_id', False)
+            for record in self:
+                partner = self.env['res.partner'].browse(partner_id)
+                if partner:
+                    vals.update({
+                        'check_holder_name': partner.name_get()[0][1] or ''
+                    })
+        return super(AccountMoveLine, self).write(vals)
