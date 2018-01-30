@@ -158,10 +158,17 @@ class AccountCheckDeposit(models.Model):
     @api.model
     def _prepare_account_move_vals(self, deposit):
         date = deposit.deposit_date
+        if deposit.destination_journal_id.sequence_id:
+            move_name =\
+                deposit.destination_journal_id.sequence_id.with_context(
+                    ir_sequence_date=date).next_by_id()
+        else:
+            raise UserError(_(
+                'Please define a sequence on the destination journal.'))
         move_vals = {
             'journal_id': deposit.destination_journal_id.id,
             'date': date,
-            'name': deposit.name,
+            'name': move_name,
             'ref': deposit.name,
         }
         return move_vals
