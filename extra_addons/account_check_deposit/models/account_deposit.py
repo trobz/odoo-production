@@ -175,7 +175,11 @@ class AccountCheckDeposit(models.Model):
 
     @api.model
     def _prepare_move_line_vals(self, line, deposit):
-        assert (line.debit > 0), 'Debit must have a value'
+        # replace assert is raise
+        if line.debit > 0:
+            raise UserError(_(
+                'Debit must have a value'))
+        # assert (line.debit > 0), 'Debit must have a value'
         return {
             'name': _('%s - Ref. Check %s') % (deposit.name,
                                                line.ref or line.name or ''),
