@@ -10,7 +10,7 @@
     'author': 'La Louve',
     'website': 'http://www.lalouve.net',
     'depends': [
-        'account',
+        'account', 'account_asset'
     ],
     'data': [
         "security/res_group.xml",

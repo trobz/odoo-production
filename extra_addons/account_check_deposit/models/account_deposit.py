@@ -158,17 +158,28 @@ class AccountCheckDeposit(models.Model):
     @api.model
     def _prepare_account_move_vals(self, deposit):
         date = deposit.deposit_date
+        if deposit.destination_journal_id.sequence_id:
+            move_name =\
+                deposit.destination_journal_id.sequence_id.with_context(
+                    ir_sequence_date=date).next_by_id()
+        else:
+            raise UserError(_(
+                'Please define a sequence on the destination journal.'))
         move_vals = {
             'journal_id': deposit.destination_journal_id.id,
             'date': date,
-            'name': deposit.name,
+            'name': move_name,
             'ref': deposit.name,
         }
         return move_vals
 
     @api.model
     def _prepare_move_line_vals(self, line, deposit):
-        assert (line.debit > 0), 'Debit must have a value'
+        # replace assert is raise
+        if line.debit <= 0:
+            raise UserError(_(
+                'Debit must have a value'))
+        # assert (line.debit > 0), 'Debit must have a value'
         return {
             'name': _('%s - Ref. Check %s') % (deposit.name,
                                                line.ref or line.name or ''),
@@ -261,6 +272,7 @@ class AccountMoveLine(models.Model):
         compute='compute_state_deposit',
         help="Technical fields use invisible button 'DELETE'"
         "if state is draft button visible else button invisible")
+    check_holder_name = fields.Char(string="Cheque Holder")
 
     @api.multi
     def compute_state_deposit(self):
@@ -275,3 +287,36 @@ class AccountMoveLine(models.Model):
         self.ensure_one()
         self.write({'check_deposit_id': False})
         return True
+
+    @api.onchange('partner_id')
+    def onchange_partner_id(self):
+        change_check_holder_name = self._context.get(
+            'change_check_holder_name', False)
+        if self.partner_id and not self.check_holder_name:
+            if change_check_holder_name or self.check_deposit_id:
+                self.check_holder_name = self.partner_id.name_get()[0][1] or ''
+
+    @api.model
+    def create(self, vals):
+        res = super(AccountMoveLine, self).create(vals)
+        res.update_check_holder_name()
+        return res
+
+    @api.multi
+    def write(self, vals):
+        res = super(AccountMoveLine, self).write(vals)
+        self.update_check_holder_name()
+        return res
+
+    @api.multi
+    def update_check_holder_name(self):
+        '''
+            Update check holder name for item was generate from deposit
+        '''
+        for record in self:
+            if record.check_deposit_id and record.partner_id and not\
+                    record.check_holder_name:
+                record.check_holder_name = record.partner_id.name_get()[
+                    0][1] or ''
+            elif not record.check_deposit_id and record.check_holder_name:
+                record.check_holder_name = ""
