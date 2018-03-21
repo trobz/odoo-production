@@ -132,7 +132,7 @@ class ShiftShift(models.Model):
             ('date_begin', '<=',
                 (datetime.now() + timedelta(days=7)).strftime('%Y-%m-%d'))
         ])
-  
+
         # Get attendent
         attendances = shifts.mapped("ftop_registration_ids")
 
