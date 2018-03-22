@@ -62,4 +62,28 @@ If you think there was a mistake or wish to subscribe to another team please con
 ]]>
         </field>
     </record>
+    <record id="coop_ftop_members_reminder_email" model="mail.template">
+        <field name="name">Remind FTOP Member Email</field>
+        <field name="model_id" ref="coop_membership.model_shift_registration"/>
+        <field name="email_from">${(object.partner_id.company_id.email or '')|safe}</field>
+        <field name="email_to" >${object.partner_id.email|safe}</field>
+        <field name="lang">${object.partner_id.lang}</field>
+        <field name="reply_to">no-reply@cooplalouve.fr</field>
+        <field name="subject"></field>
+        <field name="body_html"><![CDATA[
+<p>Hello members of the flying team--</p>
+<br/>
+<p>Just a reminder to tell you that the next settlement day will be next Thursday, the ${object.date_begin} ... this is the last day to perform a flying service and avoid catching up.</p>
+<p>The programming of the flying services is done via the members area. Click on "tools", then "schedule a flying service" and then "registration". If you do not have access to the members area, you can still schedule a flying service by contacting the Members Bureau during its opening hours.</p>
+<p>What happens if I do not have a credit in my "account" on ${object.date_begin}? Like the members of all the other teams, you will need 2 catches. So, in total, you will have three services to program and perform before the next settlement day: the 2 catch-ups, and the service you need anyway before the next countdown. (These three services to do are in addition to catch-up that eventually you must already at La Louve).</p>
+<p>How to make a catch-up? Unlike members of ABCD teams, members of the flying team must program their catch-up, without exception ... simply by scheduling additional vacations. A member of the flying team can not use the same catch-up system as the ABCD teams. If he presents himself to any service to make a catch-up, without having programmed it, he will not be credited.</p>
+<p>Canceling a scheduled service Scheduling a vacation and then skipping it without canceling it will result in the withdrawal of a credit from the service savings account. The members of the flying team can cancel their vacations without penalty up to one hour before their start, at the office of the members, during the opening hours.</p>
+<p>For any information, contact the Bureau des membres during its opening hours: +33 (0) 1 86 95 91 90.</p>
+<p>Opening hours of the Members Bureau: Tuesday: 13h30 - 16h Wednesday to Friday: 13h30 - 20h Saturday: 10h - 16h</p>
+<br/>
+<p>Cordially,</p>
+]]>
+        </field>
+    </record>
+
 </odoo>
