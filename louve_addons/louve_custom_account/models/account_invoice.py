@@ -37,13 +37,3 @@ class AccountInvoice(models.Model):
                     (2, id_delete) for id_delete in to_delete_ids
                 ]
             })
-
-    @api.multi
-    def signal_workflow(self, signal):
-        if signal == u'invoice_open' and not \
-            self.env.user.has_group(
-                'louve_custom_account.group_validate_invoice'):
-            raise Warning(_(
-                'You dont have the invoice validation right,'
-                ' so you cant validate this invoice'))
-        return super(AccountInvoice, self).signal_workflow(signal)
