@@ -653,7 +653,8 @@ class ShiftTemplate(models.Model):
                                 'tmpl_reg_line_id': strl_id,
                                 'template_created': True,
                             }
-                            self.env['shift.registration'].create(vals)
+                            self.env['shift.registration'].with_context(
+                                from_shift_template=True).create(vals)
 
     def compute_rule_string(self, data):
         """
