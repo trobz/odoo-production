@@ -44,8 +44,7 @@ class WebsiteRegisterMeeting(http.Controller):
 
         if request.httprequest.method == 'POST':
             old_uid = request.uid
-            uid = request.session.authenticate(
-                request.session.db, request.params['login'], request.params['password'])
+            uid = request.session.authenticate(request.session.db, request.params['login'], request.params['password'])
             if uid is not False:
                 request.params['login_success'] = True
                 if not redirect:
@@ -53,7 +52,7 @@ class WebsiteRegisterMeeting(http.Controller):
                 return http.redirect_with_hash(redirect)
             request.uid = old_uid
             values['error'] = _("Wrong login/password")
-        return request.render('coop_membership.login', values)
+        return request.render('coop_membership.login', values)         
 
     @http.route(['/web/membership/discovery-meeting-form'], type='http',
                 auth="none", website=True)
@@ -165,6 +164,7 @@ class WebsiteRegisterMeeting(http.Controller):
                     request.cr, request.uid, attendee_id,
                     {'partner_id': new_partner_id},
                     context=request.context)
+
 
                 if social_registration == 'yes':
                     partner.set_underclass_population()
