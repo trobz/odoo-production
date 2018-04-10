@@ -1044,6 +1044,7 @@ coop_membership.group_membership_access_user,coop_membership.group_membership_bd
                 <field name="email" groups="coop_membership.group_membership_see_associated_people,
 coop_membership.group_membership_access_user,coop_membership.group_membership_bdm_saisie"/>
                 <field name="cooperative_state"/>
+                <field name="zip" groups="coop_membership.group_membership_bdm_lecture,coop_membership.group_membership_bdm_presence"/>
             </tree>
         </field>
     </record>
