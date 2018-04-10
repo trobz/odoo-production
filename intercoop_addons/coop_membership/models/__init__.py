@@ -16,6 +16,7 @@ from . import res_config
 from . import res_users
 from . import shift_leave_type
 from . import shift_leave
+from . import web_access_buttons
 from . import event
 from . import event_registration
 from . import event_event_ticket
