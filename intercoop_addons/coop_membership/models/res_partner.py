@@ -590,7 +590,6 @@ class ResPartner(models.Model):
             })
         return True
 
-<<<<<<< addons/lalouve-production/intercoop_addons/coop_membership/models/res_partner.py
     def fields_view_get(self, cr, uid, view_id=None, view_type='form',
                         context=None, toolbar=False, submenu=False):
         if context is None:
@@ -620,8 +619,6 @@ class ResPartner(models.Model):
 
         return res
 
-        
-=======
     @api.multi
     def generate_pdf(self, report_name):
         context = dict(self._context or {})
@@ -651,4 +648,3 @@ class ResPartner(models.Model):
         }
         new_attachment = self.env['ir.attachment'].create(attachment_value)
         return new_attachment
->>>>>>> addons/lalouve-production/intercoop_addons/coop_membership/models/res_partner.py
