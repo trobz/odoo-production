@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_inherit_stock_history_report_tree" model="ir.ui.view">
+        <field name="name">view.inherit.stock.history.report.tree</field>
+        <field name="model">stock.history</field>
+        <field name="inherit_id" ref="stock_account.view_stock_history_report_tree" />
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="attributes">
+                <attribute name="create">true</attribute>
+            </xpath>
+        </field>
+    </record>
+    </data>
+</openerp>
