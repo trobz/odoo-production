@@ -318,10 +318,9 @@
                             />
                             <field name="user_ids" invisible="1"/>
                             <field name="notify_email" widget="radio"
-                                   groups="base.group_no_one,coop_membership.group_membership_bdm_lecture"/>
+                                   groups="coop_membership.group_membership_bdm_lecture"/>
                             <field name="opt_out" string="Mailing Opt-Out"
-                                   groups="base.group_no_one,coop_membership.group_membership_bdm_lecture,
-                                   coop_membership.group_membership_bdm_saisie"/>
+                                   groups="coop_membership.group_membership_bdm_lecture"/>
                             <field name="email" widget="email"
                                    attrs="{'required': [('user_ids','!=', [])]}"
                                    groups="coop_membership.group_membership_see_associated_people,
@@ -612,7 +611,7 @@
                         </page>
                         <page name="internal_notes" string="Internal Notes"
                               groups="coop_membership.group_membership_see_associated_people,
-                              coop_membership.group_membership_access_user">
+                              coop_membership.group_membership_access_user,coop_membership.group_membership_bdm_saisie">
                             <field name="comment" placeholder="Internal note..."/>
                         </page>
                         <page name="sales_purchases"
@@ -728,7 +727,7 @@
                         <page name="shifts" string="Shifts"
                               attrs="{'invisible': [('is_member', '=', False)]}"
                               groups="coop_membership.group_membership_access_user,
-                              coop_membership.group_membership_bdm_lecture">
+                              coop_membership.group_membership_bdm_lecture,coop_membership.group_membership_bdm_saisie">
                             <group name="state">
                                 <group name="state1"
                                        groups="coop_shift.group_shift_see_counter">
@@ -1042,6 +1041,7 @@ coop_membership.group_membership_access_user,coop_membership.group_membership_bd
                 <field name="email" groups="coop_membership.group_membership_see_associated_people,
 coop_membership.group_membership_access_user,coop_membership.group_membership_bdm_saisie"/>
                 <field name="cooperative_state"/>
+                <field name="zip" groups="coop_membership.group_membership_bdm_lecture,coop_membership.group_membership_bdm_presence"/>
             </tree>
         </field>
     </record>
