@@ -13,6 +13,7 @@
         'account', 'account_asset', 'coop_base'
     ],
     'data': [
+        "data/ir_cron.xml",
         "security/res_group.xml",
         "view/view_account_config_setting.xml",
         "view/view_account_bank_statement.xml",
