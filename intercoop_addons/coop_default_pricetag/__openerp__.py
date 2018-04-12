@@ -39,6 +39,7 @@ Functionnalities
         'report',
         'l10n_fr_department',
         'purchase_package_qty',
+        'coop_base',
     ],
     'data': [
         'security/res_groups.yml',
@@ -53,7 +54,6 @@ Functionnalities
         'views/view_product_product.xml',
         'views/view_product_template.xml',
         'views/view_product_uom_categ.xml',
-        'views/view_ir_actions_report_xml.xml',
         'views/action.xml',
         'views/menu.xml',
     ],
