@@ -30,11 +30,36 @@ class ReportBankReconciliationSummary(ReportXlsx):
         # generate main content
         self.generate_report_title()
         # generate data table
-        datas = objects.get_data()
+        move_lines, bank_statement_lines = self.get_data(self.object)
         self.generate_title_bank_reconciliation()
         total_credit, total_debit = self.generate_data_bank_reconciliation(
-            datas)
+            move_lines, bank_statement_lines)
         self.load_data_blance(total_credit, total_debit)
+
+    def get_data(self, obj):
+        journal_id = obj.journal_id and obj.journal_id.id or False
+        default_account_credit = obj.journal_id and \
+            obj.journal_id.default_credit_account_id and \
+            obj.journal_id.default_credit_account_id.id or False
+        # default_account_debit = obj.journal_id and \
+        #     obj.journal_id.default_debit_account_id and \
+        #     obj.journal_id.default_debit_account_id.id or False
+        bank_statement_lines = self.env['account.bank.statement.line'].search([
+            ('date', '<=', obj.analysis_date),
+            ('journal_id', '=', journal_id),
+            ('journal_entry_ids', '=', False),
+            ('statement_id.account_id', '=', default_account_credit)])
+        sql_move_lines = """SELECT ml.date, am.name, rp.name, ml.ref,
+        ml.name, ml.debit, ml.credit
+            FROM account_move_line ml
+                LEFT JOIN account_move am ON ml.move_id = am.id
+                LEFT JOIN res_partner rp ON ml.partner_id = rp.id
+            WHERE ml.date <= '%s' AND ml.reconciled = false AND
+            ml.statement_id is null AND
+            ml.account_id = %s""" % (obj.analysis_date, default_account_credit)
+        self.env.cr.execute(sql_move_lines)
+        move_lines = self.env.cr.fetchall()
+        return move_lines, bank_statement_lines
 
     def _define_formats(self, workbook):
         # ---------------------------------------------------------------------
@@ -192,12 +217,12 @@ class ReportBankReconciliationSummary(ReportXlsx):
         self.sheet.set_column('A:Z', None, self.format_default)
         self.sheet.set_row(4, 20)
 
-        self.sheet.set_column('A:A', 30)
-        self.sheet.set_column('B:B', 20)
-        self.sheet.set_column('C:C', 20)
-        self.sheet.set_column('D:D', 60)
-        self.sheet.set_column('E:E', 30)
-        self.sheet.set_column('F:F', 20)
+        self.sheet.set_column('A:A', 15)
+        self.sheet.set_column('B:B', 40)
+        self.sheet.set_column('C:C', 30)
+        self.sheet.set_column('D:D', 80)
+        self.sheet.set_column('E:E', 60)
+        self.sheet.set_column('F:F', 15)
         self.sheet.set_column('G:G', 15)
 
     def generate_report_title(self):
@@ -360,106 +385,98 @@ class ReportBankReconciliationSummary(ReportXlsx):
             self.format_table_center
         )
 
-    def generate_data_bank_reconciliation(self, datas):
+    def generate_data_bank_reconciliation(
+            self, move_lines, bank_statement_lines):
         row = 20
         total_credit = 0
         total_debit = 0
-        if datas:
-            move_line_ids = datas.get('move_line_ids', False)
-            if move_line_ids:
-                move_lines = self.env['account.move.line'].browse(
-                    move_line_ids)
-                for move_line in move_lines:
-                    self.sheet.write(
-                        "A%s" % row,
-                        u"%s" % move_line.date,
-                        self.format_table_date_default)
-                    self.sheet.write(
-                        "B%s" % row,
-                        u"%s" % move_line.move_id and
-                        move_line.move_id.name or '',
-                        self.format_table_bold)
-                    self.sheet.write(
-                        "C%s" % row,
-                        u"%s" % move_line.partner_id and
-                        move_line.partner_id.name or '',
-                        self.format_table_bold)
-                    self.sheet.write(
-                        "D%s" % row,
-                        u"%s" % move_line.ref or '',
-                        self.format_table_bold)
-                    self.sheet.write(
-                        "E%s" % row,
-                        u"%s" % move_line.name or '',
-                        self.format_table_bold)
-                    self.sheet.write(
-                        "F%s" % row,
-                        u"%s" % str(move_line.debit) or '0.00',
-                        self.format_table_bold)
-                    self.sheet.write(
-                        "G%s" % row,
-                        u"%s" % str(move_line.credit) or '0.00',
-                        self.format_table_bold)
-                    total_credit += move_line.credit
-                    row += 1
-                self.sheet.merge_range(
-                    'A%s:E%s' % (row, row),
-                    _(u'Total Journal Items'),
-                    self.format_table_bold_total)
-                self.sheet.write(
-                    "G%s" % row,
-                    u"%s" % str(total_credit),
-                    self.format_table_bold_total_number)
-            row += 5
-            self.generate_outstanding_bank(row)
-            row += 2
-            bank_statement_line_ids = datas.get(
-                'bank_statement_line_ids', False)
-            if bank_statement_line_ids:
-                bank_statement_lines = \
-                    self.env['account.bank.statement.line'].browse(
-                        bank_statement_line_ids)
-                for bank_statement_line in bank_statement_lines:
-                    self.sheet.write(
-                        "A%s" % row,
-                        u"%s" % bank_statement_line.date,
-                        self.format_table_date_default)
-                    self.sheet.write(
-                        "B%s" % row,
-                        u"%s" % bank_statement_line.ref or '',
-                        self.format_table_bold)
-                    self.sheet.write(
-                        "C%s" % row,
-                        u"%s" % bank_statement_line.partner_id and
-                        bank_statement_line.partner_id.name or '',
-                        self.format_table_bold)
-                    self.sheet.write(
-                        "D%s" % row,
-                        u"%s" % bank_statement_line.name or '',
-                        self.format_table_bold)
-                    self.sheet.write(
-                        "E%s" % row,
-                        u"%s" % '',
-                        self.format_table_bold)
-                    self.sheet.write(
-                        "F%s" % row,
-                        u"%s" % str(bank_statement_line.amount) or '0.00',
-                        self.format_table_bold)
-                    self.sheet.write(
-                        "G%s" % row,
-                        u"%s" % '',
-                        self.format_table_bold)
-                    total_debit += bank_statement_line.amount
-                    row += 1
-                self.sheet.merge_range(
-                    'A%s:E%s' % (row, row),
-                    _(u'Total Bank Transactions'),
-                    self.format_table_bold_total)
-                self.sheet.write(
-                    "F%s" % row,
-                    u"%s" % str(total_debit),
-                    self.format_table_bold_total_number)
-        return total_credit, total_debit
+        total_debit_move_line = 0
+        total = 0
+        for move_line in move_lines:
+            self.sheet.write(
+                "A%s" % row,
+                u"%s" % move_line[0],
+                self.format_table_date_default)
+            self.sheet.write(
+                "B%s" % row,
+                u"%s" % move_line[1] or '',
+                self.format_table_bold)
+            self.sheet.write(
+                "C%s" % row,
+                u"%s" % move_line[2] or '',
+                self.format_table_bold)
+            self.sheet.write(
+                "D%s" % row,
+                u"%s" % move_line[3] or '',
+                self.format_table_bold)
+            self.sheet.write(
+                "E%s" % row,
+                u"%s" % move_line[4] or '',
+                self.format_table_bold)
+            self.sheet.write(
+                "F%s" % row,
+                u"%s" % move_line[5] or '0.00',
+                self.format_table_bold)
+            self.sheet.write(
+                "G%s" % row,
+                u"%s" % move_line[6] or '0.00',
+                self.format_table_bold)
+            total_debit_move_line += move_line[5]
+            total_credit += move_line[6]
+            row += 1
+        total = total_credit - total_debit_move_line
+        self.sheet.merge_range(
+            'A%s:E%s' % (row, row),
+            _(u'Total Journal Items'),
+            self.format_table_bold_total)
+        self.sheet.write(
+            "G%s" % row,
+            u"%s" % str(total),
+            self.format_table_bold_total_number)
+        row += 5
+        self.generate_outstanding_bank(row)
+        row += 2
+        for bank_statement_line in bank_statement_lines:
+            self.sheet.write(
+                "A%s" % row,
+                u"%s" % bank_statement_line.date,
+                self.format_table_date_default)
+            self.sheet.write(
+                "B%s" % row,
+                u"%s" % bank_statement_line.ref or '',
+                self.format_table_bold)
+            self.sheet.write(
+                "C%s" % row,
+                u"%s" % bank_statement_line.partner_id and
+                bank_statement_line.partner_id.name or '',
+                self.format_table_bold)
+            self.sheet.write(
+                "D%s" % row,
+                u"%s" % bank_statement_line.name or '',
+                self.format_table_bold)
+            self.sheet.write(
+                "E%s" % row,
+                u"%s" % '',
+                self.format_table_bold)
+            self.sheet.write(
+                "F%s" % row,
+                u"%s" % str(bank_statement_line.amount) or '0.00',
+                self.format_table_bold)
+            self.sheet.write(
+                "G%s" % row,
+                u"%s" % '',
+                self.format_table_bold)
+            total_debit += bank_statement_line.amount
+            row += 1
+        self.sheet.merge_range(
+            'A%s:E%s' % (row, row),
+            _(u'Total Bank Transactions'),
+            self.format_table_bold_total)
+        self.sheet.write(
+            "F%s" % row,
+            u"%s" % str(total_debit),
+            self.format_table_bold_total_number)
+        return total, total_debit
 
     def load_data_blance(self, total_credit, total_debit):
         self.sheet.write(

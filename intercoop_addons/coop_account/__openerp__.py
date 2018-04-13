@@ -22,7 +22,6 @@
         "view/view_account_payment.xml",
         "view/view_account_asset_asset.xml",
         "view/view_account_account.xml",
-        "report/report_bank_reconciliation_summary_view.xml",
         "wizard/view_bank_statement_line_reconcile_wizard.xml",
         "wizard/view_bank_reconciliation_summary_wizard.xml",
     ],
