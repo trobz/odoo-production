@@ -10,9 +10,10 @@
     'author': 'La Louve',
     'website': 'http://www.lalouve.net',
     'depends': [
-        'account', 'account_asset'
+        'account', 'account_asset', 'coop_base'
     ],
     'data': [
+        "data/ir_cron.xml",
         "security/res_group.xml",
         "view/view_account_config_setting.xml",
         "view/view_account_bank_statement.xml",
@@ -21,7 +22,9 @@
         "view/view_account_payment.xml",
         "view/view_account_asset_asset.xml",
         "view/view_account_account.xml",
+        "report/report_bank_reconciliation_summary_view.xml",
         "wizard/view_bank_statement_line_reconcile_wizard.xml",
+        "wizard/view_bank_reconciliation_summary_wizard.xml",
     ],
     'installable': True,
 }
