@@ -619,6 +619,11 @@ msgid "Create Extension until next regular shift"
 msgstr "Créer une extension jusqu'au prochain créneau"
 
 #. module: coop_membership
+#: model:mail.template,subject:coop_membership.coop_ftop_members_reminder_email
+msgid "Countdown flying ${object.date_begin}"
+msgstr "Décompte volant le ${object.date_begin}"
+
+#. module: coop_membership
 #: model:ir.model.fields,field_description:coop_membership.field_res_partner_nb_associated_people
 #: model:ir.ui.view,arch_db:coop_membership.view_res_partner_form_base
 msgid "Number of Associated People"
