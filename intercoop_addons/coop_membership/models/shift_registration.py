@@ -23,7 +23,7 @@
 
 from openerp import api, models, fields, _
 from openerp.exceptions import UserError
-from datetime import datetime
+from datetime import datetime, timedelta
 import pytz
 
 
@@ -275,7 +275,7 @@ class ShiftRegistration(models.Model):
         """
         is_from_template = self._context.get('from_shift_template', False)
         for reg in self:
-            # Get leave 
+            # Get leave
             leaves = reg.partner_id.leave_ids.filtered(
                 lambda l: (l.type_id.is_temp_leave or l.type_id.is_incapacity)
                 and l.stop_date and l.state == 'done')
@@ -320,3 +320,27 @@ class ShiftRegistration(models.Model):
                                     "that falls within the period of the leave (%s - %s)" %
                                     (reg.date_begin, reg.date_end, leave.start_date,
                                      leave.stop_date)))
+
+    @api.multi
+    def calculate_date_time_for_attendent(self):
+        self.ensure_one()
+        tz_name = self._context.get('tz') or self.env.user.tz
+        context_tz = pytz.timezone(tz_name)
+        if self.date_begin:
+            start_date_object = fields.Datetime.from_string(self.date_begin)
+            utc_timestamp = pytz.utc.localize(
+                start_date_object, is_dst=False)
+            start_date_object_tz = utc_timestamp.astimezone(context_tz)
+            start_date = start_date_object - timedelta(
+                hours=start_date_object.hour - start_date_object_tz.hour)
+            registration_date = "%s-%02d-%02d %02d:%02d:%02d" % (
+                start_date.year,
+                start_date.month,
+                start_date.day,
+                start_date.hour,
+                start_date.minute,
+                start_date.second,
+            )
+            return registration_date
+        else:
+            return ''
