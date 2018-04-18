@@ -13,6 +13,8 @@
         'account', 'account_asset'
     ],
     'data': [
+        "data/ir_cron.xml",
+        "data/ir_config_paramerter.xml",
         "security/res_group.xml",
         "view/view_account_config_setting.xml",
         "view/view_account_bank_statement.xml",

@@ -35,9 +35,6 @@ class AccountInvoice(models.Model):
             description=description, journal_id=journal_id)
         res['is_capital_fundraising'] = invoice.is_capital_fundraising
         res['fundraising_category_id'] = invoice.fundraising_category_id.id
-        # Set Due date and Invoice date is today
-        res['date_due'] = fields.Date.context_today(invoice)
-        res['date_invoice'] = fields.Date.context_today(invoice)
         # Set saleman is curent user
         res['user_id'] = invoice.env.user.id
         return res
@@ -242,3 +239,15 @@ class AccountInvoice(models.Model):
                             # we get the first one satisfy and update with
                             # total quantity.
                             break
+
+    @api.multi
+    def register_payment(self, payment_line, writeoff_acc_id=False,
+                         writeoff_journal_id=False):
+        res = super(AccountInvoice, self).register_payment(
+            payment_line,
+            writeoff_acc_id,
+            writeoff_journal_id)
+        if payment_line.full_reconcile_id:
+            # Generate capital
+            payment_line.full_reconcile_id.generate_capital_entrie(undo=False)
+        return res
