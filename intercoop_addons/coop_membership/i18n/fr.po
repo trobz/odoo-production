@@ -28,6 +28,78 @@ msgstr "\n"
 Si vous pensez qu’il s’agit d’une erreur ou si vous souhaitez réintégrer une équipe, merci de contacter le bureau des membres au plus vite.</p>\n"
 "            "
 
+#. module: coop_membership
+#: model:mail.template,body_html:coop_membership.register_confirm_email
+msgid "\n"
+"<p>Hello ${object.name}</p>\n"
+"<br/>\n"
+"<p>We confirm your registration for the La Louve meeting scheduled on ${object.event_id.date_begin}. IF YOU ARE NOT A CO-OPERATOR AND WISH TO SUBSCRIBE ON THE DAY OF THE MEETING, YOU SHOULD HAVE:<br/>\n"
+"- Your check book or bank card<br/>\n"
+"- An ID</p>\n"
+"<p>Proof of reduced subscription: social minimums (document of less than 3 months attesting the payment of the RSA, the ASS, the AER-R, the ATS, the ATA, the ADA, the AAH, the 'ASI, AV, ASV or ASPA) or scholarship students 6 or 7 (scholarship certificate).</p>\n"
+"<br/>\n"
+"<p>You will find attached the contract which you will have to sign at the end of the meeting if you accept the conditions of operation which will be presented to you. If possible, please print and bring this form to the welcome meeting. In case of forgetfulness, you will be forced to fill a blank copy on the spot. If an error is present on this form, thank you to correct it with the pen in a visible way visible.</p>\n"
+"<br />\n"
+"<p>Cordially.</p>\n"
+"\n"
+"        "
+msgstr "\n"
+"<p>Bonjour ${object.name}</p>\n"
+"<br/>\n"
+"<p>Nous vous confirmons votre inscription pour la réunion d'accueil de La Louve prévue le  ${object.event_id.date_begin}. SI VOUS N'ETES PAS ENCORE COOPÉRATEUR ET QUE VOUS SOUHAITEZ SOUSCRIRE LE JOUR DE LA RÉUNION, IL FAUDRA VOUS MUNIR DE :<br/>\n"
+"- Votre carnet de chèque ou votre carte bancaire<br/>\n"
+"- Une pièce d’identité</p>\n"
+"<p>Un justificatif pour une souscription réduite : minimas sociaux (document de moins de 3 mois attestant du versement du RSA, de l'ASS, l'AER-R, l'ATS, l'ATA, l'ADA, l'AAH, l'ASI, l'AV, l'ASV ou l’ASPA) ou étudiants boursiers 6 ou 7 (attestation de bourse).</p>\n"
+"<br/>\n"
+"<p>Vous trouverez ci-joint le contrat que vous devrez signer en fin de réunion si vous acceptez les conditions de fonctionnement qui vous seront présentée. Dans la mesure du possible, merci d'imprimer et d'apporter ce formulaire à la réunion d'accueil. En cas d'oubli, vous serez contraint de remplir un exemplaire vierge sur place. Si une erreur est présente sur ce formulaire, merci de la corriger au stylo de manière visible visible.</p>\n"
+"<br />\n"
+"<p>Cordialement.</p>\n"
+"\n"
+"        "
+
+#: model:mail.template,body_html:coop_membership.coop_ftop_members_reminder_email
+msgid "\n"
+"<b><p>Hello members of the flying team--</p>\n"
+"<br>\n"
+"<p>Just a reminder to tell you that the next settlement day will be next Thursday, the ${object.date_begin} ... this is the last day to perform a flying service and avoid catching up.</p>\n"
+"<p>The programming of the flying services is done via the members area. Click on \"tools\", then \"schedule a flying service\" and then \"registration\". If you do not have access to the members area, you can still schedule a flying service by contacting the Members Bureau during its opening hours.</p>\n"
+"<p>Since the first flight count of August 2017, experience shows that the vast majority of flying is on a service the 3 days before the day of the countdown. The seats created for Tuesday, Wednesday and Thursday of week A are systematically all taken, which is not the case for all other days weeks A, B, C, D. This creates an imbalance. As far as possible, we kindly ask you to try to spread the programming of your services on the 4 weeks A, B, C, D. For information, the most \"critical\" slots are on Sunday morning at 7:15, Saturday evening at 19h, Monday from 9h to 12h.</p>\n"
+"<p>What happens if I do not have a credit in my \"account\" on ${object.date_begin}?</p> \n"
+"<p>Like the members of all the other teams, you will need 2 catches. So, in total, you will have three services to program and perform before the next settlement day: the 2 catch-ups, and the service you need anyway before the next countdown. (These three services to do are in addition to catch-up that eventually you must already at La Louve).</p>\n"
+"<p>How to make a catch-up?</p>\n"
+"<p>Unlike members of ABCD teams, members of the flying team must program their catch-up, without exception ... simply by scheduling additional vacations. A member of the flying team can not use the same catch-up system as the ABCD teams. If he presents himself to any service to make a catch-up, without having programmed it, he will not be credited.</p>\n"
+"<p>Cancel a scheduled service?</p>\n"
+"<p>Canceling a scheduled service Scheduling a vacation and then skipping it without canceling it will result in the withdrawal of a credit from the service savings account. The members of the flying team can cancel their vacations without penalty up to one hour before their start, at the office of the members, during the opening hours.</p>\n"
+"<p>For any information, contact the Bureau des membres during its opening hours: 01 86 95 91 90.</p>\n"
+"<p>Opening hours of the Members Bureau:</p>\n"
+"<p>Tuesday: 13h30 - 16h</p>\n"
+"<p>Wednesday to Friday: 13h30 - 20h</p>\n"
+"<p>Saturday: 10h - 16h</p>\n"
+"<br>\n"
+"<p>Best Regards,</p></b>\n"
+"\n"
+"        "
+msgstr "\n"
+"<b><p>Bonjour membres de l’équipe volante--</p>\n"
+"<br>\n"
+"<p>Juste un rappel pour vous dire que le prochain jour de décompte sera jeudi prochain, le ${object.date_begin} ...c'est le dernier jour pour effectuer un service volant et éviter des rattrapages.</p>\n"
+"<p>La programmation des services volants se fait via l’espace membres. Cliquez sur “outils”, puis “programmer un service volant”, puis “inscription”. Si vous n’avez pas accès à l’espace membres, il est toujours possible de programmer un service volant en contactant le Bureau des membres pendant ses horaires d’ouverture.</p>\n"
+"<p>Depuis le 1er décompte volant du mois d'août 2017, l'expérience montre que la grande majorité des volants s'inscrit sur un service les 3 jours précédant le jour du décompte. Les places volantes créées pour les mardi, mercredi et jeudi de semaine A sont donc systématiquement toutes prises, ce qui n'est pas le cas pour tous les autres jours des semaines A, B, C, D. Ceci crée un déséquilibre. Dans la mesure du possible, nous vous prions de bien vouloir essayer d'étaler la programmation de vos services sur les 4 semaines A, B, C, D. Pour information, les créneaux les plus "critiques" sont le dimanche matin à 7h15, le samedi soir à 19h, le lundi de 9h à 12h.</p>\n"
+"<p>Qu’est ce qui se passe si je n’ai pas un crédit dans mon « compte » le ${object.date_begin}?</p> \n"
+"<p>Comme les membres de toutes les autres équipes, vous devrez 2 rattrapages. Donc, au total, vous aurez trois services à programmer et à effectuer avant le prochain jour de décompte  : les 2 rattrapages, et le service que vous devez de toute façon avant le prochain décompte. (Ces trois services à faire sont en plus des rattrapages que, éventuellement, vous devez déjà à La Louve).</p>\n"
+"<p>Comment faire un rattrapage?</p>\n"
+"<p>À la différence des membres des équipes ABCD, les membres de l’équipe volante doivent programmer leurs rattrapages, sans exception… tout simplement en programmant des vacations supplémentaires. Un membre de l’équipe volante ne peut pas utiliser le même système de rattrapage que celui des équipes ABCD. S’il se présente à n’importe quel service pour faire un rattrapage, sans l'avoir programmé, il ne sera pas crédité.</p>\n"
+"<p>Annuler un service programmé?</p>\n"
+"<p>Programmer une vacation puis la manquer sans l'annuler au préalable entraîne le retrait d’un crédit de son compte d’épargne de services. Les membres de l’équipe volante peuvent annuler leurs vacations sans pénalités jusqu’à une heure avant leur démarrage, auprès du bureau des membres, pendant les horaires d’ouverture.</p>\n"
+"<p>Pour tout renseignement, contactez le Bureau des membres pendant ses horaires d’ouverture : 01 86 95 91 90.</p>\n"
+"<p>Horaires d’ouverture du Bureau Des Membres :</p>\n"
+"<p>TMardi : 13h30 - 16h</p>\n"
+"<p>Mercredi à Vendredi : 13h30 - 20h</p>\n"
+"<p>Samedi : 10h - 16h</p>\n"
+"<br>\n"
+"<p>Cordialement,</p></b>\n"
+"\n"
+"        "
 
 #. module: coop_membership
 #: code:addons/coop_membership/models/barcode_rule.py:37
@@ -71,14 +143,43 @@ msgid "Attendee"
 msgstr "Participant"
 
 #. module: coop_membership
+#: model:ir.model.fields,help:coop_membership.field_event_event_leader_member_ids
+msgid "1 or 2 people"
+msgstr "1 ou 2 personnes"
+
+#. module: coop_membership
+#: model:ir.model.fields,help:coop_membership.field_event_event_room_preparation_member_ids
+msgid "1 or 2 people to prepare the room (chairs, tables, ...)"
+msgstr "1 ou 2 personnes pour préparer la salle (chaises, tables,...)"
+
+#. module: coop_membership
 #: model:ir.ui.view,arch_db:coop_membership.view_shift_form_attendance_entry
 msgid "Attendees"
 msgstr "Participants"
 
 #. module: coop_membership
+#: model:ir.model.fields,help:coop_membership.field_event_event_subscription_member_ids
+msgid "2 or 3 people"
+msgstr "2 ou 3 personnes"
+
+#. module: coop_membership
+#: model:ir.model.fields,help:coop_membership.field_event_event_subscription_help_member_ids
+msgid "2 people (+ 1 or 2 members in shift)"
+msgstr "2 personnes (+1 ou 2 membres en service)"
+
+#. module: coop_membership
 #: model:ir.model.fields,name:coop_membership.field_res_partner_generate_barcode_wizard_current_barcode
 msgid "BarCode"
 msgstr "Code-barres"
+
+#. module: coop_membership
+#: model:ir.ui.view,arch_db:coop_membership.register_submit_form_success
+msgid "<span class=\"contact100-form-title\">\n"
+"                                Subscription registered. You ll receive a confirmation email\n"
+"                            </span>"
+msgstr "<span class=\"contact100-form-title\">\n"
+"                                Inscription enregistrée. Vous allez recevoir un email de confirmation.\n"
+"                            </span>"
 
 #. module: coop_membership
 #: model:ir.model.fields,name:coop_membership.field_res_partner_generate_barcode_wizard_current_barcode
@@ -89,6 +190,24 @@ msgstr "Code Barre"
 #: model:mail.template,name:coop_membership.welcome_email
 msgid "Bienvenue à La Louve"
 msgstr "Bienvenue à La Louve"
+
+#. module: coop_membership
+#: model:ir.ui.view,arch_db:coop_membership.register_submit_form_err_event
+msgid "<span class=\"contact100-form-title\">\n"
+"                                The meeting date you choose is invalid or full, would you like to change to other meeting.\n"
+"                            </span>"
+msgstr "<span class=\"contact100-form-title\">\n"
+"                                La date de la réunion que vous avez choisie est invalide ou bien cette réunion a atteint sa capacité maximale. Merci de choisir une autre date dans la liste.\n"
+"                            </span>"
+
+#. module: coop_membership
+#: model:ir.ui.view,arch_db:coop_membership.register_submit_form_err_email
+msgid "<span class=\"contact100-form-title\">\n"
+"                                This email is already in the database, you can't register online.\n"
+"                            </span>"
+msgstr "<span class=\"contact100-form-title\">\n"
+"                                L'email est déjà dans notre base de donnée, vous ne pouvez pas vous enregistrer en ligne.\n"
+"                            </span>"
 
 #. module: coop_membership
 #: selection:res.partner,cooperative_state:0
@@ -429,6 +548,11 @@ msgid "Wizard"
 msgstr "Assistant"
 
 #. module: coop_membership
+#: model:ir.model.fields,field_description:coop_membership.field_event_event_is_discovery_meeting
+msgid "Discovery Meeting"
+msgstr "Article pour les réunions d'accueil"
+
+#. module: coop_membership
 #: code:addons/coop_membership/models/shift_registration.py:50
 #, python-format
 msgid "You can't register this partner on a shift because he isn't registered on a template"
@@ -493,6 +617,11 @@ msgstr "Méthode d'extension"
 #: model:ir.ui.view,arch_db:coop_membership.view_shift_registration_tree_inherit
 msgid "Create Extension until next regular shift"
 msgstr "Créer une extension jusqu'au prochain créneau"
+
+#. module: coop_membership
+#: model:mail.template,subject:coop_membership.coop_ftop_members_reminder_email
+msgid "Countdown flying ${object.date_begin}"
+msgstr "Décompte volant le ${object.date_begin}"
 
 #. module: coop_membership
 #: model:ir.model.fields,field_description:coop_membership.field_res_partner_nb_associated_people
@@ -771,6 +900,11 @@ msgid "Mailing Opt-Out"
 msgstr "Désabonner des mailings"
 
 #. module: coop_membership
+#: model:ir.model.fields,field_description:coop_membership.field_event_event_leader_member_ids
+msgid "Meeting leaders"
+msgstr "Animateurs"
+
+#. module: coop_membership
 #: model:ir.ui.view,arch_db:coop_membership.view_partner_form
 msgid "Member Number"
 msgstr "Numéro de membre"
@@ -914,6 +1048,11 @@ msgid "Remove 'Underclass Population'"
 msgstr "Retirer 'Minima Sociaux'"
 
 #. module: coop_membership
+#: model:ir.model.fields,field_description:coop_membership.field_event_event_room_preparation_member_ids
+msgid "Room preparation delegates"
+msgstr "Préparateurs de salle"
+
+#. module: coop_membership
 #: model:ir.ui.view,arch_db:coop_membership.view_partner_form
 msgid "Sale"
 msgstr "Vente"
@@ -967,6 +1106,16 @@ msgstr "Rue 2..."
 #: model:ir.ui.view,arch_db:coop_membership.view_partner_form
 msgid "Street..."
 msgstr "Rue..."
+
+#. module: coop_membership
+#: model:ir.model.fields,field_description:coop_membership.field_event_event_subscription_help_member_ids
+msgid "Subscription helpers"
+msgstr "Aides inscription"
+
+#. module: coop_membership
+#: model:ir.model.fields,field_description:coop_membership.field_event_event_subscription_member_ids
+msgid "Subscription delegates"
+msgstr "Chargés inscription"
 
 #. module: coop_membership
 #: model:ir.ui.view,arch_db:coop_membership.view_partner_form
