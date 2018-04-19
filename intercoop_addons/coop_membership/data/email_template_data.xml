@@ -86,4 +86,35 @@ If you think there was a mistake or wish to subscribe to another team please con
         </field>
     </record>
 
+    <record id="coop_ftop_members_reminder_email" model="mail.template">
+        <field name="name">Remind FTOP Member Email</field>
+        <field name="model_id" ref="coop_membership.model_shift_registration"/>
+        <field name="email_from">${(object.partner_id.company_id.email or '')|safe}</field>
+        <field name="email_to" >${object.partner_id.email|safe}</field>
+        <field name="lang">${object.partner_id.lang}</field>
+        <field name="reply_to">no-reply@cooplalouve.fr</field>
+        <field name="subject">Décompte volant le ${object.shift_id.date_begin_tz}</field>
+        <field name="body_html"><![CDATA[
+<p>Hello members of the flying team--</p>
+<br/>
+<p>Just a reminder to tell you that<h3>the next settlement day will be next Thursday, the ${object.shift_id.date_begin_tz}</h3>... this is the last day to perform a flying service and avoid catching up.</p>
+<p>The programming of the flying services is done via the members area. Click on "tools", then "schedule a flying service" and then "registration". If you do not have access to the members area, you can still schedule a flying service by contacting the Members Bureau during its opening hours.</p>
+<p>Since the first flight count of August 2017, experience shows that the vast majority of flying is on a service the 3 days before the day of the countdown. The seats created for Tuesday, Wednesday and Thursday of week A are systematically all taken, which is not the case for all other days weeks A, B, C, D. This creates an imbalance. As far as possible, we kindly ask you to try to spread the programming of your services on the 4 weeks A, B, C, D. For information, the most "critical" slots are on Sunday morning at 7:15, Saturday evening at 19h, Monday from 9h to 12h.</p>
+<h3>What happens if I do not have a credit in my "account" on ${object.shift_id.date_begin_tz}?</h3> 
+<p>Like the members of all the other teams, you will need 2 catches. So, in total, you will have three services to program and perform before the next settlement day: the 2 catch-ups, and the service you need anyway before the next countdown. (These three services to do are in addition to catch-up that eventually you must already at La Louve).</p>
+<h3>How to make a catch-up?</h3>
+<p>Unlike members of ABCD teams, members of the flying team must program their catch-up, without exception ... simply by scheduling additional vacations. A member of the flying team can not use the same catch-up system as the ABCD teams. If he presents himself to any service to make a catch-up, without having programmed it, he will not be credited.</p>
+<h3>Cancel a scheduled service?</h3>
+<p>Canceling a scheduled service Scheduling a vacation and then skipping it without canceling it will result in the withdrawal of a credit from the service savings account. The members of the flying team can cancel their vacations without penalty up to one hour before their start, at the office of the members, during the opening hours.</p>
+<h3>For any information, contact the Bureau des membres during its opening hours: 01 86 95 91 90.</h3>
+<p>Opening hours of the Members Bureau:</p>
+<p>Tuesday: 13h30 - 16h</p>
+<p>Wednesday to Friday: 13h30 - 20h</p>
+<p>Saturday: 10h - 16h</p>
+<br/>
+<p>Best Regards,</p>
+]]>
+        </field>
+    </record>
+
 </odoo>
