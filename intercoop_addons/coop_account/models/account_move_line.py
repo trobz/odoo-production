@@ -16,6 +16,14 @@ class AccountMoveLine(models.Model):
         'account.bank.statement.line',
         related='move_id.statement_line_id',
         string='Bank Statement Line')
+    other_balance = fields.Float(
+        string='Balance', compute='compute_order_balance', default=0.0)
+
+    @api.multi
+    @api.depends('debit', 'credit')
+    def compute_order_balance(self):
+        for record in self:
+            record.other_balance = record.credit - record.debit
 
     @api.multi
     @api.constrains('move_id', 'account_id')
