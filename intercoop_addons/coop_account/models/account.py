@@ -26,7 +26,7 @@ class AccountAccount(models.Model):
     )
     # field for checking to reconciled and create new move by manual
     reconcile_liquidity_type = fields.Boolean(
-        string="Reconcile for cash and bank type",
+        string="Reconciliation for Cash & Bank account type",
         help="If true, account move will be create when reconcile manual" +\
             " even type of this account is cash and bank")
 
