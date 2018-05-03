@@ -91,6 +91,8 @@
                                     </div>
                                 </div>
 
+                                <div class="g-recaptcha" style="margin:auto;" t-att-data-sitekey="captcha_site_key"/>
+
                                 <div class="container-contact100-form-btn">
                                     <button class="contact100-form-btn" >
                                         <span>
