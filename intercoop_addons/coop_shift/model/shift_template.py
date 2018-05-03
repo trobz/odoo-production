@@ -273,8 +273,9 @@ class ShiftTemplate(models.Model):
                     'coop_shift.shift_type'):
                 name = ""
             else:
-                name = template.shift_type_id.name\
-                    and template.shift_type_id.name + ' - ' or ''
+                prefix_name = template.shift_type_id and \
+                    template.shift_type_id.prefix_name or ''
+                name = prefix_name + ' - ' or ''
             name += template.week_number and (
                 WEEK_NUMBERS[template.week_number - 1][1]) or ""
             name += _("Mo") if template.mo else ""
@@ -295,8 +296,8 @@ class ShiftTemplate(models.Model):
                     addr_name = template.address_id.name
                     isa_characters = \
                         "".join([c for c in addr_name if c.isalnum()])
-                    str_place = udd.normalize("NFKD",
-                                              isa_characters[0:5]).encode("ascii", "ignore")
+                    str_place = udd.normalize(
+                        "NFKD", isa_characters[0:5]).encode("ascii", "ignore")
                     if str_place:
                         name += " - %s" % (str_place)
             template.name = name
@@ -653,7 +654,8 @@ class ShiftTemplate(models.Model):
                                 'tmpl_reg_line_id': strl_id,
                                 'template_created': True,
                             }
-                            self.env['shift.registration'].create(vals)
+                            self.env['shift.registration'].with_context(
+                                from_shift_template=True).create(vals)
 
     def compute_rule_string(self, data):
         """

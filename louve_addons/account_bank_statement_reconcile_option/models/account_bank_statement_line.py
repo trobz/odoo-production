@@ -15,6 +15,8 @@ class AccountBankStatementLine(models.Model):
             self, excluded_ids=None, str=False, offset=0, limit=None,
             additional_domain=None, overlook_partner=False):
         if self.journal_id.reconcile_mode == 'journal_account':
+            additional_domain = self.get_date_additional_domain(
+                additional_domain)
             domain = self._get_domain_reconciliation(
                 excluded_ids, str, overlook_partner, additional_domain)
             return self.env['account.move.line'].search(
@@ -104,7 +106,6 @@ class AccountBankStatementLine(models.Model):
 
     def _get_domain_reconciliation(
             self, excluded_ids, str, overlook_partner, additional_domain):
-
         reconciliation_aml_accounts = [
             self.journal_id.default_credit_account_id.id,
             self.journal_id.default_debit_account_id.id,
@@ -115,8 +116,9 @@ class AccountBankStatementLine(models.Model):
             bank_reconcile_account_allowed_ids
 
         domain = [
-            '&', ('statement_id', '=', False), ('account_id', 'in',
-                                                reconciliation_account_all)]
+            '&', '&', ('statement_id', '=', False),
+            ('reconciled', '=', False),
+            ('account_id', 'in', reconciliation_account_all)]
 
         if self.partner_id.id and not overlook_partner:
             domain = expression.AND(

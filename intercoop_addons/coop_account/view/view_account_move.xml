@@ -11,4 +11,25 @@
         </field>
     </record>
 
+    <record model="ir.actions.server" id="action_server_unmatch_bankstatement">
+      <field name="name">Unmatch Bank Statement</field>
+      <field name="model_id" ref="account.model_account_move"/>
+      <field name="code">
+        self.unmatch_bankstatement(cr, uid, context.get('active_ids', []), context=context)
+      </field>
+    </record>
+
+    <record model="ir.values" id="action_value_mass_unreconcile">
+      <field name="model_id" ref="account.model_account_move" />
+      <field name="name">Unmatch Bank Statement</field>
+      <field name="key2">client_action_multi</field>
+      <field name="value" eval="'ir.actions.server,' +str(ref('action_server_unmatch_bankstatement'))" />
+      <field name="key">action</field>
+      <field name="model">account.move</field>
+    </record>
+
+    <record id="account.action_move_journal_line" model="ir.actions.act_window">
+            <field name="context">{'search_default_misc_filter':0}</field>
+        </record>
+
 </odoo>
