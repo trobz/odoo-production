@@ -23,6 +23,10 @@ class WebsiteRegisterMeeting(http.Controller):
         REGISTER_USER_ID =\
             int(request.env['ir.config_parameter'].sudo(
             ).get_param('register_user_id'))
+        captcha_site_key = request.env['ir.config_parameter'].sudo().get_param(
+            'captcha_site_key')
+        captcha_secret_key = request.env[
+            'ir.config_parameter'].sudo().get_param('captcha_secret_key')
 
         # Get event available
         event_obj = request.registry['event.event']
@@ -34,6 +38,8 @@ class WebsiteRegisterMeeting(http.Controller):
                                   context=request.context)
         value = {
             'events': events,
+            'captcha_site_key': captcha_site_key,
+            'captcha_secret_key': captcha_secret_key
         }
         return request.render("coop_membership.register_form", value)
 
@@ -45,7 +51,6 @@ class WebsiteRegisterMeeting(http.Controller):
         REGISTER_USER_ID =\
             int(request.env['ir.config_parameter'].sudo(
             ).get_param('register_user_id'))
-
 
         # Get data from form
         name = post.get('name', False)
@@ -61,7 +66,6 @@ class WebsiteRegisterMeeting(http.Controller):
         social_registration = post.get('social_registration', False)
         event_id = post.get('select_event', False)
         dob = post.get('dob', False)
-        already_cooperator = post.get('cooperator')
 
         # conver dob to correct format in database
         try:
@@ -105,7 +109,6 @@ class WebsiteRegisterMeeting(http.Controller):
                 'event_id': event.id,
                 'name': first_name + ', ' + name,
                 'email': email,
-                'already_cooperator': already_cooperator,
             }
             attendee_id = self.create_event_registration(val, REGISTER_USER_ID)
 

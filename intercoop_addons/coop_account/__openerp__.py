@@ -14,6 +14,7 @@
     ],
     'data': [
         "data/ir_cron.xml",
+        "data/ir_config_paramerter.xml",
         "security/res_group.xml",
         "view/view_account_config_setting.xml",
         "view/view_account_bank_statement.xml",
@@ -22,6 +23,7 @@
         "view/view_account_payment.xml",
         "view/view_account_asset_asset.xml",
         "view/view_account_account.xml",
+        "view/view_account_journal.xml",
         "wizard/view_bank_statement_line_reconcile_wizard.xml",
     ],
     'installable': True,
