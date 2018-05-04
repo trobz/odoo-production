@@ -14,6 +14,7 @@
     ],
     'data': [
         "data/ir_cron.xml",
+        "data/update_other_balance_move_line.yml",
         "security/res_group.xml",
         "view/view_account_config_setting.xml",
         "view/view_account_bank_statement.xml",
