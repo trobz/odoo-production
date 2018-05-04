@@ -165,7 +165,7 @@ class WebsiteRegisterMeeting(http.Controller):
                     template_email.sudo().send_mail(attendee_id)
 
             return request.render(
-                "coop_membership.register_submit_form_success", value)
+                "coop_membership.register_submit_form_success")
 
     def create_event_registration(self, val, REGISTER_USER_ID):
         event_reg_obj = request.registry['event.registration']
