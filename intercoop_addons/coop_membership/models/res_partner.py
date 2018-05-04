@@ -677,5 +677,6 @@ class ResPartner(models.Model):
                                 'name',
                                 str(tpl_reg_line_fr_partner_tree_id))
                     res['arch'] = etree.tostring(doc)
+
         return res
 
