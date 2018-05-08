@@ -76,6 +76,12 @@ msgid "Journal Item"
 msgstr "Écriture comptable"
 
 #. module: coop_account
+#: code:addons/coop_account/models/account_move.py:33
+#, python-format
+msgid "You cannot reconcile that account move with a bank statement line that is not related to bank journal."
+msgstr "Vous ne pouvez pas rapprocher cette pièce comptable avec une ligne d'un relevé qui n'est pas lié à un journal de banque."
+
+#. module: coop_account
 #: code:addons/coop_account/models/account_move_line.py:32
 #, python-format
 msgid "Only one journal item on an account requiring bank reconciliation can be booked in this account move. It is impossible to add another one. Please create a distinct account move to registrer this account.move.line and its counterpart."
