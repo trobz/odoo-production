@@ -10,6 +10,11 @@ class AccountInvoice(models.Model):
 
     @api.onchange('purchase_id')
     def purchase_order_change(self):
+
+        # Get invocie line involved to generate
+        if self.type == 'in_refund':
+            self.adding_po_line_vendor_refund()
+
         res = super(AccountInvoice, self).purchase_order_change()
         for line in self.invoice_line_ids:
             suppliers = line.product_id.seller_ids.filtered(
@@ -47,3 +52,25 @@ class AccountInvoice(models.Model):
             res['arch'] = etree.tostring(doc)
 
         return res
+
+    @api.multi
+    def adding_po_line_vendor_refund(self):
+        self.ensure_one()
+        new_lines = self.env['account.invoice.line']
+
+        # Get all invoiced line involved this purchase
+        invoice_lines = self.purchase_id.order_line.mapped('invoice_lines').filtered(
+            lambda i: i.invoice_id.state == 'paid'
+        )
+
+        # Get po lines have invoiced
+        po_line_related = invoice_lines.mapped('purchase_line_id')
+
+        for line in po_line_related -\
+                self.invoice_line_ids.mapped('purchase_line_id'):
+            data = self._prepare_invoice_line_from_po_line(line)
+            new_line = new_lines.new(data)
+            new_line._set_additional_fields(self)
+            new_lines += new_line
+        self.invoice_line_ids += new_lines
+        self.purchase_id = False
