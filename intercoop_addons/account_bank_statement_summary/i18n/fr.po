@@ -166,8 +166,8 @@ msgstr "État de rapprochement"
 
 #. module: account_bank_statement_summary
 #: model:ir.actions.report.xml,name:account_bank_statement_summary.bank_reconciliation_summary_xlsx
-msgid "Bank Reconciliation Summary Report"
-msgstr "État de rapprochement Rapport"
+msgid "Bank Reconciliation Summary"
+msgstr "État de rapprochement"
 
 #. module: account_bank_statement_summary
 #: model:ir.ui.view,arch_db:account_bank_statement_summary.view_bank_reconciliation_summary_wizard
@@ -181,6 +181,7 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #. module: account_bank_statement_summary
-#: code:addons/account_bank_statement_summary/report/report_bank_reconciliation_summary.py:246
+#: code:addons/account_bank_statement_summary/report/report_bank_reconciliation_summary.py:264
+#, python-format
 msgid "Account"
 msgstr "Compte"

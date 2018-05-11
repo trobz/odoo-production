@@ -46,7 +46,8 @@ class ReportBankReconciliationSummary(ReportXlsx):
             ('date', '<=', obj.analysis_date),
             ('journal_id', '=', journal_id),
             ('journal_entry_ids', '=', False),
-            ('statement_id.account_id', '=', default_account_credit)])
+            ('statement_id.account_id', '=', default_account_credit)],
+            order='date')
         sql_move_lines = """SELECT ml.date, am.name, rp.name, ml.ref,
         ml.name, ml.debit, ml.credit
             FROM account_move_line ml
@@ -54,7 +55,8 @@ class ReportBankReconciliationSummary(ReportXlsx):
                 LEFT JOIN res_partner rp ON ml.partner_id = rp.id
             WHERE ml.date <= '%s' AND ml.reconciled = false AND
             ml.statement_id is null AND
-            ml.account_id = %s""" % (obj.analysis_date, default_account_credit)
+            ml.account_id = %s
+            ORDER BY ml.date""" % (obj.analysis_date, default_account_credit)
         self.env.cr.execute(sql_move_lines)
         move_lines = self.env.cr.fetchall()
         return move_lines, bank_statement_lines
@@ -282,22 +284,23 @@ class ReportBankReconciliationSummary(ReportXlsx):
             _(u"Control"),
             self.format_bold
         )
-
+        format_date = datetime.strptime(self.object.analysis_date, '%Y-%m-%d')
+        analysis_date = format_date.strftime("%d/%m/%Y")
         self.sheet.write(
             "B8",
-            u"%s" % self.object.analysis_date or '',
+            u"%s" % analysis_date,
             self.format_table_date_default
         )
 
         self.sheet.write(
             "B9",
-            u"%s" % self.object.env.user.name or '',
+            u"%s" % self.object.create_uid.name or '',
             self.format_table_bold
         )
 
         self.sheet.write(
             "B10",
-            u"%s" % datetime.now().strftime("%Y-%m-%d %H:%M:%S") or '',
+            u"%s" % datetime.now().strftime("%d/%m/%Y %H:%M:%S") or '',
             self.format_table_date_default
         )
 
@@ -405,9 +408,12 @@ class ReportBankReconciliationSummary(ReportXlsx):
         total_debit_move_line = 0
         total_move_line = 0
         for move_line in move_lines:
+            format_date = datetime.strptime(
+                move_line[0], '%Y-%m-%d')
+            move_line_date = format_date.strftime("%d/%m/%Y")
             self.sheet.write(
                 "A%s" % row,
-                u"%s" % move_line[0],
+                u"%s" % move_line_date,
                 self.format_table_date_default)
             self.sheet.write(
                 "B%s" % row,
@@ -452,9 +458,18 @@ class ReportBankReconciliationSummary(ReportXlsx):
         self.generate_outstanding_bank(row)
         row += 2
         for bank_statement_line in bank_statement_lines:
+            bank_debit = 0.0
+            bank_credit = 0.0
+            if bank_statement_line.amount < 0:
+                bank_debit = bank_statement_line.amount
+            else:
+                bank_credit = bank_statement_line.amount
+            format_date = datetime.strptime(
+                bank_statement_line.date, '%Y-%m-%d')
+            bank_statement_line_date = format_date.strftime("%d/%m/%Y")
             self.sheet.write(
                 "A%s" % row,
-                u"%s" % bank_statement_line.date,
+                u"%s" % bank_statement_line_date,
                 self.format_table_date_default)
             ref = '' if not bank_statement_line.ref else \
                 bank_statement_line.ref
@@ -477,12 +492,12 @@ class ReportBankReconciliationSummary(ReportXlsx):
                 self.format_table_bold)
             self.sheet.write_number(
                 "F%s" % row,
-                float(bank_statement_line.amount) or 0.00,
+                float(bank_debit),
                 self.format_table_number_bold)
             self.sheet.write(
                 "G%s" % row,
-                u"%s" % '',
-                self.format_table_bold)
+                float(bank_credit),
+                self.format_table_number_bold)
             total_debit_bank_statement_line += bank_statement_line.amount
             row += 1
         self.sheet.merge_range(
