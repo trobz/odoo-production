@@ -67,56 +67,60 @@ class ShiftLeaveWizard(models.TransientModel):
 
         registration_ids = self.shift_template_registration_line_ids\
             .mapped('registration_id').ids
-        leave_s_date = leave.start_date
-        leave_e_date = leave.stop_date
 
-        for line in self.shift_template_registration_line_ids:
-            previous_date_end = line.date_end
-            work_s_date = line.date_begin
-            work_e_date = line.date_end
+        if leave.non_defined_type and leave.non_defined_leave:
+            leave.update_registration_template_based_non_define_leave()
+        else:
+            leave_s_date = leave.start_date
+            leave_e_date = leave.stop_date
 
-            # if same period, delete registration line
-            if work_s_date == leave_s_date and work_e_date == leave_e_date:
-                # We confirm the same leave, previously canceled
-                line.unlink()
-            elif leave_s_date >= work_s_date:
-                # Otherwise, Reduce current registration line stop date
-                if leave_s_date > work_s_date:
-                    line.date_end = add_days(leave_s_date, -1)
+            for line in self.shift_template_registration_line_ids:
+                previous_date_end = line.date_end
+                work_s_date = line.date_begin
+                work_e_date = line.date_end
+
+                # if same period, delete registration line
+                if work_s_date == leave_s_date and work_e_date == leave_e_date:
+                    # We confirm the same leave, previously canceled
+                    line.unlink()
+                elif leave_s_date >= work_s_date:
+                    # Otherwise, Reduce current registration line stop date
+                    if leave_s_date > work_s_date:
+                        line.date_end = add_days(leave_s_date, -1)
+                    else:
+                        line.date_end = leave_e_date
+
+                    if leave_e_date and (not previous_date_end or
+                                         previous_date_end > leave_e_date):
+                        # Create a new registration line, if leave has stop date
+                        line.copy(default={
+                            'date_begin': add_days(leave_e_date, 1),
+                            'date_end': previous_date_end,
+                        })
+                elif leave_e_date and work_e_date and work_e_date <= leave_e_date:
+                    line.unlink()
                 else:
-                    line.date_end = leave_e_date
+                    line.date_begin = add_days(leave_e_date, 1)
 
-                if leave_e_date and (not previous_date_end or
-                                     previous_date_end > leave_e_date):
-                    # Create a new registration line, if leave has stop date
-                    line.copy(default={
-                        'date_begin': add_days(leave_e_date, 1),
-                        'date_end': previous_date_end,
+            line_obj = self.env['shift.template.registration.line']
+            for registration_id in registration_ids:
+                # Update state of existing registration lines
+                existed_line = line_obj.search([
+                    ('registration_id', '=', registration_id),
+                    ('date_begin', '=', leave_s_date),
+                    ('state', '!=', 'waiting'),
+                ])
+                if existed_line:
+                    existed_line.with_context(bypass_leave_change_check=True)\
+                        .write({'state': 'waiting', 'leave_id': leave.id})
+                else:
+                    # Create new registration lines (type 'waiting')
+                    line_obj.create({
+                        'registration_id': registration_id,
+                        'date_begin': leave_s_date,
+                        'date_end': leave_e_date,
+                        'state': 'waiting',
+                        'leave_id': leave.id,
                     })
-            elif leave_e_date and work_e_date and work_e_date <= leave_e_date:
-                line.unlink()
-            else:
-                line.date_begin = add_days(leave_e_date, 1)
 
-        line_obj = self.env['shift.template.registration.line']
-        for registration_id in registration_ids:
-            # Update state of existing registration lines
-            existed_line = line_obj.search([
-                ('registration_id', '=', registration_id),
-                ('date_begin', '=', leave_s_date),
-                ('state', '!=', 'waiting'),
-            ])
-            if existed_line:
-                existed_line.with_context(bypass_leave_change_check=True)\
-                    .write({'state': 'waiting', 'leave_id': leave.id})
-            else:
-                # Create new registration lines (type 'waiting')
-                line_obj.create({
-                    'registration_id': registration_id,
-                    'date_begin': leave_s_date,
-                    'date_end': leave_e_date,
-                    'state': 'waiting',
-                    'leave_id': leave.id,
-                })
-
-        leave.state = 'done'
+            leave.state = 'done'
