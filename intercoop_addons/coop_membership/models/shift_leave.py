@@ -200,6 +200,8 @@ class ShiftLeave(models.Model):
                 today and l.state != 'cancel' and
                 l.shift_ticket_id.shift_type == 'standard')
             if record.type_id.is_anticipated:
+                num_line_guess = record.calculate_number_shift_future_in_leave()
+                total_line = len(abcd_lines_in_leave) + num_line_guess
                 if record.partner_id.in_ftop_team:
                     raise ValidationError(
                         _("This member is not part of an ABCD team."))
@@ -211,8 +213,7 @@ class ShiftLeave(models.Model):
                     raise ValidationError(_(
                         "The period of leave must include TWO" +
                         " minimum missed services."))
-                elif record.partner_id.final_ftop_point <\
-                        len(abcd_lines_in_leave):
+                elif record.partner_id.final_ftop_point < total_line:
                     raise ValidationError(_(
                         "The member does not have enough" +
                         " credits to cover the proposed period."))
@@ -228,8 +229,10 @@ class ShiftLeave(models.Model):
             today and l.state != 'cancel' and
             l.shift_ticket_id.shift_type == 'standard')
 
+        num_shift_guess = self.calculate_number_shift_future_in_leave()
+
         # Update FTOP points
-        count_point_remove = len(abcd_lines_in_leave)
+        count_point_remove = len(abcd_lines_in_leave) + num_shift_guess
 
         point_counter_env = self.env['shift.counter.event']
         event = point_counter_env.sudo().with_context(
@@ -242,6 +245,29 @@ class ShiftLeave(models.Model):
                            ' on anticipated leave.')
             })
         self.event_id = event.id
+
+    @api.multi
+    def calculate_number_shift_future_in_leave(self):
+        self.ensure_one()
+        # Find shift template include current partner
+        templates = self.partner_id.tmpl_reg_line_ids.filtered(
+            lambda l: (l.is_current or l.is_future) and l.date_begin >=
+            self.start_date and l.shift_ticket_id.shift_type ==
+            'standard').mapped('shift_template_id')
+
+        # Get number of shifts in period that is from end date of past ABCD line to
+        # the end of leave to guess line partner might register
+
+        num_shift_guess = 0
+
+        for template in templates:
+            rec_dates = template.get_recurrent_dates(
+                template.last_shift_date, self.stop_date)
+            for rec in rec_dates:
+                if fields.Datetime.to_string(rec) < self.stop_date:
+                    num_shift_guess += 1
+
+        return num_shift_guess
 
     @api.multi
     def button_cancel(self):
@@ -307,7 +333,7 @@ class ShiftLeave(models.Model):
                     template_registration.filtered(
                         lambda l: l.is_current).sorted(
                         key=lambda l: l.date_begin, reverse=True)
-                
+
                 # Must mark leave as done before setting end_date
                 # for tmpl_reg_line to make _compute_is_unsubscribed
                 # work as expected
@@ -320,7 +346,7 @@ class ShiftLeave(models.Model):
                 if last_templates:
                     last_templates[0].date_end = fields.Date.from_string(
                         leave.start_date) - timedelta(days=1)
-                
+
         return True
 
     @api.model
