@@ -17,6 +17,11 @@ class ShiftTicket(models.Model):
         string="Available Seats Standard",
         compute="_compute_seats_ticket",
         store=True)
+    dummy = fields.Char(
+        string="",
+        help="This is dummy field which help to make column"
+        "in tree view more beautiful"
+    )
 
     @api.multi
     @api.depends('shift_id', 'shift_id.shift_ticket_ids',
