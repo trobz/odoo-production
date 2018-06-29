@@ -320,7 +320,7 @@ class ShiftLeave(models.Model):
                 vals.update({
                     'stop_date': fields.Datetime.to_string(
                         date_shift_guess[0] - timedelta(days=1))
-                })
+                    })
             elif future_lines:
                 date_suggest = fields.Date.from_string(
                     future_lines[0].date_begin) - timedelta(days=1)
