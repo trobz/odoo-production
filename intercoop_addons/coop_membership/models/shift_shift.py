@@ -31,6 +31,15 @@ class ShiftShift(models.Model):
 
     is_send_reminder = fields.Boolean("Send Reminder", default=False)
 
+    long_holiday_id = fields.Many2one('shift.holiday', string="Long Holiday")
+    single_holiday_id = fields.Many2one('shift.holiday',
+                                        string="Single Holiday")
+    state_in_holiday = fields.Selection(
+        [('open', 'Open'), ('closed', 'Closed')],
+        string="State in holiday",
+    )
+    is_on_holiday = fields.Boolean(string="Is On Holiday", default=False)
+
     @api.multi
     def button_done(self):
         """
@@ -119,6 +128,18 @@ class ShiftShift(models.Model):
                         reg.confirm_registration()
         return res
 
+    @api.multi
+    def open_in_holiday(self):
+        for shift in self:
+            if shift.state_in_holiday != 'open':
+                shift.state_in_holiday = 'open'
+
+    @api.multi
+    def close_in_holiday(self):
+        for shift in self:
+            if shift.state_in_holiday != 'closed':
+                shift.state_in_holiday = 'closed'
+
     @api.model
     def send_mail_reminder_ftop_members(self):
         shift_env = self.env['shift.shift']
@@ -127,6 +148,7 @@ class ShiftShift(models.Model):
         shifts = shift_env.search([
             ('is_send_reminder', '=', False),
             ('shift_type_id.is_ftop', '=', True),
+            ('is_on_holiday', '=', False),
             ('state', 'not in', ('cancel', 'done')),
             ('date_begin', '>=', fields.Date.context_today(self)),
             ('date_begin', '<=',
