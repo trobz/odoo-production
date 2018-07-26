@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="view_shift_change_team_tree" model="ir.ui.view">
+        <field name="model">shift.change.team</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="partner_id" />
+                <field name="current_shift_template_id" />
+                <field name="next_current_shift_date" />
+                <field name="new_shift_template_id" />
+                <field name="new_next_shift_date" />
+            </tree>
+        </field>
+    </record>
+
+	<record id="view_shift_change_team_form" model="ir.ui.view">
+        <field name="model">shift.change.team</field>
+        <field name="arch" type="xml">
+            <form>
+                <!-- <header>
+                    <button string="Confirm" name="button_confirm" states="draft" class="oe_highlight" type="object" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button string="Approve" name="button_done" class="oe_highlight" type="object" attrs="{'invisible': ['|', ('state', '!=', 'confirmed'), ('state', '=', 'done')]}"/>
+                    <button string="Set To Draft" name="button_draft" type="object" attrs="{'invisible': [('state', 'in', ['draft', 'done'])]}"/>
+                    <button string="Cancel" name="button_cancel" type="object" attrs="{'invisible': [('state', '=', 'cancel')]}"/>
+                    <field name="state" widget="statusbar" nolabel="1" readonly="1"/>
+                </header> -->
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id" domain="[('is_member', '=', True)]"/>
+                            <field name="current_shift_template_id" readonly="True"/>
+                            <field name="next_current_shift_date" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="new_shift_template_id"/>
+                            <field name="new_next_shift_date" readonly="True"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>
