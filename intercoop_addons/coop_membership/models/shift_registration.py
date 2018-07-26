@@ -161,6 +161,9 @@ class ShiftRegistration(models.Model):
         for shift_reg in self:
             if vals_state != shift_reg.state:
                 counter_vals = {}
+
+                shift_reg.adjust_qty_on_holiday(vals_state)
+
                 if shift_reg.shift_type == 'ftop':
                     if vals_state in ['done', 'replaced']:
                         reason = vals_state == 'done' and \
