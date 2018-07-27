@@ -31,6 +31,15 @@ class ShiftShift(models.Model):
 
     is_send_reminder = fields.Boolean("Send Reminder", default=False)
 
+    long_holiday_id = fields.Many2one('shift.holiday', string="Long Holiday")
+    single_holiday_id = fields.Many2one('shift.holiday',
+                                        string="Single Holiday")
+    state_in_holiday = fields.Selection(
+        [('open', 'Open'), ('closed', 'Closed')],
+        string="State in holiday",
+    )
+    is_on_holiday = fields.Boolean(string="Is On Holiday", default=False)
+
     @api.multi
     def button_done(self):
         """
@@ -60,6 +69,8 @@ class ShiftShift(models.Model):
         point_counter_env = self.env['shift.counter.event']
         for shift in self:
             if shift.shift_type_id.is_ftop:
+                long_holiday = shift.long_holiday_id
+                single_holiday = shift.single_holiday_id
                 for registration in shift.registration_ids:
                     partner = registration.partner_id
                     # Registration's state is waiting means the member is on
@@ -74,6 +85,22 @@ class ShiftShift(models.Model):
                             counter.ignored = False
 
                     current_point = partner.final_ftop_point
+
+                    if (single_holiday and single_holiday.state == 'done')\
+                            or (long_holiday and long_holiday.state == 'done'):
+                        holiday_id = single_holiday and\
+                            single_holiday.id or long_holiday.id
+
+                        att_state = single_holiday and shift.state_in_holiday\
+                            or long_holiday.make_up_type
+                        registration.adjust_qty_for_ftop_on_holiday(
+                            holiday_id, att_state)
+
+                        if not single_holiday:
+                            holiday_id = long_holiday.id
+                            registration.balance_point_qty_ftop_shift(
+                                holiday_id, current_point)
+
                     if current_point >= 1:
                         point = -1
                     else:
@@ -119,6 +146,18 @@ class ShiftShift(models.Model):
                         reg.confirm_registration()
         return res
 
+    @api.multi
+    def open_in_holiday(self):
+        for shift in self:
+            if shift.state_in_holiday != 'open':
+                shift.state_in_holiday = 'open'
+
+    @api.multi
+    def close_in_holiday(self):
+        for shift in self:
+            if shift.state_in_holiday != 'closed':
+                shift.state_in_holiday = 'closed'
+
     @api.model
     def send_mail_reminder_ftop_members(self):
         shift_env = self.env['shift.shift']
@@ -127,6 +166,7 @@ class ShiftShift(models.Model):
         shifts = shift_env.search([
             ('is_send_reminder', '=', False),
             ('shift_type_id.is_ftop', '=', True),
+            ('is_on_holiday', '=', False),
             ('state', 'not in', ('cancel', 'done')),
             ('date_begin', '>=', fields.Date.context_today(self)),
             ('date_begin', '<=',
