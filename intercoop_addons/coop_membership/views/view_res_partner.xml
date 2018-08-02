@@ -1119,6 +1119,20 @@ coop_membership.group_membership_access_user,coop_membership.group_membership_bd
         </field>
     </record>
 
+    <record id="view_partner_form_group_clean_up" model="ir.ui.view">
+        <field name="name">view.partner.form.group.clean.up</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="coop_membership.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='toggle_active']" position="attributes">
+                <attribute name="groups">coop_membership.group_clean_up</attribute>
+            </xpath>
+            <xpath expr="//button[@name='%(account.action_open_partner_analytic_accounts)d']" position="attributes">
+                <attribute name="groups">coop_membership.group_clean_up</attribute>
+            </xpath>
+        </field>
+    </record>
+
     <!-- Todo: To remove this view: It is currently unremovable due to the view data defined in DB -->
     <record model="ir.ui.view" id="view_res_partner_form_base">
         <field name="model">res.partner</field>
