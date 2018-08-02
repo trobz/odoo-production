@@ -15,4 +15,26 @@
       </field>
     </field>
   </record>
+
+  <record id="view_partner_button_contracts_count_inherit" model="ir.ui.view">
+    <field name="name">view.partner.button.contracts.count.inherit</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="account.partner_view_button_contracts_count"/>
+    <field name="arch" type="xml">
+      <xpath expr="//button[@name='%(account.action_open_partner_analytic_accounts)d']" position="attributes">
+        <attribute name="groups">coop_membership.group_clean_up</attribute>
+      </xpath>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="view_partner_form_inherit">
+      <field name="name">view.partner.form.inherit</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form" />
+      <field name="arch" type="xml">
+        <xpath expr="//button[@name='toggle_active']" position="attributes">
+          <attribute name="groups">coop_membership.group_clean_up</attribute>
+        </xpath>
+      </field>
+  </record>
 </odoo>
