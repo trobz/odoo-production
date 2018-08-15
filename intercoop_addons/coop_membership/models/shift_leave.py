@@ -261,8 +261,8 @@ class ShiftLeave(models.Model):
         self.ensure_one()
         # Find shift template include current partner
         templates = self.partner_id.tmpl_reg_line_ids.filtered(
-            lambda l: (l.is_current or l.is_future) and l.date_begin >=
-            self.start_date and l.shift_ticket_id.shift_type ==
+            lambda l: (l.is_current or l.is_future) and
+            l.shift_ticket_id.shift_type ==
             'standard').mapped('shift_template_id')
 
         # Get number of shifts in period that is from end date of past ABCD line to
@@ -349,6 +349,7 @@ class ShiftLeave(models.Model):
     def create(self, vals):
         type_id = vals.get('type_id', False)
         type_leave = self.env['shift.leave.type'].browse(type_id)
+        res = super(ShiftLeave, self).create(vals)
 
         if type_leave.is_anticipated:
             partner_id = vals.get('partner_id', self.partner_id.id)
@@ -357,21 +358,17 @@ class ShiftLeave(models.Model):
 
             future_lines = partner.registration_ids.filtered(
                 lambda l: l.date_begin >= stop_date)
-            date_shift_guess = self.guess_future_date_shift(stop_date)
+            date_shift_guess = res.guess_future_date_shift(stop_date)
 
             if date_shift_guess:
-                vals.update({
-                    'stop_date': fields.Datetime.to_string(
+                res.stop_date = fields.Datetime.to_string(
                         date_shift_guess[0] - timedelta(days=1))
-                })
             elif future_lines:
                 date_suggest = fields.Date.from_string(
                     future_lines[0].date_begin) - timedelta(days=1)
                 if stop_date != date_suggest:
-                    vals.update({
-                        'stop_date': date_suggest
-                    })
-        return super(ShiftLeave, self).create(vals)
+                    res.stop_date = date_suggest
+        return res
 
     @api.multi
     def write(self, vals):
