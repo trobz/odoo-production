@@ -460,6 +460,16 @@ msgid "Suspended"
 msgstr "Suspendu"
 
 #. module: coop_membership
+#: model:mail.template,subject:coop_membership.anounce_open_on_holiday_email
+msgid "The store will be open on ${object.convert_format_datatime()}"
+msgstr "Le magasin sera ouvert le ${object.convert_format_datatime()}"
+
+#. module: coop_membership
+#: model:mail.template,subject:coop_membership.anounce_close_on_holiday_email
+msgid "The store will be close on ${object.convert_format_datatime()}"
+msgstr "Le magasin sera fermé le ${object.convert_format_datatime()}"
+
+#. module: coop_membership
 #: model:ir.model.fields,field_description:coop_membership.field_res_partner_temp_coop_number
 msgid "Temporary number"
 msgstr "Numéro temporaire"
