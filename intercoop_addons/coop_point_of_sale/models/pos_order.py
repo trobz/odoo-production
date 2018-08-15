@@ -7,6 +7,8 @@ from openerp import fields, models, api, _
 from datetime import datetime, timedelta
 from openerp.addons.connector.queue.job import job
 from openerp.addons.connector.session import ConnectorSession
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class PosOrder(models.Model):
@@ -17,6 +19,30 @@ class PosOrder(models.Model):
     week_day = fields.Char(
         string="Day", compute="compute_week_day", store=True)
     cycle = fields.Char(string="Cycle", compute="compute_cycle", store=True)
+    email_status = fields.Selection([('no_send', 'Do not Send'),
+                                    ('to_send', 'To send'),
+                                    ('sent', 'Sent')],
+                                   default="no_send", string="Send Status")
+
+    @api.model
+    def _send_order_cron(self):
+        mail_template = self.env.ref("coop_point_of_sale.email_send_ticket")
+        _logger.info("Start to send ticket")
+        for order in self.search([
+            ('email_status', '=', 'to_send'),
+        ]):
+            mail_template.send_mail(order.id, force_send=True)
+            order.email_status = 'sent'
+            # Make sure we commit the change to not send ticket twice
+            self.env.cr.commit()
+
+    @api.multi
+    def action_paid(self):
+        res = super(PosOrder, self).action_paid()
+        for order in self:
+            if order.partner_id.email and order.partner_id.email_pos_receipt:
+                order.email_status = 'to_send'
+        return res
 
     @api.multi
     @api.depends('date_order')
@@ -90,7 +116,8 @@ class PosOrder(models.Model):
 @job
 def update_cycle_pos_order_job(session, model_name, order_list):
     ''' Job for compute cycle '''
-    orders = session.env[model_name].with_context({'lang': 'fr_FR'}).browse(order_list)
+    orders = session.env[model_name].with_context(
+        {'lang': 'fr_FR'}).browse(order_list)
     orders.compute_week_number()
     orders.compute_week_day()
     orders.compute_cycle()
