@@ -14,6 +14,9 @@ class PosConfig(models.Model):
         default=False,
         compute='_compute_diacritics_insensitive_search',
         string="Diacritics insensitive search")
+    is_print_receipt = fields.Boolean(
+        string="Print receipt when not sent email",
+        default=False)
 
     @api.multi
     def _compute_diacritics_insensitive_search(self):

@@ -178,6 +178,16 @@ msgid "Thu"
 msgstr "Jeu"
 
 #. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_config_is_print_receipt
+msgid "Print receipt when not sent email"
+msgstr "Imprimer le reçu lorsqu'il n'a pas été envoyé par courrier électronique"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_res_partner_email_pos_receipt
+msgid "Send email POS"
+msgstr "Mail envoyé POS"
+
+#. module: coop_point_of_sale
 #: code:addons/coop_point_of_sale/models/pos_order.py:57
 #: code:addons/coop_point_of_sale/models/pos_session.py:57
 #, python-format
