@@ -12,8 +12,6 @@ odoo.define('coop_point_of_sale.coop_point_of_sale', function (require) {
     var screens = require('point_of_sale.screens');
     var core = require('web.core');
     var gui = require('point_of_sale.gui');
-    var Model = require('web.DataModel');
-    var QWeb = core.qweb;
     var _t = core._t;
 
 /* ********************************************************
@@ -36,51 +34,6 @@ Overload models.PosModel
 
             return _super_posmodel.after_load_server_data.call(this);
         },
-    });
-
-    screens.ReceiptScreenWidget.include({
-
-        is_send_mail : function(){
-            var partner_id = this.pos.get_order().attributes.client.id;
-            var self = this;
-            var result = new $.Deferred();
-            return new Model('res.partner').call('is_send_mail_pos', [partner_id]);
-        },
-
-        print_web: function() {
-            var self = this;
-            this.is_send_mail().done(function(result){
-                if (self.pos.config.is_print_receipt == false && result == true){
-                    return
-                }else{
-                    window.print();
-                    this.pos.get_order()._printed = true;
-                }
-        
-            });
-        },
-
-        print_xml: function() {
-            var self = this;
-            this.is_send_mail().done(function(result){
-                if (self.pos.config.is_print_receipt == false && result == true){
-                    return
-                }else{
-                    var env = {
-                        widget:  self,
-                        pos:     self.pos,
-                        order:   self.pos.get_order(),
-                        receipt: self.pos.get_order().export_for_printing(),
-                        paymentlines: self.pos.get_order().get_paymentlines()
-                    };
-                    var receipt = QWeb.render('XmlReceipt',env);
-                    self.pos.proxy.print_receipt(receipt);
-                    self.pos.get_order()._printed = true;
-                }
-        
-            });
-        },
-
     });
 
 });
