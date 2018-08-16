@@ -243,18 +243,22 @@ class ShiftLeave(models.Model):
 
         # Update FTOP points
         count_point_remove = len(abcd_lines_in_leave) + num_shift_guess
-
-        point_counter_env = self.env['shift.counter.event']
-        event = point_counter_env.sudo().with_context(
-            {'automatic': True}).create({
-                'name': _('Anticipated Leave'),
-                'type': 'ftop',
-                'partner_id': self.partner_id.id,
-                'point_qty': -count_point_remove,
-                'notes': _('This event was created to remove point base' +
-                           ' on anticipated leave.')
-            })
-        self.event_id = event.id
+        if count_point_remove > self.partner_id.final_ftop_point:
+            raise ValidationError(_(
+                        "The member does not have enough" +
+                        " credits to cover the proposed period."))
+        else:
+            point_counter_env = self.env['shift.counter.event']
+            event = point_counter_env.sudo().with_context(
+                {'automatic': True}).create({
+                    'name': _('Anticipated Leave'),
+                    'type': 'ftop',
+                    'partner_id': self.partner_id.id,
+                    'point_qty': -count_point_remove,
+                    'notes': _('This event was created to remove point base' +
+                               ' on anticipated leave.')
+                })
+            self.event_id = event.id
 
     @api.multi
     def calculate_number_shift_future_in_leave(self):
