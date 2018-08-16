@@ -18,15 +18,11 @@
         'static/src/xml/point_of_sale.xml',
     ],
     'data': [
-        'data/ir_cron.xml',
-        'data/email_template_data.xml',
         'static/src/xml/templates.xml',
         'views/view_pos_order.xml',
         'views/view_res_config.xml',
         'views/view_pos_session.xml',
         'views/view_pos_order_line.xml',
-        'views/view_pos_config.xml',
-        'views/view_res_partner.xml',
     ],
     'installable': True,
 }
