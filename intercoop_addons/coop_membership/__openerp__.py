@@ -27,7 +27,9 @@
     ],
     'data': [
         'data/update_template_name_ftop.yml',
+        'data/update_menu_user_right.yml',
         'data/report_paperformat_data.xml',
+        'data/ir_attachment.xml',
 
 
 
@@ -64,7 +66,7 @@
         'views/web_templates.xml',
         'views/view_web_access_buttons.xml',
         'views/view_shift_holiday.xml',
-
+        'views/view_shift_change_team.xml',
         'views/action.xml',
         'views/menu.xml',
 

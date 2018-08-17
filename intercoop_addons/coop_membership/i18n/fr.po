@@ -1304,6 +1304,47 @@ msgid "Confirmation of your leave request"
 msgstr "Confirmation de votre demande de congé"
 
 #. module: coop_membership
+#: model:ir.model.fields,field_description:coop_membership.field_shift_change_team_next_current_shift_date
+msgid "Date of next shift current team"
+msgstr "Prochaine service, équipe actuelle"
+
+#. module: coop_membership
+#: model:ir.actions.act_window,name:coop_membership.action_shift_change_team
+#: model:ir.ui.menu,name:coop_membership.menu_action_shift_change_team
+msgid "Change Team"
+msgstr "Changement d’équipe"
+
+#. module: coop_membership
+#: model:ir.model.fields,field_description:coop_membership.field_shift_change_team_new_shift_template_id
+msgid "New Team"
+msgstr "Nouvelle Équipe"
+
+#. module: coop_membership
+#: model:ir.model.fields,field_description:coop_membership.field_shift_change_team_new_next_shift_date
+msgid "Start date of shift new team"
+msgstr "Date de démarrage, nouvelle équipe"
+
+#. module: coop_membership
+#: model:ir.model.fields,field_description:coop_membership.field_shift_change_team_is_catch_up
+msgid "Is Catch Up"
+msgstr "Ajouter un rattrapage ?"
+
+#. module: coop_membership
+#: model:ir.model.fields,field_description:coop_membership.field_shift_change_team_current_shift_template_id
+msgid "Current Team"
+msgstr "Équipe actuelle"
+
+#. module: coop_membership
+#: model:ir.model.fields,field_description:coop_membership.field_shift_change_team_partner_id
+msgid "Member"
+msgstr "Membre"
+
+#. module: coop_membership
+#: model:ir.model.fields,field_description:coop_membership.field_shift_change_team_date_end_current_shift
+msgid "End Date Current Shift"
+msgstr "Date de fin, équipe actuelle"
+
+#. module: coop_membership
 #: model:mail.template,body_html:coop_membership.coop_ftop_leave_email
 msgid "\n"
 "<p>Hello ${object.partner_id.name}</p>\n"
@@ -1319,6 +1360,60 @@ msgstr "\n"
 "<p>Nous avons peut être prolongé la durée de votre congé par rapport à votre demande car votre date de retour proposée était trop proche du jour de décompte de l’équipe volante. N’oubliez pas que vous devez avoir fait un service qui suit votre retour${object.shift_date_after_return and (', le ' + str(object.shift_date_after_return)) or ''}.</p>\n"
 "\n"
 "<p>Bonne journée,</p>"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/shift_change_team.py:144
+#, python-format
+msgid "Up to date"
+msgstr "A jour"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/shift_change_team.py:148
+#, python-format
+msgid "Suspended"
+msgstr "Suspendu(e)"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/shift_change_team.py:140
+#, python-format
+msgid "Exempted"
+msgstr "Exempté"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/shift_change_team.py:142
+#, python-format
+msgid "Vacation"
+msgstr "En congés"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/shift_change_team.py:146
+#, python-format
+msgid "Alert"
+msgstr "Alerte"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/shift_change_team.py:150
+#, python-format
+msgid "Delay"
+msgstr "Délai"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/shift_change_team.py:152
+#, python-format
+msgid "Blocked"
+msgstr "Bloqué(e)"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/shift_change_team.py:154
+#, python-format
+msgid "Unpayed"
+msgstr "Impayé"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/shift_change_team.py:156
+#, python-format
+msgid "Not Concerned"
+msgstr "Non concerné"
 
 #. module: coop_membership
 #: code:addons/coop_membership/models/shift_leave.py:204
