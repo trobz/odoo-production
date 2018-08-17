@@ -215,9 +215,8 @@ class Website(openerp.addons.website.controllers.main.Website):
             ('user_ids', 'in', [user.partner_id.id]),
             ('state', '=', 'confirm')
         ])
-        members = shifts and shifts.registration_ids.mapped(
+        members = shifts and shifts.mapped('registration_ids').mapped(
             'partner_id').filtered(lambda r: r.shift_type == 'standard') or []
-
         return request.render(
             'foodcoop_memberspace.myteam',
             {
@@ -241,7 +240,8 @@ class Website(openerp.addons.website.controllers.main.Website):
 
         members = request.env['res.partner'].sudo().search([
             ('is_member', '=', True),
-            ('cooperative_state', 'not in', ['blocked', 'unpayed'])
+            ('cooperative_state', 'not in',
+                ['blocked', 'unpayed', 'not_concerned', 'unsubscribed'])
         ])
 
         first_day_of_year = datetime.now().strftime("%Y-01-01 00:00:00")
@@ -272,3 +272,7 @@ class Website(openerp.addons.website.controllers.main.Website):
                 'turnover_year_tax': datas[1]
             }
         )
+
+    @http.route('/documents', type='http', auth='user', website=True)
+    def page_documents(self, **kwargs):
+        return request.render('foodcoop_memberspace.documents', {})
