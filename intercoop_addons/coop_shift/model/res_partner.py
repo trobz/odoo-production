@@ -66,6 +66,10 @@ class ResPartner(models.Model):
         'shift.registration', "partner_id", 'Next Registration',
         compute="_compute_registration_counts")
 
+    next_registrations = fields.One2many(
+        'shift.registration', "partner_id", 'Prochains Services',
+        compute="_compute_registration_counts")
+
     tmpl_reg_ids = fields.One2many(
         'shift.template.registration', "partner_id",
         'Template Registrations')
@@ -154,6 +158,10 @@ class ResPartner(models.Model):
         string='Extensions Quantity', compute='compute_extension_qty',
         store=True)
 
+    upcomming_extension_qty = fields.Integer(
+        string='Upcoming Extensions Quantity', compute='compute_extension_qty',
+        store=True)
+
     counter_event_ids = fields.One2many(
         comodel_name='shift.counter.event', inverse_name='partner_id',
         string='Counter Events')
@@ -188,7 +196,8 @@ class ResPartner(models.Model):
     @api.depends('leave_ids')
     def _compute_leave_qty(self):
         for partner in self:
-            partner.leave_qty = len(partner.leave_ids)
+            partner.leave_qty = len(partner.leave_ids.filtered(
+                lambda l: l.stop_date >= fields.Date.context_today(self)))
 
     @api.multi
     def _compute_registration_counts(self):
@@ -196,6 +205,17 @@ class ResPartner(models.Model):
         for partner in self:
             next_registrations = partner.sudo().registration_ids.filtered(
                 lambda r, d=d: r.date_begin >= d)
+
+            # Set 4 next shifts
+            num = 0
+            for registration in next_registrations.filtered(
+                lambda r: r.state=='open'):
+                if num < 4:
+                    partner.next_registrations = [(4, registration.id)]
+                    num += 1
+                else:
+                    break
+
             partner.upcoming_registration_count = len(next_registrations)
             next_registrations = next_registrations.sorted(
                 lambda r: r.date_begin)
@@ -237,6 +257,9 @@ class ResPartner(models.Model):
     def compute_extension_qty(self):
         for partner in self:
             partner.extension_qty = len(partner.sudo().extension_ids)
+            partner.upcomming_extension_qty =\
+                len(partner.sudo().extension_ids.filtered(
+                    lambda e: e.date_stop >= fields.Date.context_today(self)))
 
     @api.depends('counter_event_ids', 'counter_event_ids.point_qty',
                  'counter_event_ids.type', 'counter_event_ids.partner_id',
@@ -451,6 +474,7 @@ class ResPartner(models.Model):
                                 })
 
         return super(ResPartner, self).write(vals)
+
 
 @job
 def update_member_working_state(session, model_name, partner_ids):
