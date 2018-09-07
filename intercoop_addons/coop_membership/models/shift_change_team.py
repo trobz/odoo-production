@@ -265,7 +265,7 @@ class ShiftChangeTeam(models.Model):
 
         not_show = self._context.get('not_show_button_next_member', False)
         if not_show:
-            return
+            return True
         if partner_ids:
             partner_id = partner_ids[0]
             partner_ids.remove(partner_ids[0])
@@ -304,7 +304,7 @@ class ShiftChangeTeam(models.Model):
 
         not_show = self._context.get('not_show_button_next_member', False)
         if not_show:
-            return
+            return True
         if changed_team_ids:
             return{
                 'name': _('Change Teams'),
