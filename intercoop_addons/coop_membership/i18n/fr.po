@@ -1504,6 +1504,12 @@ msgid "Max Available Seats Standard"
 msgstr "Nombre de places classique maximum"
 
 #. module: coop_membership
+#: code:addons/coop_membership/models/res_partner.py:192
+#, python-format
+msgid "Members are should be around 18 - 100"
+msgstr "Les membres doivent être autour de 18 - 100"
+
+#. module: coop_membership
 #: model:ir.ui.view,arch_db:coop_membership.view_shift_ticket_seats_tree
 msgid "Max Available Seats FTOP"
 msgstr "Nombre de places volants maximum"
