@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<odoo>
+    
+    <menuitem
+        id="account_asset.menu_asset_depreciation_confirmation_wizard"
+        groups="base.group_no_one,account.group_account_manager"/>
+
+</odoo>
