@@ -78,7 +78,7 @@
                             <th>Date</th>
                             <th>Heure</th>
                             <th>Coordinateurs</th>
-                            <th>Echange</th>
+                            <th>Type</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -391,7 +391,7 @@
                                 <th>Date</th>
                                 <th>Heure</th>
                                 <th>Coordinateurs</th>
-                                <th>Echange</th>
+                                <th>Type</th>
                             </tr>
                         </thead>
                         <tbody>

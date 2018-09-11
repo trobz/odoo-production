@@ -262,16 +262,19 @@ class Website(openerp.addons.website.controllers.main.Website):
             ('date_order', '<=', end_day_of_year)
         ])
 
-        turnover_year_wo_tax_sql = '''
-        SELECT SUM(amount_subtotal) as turnover_year_wo_tax, SUM(total_amount)
-            as turnover_year_tax
-        FROM pos_session
-        WHERE stop_at BETWEEN '%s' AND '%s'
-            AND state = 'closed'
-        ''' % (first_day_of_year, end_day_of_year)
+        try:
+            turnover_year_wo_tax_sql = '''
+            SELECT SUM(amount_subtotal) as turnover_year_wo_tax, SUM(total_amount)
+                as turnover_year_tax
+            FROM pos_session
+            WHERE stop_at BETWEEN '%s' AND '%s'
+                AND state = 'closed'
+            ''' % (first_day_of_year, end_day_of_year)
+            request.env.cr.execute(turnover_year_wo_tax_sql)
+            datas = request.env.cr.fetchone()
+        except:
+            datas = [0, 0]
 
-        request.env.cr.execute(turnover_year_wo_tax_sql)
-        datas = request.env.cr.fetchone()
         return request.render(
             'coop_memberspace.statistics',
             {
