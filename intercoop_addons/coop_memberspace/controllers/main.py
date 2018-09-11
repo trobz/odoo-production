@@ -4,7 +4,7 @@ import openerp
 from openerp.addons.web import http
 from openerp.http import request
 from openerp import tools
-from datetime import datetime
+from datetime import datetime, timedelta
 import pytz
 import logging
 import locale
@@ -59,7 +59,8 @@ class Website(openerp.addons.website.controllers.main.Website):
              ('date_order', '<=', datetime.utcnow().strftime(
                 '%Y-%m-%d %H:%M:%S'))]
         )
-        turnover_the_day = sum(item.amount_total for item in turnover_the_day)
+        turnover_the_day = int(
+            sum(item.amount_total for item in turnover_the_day))
 
         values = {
             'date_begin': date_begin and date_begin.capitalize() or False,
@@ -169,8 +170,9 @@ class Website(openerp.addons.website.controllers.main.Website):
         if tmpl:
             shifts_available = shift_env.sudo().search([
                 ('shift_template_id', '!=', tmpl[0].shift_template_id.id),
-                ('date_begin', '>=', datetime.now().strftime(
-                    '%Y-%m-%d 00:00:00')),
+                ('date_begin', '>=', (
+                    datetime.now() + timedelta(days=1)).strftime(
+                        '%Y-%m-%d 00:00:00')),
                 ('state', '=', 'confirm')
             ]).filtered(
                 lambda r, user=request.env.user: user.partner_id not in

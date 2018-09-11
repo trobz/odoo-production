@@ -7,9 +7,9 @@
                 <div class="row" style="padding-left: 15px;padding-right:15px;margin-top: 30px">
                     <h3>Mes coordinateurs 
                         <button type="button" style="margin-left: 5px;background-color: transparent;border: 0px;" class="material-icons js-copy" data-toggle="tooltip"
-                            title="Vous pouvez contacter L’ENSEMBLE de vos coordinateurs en écrivant à xxxxxxxxx@xxxxxxxx."
+                            title="Vous pouvez contacter L’ENSEMBLE de vos coordinateurs en écrivant à xxxxxxxxx@xxxxxxxx (cliquez pour copier l’adresse)."
                             data-copy="xxxxxxxxx@xxxxxxxx" >
-                            alternate_email
+                            email
                         </button>
                     </h3>
                     <div class="table-responsive">
@@ -45,9 +45,9 @@
                 <div t-if="members" class="row" style="padding-left: 15px;padding-right:15px;margin-top: 30px">
                     <h3>Mon équipe 
                         <button type="button" style="margin-left: 5px;background-color: transparent;border: 0px;" class="material-icons js-copy" data-toggle="tooltip"
-                            title="Vous pouvez contacter L’ENSEMBLE de vos coordinateurs en écrivant à xxxxxxxxx@xxxxxxxx."
+                            title="Vous pouvez contacter L’ENSEMBLE de vos coordinateurs en écrivant à xxxxxxxxx@xxxxxxxx (cliquez pour copier l’adresse)."
                             data-copy="xxxxxxxxx@xxxxxxxx" >
-                            alternate_email
+                            email
                         </button>
                     </h3>
                     <div class="table-responsive">
