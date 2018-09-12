@@ -4,7 +4,7 @@ import openerp
 from openerp.addons.web import http
 from openerp.http import request
 from openerp import tools
-from datetime import datetime
+from datetime import datetime, timedelta
 import pytz
 import logging
 import locale
@@ -59,7 +59,8 @@ class Website(openerp.addons.website.controllers.main.Website):
              ('date_order', '<=', datetime.utcnow().strftime(
                 '%Y-%m-%d %H:%M:%S'))]
         )
-        turnover_the_day = sum(item.amount_total for item in turnover_the_day)
+        turnover_the_day = int(
+            sum(item.amount_total for item in turnover_the_day))
 
         values = {
             'date_begin': date_begin and date_begin.capitalize() or False,
@@ -169,8 +170,9 @@ class Website(openerp.addons.website.controllers.main.Website):
         if tmpl:
             shifts_available = shift_env.sudo().search([
                 ('shift_template_id', '!=', tmpl[0].shift_template_id.id),
-                ('date_begin', '>=', datetime.now().strftime(
-                    '%Y-%m-%d 00:00:00')),
+                ('date_begin', '>=', (
+                    datetime.now() + timedelta(days=1)).strftime(
+                        '%Y-%m-%d 00:00:00')),
                 ('state', '=', 'confirm')
             ]).filtered(
                 lambda r, user=request.env.user: user.partner_id not in
@@ -260,16 +262,19 @@ class Website(openerp.addons.website.controllers.main.Website):
             ('date_order', '<=', end_day_of_year)
         ])
 
-        turnover_year_wo_tax_sql = '''
-        SELECT SUM(amount_subtotal) as turnover_year_wo_tax, SUM(total_amount)
-            as turnover_year_tax
-        FROM pos_session
-        WHERE stop_at BETWEEN '%s' AND '%s'
-            AND state = 'closed'
-        ''' % (first_day_of_year, end_day_of_year)
+        try:
+            turnover_year_wo_tax_sql = '''
+            SELECT SUM(amount_subtotal) as turnover_year_wo_tax, SUM(total_amount)
+                as turnover_year_tax
+            FROM pos_session
+            WHERE stop_at BETWEEN '%s' AND '%s'
+                AND state = 'closed'
+            ''' % (first_day_of_year, end_day_of_year)
+            request.env.cr.execute(turnover_year_wo_tax_sql)
+            datas = request.env.cr.fetchone()
+        except:
+            datas = [0, 0]
 
-        request.env.cr.execute(turnover_year_wo_tax_sql)
-        datas = request.env.cr.fetchone()
         return request.render(
             'coop_memberspace.statistics',
             {
