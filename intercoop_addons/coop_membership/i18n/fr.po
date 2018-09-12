@@ -1640,6 +1640,12 @@ msgid "Max Available Seats Standard"
 msgstr "Nombre de places classique maximum"
 
 #. module: coop_membership
+#: code:addons/coop_membership/models/res_partner.py:192
+#, python-format
+msgid "Member must be over 18 years old"
+msgstr "Le membre doit avoir plus de 18 ans"
+
+#. module: coop_membership
 #: model:ir.ui.view,arch_db:coop_membership.view_shift_ticket_seats_tree
 msgid "Max Available Seats FTOP"
 msgstr "Nombre de places volants maximum"
