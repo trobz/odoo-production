@@ -86,7 +86,7 @@ odoo.define('coop_memberspace.programmer_une_vacation', function (require) {
                                     $('.ftop-programmer-une-vacation-body').append(new_shift);
                                 });
                                 
-                                $('#btn-add-' + self.shift_id).removeAttr("data-toggle").removeAttr("data-target").css({'color': 'red'});
+                                $('#btn-add-' + self.shift_id).removeAttr("data-toggle").removeAttr("data-target").css({'color': 'grey'});
                                 let no_available_seats = '#avalable-seats-' + self.shift_id;
                                 $(no_available_seats).text(parseInt($(no_available_seats).text()) - 1);
                                 $('#programmer_modal').modal('hide');
