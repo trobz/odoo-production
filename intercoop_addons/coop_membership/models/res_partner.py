@@ -180,6 +180,18 @@ class ResPartner(models.Model):
                                         "associated people has been exceeded."))
 
     @api.multi
+    @api.constrains('birthdate')
+    def _age_validate(self):
+        for partner in self:
+            if partner.birthdate:
+                d1 = datetime.strptime(partner.birthdate, "%Y-%m-%d").date()
+                d2 = date.today()
+                age = relativedelta(d2, d1).years
+                if age < 18:
+                    raise ValidationError(
+                        _("Member must be over 18 years old"))
+
+    @api.multi
     @api.depends('badge_distribution_date', 'badge_print_date')
     def compute_badge_to_distribute(self):
         for record in self:
