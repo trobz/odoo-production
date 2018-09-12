@@ -51,13 +51,17 @@ class ResPartner(models.Model):
 
     @api.multi
     def create_memberspace_user(self):
+        """
+        This function is used to create user for existing partner when installing
+        module coop_memberspace
+        """
         members_dont_have_user = self.filtered(lambda r: not r.related_user_id)
         # portal group
         portal_group = self.env.ref('base.group_portal')
         # memberspace group
         memberspace_group = self.env.ref(
             'coop_memberspace.group_memberspace')
-        Users = self.env['res.users']
+        Users = self.env['res.users'].with_context(no_check_validate_email=True)
         context = self.env.context.copy()
         context.update({
             'default_groups_id': [
