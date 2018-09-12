@@ -78,17 +78,17 @@
                             <th>Date</th>
                             <th>Heure</th>
                             <th>Coordinateurs</th>
-                            <th>Echange</th>
+                            <th>Type</th>
                         </tr>
                     </thead>
                     <tbody>
                         <t t-if="shift_upcomming" t-foreach="shift_upcomming" t-as="shift">
                             <tr>
-                                <t t-set="date_begin" t-value="user.get_time_by_user_lang(shift.date_begin, ['%A, %B %d, %Y', '%HH%M'], lang=user.lang + '.utf8')" />
+                                <t t-set="date_begin" t-value="user.get_time_by_user_lang(shift.date_begin, ['%A, %d %B %Hh%M', '%HH%M'], lang=user.lang + '.utf8')" />
                                 <td scope="row"><t t-if="date_begin" t-esc="date_begin and date_begin[0] or ''"/></td>
                                 <td><t t-if="date_begin" t-esc="date_begin and date_begin[1] or ''"/></td>
-                                <td><span><t t-esc="shift.get_coordinators()" /> <i data-toggle="tooltip" title="Info: Vous pouvez contacter vos coordinateurs en écrivant à
-                                    coordos.ave10@cooplalouve.fr (we should be able to copy the address)" class="fa fa-question-circle"></i></span></td>
+                                <td><span><t t-esc="shift.get_coordinators()" /> <i data-toggle="tooltip" title="Vous pouvez contacter vos coordinateurs en écrivant à
+                                    coordos.ave10@cooplalouve.fr (cliquez pour copier l’adresse)" class="fa fa-question-circle"></i></span></td>
                                 <td>Extra</td>
                             </tr>
                         </t>
@@ -363,7 +363,7 @@
                                 <t t-set="seats_avail" t-value="sum(shift.shift_ticket_ids.filtered(lambda r: r.shift_type == 'ftop').mapped('seats_available'))" />
                                 <t t-if="seats_avail > 0">
                                     <tr>
-                                        <t t-set="date_begin" t-value="user.get_time_by_user_lang(shift.date_begin, ['%A %B %d %Y', '%HH%M'], lang=user.lang + '.utf8')" />
+                                        <t t-set="date_begin" t-value="user.get_time_by_user_lang(shift.date_begin, ['%A, %d %B %Hh%M', '%HH%M'], lang=user.lang + '.utf8')" />
                                         <td scope="row" t-attf-id="time-{{shift.id}}" ><t t-esc="date_begin and date_begin[0] or ''" /></td>
                                         <td t-attf-id="hour-{{shift.id}}"><t t-esc="date_begin and date_begin[1] or ''" /></td>
                                         <td><span t-attf-id="avalable-seats-{{shift.id}}" t-esc="seats_avail" /></td>
@@ -391,7 +391,7 @@
                                 <th>Date</th>
                                 <th>Heure</th>
                                 <th>Coordinateurs</th>
-                                <th>Echange</th>
+                                <th>Type</th>
                             </tr>
                         </thead>
                         <tbody>
