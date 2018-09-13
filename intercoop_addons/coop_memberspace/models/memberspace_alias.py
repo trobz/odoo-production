@@ -25,12 +25,15 @@ class MemberSpaceAlias(models.Model):
     def _auto_init(self, cr, context=None):
         """Installation hook to create aliases for all conversation
             and avoid constraint errors."""
+        alias_context = dict(
+            context, alias_model_name='memberspace.conversation')
         return self.pool.get('mail.alias').migrate_to_alias(
             cr, self._name, self._table,
             super(MemberSpaceAlias, self)._auto_init,
             'memberspace.conversation', self._columns['alias_id'],
-            'name', alias_prefix='Conversation+',
-            alias_defaults={}, context=context)
+            'name', alias_prefix='conversation+',
+            alias_defaults={'memberspace_alias_id': 'id'},
+            context=alias_context)
 
     @api.model
     def create(self, vals):

@@ -14,6 +14,7 @@ class MemberSpaceConversation(models.Model):
     @api.model
     def create(self, vals):
         res = super(MemberSpaceConversation, self).create(vals)
-        res.message_follower_ids = \
-            res.memberspace_alias_id.message_follower_ids
+        partner_ids = res.memberspace_alias_id.message_follower_ids.mapped(
+            'partner_id').ids
+        res.message_subscribe(partner_ids=partner_ids)
         return res
