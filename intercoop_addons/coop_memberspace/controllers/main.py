@@ -221,17 +221,33 @@ class Website(openerp.addons.website.controllers.main.Website):
             lambda r: r.is_current)
         coordinators = tmpl and tmpl[0].shift_template_id.user_ids or []
 
-        shifts = request.env['shift.shift'].sudo().search([
-            ('user_ids', 'in', [user.partner_id.id]),
-            ('state', '=', 'confirm')
-        ])
+        shifts = request.env['shift.shift'].sudo().search(
+            [
+                ('user_ids', 'in', [user.partner_id.id]),
+                ('state', '=', 'confirm')
+            ]
+        )
         members = shifts and shifts.mapped('registration_ids').mapped(
             'partner_id').filtered(lambda r: r.shift_type == 'standard') or []
+        alias_team = request.env['memberspace.alias'].search(
+            [('shift_id', 'in', shifts.ids), ('type', '=', 'team')]
+        )
+        alias_team = ', '.join(
+            [alias.alias_id.name_get()[0][1] for alias in alias_team])
+
+        alias_leader = request.env['memberspace.alias'].search(
+            [('shift_id', 'in', shifts.ids), ('type', '=', 'coordinator')]
+        )
+        alias_leader = ', '.join(
+            [alias.alias_id.name_get()[0][1] for alias in alias_leader])
+        
         return request.render(
             'coop_memberspace.myteam',
             {
                 'coordinators': coordinators,
-                'members': members
+                'members': members,
+                'alias_team': alias_team,
+                'alias_leader': alias_leader
             }
         )
 
