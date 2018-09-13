@@ -31,14 +31,37 @@ class ResPartner(models.Model):
     )
 
     @api.multi
+    def action_create_new_user(self):
+        """
+        Function to activate the User Creation Form
+        """
+        self.ensure_one()
+
+        res = super(ResPartner, self).action_create_new_user()
+        context = res.get('context', {})
+        portal_group = self.env.ref('base.group_portal')
+        # memberspace group
+        memberspace_group = self.env.ref(
+            'coop_memberspace.group_memberspace')
+        context.update({
+            'default_groups_id': [
+                (6, 0, [portal_group.id, memberspace_group.id])]
+        })
+        return res
+
+    @api.multi
     def create_memberspace_user(self):
+        """
+        This function is used to create user for existing partner when installing
+        module coop_memberspace
+        """
         members_dont_have_user = self.filtered(lambda r: not r.related_user_id)
         # portal group
         portal_group = self.env.ref('base.group_portal')
         # memberspace group
         memberspace_group = self.env.ref(
             'coop_memberspace.group_memberspace')
-        Users = self.env['res.users']
+        Users = self.env['res.users'].with_context(no_check_validate_email=True)
         context = self.env.context.copy()
         context.update({
             'default_groups_id': [

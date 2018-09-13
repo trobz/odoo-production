@@ -19,3 +19,18 @@ class ShiftRegistration(models.Model):
         if not coordinators:
             return ""
         return ", ".join(coordinators)
+
+    @api.model
+    def create(self, vals):
+        res = super(ShiftRegistration, self).create(vals)
+
+        # Add follower to memberspace alias
+        memberspace_alias = self.env['memberspace.alias'].search(
+            [('shift_id', '=', res.shift_id.id), ('type', '=', 'team')],
+            limit=1
+        )
+        if memberspace_alias and \
+                res.state in ('draft', 'open', 'done', 'replacing'):
+            memberspace_alias.message_subscribe(
+                partner_ids=[res.partner_id.id])
+        return res
