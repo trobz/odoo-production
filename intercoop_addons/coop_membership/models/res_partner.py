@@ -180,6 +180,18 @@ class ResPartner(models.Model):
                                         "associated people has been exceeded."))
 
     @api.multi
+    @api.constrains('birthdate', 'company_type')
+    def _age_validate(self):
+        for partner in self:
+            if partner.birthdate and partner.company_type == 'person':
+                d1 = datetime.strptime(partner.birthdate, "%Y-%m-%d").date()
+                d2 = date.today()
+                age = relativedelta(d2, d1).years
+                if age < 18:
+                    raise ValidationError(
+                        _("Member must be over 18 years old"))
+
+    @api.multi
     @api.depends('badge_distribution_date', 'badge_print_date')
     def compute_badge_to_distribute(self):
         for record in self:
@@ -416,7 +428,7 @@ class ResPartner(models.Model):
         """
         partners = self.browse(partner_ids)
         partners._compute_is_unsubscribed()
-    
+
     @api.model
     def update_is_unsubscribed(self):
         partners = self.search([])
@@ -528,6 +540,27 @@ class ResPartner(models.Model):
                 [('partner_id', '=', partner.id)])
             partner.related_user_id = \
                 related_users and related_users[0] or False
+
+    @api.multi
+    def _mass_change_team(self):
+        active_ids = self._context.get('active_ids', [])
+        partner_ids = active_ids
+        if partner_ids:
+            partner_id = partner_ids[0]
+            partner_ids.remove(partner_ids[0])
+            changed_team_ids = []
+            return {
+                'name': _('Change Team'),
+                'type': 'ir.actions.act_window',
+                'res_model': 'shift.change.team',
+                'view_type': 'form',
+                'target': 'new',
+                'view_mode': 'form',
+                'context': {'default_partner_id': partner_id,
+                            'partner_ids': partner_ids,
+                            'changed_team_ids': changed_team_ids,
+                            },
+            }
 
     @api.multi
     def action_create_new_user(self):
