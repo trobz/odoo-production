@@ -16,3 +16,4 @@ class MemberSpaceConversation(models.Model):
         res = super(MemberSpaceConversation, self).create(vals)
         res.message_follower_ids = \
             res.memberspace_alias_id.message_follower_ids
+        return res
