@@ -17,10 +17,12 @@ class ResPartner(models.Model):
             'warning_member_state'))
         if not (self.cooperative_state and warning_member_state.has_key(
             self.cooperative_state)):
-            return warning_member_state['none']['alert'] + ' ' + \
-                warning_member_state['none']['message']
-        return warning_member_state[self.cooperative_state]['alert'] + ' ' + \
-            warning_member_state[self.cooperative_state]['message']
+            return warning_member_state['none']['alert'], \
+                warning_member_state['none']['message'], \
+                    warning_member_state['none']['css-class'] 
+        return warning_member_state[self.cooperative_state]['alert'], \
+            warning_member_state[self.cooperative_state]['message'], \
+                warning_member_state[self.cooperative_state]['css-class']
 
     public_avatar = fields.Boolean(
         "Public Avatar", help="Public your avatar in website")
