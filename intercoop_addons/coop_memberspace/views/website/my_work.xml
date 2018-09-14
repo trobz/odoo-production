@@ -7,7 +7,7 @@
                 <!-- Status -->
                 <div contenteditable="false" style="text-align: center;margin-top: 10px;margin-left: -15px;margin-right: -15px;"
                     t-att-class="member_status[2]">
-                    <h3>
+                    <h3 style="margin-bottom: 0px;margin-top: 0px;">
                         <strong><span t-esc="member_status[0] + ' '" /></strong>
                         <span t-esc="member_status[1]" />
                     </h3>
