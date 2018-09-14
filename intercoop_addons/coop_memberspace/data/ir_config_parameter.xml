@@ -21,7 +21,7 @@
                 },
                 'delay': {
                     'alert': 'Attention !',
-                    'message': "Votre participation est temporairement gelée.",
+                    'message': "Vous avez un ou plusieurs rattrapages à faire.",
                     'css-class': 'alert alert-warning'
                 },
                 'unpayed': {
