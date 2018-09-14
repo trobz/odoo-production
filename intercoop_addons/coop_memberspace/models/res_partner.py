@@ -14,15 +14,16 @@ class ResPartner(models.Model):
     def get_warning_member_state(self):
         IrConfig  = self.env['ir.config_parameter']
         warning_member_state = safe_eval(IrConfig.sudo().get_param(
-            'warning_member_state'))
+            'warning_member_state')) or {}
+        member_state = {}
         if not (self.cooperative_state and warning_member_state.has_key(
             self.cooperative_state)):
-            return warning_member_state['none']['alert'], \
-                warning_member_state['none']['message'], \
-                    warning_member_state['none']['css-class'] 
-        return warning_member_state[self.cooperative_state]['alert'], \
-            warning_member_state[self.cooperative_state]['message'], \
-                warning_member_state[self.cooperative_state]['css-class']
+            member_state = warning_member_state.get('none', {})
+        else:
+            member_state = warning_member_state.get(
+                self.cooperative_state, {})
+        return member_state.get('alert', ""), \
+            member_state.get('message', ""), member_state.get('css-class', "")
 
     public_avatar = fields.Boolean(
         "Public Avatar", help="Public your avatar in website")
