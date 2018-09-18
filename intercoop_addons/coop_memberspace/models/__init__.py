@@ -6,4 +6,3 @@ from . import shift_registration
 from . import memberspace_alias
 from . import memberspace_conversation
 from . import shift_template
-from . import shift_template_registration_line

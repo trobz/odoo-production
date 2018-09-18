@@ -20,7 +20,7 @@ class ShiftRegistration(models.Model):
         
         # Get alias coordinator
         alias_coordinator = self.env['memberspace.alias'].search([
-            ('shift_id', '=', shift.id),
+            ('shift_id', '=', shift.shift_template_id.id),
             ('type', '=', 'coordinator')
         ], limit=1)
         alias_coordinator = alias_coordinator.alias_id.name_get()[0][1] \
