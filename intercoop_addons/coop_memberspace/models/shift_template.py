@@ -13,22 +13,32 @@ class ShiftTemplate(models.Model):
     def create(self, vals):
         res = super(ShiftTemplate, self).create(vals)
         # generate automatically an alias
-        name = res.name + (res.start_datetime and
-            (' ' + res.start_datetime) or '')
+        res.create_email_alias()
+        return res
+
+    @api.model
+    def create_email_alias(self):
+        name = self.name + (self.start_datetime and
+            (' ' + self.start_datetime) or '')
         alias_prefix = "_".join(
             name.replace('-', '').replace('.', '').split(' '))
             # 1. for the coordinators of the team
         self.env['memberspace.alias'].create({
             'name': name + ' - Leader',
-            'shift_id': res.id,
+            'shift_id': self.id,
             'alias_name': '%s_leader' % (alias_prefix),
             'type': 'coordinator'
         })
             # 2. for the members of the team (include coordinators))
         self.env['memberspace.alias'].create({
             'name': name + ' - Team',
-            'shift_id': res.id,
+            'shift_id': self.id,
             'alias_name': '%s_team' % (alias_prefix),
             'type': 'team'
         })
-        return res
+
+    @api.multi
+    def generate_email_alias(self):
+        records = self.filtered(lambda r: len(r.memberspace_alias_ids) < 1)
+        for record in records:
+            record.create_email_alias()
