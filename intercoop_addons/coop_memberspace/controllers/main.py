@@ -222,17 +222,16 @@ class Website(openerp.addons.website.controllers.main.Website):
         shift_tmpl = tmpl_lines and tmpl_lines[0].shift_template_id or False
         coordinators = shift_tmpl and shift_tmpl.user_ids or []
 
-        alias_leader = request.env['memberspace.alias'].search(
+        alias_leader = shift_tmpl and request.env['memberspace.alias'].search(
             [('shift_id', '=', shift_tmpl.id), ('type', '=', 'coordinator')],
-            limit=1
-        )
+            limit=1) or False
         alias_leader = alias_leader and \
             alias_leader[0].alias_id.name_get()[0][1] or ''
 
         # User may be have many shift template,
         # but we just get the first shift template.
         your_shift_tmpl = request.env['shift.template'].search([
-            ('user_ids.ids', 'in', [user.partner_id.id])
+            ('user_ids', 'in', [user.partner_id.id])
         ], limit=1)
         members = your_shift_tmpl and \
             your_shift_tmpl.registration_ids.filtered(
