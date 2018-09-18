@@ -245,8 +245,6 @@ class Website(openerp.addons.website.controllers.main.Website):
         alias_team = alias_team and \
             alias_team[0].alias_id.name_get()[0][1] or ''
 
-        is_leader = user.partner_id in coordinators
-
         return request.render(
             'coop_memberspace.myteam',
             {
@@ -254,7 +252,6 @@ class Website(openerp.addons.website.controllers.main.Website):
                 'members': members,
                 'alias_team': alias_team,
                 'alias_leader': alias_leader,
-                'is_leader': is_leader
             }
         )
 
