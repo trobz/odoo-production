@@ -16,8 +16,9 @@ class ShiftTemplate(models.Model):
         res.create_email_alias()
         return res
 
-    @api.model
+    @api.multi
     def create_email_alias(self):
+        self.ensure_one()
         name = self.name + (self.start_datetime and
             (' ' + self.start_datetime) or '')
         alias_prefix = "_".join(
