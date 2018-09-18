@@ -34,3 +34,8 @@ msgstr "Colisage"
 #: model:ir.model.fields,field_description:coop_stock.field_stock_pack_operation_vendor_product_code
 msgid "Vendor Product Code"
 msgstr "Référence Fournisseur"
+
+#. module: coop_stock
+#: model:ir.ui.view,arch_db:coop_stock.report_inventory_adjust
+msgid "<strong>Quantity</strong>"
+msgstr "<strong>Quantité</strong>"
