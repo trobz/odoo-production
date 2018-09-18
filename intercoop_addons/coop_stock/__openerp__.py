@@ -12,6 +12,8 @@
         'views/action.xml',
         'views/menu.xml',
         'views/stock_picking_view.xml',
+
+        'report/report_stockinventory.xml',
     ],
     'installable': True,
 }

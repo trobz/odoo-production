@@ -40,3 +40,7 @@ msgstr "Colisage"
 msgid "Vendor Product Code"
 msgstr "Référence Fournisseur"
 
+#. module: coop_stock
+#: model:ir.ui.view,arch_db:coop_stock.report_inventory_adjust
+msgid "<strong>Quantity</strong>"
+msgstr "<strong>Quantité</strong>"
