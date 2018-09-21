@@ -21,7 +21,7 @@
         'data/ir_cron_data.xml',
 
         # view
-        'views/view_pos_config.xml',
+        'views/view_pos_config_settings.xml',
 
         # templates
         'static/src/xml/templates.xml',
