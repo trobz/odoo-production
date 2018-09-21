@@ -50,11 +50,6 @@ msgid "Send Status"
 msgstr "Send Status"
 
 #. module: email_pos_receipt
-#: model:ir.model.fields,field_description:email_pos_receipt.field_res_partner_email_pos_receipt
-msgid "E-receipt"
-msgstr "Reçu électronique"
-
-#. module: email_pos_receipt
 #: selection:pos.order,email_status:0
 msgid "Sent"
 msgstr "Sent"
@@ -85,11 +80,6 @@ msgid "Print receipt when not sent email"
 msgstr "Ne pas imprimer de ticket s’il est envoyé par par email"
 
 #. module: email_pos_receipt
-#: model:ir.model.fields,field_description:email_pos_receipt.field_res_partner_email_pos_receipt
-msgid "E-receipt"
-msgstr "Reçu électronique"
-
-#. module: email_pos_receipt
 #: model:ir.model.fields,field_description:email_pos_receipt.field_pos_config_settings_receipt_options
 msgid "Receipt"
 msgstr "Reçu"
@@ -113,3 +103,8 @@ msgstr "Envoyer le reçu par email et l'imprimer sauf si ce partenaire est confi
 #: model:ir.model.fields,help:email_pos_receipt.field_res_partner_email_pos_receipt
 msgid "If you tick this box and option 3 is selected for 'Receipt' in point of sale settings, the user will only receive e-receipt"
 msgstr "Si vous cochez cette case et que l'option 3 est sélectionnée dans la configuration générale du point de vente, ce partenaire recevra uniquement le reçu électronique"
+
+#. module: email_pos_receipt
+#: model:ir.model.fields,field_description:email_pos_receipt.field_res_partner_email_pos_receipt
+msgid "E-receipt"
+msgstr "Reçu électronique"
