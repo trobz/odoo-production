@@ -19,6 +19,8 @@
                             <span class="label label-danger" ng-show="partner.cooperative_state == 'blocked'">Bloqué(e)</span>
                             <span class="label label-danger" ng-show="partner.cooperative_state == 'unpayed'">Impayé constaté</span>
                             <span class="label label-danger" ng-show="partner.cooperative_state == 'unsubscribed'">Désinscrit</span>
+                            <span class="label label-success" ng-show="partner.cooperative_state == 'exempted'">Exempté</span>
+                            <span class="label label-danger" ng-show="partner.cooperative_state == 'vacation'">En congés</span>
                         </h3>
                         <h3>Peut acheter :
                             <span class="label label-success" ng-show="partner.customer">OUI</span>
@@ -47,7 +49,7 @@
                             <input type="submit" class="button button-positive" value="Erreur" style="width:150px;">
                         </form>
                     </div>
-                    <div class="col-sm-3" style="text-align: center;">
+                    <div class="col-sm-3" style="text-align: center;" ng-show="partner.badge_to_distribute">
                             <form ng-submit="set_badge_distributed()">
                             <input type="submit" class="button button-positive" value="Badge distribué" style="width:150px;">
                         </form>
