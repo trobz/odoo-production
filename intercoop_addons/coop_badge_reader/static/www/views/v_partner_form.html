@@ -35,6 +35,10 @@
                     </div>
                 </div>      
                 <br />
+                <div style="text-align: center; width: 70%; margin: auto;" ng-show="partner.contact_us_message">
+                    <h3 style="text-align: left"><span ng-bind-html="partner.contact_us_message"></span></h3>
+                </div>
+                <br />
                 <br />
                 <div class="row">
                     <div class="col-sm-3" style="text-align: center;">
@@ -52,7 +56,7 @@
                             <input type="submit" class="button button-positive" value="Erreur" style="width:150px;">
                         </form>
                     </div>
-                    <div class="col-sm-3" style="text-align: center;">
+                    <div class="col-sm-3" style="text-align: center;" ng-show="partner.badge_to_distribute">
                             <form ng-submit="set_badge_distributed()">
                             <input type="submit" class="button button-positive" value="Badge distribué" style="width:150px;">
                         </form>
