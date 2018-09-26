@@ -16,15 +16,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: email_pos_receipt
-#: model:mail.template,body_html:email_pos_receipt.email_send_pos_receipt
-msgid "\n"
-"Votre Ticket ${object.pos_reference}\n"
-"            "
-msgstr "\n"
-"Votre Ticket ${object.pos_reference}\n"
-"            "
-
-#. module: email_pos_receipt
 #: selection:pos.order,email_status:0
 msgid "Do not Send"
 msgstr "Do not Send"
@@ -63,11 +54,6 @@ msgstr "Ticket ${object.pos_reference}"
 #: selection:pos.order,email_status:0
 msgid "To send"
 msgstr "To send"
-
-#. module: email_pos_receipt
-#: model:mail.template,subject:email_pos_receipt.email_send_pos_receipt
-msgid "[${object.user_id.company_id.name}] Reçu ${object.pos_reference}"
-msgstr "[${object.user_id.company_id.name}] Reçu ${object.pos_reference}"
 
 #. module: email_pos_receipt
 #: model:ir.model,name:email_pos_receipt.model_pos_config
