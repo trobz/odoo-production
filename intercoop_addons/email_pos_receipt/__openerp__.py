@@ -23,6 +23,7 @@
 
         # view
         'views/view_pos_config_settings.xml',
+        'views/view_res_partner.xml',
 
         # templates
         'static/src/xml/templates.xml',
