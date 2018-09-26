@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from . import event_config_settings
 from . import shift_leave_wizard
 from . import barcode_rule
 from . import res_partner
@@ -26,3 +27,4 @@ from . import shift_ticket
 from . import shift_holiday
 from . import shift_counter_event
 from . import shift_change_team
+from . import res_company

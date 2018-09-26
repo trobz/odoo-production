@@ -24,7 +24,7 @@
         'purchase_compute_order',
         'res_partner_account_move_line',
         'stock',
-        'pos_receipt_by_email',
+        'email_pos_receipt',
     ],
     'data': [
         'data/update_template_name_ftop.yml',
@@ -43,6 +43,7 @@
         # Wizard
         'wizard/view_capital_fundraising_wizard.xml',
         'wizard/res_partner_generate_barcode_wizard.xml',
+        'wizard/contact_us_message_wizard.xml',
 
         # Classical Data
         'views/view_shift_counter_event.xml',
@@ -61,6 +62,7 @@
         'views/account_view.xml',
         'views/capital_subscription_view.xml',
         'views/event_view.xml',
+        'views/event_config_settings_view.xml',
         'views/shift_view.xml',
         'views/view_shift_extension.xml',
         'views/view_shift_ticket.xml',
