@@ -43,18 +43,30 @@ class ResUsers(models.Model):
             lambda r: r.is_current)
         shift_env = self.env['shift.shift']
         shifts_available = shift_env
+        shifts = []
         if tmpl:
             shifts_available = shift_env.sudo().search([
                 ('shift_template_id', '!=', tmpl[0].shift_template_id.id),
                 ('date_begin', '>=', (
                     datetime.now() + timedelta(days=1)).strftime(
-                        '%Y-%m-%d 00:00:00')),
-                ('state', '=', 'confirm')
+                        '%Y-%m-%d 00:00:00'))
             ]).filtered(lambda r, user=self.env.user:
                 user.partner_id not in r.registration_ids.mapped('partner_id')
             ).sorted(key=lambda r: r.date_begin)
-
-        return shifts_available.read([])
+            for shift in shifts_available:
+                tickets = shift.shift_ticket_ids.filtered(
+                    lambda r: r.shift_type == 'ftop')
+                seats_avail = sum(tickets.mapped("seats_available"))
+                if seats_avail < 1:
+                    continue
+                shifts.append({
+                    'id': shift.id,
+                    'seats_avail': seats_avail,
+                    'date_begin': user.get_time_by_user_lang(
+                        shift.date_begin, ['%A, %d %B %Hh%M', '%HH%M'],
+                        lang=user.lang + '.utf8')
+                })
+        return shifts
 
     @api.model
     def get_statistics_char(self):
