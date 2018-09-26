@@ -1,4 +1,4 @@
-odoo.define('lalouve_custom_pos.db', function (require) {
+odoo.define('pos_search_improvement.db', function (require) {
     "use strict";
 
     var PosDB = require('point_of_sale.DB');
@@ -63,6 +63,28 @@ odoo.define('lalouve_custom_pos.db', function (require) {
         },
         get_multi_barcodes: function(){
             return this.multi_barcode_by_id;
-        }
+        },
+
+        search_product_in_category: function(category_id, query){
+
+            try {
+                query = query.replace(/[\[\]\(\)\+\*\?\.\-\!\&\^\$\|\~\_\{\}\:\,\\\/]/g,'.');
+                query = query.replace(/ /g,'.+');
+            }catch(e){
+                return [];
+            }
+            var res = this._super(category_id, query);
+            var results = [];
+
+            for(var i = 0; i < res.length; i++){
+                if(res[i].barcode == query || res[i].default_code == query || res[i].description_sale == query || res[i].description == query){
+                    results.push(res[i]);
+                }else{
+                    break;
+                }
+            }
+            return results;
+        },
+
     });
 });
