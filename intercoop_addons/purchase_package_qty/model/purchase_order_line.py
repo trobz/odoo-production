@@ -86,13 +86,17 @@ class PurchaseOrderLine(models.Model):
         return False
 
     package_qty = fields.Float(
-        'Package Qty', default=lambda self: self._get_package_qty(),
+        'Package Qty',
+        digits=dp.get_precision('Product Unit of Measure'),
+        default=lambda self: self._get_package_qty(),
         help="""The quantity of products in the supplier package.""")
     indicative_package = fields.Boolean(
         'Indicative Package',
         default=lambda self: self._get_indicative_package())
     product_qty_package = fields.Float(
-        'Number of packages', help="""The number of packages you'll buy.""")
+        'Number of packages',
+        digits=dp.get_precision('Product Unit of Measure'),
+        help="""The number of packages you'll buy.""")
     product_qty = fields.Float(
         string='Quantity',
         digits=dp.get_precision('Product Unit of Measure'),
