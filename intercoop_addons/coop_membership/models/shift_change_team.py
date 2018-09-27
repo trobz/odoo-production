@@ -146,9 +146,11 @@ class ShiftChangeTeam(models.Model):
         '''
         self.ensure_one()
         current_registrations = self.partner_id.tmpl_reg_line_ids.filtered(
-            lambda r: r.date_begin <= self.new_next_shift_date)
+            lambda r: r.date_begin <= self.new_next_shift_date and (
+                not r.date_end or r.date_end >= fields.Date.context_today(self)))
         future_registrations = self.partner_id.tmpl_reg_line_ids.filtered(
-            lambda r: r.date_begin > self.new_next_shift_date)
+            lambda r: r.date_begin > self.new_next_shift_date and
+            r.date_begin >= fields.Date.context_today(self))
         if current_registrations:
             current_registrations[0].date_end = fields.Date.to_string(
                 fields.Date.from_string(
@@ -256,6 +258,19 @@ class ShiftChangeTeam(models.Model):
             return (_('Not Concerned'))
         else:
             return ''
+
+    @api.multi
+    def save_new_without_partner(self):
+        self.button_close()
+        return {
+            'name': _('Change Teams'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'shift.change.team',
+            'view_type': 'form',
+            'target': 'new',
+            'view_mode': 'form',
+            'context': {},
+        }
 
     @api.multi
     def button_save_new(self):
@@ -389,6 +404,9 @@ class ShiftChangeTeam(models.Model):
                 self.current_shift_template_id = reg[0].shift_template_id
                 next_shifts =\
                     self.current_shift_template_id.shift_ids.filtered(
+                        lambda s: s.date_begin >= fields.Date.context_today(self))
+                if self.new_next_shift_date:
+                    next_shifts = next_shifts.filtered(
                         lambda s: s.date_begin < self.new_next_shift_date).sorted(
                         key=lambda l: l.date_begin, reverse=True)
                 self.next_current_shift_date = next_shifts and\
