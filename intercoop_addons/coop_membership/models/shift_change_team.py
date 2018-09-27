@@ -258,6 +258,19 @@ class ShiftChangeTeam(models.Model):
             return ''
 
     @api.multi
+    def save_new_without_partner(self):
+        self.button_close()
+        return {
+            'name': _('Change Teams'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'shift.change.team',
+            'view_type': 'form',
+            'target': 'new',
+            'view_mode': 'form',
+            'context': {},
+            }
+
+    @api.multi
     def button_save_new(self):
         self.ensure_one()
         partner_ids = self._context.get('partner_ids', [])
