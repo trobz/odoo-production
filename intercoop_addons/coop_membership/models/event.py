@@ -42,7 +42,7 @@ class event_event(models.Model):
 
     @api.model
     def _get_default_seats_max(self):
-        event_confg = self.env['event.config.settings'].search(
+        event_confg = self.env['event.config.settings'].sudo().search(
             [], limit=1, order="id desc")
         return event_confg and event_confg.seats_max or 0
 
