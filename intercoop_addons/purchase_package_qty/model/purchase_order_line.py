@@ -96,7 +96,7 @@ class PurchaseOrderLine(models.Model):
     product_qty = fields.Float(
         string='Quantity',
         digits=dp.get_precision('Product Unit of Measure'),
-        required=True, _prefetch=False)       
+        required=True, _prefetch=False)
     price_policy = fields.Selection(
         [('uom', 'per UOM'), ('package', 'per Package')], "Price Policy",
         default='uom', required=True)
