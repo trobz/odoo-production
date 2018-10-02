@@ -6,6 +6,7 @@
 from openerp import api, fields, models, _
 from openerp.exceptions import UserError
 from datetime import datetime, timedelta
+from dateutil import rrule
 
 
 class ShiftChangeTeam(models.Model):
@@ -410,6 +411,18 @@ class ShiftChangeTeam(models.Model):
                     next_shifts[0].date_begin or False
 
     @api.multi
+    def check_num_week(self, new_next_shift_date):
+        self.ensure_one()
+        weekA_date = fields.Datetime.from_string(
+            self.env.ref('coop_shift.config_parameter_weekA').value)
+
+        week_number = 1 + (((fields.Datetime.from_string(
+            new_next_shift_date) - weekA_date).days // 7) % 4)
+
+        num_week = (self.new_shift_template_id.week_number - (week_number)) % 4
+        return num_week
+
+    @api.multi
     def compute_range_day(self):
         '''
         Compute range day base on next shift
@@ -429,10 +442,25 @@ class ShiftChangeTeam(models.Model):
 
         new_next_shift_date = self.new_next_shift_date
 
-        if new_team_start_date > 1:
+        if new_team_start_date > 1 and\
+                self.new_shift_template_id.shift_type_id.is_ftop:
             new_next_shift_date = (fields.Datetime.from_string(
                 self.new_next_shift_date) - timedelta(
                 days=new_team_start_date)).strftime('%Y-%m-%d')
+
+        if not self.new_shift_template_id.shift_type_id.is_ftop:
+            if self.check_num_week(new_next_shift_date) == 1:
+                new_next_shift_date = (fields.Datetime.from_string(
+                    new_next_shift_date) - timedelta(
+                    days=21)).strftime('%Y-%m-%d')
+            elif self.check_num_week(new_next_shift_date) == 2:
+                new_next_shift_date = (fields.Datetime.from_string(
+                    new_next_shift_date) - timedelta(
+                    days=14)).strftime('%Y-%m-%d')
+            elif self.check_num_week(new_next_shift_date) == 3:
+                new_next_shift_date = (fields.Datetime.from_string(
+                    new_next_shift_date) - timedelta(
+                    days=7)).strftime('%Y-%m-%d')
 
         next_shift_mounth = (fields.Datetime.from_string(
             new_next_shift_date) +
