@@ -250,7 +250,7 @@
                 <body>
                     <div class="container-contact100">
                         <div class="wrap-email-aready">
-                            <span class="email-aready">Votre adresse mail est déjà dans les contacts de La Louve.</span><br />
+                            <span class="email-aready">Votre adresse mail est déjà dans les contacts de <span t-esc= "company_name"></span>.</span><br />
                             <span class="email-aready">(Peut-être parce que vous êtes déjà membre, ou que vous vous êtes déjà inscrit.e à une réunion d’accueil.)</span><br />
                             <span class="email-aready">Merci de nous contacter par mail à l’adresse <span t-esc= "email_contact"></span> pour que nous vous inscrivions directement à la date que vous souhaitez.</span><br />
                             <span class="email-aready">A bientôt !</span>
