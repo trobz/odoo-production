@@ -1750,7 +1750,7 @@ msgid "\n"
 "<br/>\n"
 "<p>See you soon at the co-op!</p>\n"
 "<br />\n"
-"<p> <img src=\"data:image/png;base64,${object.company_id.logo}\" style=\"width: 250px;\" /> </p>\n"
+"<p> <img src="/coop_membership/static/description/image_lalouve.png" /> </p>\n"
 "\n"
 "        "
 msgstr "\n"
@@ -1763,7 +1763,7 @@ msgstr "\n"
 "<br/>\n"
 "<p>A bientôt à La Louve !</p>\n"
 "<br />\n"
-"<p> <img src=\"data:image/png;base64,${object.company_id.logo}\" style=\"width: 250px;\" /> </p>\n"
+"<p> <img src="/coop_membership/static/description/image_lalouve.png" /> </p>\n"
 "\n"
 "        "
 
@@ -1776,6 +1776,78 @@ msgstr "Votre inscription à la réunion d’accueil du ${object.convert_event_d
 #: model:ir.ui.view,arch_db:coop_membership.view_contact_us_message_wizard
 msgid "OK"
 msgstr "Confirmer"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/event_registration.py:113
+#, python-format
+msgid "January"
+msgstr "janvier"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/event_registration.py:115
+#, python-format
+msgid "February"
+msgstr "février"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/event_registration.py:117
+#, python-format
+msgid "March"
+msgstr "mars"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/event_registration.py:119
+#, python-format
+msgid "April"
+msgstr "avril"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/event_registration.py:121
+#, python-format
+msgid "May"
+msgstr "mai"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/event_registration.py:123
+#, python-format
+msgid "June"
+msgstr "juin"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/event_registration.py:125
+#, python-format
+msgid "July"
+msgstr "juillet"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/event_registration.py:127
+#, python-format
+msgid "August"
+msgstr "août"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/event_registration.py:129
+#, python-format
+msgid "September"
+msgstr "septembre"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/event_registration.py:131
+#, python-format
+msgid "October"
+msgstr "octobre"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/event_registration.py:133
+#, python-format
+msgid "November"
+msgstr "novembre"
+
+#. module: coop_membership
+#: code:addons/coop_membership/models/event_registration.py:135
+#, python-format
+msgid "December"
+msgstr "décembre"
 
 #. module: coop_membership
 #: model:ir.ui.view,arch_db:coop_membership.view_partner_form

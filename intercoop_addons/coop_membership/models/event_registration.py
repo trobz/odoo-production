@@ -45,7 +45,16 @@ class event_registration(models.Model):
             date_begin = datetime.strptime(record.event_id.date_begin_located,
                                            '%Y-%m-%d %H:%M:%S')
             time_ago = date_begin - timedelta(minutes=number)
-            return unicode(fields.Datetime.to_string(time_ago), "utf-8")
+            time_ago = fields.Datetime.to_string(time_ago)
+            time = self.convert_meeting_time(time_ago)
+            return unicode(time, "utf-8")
+
+    @api.multi
+    def convert_meeting_time(self, time):
+        self.ensure_one()
+        time = '%sh%s' %\
+            (time[11:].split(':')[0], time.split(':')[1])
+        return time
 
     @api.multi
     def get_time_meeting(self):
@@ -69,12 +78,10 @@ class event_registration(models.Model):
 
             meeting_time = self.get_time_meeting()
 
-            time_end = date_end[11:].split(':')[1]
+            time_end = self.convert_meeting_time(date_end)
 
-            date_time_meeting = '%s %s %s de %s a %s' % (
+            date_time_meeting = '%s %s %s de %s à %s' % (
                 str(weekday), str(date), str(month), str(meeting_time), str(time_end))
-
-            print '\n\ndate time', date_time_meeting
 
             return unicode(date_time_meeting, "utf-8")
 
@@ -88,7 +95,7 @@ class event_registration(models.Model):
         elif wd == 2:
             wd = _("Mercredi")
         elif wd == 3:
-            wd = _("Juedi")
+            wd = _("Jeudi")
         elif wd == 4:
             wd = _("Vendredi")
         elif wd == 5:
@@ -101,29 +108,29 @@ class event_registration(models.Model):
     def convert_month(self, month):
         self.ensure_one()
         if month == 1:
-            month = _("janvier")
+            month = _("January")
         elif month == 2:
-            month = _("fevrier")
+            month = _("February")
         elif month == 3:
-            month = _("mars")
+            month = _("March")
         elif month == 4:
-            month = _("avril")
+            month = _("April")
         elif month == 5:
-            month = _("mai")
+            month = _("May")
         elif month == 6:
-            month = _("juin")
+            month = _("June")
         elif month == 7:
-            month = _("juillet")
+            month = _("July")
         elif month == 8:
-            month = _("aout")
+            month = _("August")
         elif month == 9:
-            month = _("septembre")
+            month = _("September")
         elif month == 10:
-            month = _("octobre")
+            month = _("October")
         elif month == 11:
-            month = _("novembre")
+            month = _("November")
         elif month == 12:
-            month = _("decembre")
+            month = _("December")
         return month
 
     @api.model
@@ -131,6 +138,7 @@ class event_registration(models.Model):
         registration_env = self.env['event.registration']
         registrations = registration_env.search([
             ('is_send_reminder', '=', False),
+            ('state', '=', 'open'),
             ('event_id.date_begin', '>=', fields.Date.context_today(self)),
             ('event_id.date_begin', '<=',
              (datetime.now() + timedelta(days=3)).strftime('%Y-%m-%d'))
