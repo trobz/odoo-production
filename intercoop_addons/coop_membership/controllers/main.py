@@ -201,8 +201,11 @@ class WebsiteRegisterMeeting(http.Controller):
         if partner_id:
             email_meeting_contact = request.env[
                 'ir.config_parameter'].sudo().get_param('email_meeting_contact')
+            company_name = request.env[
+                'ir.config_parameter'].sudo().get_param('company_name')
             email_contact = {
-                'email_contact': email_meeting_contact
+                'email_contact': email_meeting_contact,
+                'company_name': company_name
             }
             return request.render(
                 "coop_membership.register_submit_form_err_email", email_contact)
@@ -279,6 +282,11 @@ class WebsiteRegisterMeeting(http.Controller):
                     # template_email.sudo().attachment_ids = [
                     #     (6, 0, (contract.ids))]
                     template_email.sudo().send_mail(attendee_id)
+
+                template_email_confirm = request.env.ref(
+                    'coop_membership.registration_confirm_meeting_email')
+                if template_email_confirm:
+                    template_email_confirm.sudo().send_mail(attendee_id)
 
             value = {
                 'website': website

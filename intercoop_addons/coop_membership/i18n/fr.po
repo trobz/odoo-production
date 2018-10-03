@@ -1743,7 +1743,7 @@ msgstr "Places volants"
 msgid "\n"
 "<p>Hello,</p>\n"
 "<br/>\n"
-"<p>You have just registered to a welcome meeting that will take place on ${object.convert_event_date_begin()} at ${object.event_id.date_begin[11:].split(':')[0]}h${object.event_id.date_begin[11:].split(':')[1]}. Thanks for your interest in what we do!</p>\n"
+"<p>You have just registered to a welcome meeting that will take place on ${object.convert_event_date_begin()} at ${object.get_time_meeting()}. Thanks for your interest in what we do!</p>\n"
 "<p>The meeting will take place at this address ${object.get_address_meeting()}.</p>\n"
 "<p>You should receive a reminder email three days before the meeting.</p>\n"
 "<p>If you wish to cancel or postpone your attendance, please write to ${object.get_email_contact_meeting()}.</p>\n"
@@ -1756,7 +1756,7 @@ msgid "\n"
 msgstr "\n"
 "<p>Bonjour,</p>\n"
 "<br/>\n"
-"<p>Vous venez de vous inscrire à la réunion d’accueil de [La Louve] qui aura lieu le ${object.convert_event_date_begin()} à ${object.event_id.date_begin[11:].split(':')[0]}h${object.event_id.date_begin[11:].split(':')[1]}. Merci de votre intérêt pour notre projet !</p>\n"
+"<p>Vous venez de vous inscrire à la réunion d’accueil de La Louve qui aura lieu le ${object.get_time_meeting()}. Merci de votre intérêt pour notre projet !</p>\n"
 "<p>La réunion aura lieu à la coopérative, ${object.get_address_meeting()}.</p>\n"
 "<p>Vous recevrez un mail de rappel accompagné d’informations complémentaires trois jours avant la réunion.</p>\n"
 "<p>Si vous souhaitez annuler ou reporter votre participation à cette réunion, merci d’envoyer un mail à ${object.get_email_contact_meeting()}.</p>\n"
@@ -1769,8 +1769,8 @@ msgstr "\n"
 
 #. module: coop_membership
 #: model:mail.template,subject:coop_membership.registration_confirm_meeting_email
-msgid "Your registration to a welcome meeting on ${object.convert_event_date_begin()} at ${object.event_id.date_begin[11:].split(':')[0]}h${object.event_id.date_begin[11:].split(':')[1]}"
-msgstr "Votre inscription à la réunion d’accueil du ${object.convert_event_date_begin()} at ${object.event_id.date_begin[11:].split(':')[0]}h${object.event_id.date_begin[11:].split(':')[1]}"
+msgid "Your registration to a welcome meeting on ${object.convert_event_date_begin()} at ${object.get_time_meeting()}"
+msgstr "Votre inscription à la réunion d’accueil du ${object.convert_event_date_begin()} at ${object.get_time_meeting()}"
 
 #. module: coop_membership
 #: model:ir.ui.view,arch_db:coop_membership.view_contact_us_message_wizard
