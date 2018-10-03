@@ -485,7 +485,7 @@ class ShiftChangeTeam(models.Model):
             if self.new_shift_template_id.shift_type_id.is_ftop:
                 range_dates = rec_new_template_dates[0] -\
                     fields.Datetime.from_string(self.new_next_shift_date)
-                return range_dates.days + 1, rec_new_template_dates
+                return range_dates.days, rec_new_template_dates
             else:
                 return False, rec_new_template_dates
         else:
