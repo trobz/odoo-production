@@ -99,7 +99,11 @@ class Proposal(models.Model):
             'coop_memberspace.confirm_exchange_done')
         proposal_accepted_mail_tmpl = self.env.ref(
             'coop_memberspace.proposal_accepted')
+        proposal_cancelled_mail_tmpl = self.env.ref(
+            'coop_memberspace.proposal_cancelled')
         for record in self:
+            if record.state != 'in_progress':
+                continue
             # Replace shift for member B
             new_src_reg_id = record.src_registration_id.copy({
                 'partner_id': record.des_registration_id.partner_id.id,
@@ -136,9 +140,45 @@ class Proposal(models.Model):
             if confirm_exchange_done_mail_tmpl:
                 confirm_exchange_done_mail_tmpl.send_mail(record.id)
                 record.send_email_confirm_accept_done = True
+            # Send email to member B to inform exchange was acceted.
             if proposal_accepted_mail_tmpl:
                 proposal_accepted_mail_tmpl.send_mail(record.id)
                 record.send_email_accept = True
+            # Send email to others member B to inform exchange was refuse.
+            others_b = self.search([
+                ('id', '!=', record.id),
+                ('state', '=', 'in_progress'),
+                ('src_registration_id', '=', record.src_registration_id.id)
+            ])
+            others_b.write({'state': 'refuse'})
+            if proposal_cancelled_mail_tmpl:
+                for b in others_b:
+                    proposal_cancelled_mail_tmpl.send_mail(b.id)
+                    b.send_email_refuse = True
+            # Send email to others member that proposal to member B
+            # exchange was refuse.
+            others_member = self.search([
+                ('state', '=', 'in_progress'),
+                ('src_registration_id', '=', record.des_registration_id.id)
+            ])
+            others_member.write({'state': 'refuse'})
+            if proposal_cancelled_mail_tmpl:
+                for m in others_member:
+                    proposal_cancelled_mail_tmpl.send_mail(m.id)
+                    m.send_email_refuse = True
+            # Cancel all proposal that member A proposal to the others member.
+            others_proposal_a = self.search([
+                ('state', '=', 'in_progress'),
+                ('des_registration_id', '=', record.src_registration_id.id)
+            ])
+            # Cancel all proposal that member B proposal to the others member.
+            others_proposal_b = self.search([
+                ('id', '!=', record.id),
+                ('state', '=', 'in_progress'),
+                ('des_registration_id', '=', record.des_registration_id.id)
+            ])
+            others_proposal = others_proposal_a | others_proposal_b
+            others_proposal.write({'state': 'cancel'})
         self.write({'state': 'accept'})
 
     @api.multi

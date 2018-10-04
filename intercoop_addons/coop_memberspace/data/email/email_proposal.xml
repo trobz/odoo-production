@@ -10,17 +10,17 @@
         <field name="subject">${'Proposition d’échange de votre service du ' + user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])[0].lower()}</field>
         <field name="body_html"><![CDATA[
 <p>Cher ${object.src_registration_id.partner_id.name}</p>
-<p>[LAST NAME, First Name] vous propose de remplacer votre service du ${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])[0].lower()} à ${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%Hh%M'])[0].lower()} par :</p>
+<p>${object.des_registration_id.partner_id.name} vous propose de remplacer votre service du ${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])[0].lower()} à ${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%Hh%M'])[0].lower()} par :</p>
 <p style="margin-left: 50px;">
-    <span style="margin-right: 20px;">${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])[0].lower()}</span>
+    <span style="margin-right: 20px;">${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])[0]}</span>
     <span>${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%Hh%M'])[0].lower()}</span>
 </p>
 <p>Veuillez pouvez accepter ou refuser cette proposition en cliquant sur l’un des boutons ci-dessous.</p>
 <div style="height: auto;width:450px; margin:0 auto;padding-top:20px;padding-bottom:40px;">
-    <a style="margin-right: 40px" href="/proposal/confirm?token=${object.token}&action=refuse">
+    <a style="margin-right: 40px;text-decoration:none;" href="/proposal/confirm?token=${object.token}&action=refuse">
         <img style="width: 50px" src="/coop_memberspace/static/src/img/cancel.png" />
     </a>
-    <a href="/proposal/confirm?token=${object.token}&action=accept">
+    <a style="text-decoration:none;" href="/proposal/confirm?token=${object.token}&action=accept">
         <img style="width: 50px" src="/coop_memberspace/static/src/img/check.png" />
     </a>
 </div>
@@ -42,7 +42,7 @@
 <p>Cher ${object.src_registration_id.partner_id.name}</p>
 <p>Nous avons le plaisir de vous confirmer que votre service du ${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])[0].lower()} à ${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%Hh%M'])[0].lower()} remplacé par :</p>
 <p style="margin-left: 50px;">
-    <span style="margin-right: 20px;">${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])[0].lower()}</span>
+    <span style="margin-right: 20px;">${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])[0]}</span>
     <span>${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%Hh%M'])[0].lower()}</span>
 </p>
 <p>Amicalement,</p>
@@ -63,7 +63,7 @@
 <p>Cher ${object.des_registration_id.partner_id.name}</p>
 <p>Nous avons le regret de vous informer que votre proposition d’échange de votre service n’a pas été acceptée :</p>
 <p style="margin-left: 50px;">
-    <span style="margin-right: 20px;">${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])[0].lower()}</span>
+    <span style="margin-right: 20px;">${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])[0]}</span>
     <span>${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%Hh%M'])[0].lower()}</span>
 </p>
 <p>Vous pouvez vous rendre sur la bourse aux services pour trouver une autre service de remplacement.</p>
@@ -86,7 +86,7 @@
 <p>Cher ${object.des_registration_id.partner_id.name}</p>
 <p>Nous avons le plaisir de vous confirmer que votre service du ${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])[0].lower()} à ${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%Hh%M'])[0].lower()} a été acceptée. Votre service est remplacé par :</p>
 <p style="margin-left: 50px;">
-    <span >${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])[0].lower()}</span>
+    <span >${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])[0]}</span>
      à 
     <span>${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%Hh%M'])[0].lower()}</span>
 </p>
