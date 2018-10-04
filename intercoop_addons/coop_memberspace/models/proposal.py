@@ -104,37 +104,43 @@ class Proposal(models.Model):
         for record in self:
             if record.state != 'in_progress':
                 continue
-            # Replace shift for member B
+            # Create new shift registration for member B
+            # base on the shift registration of the member A
             new_src_reg_id = record.src_registration_id.copy({
                 'partner_id': record.des_registration_id.partner_id.id,
-                'replaced_reg_id': record.src_registration_id.id,
-                'exchange_replaced_reg_id': record.des_registration_id.id,
-                'tmpl_reg_line_id': False,
-                'template_created': False,
-                'state': 'replacing',
+                'replaced_reg_id': record.src_registration_id.id, # The old shift of member A
+                'exchange_replaced_reg_id': record.des_registration_id.id, # The old shift of member B
+                'tmpl_reg_line_id': record.des_registration_id.tmpl_reg_line_id.id,
+                'template_created': True,
+                'state': 'open',
                 'exchange_state': 'replacing'})
-            # Replace shift for member A
+            # Create new shift registration for member A
+            # base on the shift registration of the member B
             new_des_reg_id = record.des_registration_id.copy({
                 'partner_id': record.src_registration_id.partner_id.id,
-                'replaced_reg_id': record.des_registration_id.id,
-                'exchange_replaced_reg_id': record.src_registration_id.id,
-                'tmpl_reg_line_id': False,
-                'template_created': False,
-                'state': 'replacing',
+                'replaced_reg_id': record.des_registration_id.id, # The old shift of member B
+                'exchange_replaced_reg_id': record.src_registration_id.id, # The old shift of member A
+                'tmpl_reg_line_id': record.src_registration_id.tmpl_reg_line_id.id, # use the run function absent - registration.
+                'template_created': True, # template_created = True to subtract the point counter if member don't go to work
+                'state': 'open',
                 'exchange_state': 'replacing'})
 
+            # Deactive shift registration
+            # to not update point counter for member A
             record.src_registration_id.write({
                'state': "replaced",
                'exchange_state': "replaced",
-               'replacing_reg_id': new_src_reg_id.id,
-               'exchange_replacing_reg_id': new_des_reg_id.id
+               'replacing_reg_id': new_src_reg_id.id, # This field use to track the new shift registration that member A replaced by member B.
+               'exchange_replacing_reg_id': new_des_reg_id.id # New shift that member A must be working on.
             })
-            
+
+            # Deactive shift registration
+            # to not update point counter for member B
             record.des_registration_id.write({
                'state': "replaced",
                'exchange_state': "replaced",
-               'replacing_reg_id': new_des_reg_id.id,
-               'exchange_replacing_reg_id': new_src_reg_id.id
+               'replacing_reg_id': new_des_reg_id.id, # This field use to track the new shift registration that member B replaced by member A.
+               'exchange_replacing_reg_id': new_src_reg_id.id # New shift that member B must be working on.
             })
             # Send email to member A to inform exchange done.
             if confirm_exchange_done_mail_tmpl:

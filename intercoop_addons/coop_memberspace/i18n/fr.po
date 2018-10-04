@@ -27,10 +27,10 @@ msgid "\n"
 "<p style=\"margin:0px 0px 10px 0px;\">Veuillez pouvez accepter ou refuser cette proposition en cliquant sur l’un des boutons ci-dessous.</p>\n"
 "<div style=\"height: auto;width:450px; margin:0 auto;padding-top:20px;padding-bottom:40px;\">\n"
 "    <a style=\"text-decoration-color:initial;text-decoration-style:initial;text-decoration-line:none;color:rgb(51, 122, 183);background-color:transparent;margin-right: 40px;text-decoration:none;\" href=\"/proposal/confirm?token=${object.token}&amp;action=refuse\">\n"
-"        <img style=\"vertical-align:middle;border-image-repeat:initial;border-image-outset:initial;border-image-width:initial;border-image-slice:initial;border-image-source:initial;border-left-color:initial;border-bottom-color:initial;border-right-color:initial;border-top-color:initial;border-left-style:initial;border-bottom-style:initial;border-right-style:initial;border-top-style:initial;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 50px\" src=\"/coop_memberspace/static/src/img/cancel.png\">\n"
+"        <img style="width: 50px;border: 1px solid red;padding: 5px;" src="/coop_memberspace/static/src/img/cancel.svg" alt="Refuse" />
 "    </a>\n"
 "    <a style=\"text-decoration-color:initial;text-decoration-style:initial;text-decoration-line:none;color:rgb(51, 122, 183);background-color:transparent;text-decoration:none;\" href=\"/proposal/confirm?token=${object.token}&amp;action=accept\">\n"
-"        <img style=\"vertical-align:middle;border-image-repeat:initial;border-image-outset:initial;border-image-width:initial;border-image-slice:initial;border-image-source:initial;border-left-color:initial;border-bottom-color:initial;border-right-color:initial;border-top-color:initial;border-left-style:initial;border-bottom-style:initial;border-right-style:initial;border-top-style:initial;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 50px\" src=\"/coop_memberspace/static/src/img/check.png\">\n"
+"        <img style="width: 50px;border: 1px solid green;padding: 5px;" src="/coop_memberspace/static/src/img/check.svg" alt="Accept" />
 "    </a>\n"
 "</div>\n"
 "<p style=\"margin:0px 0px 10px 0px;\">Amicalement,</p>\n"
