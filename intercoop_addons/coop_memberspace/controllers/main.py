@@ -89,7 +89,8 @@ class Website(openerp.addons.website.controllers.main.Website):
         shift_upcomming = shift_registration_env.sudo().search(
             [
                 ('partner_id', '=', user.partner_id.id),
-                ('state', 'not in', ['cancel', 'replacing']),
+                ('state', '!=', 'cancel'),
+                ('exchange_state', '!=', 'replacing'),
                 ('date_begin', '>=', datetime.now().strftime(
                     '%Y-%m-%d %H:%M:%S'))
             ],
@@ -198,7 +199,8 @@ class Website(openerp.addons.website.controllers.main.Website):
         shift_upcomming = shift_registration_env.sudo().search(
             [
                 ('partner_id', '=', user.partner_id.id),
-                ('state', 'not in', ['cancel', 'replacing']),
+                ('state', 'not in', ['cancel']),
+                ('exchange_state', '!=', 'replacing'),
                 ('date_begin', '>=', datetime.now().strftime(
                     '%Y-%m-%d %H:%M:%S')),
                 ('shift_id.shift_type_id.is_ftop', '=', False)
