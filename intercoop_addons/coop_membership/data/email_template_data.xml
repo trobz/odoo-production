@@ -303,7 +303,7 @@ If you think there was a mistake or wish to subscribe to another team please con
 <p>Bonjour,</p>
 <p>Vous êtes inscrit.e pour la réunion d’accueil de La Louve qui se déroulera le <strong> ${object.get_date_time_meeting()}, ${object.get_address_meeting()}</strong></p>
 <p>Métro : Marcadet-Poissonniers ou Simplon.</p>
-<p>L’accueil sera assuré à partir de <span style="color: red">${object.get_time_before(30)}</span>.</p>
+<p>L’accueil sera assuré à partir de <span style="color: red"><strong>${object.get_time_before(30)}</strong></span>.</p>
 <p>Les informations transmises pendant la réunion étant essentielles, aucun retard ne pourra être accepté. Nous vous remercions de votre compréhension.</p>
 <p><strong>Au menu de cette réunion d’accueil :</strong></p>
 <ul>
