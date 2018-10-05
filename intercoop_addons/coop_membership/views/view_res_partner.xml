@@ -773,7 +773,7 @@
                             </group>
                         </page>
                         <page name="shifts" string="Shifts"
-                              attrs="{'invisible': [('is_member', '=', False)]}"
+                              attrs="{'invisible': ['|', ('is_member', '=', False), ('company_type', '=', 'company')]}"
                               groups="coop_membership.group_membership_access_user,
                               coop_membership.group_membership_bdm_lecture,coop_membership.group_membership_bdm_saisie">
                             <group name="state">
@@ -808,7 +808,9 @@
                         </page>
                         <page name="page_capital_fundraising"
                               string="Capital Subscriptions"
-                              groups="coop_membership.subscriptions_reader">
+                              attrs="{'invisible': [('company_type', '=', 'company')]}"
+                              groups="coop_membership.subscriptions_reader"
+                              >
                             <group>
                                 <group string="Partner Type">
                                     <field name="fundraising_partner_type_ids"
@@ -1198,7 +1200,7 @@ coop_membership.group_membership_access_user,coop_membership.group_membership_bd
 
             <!-- New Page for Coop Data information -->
             <notebook position="inside">
-                <page string="Coop Data" name="coop_data">
+                <page string="Coop Data" name="coop_data" attrs="{'invisible': [('company_type', '=', 'company')]}">
                     <group>
                         <group string="MemberShip" >
                             <field name="nb_associated_people"
