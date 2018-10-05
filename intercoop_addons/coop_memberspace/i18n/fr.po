@@ -47,10 +47,10 @@ msgstr "\n"
 "<p style=\"margin:0px 0px 10px 0px;\">Veuillez pouvez accepter ou refuser cette proposition en cliquant sur l’un des boutons ci-dessous.</p>\n"
 "<div style=\"height: auto;width:450px; margin:0 auto;padding-top:20px;padding-bottom:40px;\">\n"
 "    <a style=\"text-decoration-color:initial;text-decoration-style:initial;text-decoration-line:none;color:rgb(51, 122, 183);background-color:transparent;margin-right: 40px\" href=\"/proposal/confirm?token=${object.token}&amp;action=refuse\">\n"
-"        <img style=\"vertical-align:middle;border-image-repeat:initial;border-image-outset:initial;border-image-width:initial;border-image-slice:initial;border-image-source:initial;border-left-color:initial;border-bottom-color:initial;border-right-color:initial;border-top-color:initial;border-left-style:initial;border-bottom-style:initial;border-right-style:initial;border-top-style:initial;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 50px\" src=\"/coop_memberspace/static/src/img/cancel.png\">\n"
+"        <img style="width: 50px;border: 1px solid red;padding: 5px;" src="/coop_memberspace/static/src/img/cancel.svg" alt="Refuse" />
 "    </a>\n"
 "    <a href=\"/proposal/confirm?token=${object.token}&amp;action=accept\" style=\"text-decoration-color:initial;text-decoration-style:initial;text-decoration-line:none;color:rgb(51, 122, 183);background-color:transparent;\">\n"
-"        <img style=\"vertical-align:middle;border-image-repeat:initial;border-image-outset:initial;border-image-width:initial;border-image-slice:initial;border-image-source:initial;border-left-color:initial;border-bottom-color:initial;border-right-color:initial;border-top-color:initial;border-left-style:initial;border-bottom-style:initial;border-right-style:initial;border-top-style:initial;border-left-width:0px;border-bottom-width:0px;border-right-width:0px;border-top-width:0px;width: 50px\" src=\"/coop_memberspace/static/src/img/check.png\">\n"
+"        <img style="width: 50px;border: 1px solid green;padding: 5px;" src="/coop_memberspace/static/src/img/check.svg" alt="Accept" />
 "    </a>\n"
 "</div>\n"
 "<p style=\"margin:0px 0px 10px 0px;\">Amicalement,</p>\n"
@@ -824,7 +824,7 @@ msgid "Numéro de mobile :"
 msgstr "Numéro de mobile :"
 
 #. module: coop_memberspace
-#: code:addons/coop_memberspace/controllers/main.py:355
+#: code:addons/coop_memberspace/controllers/main.py:357
 #, python-format
 msgid "Ooops... this offer is no longer valid, it has been withdrawn or the member closed a deal with somebody else."
 msgstr "Désolé... cette proposition n’est plus valide, elle a été retirée ou le membre a échangé ce service avec une autre personne."
@@ -1241,7 +1241,7 @@ msgid "Website communication history"
 msgstr "Historique de communication du site web"
 
 #. module: coop_memberspace
-#: code:addons/coop_memberspace/controllers/main.py:364
+#: code:addons/coop_memberspace/controllers/main.py:366
 #, python-format
 msgid "Well noted! We hope that you’ll find another option that suits you."
 msgstr "C’est noté ! Nous espérons que vous trouverez une option qui vous conviendra."
@@ -1255,7 +1255,7 @@ msgstr "You already have a proposal from this shift.\n"
 "                    Please check and accept it."
 
 #. module: coop_memberspace
-#: code:addons/coop_memberspace/controllers/main.py:360
+#: code:addons/coop_memberspace/controllers/main.py:362
 #, python-format
 msgid "Your exchange has been confirmed! Your information has been updated in 'My shifts' section of your member area."
 msgstr "Votre échange est enregistré, vos changements ont été actualisés dans la section 'Ma participation' de votre espace membre."
