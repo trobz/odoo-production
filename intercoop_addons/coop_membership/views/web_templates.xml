@@ -45,13 +45,13 @@
                                     <span class="label-input100">Prénom</span><span class="star_style"> *</span>
                                     <input class="input100" type="text" name="first_name" placeholder="Veuillez renseigner votre prénom"></input>
                                 </div>
-                                <div class="wrap-input100 validate-input bg1 input_radio" data-validate = "Enter Your Sex" >
-                                    <span class="label-input100">Sexe</span><span class="star_style"> *</span><br />
+                                <div class="wrap-input100 bg1 input_radio">
+                                    <span class="label-input100">Sexe</span><br />
                                     <input  type="radio" name="sex" value="m"> Homme </input><br />
                                     <input  type="radio" name="sex" value="f"> Femme </input><br />
                                     <input  type="radio" name="sex" value="o"> Autre </input><br />
                                 </div>
-                                <div class="wrap-input100 validate-input bg1" data-validate="Vous devez avoir plus de 18 ans et le format de date doit être JJ/MM/AAA">
+                                <div class="wrap-input100 bg1">
                                     <span class="label-input100 long-text">Date de naissance</span>
                                     <input class="dob input100" type="text" name="dob" placeholder="Veuillez renseigner votre date de naissance"></input>
                                 </div>                                
@@ -171,8 +171,8 @@
                                     <span class="label-input100">Prénom</span><span class="star_style"> *</span>
                                     <input class="input100" type="text" t-att-value="first_name" name="first_name" placeholder="Veuillez renseigner votre prénom"></input>
                                 </div>
-                                <div class="wrap-input100 validate-input bg1 input_radio content-hidden" data-validate = "Enter Your Sex" >
-                                    <span class="label-input100">Sexe</span><span class="star_style"> *</span><br />
+                                <div class="wrap-input100 bg1 input_radio content-hidden" >
+                                    <span class="label-input100">Sexe</span><br />
                                     <t t-if="sex == 'm'">
                                         <input  type="radio" name="sex" checked="checked" value="m"> Homme </input><br />
                                     </t>
@@ -183,7 +183,7 @@
                                         <input  type="radio" name="sex" checked="checked" value="o"> Autre </input><br />
                                     </t>
                                 </div>
-                                <div class="wrap-input100 validate-input bg1 content-hidden" data-validate="Vous devez avoir plus de 18 ans et le format de date doit être JJ/MM/AAA">
+                                <div class="wrap-input100 bg1 content-hidden">
                                     <span class="label-input100 long-text">Date de naissance</span>
                                     <input class="dob input100" t-att-value="dob" type="text" name="dob" placeholder="Veuillez renseigner votre date de naissance"></input>
                                 </div>                                
@@ -339,8 +339,8 @@
                                     <span class="label-input100">Prénom</span><span class="star_style"> *</span>
                                     <input class="input100" type="text" t-att-value="first_name" name="first_name" placeholder="Veuillez renseigner votre prénom"></input>
                                 </div>
-                                <div class="wrap-input100 validate-input bg1 input_radio" data-validate = "Enter Your Sex" >
-                                    <span class="label-input100">Sexe</span><span class="star_style"> *</span><br />
+                                <div class="wrap-input100 bg1 input_radio" >
+                                    <span class="label-input100">Sexe</span><br />
                                     <t t-if="sex == 'm'">
                                         <input  type="radio" name="sex" checked="checked" value="m"> Homme </input><br />
                                         <input  type="radio" name="sex" value="f"> Femme </input><br />
@@ -357,7 +357,7 @@
                                         <input  type="radio" name="sex" checked="checked" value="o"> Autre </input><br />
                                     </t>
                                 </div>
-                                <div class="wrap-input100 validate-input bg1" data-validate="Vous devez avoir plus de 18 ans et le format de date doit être JJ/MM/AAA">
+                                <div class="wrap-input100 bg1">
                                     <span class="label-input100 long-text">Date de naissance</span>
                                     <input class="dob input100" t-att-value="dob" type="text" name="dob" placeholder="Veuillez renseigner votre date de naissance"></input>
                                 </div>                                
