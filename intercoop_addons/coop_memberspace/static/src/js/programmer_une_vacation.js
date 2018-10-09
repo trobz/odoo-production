@@ -26,7 +26,10 @@ odoo.define('coop_memberspace.programmer_une_vacation', function (require) {
                         shifts.forEach(function(shift, idx, array) {
                             $('.body_ftop_programmer').append(
                                 `<tr>
-                                    <td scope="row" id="time-${shift.id}">${shift.date_begin[0]}</td>
+                                    <td scope="row">
+                                        <span id="time-${shift.id}">${shift.date_begin[0] + ' '}</span>
+                                        <span>${shift.date_begin[1]}</span>
+                                    </td>
                                     <td id="hour-${shift.id}">${shift.date_begin[1]}</td>
                                     <td id="avalable-seats-${shift.id}"><span>${shift.seats_avail}</span></td>
                                     <td><a><span class="fa fa-user-plus" data-toggle="modal" data-target="#programmer_modal" id="btn-add-${shift.id}" shift-id="${shift.id}" /></a></td>
@@ -73,7 +76,7 @@ odoo.define('coop_memberspace.programmer_une_vacation', function (require) {
                                     let hour = $('#hour-' + self.shift_id).text();
                                     let new_shift = `
                                         <tr>
-                                            <td scope="row">${time}</td>
+                                            <td scope="row">${time + ' '} ${hour}</td>
                                             <td>${hour}</td>
                                             <td><span><span>${coordinators[0]}</span> <i data-toggle="tooltip" title="Vous pouvez contacter vos coordinateurs en écrivant à
                                                 ${coordinators[1]} (we should be able to copy the address)" class="fa fa-question-circle js-copy" data-copy="${coordinators[1]}"></i></span></td>
