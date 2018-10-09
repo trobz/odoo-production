@@ -70,9 +70,14 @@ class WebsiteRegisterMeeting(http.Controller):
                            e.seats_available < 1))
         datas = self.prepare_data_events(available_events)
 
+        event_config = request.env['event.config.settings'].sudo().search(
+            [], limit=1, order="id desc"
+        )
         value = {
             'datas': datas,
             'captcha_site_key': captcha_site_key,
+            'description': event_config and event_config.description or "",
+            'notice': event_config and event_config.notice or ""
         }
         return request.render("coop_membership.register_form", value)
 
