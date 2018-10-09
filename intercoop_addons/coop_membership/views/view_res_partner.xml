@@ -429,7 +429,8 @@
                             <field name="is_unsubscribed"
                                    groups="coop_membership.group_membership_access_manager"/>
                         </group>
-                        <group string="Extra Data">
+                        <group string="Extra Data"
+                            attrs="{'invisible': [('is_member','=',False),('is_former_member','=',False), ('is_former_associated_people','=',False), ('is_associated_people','=',False),('is_interested_people','=',False)]}">
                             <field name="temp_coop_number"
                                    groups="coop_membership.group_membership_see_associated_people,
                                    coop_membership.group_membership_access_user"
