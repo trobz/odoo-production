@@ -61,8 +61,10 @@ class account_payment(models.Model):
         if invoice:
             communication = invoice.reference or invoice.name or invoice.number
         if self.text_check_code:
-            self.communication = communication + \
-                '-' + _('Check nb ') + str(self.text_check_code)
+            check_nb = _('Check nb ')
+            self.communication = '%s-%s%s' %\
+                (communication, check_nb, self.text_check_code)
         if self.text_lcr_code:
-            self.communication = communication + \
-                '-' + _('LCR nb ') + str(self.text_lcr_code)
+            lcr_nb = _('LCR nb ')
+            self.communication = '%s-%s%s' %\
+                (communication, lcr_nb, self.text_lcr_code)

@@ -65,13 +65,13 @@ msgstr "Type d'Opération"
 #: code:addons/louve_custom_account/models/account_payment.py:47
 #, python-format
 msgid "SEPA Direct Debit"
-msgstr "PRLV SEPA"
+msgstr "VIR SEPA"
 
 #. module: louve_custom_account
 #: code:addons/louve_custom_account/models/account_payment.py:50
 #, python-format
 msgid "SEPA Direct Credit"
-msgstr "VIR SEPA"
+msgstr "PRLV SEPA"
 
 #. module: louve_custom_account
 #: code:addons/louve_custom_account/models/account_payment.py:53
