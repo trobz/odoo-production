@@ -20,10 +20,9 @@ class ShiftTemplate(models.Model):
     def create_email_alias(self):
         self.ensure_one()
         template_name = self.name.replace(' ', '').split('-')
-        if self.shift_type_id.is_ftop and len(template_name) > 2:
-            prefix = "%s%s" % (template_name[1][:3], template_name[2][:2])
-        else:
-            prefix = "%s%s" % (template_name[0][:3], template_name[1][:2])
+        if len(template_name) < 2:
+            return False
+        prefix = "%s%s" % (template_name[-2][:3], template_name[-1][:2])
 
             # 1. for the coordinators of the team
         leader_alias_prefix = 'coordos.%s' % (prefix)
@@ -41,6 +40,7 @@ class ShiftTemplate(models.Model):
             'alias_name': team_alias_prefix,
             'type': 'team'
         })
+        return True
 
     @api.multi
     def generate_email_alias(self):
