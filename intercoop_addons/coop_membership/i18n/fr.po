@@ -681,6 +681,7 @@ msgstr "Assistant"
 
 #. module: coop_membership
 #: model:ir.model.fields,field_description:coop_membership.field_event_event_is_discovery_meeting
+#: model:ir.ui.view,arch_db:coop_membership.view_event_event_search_inherit
 msgid "Discovery Meeting"
 msgstr "Réunion d'accueil"
 
