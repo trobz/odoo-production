@@ -489,7 +489,7 @@
     <template id="coop_memberspace.mywork_ftop">
         <div class="row" style="margin-top: 20px">
             <div class="col-md-6">
-                <div style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;min-height: 192px;">
+                <div style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;min-height: 205px;">
                     <div class="row">
                         <div class="col-md-10">
                             <div>
@@ -510,7 +510,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <div style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;min-height: 192px;">
+                <div style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;min-height: 205px;">
                     <p style="font-size: 25px;font-weight: 600">Programmer un service volant</p>
                     <p class="text-center">Si vous êtes membre de l’équipe volante, passez par ici pour voir les
                         services disponibles et programmer vôtre vacation. L’annulation
