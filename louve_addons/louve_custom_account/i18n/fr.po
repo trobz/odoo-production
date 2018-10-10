@@ -29,12 +29,12 @@ msgstr "Vous n'avez pas le droit de validation sur les factures, vous ne pouvez 
 #. module: louve_custom_account
 #: selection:account.payment,operation_type:0
 msgid "SEPA Direct Credit"
-msgstr "Prélèvement SEPA"
+msgstr "Virement SEPA"
 
 #. module: louve_custom_account
 #: selection:account.payment,operation_type:0
 msgid "SEPA Direct Debit"
-msgstr "Virement SEPA"
+msgstr "Prélèvement SEPA"
 
 #. module: louve_custom_account
 #: selection:account.payment,operation_type:0
@@ -65,13 +65,13 @@ msgstr "Type d'Opération"
 #: code:addons/louve_custom_account/models/account_payment.py:47
 #, python-format
 msgid "SEPA Direct Debit"
-msgstr "VIR SEPA"
+msgstr "PRLV SEPA"
 
 #. module: louve_custom_account
 #: code:addons/louve_custom_account/models/account_payment.py:50
 #, python-format
 msgid "SEPA Direct Credit"
-msgstr "PRLV SEPA"
+msgstr "VIR SEPA"
 
 #. module: louve_custom_account
 #: code:addons/louve_custom_account/models/account_payment.py:53
