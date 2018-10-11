@@ -8,6 +8,7 @@
 <odoo>
     <template id="assets_frontend" inherit_id="point_of_sale.assets">
         <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/louve_custom_pos/static/src/css/keyboard.css" />
             <script type="text/javascript" src="/louve_custom_pos/static/src/js/louve_custom_pos.js"/>
         </xpath>
     </template>

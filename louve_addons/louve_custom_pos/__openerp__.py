@@ -18,7 +18,10 @@
         'louve_custom_product'
     ],
     'data': [
-        'static/src/xml/templates.xml',
+      'views/templates.xml'
+    ],
+    'qweb': [
+        'static/src/xml/widget.xml',
     ],
     'installable': True,
 }
