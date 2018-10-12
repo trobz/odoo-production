@@ -3,12 +3,13 @@
 import openerp
 from openerp.addons.web import http
 from openerp.http import request
-from openerp import tools
+from openerp import tools, _
 from datetime import datetime, timedelta
 import pytz
 import logging
 import locale
 _logger = logging.getLogger(__name__)
+import werkzeug
 
 
 class Website(openerp.addons.website.controllers.main.Website):
@@ -89,6 +90,7 @@ class Website(openerp.addons.website.controllers.main.Website):
             [
                 ('partner_id', '=', user.partner_id.id),
                 ('state', '!=', 'cancel'),
+                ('exchange_state', '!=', 'replacing'),
                 ('date_begin', '>=', datetime.now().strftime(
                     '%Y-%m-%d %H:%M:%S'))
             ],
@@ -190,10 +192,37 @@ class Website(openerp.addons.website.controllers.main.Website):
     @http.route('/standard/echange_de_services', type='http', auth='user',
         website=True)
     def page_echange_de_services(self, **kwargs):
+        user = request.env.user
+        # Get next shift
+        shift_registration_env = request.env['shift.registration']
+        shift_upcomming = shift_registration_env.sudo().search(
+            [
+                ('partner_id', '=', user.partner_id.id),
+                ('state', 'not in', ['cancel']),
+                ('exchange_state', '!=', 'replacing'),
+                ('date_begin', '>=', datetime.now().strftime(
+                    '%Y-%m-%d %H:%M:%S')),
+                ('shift_id.shift_type_id.is_ftop', '=', False)
+            ],
+            order="date_begin"
+        )
+        shifts_on_market = shift_registration_env.sudo().search(
+            [
+                ('partner_id', '!=', user.partner_id.id),
+                ('state', '!=', 'cancel'),
+                ('exchange_state', '=', 'in_progress'),
+                ('date_begin', '>=', datetime.now().strftime(
+                    '%Y-%m-%d %H:%M:%S'))
+            ],
+            order="date_begin"
+        )
         return request.render(
             'coop_memberspace.counter',
             {
-                'echange_de_services': True
+                'echange_de_services': True,
+                'shift_upcomming': shift_upcomming,
+                'shifts_on_market': shifts_on_market,
+                'user': user
             }
         )
 
@@ -307,3 +336,32 @@ class Website(openerp.addons.website.controllers.main.Website):
     @http.route('/documents', type='http', auth='user', website=True)
     def page_documents(self, **kwargs):
         return request.render('coop_memberspace.documents', {})
+
+    @http.route('/proposal/confirm', type='http', auth='public', website=True)
+    def proposal_confirm(self, *args, **kw):
+        token = kw.get('token', False)
+        action = kw.get('action', False)
+        if not (token and action) or (action not in ['accept', 'refuse']):
+            raise werkzeug.exceptions.NotFound()
+        proposal_model = request.env['proposal']
+        proposal = proposal_model.sudo().search([
+            ('token', '=', token),
+            ('state', '=', 'in_progress')
+        ], limit=1)
+        values = {}
+        request.context.update({
+            'lang': request.env.user.lang
+        })
+        if not (proposal and proposal.token_valid):
+            values['bootstrap_class'] = 'alert alert-danger'
+            values['message'] = _('Désolé... cette proposition n’est plus valide, elle a été retirée ou le membre a échangé ce service avec une autre personne.')
+        else:
+            if action == 'accept':
+                proposal.accept_proposal()
+                values['bootstrap_class'] = 'alert alert-success'
+                values['message'] = _("Votre échange est enregistré, vos changements ont été actualisés dans la section 'Ma participation' de votre espace membre.")
+            else:
+                proposal.refuse_proposal()
+                values['bootstrap_class'] = 'alert alert-warning'
+                values['message'] = _('C’est noté ! Nous espérons que vous trouverez une option qui vous conviendra.')
+        return request.render('coop_memberspace.proposal_confirm', values)
