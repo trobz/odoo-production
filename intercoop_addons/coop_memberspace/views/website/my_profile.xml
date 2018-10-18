@@ -202,16 +202,16 @@
                                 <h4>Activer :</h4>
                             </div>
                             <div class="col-xs-4 col-sm-4 col-md-4">
-                                <label class="switch">
-                                    <input type="checkbox" t-att-checked="user.active" />
-                                    <span class="slider round"></span>
-                                </label>
+
                             </div>
                             <div class="col-xs-4 col-sm-4 col-md-4">
-                                <label class="switch">
-                                    <input type="checkbox" name="public_active" t-att-checked="user.public_active" />
-                                    <span class="slider round"></span>
-                                </label>
+                                <form class="edit-email-pos-receipt" method="post" action="/edit-email-pos-receipt">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <label class="switch">
+                                        <input type="checkbox" name="email_pos_receipt" t-att-checked="user.partner_id.email_pos_receipt" onchange="this.form.submit();"/>
+                                        <span class="slider round"></span>
+                                    </label>
+                                </form>
                             </div>
                         </div>
                     </div>
