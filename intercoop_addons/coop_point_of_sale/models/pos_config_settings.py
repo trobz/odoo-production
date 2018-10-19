@@ -18,3 +18,23 @@ class PosConfigSettings(models.Model):
         "would like to display a message when used in POS")
 
     payable_to = fields.Char(string="Payable to")
+
+    @api.model
+    def default_get(self, fields):
+        res = super(PosConfigSettings, self).default_get(fields)
+        journal_ids = self.env.user.company_id.journal_config_ids
+        payable_to = self.env.user.company_id.payable_to
+        res.update({
+            'account_journal_ids': [(6, 0, journal_ids.ids)],
+            'payable_to': payable_to
+        })
+        return res
+
+    @api.multi
+    def execute(self):
+        for record in self:
+            self.env.user.company_id.journal_config_ids =\
+                [(6, 0, record.account_journal_ids.ids)]
+            self.env.user.company_id.payable_to = record.payable_to
+
+        return super(PosConfigSettings, self).execute()
