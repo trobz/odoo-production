@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="point_of_sale.view_sale_config_settings_form_pos"/>
         <field name="arch" type="xml">
             <xpath expr="//group" position="inside">
-                <field name="account_journal_ids" widget="many2many_tags" readonly="0"/>
+                <field name="account_journal_ids" widget="many2many_tags"/>
                 <field name="payable_to" />           
             </xpath>
         </field>
