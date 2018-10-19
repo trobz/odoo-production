@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
+    <function name="write" model="ir.model.data">
+        <function name="search" model="ir.model.data">
+            <value eval="[('module', '=', 'coop_memberspace'), ('name', '=', 'statistics')]" />
+        </function>
+        <value eval="{'noupdate': False}" />
+    </function>
 	<template id="coop_memberspace.statistics">
 		<t t-call="website.layout">
             <t t-set="title">Espace membre | Statistiques</t>
