@@ -83,8 +83,8 @@ class AccountBankStatementLine(models.Model):
                         'limit_days_before': limit_days_before,
                     })
 
-                    sql_query += "AND aml.date_maturity <= %(limit_days_after)s \
-                        AND aml.date_maturity >= %(limit_days_before)s"
+                    sql_query += "AND aml.date_maturity < %(limit_days_after)s \
+                        AND aml.date_maturity > %(limit_days_before)s"
                 sql_query += " AND (aml.ref= %(ref)s or m.name = %(ref)s) \
                         AND aml.account_id IN %(account_payable_receivable)s \
                         AND aml.reconciled = False \
@@ -118,8 +118,8 @@ class AccountBankStatementLine(models.Model):
                     'limit_days_before': limit_days_before,
                 })
 
-                sql_query += "AND aml.date_maturity <= %(limit_days_after)s" \
-                    " AND aml.date_maturity >= %(limit_days_before)s"
+                sql_query += "AND aml.date_maturity < %(limit_days_after)s" \
+                    " AND aml.date_maturity > %(limit_days_before)s"
 
             sql_query += \
                 " AND aml.account_id IN %(account_payable_receivable)s" \
@@ -178,8 +178,8 @@ class AccountBankStatementLine(models.Model):
                         'limit_days_before': limit_days_before,
                     })
 
-                    sql_query += "AND aml.date_maturity <= %(limit_days_after)s \
-                        AND aml.date_maturity >= %(limit_days_before)s"
+                    sql_query += "AND aml.date_maturity < %(limit_days_after)s \
+                        AND aml.date_maturity > %(limit_days_before)s"
 
                 sql_query += " AND (aml.ref= %(ref)s or m.name = %(ref)s)" +\
                     " ORDER BY temp_field_order, date_maturity asc, aml.id asc"
@@ -208,8 +208,8 @@ class AccountBankStatementLine(models.Model):
                     'limit_days_before': limit_days_before,
                 })
 
-                sql_query += "AND aml.date_maturity <= %(limit_days_after)s" \
-                    " AND aml.date_maturity >= %(limit_days_before)s"
+                sql_query += "AND aml.date_maturity < %(limit_days_after)s" \
+                    " AND aml.date_maturity > %(limit_days_before)s"
 
             sql_query += " AND (" + field + " = %(amount)s OR (acc.internal_type = 'liquidity'\
                      AND " + liquidity_field + " = " + liquidity_amt_clause + ")) \

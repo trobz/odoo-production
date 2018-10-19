@@ -46,7 +46,7 @@ class account_payment(models.Model):
             'view_mode': 'form',
             'res_model': 'account.payment',
             'view_id': self.env.ref(
-                'account.view_account_payment_form').id,
+                'account_payment_transfer_account.view_account_payment_form_extend').id,
             'type': 'ir.actions.act_window',
             'res_id': new_record.id
         }
