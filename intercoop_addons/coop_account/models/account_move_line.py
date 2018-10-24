@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
+import json
 from openerp import api, models, fields, _
-from openerp.exceptions import UserError
+from openerp.exceptions import UserError, Warning
 from openerp.addons.connector.session import ConnectorSession
 from openerp.addons.connector.queue.job import job
 
@@ -97,6 +98,62 @@ class AccountMoveLine(models.Model):
             'target': 'new',
             'context': {'active_ids': active_ids, 'active_model': active_model}
         }
+
+    @api.model
+    def export_wrong_reconciliation_ml(self):
+        wrong_reconciliation_ml_data = self.get_wrong_reconciliation_ml_data()
+        data = {
+            'model': self._name,
+            'headers': wrong_reconciliation_ml_data['headers'],
+            'rows': wrong_reconciliation_ml_data['rows']
+        }
+        return json.dumps(data)
+
+    @api.model
+    def get_wrong_reconciliation_ml_data(self):
+        read_columns = [
+            'name', 'journal_id', 'ref', 'date', 'partner_id', 'company_id',
+            'check_holder_name', 'account_id', 'move_id', 'debit', 'credit',
+            'quantity', 'statement_line_id' , 'statement_id', 'payment_id',
+            'check_deposit_id'
+        ]
+        model_fields = self._fields
+        header_columns = [getattr(model_fields[column], 'string') for column in read_columns]
+        header_columns = ['External ID'] + header_columns
+        read_columns = ['id'] + read_columns
+        wrong_move_lines = self.get_wrong_reconciliation_ml()
+        if not wrong_move_lines:
+            raise Warning(_('Found no wrong account move lines.'))
+        record_values_dict = wrong_move_lines.export_data(read_columns)
+        converted_data_rows = [
+            [unicode(cell_data) for cell_data in data_row]
+            for data_row in record_values_dict['datas']
+        ]
+        return {
+            'rows': converted_data_rows,
+            'headers': header_columns,
+        }
+
+    @api.model
+    def get_wrong_reconciliation_ml(self):
+        wrong_move_lines = self
+        having_statement_move_lines = self.search([
+            ('statement_id', '!=', False),
+            ('move_id', '!=', False),
+        ], order='statement_id, move_id', limit=500)
+        for aml in having_statement_move_lines:
+            move_id = aml.move_id
+            other_aml_ids = move_id.line_ids.filtered(lambda l: l.id != aml.id)
+            if len(other_aml_ids) == 1:
+                continue
+            aml_date_obj = fields.Date.from_string(aml.date)
+            for other_aml_id in other_aml_ids:
+                other_aml_date_obj = fields.Date.from_string(other_aml_id.date)
+                if other_aml_date_obj.year == aml_date_obj.year and \
+                        other_aml_date_obj.month <= aml_date_obj.month:
+                    continue
+                wrong_move_lines |= other_aml_id
+        return wrong_move_lines
 
     @api.model
     def run_reconcile_411_pos(self, nb_lines_per_job=100):
