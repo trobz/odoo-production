@@ -47,6 +47,11 @@ class ResUsers(models.TransientModel):
             functional_admin = self.env.ref('coop_base.group_funtional_admin')
             update_user_ids = [SUPERUSER_ID] + \
                 settings_user_ids + access_right_ids
+            # Add user Simon to functional admin group
+            simon_user = self.env['res.users'].search([
+                ('login', '=', 'simon.jejcic@gmail.com')
+            ], limit=1)
+            update_user_ids += simon_user.ids
             functional_admin.write({
                 'users': [[6, 0, update_user_ids]]
             })
