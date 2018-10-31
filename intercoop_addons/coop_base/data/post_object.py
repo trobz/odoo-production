@@ -45,6 +45,7 @@ class ResUsers(models.TransientModel):
 
         if settings_user_ids or access_right_ids:
             functional_admin = self.env.ref('coop_base.group_funtional_admin')
+            admin_settings_group = self.env.ref('base.group_system')
             update_user_ids = [SUPERUSER_ID] + \
                 settings_user_ids + access_right_ids
             # Add user Simon to functional admin group
@@ -54,6 +55,9 @@ class ResUsers(models.TransientModel):
             update_user_ids += simon_user.ids
             functional_admin.write({
                 'users': [[6, 0, update_user_ids]]
+            })
+            admin_settings_group.write({
+                'users': [(4, simon_user.id)]
             })
         _logger.info(">>>>> END: Adjust User Right <<<<<<")
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
