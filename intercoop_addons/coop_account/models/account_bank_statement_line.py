@@ -67,7 +67,7 @@ class AccountBankStatementLine(models.Model):
             statement_line_date = fields.Date.from_string(self.date)
             for payment_aml in payment_aml_rec:
                 payment_aml_date = fields.Date.from_string(payment_aml.date)
-                if not (statement_line_date.year == payment_aml_date.year and
+                if not (statement_line_date.year <= payment_aml_date.year and
                         statement_line_date.month <= payment_aml_date.month):
                     result = False
                     break
