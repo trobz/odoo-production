@@ -137,10 +137,22 @@ class AccountMoveLine(models.Model):
     @api.model
     def get_wrong_reconciliation_ml(self):
         wrong_move_lines = self
+        prefix_512_accounts = self.env['account.account'].search([
+            ('code', 'like', '512%')
+        ])
+        selected_journals = self.env['account.journal'].search([
+            ('name', 'not like', '%Chèques%'),
+            '|',
+            ('name', 'like', 'CCOOP - compte courant'),
+            ('name', 'ilike', '%cep%'),
+        ])
         having_statement_move_lines = self.search([
             ('statement_id', '!=', False),
             ('move_id', '!=', False),
-        ], order='statement_id, move_id', limit=500)
+            ('account_id', 'in', prefix_512_accounts.ids),
+            ('journal_id', 'in', selected_journals.ids),
+        ], order='statement_id, move_id')
+
         for aml in having_statement_move_lines:
             move_id = aml.move_id
             other_aml_ids = move_id.line_ids.filtered(lambda l: l.id != aml.id)
@@ -149,7 +161,7 @@ class AccountMoveLine(models.Model):
             aml_date_obj = fields.Date.from_string(aml.date)
             for other_aml_id in other_aml_ids:
                 other_aml_date_obj = fields.Date.from_string(other_aml_id.date)
-                if other_aml_date_obj.year == aml_date_obj.year and \
+                if other_aml_date_obj.year <= aml_date_obj.year and \
                         other_aml_date_obj.month <= aml_date_obj.month:
                     continue
                 wrong_move_lines |= other_aml_id
