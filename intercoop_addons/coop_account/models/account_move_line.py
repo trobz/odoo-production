@@ -114,7 +114,7 @@ class AccountMoveLine(models.Model):
         read_columns = [
             'name', 'journal_id', 'ref', 'date', 'partner_id', 'company_id',
             'check_holder_name', 'account_id', 'move_id', 'debit', 'credit',
-            'quantity', 'statement_line_id' , 'statement_id', 'payment_id',
+            'quantity', 'statement_line_id', 'statement_id', 'payment_id',
             'check_deposit_id'
         ]
         model_fields = self._fields
@@ -137,34 +137,38 @@ class AccountMoveLine(models.Model):
     @api.model
     def get_wrong_reconciliation_ml(self):
         wrong_move_lines = self
-        prefix_512_accounts = self.env['account.account'].search([
-            ('code', 'like', '512%')
-        ])
         selected_journals = self.env['account.journal'].search([
             ('name', 'not like', '%Chèques%'),
             '|',
             ('name', 'like', 'CCOOP - compte courant'),
             ('name', 'ilike', '%cep%'),
         ])
-        having_statement_move_lines = self.search([
-            ('statement_id', '!=', False),
-            ('move_id', '!=', False),
-            ('account_id', 'in', prefix_512_accounts.ids),
-            ('journal_id', 'in', selected_journals.ids),
-        ], order='statement_id, move_id')
+        bank_statement_line_query = """
+            select statement_line_id
+            from account_move
+            where statement_line_id is not null and journal_id in {} 
+            group by statement_line_id
+            having count(statement_line_id) > 1
+        """.format(tuple(selected_journals.ids))
 
-        for aml in having_statement_move_lines:
-            move_id = aml.move_id
-            other_aml_ids = move_id.line_ids.filtered(lambda l: l.id != aml.id)
-            if len(other_aml_ids) == 1:
+        self.env.cr.execute(bank_statement_line_query)
+        results = self.env.cr.fetchall()
+        line_ids = [id_tuple[0] for id_tuple in results]
+        bank_statement_line_ids = self.env['account.bank.statement.line']\
+            .browse(line_ids)
+        for stml in bank_statement_line_ids:
+            stml_date = fields.Date.from_string(stml.date)
+            move_ids = stml.journal_entry_ids
+            move_line_ids = move_ids.mapped('line_ids')
+            if len(move_ids) == 1 and len(move_line_ids) == 2:
                 continue
-            aml_date_obj = fields.Date.from_string(aml.date)
-            for other_aml_id in other_aml_ids:
-                other_aml_date_obj = fields.Date.from_string(other_aml_id.date)
-                if other_aml_date_obj.year <= aml_date_obj.year and \
-                        other_aml_date_obj.month <= aml_date_obj.month:
+            for aml in move_line_ids.filtered(lambda ml: not ml.statement_id):
+                aml_date = fields.Date.from_string(aml.date)
+                if aml_date.year <= stml_date.year and \
+                        aml_date.month <= stml_date.month:
                     continue
-                wrong_move_lines |= other_aml_id
+                else:
+                    wrong_move_lines |= aml
         return wrong_move_lines
 
     @api.model
