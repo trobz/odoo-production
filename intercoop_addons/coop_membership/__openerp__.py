@@ -92,6 +92,9 @@
 
         # Report
         'views/account_report.xml',
+
+        # Custom function
+        'data/function.xml',
     ],
     'demo': [
         'demo/capital_fundraising_category.xml',
