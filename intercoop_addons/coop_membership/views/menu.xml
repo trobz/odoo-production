@@ -257,6 +257,7 @@
         <field name="sequence">12</field>
     </record>
 
+    <!-- Menu for Res Partner Inform-->
     <record id="action_res_partner_inform" model="ir.actions.act_window">
             <field name="name">Res Partner Inform</field>
             <field name="type">ir.actions.act_window</field>
@@ -272,5 +273,22 @@
             parent="coop_shift.menu_shift_configuration"
             groups="coop_membership.coop_group_access_res_partner_inform"
             sequence="112"
+    />
+    <!-- Menu for Shift Counter Event Reason -->
+    <record id="action_shift_counter_event_reason" model="ir.actions.act_window">
+        <field name="name">Shift Counter Event Reason</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">shift.counter.event.reason</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            name="Shift Counter Event Reason"
+            id="menu_shift_counter_event_reason"
+            action="action_shift_counter_event_reason"
+            parent="coop_shift.menu_shift_configuration"
+            groups="coop_membership.coop_group_access_res_partner_inform"
+            sequence="113"
     />
 </odoo>
