@@ -256,4 +256,21 @@
     <record id="event.menu_action_registration" model="ir.ui.menu">
         <field name="sequence">12</field>
     </record>
+
+    <record id="action_res_partner_inform" model="ir.actions.act_window">
+            <field name="name">Res Partner Inform</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner.inform</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    <menuitem
+            name="Res Partner Inform"
+            id="menu_res_partner_inform"
+            action="action_res_partner_inform"
+            parent="coop_shift.menu_shift_configuration"
+            groups="coop_membership.coop_group_access_res_partner_inform"
+            sequence="112"
+    />
 </odoo>
