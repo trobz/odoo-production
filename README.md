@@ -1,7 +1,7 @@
 Odoo mutualization
 ============
 
-This repository aims to handle a commom Odoo source code for the food co-ops that take part in the mutualization (and found it).
+This repository aims to handle a common Odoo source code for the food co-ops that take part in the mutualization (and found it).
 Our code if free, so that co-ops don't want to fit in the previsous rules can freely fork this Github repository. However, we higly encourage then to not fork the common modules. In that case it would be very difficult for them to entrer in the mutualization in the future.
 
 Repository organization
