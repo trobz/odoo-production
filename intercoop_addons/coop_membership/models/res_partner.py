@@ -140,6 +140,9 @@ class ResPartner(models.Model):
 
     force_customer = fields.Boolean(string="Force Customer", default=False)
 
+    inform_id = fields.Many2one(
+        comodel_name='res.partner.inform', string='Informé')
+
     # Constraint Section
     @api.multi
     @api.constrains('is_member',
