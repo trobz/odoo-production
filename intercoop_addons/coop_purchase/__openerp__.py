@@ -22,7 +22,8 @@
         'views/purchase_config_settings_view.xml',
         'views/account_invoice_view.xml',
         'views/actions.xml',
-        'views/menu.xml'
+        'views/menu.xml',
+        'wizard/supplier_info_update.xml',
     ],
     'installable': True,
 }
