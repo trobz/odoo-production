@@ -20,8 +20,8 @@ class ResUsers(models.TransientModel):
     @api.model
     def adjust_user_rights(self):
         """
-        Add users Simon and Mathilde Virard to group Access Res Partner Inform
-        to access res.partner.inform
+        Add users Tom Boothe and Mathilde Virard to
+        group Access Res Partner Inform to access res.partner.inform
         """
         # remove normal users from
         # coop_membership.coop_group_access_res_partner_inform
@@ -30,7 +30,7 @@ class ResUsers(models.TransientModel):
             self.env.ref('coop_membership.coop_group_access_res_partner_inform')
         selected_users = self.env['res.users'].search([
             '|',
-            ('login', '=', 'simon.jejcic@gmail.com'),
+            ('login', '=', 'tkboothe@cooplalouve.fr'),
             ('login', '=', 'mathilde.virard@gmail.com'),
         ])
         group_acess_res_partner_inform.write({
