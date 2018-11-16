@@ -15,6 +15,9 @@ class ShiftCounterEvent(models.Model):
         string="Sum",
         store=True)
 
+    reason_ids = fields.Many2many(
+        comodel_name='shift.counter.event.reason', string='Justification')
+
     @api.multi
     @api.depends('point_qty', 'partner_id', 'type')
     def compute_sum_current_qty(self):

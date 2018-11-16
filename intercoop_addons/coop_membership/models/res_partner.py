@@ -140,6 +140,9 @@ class ResPartner(models.Model):
 
     force_customer = fields.Boolean(string="Force Customer", default=False)
 
+    inform_id = fields.Many2one(
+        comodel_name='res.partner.inform', string='Informé')
+
     # Constraint Section
     @api.multi
     @api.constrains('is_member',
@@ -538,7 +541,7 @@ class ResPartner(models.Model):
         if next_shift_time:
             next_shift_time_obj = datetime.strptime(
                 next_shift_time, '%Y-%m-%d %H:%M:%S')
-            tz_name = self._context.get('tz') or self.env.user.tz
+            tz_name = self._context.get('tz', self.env.user.tz) or 'utc'
             utc_timestamp = pytz.utc.localize(
                 next_shift_time_obj, is_dst=False)
             context_tz = pytz.timezone(tz_name)
