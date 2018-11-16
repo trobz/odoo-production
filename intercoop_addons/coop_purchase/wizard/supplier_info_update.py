@@ -124,5 +124,9 @@ class SupplierInfoUpdate(models.TransientModel):
             if discount_2nd != discount_1st:
                 update_values['discount'] = discount_2nd
             if update_values:
-                second_line.seller_id.write(update_values)
+                seller_id = second_line.seller_id
+                product_template = seller_id.product_tmpl_id
+
+                seller_id.write(update_values)
+                product_template.auto_update_theoritical_cost_price()
         return True

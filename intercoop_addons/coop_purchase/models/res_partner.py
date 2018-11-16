@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from lxml import etree
-from openerp import api, fields, models
+from openerp import api, fields, models, _
 
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     show_discount = fields.Boolean(
-        string="Show discounts on update prices"
+        string=_("Show discounts on update prices")
     )
 
     @api.model
