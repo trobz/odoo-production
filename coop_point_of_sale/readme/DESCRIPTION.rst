@@ -1,9 +1,3 @@
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-    :alt: License: AGPL-3
-
-Module Custom de la Louve pour le Point de Vente
-================================================
-
 * Affiche la photo des clients en format grand (champ 'res_partner.image') au
   lieu d'afficher l'image petite. ('res_partner.image_small')
 
@@ -18,14 +12,3 @@ soit carré dans son format d'origine, pour éviter les distorsions.
 
 
 This module is distributed in the hope that it will be useful.
-
-
-Credits
-=======
-
-Contributors
-------------
-
-* Sylvain LE GAL <https://twitter.com/legalsylvain>
-* Julien Weste
-* Druidoo <https://www.druidoo.io>
