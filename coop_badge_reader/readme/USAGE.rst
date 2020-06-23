@@ -1,11 +1,3 @@
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-    :alt: License: AGPL-3
-
-Ionic Apps - Coop Badge Reader
-===============================
-
-Provide light JS apps that provides badge reader interface.
-
 Once installed, the apps is available via this url
 http://localhost:8069/coop_badge_reader/static/www/index.html (by default)
 
@@ -22,18 +14,18 @@ Authentication
 User must select Database name, login and password. (The user must be
 member of the new group 'Coop Badge Reader / Time Clock')
 
-.. image:: /coop_badge_reader/static/description/authentication.png
+.. image:: ../static/description/authentication.png
 
 User Search
 -----------
 
 User should scan User barcode.
 
-.. image:: /coop_badge_reader/static/description/user_search.png
+.. image:: ../static/description/user_search.png
 
 If the barcode is unknown a specific sound is played.
 
-.. image:: /coop_badge_reader/static/description/user_not_found.png
+.. image:: ../static/description/user_not_found.png
 
 Partner Form
 ------------
@@ -41,13 +33,13 @@ Partner Form
 If the barcode matches with a user, the partner is display with some
 informations.
 
-.. image:: /coop_badge_reader/static/description/partner_success.png
+.. image:: ../static/description/partner_success.png
 
 
 If the partner has some special state, an alternative background color is
 displayed with the reason.
 
-.. image:: /coop_badge_reader/static/description/partner_warning.png
+.. image:: ../static/description/partner_warning.png
 
 Move Logs
 ---------
@@ -55,7 +47,7 @@ Move Logs
 The use of this badge reader is logged and and logs are available in
 back-office
 
-.. image:: /coop_badge_reader/static/description/user_moves.png
+.. image:: ../static/description/user_moves.png
 
 Technical Information - Back office
 -----------------------------------
@@ -84,24 +76,3 @@ The extra libs used are
 * Angular Odoo <https://github.com/akretion/angular-odoo>, little JS framework
   based on angular, that provides functions to connect and communicate with
   Odoo / OCB
-
-
-Possible Improvments
-====================
-
-* display partner with bootstrap colors in kanban and tree view
-
-* The JS apps is not translatable for the time being and is available only
-  in french
-
-Credits
-=======
-
-Contributors
-------------
-
-* Sylvain LE GAL <https://twitter.com/legalsylvain>
-* Druidoo (<https://www.druidoo.io>)
-
-Icon module comes from <https://www.iconfinder.com/icons/52644/card_reader_security_icon> and is copyright by <www.tpdkdesign.net>
-
