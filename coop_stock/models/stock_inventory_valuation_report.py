@@ -146,4 +146,4 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                     default_format=self.format_tcell_left)
                 total += line.stock_value
 
-            ws.write(row_pos, 6, total, self.format_theader_blue_amount_right)
+            ws.write(row_pos, 7, total, self.format_theader_blue_amount_right)
