@@ -17,13 +17,8 @@
         id="stock.stock_picking_type_menu" parent="stock.menu_stock_root"
         sequence="1" name="Dashboard" />
 
-    <menuitem action="stock.product_template_action_product"
+    <menuitem action="stock.stock_product_normal_action"
         id="stock.menu_product_variant_config_stock" name="Products"
         parent="stock.menu_stock_root" sequence="0" />
-
-    <!-- Show the menu product variant in Inventory regardless the variant setting-->
-    <record id="stock.product_product_menu" model="ir.ui.menu">
-        <field name="groups_id" eval="[(6, 0, [])]"/>
-    </record>
 
 </odoo>
