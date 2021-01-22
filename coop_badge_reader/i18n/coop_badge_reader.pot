@@ -220,7 +220,7 @@ msgstr ""
 #. module: coop_badge_reader
 #: model:ir.actions.act_window,name:coop_badge_reader.action_res_partner_move
 #: model:ir.ui.menu,name:coop_badge_reader.menu_res_partner_move
-msgid "Partner Moves"
+msgid "Entries"
 msgstr ""
 
 #. module: coop_badge_reader

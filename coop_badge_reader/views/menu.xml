@@ -9,7 +9,7 @@
 <odoo>
 
     <record model="ir.ui.menu" id="menu_res_partner_move">
-        <field name="name">Partner Moves</field>
+        <field name="name">Entries</field>
         <field name="action" ref="action_res_partner_move"/>
         <field name="parent_id" ref="coop_shift.menu_shift_configuration"/>
         <field name="sequence">2</field>
