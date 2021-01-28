@@ -24,8 +24,10 @@ class StockInventoryValuationReport(models.TransientModel):
         products = self.env['product.product'].\
             search([('type', '=', 'product'), ('qty_available', '!=', 0)]).\
             with_context(dict(to_date=self.date, company_owned=True,
-                              create=False, edit=False))
+                              create=False, edit=False,
+                              lang=self._context.get('lang')))
         ReportLine = self.env['stock.inventory.valuation.view']
+
         for product in products:
             standard_price = product.standard_price
             if self.date:

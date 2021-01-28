@@ -70,7 +70,7 @@ class StockScrapProductWizard(models.TransientModel):
         for move_line in move_lines:
             product = move_line.product_id.with_context(
                 dict(to_date=move_line.date, company_owned=True,
-                create=False, edit=False))
+                create=False, edit=False, lang=self._context.get('lang')))
             standard_price = product.get_history_price(
                 self.env.user.company_id.id,
                 date=move_line.date)
