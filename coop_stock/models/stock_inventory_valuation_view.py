@@ -30,7 +30,7 @@ class StockInventoryValuationReport(models.TransientModel):
 
         for product in products:
             standard_price = product.standard_price
-            if self.date:
+            if self.compute_at_date:
                 standard_price = product.get_history_price(
                     self.env.user.company_id.id,
                     date=self.date)
