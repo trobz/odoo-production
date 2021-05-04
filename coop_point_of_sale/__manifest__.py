@@ -17,6 +17,7 @@
     "depends": [
         "point_of_sale",
         "pos_price_to_weight",
+        "pos_payment_credit",
         "coop_membership",
     ],
     "qweb": [
@@ -33,6 +34,7 @@
         "views/view_pos_order_line.xml",
         "views/view_pos_config_settings.xml",
         "views/view_pos_category.xml",
+        "views/view_res_partner.xml",
     ],
     "installable": True,
 }
