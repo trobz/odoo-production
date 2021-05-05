@@ -27,4 +27,5 @@ class ResPartner(models.Model):
     credit_amount = fields.Float(
         string="Available Credit",
         digits=0,
+        readonly=True,
     )
