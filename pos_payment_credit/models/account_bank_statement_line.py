@@ -36,4 +36,4 @@ class AccountBankStatementLine(models.Model):
         lines = self.filtered(
             lambda l: l.amount and l.partner_id and l.journal_id.is_credit)
         for line in lines:
-            line.partner_id.credit_amount -= line.amount
+            line.sudo().partner_id.credit_amount -= line.amount
