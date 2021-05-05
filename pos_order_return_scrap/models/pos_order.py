@@ -38,7 +38,7 @@ class PosOrder(models.Model):
         super(PosOrder, self)._force_picking_done(picking)
         if picking.state == 'done':
             lines = self.lines.filtered(lambda l: l.is_scrap)
-            StockScrap = self.env['stock.scrap']
+            StockScrap = self.env['stock.scrap'].sudo()
             for line in lines:
                 vals = StockScrap.default_get(StockScrap.fields_get_keys())
                 vals.update({
