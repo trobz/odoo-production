@@ -137,3 +137,18 @@ class PosOrder(models.Model):
     @job
     def _job_recompute_week_fields_async(self):
         self._compute_week_number()
+
+    def _reconcile_payments(self):
+        """
+        When refunding the order, its receivable journal item
+        could not be reconciled
+        """
+        super(PosOrder, self)._reconcile_payments()
+        for order in self:
+            aml = order.statement_ids.mapped('journal_entry_ids')
+            aml |= order.account_move.line_ids
+            aml |= order.invoice_id.move_id.line_ids
+            aml = aml.filtered(
+                lambda r: r.reconciled and r.account_id.internal_type == 'receivable'
+                    and not r.full_reconcile_id)
+            aml.check_full_reconcile()
