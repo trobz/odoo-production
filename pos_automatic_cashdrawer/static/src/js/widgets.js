@@ -144,6 +144,7 @@ odoo.define('pos_automatic_cashdrawer.widgets', function (require) {
             }).then(function () {
                 self.gui.show_popup('cashdrawer_cash_in', {
                     allow_cancel: true,
+                    payment: false,
                     title: _t('Add cash'),
                     confirm: function (value) {
                         self.pos.action_put_money_in(value, _t('Manual: put money in')).then(function (st_line) {
@@ -382,13 +383,23 @@ odoo.define('pos_automatic_cashdrawer.widgets', function (require) {
             this.closed = false;
             this.inputbuffer = 0.00;
             framework.blockUI();
-            this.pos.proxy.automatic_cashdrawer_start_add_change().then(function (res) {
-                self.update_counter();
-            }).fail(function (err) {
-                self.close();
-            }).always(function () {
-                framework.unblockUI();
-            });
+            if (options.payment) {
+                this.pos.proxy.automatic_cashdrawer_start_acceptance().then(function (res) {
+                    self.update_counter();
+                    }).fail(function (err) {
+                        self.close();
+                        }).always(function () {
+                            framework.unblockUI();
+                            });
+            } else {
+                this.pos.proxy.automatic_cashdrawer_start_add_change().then(function (res) {
+                    self.update_counter();
+                    }).fail(function (err) {
+                        self.close();
+                        }).always(function () {
+                            framework.unblockUI();
+                            });
+            }
         },
 
         close: function (options) {
