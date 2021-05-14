@@ -1,6 +1,4 @@
 def migrate(cr, version):
-    if not version:
-        return
     cr.execute("""
         WITH raw_rows AS (
             SELECT a.id,
