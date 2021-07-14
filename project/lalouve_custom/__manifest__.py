@@ -11,6 +11,7 @@ Lalouve Custom    """,
         'calendar'
     ],
     'data': [
+        'security/res_groups.xml',
         'view/calendar_view.xml',
     ],
     'test': [],
