@@ -36,14 +36,21 @@ class GeneralLedgerReportMoveLine(models.TransientModel):
             def __getattr__(self, attr):
                 return attr in self.dict and self.dict.__getitem__(attr) or 0.0
 
-        def get_k(line):
-            return '{a}_{b}_{c}_{d}_{e}_{f}_{g}_{h}_{i}'.format(
+        def get_move_ref_and_k(line):
+            # to get the reference of the account move
+            # we could use line.move_line_id.ref, but
+            # it's too costly in terms of performances;
+            # we know that line.label is built as follow:
+            # https://github.com/OCA/account-financial-reporting/blob/12.0/account_financial_report/report/general_ledger.py#L1158
+            # so we can use this trick:
+            move_ref = line.label.split(" - ")[0]
+            return move_ref, '{a}_{b}_{c}_{d}_{e}_{f}_{g}_{h}_{i}'.format(
                 a=line.date,
                 b=line.entry,
                 c=line.account,
                 d=line.taxes_description,
                 e=line.partner,
-                f=line.move_line_id.ref, # By reference of account move
+                f=move_ref,
                 g=line.cost_center,
                 h=line.matching_number,
                 i=line.currency_id,
@@ -51,7 +58,7 @@ class GeneralLedgerReportMoveLine(models.TransientModel):
         data_dict = {}
 
         for line in self:
-            k = get_k(line)
+            move_ref, k = get_move_ref_and_k(line)
             if k not in data_dict:
                 data_dict[k] = DataLine(
                     line.date,
@@ -59,7 +66,7 @@ class GeneralLedgerReportMoveLine(models.TransientModel):
                     line.account,
                     line.taxes_description,
                     line.partner,
-                    line.move_line_id.ref,
+                    move_ref,
                     line.cost_center,
                     line.tags,
                     line.matching_number,
