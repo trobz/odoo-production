@@ -13,6 +13,7 @@ Lalouve Custom    """,
     'data': [
         'security/res_groups.xml',
         'view/calendar_view.xml',
+        'view/assets.xml',
     ],
     'test': [],
     'installable': True,
