@@ -8,6 +8,7 @@ class CalendarEvent(models.Model):
     _inherit = 'calendar.event'
 
     privacy = fields.Selection(default='confidential')
+    send_invitation = fields.Boolean(string="Invite by email")
 
     @api.model
     def default_get(self, fields_list):
@@ -32,3 +33,68 @@ class CalendarEvent(models.Model):
                 'duration': default_duration
             })
         return vals
+
+    @api.multi
+    def create_attendees(self):
+        res = {}
+        for rec in self:
+            if rec.send_invitation:
+                res2 = super(CalendarEvent, rec).create_attendees()
+                res.update(res2)
+            else:
+                res2 = super(CalendarEvent, rec.with_context(
+                    detaching=True)).create_attendees()
+                res.update(res2)
+        return res
+
+    @api.model
+    def _number_to_letters(self, num):
+        """
+        Convert a number into a letters (3 -> 'C')
+        """
+        if not 1 <= num <= 18278:
+            return ''
+        letters = []
+        while num > 0:
+            num, remainder = divmod(num, 26)
+            # check for exact division and borrow if needed
+            if remainder == 0:
+                remainder = 26
+                num -= 1
+            letters.append(chr(remainder+64))
+        result = ''.join(reversed(letters))
+        return result
+
+    @api.model
+    def compute_week_name(self, dates):
+        week_names = {}
+        if not dates:
+            return week_names
+        get_param = self.env['ir.config_parameter'].sudo().get_param
+        week_date = get_param('coop_shift.week_a_date')
+        n_weeks_cycle = int(get_param('coop_shift.number_of_weeks_per_cycle'))
+
+        for _date  in dates:
+            sql = """
+                SELECT
+                    (   1 +
+                        MOD(
+                            DIV(
+                                ABS('{date_1}'::date - '{date_2}'::date)::integer,
+                                7
+                            ),
+                            {weeks_cycle}
+                        )
+                    )::integer AS week_number
+            """.format(
+                date_1=_date,
+                date_2=week_date,
+                weeks_cycle=n_weeks_cycle
+            )
+            self.env.cr.execute(sql)
+            res = self.env.cr.fetchone()
+            week_name = self._number_to_letters(res[0])
+            week_names.update({
+                _date: week_name
+            })
+        return week_names

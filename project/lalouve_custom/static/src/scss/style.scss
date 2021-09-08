@@ -1,0 +1,35 @@
+div.llc-week-number div{
+    border-radius: 12px;
+    margin-left: 10px;
+    font-size: 1.3em;
+    text-align: center;
+    color: #FFF;
+    width: 25px;
+    float: right;
+}
+th div.llc-week-number{
+    font-size: 1.3em;
+    color: #FFF;
+    span  {
+        font-size: 12px;
+    }
+}
+div.week-name-A div, th.week-name-A{
+    background-color: #cccc0e !important;
+}
+div.week-name-B div, th.week-name-B{
+    background-color: blue !important;
+}
+div.week-name-C div, th.week-name-C{
+    background-color: orange !important;
+}
+div.week-name-D div, th.week-name-D{
+    background-color: green !important;
+}
+div.week-name-lb{
+    text-align: left;
+    padding-left: 3px;
+}
+div.week-nb{
+    float: left;
+}

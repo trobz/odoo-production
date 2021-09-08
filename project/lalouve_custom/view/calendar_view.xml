@@ -24,6 +24,9 @@
             <field name="categ_ids" position="before">
                 <field name="privacy"/>
             </field>
+            <field name="allday" position="after">
+                <field name="send_invitation"/>
+            </field>
         </field>
     </record>
 </odoo>
