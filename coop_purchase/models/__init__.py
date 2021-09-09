@@ -7,3 +7,5 @@ from . import product_supplierinfo
 from . import res_partner
 from . import stock_picking
 from . import purchase_bill
+from . import product_product
+from . import stock_inventory_line
