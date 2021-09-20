@@ -26,7 +26,20 @@
             </field>
             <field name="allday" position="after">
                 <field name="send_invitation"/>
+                <field name="prevent_change"/>
             </field>
+        </field>
+    </record>
+    <record id="view_calendar_event_form_popup_inherit" model="ir.ui.view">
+        <field name="name">calendar.event.form.inherit</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form_popup"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/group" position="after">
+                <group string="Description">
+                    <field name="description" nolabel="1"/>
+                </group>
+            </xpath>
         </field>
     </record>
 </odoo>
