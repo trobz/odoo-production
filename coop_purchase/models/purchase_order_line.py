@@ -20,7 +20,6 @@ class PurchaseOrderLine(models.Model):
         related="product_id.default_code",
         store=True
     )
-    product_id = fields.Many2one(context={'display_default_code': False})
 
     @api.multi
     @api.depends("price_total", "product_qty")
