@@ -9,6 +9,7 @@ class ProductProduct(models.Model):
         ctx = self._context
         if isinstance(ctx.get('params'), dict) and \
                 ctx['params'].get('model') in ['stock.inventory',
+                    'computed.purchase.order',
                     'purchase.order', 'account.invoice']:
             names = dict(self.with_context(
                 display_default_code=False).name_get())
