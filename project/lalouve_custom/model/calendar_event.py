@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from datetime import timedelta
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 
 class CalendarEvent(models.Model):
@@ -99,3 +99,20 @@ class CalendarEvent(models.Model):
                 _date: week_name
             })
         return week_names
+
+    @api.model
+    def search_read(self, domain=None, fields=None, offset=0, limit=None,
+            order=None):
+        """
+        Hide the privacy calendar
+
+        """
+        records = super(CalendarEvent, self).search_read(
+            domain=domain, fields=fields, offset=offset, limit=limit,
+            order=order)
+        res = []
+        for rec in records:
+            if not rec.get('display_name') and rec.get('name') == _('Busy'):
+                continue
+            res.append(rec)
+        return res
