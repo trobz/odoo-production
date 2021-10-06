@@ -17,8 +17,7 @@ class PurchaseOrderLine(models.Model):
     )
     product_default_code = fields.Char(
         string="Internal Reference",
-        related="product_id.default_code",
-        store=True
+        related="product_id.default_code"
     )
 
     @api.multi
