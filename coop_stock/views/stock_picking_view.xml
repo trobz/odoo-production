@@ -37,6 +37,16 @@
                 position="before">
                 <field name="product_default_code"/>
             </xpath>
+            <xpath
+                expr="//field[@name='move_line_ids_without_package']"
+                    position="attributes">
+                <attribute name="context">{'display_default_code': False}</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='move_ids_without_package']"
+                    position="attributes">
+                <attribute name="context">{'display_default_code': False}</attribute>
+            </xpath>
         </field>
     </record>
     <record id="view_stock_product_tree2_inherit" model="ir.ui.view">

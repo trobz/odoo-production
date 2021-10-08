@@ -9,6 +9,9 @@
                 position="before">
                 <field name="product_default_code"/>
             </xpath>
+            <xpath expr="//field[@name='lines']" position="attributes">
+                <attribute name="context">{'display_default_code': False}</attribute>
+            </xpath>
         </field>
     </record>
     <record id="view_pos_order_search" model="ir.ui.view">
