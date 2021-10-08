@@ -8,7 +8,8 @@ Lalouve Custom    """,
     'author': 'Trobz',
     'website': 'http://www.trobz.com',
     'depends': [
-        'calendar'
+        'calendar',
+        'coop_point_of_sale'
     ],
     'data': [
         'security/res_groups.xml',
