@@ -9,12 +9,22 @@ Lalouve Custom    """,
     'website': 'http://www.trobz.com',
     'depends': [
         'calendar',
+        'project',
         'coop_point_of_sale'
     ],
     'data': [
+        'data/project_data.xml',
+        'data/mail_template.xml',
         'security/res_groups.xml',
+        'security/ir.model.access.csv',
         'view/calendar_view.xml',
+        "view/mail_message_view.xml",
+        "view/project_view.xml",
+        "view/project_category_view.xml",
         'view/assets.xml',
+    ],
+    'qweb': [
+        "static/src/xml/web_calendar.xml",
     ],
     'test': [],
     'installable': True,

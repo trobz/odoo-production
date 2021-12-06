@@ -10,6 +10,9 @@ class CalendarEvent(models.Model):
     privacy = fields.Selection(default='confidential')
     send_invitation = fields.Boolean(string="Invite by email")
     prevent_change = fields.Boolean(string="Prevent change", default=True)
+    description = fields.Html(
+        'Description', states={'done': [('readonly', True)]})
+    from_task = fields.Boolean()
 
     @api.model
     def default_get(self, fields_list):

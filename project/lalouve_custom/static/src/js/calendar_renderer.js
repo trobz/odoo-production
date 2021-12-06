@@ -2,6 +2,11 @@ odoo.define('lalouve_custom.CalendarRenderer', function (require) {
     "use strict";
 
     var CalendarRenderer = require('web.CalendarRenderer');
+    var core = require('web.core');
+    var _t = core._t;
+    var qweb = core.qweb;
+    var config = require('web.config');
+    var session = require('web.session');
 
     CalendarRenderer.include({
         _render: function () {
@@ -39,6 +44,24 @@ odoo.define('lalouve_custom.CalendarRenderer', function (require) {
                     });
                 }
             });
+        },
+        _eventRender: function (event) {
+            var qweb_context = {
+                event: event,
+                fields: this.state.fields,
+                format: this._format.bind(this),
+                isMobile: config.device.isMobile,
+                read_only_mode: this.read_only_mode,
+                record: event.record,
+                user_context: session.user_context,
+                widget: this,
+            };
+            this.qweb_context = qweb_context;
+            if (_.isEmpty(qweb_context.record)) {
+                return '';
+            } else {
+                return (this.qweb || qweb).render("calendar-box", qweb_context);
+            }
         },
         _addWeekNames_Month: function(tdWnEles, res){
             var th = self.$('.o_calendar_view').find('th.fc-week-number');
