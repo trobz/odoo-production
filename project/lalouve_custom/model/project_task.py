@@ -10,7 +10,7 @@ class ProjectTask(models.Model):
         ('1', 'Low'),
         ('2', 'Normal'),
         ('3', 'High Priority'),
-        ], default='2')
+        ])
 
     show_dealine_in_calendar = fields.Boolean(
         string="Show deadline on common calendar")
@@ -24,6 +24,11 @@ class ProjectTask(models.Model):
         default=lambda self: self.env.uid
     )
     user_id = fields.Many2one(default=False)
+    assignee_ids = fields.Many2many(
+        'res.users',
+        string="Assigned to",
+        track_visibility=True
+    )
     comment_ids = fields.Many2many(
         'mail.message',
         compute="_compute_comment_ids"
@@ -43,6 +48,28 @@ class ProjectTask(models.Model):
     project_category_name = fields.Char(
         related='project_categ_id.name', store=True)
     color = fields.Integer(related="project_categ_id.color", store=True)
+
+    @api.multi
+    def get_partner_assignee_ids(self):
+        partner_ids = self.mapped('assignee_ids.partner_id.id')
+        if not partner_ids:
+            return ''
+        res = ','.join(str(i) for i in partner_ids)
+        return res
+
+    @api.multi
+    def get_partner_assignee_names(self):
+        partner_names = self.mapped('assignee_ids.partner_id.name')
+        return ', '.join(partner_names)
+
+    @api.multi
+    def get_lang(self):
+        lang = ''
+        if self.user_id:
+            lang = self.user_id.lang
+        elif self.assignee_ids:
+            lang = self.assignee_ids[0].lang
+        return lang
 
     @api.multi
     def _compute_comment_ids(self):
@@ -68,9 +95,9 @@ class ProjectTask(models.Model):
                 if task.calendar_event_id:
                     task.calendar_event_id.unlink()
                 continue
-            partner_ids = [task.create_user_id.partner_id.id]
-            if task.user_id.partner_id.id not in partner_ids:
-                partner_ids.append(task.user_id.partner_id.id)
+            partner_ids = task.mapped('assignee_ids.partner_id.id')
+            if task.create_user_id.partner_id.id not in partner_ids:
+                partner_ids.append(task.create_user_id.partner_id.id)
             hours = int(self.env[
                 'ir.config_parameter'].sudo().get_param(
                 'project.task.calendar.hours', '10'
@@ -102,8 +129,22 @@ class ProjectTask(models.Model):
     @api.multi
     def notify_assignee(self):
         for task in self:
-            if not task.user_id:
+            if not task.assignee_ids:
                 continue
+            # Add to followers
+            message_partner_ids = task.message_partner_ids
+            partners = task.mapped('assignee_ids.partner_id')
+            to_add = partners - message_partner_ids
+            vals = []
+            for p in to_add:
+                vals.append({
+                    'res_model': task._name,
+                    'res_id': task.id,
+                    'partner_id': p.id
+                })
+            if vals:
+                self.env['mail.followers'].create(vals)
+
             mail_template = self.env.ref('lalouve_custom.email_notify_assignee')
             if mail_template:
                 mail_template.send_mail(task.id)
@@ -121,7 +162,7 @@ class ProjectTask(models.Model):
         res = super(ProjectTask, self.with_context(
             mail_auto_subscribe_no_notify=1)).write(vals)
         self.sync_calendar_event()
-        if vals.get('user_id'):
+        if vals.get('assignee_ids'):
             self.notify_assignee()
         return res
 
@@ -137,6 +178,9 @@ class ProjectTask(models.Model):
     def btn_add_comment(self):
         self.ensure_one()
         view = self.env.ref('lalouve_custom.view_task_comment_form')
+        partner_ids = self.mapped('assignee_ids.partner_id.id')
+        if self.create_user_id.partner_id.id not in partner_ids:
+            partner_ids.append(self.create_user_id.partner_id.id)
         act_vals = {
             'view_type': 'form',
             'view_mode': 'form',
@@ -149,7 +193,7 @@ class ProjectTask(models.Model):
                 'default_model': 'project.task',
                 'default_res_id': self.id,
                 'default_needaction_partner_ids':
-                    [(6, 0, [self.user_id.partner_id.id, self.create_user_id.partner_id.id])],
+                    [(6, 0, partner_ids)],
                 'default_author_id': self.env.user.partner_id.id,
                 'default_message_type': 'comment',
                 'default_subtype_id':

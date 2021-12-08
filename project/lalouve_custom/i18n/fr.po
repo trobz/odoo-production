@@ -43,6 +43,7 @@ msgstr "Assigné à"
 
 #. module: lalouve_custom
 #: model:ir.model.fields,field_description:lalouve_custom.field_project_task__user_id
+#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__assignee_ids
 #: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_form2_inherit
 msgid "Assigned to"
 msgstr "Assigné à"
@@ -356,7 +357,7 @@ msgstr "Changement: <ul>"
 #. module: lalouve_custom
 #: model:mail.template,body_html:lalouve_custom.email_notify_assignee
 msgid "\n"
-"<p>Hello ${object.user_id.name}, </p>\n"
+"<p>Hello ${object.get_partner_assignee_names()}, </p>\n"
 "<p>\n"
 "    ${user.name} has assigned to you a new task:\n"
 "</p>\n"
@@ -369,7 +370,7 @@ msgid "\n"
 "<p>Thank you, </p>\n"
 "            "
 msgstr "\n"
-"<p>Bonjour ${object.user_id.name}, </p>\n"
+"<p>Bonjour ${object.get_partner_assignee_names()}, </p>\n"
 "<p>\n"
 "    ${user.name} vous a confié une nouvelle tâche:\n"
 "</p>\n"
