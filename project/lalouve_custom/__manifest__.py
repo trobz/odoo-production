@@ -24,7 +24,7 @@ Lalouve Custom    """,
         'view/assets.xml',
     ],
     'qweb': [
-        "static/src/xml/web_calendar.xml",
+        "static/src/xml/*.xml",
     ],
     'test': [],
     'installable': True,

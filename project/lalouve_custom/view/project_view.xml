@@ -34,6 +34,15 @@
         </field>
     </field>
 </record>
+<record id="view_task_search_form_inherit" model="ir.ui.view">
+    <field name="model">project.task</field>
+    <field name="inherit_id" ref="project.view_task_search_form"/>
+    <field name="arch" type="xml">
+        <field name="stage_id" position="after">
+            <field name="project_categ_id"/>
+        </field>
+    </field>
+</record>
 <record id="view_task_kanban_inherit" model="ir.ui.view">
     <field name="model">project.task</field>
     <field name="inherit_id" ref="project.view_task_kanban"/>
@@ -41,6 +50,7 @@
         <xpath expr="//kanban" position="attributes">
             <attribute name="on_create"/>
             <attribute name="quick_create">0</attribute>
+            <attribute name="js_class">project_legend_kanban</attribute>
         </xpath>
         <xpath expr="//ul[hasclass('oe_kanban_colorpicker')]" position="attributes">
             <attribute name="invisible">1</attribute>

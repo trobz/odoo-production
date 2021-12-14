@@ -5,6 +5,11 @@
             <link rel="stylesheet" type="text/scss" href="/lalouve_custom/static/src/scss/style.scss"/>
             <script type="text/javascript" src="/lalouve_custom/static/src/js/calendar_view.js"></script>
             <script type="text/javascript" src="/lalouve_custom/static/src/js/calendar_renderer.js"></script>
+
+            <script type="text/javascript" src="/lalouve_custom/static/src/js/kanban_project_renderer.js"></script>
+            <script type="text/javascript" src="/lalouve_custom/static/src/js/kanban_project_controller.js"></script>
+            <script type="text/javascript" src="/lalouve_custom/static/src/js/kanban_project_view.js"></script>
+
         </xpath>
     </template>
 
