@@ -23,6 +23,10 @@ odoo.define('lalouve_custom.KanbanProjectRenderer', function (require) {
         },
         _renderProjectLegend: function(){
             var self = this;
+            var categLegend = $('.o_kanban_project_panel_section');
+            if (categLegend){
+                categLegend.remove()
+            }
             if (this.state.context.default_project_id === undefined){
                 return;
             }
