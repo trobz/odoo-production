@@ -9,7 +9,7 @@
             <field name="partner_to">${object.get_partner_assignee_ids()}</field>
             <field name="subject">Assignment of task: ${object.name}</field>
             <field name="model_id" ref="project.model_project_task" />
-            <field name="auto_delete" eval="True" />
+            <field name="auto_delete" eval="False" />
             <field name="lang">${object.get_lang()}</field>
             <field name="body_html"><![CDATA[
 <p>Hello ${object.get_partner_assignee_names()}, </p>
