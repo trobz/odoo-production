@@ -9,9 +9,6 @@
                 <attribute name="mode">month</attribute>
                 <attribute name="quick_add">false</attribute>
             </xpath>
-            <field name="is_highlighted" position="after">
-                <field name="from_task" invisible="1"/>
-            </field>
         </field>
     </record>
     <record id="calendar.mail_menu_calendar" model="ir.ui.menu">

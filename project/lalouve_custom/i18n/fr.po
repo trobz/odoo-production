@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-30 08:54+0000\n"
-"PO-Revision-Date: 2021-11-30 08:54+0000\n"
+"POT-Creation-Date: 2022-01-05 02:07+0000\n"
+"PO-Revision-Date: 2022-01-05 02:07+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,40 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: lalouve_custom
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_form2_inherit
-msgid "<i class=\"fa fa-edit\"/> Add comment"
-msgstr "<i class=\"fa fa-edit\"/> Ajouter un commentaire"
-
-#. module: lalouve_custom
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_form2_inherit
-msgid "<i class=\"fa fa-minus\"/> Only comments"
-msgstr "<i class=\"fa fa-minus\"/> Commentaires uniquement"
-
-#. module: lalouve_custom
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_form2_inherit
-msgid "<i class=\"fa fa-plus\"/> Full History"
-msgstr "<i class=\"fa fa-plus\"/> Historique complet"
-
-#. module: lalouve_custom
-#: selection:project.task,show_comment_type:0
-msgid "All"
-msgstr ""
-
-#. module: lalouve_custom
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_comment_form
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_form2_inherit
-msgid "Assigned To"
-msgstr "Assigné à"
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__user_id
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__assignee_ids
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_form2_inherit
-msgid "Assigned to"
-msgstr "Assigné à"
-
-#. module: lalouve_custom
-#: code:addons/lalouve_custom/model/calendar_event.py:118
+#: code:addons/lalouve_custom/model/calendar_event.py:117
 #, python-format
 msgid "Busy"
 msgstr ""
@@ -62,134 +29,23 @@ msgstr ""
 #. module: lalouve_custom
 #: model:ir.model,name:lalouve_custom.model_calendar_attendee
 msgid "Calendar Attendee Information"
-msgstr ""
+msgstr "Informations des participants au calendrier"
 
 #. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__calendar_event_id
-msgid "Calendar Event"
-msgstr ""
-
-#. module: lalouve_custom
-#: model:ir.actions.act_window,name:lalouve_custom.project_category_action
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_project__project_categ_ids
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__project_categ_ids
-#: model:ir.ui.menu,name:lalouve_custom.menu_project_category_act
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.project_category_search_view
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.project_category_tree_view
-msgid "Categories"
-msgstr "Catégorie"
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__project_categ_id
-msgid "Category"
-msgstr "Catégorie"
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_category__color
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__color
-msgid "Color Index"
-msgstr ""
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__comment_ids
-msgid "Comment"
-msgstr "Commentaire"
-
-#. module: lalouve_custom
-#: selection:project.task,show_comment_type:0
-msgid "Comment Only"
-msgstr ""
-
-#. module: lalouve_custom
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_form2_inherit
-msgid "Comments"
-msgstr "Commentaires"
-
-#. module: lalouve_custom
-#: model_terms:ir.actions.act_window,help:lalouve_custom.project_category_action
-msgid "Create a new category"
-msgstr ""
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__create_user_id
-msgid "Created By"
-msgstr "Créé par"
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_category__create_user_id
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_comment_form
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_form2_inherit
-msgid "Created by"
-msgstr "Créé par"
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_category__create_date
-msgid "Created on"
-msgstr ""
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_account_invoice_send__task_description
 #: model:ir.model.fields,field_description:lalouve_custom.field_calendar_event__description
-#: model:ir.model.fields,field_description:lalouve_custom.field_mail_compose_message__task_description
-#: model:ir.model.fields,field_description:lalouve_custom.field_mail_mail__task_description
-#: model:ir.model.fields,field_description:lalouve_custom.field_mail_message__task_description
-#: model:ir.model.fields,field_description:lalouve_custom.field_survey_mail_compose_message__task_description
 #: model_terms:ir.ui.view,arch_db:lalouve_custom.view_calendar_event_form_popup_inherit
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_comment_form
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_form2_inherit
 msgid "Description"
-msgstr ""
-
-#. module: lalouve_custom
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_comment_form
-msgid "Discard"
-msgstr ""
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_category__display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__estimated_cost
-msgid "Estimated Cost"
-msgstr "Budget Estimé"
+msgstr "La description"
 
 #. module: lalouve_custom
 #: model:ir.model,name:lalouve_custom.model_calendar_event
 msgid "Event"
-msgstr ""
+msgstr "Évènement"
 
 #. module: lalouve_custom
 #: selection:calendar.event,privacy:0
 msgid "Everyone"
-msgstr ""
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_calendar_event__from_task
-msgid "From Task"
-msgstr ""
-
-#. module: lalouve_custom
-#: selection:project.task,priority:0
-msgid "High Priority"
-msgstr ""
-
-#. module: lalouve_custom
-#: model:ir.model.fields,help:lalouve_custom.field_project_project__privacy_visibility
-msgid "Holds visibility of the tasks or issues that belong to the current project:\n"
-"- On invitation only: Employees may only see the followed project, tasks or issues\n"
-"- Visible by all employees: Employees may see all project, tasks or issues\n"
-"- Visible by following customers: employees see everything;\n"
-"   if website is activated, portal users may see project, tasks or issues followed by\n"
-"   them or by someone of their company\n"
-""
-msgstr ""
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_category__id
-msgid "ID"
-msgstr ""
+msgstr "Tout le monde"
 
 #. module: lalouve_custom
 #: model:ir.model.fields,field_description:lalouve_custom.field_calendar_event__send_invitation
@@ -197,60 +53,19 @@ msgid "Invite by email"
 msgstr "Inviter par courriel"
 
 #. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_category____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_category__write_uid
-msgid "Last Updated by"
-msgstr ""
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_category__write_date
-msgid "Last Updated on"
-msgstr ""
-
-#. module: lalouve_custom
-#: selection:project.task,priority:0
-msgid "Low"
-msgstr ""
-
-#. module: lalouve_custom
 #: model:ir.model,name:lalouve_custom.model_mail_message
 msgid "Message"
 msgstr ""
 
 #. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_category__name
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__project_category_name
-msgid "Name"
-msgstr ""
-
-#. module: lalouve_custom
-#: selection:project.task,priority:0
-msgid "No Priority"
-msgstr ""
-
-#. module: lalouve_custom
-#: selection:project.task,priority:0
-msgid "Normal"
-msgstr ""
-
-#. module: lalouve_custom
-#: selection:project.project,privacy_visibility:0
-msgid "On invitation only"
-msgstr ""
-
-#. module: lalouve_custom
 #: selection:calendar.event,privacy:0
 msgid "Only internal users"
-msgstr ""
+msgstr "Utilisateurs internes seulement"
 
 #. module: lalouve_custom
 #: selection:calendar.event,privacy:0
 msgid "Only me"
-msgstr ""
+msgstr "Moi seulement"
 
 #. module: lalouve_custom
 #: model:ir.model.fields,field_description:lalouve_custom.field_calendar_event__prevent_change
@@ -258,20 +73,14 @@ msgid "Prevent change"
 msgstr "Prévenir des changements"
 
 #. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__priority
-msgid "Priority"
-msgstr "Priorité"
-
-#. module: lalouve_custom
 #: model:ir.model.fields,field_description:lalouve_custom.field_calendar_event__privacy
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_project__privacy_visibility
 msgid "Privacy"
-msgstr ""
+msgstr "Confidentialité"
 
 #. module: lalouve_custom
 #: model:ir.model,name:lalouve_custom.model_project_project
 msgid "Project"
-msgstr ""
+msgstr "Projet"
 
 #. module: lalouve_custom
 #: model:ir.model,name:lalouve_custom.model_project_category
@@ -279,29 +88,14 @@ msgid "Project Category"
 msgstr ""
 
 #. module: lalouve_custom
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_comment_form
-msgid "Save"
-msgstr ""
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__show_comment_type
-msgid "Show Comment Type"
-msgstr ""
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__show_dealine_in_calendar
-msgid "Show deadline on common calendar"
-msgstr "Afficher l’échéance dans le calendrier commun"
-
-#. module: lalouve_custom
 #: model:ir.model,name:lalouve_custom.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Mouvement de stock"
 
 #. module: lalouve_custom
 #: model:ir.model,name:lalouve_custom.model_project_task
 msgid "Task"
-msgstr ""
+msgstr "Tâche"
 
 #. module: lalouve_custom
 #: model:mail.message.subtype,name:lalouve_custom.mt_task_assign
@@ -317,73 +111,3 @@ msgstr ""
 #: model:mail.message.subtype,name:lalouve_custom.mt_task_comment
 msgid "Task Commented"
 msgstr ""
-
-#. module: lalouve_custom
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_form2_inherit
-msgid "Task Title..."
-msgstr ""
-
-#. module: lalouve_custom
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_form2_inherit
-msgid "Ticket"
-msgstr ""
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__ticket_description
-msgid "Ticket Description"
-msgstr ""
-
-#. module: lalouve_custom
-#: model:ir.model.fields,field_description:lalouve_custom.field_project_task__ticket_number
-msgid "Ticket Number"
-msgstr "Numéro de ticket"
-
-#. module: lalouve_custom
-#: selection:project.project,privacy_visibility:0
-msgid "Visible by all employees"
-msgstr ""
-
-#. module: lalouve_custom
-#: model_terms:ir.ui.view,arch_db:lalouve_custom.view_task_comment_form
-msgid "or"
-msgstr ""
-
-#. module: lalouve_custom
-#: code:addons/lalouve_custom/model/mail_message.py:22
-#, python-format
-msgid "CHANGES: <ul>"
-msgstr "Changement: <ul>"
-
-#. module: lalouve_custom
-#: model:mail.template,body_html:lalouve_custom.email_notify_assignee
-msgid "\n"
-"<p>Hello ${object.get_partner_assignee_names()}, </p>\n"
-"<p>\n"
-"    ${user.name} has assigned to you a new task:\n"
-"</p>\n"
-"<ul>\n"
-"    <li>\n"
-"        ${object.name}\n"
-"    </li>\n"
-"</ul>\n"
-"\n"
-"<p>Thank you, </p>\n"
-"            "
-msgstr "\n"
-"<p>Bonjour ${object.get_partner_assignee_names()}, </p>\n"
-"<p>\n"
-"    ${user.name} vous a confié une nouvelle tâche:\n"
-"</p>\n"
-"<ul>\n"
-"    <li>\n"
-"        ${object.name}\n"
-"    </li>\n"
-"</ul>\n"
-"\n"
-"<p>Merci, </p>\n"
-"            "
-
-#. module: lalouve_custom
-#: model:mail.template,subject:lalouve_custom.email_notify_assignee
-msgid "Assignment of task: ${object.name}"
-msgstr "Attribution de la tâche: ${object.name}"
