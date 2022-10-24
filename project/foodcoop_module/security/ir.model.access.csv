@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_res_users_functional_admin,access_res_users_functional_admin,base.model_res_users,foodcoop_module.functional_admin,1,1,1,1
+access_res_users_role_line_users_functional_admin,access_res_users_role_line_users_functional_admin,base_user_role.model_res_users_role_line,foodcoop_module.functional_admin,1,1,1,1
+access_res_users_role,access_res_users_role,base_user_role.model_res_users_role,foodcoop_module.functional_admin,1,0,0,0
