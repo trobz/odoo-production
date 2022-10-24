@@ -19,7 +19,6 @@
                 ref('foodcoop_data_role.group_BDMLecture'),
                 ref('foodcoop_data_role.group_BDMPresence'),
                 ref('foodcoop_data_role.group_BDMSaisie'),
-                ref('foodcoop_data_role.group_Subscription'),
                 ref('foodcoop_data_role.group_BadgeReader'),
         ])]"/>
 </record>
