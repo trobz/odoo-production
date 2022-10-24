@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<record id="view_shift_form_inherit" model="ir.ui.view">
+    <field name="model">shift.shift</field>
+    <field name="inherit_id" ref="coop_membership.view_shift_form_inherit" />
+    <field name="arch" type="xml">
+        <button name="button_makeupok" position="attributes">
+                <attribute name="groups">coop_shift.group_shift_user</attribute>
+        </button>
+    </field>
+</record>
+
+</odoo>

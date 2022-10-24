@@ -1,0 +1,235 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* foodcoop_data_role
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-07-20 02:48+0000\n"
+"PO-Revision-Date: 2022-07-20 02:48+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_Accountant
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_Accountant
+msgid "Accountant"
+msgstr "Comptable"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.member_accountant_invoicing_menu_entries
+msgid "Accounting"
+msgstr "Comptabilité"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_BadgeReader
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_BadgeReader
+msgid "BadgeReader"
+msgstr "Badgeuse"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_BDMLecture
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_BDMLecture
+msgid "BDMLecture"
+msgstr ""
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_BDMPresence
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_BDMPresence
+msgid "BDMPresence"
+msgstr ""
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_BDMSaisie
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_BDMSaisie
+msgid "BDMSaisie"
+msgstr ""
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_action_invoice_tree2
+msgid "Bills"
+msgstr "Factures"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_Cashier
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_Cashier
+msgid "Cashier"
+msgstr "Caissier"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_check_deposit_tree
+msgid "Checks Deposits"
+msgstr "Remises de chèques"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_Communications_Manager
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_Communications_Manager
+msgid "Communications Manager"
+msgstr "Responsable Communication"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_Communications_Officer
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_Communications_Officer
+msgid "Communications Officer"
+msgstr "Chargé de Communication"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_stock_config_settings_2
+msgid "Configuration"
+msgstr ""
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_Foodcoop_Admin
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_Foodcoop_Admin
+msgid "Foodcoop Admin"
+msgstr "Administrateur Foodcoop"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_Inventory_Manager
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_Inventory_Manager
+msgid "Inventory Manager"
+msgstr "Responsable Stocks"
+
+#. module: foodcoop_data_role
+#: model:ir.model,name:foodcoop_data_role.model_account_invoice
+msgid "Invoice"
+msgstr "Facture"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.member_accountant_invoicing_menu_root
+msgid "Invoicing"
+msgstr "Facturation"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_Member_Accountant
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_Member_Accountant
+msgid "Member Accountant"
+msgstr "Membre comptable"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_Member_Manager
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_Member_Manager
+msgid "Member Manager"
+msgstr "Responsable Membres"
+
+#. module: foodcoop_data_role
+#: model:ir.model,name:foodcoop_data_role.model_pos_session
+msgid "Point of Sale Session"
+msgstr "Session du point de vente"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_POS_Manager
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_POS_Manager
+msgid "Point of Sales Manager"
+msgstr "Gestionnaire Point de Vente"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_product_print_category
+msgid "Print Categories"
+msgstr "Étiquettes"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_product_coefficient
+msgid "Products Coefficients"
+msgstr "Coefficients d'articles"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_Purchase_Manager
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_Purchase_Manager
+msgid "Purchase Manager"
+msgstr "Responsable Achats"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_Purchaser
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_Purchaser
+msgid "Purchaser"
+msgstr "Acheteur"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_action_invoice_in_refund
+msgid "Refund"
+msgstr "Avoir"
+
+#. module: foodcoop_data_role
+#: model_terms:ir.ui.view,arch_db:foodcoop_data_role.invoice_supplier_form_inherit
+msgid "Register Payment"
+msgstr "Enregistrer un paiement"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_member_Communications_Manager_restrict
+msgid "Restrict rights for Communications Manager"
+msgstr ""
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_member_Communications_Officer_restrict
+msgid "Restrict rights for Communications Officer"
+msgstr ""
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_member_accountant_restrict
+msgid "Restrict rights for Member Accountant"
+msgstr ""
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_member_Member_Manager_restrict
+msgid "Restrict rights for Member Manager"
+msgstr ""
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_POS_Manager_restrict
+msgid "Restrict rights for POS Manager"
+msgstr ""
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_Purchaser_restrict
+msgid "Restrict rights for Purchaser"
+msgstr ""
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_member_Subscription_restrict
+msgid "Restrict rights for Subscription"
+msgstr ""
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_member_WelMTeam_restrict
+msgid "Restrict rights for Welcome Meeting Team"
+msgstr ""
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_product_scale_log
+msgid "Scale Logs"
+msgstr "Évènements Balances"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_Staff
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_Staff
+msgid "Staff"
+msgstr "Salarié"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_Subscription
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_Subscription
+msgid "Subscription"
+msgstr "Responsable Souscriptions"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_Teamleader
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_Teamleader
+msgid "Teamleader"
+msgstr "Coordinateur d'équipe"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.member_accountant_invoicing_menu_payables
+msgid "Vendors"
+msgstr "Fournisseurs"
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_Welcome_Meeting_Team
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_Welcome_Meeting_Team
+msgid "Welcome Meeting Team"
+msgstr "Responsable Évènements"

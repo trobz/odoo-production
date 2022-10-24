@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+group_membership_bdm_lecture_bank_line,group_membership_bdm_lecture_bank_line,account.model_account_bank_statement_line,coop_membership.group_membership_bdm_lecture,1,0,0,0
+coop_membership.bdm_saisie_shift_edit,bdm.saisie.shift.edit,coop_shift.model_shift_shift,coop_membership.group_membership_bdm_saisie,1,0,1,0
+coop_membership.bdm_saisie_shift_leave_manager,bdm.saisie.shift.leave.manager,coop_shift.model_shift_leave,coop_membership.group_membership_bdm_saisie,1,0,0,0

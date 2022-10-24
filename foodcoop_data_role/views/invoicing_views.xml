@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<record id="account.menu_finance" model="ir.ui.menu">
+        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
+        <field name="groups_id" eval="[(6, 0, [
+            ref('foodcoop_data_role.group_Foodcoop_Admin'),
+            ref('foodcoop_data_role.group_Accountant'),
+        ])]"/>
+</record>
+<record id="coop_shift.shift_menu" model="ir.ui.menu">
+        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
+        <field name="groups_id" eval="[(6, 0, [
+            ref('foodcoop_data_role.group_Teamleader'),
+                ref('foodcoop_data_role.group_Foodcoop_Admin'),
+                ref('foodcoop_data_role.group_Member_Manager'),
+                ref('foodcoop_data_role.group_Member_Accountant'),
+                ref('foodcoop_data_role.group_Accountant'),
+                ref('foodcoop_data_role.group_BDMLecture'),
+                ref('foodcoop_data_role.group_BDMPresence'),
+                ref('foodcoop_data_role.group_BDMSaisie'),
+                ref('foodcoop_data_role.group_Subscription'),
+                ref('foodcoop_data_role.group_BadgeReader'),
+        ])]"/>
+</record>
+<menuitem
+        id="member_accountant_invoicing_menu_root"
+        name="Invoicing"
+        web_icon="account,static/description/icon.png"
+        groups="group_member_accountant_restrict,group_member_Subscription_restrict"/>
+<record id="member_accountant_invoicing_menu_root" model="ir.ui.menu">
+        <field name="invisible_groups_ids" eval="[(6, 0, [
+            ref('foodcoop_data_role.group_Foodcoop_Admin'),
+            ref('foodcoop_data_role.group_Accountant'),
+        ])]"/>
+</record>
+<menuitem id="member_accountant_invoicing_menu_payables"
+        name="Vendors"
+        parent="member_accountant_invoicing_menu_root"
+        groups="group_member_accountant_restrict"
+        sequence="10"/>
+<menuitem id="member_accountant_invoicing_menu_entries" name="Accounting"
+        parent="member_accountant_invoicing_menu_root"
+        sequence="20"/>
+<menuitem action="account.action_invoice_tree2"
+        id="menu_action_invoice_tree2"
+        parent="member_accountant_invoicing_menu_payables"
+        sequence="1"/>
+<menuitem action="account.action_invoice_in_refund"
+        id="menu_action_invoice_in_refund"
+        parent="member_accountant_invoicing_menu_payables"
+        sequence="5"/>
+<menuitem action="account_check_deposit.action_check_deposit_tree"
+        id="menu_check_deposit_tree"
+        parent="member_accountant_invoicing_menu_entries"
+        sequence="20"/>
+
+<record id="invoice_supplier_form_inherit" model="ir.ui.view">
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.invoice_supplier_form" />
+    <field name="groups_id" eval="[(6, 0, [ref('foodcoop_data_role.group_member_accountant_restrict')])]"/>
+    <field name="arch" type="xml">
+        <form position="attributes">
+                <attribute name="edit">0</attribute>
+                <attribute name="create">0</attribute>
+                <attribute name="delete">0</attribute>
+        </form>
+        <header position="attributes">
+                <attribute name="invisible">1</attribute>
+        </header>
+        <header position="after">
+                <header>
+                  <button name="127" type="action" states="open" string="Register Payment" class="oe_highlight" modifiers="{'invisible':[['state','not in',['open']]]}"/>
+                </header>
+        </header>
+    </field>
+</record>
+<record id="invoice_supplier_form_inherit_2" model="ir.ui.view">
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.invoice_supplier_form" />
+    <field name="arch" type="xml">
+        <button name="action_invoice_open" position="attributes">
+                <attribute name="groups">account.group_account_invoice,foodcoop_data_role.group_Purchaser</attribute>
+        </button>
+    </field>
+</record>
+<record id="invoice_supplier_tree_inherit" model="ir.ui.view">
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.invoice_supplier_tree" />
+    <field name="groups_id" eval="[(6, 0, [ref('foodcoop_data_role.group_member_accountant_restrict')])]"/>
+    <field name="arch" type="xml">
+        <tree position="attributes">
+                <attribute name="create">0</attribute>
+                <attribute name="delete">0</attribute>
+        </tree>
+    </field>
+</record>
+<record id="invoice_kanban_inherit" model="ir.ui.view">
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="account.invoice_kanban" />
+    <field name="groups_id" eval="[(6, 0, [ref('foodcoop_data_role.group_member_accountant_restrict')])]"/>
+    <field name="arch" type="xml">
+        <kanban position="attributes">
+                <attribute name="create">0</attribute>
+        </kanban>
+    </field>
+</record>
+</odoo>
