@@ -1,0 +1,232 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="res_users_role_Cashier" model="res.users.role">
+        <field name="name">Cashier</field>
+        <field name="group_id" ref="foodcoop_data_role.group_Cashier"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('pos_payment_terminal.payment_terminal_return')),
+            (4, ref('pos_access_right.group_payment')),
+            (4, ref('point_of_sale.group_pos_user')),
+        ]"/>
+    </record>
+    <record id="res_users_role_Purchaser" model="res.users.role">
+        <field name="name">Purchaser</field>
+        <field name="group_id" ref="foodcoop_data_role.group_Purchaser"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('coop_default_pricetag.group_food_manager')),
+            (4, ref('purchase.group_purchase_user')),
+            (4, ref('stock.group_stock_user')),
+            (4, ref('foodcoop_data_role.group_Purchaser_restrict')),
+            (4, ref('project.group_project_user')),
+            (4, ref('base_technical_features.group_technical_features')),
+            (4, ref('coop_membership.subscriptions_creator')),
+            (4, ref('product_print_category.manager')),
+            (4, ref('product_to_scale_bizerba.group_manager')),
+            (4, ref('project.group_project_user')),
+            (4, ref('maintenance.group_equipment_manager')),
+            (4, ref('purchase.group_manage_vendor_price')),
+        ]"/>
+    </record>
+    <record id="res_users_role_Purchase_Manager" model="res.users.role">
+        <field name="name">Purchase Manager</field>
+        <field name="group_id" ref="foodcoop_data_role.group_Purchase_Manager"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('coop_default_pricetag.group_food_manager')),
+            (4, ref('purchase.group_purchase_manager')),
+            (4, ref('stock.group_stock_manager')),
+            (4, ref('barcodes_generator_abstract.generate_barcode')),
+            (4, ref('project.group_project_user')),
+            (4, ref('maintenance.group_equipment_manager')),
+            (4, ref('purchase.group_manage_vendor_price')),
+        ]"/>
+    </record>
+    <record id="res_users_role_Inventory_Manager" model="res.users.role">
+        <field name="name">Inventory Manager</field>
+        <field name="group_id" ref="foodcoop_data_role.group_Inventory_Manager"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('barcodes_generator_abstract.generate_barcode')),
+            (4, ref('coop_default_pricetag.group_food_manager')),
+            (4, ref('stock.group_stock_manager')),
+            (4, ref('project.group_project_user')),
+            (4, ref('maintenance.group_equipment_manager')),
+        ]"/>
+    </record>
+    <record id="res_users_role_Teamleader" model="res.users.role">
+        <field name="name">Teamleader</field>
+        <field name="group_id" ref="foodcoop_data_role.group_Teamleader"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('coop_shift.group_shift_manager')),
+        ]"/>
+    </record>
+    <record id="res_users_role_Member_Manager" model="res.users.role">
+        <field name="name">Member Manager</field>
+        <field name="group_id" ref="foodcoop_data_role.group_Member_Manager"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('coop_membership.subscriptions_creator_payment')),
+            (4, ref('coop_badge_reader.group_manager')),
+            (4, ref('coop_membership.group_refund_capital_subscription')),
+            (4, ref('foodcoop_data_role.group_Teamleader')),
+            (4, ref('foodcoop_data_role.group_member_Member_Manager_restrict')),
+            (4, ref('coop_membership.group_shift_template_operations')),
+            (4, ref('point_of_sale.group_pos_user')),
+            (4, ref('base.group_no_one')),
+            (4, ref('project.group_project_user')),
+            (4, ref('maintenance.group_equipment_manager')),
+        ]"/>
+    </record>
+    <record id="res_users_role_Accountant" model="res.users.role">
+        <field name="name">Accountant</field>
+        <field name="group_id" ref="foodcoop_data_role.group_Accountant"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('account.group_account_invoice')),
+            (4, ref('foodcoop_data_role.group_Cashier')),
+            (4, ref('coop_membership.subscriptions_creator_payment')),
+            (4, ref('coop_membership.group_refund_capital_subscription')),
+            (4, ref('stock.group_stock_user')),
+            (4, ref('purchase.group_purchase_user')),
+            (4, ref('coop_shift.group_shift_user')),
+            (4, ref('sales_team.group_sale_salesman_all_leads')),
+            (4, ref('coop_membership.group_clean_up')),
+            (4, ref('project.group_project_user')),
+            (4, ref('maintenance.group_equipment_manager')),
+            (4, ref('purchase.group_manage_vendor_price')),
+        ]"/>
+    </record>
+    <record id="res_users_role_Foodcoop_Admin" model="res.users.role">
+        <field name="name">Foodcoop Admin</field>
+        <field name="group_id" ref="foodcoop_data_role.group_Foodcoop_Admin"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('foodcoop_data_role.group_Accountant')),
+            (4, ref('account_export.group_account_export')),
+            (4, ref('account.group_account_manager')),
+            (4, ref('product_to_scale_bizerba.group_manager')),
+            (4, ref('foodcoop_data_role.group_Cashier')),
+            (4, ref('foodcoop_module.functional_admin')),
+            (4, ref('foodcoop_data_role.group_Inventory_Manager')),
+            (4, ref('coop_badge_reader.group_manager')),
+            (4, ref('event.group_event_manager')),
+            (4, ref('project.group_project_manager')),
+            (4, ref('sales_team.group_sale_manager')),
+            (4, ref('purchase.group_purchase_manager')),
+            (4, ref('stock.group_stock_manager')),
+            (4, ref('point_of_sale.group_pos_manager')),
+            (4, ref('foodcoop_data_role.group_Member_Manager')),
+            (4, ref('pos_access_right.group_delete_order')),
+            (4, ref('pos_access_right.group_discount')),
+            (4, ref('pos_access_right.group_multi_order')),
+            (4, ref('pos_access_right.group_negative_qty')),
+            (4, ref('pos_access_right.group_payment')),
+            (4, ref('product_print_category.manager')),
+            (4, ref('foodcoop_data_role.group_Purchaser')),
+            (4, ref('account.group_account_user')),
+            (4, ref('foodcoop_data_role.group_Teamleader')),
+            (4, ref('base_technical_features.group_technical_features')),
+            (4, ref('mass_mailing.group_mass_mailing_user')),
+            (4, ref('coop_membership.group_clean_up')),
+            (4, ref('project.group_project_user')),
+            (4, ref('maintenance.group_equipment_manager')),
+            (4, ref('purchase.group_manage_vendor_price')),
+        ]"/>
+    </record>
+    <record id="res_users_role_BDMLecture" model="res.users.role">
+        <field name="name">BDMLecture</field>
+        <field name="group_id" ref="foodcoop_data_role.group_BDMLecture"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('coop_membership.group_membership_bdm_lecture')),
+        ]"/>
+    </record>
+    <record id="res_users_role_BDMPresence" model="res.users.role">
+        <field name="name">BDMPresence</field>
+        <field name="group_id" ref="foodcoop_data_role.group_BDMPresence"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('coop_membership.group_membership_bdm_presence')),
+        ]"/>
+    </record>
+    <record id="res_users_role_BDMSaisie" model="res.users.role">
+        <field name="name">BDMSaisie</field>
+        <field name="group_id" ref="foodcoop_data_role.group_BDMSaisie"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('coop_membership.group_membership_bdm_saisie')),
+        ]"/>
+    </record>
+    <record id="res_users_role_Subscription" model="res.users.role">
+        <field name="name">Subscription</field>
+        <field name="group_id" ref="foodcoop_data_role.group_Subscription"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('coop_shift.group_shift_user')),
+            (4, ref('coop_membership.subscriptions_creator_payment')),
+            (4, ref('foodcoop_data_role.group_member_Subscription_restrict')),
+            (4, ref('account.group_account_user')),
+            (4, ref('foodcoop_data_role.group_member_WelMTeam_restrict')),
+
+        ]"/>
+    </record>
+    <record id="res_users_role_Communications_Officer" model="res.users.role">
+        <field name="name">Communications Officer</field>
+        <field name="group_id" ref="foodcoop_data_role.group_Communications_Officer"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('mass_mailing.group_mass_mailing_user')),
+            (4, ref('foodcoop_data_role.group_member_Communications_Officer_restrict')),
+            
+        ]"/>
+    </record>
+    <record id="res_users_role_Communications_Manager" model="res.users.role">
+        <field name="name">Communications Manager</field>
+        <field name="group_id" ref="foodcoop_data_role.group_Communications_Manager"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('mass_mailing_access.group_manager')),
+            (4, ref('foodcoop_data_role.group_member_Communications_Manager_restrict')),
+            
+        ]"/>
+    </record>
+        <record id="res_users_role_Welcome_Meeting_Team" model="res.users.role">
+        <field name="name">Welcome Meeting Team</field>
+        <field name="group_id" ref="foodcoop_data_role.group_Welcome_Meeting_Team"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('event.group_event_manager')),
+        ]"/>
+    </record>
+    <record id="res_users_role_Member_Accountant" model="res.users.role">
+        <field name="name">Member Accountant</field>
+        <field name="group_id" ref="foodcoop_data_role.group_Member_Accountant"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('foodcoop_data_role.group_member_accountant_restrict')),
+            (4, ref('pos_payment_terminal.payment_terminal_return')),
+            (4, ref('pos_access_right.group_payment')),
+            (4, ref('point_of_sale.group_pos_user')),
+            (4, ref('account.group_account_user')),
+        ]"/>
+    </record>
+    <record id="res_users_role_POS_Manager" model="res.users.role">
+        <field name="name">Point of Sales Manager</field>
+        <field name="group_id" ref="foodcoop_data_role.group_POS_Manager"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('point_of_sale.group_pos_manager')),
+            (4, ref('pos_payment_terminal.payment_terminal_return')),
+            (4, ref('pos_access_right.group_payment')),
+            (4, ref('foodcoop_data_role.group_POS_Manager_restrict')),
+            (4, ref('pos_access_right.group_delete_order')),
+            (4, ref('pos_access_right.group_discount')),
+            (4, ref('pos_access_right.group_multi_order')),
+            (4, ref('pos_access_right.group_negative_qty')),
+            (4, ref('project.group_project_user')),
+            (4, ref('maintenance.group_equipment_manager')),
+        ]"/>
+    </record>
+    <record id="res_users_role_BadgeReader" model="res.users.role">
+        <field name="name">BadgeReader</field>
+        <field name="group_id" ref="foodcoop_data_role.group_BadgeReader"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('coop_membership.group_membership_bdm_lecture')),
+            (4, ref('coop_badge_reader.group_time_clock')),
+        ]"/>
+    </record>
+    <record id="res_users_role_Staff" model="res.users.role">
+        <field name="name">Staff</field>
+        <field name="group_id" ref="foodcoop_data_role.group_Staff"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')),
+            (4, ref('project.group_project_user')),
+            (4, ref('maintenance.group_equipment_manager')),
+        ]"/>
+    </record>
+</odoo>

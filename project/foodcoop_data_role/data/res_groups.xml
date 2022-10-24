@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="group_Cashier" model="res.groups">
+        <field name="name">Cashier</field>
+    </record>
+    <record id="group_Member_Manager" model="res.groups">
+        <field name="name">Member Manager</field>
+    </record>
+    <record id="group_Accountant" model="res.groups">
+        <field name="name">Accountant</field>
+    </record>
+    <record id="group_Inventory_Manager" model="res.groups">
+        <field name="name">Inventory Manager</field>
+    </record>
+    <record id="group_Teamleader" model="res.groups">
+        <field name="name">Teamleader</field>
+    </record>
+    <record id="group_Purchaser" model="res.groups">
+        <field name="name">Purchaser</field>
+    </record>
+    <record id="group_Purchase_Manager" model="res.groups">
+        <field name="name">Purchase Manager</field>
+    </record>
+    <record id="group_Foodcoop_Admin" model="res.groups">
+        <field name="name">Foodcoop Admin</field>
+    </record>
+    <record id="group_BDMLecture" model="res.groups">
+        <field name="name">BDMLecture</field>
+    </record>
+    <record id="group_BDMPresence" model="res.groups">
+        <field name="name">BDMPresence</field>
+    </record>
+    <record id="group_BDMSaisie" model="res.groups">
+        <field name="name">BDMSaisie</field>
+    </record>
+    <record id="group_POS_Manager" model="res.groups">
+        <field name="name">Point of Sales Manager</field>
+    </record>
+
+    <record id="group_Subscription" model="res.groups">
+        <field name="name">Subscription</field>
+    </record>
+    <record id="group_Communications_Officer" model="res.groups">
+        <field name="name">Communications Officer</field>
+    </record>
+    <record id="group_Communications_Manager" model="res.groups">
+        <field name="name">Communications Manager</field>
+    </record>
+    <record id="group_Welcome_Meeting_Team" model="res.groups">
+        <field name="name">Welcome Meeting Team</field>
+    </record>
+    <record id="group_Member_Accountant" model="res.groups">
+        <field name="name">Member Accountant</field>
+    </record>
+    <record id="group_BadgeReader" model="res.groups">
+        <field name="name">BadgeReader</field>
+    </record>
+    <record id="group_Staff" model="res.groups">
+        <field name="name">Staff</field>
+    </record>
+
+    <record id="group_member_accountant_restrict" model="res.groups">
+        <field name="name">Restrict rights for Member Accountant</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+    <record id="group_member_Subscription_restrict" model="res.groups">
+        <field name="name">Restrict rights for Subscription</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+    <record id="group_member_WelMTeam_restrict" model="res.groups">
+        <field name="name">Restrict rights for Welcome Meeting Team</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+    <record id="group_member_Communications_Officer_restrict" model="res.groups">
+        <field name="name">Restrict rights for Communications Officer</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+    <record id="group_member_Communications_Manager_restrict" model="res.groups">
+        <field name="name">Restrict rights for Communications Manager</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+    <record id="group_member_Member_Manager_restrict" model="res.groups">
+        <field name="name">Restrict rights for Member Manager</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+    <record id="group_Purchaser_restrict" model="res.groups">
+        <field name="name">Restrict rights for Purchaser</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+    <record id="group_POS_Manager_restrict" model="res.groups">
+        <field name="name">Restrict rights for POS Manager</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+    <record model="ir.ui.menu" id="mail.menu_root_discuss">
+        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
+        <field name="groups_id" eval="[(6, 0, [
+            ref('foodcoop_data_role.group_Foodcoop_Admin'),
+        ])]"/>
+    </record>
+    <record model="ir.ui.menu" id="mass_mailing.mass_mailing_mailing_list_menu">
+        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
+        <field name="groups_id" eval="[(6, 0, [
+            ref('foodcoop_data_role.group_Communications_Manager'),
+            ref('foodcoop_data_role.group_Foodcoop_Admin'),
+        ])]"/>
+    </record>
+    <record model="ir.ui.menu" id="mass_mailing.menu_mass_mailing_configuration">
+        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
+        <field name="groups_id" eval="[(6, 0, [
+            ref('foodcoop_data_role.group_Communications_Manager'),
+            ref('foodcoop_data_role.group_Foodcoop_Admin'),
+        ])]"/>
+    </record>
+    <record model="ir.ui.menu" id="coop_shift.menu_shift_configuration">
+        <field name="groups_id" eval="[
+        (4, ref('foodcoop_data_role.group_Member_Manager')),
+        ]"/>
+    </record>
+    <record model="ir.ui.menu" id="coop_membership.menu_shift_type_seting">
+        <field name="groups_id" eval="[
+        (4, ref('base.group_system')),
+        ]"/>
+    </record>
+    <record model="ir.ui.menu" id="coop_print_badge.menu_badge_to_distribute">
+        <field name="groups_id" eval="[
+        (4, ref('foodcoop_data_role.group_Member_Manager')),
+        ]"/>
+    </record>
+    <record model="ir.ui.menu" id="point_of_sale.menu_point_root">
+        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
+        <field name="groups_id" eval="[(6, 0, [
+            ref('foodcoop_data_role.group_Cashier'),
+            ref('foodcoop_data_role.group_Foodcoop_Admin'),
+            ref('foodcoop_data_role.group_POS_Manager'),
+            ref('foodcoop_data_role.group_Member_Accountant'),
+            ref('foodcoop_data_role.group_Accountant'),
+
+        ])]"/>
+    </record>
+    <record model="ir.ui.menu" id="coop_membership.menu_shift_counter_event_reason">
+        <field name="groups_id" eval="[
+        (4, ref('foodcoop_data_role.group_Member_Manager')),
+        ]"/>
+    </record>
+    <record model="ir.ui.menu" id="stock.menu_stock_root">
+        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
+        <field name="groups_id" eval="[(6, 0, [
+            ref('foodcoop_data_role.group_Inventory_Manager'),
+            ref('foodcoop_data_role.group_Foodcoop_Admin'),
+            ref('foodcoop_data_role.group_Purchaser'),
+            ref('foodcoop_data_role.group_Purchase_Manager'),
+            ref('foodcoop_data_role.group_Accountant'),
+
+        ])]"/>
+    </record>
+    
+</odoo>
