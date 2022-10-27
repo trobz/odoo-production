@@ -141,4 +141,7 @@
     <record model="ir.ui.menu" id="base.menu_board_root">
         <field name="groups_id" eval="[(4, ref('foodcoop_data_role.group_Staff'))]"/>
     </record>
+    <record model="ir.ui.menu" id="mass_mailing.menu_email_mass_mailing_contacts">
+        <field name="groups_id" eval="[(4, ref('foodcoop_data_role.group_Communications_Manager'))]"/>
+    </record>
 </odoo>
