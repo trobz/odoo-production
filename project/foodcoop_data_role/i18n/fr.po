@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-20 02:48+0000\n"
-"PO-Revision-Date: 2022-07-20 02:48+0000\n"
+"POT-Creation-Date: 2022-10-31 08:34+0000\n"
+"PO-Revision-Date: 2022-10-31 08:34+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -27,10 +27,19 @@ msgid "Accounting"
 msgstr "Comptabilité"
 
 #. module: foodcoop_data_role
-#: model:res.groups,name:foodcoop_data_role.group_BadgeReader
-#: model:res.users.role,name:foodcoop_data_role.res_users_role_BadgeReader
-msgid "BadgeReader"
-msgstr "Badgeuse"
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_finance_entries_accounting_entries
+msgid "Accounting Entries"
+msgstr "Écritures comptables"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_finance_entries_actions
+msgid "Actions"
+msgstr ""
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_action_analytic_lines_tree
+msgid "Analytic Items"
+msgstr "Écritures analytiques"
 
 #. module: foodcoop_data_role
 #: model:res.groups,name:foodcoop_data_role.group_BDMLecture
@@ -49,6 +58,12 @@ msgstr ""
 #: model:res.users.role,name:foodcoop_data_role.res_users_role_BDMSaisie
 msgid "BDMSaisie"
 msgstr ""
+
+#. module: foodcoop_data_role
+#: model:res.groups,name:foodcoop_data_role.group_BadgeReader
+#: model:res.users.role,name:foodcoop_data_role.res_users_role_BadgeReader
+msgid "BadgeReader"
+msgstr "Badgeuse"
 
 #. module: foodcoop_data_role
 #: model:ir.ui.menu,name:foodcoop_data_role.menu_action_invoice_tree2
@@ -84,10 +99,20 @@ msgid "Configuration"
 msgstr ""
 
 #. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_export_wrong_reconciliation_ml
+msgid "Export wrong reconciliation move lines"
+msgstr ""
+
+#. module: foodcoop_data_role
 #: model:res.groups,name:foodcoop_data_role.group_Foodcoop_Admin
 #: model:res.users.role,name:foodcoop_data_role.res_users_role_Foodcoop_Admin
 msgid "Foodcoop Admin"
 msgstr "Administrateur Foodcoop"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_inter_tranfer_payment
+msgid "Inter Account Transfer"
+msgstr "Tranfert interne"
 
 #. module: foodcoop_data_role
 #: model:res.groups,name:foodcoop_data_role.group_Inventory_Manager
@@ -104,6 +129,21 @@ msgstr "Facture"
 #: model:ir.ui.menu,name:foodcoop_data_role.member_accountant_invoicing_menu_root
 msgid "Invoicing"
 msgstr "Facturation"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_action_move_journal_line_form
+msgid "Journal Entries"
+msgstr "Pièces comptables"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_action_account_moves_all
+msgid "Journal Items"
+msgstr "Écritures comptables"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_mass_reconcile
+msgid "Mass Automatic Reconcile"
+msgstr "Lettrage automatisé"
 
 #. module: foodcoop_data_role
 #: model:res.groups,name:foodcoop_data_role.group_Member_Accountant
@@ -149,6 +189,11 @@ msgstr "Responsable Achats"
 #: model:res.users.role,name:foodcoop_data_role.res_users_role_Purchaser
 msgid "Purchaser"
 msgstr "Acheteur"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_action_manual_reconciliation
+msgid "Reconciliation"
+msgstr "Lettrage"
 
 #. module: foodcoop_data_role
 #: model:ir.ui.menu,name:foodcoop_data_role.menu_action_invoice_in_refund
@@ -216,6 +261,11 @@ msgstr "Salarié"
 #: model:res.users.role,name:foodcoop_data_role.res_users_role_Subscription
 msgid "Subscription"
 msgstr "Responsable Souscriptions"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_action_tax_adjustment
+msgid "Tax Adjustments"
+msgstr "Ajustements fiscaux"
 
 #. module: foodcoop_data_role
 #: model:res.groups,name:foodcoop_data_role.group_Teamleader
