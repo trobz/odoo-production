@@ -68,10 +68,34 @@
                 <attribute name="invisible">1</attribute>
         </header>
         <header position="after">
-                <header>
-                  <button name="127" type="action" states="open" string="Register Payment" class="oe_highlight" modifiers="{'invisible':[['state','not in',['open']]]}"/>
+                <header name="member_accountant_header">
+                  <button name="%(account.action_account_invoice_payment)d" type="action" states="open" string="Register Payment" class="oe_highlight" modifiers="{'invisible':[['state','not in',['open']]]}"/>
                 </header>
         </header>
+    </field>
+</record>
+<record id="invoice_supplier_form_inherit_other" model="ir.ui.view">
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="foodcoop_data_role.invoice_supplier_form_inherit" />
+    <field name="groups_id" eval="[(6, 0, [
+        ref('foodcoop_data_role.group_Cashier'),
+        ref('foodcoop_data_role.group_Member_Manager'),
+        ref('foodcoop_data_role.group_Accountant'),
+        ref('foodcoop_data_role.group_Purchase_Manager'),
+        ref('foodcoop_data_role.group_Foodcoop_Admin'),
+        ref('foodcoop_data_role.group_POS_Manager'),        
+    ])]"/>
+    <field name="arch" type="xml">
+        <form position="attributes">
+                <attribute name="edit"/>
+                <attribute name="create"/>
+                <attribute name="delete"/>
+        </form>
+
+        <header position="attributes">
+                <attribute name="invisible" />
+        </header>
+        <header name="member_accountant_header" position="replace" />
     </field>
 </record>
 <record id="invoice_supplier_form_inherit_2" model="ir.ui.view">
@@ -94,6 +118,24 @@
         </tree>
     </field>
 </record>
+<record id="invoice_supplier_tree_inherit_other" model="ir.ui.view">
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="foodcoop_data_role.invoice_supplier_tree_inherit" />
+    <field name="groups_id" eval="[(6, 0, [
+        ref('foodcoop_data_role.group_Cashier'),
+        ref('foodcoop_data_role.group_Member_Manager'),
+        ref('foodcoop_data_role.group_Accountant'),
+        ref('foodcoop_data_role.group_Purchase_Manager'),
+        ref('foodcoop_data_role.group_Foodcoop_Admin'),
+        ref('foodcoop_data_role.group_POS_Manager'),        
+    ])]"/>
+    <field name="arch" type="xml">
+        <tree position="attributes">
+                <attribute name="create"/>
+                <attribute name="delete"/>
+        </tree>
+    </field>
+</record>
 <record id="invoice_kanban_inherit" model="ir.ui.view">
     <field name="model">account.invoice</field>
     <field name="inherit_id" ref="account.invoice_kanban" />
@@ -101,6 +143,23 @@
     <field name="arch" type="xml">
         <kanban position="attributes">
                 <attribute name="create">0</attribute>
+        </kanban>
+    </field>
+</record>
+<record id="invoice_kanban_inherit_other" model="ir.ui.view">
+    <field name="model">account.invoice</field>
+    <field name="inherit_id" ref="foodcoop_data_role.invoice_kanban_inherit" />
+    <field name="groups_id" eval="[(6, 0, [
+        ref('foodcoop_data_role.group_Cashier'),
+        ref('foodcoop_data_role.group_Member_Manager'),
+        ref('foodcoop_data_role.group_Accountant'),
+        ref('foodcoop_data_role.group_Purchase_Manager'),
+        ref('foodcoop_data_role.group_Foodcoop_Admin'),
+        ref('foodcoop_data_role.group_POS_Manager'),        
+    ])]"/>
+    <field name="arch" type="xml">
+        <kanban position="attributes">
+                <attribute name="create"/>
         </kanban>
     </field>
 </record>

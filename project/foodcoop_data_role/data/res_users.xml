@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<odoo>
+<odoo noupdate="1">
     <record id="demo_user_Cashier" model="res.users">
         <field name="name">Cashier Example</field>
         <field name="login">cashier@example.com</field>
