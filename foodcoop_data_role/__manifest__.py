@@ -30,11 +30,13 @@
         'mass_mailing_access',
         'pos_report_session_summary',
         'coop_account_check_deposit',
+        'coop_account',
         'invisible_menu_groups',
         'coop_print_badge',
         'coop_product_coefficient',
         'coop_inventory_recurrent',
-        'maintenance'
+        'maintenance',
+        'account_mass_reconcile'
     ],
     'test': [],
     'data': [

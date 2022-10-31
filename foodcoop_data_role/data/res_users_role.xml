@@ -91,6 +91,8 @@
             (4, ref('project.group_project_user')),
             (4, ref('maintenance.group_equipment_manager')),
             (4, ref('purchase.group_manage_vendor_price')),
+            (4, ref('account.group_account_user')),
+            (4, ref('account.group_account_manager')),
         ]"/>
     </record>
     <record id="res_users_role_Foodcoop_Admin" model="res.users.role">

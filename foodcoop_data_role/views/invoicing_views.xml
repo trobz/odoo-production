@@ -6,6 +6,7 @@
         <field name="groups_id" eval="[(6, 0, [
             ref('foodcoop_data_role.group_Foodcoop_Admin'),
             ref('foodcoop_data_role.group_Accountant'),
+            ref('base.group_system'),
         ])]"/>
 </record>
 <record id="coop_shift.shift_menu" model="ir.ui.menu">
@@ -53,6 +54,54 @@
         id="menu_check_deposit_tree"
         parent="member_accountant_invoicing_menu_entries"
         sequence="20"/>
+    <!-- Adviser sub-menus -->
+    <menuitem id="menu_finance_entries_accounting_entries" name="Accounting Entries" sequence="10"
+        parent="member_accountant_invoicing_menu_entries" groups="foodcoop_data_role.group_member_accountant_restrict"/>
+            <!-- Accounting Entries sub-menus -->
+            <menuitem
+                action="account.action_move_journal_line"
+                id="menu_action_move_journal_line_form"
+                parent="menu_finance_entries_accounting_entries"
+                sequence="1"/>
+            <menuitem action="account.action_account_moves_all_a" id="menu_action_account_moves_all" 
+                parent="menu_finance_entries_accounting_entries" sequence="10"/>
+            <menuitem
+                name="Analytic Items"
+                parent="menu_finance_entries_accounting_entries"
+                action="analytic.account_analytic_line_action_entries"
+                id="menu_action_analytic_lines_tree"
+                sequence="35"
+                groups="analytic.group_analytic_accounting"/>
+
+    <menuitem id="menu_finance_entries_actions" name="Actions" sequence="15" 
+        parent="member_accountant_invoicing_menu_entries" groups="foodcoop_data_role.group_member_accountant_restrict"/>
+            <!-- submenu-->
+            <menuitem id="menu_action_manual_reconciliation" 
+                parent="menu_finance_entries_actions" action="account.action_manual_reconciliation" sequence="25"/>
+
+            <menuitem action="account_mass_reconcile.action_account_mass_reconcile"
+                id="menu_mass_reconcile" sequence="30"
+                parent="menu_finance_entries_actions"/>
+            <menuitem action="account.tax_adjustments_form" id="menu_action_tax_adjustment"
+                parent="menu_finance_entries_actions" sequence="45"/>
+
+
+    <menuitem action="coop_account.inter_tranfer_payment_action"
+            name="Inter Account Transfer"
+            id="menu_inter_tranfer_payment"
+            parent="member_accountant_invoicing_menu_entries"
+            groups="foodcoop_data_role.group_member_accountant_restrict"
+            sequence="25"/>
+    <menuitem
+        id="menu_export_wrong_reconciliation_ml"
+        name="Export wrong reconciliation move lines"
+        parent="member_accountant_invoicing_menu_entries"
+        groups="foodcoop_data_role.group_member_accountant_restrict"
+        action="coop_account.action_export_wrong_reconciliation_ml_client"
+        sequence="112"
+    />
+
+    
 
 <record id="invoice_supplier_form_inherit" model="ir.ui.view">
     <field name="model">account.invoice</field>
