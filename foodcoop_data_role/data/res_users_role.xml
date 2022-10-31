@@ -72,6 +72,7 @@
             (4, ref('base.group_no_one')),
             (4, ref('project.group_project_user')),
             (4, ref('maintenance.group_equipment_manager')),
+            (4, ref('coop_membership.group_membership_bdm_saisie')),
         ]"/>
     </record>
     <record id="res_users_role_Accountant" model="res.users.role">

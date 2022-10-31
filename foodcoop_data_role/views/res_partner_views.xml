@@ -13,5 +13,35 @@
         </form>
     </field>
 </record>
+<record id="view_partner_form_inherit2" model="ir.ui.view">
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="foodcoop_data_role.view_partner_form_inherit" />
+    <field name="groups_id" eval="[(6, 0, [
+        ref('foodcoop_data_role.group_Cashier'),
+        ref('foodcoop_data_role.group_Member_Manager'),
+        ref('foodcoop_data_role.group_Accountant'),
+        ref('foodcoop_data_role.group_Inventory_Manager'),
+        ref('foodcoop_data_role.group_Teamleader'),
+        ref('foodcoop_data_role.group_Purchase_Manager'),
+        ref('foodcoop_data_role.group_Foodcoop_Admin'),
+        ref('foodcoop_data_role.group_BDMLecture'),
+        ref('foodcoop_data_role.group_BDMPresence'),
+        ref('foodcoop_data_role.group_BDMSaisie'),
+        ref('foodcoop_data_role.group_POS_Manager'),
+        ref('foodcoop_data_role.group_Member_Accountant'),
+        ref('foodcoop_data_role.group_Staff'),
+        ref('foodcoop_data_role.group_Communications_Officer'),
+        ref('foodcoop_data_role.group_Communications_Manager'),
+        ref('foodcoop_data_role.group_Welcome_Meeting_Team'),
+        
+    ])]"/>
+    <field name="arch" type="xml">
+        <form position="attributes">
+            <attribute name="edit"/>
+            <attribute name="create"/>
+            <attribute name="delete"/>
+        </form>
+    </field>
+</record>
 
 </odoo>
