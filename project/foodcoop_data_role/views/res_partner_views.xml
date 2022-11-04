@@ -33,6 +33,7 @@
         ref('foodcoop_data_role.group_Communications_Officer'),
         ref('foodcoop_data_role.group_Communications_Manager'),
         ref('foodcoop_data_role.group_Welcome_Meeting_Team'),
+        ref('base.group_system'),
         
     ])]"/>
     <field name="arch" type="xml">
