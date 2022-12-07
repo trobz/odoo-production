@@ -36,7 +36,8 @@
         'coop_product_coefficient',
         'coop_inventory_recurrent',
         'maintenance',
-        'account_mass_reconcile'
+        'account_mass_reconcile',
+        'coop_delivery_category'
     ],
     'test': [],
     'data': [

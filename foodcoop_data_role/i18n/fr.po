@@ -283,3 +283,8 @@ msgstr "Fournisseurs"
 #: model:res.users.role,name:foodcoop_data_role.res_users_role_Welcome_Meeting_Team
 msgid "Welcome Meeting Team"
 msgstr "Responsable Évènements"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_delivery_category
+msgid "Delivery Categories"
+msgstr "Catégories de livraison"
