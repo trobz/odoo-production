@@ -151,6 +151,7 @@
         <field name="group_id" ref="foodcoop_data_role.group_BDMSaisie"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user')),
             (4, ref('coop_membership.group_membership_bdm_saisie')),
+            (4, ref('coop_shift.group_shift_cancel_shifts')),
         ]"/>
     </record>
     <record id="res_users_role_Subscription" model="res.users.role">
