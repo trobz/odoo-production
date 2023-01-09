@@ -10,5 +10,13 @@
         </button>
     </field>
 </record>
-
+<record id="view_shift_registration_tree_confirm_inherit" model="ir.ui.view">
+    <field name="model">shift.registration</field>
+    <field name="inherit_id" ref="coop_shift.view_shift_registration_tree_confirm" />
+    <field name="arch" type="xml">
+        <button name="button_reg_cancel" position="attributes">
+                <attribute name="groups">coop_shift.group_shift_manager,foodcoop_data_role.group_BDMSaisie</attribute>
+        </button>
+    </field>
+</record>
 </odoo>
