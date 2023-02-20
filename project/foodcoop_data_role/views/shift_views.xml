@@ -1,22 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-<record id="view_shift_form_inherit" model="ir.ui.view">
-    <field name="model">shift.shift</field>
-    <field name="inherit_id" ref="coop_membership.view_shift_form_inherit" />
-    <field name="arch" type="xml">
-        <button name="button_makeupok" position="attributes">
-                <attribute name="groups">coop_shift.group_shift_user</attribute>
-        </button>
-    </field>
-</record>
-<record id="view_shift_registration_tree_confirm_inherit" model="ir.ui.view">
-    <field name="model">shift.registration</field>
-    <field name="inherit_id" ref="coop_shift.view_shift_registration_tree_confirm" />
-    <field name="arch" type="xml">
-        <button name="button_reg_cancel" position="attributes">
-                <attribute name="groups">coop_shift.group_shift_manager,foodcoop_data_role.group_BDMSaisie</attribute>
-        </button>
-    </field>
-</record>
+    <record id="view_shift_form_inherit" model="ir.ui.view">
+        <field name="model">shift.shift</field>
+        <field name="inherit_id" ref="coop_membership.view_shift_form_inherit" />
+        <field name="arch" type="xml">
+            <button name="button_makeupok" position="attributes">
+                    <attribute name="groups">coop_shift.group_shift_user</attribute>
+            </button>
+        </field>
+    </record>
+    <!-- BDMSaisie Role only -->
+    <record id="view_shift_form_inherit_BDMSaisie" model="ir.ui.view">
+        <field name="name">view.shift.shift.form.inherit.BDMSaisie</field>
+        <field name="model">shift.shift</field>
+        <field name="inherit_id" ref="foodcoop_data_role.view_shift_form_inherit"/>
+        <field name="groups_id" eval="[(4, ref('foodcoop_data_role.group_BDMSaisie'))]"/>
+        <field name="arch" type="xml">
+            <form position="attributes">
+                <attribute name="edit">false</attribute>
+            </form>
+        </field>
+    </record>
+    <!-- To  -->
+    <record id="view_shift_form_inherit_Membership_User" model="ir.ui.view">
+        <field name="name">view.shift.shift.form.inherit.Membership_User</field>
+        <field name="model">shift.shift</field>
+        <field name="inherit_id" ref="foodcoop_data_role.view_shift_form_inherit_BDMSaisie"/>
+        <field name="groups_id" eval="[(4, ref('coop_shift.group_shift_user'))]"/>
+        <field name="arch" type="xml">
+            <form position="attributes">
+                <attribute name="edit">true</attribute>
+            </form>
+        </field>
+    </record>
+    <record id="view_shift_form_attendance_entry_BDMSaisie" model="ir.ui.view">
+        <field name="name">view.shift.shift.attendance_entry.BDMSaisie</field>
+        <field name="model">shift.shift</field>
+        <field name="inherit_id" ref="coop_membership.view_shift_form_attendance_entry"/>
+        <field name="groups_id" eval="[(4, ref('foodcoop_data_role.group_BDMSaisie'))]"/>
+        <field name="arch" type="xml">
+            <form position="attributes">
+                <attribute name="edit">true</attribute>
+            </form>
+        </field>
+    </record>
+    <record id="view_shift_registration_tree_confirm_inherit" model="ir.ui.view">
+        <field name="model">shift.registration</field>
+        <field name="inherit_id" ref="coop_shift.view_shift_registration_tree_confirm" />
+        <field name="arch" type="xml">
+            <button name="button_reg_cancel" position="attributes">
+                    <attribute name="groups">coop_shift.group_shift_manager,foodcoop_data_role.group_BDMSaisie</attribute>
+            </button>
+        </field>
+    </record>
 </odoo>
