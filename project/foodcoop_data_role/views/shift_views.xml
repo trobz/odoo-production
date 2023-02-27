@@ -6,7 +6,10 @@
         <field name="inherit_id" ref="coop_membership.view_shift_form_inherit" />
         <field name="arch" type="xml">
             <button name="button_makeupok" position="attributes">
-                    <attribute name="groups">coop_shift.group_shift_user</attribute>
+                    <attribute name="groups">coop_shift.group_shift_user,coop_membership.group_membership_bdm_saisie</attribute>
+            </button>
+            <button name="button_done" position="attributes">
+                    <attribute name="groups">coop_shift.group_shift_user,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
         </field>
     </record>
