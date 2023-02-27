@@ -150,5 +150,7 @@
         sequence="50"
         action="coop_delivery_category.action_delivery_category"
         parent="menu_stock_config_settings_2"/>
-
+    <record model="ir.actions.act_window" id="sms.send_sms_action">
+        <field name="groups_id" eval="[(4, ref('base.group_erp_manager'))]"/>
+    </record>
 </odoo>
