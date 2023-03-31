@@ -44,8 +44,19 @@
         </form>
     </field>
 </record>
-    <record model="ir.ui.view" id="coop_membership.view_manager_partner_contact_gender_view_personal_information_gender">
-        <field name="groups_id" eval="[(4,ref('foodcoop_data_role.group_Subscription'))]"/>
-    </record>
-
+<record id="membership_view_partner_form_inherit" model="ir.ui.view">
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="coop_membership.view_partner_form" />
+    <field name="arch" type="xml">
+        <group name="membership" position="attributes">
+            <attribute name="groups" separator="," add="coop_membership.group_membership_bdm_saisie"/>
+        </group>
+    </field>
+</record>
+<record model="ir.ui.view" id="coop_membership.view_manager_partner_contact_gender_view_personal_information_gender">
+    <field name="groups_id" eval="[(4,ref('foodcoop_data_role.group_Subscription'))]"/>
+</record>
+<record model="ir.ui.view" id="coop_membership.view_shift_extension_form_create">
+    <field name="groups_id" eval="[(4,ref('coop_membership.group_membership_bdm_saisie'))]"/>
+</record>
 </odoo>
