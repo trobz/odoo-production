@@ -153,4 +153,7 @@
     <record model="ir.actions.act_window" id="sms.send_sms_action">
         <field name="groups_id" eval="[(4, ref('base.group_erp_manager'))]"/>
     </record>
+    <menuitem action="mail.action_email_template_tree_all" id="menu_email_template_tree_all"
+        name="Mail Templates"
+        parent="coop_shift.menu_shift_configuration"/>
 </odoo>

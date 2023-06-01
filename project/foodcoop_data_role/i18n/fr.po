@@ -288,3 +288,8 @@ msgstr "Responsable Évènements"
 #: model:ir.ui.menu,name:foodcoop_data_role.menu_delivery_category
 msgid "Delivery Categories"
 msgstr "Catégories de livraison"
+
+#. module: foodcoop_data_role
+#: model:ir.ui.menu,name:foodcoop_data_role.menu_email_template_tree_all
+msgid "Mail Templates"
+msgstr "Modèles de courrier"
