@@ -41,8 +41,8 @@
     ],
     'test': [],
     'data': [
-        'security/ir.model.access.csv',
         'data/res_groups.xml',
+        'security/ir.model.access.csv',
         'data/res_users_role.xml',
         'data/res_users.xml',
         'data/res.users.role.line.csv',
