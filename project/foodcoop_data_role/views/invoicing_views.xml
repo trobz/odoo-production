@@ -21,6 +21,7 @@
                 ref('foodcoop_data_role.group_BDMPresence'),
                 ref('foodcoop_data_role.group_BDMSaisie'),
                 ref('foodcoop_data_role.group_BadgeReader'),
+                ref('base.group_system'),
         ])]"/>
 </record>
 <menuitem
@@ -132,7 +133,8 @@
         ref('foodcoop_data_role.group_Accountant'),
         ref('foodcoop_data_role.group_Purchase_Manager'),
         ref('foodcoop_data_role.group_Foodcoop_Admin'),
-        ref('foodcoop_data_role.group_POS_Manager'),        
+        ref('foodcoop_data_role.group_POS_Manager'),
+        ref('base.group_system'),    
     ])]"/>
     <field name="arch" type="xml">
         <form position="attributes">
@@ -176,7 +178,8 @@
         ref('foodcoop_data_role.group_Accountant'),
         ref('foodcoop_data_role.group_Purchase_Manager'),
         ref('foodcoop_data_role.group_Foodcoop_Admin'),
-        ref('foodcoop_data_role.group_POS_Manager'),        
+        ref('foodcoop_data_role.group_POS_Manager'),
+        ref('base.group_system'),  
     ])]"/>
     <field name="arch" type="xml">
         <tree position="attributes">
@@ -204,7 +207,8 @@
         ref('foodcoop_data_role.group_Accountant'),
         ref('foodcoop_data_role.group_Purchase_Manager'),
         ref('foodcoop_data_role.group_Foodcoop_Admin'),
-        ref('foodcoop_data_role.group_POS_Manager'),        
+        ref('foodcoop_data_role.group_POS_Manager'),
+        ref('base.group_system'),
     ])]"/>
     <field name="arch" type="xml">
         <kanban position="attributes">
