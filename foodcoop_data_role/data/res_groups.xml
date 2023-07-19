@@ -156,5 +156,10 @@
             ref('base.group_system'),
         ])]"/>
     </record>
-    
+    <record model="res.groups" id="product_to_scale_bizerba.group_manager">
+        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+    </record>
+    <record model="res.groups" id="account.group_account_user">
+        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+    </record>
 </odoo>
