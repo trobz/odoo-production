@@ -1,4 +1,5 @@
 from odoo import api, models
+from odoo.addons.base_user_role.models.user import ResUsers as BURUsers
 
 
 class ResUsers(models.Model):
@@ -54,5 +55,5 @@ class ResUsers(models.Model):
                 vals = {
                     "groups_id": groups,
                 }
-                super(ResUsers, user).write(vals)
+                super(BURUsers, user).write(vals)
         return True
