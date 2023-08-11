@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+    <record id="demo_user_Member" model="res.users">
+        <field name="name">Member Example</field>
+        <field name="login">member@example.com</field>
+        <field name="email">member@example.com</field>
+        <field eval="[(4, ref('base.group_portal'))]"
+                   name="groups_id"/>
+    </record>
+</odoo>

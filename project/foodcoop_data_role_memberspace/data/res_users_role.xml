@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="res_users_role_Member" model="res.users.role">
+        <field name="name">Member</field>
+        <field name="group_id" ref="foodcoop_data_role_memberspace.group_Member"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_portal')),
+            (4, ref('foodcoop_data_role_memberspace.group_member_restrict')),
+            (4, ref('coop_memberspace.group_memberspace')),
+        ]"/>
+    </record>
+</odoo>
