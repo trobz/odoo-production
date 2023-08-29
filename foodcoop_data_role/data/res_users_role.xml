@@ -130,6 +130,7 @@
             (4, ref('maintenance.group_equipment_manager')),
             (4, ref('purchase.group_manage_vendor_price')),
             (4, ref('mass_mailing_access.group_manager')),
+            (4, ref('coop_membership.group_create_related_user')),
         ]"/>
     </record>
     <record id="res_users_role_BDMLecture" model="res.users.role">
