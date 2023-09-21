@@ -1,0 +1,93 @@
+/* This is a copy of the pos scrap screen CSS
+ * This allows to use it in the backend */
+
+/*  ********* Generic element styling  ********* */
+
+.pos a {
+    text-decoration: none;
+    color: #555555;
+}
+.pos button, .pos a.button {
+    display: inline-block;
+    cursor: pointer;
+    padding: 4px 10px;
+    font-size: 11px;
+    border: 1px solid #cacaca;
+    background: #e2e2e2;
+    border-radius: 3px;
+}
+.pos ul, .pos ol {
+    padding: 0;
+    margin: 0;
+}
+.pos li {
+    list-style-type: none;
+}
+.pos .pos-right-align {
+    text-align: right;
+}
+.pos .pos-center-align {
+    text-align: center;
+}
+.pos .pos-disc-font {
+    font-size: 12px;
+    font-style:italic;
+    color: #808080;
+}
+
+/* c) The scrap screen */
+
+.pos .scrap-screen .centered-content .button {
+    line-height: 40px;
+    padding: 3px 13px;
+    font-size: 20px;
+    text-align: center;
+    background: rgb(230, 230, 230);
+    margin: 16px;
+    margin-bottom: 0px;
+    border-radius: 3px;
+    border: solid 1px rgb(209, 209, 209);
+    cursor: pointer;
+}
+
+.pos .pos-scrap-container {
+    font-size: 0.75em;
+    text-align: center;
+    direction: ltr;
+}
+
+.pos .pos-scraps {
+    text-align: left;
+    background-color: white;
+    margin: 20px;
+    padding: 15px;
+    font-size: 14px;
+    padding-bottom:30px;
+    display: inline-block;
+    font-family: "Inconsolata";
+    border: solid 1px rgb(220,220,220);
+    border-radius: 3px;
+    overflow: hidden;
+}
+.pos .pos-scraps pre{
+    font-family: "Inconsolata";
+}
+.pos .pos-scraps .emph{
+    font-size: 20px;
+    margin:5px;
+}
+.pos .pos-scraps table {
+    width: 100%;
+    border: 0;
+    table-layout: fixed;
+}
+.pos .pos-scraps table td {
+    border: 0;
+    word-wrap: break-word;
+}
+.pos .pos-scrap-note{
+    font-size: 16px;
+    text-align: center;
+    margin-top: 15px;
+    color: red;
+}
