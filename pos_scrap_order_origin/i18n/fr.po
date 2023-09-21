@@ -1,0 +1,66 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* pos_scrap_order_origin
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-09-26 05:30+0000\n"
+"PO-Revision-Date: 2023-09-26 05:30+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: pos_scrap_order_origin
+#: code:addons/pos_scrap_order_origin/models/pos_order.py:14
+#, python-format
+msgid "Error!"
+msgstr ""
+
+#. module: pos_scrap_order_origin
+#. openerp-web
+#: code:addons/pos_scrap_order_origin/static/src/js/screen.js:21
+#: code:addons/pos_scrap_order_origin/static/src/js/screen.js:31
+#, python-format
+msgid "No Origin"
+msgstr "Pas d'origine"
+
+#. module: pos_scrap_order_origin
+#. openerp-web
+#: code:addons/pos_scrap_order_origin/static/src/js/screen.js:22
+#, python-format
+msgid "Please configure the scrap origin in backend."
+msgstr "Veuillez configurer l'origine du rebut dans le backend"
+
+#. module: pos_scrap_order_origin
+#. openerp-web
+#: code:addons/pos_scrap_order_origin/static/src/js/screen.js:32
+#, python-format
+msgid "Please select the origin."
+msgstr "Veuillez sélectionnez l'origine"
+
+#. module: pos_scrap_order_origin
+#: model:ir.model,name:pos_scrap_order_origin.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr ""
+
+#. module: pos_scrap_order_origin
+#: model:ir.model,name:pos_scrap_order_origin.model_pos_order
+msgid "Point of Sale Orders"
+msgstr "Commandes du point de vente"
+
+#. module: pos_scrap_order_origin
+#: model:ir.model.fields,field_description:pos_scrap_order_origin.field_pos_config__scrap_origin_ids
+msgid "Scrap Origin"
+msgstr "Origines du rebut"
+
+#. module: pos_scrap_order_origin
+#: code:addons/pos_scrap_order_origin/models/pos_order.py:15
+#, python-format
+msgid "You have to add the default scrap origin first."
+msgstr ""
+
