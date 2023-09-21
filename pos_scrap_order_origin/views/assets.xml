@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright (C) Nguyen Minh Chien (chien@trobz.com)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+    <template id="pos_scrap_order_origin_assets" inherit_id="point_of_sale.assets">
+        <xpath expr="//script[last()]" position="after">
+            <script type="text/javascript" src="/pos_scrap_order_origin/static/src/js/screen.js"></script>
+            <script type="text/javascript" src="/pos_scrap_order_origin/static/src/js/pos_model.js"></script>
+            <link rel="stylesheet" href="/pos_scrap_order_origin/static/src/css/scrap.css"/>
+        </xpath>
+    </template>
+</odoo>
