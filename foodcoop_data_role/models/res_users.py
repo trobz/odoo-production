@@ -47,7 +47,10 @@ class ResUsers(models.Model):
                     group_ids += role_groups[role]
             group_ids = list(set(group_ids))  # Remove duplicates IDs
             groups_to_add = list(set(group_ids) - set(user.groups_id.ids))
-            groups_to_remove = list(set(user.groups_id.ids) - set(group_ids) - set(user_types_groups.ids))
+            if set(groups_to_add) & set(user_types_groups.ids):
+                groups_to_remove = list(set(user.groups_id.ids) - set(group_ids))
+            else:
+                groups_to_remove = list(set(user.groups_id.ids) - set(group_ids) - set(user_types_groups.ids))
             to_add = [(4, gr) for gr in groups_to_add]
             to_remove = [(3, gr) for gr in groups_to_remove]
             groups = to_remove + to_add
