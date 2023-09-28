@@ -17,6 +17,9 @@
     </record>
     <record id="group_Purchaser" model="res.groups">
         <field name="name">Purchaser</field>
+        <field name="menu_access" eval="[
+            (4, ref('sale.menu_sale_report')),
+        ]" />
     </record>
     <record id="group_Purchase_Manager" model="res.groups">
         <field name="name">Purchase Manager</field>
