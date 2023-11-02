@@ -1,0 +1,97 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* coop_shift_maximum_seats
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-11-01 10:17+0000\n"
+"PO-Revision-Date: 2023-11-01 10:17+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: coop_shift_maximum_seats
+#: selection:res.company,shift_max_available_seats:0
+#: selection:shift.shift,shift_max_available_seats:0
+#: selection:shift.template,shift_max_available_seats:0
+msgid "Add Maximum available ABCD/FTOP seats manually"
+msgstr ""
+
+#. module: coop_shift_maximum_seats
+#: model:ir.model,name:coop_shift_maximum_seats.model_shift_registration
+#: model:ir.model,name:coop_shift_maximum_seats.model_shift_template_registration
+msgid "Attendee"
+msgstr "Participant"
+
+#. module: coop_shift_maximum_seats
+#: selection:res.company,shift_max_available_seats:0
+#: selection:shift.shift,shift_max_available_seats:0
+#: selection:shift.template,shift_max_available_seats:0
+msgid "Calculate Maximum available ABCD/FTOP seats automatically based on Maximum Attendees Number"
+msgstr ""
+
+#. module: coop_shift_maximum_seats
+#: model:ir.model,name:coop_shift_maximum_seats.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: coop_shift_maximum_seats
+#: model:ir.model,name:coop_shift_maximum_seats.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres de config"
+
+#. module: coop_shift_maximum_seats
+#: model:ir.model.fields,help:coop_shift_maximum_seats.field_shift_shift__seats_max
+msgid "For each event you can define a maximum registration of seats(number of attendees), above this numbers the registrations are not accepted."
+msgstr "Pour chaque évènement, vous pouvez définir un nombre maximum de places (nombre de participants), au delà de ce chiffre, les inscriptions ne sont pas acceptées."
+
+#. module: coop_shift_maximum_seats
+#: model:ir.model.fields,help:coop_shift_maximum_seats.field_shift_template__seats_max
+msgid "For each shift you can define a maximum registration of\n"
+"        seats(number of attendees), above this numbers the registrations\n"
+"        are not accepted."
+msgstr "Pour chaque service vous pouvez définir un nb. maximum d'inscriptions de\n"
+"        places(nombre de participants). Au-delà, les inscriptions\n"
+"        ne sont plus acceptées."
+
+#. module: coop_shift_maximum_seats
+#: model:ir.model.fields,field_description:coop_shift_maximum_seats.field_shift_shift__seats_max
+#: model:ir.model.fields,field_description:coop_shift_maximum_seats.field_shift_template__seats_max
+msgid "Maximum Attendees Number"
+msgstr "Nombre maximum de participants"
+
+#. module: coop_shift_maximum_seats
+#: model:ir.model.fields,field_description:coop_shift_maximum_seats.field_res_company__shift_max_available_seats
+#: model:ir.model.fields,field_description:coop_shift_maximum_seats.field_res_config_settings__shift_max_available_seats
+#: model:ir.model.fields,field_description:coop_shift_maximum_seats.field_shift_shift__shift_max_available_seats
+#: model:ir.model.fields,field_description:coop_shift_maximum_seats.field_shift_template__shift_max_available_seats
+#: model:ir.model.fields,field_description:coop_shift_maximum_seats.field_shift_template_ticket__shift_max_available_seats
+#: model:ir.model.fields,field_description:coop_shift_maximum_seats.field_shift_ticket__shift_max_available_seats
+msgid "Maximum available ABCD/FTOP seats"
+msgstr ""
+
+#. module: coop_shift_maximum_seats
+#: model:ir.model,name:coop_shift_maximum_seats.model_shift_shift
+msgid "Shift"
+msgstr ""
+
+#. module: coop_shift_maximum_seats
+#: model:ir.model,name:coop_shift_maximum_seats.model_shift_template
+msgid "Shift Template"
+msgstr "Créneau"
+
+#. module: coop_shift_maximum_seats
+#: model:ir.model,name:coop_shift_maximum_seats.model_shift_template_ticket
+msgid "Shift Template Ticket"
+msgstr "Place"
+
+#. module: coop_shift_maximum_seats
+#: model:ir.model,name:coop_shift_maximum_seats.model_shift_ticket
+msgid "Shift Ticket"
+msgstr "Type"
+
