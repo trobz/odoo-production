@@ -6,16 +6,17 @@ class ResUsers(models.Model):
     _inherit = 'res.users'
 
     @api.multi
-    def check_access_buttons(self, res_model):
-        """
-        Check group current user to hide buttons
-        """
-        res = super(ResUsers, self).check_access_buttons(res_model)
+    def check_access_ui_super_groups(self, resp):
+        super().check_access_ui_super_groups(resp)
         # F#T59241 - Add "Print Badge" function to "Member Manager" role
-        if res == 'saisie_group_partner' and self.has_group(
-                'foodcoop_data_role.group_Member_Manager'):
-            res = False
-        return res
+        if resp["result"] == 'saisie_group_partner':
+            # Always show sidebar, but will hide other button (except "print") from js
+            resp["o_cp_sidebar"] = True
+            if self.has_group('foodcoop_data_role.group_Member_Manager'):
+                resp["result"] = False
+                resp["o_chatter_topbar"] = True
+        if self.has_group('coop_membership.group_membership_action_sidebar'):
+            resp["result"] = False
 
     @api.multi
     def set_groups_from_roles(self, force=False):
