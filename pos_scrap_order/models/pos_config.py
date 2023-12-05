@@ -10,5 +10,6 @@ class PosConfig(models.Model):
     scrap_order_option = fields.Selection([
         ("no", "No Scrap Order"),
         ("onhand", "Create and validate Scrap Order for product has stock only"),
-        ("always", "Always create Scrap Order, validate if has stock")
+        ("always", "Always create Scrap Order, validate if has stock"),
+        ("force", "Always create Scrap Order, validate regardless of no stock")
     ], default="onhand")
