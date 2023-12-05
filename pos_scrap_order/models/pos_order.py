@@ -49,11 +49,14 @@ class PosOrder(models.Model):
                     vals.append(self._get_scrap_vals(order, line, default_vals))
             if len(vals) == len(lines):
                 scraps = Scrap.create(vals)
-                for scrap in scraps:
-                    res = scrap.action_validate()
-                    if scrap_order_option == "onhand" and res is not True:
-                        raise OutofStockError(_("The product {} has no enough stock.").format(
-                            scrap.product_id.display_name))
+                if scrap_order_option == "force":
+                    scraps.do_scrap()
+                else:
+                    for scrap in scraps:
+                        res = scrap.action_validate()
+                        if scrap_order_option == "onhand" and res is not True:
+                            raise OutofStockError(_("The product {} has no enough stock.").format(
+                                scrap.product_id.display_name))
                 scrap_ids = scraps.ids
             msg = {
                 "title": _("Successful!"),
