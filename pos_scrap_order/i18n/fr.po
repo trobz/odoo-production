@@ -34,6 +34,11 @@ msgid "Always create Scrap Order, validate if has stock"
 msgstr "Toujours créer la mise au rebut, valider seulement si le produit est en stock"
 
 #. module: pos_scrap_order
+#: selection:pos.config,scrap_order_option:0
+msgid "Always create Scrap Order, validate regardless of no stock"
+msgstr "Toujours créer la mise au rebut, valider même si le produit n'est pas en stock"
+
+#. module: pos_scrap_order
 #. openerp-web
 #: code:addons/pos_scrap_order/static/src/xml/screen.xml:15
 #, python-format
