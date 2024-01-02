@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <template id="coop_membership_makeup_shift.counter">
+        <t t-call="website.layout">
+            <t t-set="title">Member area | Schedule a make-up</t>
+            <t t-call="coop_membership_makeup_shift.programmer_makeup_shift"/>
+        </t>
+    </template>
+
+    <template id="coop_membership_makeup_shift.programmer_makeup_shift">
+        <div class="container">
+            <div class="row programmer_makeup_shift" style="padding: 10px;">
+                <h3 style="font-weight: 600;margin-top: 30px;margin-bottom: 10px;">Schedule a make-up</h3>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Week</th>
+                                <th>Date</th>
+                                <th>Hour</th>
+                                <th>Available seats</th>
+                                <th>Inscription</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-if="shifts_available" t-foreach="shifts_available" t-as="shift">
+                                <t t-set="seats_avail"
+                                   t-value="sum(shift.shift_ticket_ids.filtered(lambda r: r.shift_type != 'ftop').mapped('seats_available'))"/>
+                                <t t-if="seats_avail > 0">
+                                    <tr t-attf-style="{{ shift.css_color_style }}">
+                                        <t t-set="date_begin"
+                                           t-value="user.get_time_by_user_lang(shift.date_begin, ['%A, %d %B', '%HH%M'], lang=user.lang + '.utf8')"/>
+                                        <td t-attf-id="week-{{shift.id}}">
+                                            <t t-esc="shift.week_name or ''"/>
+                                        </td>
+                                        <td scope="row">
+                                            <span t-attf-id="time-{{shift.id}}"
+                                                  t-esc="(date_begin and date_begin[0] or '') + ' '"/>
+                                        </td>
+                                        <td t-attf-id="hour-{{shift.id}}">
+                                            <t t-esc="date_begin and date_begin[1] or ''"/>
+                                        </td>
+                                        <td>
+                                            <span t-attf-id="avalable-seats-{{shift.id}}" t-esc="seats_avail"/>
+                                        </td>
+                                        <td>
+                                            <a>
+                                                <span class="fa fa-user-plus" data-toggle="modal"
+                                                      t-attf-data-target="{{eligible and '#programmer_modal' or '#programmer_modal_uneligible' }}"
+                                                      t-attf-id="btn-add-{{shift.id}}"
+                                                      t-att-data-shift-id="shift.id"/>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <t t-call="coop_memberspace.programmer_modal"/>
+                <t t-call="coop_membership_makeup_shift.programmer_modal_uneligible"/>
+                <t t-call="coop_memberspace.modal_error"/>
+            </div>
+        </div>
+    </template>
+
+    <template id="coop_membership_makeup_shift.programmer_modal_uneligible">
+        <div id="programmer_modal_uneligible" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <p class="text-center">Warning! You can't register to a make-up shift because your actual status is "<span t-esc="partner_state"/>". Make-up shift registration are dedicated to members who were priviously absent</p>
+                        <div class="text-center">
+                            <button type="object" class="fa fa-times" data-dismiss="modal"
+                                    style="margin-right: 40px;font-size: 3em;background-color: transparent;border: 0px;"/>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </template>
+</odoo>
