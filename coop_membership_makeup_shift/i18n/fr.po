@@ -1,0 +1,100 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* coop_membership_makeup_shift
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-12-13 08:47+0000\n"
+"PO-Revision-Date: 2023-12-13 08:47+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: coop_membership_makeup_shift
+#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_modal_uneligible
+msgid "\". Make-up shift registration are dedicated to members who were priviously absent"
+msgstr "\". Les services de rattrapages sont réservés aux membres qui ont été absent à un service"
+
+#. module: coop_membership_makeup_shift
+#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_makeup_shift
+msgid "Available seats"
+msgstr "Places libres"
+
+#. module: coop_membership_makeup_shift
+#: model:ir.model,name:coop_membership_makeup_shift.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: coop_membership_makeup_shift
+#: model:ir.model,name:coop_membership_makeup_shift.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres de config"
+
+#. module: coop_membership_makeup_shift
+#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_makeup_shift
+msgid "Date"
+msgstr "Date "
+
+#. module: coop_membership_makeup_shift
+#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_makeup_shift
+msgid "Hour"
+msgstr "Heure"
+
+#. module: coop_membership_makeup_shift
+#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.mywork_standard
+msgid "If you've been absent to a shift and are now in alert state with a negative counter, you have to schedule a make-up shift."
+msgstr "Si vous avez été absent à un service et que vous êtes en alerte avec un compteur négatif, vous devez programmer un service de rattrapage."
+
+#. module: coop_membership_makeup_shift
+#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_makeup_shift
+msgid "Inscription"
+msgstr ""
+
+#. module: coop_membership_makeup_shift
+#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.counter
+msgid "Member area | Schedule a make-up"
+msgstr "Programmer un rattrapage"
+
+#. module: coop_membership_makeup_shift
+#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:17
+#, python-format
+msgid "No seat is available for this shift."
+msgstr ""
+
+#. module: coop_membership_makeup_shift
+#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.mywork_standard
+msgid "Schedule"
+msgstr "Programmer"
+
+#. module: coop_membership_makeup_shift
+#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_makeup_shift
+msgid "Schedule a make-up"
+msgstr "Programmer un rattrapage"
+
+#. module: coop_membership_makeup_shift
+#: model:ir.model.fields,field_description:coop_membership_makeup_shift.field_res_company__shift_makeup
+#: model:ir.model.fields,field_description:coop_membership_makeup_shift.field_res_config_settings__shift_makeup
+#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.mywork_standard
+msgid "Schedule a make-up shift"
+msgstr "Programmer un service de rattrapage"
+
+#. module: coop_membership_makeup_shift
+#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_makeup_shift
+msgid "Week"
+msgstr "Semaine"
+
+#. module: coop_membership_makeup_shift
+#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_modal_uneligible
+msgid "Warning! You can't register to a make-up shift because your actual status is \""
+msgstr "Vous ne pouvez pas programmer un service de rattrapage car votre statut actuel est \""
+
+#. module: coop_membership_makeup_shift
+#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:22
+#, python-format
+msgid "Warning! You can't register to a make-up shift because your actual status is `{}`. Make-up shift registration are dedicated to members who were priviously absent."
+msgstr "Vous ne pouvez pas programmer un service de rattrapage car votre statut actuel est `{}`. Les services de rattrapages sont réservés aux membres qui ont été absent à un service"
