@@ -80,8 +80,8 @@ msgstr "Programmer un rattrapage"
 #: model:ir.model.fields,field_description:coop_membership_makeup_shift.field_res_company__shift_makeup
 #: model:ir.model.fields,field_description:coop_membership_makeup_shift.field_res_config_settings__shift_makeup
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.mywork_standard
-msgid "Schedule a make-up shift"
-msgstr "Programmer un service de rattrapage"
+msgid "Show schedule a make-up shift"
+msgstr "Afficher programmer un service de rattrapage"
 
 #. module: coop_membership_makeup_shift
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_makeup_shift

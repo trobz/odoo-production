@@ -6,4 +6,4 @@ from odoo import models, fields
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
-    shift_makeup = fields.Boolean(string="Schedule a make-up shift")
+    shift_makeup = fields.Boolean(string="Show schedule a make-up shift")
