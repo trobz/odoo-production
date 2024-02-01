@@ -51,3 +51,9 @@ class ShiftShift(models.Model):
                 new_seats_max = max(seats_max - seats_reserved + ticket.seats_reserved, 0)
                 if ticket.seats_max != new_seats_max:
                     ticket.seats_max = new_seats_max
+
+    @api.model
+    def get_domain_programmer_un_extra(self, days=1):
+        if self.env.user.company_id.shift_max_available_seats == "auto":
+            days = 0
+        return super().get_domain_programmer_un_extra(days)
