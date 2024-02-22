@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="personal_information_inherit" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="coop_membership.personal_information"/>
+        <field name="arch" type="xml">
+            <field name="is_deceased" position="before">
+                <field name="is_forbidden" readonly="1"/>
+            </field>
+        </field>
+    </record>
+    <record id="personal_information_inherit_forbidden_manager" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="coop_membership_forbidden.personal_information_inherit"/>
+        <field name="groups_id" eval="[(4, ref('coop_membership_forbidden.group_member_forbidden_manager'))]"/>
+        <field name="arch" type="xml">
+            <field name="is_forbidden" position="attributes">
+                <attribute name="readonly">0</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
