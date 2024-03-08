@@ -16,9 +16,7 @@ class ShiftShift(models.Model):
         if not tickets:
             return 0, _("No seat is available for this shift.")
         partner = self.env.user.partner_id
-        if not (partner.shift_type == "standard" and \
-                partner.cooperative_state == "alert" and \
-                    partner.final_standard_point < 0):
+        if not partner.check_makeup_shift():
             return 0, _("Warning! You can't register to a make-up shift because your actual status is `{}`. "
                         "Make-up shift registration are dedicated to members who were priviously absent."
                         ).format(partner._fields["cooperative_state"].convert_to_export(
