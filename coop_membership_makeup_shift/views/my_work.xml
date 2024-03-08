@@ -7,7 +7,7 @@
                 <div style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;">
                     <p style="font-size: 25px;font-weight: 600">Schedule a make-up shift</p>
                     <p class="text-center">
-                        If you've been absent to a shift and are now in alert state with a negative counter, you have to schedule a make-up shift.
+                        If you've been absent to a shift and are now in state alert, suspended or delay, you have to schedule a make-up shift.
                     </p>
                     <div class="text-center">
                         <a href="/standard/programmer_makeup" class="btn btn-default btn-warning">Schedule</a>

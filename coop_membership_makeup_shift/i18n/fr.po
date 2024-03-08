@@ -47,8 +47,8 @@ msgstr "Heure"
 
 #. module: coop_membership_makeup_shift
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.mywork_standard
-msgid "If you've been absent to a shift and are now in alert state with a negative counter, you have to schedule a make-up shift."
-msgstr "Si vous avez été absent à un service et que vous êtes en alerte avec un compteur négatif, vous devez programmer un service de rattrapage."
+msgid "If you've been absent to a shift and are now in state alert, suspended or delay, you have to schedule a make-up shift."
+msgstr "Si vous avez été absent à un service et que vous êtes en statut alerte, suspendu(e) ou délai, vous devez programmer un service de rattrapage."
 
 #. module: coop_membership_makeup_shift
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_makeup_shift

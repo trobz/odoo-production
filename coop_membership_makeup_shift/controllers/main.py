@@ -46,11 +46,7 @@ class Website(WebsiteController):
             shifts_available = shifts_available.filtered(
                 lambda t: t.seats_availability == 'unlimited' or \
                     t.seats_reserved < t.seats_max)
-        eligible = False
-        if partner.shift_type == "standard" and \
-                partner.cooperative_state == "alert" and \
-                    partner.final_standard_point < 0:
-            eligible = True
+        eligible = partner.check_makeup_shift()
         return request.render(
             "coop_membership_makeup_shift.counter",
             {
