@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Programmer un extra -->
+    <template id="programmer_un_extra_inherit" inherit_id="coop_memberspace.programmer_un_extra">
+        <xpath expr="//th[3]" position="after">
+            <th>Expected attendees</th>
+        </xpath>
+        <xpath expr="//td[3]" position="after">
+            <td>
+                <t t-esc="shift.seats_reserved"/>
+                <span t-if="shift.seats_reserved > 0"
+                    data-toggle="modal" data-target="#modal_list_expected_attendee"
+                    t-att-shift-id="shift.id"
+                    class="fa fa-external-link browse-expected-attendee"/>
+            </td>
+        </xpath>
+    </template>
+
+    <!-- programmer_modal -->
+    <template id="programmer_modal_inherit" inherit_id="coop_memberspace.programmer_modal">
+        <xpath expr="." position="inside">
+            <div id="modal_list_expected_attendee" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <p class="text-center">Expected attendees</p>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody class="modal_list_expected_attendee_body">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="text-center">
+                                <span class="fa fa-times" data-dismiss="modal"
+                                        style="margin-right: 40px;font-size: 3em;"/>                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="mywork_ftop_inherit" inherit_id="coop_memberspace.mywork_ftop">
+        <!-- <xpath expr="//table[1]//thead//tr/th[3]" position="after">
+            <th>Expected attendees</th>
+        </xpath>
+        <xpath expr="//table[1]//tbody//tr/td[3]" position="after">
+            <td>
+                <t t-esc="shift.seats_reserved"/>
+                <span t-if="shift.seats_reserved > 0"
+                    data-toggle="modal" data-target="#modal_list_expected_attendee"
+                    t-att-shift-id="shift.id"
+                    class="fa fa-external-link browse-expected-attendee"/>
+            </td>
+        </xpath> -->
+
+        <!-- Model-->
+        <xpath expr="//div[@id='ftop_programmer_modal']//thead//tr//th[3]" position="after">
+            <th>Expected attendees</th>
+        </xpath>
+    </template>
+
+</odoo>
