@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import models, api, _
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, UserError
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -64,16 +64,30 @@ class PosOrder(models.Model):
             }
         except OutofStockError as e:
             self.env.cr.rollback()
+            scrap_ids = []
             msg = {
                 "title": _("No Enough Stock!"),
                 "body": e.args[0]
             }
         except AccessError as e:
+            self.env.cr.rollback()
+            scrap_ids = []
             msg = {
                 "title": _("Access Error!"),
                 "body": _("You have no right to make the scrap order.")
             }
+        except UserError as err:
+            self.env.cr.rollback()
+            scrap_ids = []
+            _logger.error("====================================")
+            _logger.error(str(err))
+            msg = {
+                "title": _("User Error!"),
+                "body": _("Stock data is incorrect. Please contact the administrator.")
+            }
         except Exception as err:
+            self.env.cr.rollback()
+            scrap_ids = []
             _logger.error("====================================")
             _logger.error(str(err))
             msg = {
