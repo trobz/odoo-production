@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<odoo noupdate="0">
+    <record id="email_extension_limited" model="mail.template">
+        <field name="name">Limit the number of Extension</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="email_from">${(user.company_id.email or '')|safe}</field>
+        <field name="email_to">${object.email|safe}</field>
+        <field name="lang">${object.lang}</field>
+        <field name="reply_to">${(user.company_id.email or '')|safe}</field>
+        <field name="subject">[Warning] You will soon reach the maximal number of extensions! Limit is ${user.company_id.member_extension_limit_count}</field>
+        <field name="body_html"><![CDATA[
+<p>Hello ${object.name and object.name.split(',')[-1]},</p>
+
+<p>Vous avez reçu ${user.company_id.member_extension_limit_count - 1} extensions consécutives qui prolongent la période pendant laquelle vous pouvez effectuer vos rattrapages. </p>
+<p>La limite est fixée à ${user.company_id.member_extension_limit_count}. Après la ${user.company_id.member_extension_limit_count}e extension, vous ne pourrez plus faire d'achats dans le magasin tant que tous vos rattrapages n'auront pas été effectués.</p>
+
+<p>Regards,<br/>
+<br/>
+<br/>
+]]></field>
+    </record>
+</odoo>

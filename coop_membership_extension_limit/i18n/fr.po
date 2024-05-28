@@ -1,0 +1,99 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* coop_membership_extension_limit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-05-30 04:49+0000\n"
+"PO-Revision-Date: 2024-05-30 04:49+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: coop_membership_extension_limit
+#: model:mail.template,body_html:coop_membership_extension_limit.email_extension_limited
+msgid "\n"
+"<p>Hello ${object.name and object.name.split(',')[-1]},</p>\n"
+"\n"
+"<p>Vous avez reçu ${user.company_id.member_extension_limit_count - 1} extensions consécutives qui prolongent la période pendant laquelle vous pouvez effectuer vos rattrapages. </p>\n"
+"<p>La limite est fixée à ${user.company_id.member_extension_limit_count}. Après la ${user.company_id.member_extension_limit_count}e extension, vous ne pourrez plus faire d'achats dans le magasin tant que tous vos rattrapages n'auront pas été effectués.</p>\n"
+"\n"
+"<p>Regards,<br/>\n"
+"<br/>\n"
+"<br/>\n"
+""
+msgstr ""
+"<p>Bonjour ${object.name and object.name.split(',')[-1]},</p>\n"
+"\n"
+"<p>Vous avez reçu ${user.company_id.member_extension_limit_count - 1} extensions consécutives qui prolongent la période pendant laquelle vous pouvez effectuer vos rattrapages. </p>\n"
+"<p>La limite est fixée à ${user.company_id.member_extension_limit_count}. Après la ${user.company_id.member_extension_limit_count}e extension, vous ne pourrez plus faire d'achats dans le magasin tant que tous vos rattrapages n'auront pas été effectués.</p>\n"
+"\n"
+"<p>Bonne journée,<br/>\n"
+"<br/>\n"
+"<br/>\n"
+""
+
+#. module: coop_membership_extension_limit
+#: code:addons/coop_membership_extension_limit/models/shift_extension.py:47
+#, python-format
+msgid "Ce membre a reçu %s extensions consécutives, le maximum.Il ne peut en bénéficier d'aucune autre avant que ses rattrapages n'aient été effectués."
+msgstr ""
+
+#. module: coop_membership_extension_limit
+#: model:ir.model,name:coop_membership_extension_limit.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: coop_membership_extension_limit
+#: model:ir.model,name:coop_membership_extension_limit.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres de config"
+
+#. module: coop_membership_extension_limit
+#: model:ir.model,name:coop_membership_extension_limit.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: coop_membership_extension_limit
+#: model:ir.model.fields,field_description:coop_membership_extension_limit.field_res_company__member_extension_limit_type_ids
+#: model:ir.model.fields,field_description:coop_membership_extension_limit.field_res_config_settings__member_extension_limit_type_ids
+msgid "Extension Types"
+msgstr "Types d'extensions"
+
+#. module: coop_membership_extension_limit
+#: model:ir.model.fields,field_description:coop_membership_extension_limit.field_shift_extension__is_new
+msgid "Is New"
+msgstr ""
+
+#. module: coop_membership_extension_limit
+#: model_terms:ir.ui.view,arch_db:coop_membership_extension_limit.res_config_settings_view_form_inherit
+msgid "Limit the number of extension for each member when suspended, alerted or delayed."
+msgstr "Limite le nombre d'extensions pour chaque membre en cas de suspension, alerte ou délai."
+
+#. module: coop_membership_extension_limit
+#: model:ir.model.fields,field_description:coop_membership_extension_limit.field_res_company__member_extension_limit
+#: model:ir.model.fields,field_description:coop_membership_extension_limit.field_res_config_settings__member_extension_limit
+#: model_terms:ir.ui.view,arch_db:coop_membership_extension_limit.res_config_settings_view_form_inherit
+msgid "Member Extension Limit"
+msgstr "Limitation du nombre d'extensions"
+
+#. module: coop_membership_extension_limit
+#: model:ir.model.fields,field_description:coop_membership_extension_limit.field_res_company__member_extension_limit_count
+#: model:ir.model.fields,field_description:coop_membership_extension_limit.field_res_config_settings__member_extension_limit_count
+msgid "Member Extension Limit Count"
+msgstr "Nombre maximum d'extensions"
+
+#. module: coop_membership_extension_limit
+#: model:ir.model,name:coop_membership_extension_limit.model_shift_extension
+msgid "Shift Extension"
+msgstr "Extension"
+
+#. module: coop_membership_extension_limit
+#: model:mail.template,subject:coop_membership_extension_limit.email_extension_limited
+msgid "[Warning] You will soon reach the maximal number of extensions! Limit is ${user.company_id.member_extension_limit_count}"
+msgstr "[Attention] Vous allez bientôt atteindre le nombre maximum d'extensions ! La limite est ${user.company_id.member_extension_limit_count}"
