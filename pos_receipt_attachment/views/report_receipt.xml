@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_receipt">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class=''>
+                    <img t-if="o.image_receipt"
+                        t-attf-src="data:image/jpeg;base64,{{o.image_receipt}}"/>
+                </div>
+            </t>
+        </t>
+    </template>
+    <report id="action_report_pos_receipt" string="Receipt from POS UI"
+        model="pos.order" report_type="qweb-pdf"
+        name="pos_receipt_attachment.report_receipt" file="pos_receipt_attachment.report_receipt"
+        print_report_name="'Receipt - %s' % (object.name)"
+        paperformat="pos_receipt_attachment.paperformat_posreceipt" />
+
+</odoo>
