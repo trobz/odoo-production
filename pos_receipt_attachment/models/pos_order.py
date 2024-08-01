@@ -77,13 +77,15 @@ class PosOrder(models.Model):
 
     @api.model
     def _send_order_cron(self):
+        """
+        Only send the ticket which order's linked to a receipt attachment
+        """
         _logger.info("------------------------------------------------------")
         _logger.info("Start to send ticket")
-        orders = self.search([('email_status', '=', 'to_send')])
-        orders_1 = orders.filtered(lambda r: not r.image_receipt)
-        if orders_1:
-            super(PosOrder, orders_1)._send_order_cron()
-            orders -= orders_1
+        orders = self.search([
+            ('email_status', '=', 'to_send'),
+            ('image_receipt', '!=', False)
+        ])
         orders.send_receipt_by_body_from_ui()
 
     def send_receipt_by_body_from_ui(self):
