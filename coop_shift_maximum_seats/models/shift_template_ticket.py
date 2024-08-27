@@ -15,3 +15,10 @@ class ShiftTemplateTicket(models.Model):
         string="Maximum available ABCD/FTOP seats",
         related="shift_template_id.shift_max_available_seats"
     )
+
+    def _check_propagated_seats(self):
+        self.ensure_one()
+        res = super()._check_propagated_seats()
+        if res:
+            res = self.shift_max_available_seats != "auto"
+        return res
