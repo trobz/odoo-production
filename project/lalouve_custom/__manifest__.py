@@ -9,7 +9,8 @@ Lalouve Custom    """,
     'website': 'http://www.trobz.com',
     'depends': [
         'coop_project',
-        'coop_point_of_sale'
+        'coop_point_of_sale',
+        'lalouve_custom_timesheet'
     ],
     'data': [
         'security/res_groups.xml',
