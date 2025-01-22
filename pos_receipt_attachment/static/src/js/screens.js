@@ -55,25 +55,24 @@ odoo.define('pos_receipt_attachment.screens', function (require) {
             return canvas.toDataURL('image/jpeg').replace('data:image/jpeg;base64,','');
         },
 
-        /**
-         * Renders the html as an image to print it
-         */
         htmlToImg: function () {
+            var self = this;
             var receipt = $('.pos-receipt-container>.pos-sale-ticket');
-            // Odoo RTL support automatically flip left into right but html2canvas
-            // won't work as expected if the receipt is aligned to the right of the
-            // screen so we need to flip it back.
-            receipt.parent().css({ left: 0, right: 'auto' });
-            return html2canvas(receipt[0], {
-                height: Math.ceil(receipt.outerHeight() + receipt.offset().top),
-                width: Math.ceil(receipt.outerWidth() + receipt.offset().left),
-                // width: Math.ceil(receipt.outerWidth()),
-                scale: 1,
-            }).then(canvas => {
-                // $('.pos-receipt-print').empty();
-                return this.process_canvas(canvas);
+            var promise = new Promise(function (resolve, reject) {
+                html2canvas(receipt[0], {
+                    onparsed: function(queue) {
+                        queue.stack.ctx.height = Math.ceil(receipt.outerHeight() + receipt.offset().top);
+                        queue.stack.ctx.width = Math.ceil(receipt.outerWidth() + 2 * receipt.offset().left);
+                    },
+                    onrendered: function (canvas) {
+                        resolve(self.process_canvas(canvas));
+                    },
+                    letterRendering: false,
+                })
             });
+            return promise;
         },
+    
     });
 
 });
