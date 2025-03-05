@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_pos_config_form_inherit" model="ir.ui.view">
+        <field name="name">pos.config.form.view.inherit</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='restrict_price_control']/../.." position="after">
+                <div class="col-xs-12 col-lg-6 o_setting_box" attrs="{'invisible': [('barcode_scanner', '=', False)]}">
+                    <div class="o_setting_left_pane">
+                        <field name="discount_by_category"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="discount_by_category"/>
+                        <div class="text-muted">
+                            Enable this option to apply the discount for a specific categoy when scanning a discount barcode.
+                        </div>
+                        <div class="content-group row mt16" attrs="{'invisible': ['|', ('barcode_scanner', '=', False), ('discount_by_category', '=', False)]}">
+                            <label for="discount_category_ids" class="col-lg-3 o_light_label"/>
+                            <field name="discount_category_ids" widget="many2many_tags"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
