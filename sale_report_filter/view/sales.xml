@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<odoo>
+    <!-- <record id="view_order_product_pivot_inherit" model="ir.ui.view">
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_pivot"/>
+        <field name="arch" type="xml">
+            <field name="price_subtotal" position="after">
+                <field name="price_total" type="measure"/>
+                <field name="product_uom_qty" type="measure"/>
+            </field>
+        </field>
+    </record> -->
+    <record id="view_order_product_search_inherit" model="ir.ui.view">
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_search"/>
+        <field name="arch" type="xml">
+            <filter name="Sales" position="after">
+                <separator/>
+                <filter name="Today" string="Order Date: Today" domain="[('date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+            </filter>
+        </field>
+    </record>
+    <record id="sale.action_order_report_all" model="ir.actions.act_window">
+        <field name="context">{'search_default_Sales':1, 'group_by_no_leaf':1,'group_by':[], 'search_default_Today': 1, 'pivot_measures': ['product_uom_qty', 'price_total',  'price_subtotal', '__count']}</field>
+    </record>
+</odoo>
