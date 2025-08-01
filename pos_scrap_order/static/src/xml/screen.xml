@@ -2,9 +2,9 @@
 <templates id="template" xml:space="preserve">
 
     <t t-name="ScrapButton">
-        <div class='control-button js_scrap'>
+        <button class='control-button main o_container_button'>
             <i class="fa fa-trash-o"></i> Make Scrap Order
-        </div>
+        </button>
     </t>
 
     <t t-name="ScrapScreenWidget">

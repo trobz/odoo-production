@@ -129,7 +129,86 @@ odoo.define("pos_scrap_order.screens", function(require) {
             }
         },
     });
+
+    // Scrap List
+    var ScrapListScreenWidget = screens.ScreenWidget.extend({
+        template: 'ScrapListScreenWidget',
+        show: function(){
+            this._super();
+            self = this;
+            this.fetch_scrap_orders().then(function(scrapOrders){
+                self.render_list(scrapOrders);
+            })
+            .fail(function(error, event){
+                event.preventDefault();
+                self.gui.show_popup("error", {
+                    "title": _t("Network Connection Lost"),
+                    "body":  _t(
+                        "It seems that you do not have a network connection at the moment." +
+                        " Try again later."),
+                });
+            });
+            
+        },
+        click_next: function() {
+            this.gui.show_screen('scrap');
+        },
+        click_back: function() {
+            this.gui.show_screen("products");
+        },
+        renderElement: function() {
+            var self = this;
+            this._super();
+            this.$('.next').click(function(){
+                self.click_next();
+            });
+            this.$('.back').click(function(){
+                self.click_back();
+            });
+        },
+        render_list: function(scrapOrders) {
+            if (!scrapOrders) {
+                return;
+            }
+            var contents = this.$el[0].querySelector('.scrap-list-contents');
+            contents.innerHTML = "";
+            for(var i = 0, len = scrapOrders.length; i < len; i++){
+                var scrapLine_html = QWeb.render('ScrapListLine',{widget: this, scrapOrder:scrapOrders[i]});
+                var scrapLine = document.createElement('tbody');
+                scrapLine.innerHTML = scrapLine_html;
+                scrapLine = scrapLine.childNodes[1];
+                contents.appendChild(scrapLine);
+            }
+        },
+        fetch_scrap_orders: function() {
+            var params = {
+                model: 'stock.scrap',
+                method: 'get_list_for_ui',
+                args: [],
+                kwargs: {context: session.user_context},
+            };
+
+            return rpc.query(params);
+        }
+    });
+    gui.define_screen({name:'scrapList', widget: ScrapListScreenWidget});
     
+    var ShowScrapListButton = screens.ActionButtonWidget.extend({
+        template: 'ShowScrapListButton',
+        button_click: function() {
+            this.gui.show_screen('scrapList');
+        },
+    });
+    
+    screens.define_action_button({
+        'name': 'scrapList',
+        'widget': ShowScrapListButton,
+        'condition': function(){
+            var opt = this.pos.config.scrap_order_option;
+            return opt !== undefined && opt !== 'no';
+        },
+    });
+        
     screens.define_action_button({
         'name': 'scrap',
         'widget': ScrapButton,
@@ -138,7 +217,9 @@ odoo.define("pos_scrap_order.screens", function(require) {
             return opt !== undefined && opt !== 'no';
         },
     });
+
     return {
         ScrapScreenWidget: ScrapScreenWidget,
+        ScrapListScreenWidget: ScrapListScreenWidget,
     };
 });

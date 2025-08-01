@@ -10,6 +10,7 @@
             <script type="text/javascript" src="/pos_scrap_order/static/src/js/screen.js"></script>
             <script type="text/javascript" src="/pos_scrap_order/static/src/js/pos_model.js"></script>
             <link rel="stylesheet" href="/pos_scrap_order/static/src/css/scrap.css"/>
+            <link rel="stylesheet" href="/pos_scrap_order/static/src/css/list.css"/>
         </xpath>
     </template>
 </odoo>

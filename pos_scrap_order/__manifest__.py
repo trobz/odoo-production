@@ -18,5 +18,8 @@
         "views/assets.xml",
         "views/pos_config.xml",
     ],
-    'qweb': ['static/src/xml/screen.xml'],
+    'qweb': [
+        'static/src/xml/screen_show_scrap_list.xml',
+        'static/src/xml/screen.xml',
+    ],
 }
