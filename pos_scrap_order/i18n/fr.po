@@ -41,9 +41,17 @@ msgstr "Toujours créer la mise au rebut, valider même si le produit n'est pas 
 #. module: pos_scrap_order
 #. openerp-web
 #: code:addons/pos_scrap_order/static/src/xml/screen.xml:15
+#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:14
 #, python-format
 msgid "Back"
-msgstr ""
+msgstr "Retour"
+
+#. module: pos_scrap_order
+#. openerp-web
+#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:34
+#, python-format
+msgid "Create Date"
+msgstr "Date de création"
 
 #. module: pos_scrap_order
 #: model:ir.model,name:pos_scrap_order.model_res_config_settings
@@ -83,7 +91,15 @@ msgstr ""
 
 #. module: pos_scrap_order
 #. openerp-web
+#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:5
+#, python-format
+msgid "List"
+msgstr "Liste"
+
+#. module: pos_scrap_order
+#. openerp-web
 #: code:addons/pos_scrap_order/static/src/xml/screen.xml:6
+#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:18
 #, python-format
 msgid "Make Scrap Order"
 msgstr "Envoyer au rebut"
@@ -121,6 +137,13 @@ msgid "Nothing to Scrap"
 msgstr ""
 
 #. module: pos_scrap_order
+#. openerp-web
+#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:35
+#, python-format
+msgid "Origin"
+msgstr "Origine"
+
+#. module: pos_scrap_order
 #: code:addons/pos_scrap_order/models/pos_order.py:30
 #, python-format
 msgid "POS Session: "
@@ -138,6 +161,20 @@ msgstr "Commandes du point de vente"
 
 #. module: pos_scrap_order
 #. openerp-web
+#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:32
+#, python-format
+msgid "Product"
+msgstr "Article"
+
+#. module: pos_scrap_order
+#. openerp-web
+#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:33
+#, python-format
+msgid "Quantity"
+msgstr "Quantité"
+
+#. module: pos_scrap_order
+#. openerp-web
 #: code:addons/pos_scrap_order/static/src/xml/screen.xml:18
 #, python-format
 msgid "Scrap Order"
@@ -147,6 +184,20 @@ msgstr "Récapitulatif de la liste de rebuts"
 #: model:ir.model.fields,field_description:pos_scrap_order.field_pos_config__scrap_order_option
 msgid "Scrap Order Option"
 msgstr "Mises au rebut"
+
+#. module: pos_scrap_order
+#. openerp-web
+#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:17
+#, python-format
+msgid "Scrap Orders"
+msgstr "Bons de mise au rebut"
+
+#. module: pos_scrap_order
+#. openerp-web
+#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:34
+#, python-format
+msgid "State"
+msgstr "Statut"
 
 #. module: pos_scrap_order
 #: code:addons/pos_scrap_order/models/pos_order.py:59
