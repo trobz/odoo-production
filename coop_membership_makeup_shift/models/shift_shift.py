@@ -27,7 +27,8 @@ class ShiftShift(models.Model):
             'partner_id': partner.id,
             'shift_id': self.id,
             'shift_ticket_id': tickets[0].id,
-            'related_extension_id': False
+            'related_extension_id': False,
+            'is_makeup': True,
         }
         self.env["shift.registration"].sudo().create(vals)
         return 1, ""
