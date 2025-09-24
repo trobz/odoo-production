@@ -1,0 +1,65 @@
+default_language_version:
+  # pylint-odoo does not (yet) support Python 3.10.
+  python: python3.9
+
+repos:
+
+# black
+- repo: https://github.com/ambv/black
+  rev: 23.1.0
+  hooks:
+  - id: black
+    language_version: python3.9
+    exclude: __openerp__.py|__manifest__.py|odoo/|addons/
+
+# pylint
+- repo: https://github.com/pycqa/pylint
+  rev: v2.15.10
+  hooks:
+  - id: pylint
+    name: pylint odoo
+    # check only specific Odoo addons
+    files: project/
+    types: ['file', 'python']   # to not check .csv and .conf files
+    args: ["--rcfile=travis/pylintrc_odoo"]
+    additional_dependencies: [pylint-odoo==v8.0.17]
+    exclude: odoo/|addons/
+  # - id: pylint
+  #   name: pylint misc
+  #   # check all Python code excepting Odoo addons
+  #   exclude: odoo/|addons/
+  #   args: ["--rcfile=travis/pylintrc"]
+
+# yaml, flake8...
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.4.0
+  hooks:
+  - id: debug-statements
+    exclude: addons/
+
+- repo: https://github.com/pycqa/flake8
+  rev: 6.0.0
+  hooks:
+  - id: flake8
+    name: flake8 except __init__.py
+    args: [--exclude=__init__.py]
+    exclude: odoo/|addons/
+  - id: flake8
+    name: flake8 only __init__.py
+    args: [--ignore=F401]  # ignore imported unused in __init__.py
+    files: __init__.py
+    exclude: odoo/|addons/
+
+# pyupgrade
+- repo: https://github.com/asottile/pyupgrade
+  rev: v3.3.1
+  hooks:
+  - id: pyupgrade
+    exclude: odoo/|addons/
+
+# isort
+- repo: https://github.com/PyCQA/isort
+  rev: 5.12.0
+  hooks:
+  - id: isort
+    exclude: __init__.py|odoo/|addons/

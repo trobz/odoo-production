@@ -1,0 +1,33 @@
+common:
+
+  modules:
+    - foodcoop18_module
+
+  load:
+    - base
+    - web
+    - worker_logger
+    - sentry
+    - dbfilter_from_header
+    - monitoring_status
+    - session_redis
+
+  audit:
+    tms_name: foodcoop18
+
+  venv:
+    python-version: 3.10.12
+    ignored-requirements:
+      - azure-identity
+      - mysql
+      - mysqlclient
+      - pymssql
+
+local:
+  load:
+    - base
+    - web
+
+  config: config/dev.conf
+  env_file: config/dev.env
+  database: foodcoop18

@@ -1,0 +1,89 @@
+# sphinx build directories
+_build/
+!.gitignore
+
+# compiled python files
+*.py[co]
+__pycache__/
+
+# setup.py egg_info
+*.egg-info
+
+# emacs backup files
+*~
+
+# hg stuff
+*.orig
+status
+
+# vim tmp files
+*.swp
+.ropeproject/
+
+# IntelliJ IDEA and derivates
+.idea/
+
+# Eclipse
+.settings/
+
+# odoo filestore
+openerp/filestore
+odoo/filestore
+
+# generated for windows installer?
+install/win32/*.bat
+install/win32/meta.py
+
+# various virtualenv
+/bin/
+/build/
+/dist/
+/include/
+/lib/
+/man/
+/share/
+/src/
+
+erppeek.ini
+odooly.ini
+.trobz/local.yml
+/config/local.conf
+
+# default server config file in mono server deployments:
+/config/server.conf
+/config/connector.conf
+# one config file per server in multi servers deployments:
+/config/server*.conf
+/config/odoo*.conf
+
+/log
+/var
+/odoo/openerp/var/
+/backup
+
+*.dump
+*.dump.gz
+
+# docker-compose local environment variables
+/.env
+
+# Mac OS Desktop Services Store
+.DS_Store
+._.DS_Store
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# env file
+/config/server.env
