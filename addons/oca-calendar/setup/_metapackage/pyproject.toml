@@ -1,0 +1,14 @@
+[project]
+name = "odoo-addons-oca-calendar"
+version = "18.0.20250725.1"
+dependencies = [
+    "odoo-addon-calendar_export_ics==18.0.*",
+    "odoo-addon-calendar_import_ics==18.0.*",
+    "odoo-addon-calendar_public_holiday==18.0.*",
+    "odoo-addon-resource_booking==18.0.*",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 18.0",
+]
