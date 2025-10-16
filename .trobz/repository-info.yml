@@ -56,3 +56,10 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         repository: git@github.com:camptocamp/odoo-cloud-platform.git
         squash: true
         watch-contributions: false
+    - !!python/object:emoi.config.repo.Subtree
+        alias: oca-l10n-france
+        branch: '18.0'
+        prefix: addons/oca-l10n-france
+        repository: git@github.com:OCA/l10n-france.git
+        squash: true
+        watch-contributions: false
