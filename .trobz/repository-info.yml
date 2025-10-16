@@ -323,13 +323,6 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
-        alias: oca-stock-logistics-warehouse
-        branch: '18.0'
-        prefix: addons/oca-stock-logistics-warehouse
-        repository: git@github.com:OCA/stock-logistics-warehouse.git
-        squash: true
-        watch-contributions: false
-    - !!python/object:emoi.config.repo.Subtree
         alias: oca-stock-logistics-reporting
         branch: '18.0'
         prefix: addons/oca-stock-logistics-reporting
