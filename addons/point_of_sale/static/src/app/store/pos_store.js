@@ -874,6 +874,20 @@ export class PosStore extends Reactive {
         }
 
         const line = this.data.models["pos.order.line"].create({ ...values, order_id: order });
+
+        if (values.product_id.tracking === "lot") {
+            const related_lines = [];
+            const price = values.product_id.get_price(
+                order.pricelist_id,
+                values.qty,
+                values.price_extra,
+                false,
+                false,
+                line,
+                related_lines
+            );
+            related_lines.forEach((line) => line.set_unit_price(price));
+        }
         line.setOptions(options);
         this.selectOrderLine(order, line);
         if (configure) {
@@ -1856,9 +1870,7 @@ export class PosStore extends Reactive {
         });
     }
     editPartnerContext(partner) {
-        return {
-            pos_config_id: this.config.id,
-        };
+        return {};
     }
     /**
      * @param {import("@point_of_sale/app/models/res_partner").ResPartner?} partner leave undefined to create a new partner
