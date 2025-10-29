@@ -2,6 +2,7 @@ common:
 
   modules:
     - foodcoop18_module
+    - delivery
 
   load:
     - base
