@@ -141,6 +141,13 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
+        alias: oca-edi-framework
+        branch: '18.0'
+        prefix: addons/oca-edi-framework
+        repository: git@github.com:OCA/edi-framework.git
+        squash: true
+        watch-contributions: false
+    - !!python/object:emoi.config.repo.Subtree
         alias: oca-social
         branch: '18.0'
         prefix: addons/oca-social
