@@ -33,6 +33,12 @@ msgid "Contact"
 msgstr ""
 
 #. module: coop_membership_register_form_tracker
+#: model:ir.model.fields,field_description:coop_membership_register_form_tracker.field_res_partner__utm_source_ids
+#: model:ir.model.fields,field_description:coop_membership_register_form_tracker.field_res_users__utm_source_ids
+msgid "Discovery Meeting Sources"
+msgstr ""
+
+#. module: coop_membership_register_form_tracker
 #: model:ir.model.fields,field_description:coop_membership_register_form_tracker.field_mail_mass_mailing__is_for_discovery_meeting
 #: model:ir.model.fields,field_description:coop_membership_register_form_tracker.field_utm_source__is_for_discovery_meeting
 msgid "Is For Discovery Meeting"
@@ -47,6 +53,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:coop_membership_register_form_tracker.view_res_partner_filter
 msgid "Medium"
 msgstr "Moyen"
+
+#. module: coop_membership_register_form_tracker
+#: model:ir.model.fields,field_description:coop_membership_register_form_tracker.field_utm_source_category__name
+msgid "Name"
+msgstr ""
+
+#. module: coop_membership_register_form_tracker
+#: model_terms:ir.ui.view,arch_db:coop_membership_register_form_tracker.register_form_inherit
+msgid "Other source..."
+msgstr ""
 
 #. module: coop_membership_register_form_tracker
 #: model_terms:ir.ui.view,arch_db:coop_membership_register_form_tracker.view_res_partner_filter
