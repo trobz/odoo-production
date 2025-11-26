@@ -18,6 +18,7 @@ class WebsiteRegisterMeetingTracker(WebsiteRegisterMeeting):
         # Add utm.source
         source_datas = request.env['utm.source']._get_member_register_sources()
         vals["source_datas"] = source_datas
+        vals["company_name"] = request.env.user.company_id.name
         return vals
 
     def _parse_sources(self, post):
