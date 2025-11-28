@@ -371,3 +371,10 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         repository: git@github.com:OCA/report-print-send.git
         squash: true
         watch-contributions: false
+    - !!python/object:emoi.config.repo.Subtree
+        alias: foodcoop-project-addon
+        branch: '18.0'
+        prefix: project
+        repository: git@gitlab.trobz.com:project/foodcoop-project-addon.git
+        squash: true
+        watch-contributions: false
