@@ -13,6 +13,9 @@
         # oca/stock-logistics-barcode
         "barcodes_generator_product",
         "barcodes_generator_partner",
+
+        # oca/web
+        "web_responsive",
     ],
     'installable': True,
 }
