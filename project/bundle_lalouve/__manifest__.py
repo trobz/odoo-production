@@ -9,6 +9,10 @@
     'depends': [
         # oca/stock-logistics-workflow
         "scrap_reason_mandatory",
+
+        # oca/stock-logistics-barcode
+        "barcodes_generator_product",
+        "barcodes_generator_partner",
     ],
     'installable': True,
 }
