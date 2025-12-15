@@ -60,7 +60,7 @@ export class PosOrder extends Base {
         if (!this.uiState) {
             this.uiState = {
                 lineToRefund: {},
-                displayed: true,
+                displayed: this.state !== "cancel",
                 booked: false,
                 screen_data: {},
                 selected_orderline_uuid: undefined,
@@ -525,7 +525,7 @@ export class PosOrder extends Base {
             );
         }
         const combo_children_lines = this.lines.filter(
-            (line) => line.price_type === "automatic" && line.combo_parent_id
+            (line) => line.price_type === "original" && line.combo_parent_id
         );
         combo_children_lines.forEach((line) => {
             line.set_unit_price(

@@ -361,9 +361,9 @@ class AccountEdiFormat(models.Model):
             # government does not accept negative in qty or unit price
             unit_price_in_inr = unit_price_in_inr * -1
             quantity = quantity * -1
-        return {
+
+        line_details = {
             "SlNo": str(index),
-            "PrdDesc": line.name.replace("\n", ""),
             "IsServc": line.product_id.type == "service" and "Y" or "N",
             "HsnCd": self._l10n_in_edi_extract_digits(line.l10n_in_hsn_code),
             "Qty": self._l10n_in_round_value(quantity or 0.0, 3),
@@ -390,6 +390,10 @@ class AccountEdiFormat(models.Model):
             "OthChrg": self._l10n_in_round_value(tax_details_by_code.get("other_amount", 0.00)),
             "TotItemVal": self._l10n_in_round_value(((sign * line.balance) + line_tax_details.get("tax_amount", 0.00))),
         }
+        if line.name:
+            line_details['PrdDesc'] = line.name.replace("\n", "")[:300]
+
+        return line_details
 
     def _l10n_in_edi_generate_invoice_json_managing_negative_lines(self, invoice, json_payload):
         """Set negative lines against positive lines as discount with same HSN code and tax rate
@@ -577,6 +581,29 @@ class AccountEdiFormat(models.Model):
                 json_payload["ExpDtls"].update({
                     "Port": invoice.l10n_in_shipping_port_code_id.code
                 })
+            json_valdtls = json_payload['ValDtls']
+            base_and_tax_amount = tax_details.get("base_amount") + tax_details.get("tax_amount")
+            # For Export If with payment of Tax then we need to include Tax in Total Invoice Value
+            if json_payload['TranDtls']['SupTyp'] == 'EXPWP' and json_valdtls['AssVal'] == base_and_tax_amount:
+                json_payload["ValDtls"]["TotInvVal"] = self._l10n_in_round_value(sum([
+                    json_valdtls['TotInvVal'],
+                    json_valdtls['IgstVal'],
+                    json_valdtls['CgstVal'],
+                    json_valdtls['SgstVal'],
+                    json_valdtls['CesVal'],
+                    json_valdtls['StCesVal'],
+                ]))
+                for line in json_payload["ItemList"]:
+                    line["TotItemVal"] = self._l10n_in_round_value(sum([
+                        line["TotItemVal"],
+                        line["IgstAmt"],
+                        line["CgstAmt"],
+                        line["SgstAmt"],
+                        line["CesAmt"],
+                        line["CesNonAdvlAmt"],
+                        line["StateCesAmt"],
+                        line["StateCesNonAdvlAmt"],
+                    ]))
         return self._l10n_in_edi_generate_invoice_json_managing_negative_lines(invoice, json_payload)
 
     @api.model

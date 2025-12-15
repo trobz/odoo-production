@@ -2016,15 +2016,15 @@ class SnippetsMenu extends Component {
         });
 
         useBus(this.props.bus, "INSERT_SNIPPET", ({ detail }) => {
-            const { snippetSelector, block } = detail;
+            const { snippetSelector } = detail;
             this._execWithLoadingEffect(() => {
                 const snippet = [...this.snippets.values()].find((snippet) => {
                     return snippet.baseBody.matches(snippetSelector);
                 });
-                if (snippet && block) {
+                if (snippet) {
                     const clonedBody = snippet.baseBody.cloneNode(true);
                     clonedBody.classList.remove(".oe_snippet_body");
-                    block.after(clonedBody);
+                    this.options.wysiwyg.odooEditor.execCommand("insert", clonedBody);
                     // This call will block the mutex so it is not awaited.
                     this.callPostSnippetDrop($(clonedBody));
                 }
@@ -3259,6 +3259,11 @@ class SnippetsMenu extends Component {
         const websiteFormEditorOptionsEl = $html.find('[data-js="WebsiteFormEditor"]')[0];
         if (websiteFormEditorOptionsEl) {
             websiteFormEditorOptionsEl.dataset.dropExcludeAncestor = "form";
+        }
+        // TODO: Remove in master and add it in the template.
+        const filterSelectEl = $html.find("we-select").has("we-button[data-gl-filter]")[0];
+        if (filterSelectEl) {
+            filterSelectEl.dataset.name = "glfilter_select_opt";
         }
         this.templateOptions = [];
         var selectors = [];

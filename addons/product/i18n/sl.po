@@ -1,26 +1,31 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* product
+# * product
 #
 # Translators:
 # Katja Deržič, 2024
 # Wil Odoo, 2025
 # Aleš Pipan, 2025
 #
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Jan Zorko <jan.zorko@implex.si>, 2025.
+# Tadej Vengust <tadej.vengust@implex.si>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-11 02:17+0000\n"
-"PO-Revision-Date: 2024-09-25 09:41+0000\n"
-"Last-Translator: Aleš Pipan, 2025\n"
-"Language-Team: Slovenian (https://app.transifex.com/odoo/teams/41243/sl/)\n"
+"PO-Revision-Date: 2025-12-11 17:24+0000\n"
+"Last-Translator: Tadej Vengust <tadej.vengust@implex.si>\n"
+"Language-Team: Slovenian <https://translate.odoo.com/projects/odoo-18/"
+"product/sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
-"n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: product
 #. odoo-python
@@ -146,6 +151,13 @@ msgid ""
 "        - Never: Variants are never created for the attribute.\n"
 "        Note: this cannot be changed once the attribute is used on a product."
 msgstr ""
+"- Takoj: Vse možne variante so ustvarjene takoj, ko so lastnosti in njihove "
+"vrednosti dodane na artikel.\n"
+"        - Dinamično: Vsaka varianta je ustvarjena šele, ko so soležne "
+"lastnosti in vrednosti dodane na naročilo.\n"
+"        - Nikoli: Variante niso nikoli ustvarjene za to lastnost.\n"
+"        Opomba: ni spremenljivo, po tem, ko je lastnost enkrat uporabljena "
+"na artiklu."
 
 #. module: product
 #: model:product.attribute.value,name:product.product_attribute_value_5
@@ -205,7 +217,7 @@ msgstr "4 x 7 s ceno"
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_pricelist_item_form_view
 msgid "<b>Tip: want to round at 9.99?</b>"
-msgstr ""
+msgstr "<b>Nasvet: želite zaokroževati na 9,99</b>"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_pricelist_item_form_view
@@ -734,7 +746,7 @@ msgstr "Na osnovi"
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_pricelist_item_form_view
 msgid "Based price"
-msgstr ""
+msgstr "Osnovna cena"
 
 #. module: product
 #: model:res.groups,name:product.group_product_pricelist
@@ -848,7 +860,7 @@ msgstr "Kombinirani indeksi"
 #: model:ir.model.fields.selection,name:product.selection__product_template__type__combo
 #: model_terms:ir.ui.view,arch_db:product.product_template_search_view
 msgid "Combo"
-msgstr ""
+msgstr "Kombo"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_combo_view_form
@@ -861,17 +873,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:product.field_product_template__combo_ids
 #: model_terms:ir.ui.view,arch_db:product.product_combo_view_tree
 msgid "Combo Choices"
-msgstr ""
+msgstr "Kombo izbire"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_combo__combo_item_ids
 msgid "Combo Item"
-msgstr ""
+msgstr "Kombo izdelek"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_combo__base_price
 msgid "Combo Price"
-msgstr ""
+msgstr "Cena kombinacije"
 
 #. module: product
 #. odoo-python
@@ -1363,7 +1375,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields.selection,name:product.selection__product_attribute__create_variant__dynamic
 msgid "Dynamically"
-msgstr ""
+msgstr "Dinamično"
 
 #. module: product
 #: model:ir.model.constraint,message:product.constraint_product_template_attribute_value_attribute_value_unique
@@ -1817,7 +1829,7 @@ msgstr ""
 #. module: product
 #: model:ir.model.fields.selection,name:product.selection__product_attribute__create_variant__always
 msgid "Instantly"
-msgstr ""
+msgstr "Takoj"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_template_form_view
@@ -1839,7 +1851,7 @@ msgstr "EAN za mednarodno identifikacijo izdelkov"
 #. odoo-javascript
 #: code:addons/product/static/src/js/product_attribute_value_list.js:0
 msgid "Invalid Operation"
-msgstr ""
+msgstr "Neveljavna operacija"
 
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_template_form_view
@@ -2441,7 +2453,7 @@ msgstr "Pravila cen"
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_pricelist_item_form_view
 msgid "Price Type"
-msgstr ""
+msgstr "Tip cene"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_product__list_price
@@ -3114,6 +3126,10 @@ msgid ""
 "Rounding is applied after the discount and before the surcharge.\n"
 "To have prices that end in 9.99, round off to 10.00 and set an extra at -0.01"
 msgstr ""
+"Nastavi ceno tako, da je večkratnik te vrednosti.\n"
+"Zaokroževanje se upošteva po popustu in pred pribitkom.\n"
+"Da dobite cene, ki se končajo na 9,99, zaokrožite na 10,00 in nastavite "
+"pribitek na -0,01"
 
 #. module: product
 #. odoo-javascript
@@ -3698,7 +3714,7 @@ msgstr "Število različic"
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_attribute__create_variant
 msgid "Variant Creation"
-msgstr ""
+msgstr "Stvaritev variant"
 
 #. module: product
 #: model:ir.model.fields,field_description:product.field_product_product__image_variant_1920
@@ -4048,7 +4064,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/product/models/product_category.py:0
 msgid "You cannot delete the %s product category."
-msgstr " Ne morete izbrisati%s kategorije izdelkov"
+msgstr "Ne morete izbrisati kategorije izdelkov %s."
 
 #. module: product
 #. odoo-python
@@ -4239,7 +4255,7 @@ msgstr ""
 #. module: product
 #: model_terms:ir.ui.view,arch_db:product.product_pricelist_item_form_view
 msgid "round off to 10.00 and set an extra at -0.01"
-msgstr ""
+msgstr "zaokrožite na 10,00 in nastavite pribitek na -0,01"
 
 #. module: product
 #. odoo-python

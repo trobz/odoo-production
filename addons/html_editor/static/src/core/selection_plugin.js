@@ -54,8 +54,12 @@ import { closestScrollableY } from "@web/core/utils/scrolling";
  * @property {() => void} restore
  * @property {(callback: (cursor: Cursor) => void) => Cursors} update
  * @property {(node: Node, newNode: Node) => Cursors} remapNode
+ * @property {(newOffset: number) => Cursors} setAnchorOffset
+ * @property {(newOffset: number) => Cursors} setFocusOffset
  * @property {(node: Node, newOffset: number) => Cursors} setOffset
  * @property {(node: Node, shiftOffset: number) => Cursors} shiftOffset
+ * @property {{ node: Node, offset: number }} anchor
+ * @property {{ node: Node, offset: number }} focus
  */
 
 /**
@@ -243,9 +247,13 @@ export class SelectionPlugin extends Plugin {
         this.activeSelection = this.makeActiveSelection();
     }
 
-    onTripleClick() {
+    onTripleClick(ev) {
         const selectionData = this.getSelectionData();
         if (selectionData.documentSelectionIsInEditable) {
+            if (this.delegateTo("triple_click_overrides", ev)) {
+                // If the override is handled, we don't do anything.
+                return;
+            }
             const { documentSelection } = selectionData;
             const block = closestBlock(documentSelection.anchorNode);
             const [anchorNode, anchorOffset] = getDeepestPosition(block, 0);
@@ -661,6 +669,14 @@ export class SelectionPlugin extends Plugin {
                     }
                 });
             },
+            setAnchorOffset(newOffset) {
+                anchor.offset = newOffset;
+                return this;
+            },
+            setFocusOffset(newOffset) {
+                focus.offset = newOffset;
+                return this;
+            },
             setOffset(node, newOffset) {
                 return this.update((cursor) => {
                     if (cursor.node === node) {
@@ -675,6 +691,8 @@ export class SelectionPlugin extends Plugin {
                     }
                 });
             },
+            anchor,
+            focus,
         };
     }
 
@@ -1047,12 +1065,11 @@ export class SelectionPlugin extends Plugin {
     }
 
     focusEditable() {
-        if (this.editable.contains(this.document.activeElement)) {
+        const { editableSelection, documentSelectionIsInEditable } = this.getSelectionData();
+        if (this.editable.contains(this.document.activeElement) && documentSelectionIsInEditable) {
             // Editor has focus — nothing to do.
             return;
         }
-
-        const { editableSelection, documentSelectionIsInEditable } = this.getSelectionData();
 
         // Manualy focusing the editable is necessary to avoid some non-deterministic error in the HOOT unit tests.
         this.editable.focus({ preventScroll: true });
