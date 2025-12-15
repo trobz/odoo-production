@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-10-07 09:43+0000\n"
+"PO-Revision-Date: 2025-12-02 15:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -158,22 +158,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:edi_core_oca.edi_exchange_consumer_mixin_buttons
 msgid "<span class=\"pe-4\"><i class=\"fa fa-retweet\"/> EDI actions</span>"
 msgstr "<span class=\"pe-4\"><i class=\"fa fa-retweet\"/> Azioni EDI</span>"
-
-#. module: edi_core_oca
-#: model_terms:ir.ui.view,arch_db:edi_core_oca.edi_exchange_record_view_form
-msgid ""
-"<span class=\"text-warning\" invisible=\"related_record_exists\">\n"
-"                                The related record is not available "
-"anymore.\n"
-"                                Consider deleting this record too or fixing "
-"its relation.\n"
-"                            </span>"
-msgstr ""
-"<span class=\"text-warning\" invisible=\"related_record_exists\">\n"
-"                                Il record relativo non è più disponibile.\n"
-"                                Considerare l'eliminazione anche di questo "
-"record o correggere la sua relazione.\n"
-"                            </span>"
 
 #. module: edi_core_oca
 #: model_terms:ir.ui.view,arch_db:edi_core_oca.message_edi_exchange_link
@@ -661,6 +645,11 @@ msgid "EDI OCA Handler Send"
 msgstr "Invio handler OCA EDI"
 
 #. module: edi_core_oca
+#: model:res.groups,name:edi_core_oca.group_edi_override_exchange_file_content
+msgid "EDI Override Exchange File Content"
+msgstr "EDI sovrascrive il contenuto del file di scambio"
+
+#. module: edi_core_oca
 #: model:ir.model,name:edi_core_oca.model_edi_exchange_record
 msgid "EDI exchange Record"
 msgstr "Record di scambio EDI"
@@ -787,6 +776,11 @@ msgstr "Auto generazione file scambio"
 #: model:ir.model.fields,field_description:edi_core_oca.field_edi_exchange_type__exchange_file_ext
 msgid "Exchange File Ext"
 msgstr "Ext file scambio"
+
+#. module: edi_core_oca
+#: model:ir.model.fields,field_description:edi_core_oca.field_edi_exchange_record__exchange_file_frozen
+msgid "Exchange File Frozen"
+msgstr "Iberna file di scambio"
 
 #. module: edi_core_oca
 #: model:ir.model.fields,field_description:edi_core_oca.field_edi_exchange_record__exchange_filechecksum
@@ -1014,27 +1008,19 @@ msgstr "Seguito da (partner)"
 msgid ""
 "For output exchange types this should be a formatting string with the "
 "following variables available (to be used between brackets, `{}`): "
-"`exchange_record`, `record_name`, `type`, `dt` and `seq`. For instance, a "
-"valid string would be {record_name}-{type.code}-{dt}-{seq}\n"
-"For more information:\n"
-"- `exchange_record` means exchange record\n"
-"- `record_name` means name of the exchange record\n"
-"- `type` means code of the exchange record type\n"
-"- `dt` means datetime\n"
-"- `seq` means sequence. You need a sequence to be defined in `Exchange "
-"Filename Sequence` to use `seq`\n"
+"`exchange_record`, `record_name`, `type` and `dt`. For instance, a valid "
+"string would be {record_name}-{type.code}-{dt}\n"
+"For input exchange types related to storage backends it should be a regex "
+"expression to filter the files to be fetched from the pending directory in "
+"the related storage. E.g: `.*my-type-[0-9]*.\\.csv`"
 msgstr ""
-"Per i tipi di scambio di output, questa dovrebbe essere una stringa di "
+"Per i tipi di scambio in uscita questo dovrebbe essere una stringa di "
 "formattazione con le seguenti variabili disponibili (da utilizzare tra "
-"parentesi, `{}`): `exchange_record`, `record_name`, `type`, `dt` e `seq`. Ad "
-"esempio, una stringa valida sarebbe {record_name}-{type.code}-{dt}-{seq}\n"
-"Per maggiori informazioni:\n"
-"- `exchange_record` significa record di scambio\n"
-"- `record_name` significa nome del record di scambio\n"
-"- `type` significa codice del tipo di record di scambio\n"
-"- `dt` significa data ora\n"
-"- `seq` significa sequenza. È necessario che una sequenza sia definita in "
-"`Sequenza nome file scambio` per utilizzare `seq`\n"
+"parentesi, `{}`): `exchange_record`, `record_name`, `type` e `dt`. Per "
+"esempio, una stringa valida sarà {record_name}-{type.code}-{dt}\n"
+"Per tipi scambio relativi ai backend deposito dovrebbe essere una "
+"espressione regolare per filtrare i campi da alimentare dalla cartella in "
+"attesa nel deposito relativo. Es. `.*my-type-[0-9]*.\\.csv`"
 
 #. module: edi_core_oca
 #: model_terms:ir.ui.view,arch_db:edi_core_oca.edi_exchange_type_rule_view_form
@@ -1327,6 +1313,11 @@ msgstr "Nuovo"
 #: code:addons/edi_core_oca/models/edi_backend.py:0
 msgid "No handler for %(action)s"
 msgstr "Nessun handler per %(action)s"
+
+#. module: edi_core_oca
+#: model:ir.model.fields,help:edi_core_oca.field_edi_exchange_record__exchange_file_frozen
+msgid "Not allowed to change the file anymore."
+msgstr "Modifica del file non più consentita."
 
 #. module: edi_core_oca
 #: model:ir.model.fields,field_description:edi_core_oca.field_edi_exchange_record__message_needaction_counter
@@ -1666,6 +1657,17 @@ msgstr ""
 "fallimento."
 
 #. module: edi_core_oca
+#: model_terms:ir.ui.view,arch_db:edi_core_oca.edi_exchange_record_view_form
+msgid ""
+"The related record is not available anymore.\n"
+"                                    Consider deleting this record too or "
+"fixing its relation."
+msgstr ""
+"Il record correlato non è più disponibile.\n"
+"                                    Valutare l'eliminazione anche di questo "
+"record o correggere la sua relazione."
+
+#. module: edi_core_oca
 #: model:ir.model.fields,field_description:edi_core_oca.field_edi_configuration__trigger_id
 msgid "Trigger"
 msgstr "Attivazione"
@@ -1743,6 +1745,47 @@ msgstr ""
 #: model:ir.model.fields.selection,name:edi_core_oca.selection__edi_exchange_record__edi_exchange_state__output_error_on_send
 msgid "error on send"
 msgstr "errore nell'invio"
+
+#~ msgid ""
+#~ "For output exchange types this should be a formatting string with the "
+#~ "following variables available (to be used between brackets, `{}`): "
+#~ "`exchange_record`, `record_name`, `type`, `dt` and `seq`. For instance, a "
+#~ "valid string would be {record_name}-{type.code}-{dt}-{seq}\n"
+#~ "For more information:\n"
+#~ "- `exchange_record` means exchange record\n"
+#~ "- `record_name` means name of the exchange record\n"
+#~ "- `type` means code of the exchange record type\n"
+#~ "- `dt` means datetime\n"
+#~ "- `seq` means sequence. You need a sequence to be defined in `Exchange "
+#~ "Filename Sequence` to use `seq`\n"
+#~ msgstr ""
+#~ "Per i tipi di scambio di output, questa dovrebbe essere una stringa di "
+#~ "formattazione con le seguenti variabili disponibili (da utilizzare tra "
+#~ "parentesi, `{}`): `exchange_record`, `record_name`, `type`, `dt` e `seq`. "
+#~ "Ad esempio, una stringa valida sarebbe {record_name}-{type.code}-{dt}-"
+#~ "{seq}\n"
+#~ "Per maggiori informazioni:\n"
+#~ "- `exchange_record` significa record di scambio\n"
+#~ "- `record_name` significa nome del record di scambio\n"
+#~ "- `type` significa codice del tipo di record di scambio\n"
+#~ "- `dt` significa data ora\n"
+#~ "- `seq` significa sequenza. È necessario che una sequenza sia definita in "
+#~ "`Sequenza nome file scambio` per utilizzare `seq`\n"
+
+#~ msgid ""
+#~ "<span class=\"text-warning\" invisible=\"related_record_exists\">\n"
+#~ "                                The related record is not available "
+#~ "anymore.\n"
+#~ "                                Consider deleting this record too or "
+#~ "fixing its relation.\n"
+#~ "                            </span>"
+#~ msgstr ""
+#~ "<span class=\"text-warning\" invisible=\"related_record_exists\">\n"
+#~ "                                Il record relativo non è più "
+#~ "disponibile.\n"
+#~ "                                Considerare l'eliminazione anche di "
+#~ "questo record o correggere la sua relazione.\n"
+#~ "                            </span>"
 
 #~ msgid "Job Channel"
 #~ msgstr "Canale lavoro"
