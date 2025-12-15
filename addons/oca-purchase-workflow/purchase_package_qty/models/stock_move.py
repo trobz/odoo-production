@@ -1,0 +1,85 @@
+##############################################################################
+#
+#    Purchase - Package Quantity Module for Odoo
+#    Copyright (C) 2019-Today: La Louve (<https://cooplalouve.fr>)
+#    Copyright (C) 2019-Today: Druidoo (<https://www.druidoo.io>)
+#    Copyright (C) 2016-Today Akretion (https://www.akretion.com)
+#    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+#    @author Julien WESTE
+#    @author Sylvain LE GAL (https://twitter.com/legalsylvain)
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU Affero General Public License as
+#    published by the Free Software Foundation, either version 3 of the
+#    License, or (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU Affero General Public License for more details.
+#
+#    You should have received a copy of the GNU Affero General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+##############################################################################
+
+from odoo import api, fields, models
+
+
+class StockMove(models.Model):
+    _inherit = "stock.move"
+
+    package_qty = fields.Float(
+        related="product_packaging_id.qty",
+        help="""The quantity of products in a package.""",
+    )
+    product_packaging_qty = fields.Float(inverse="_inverse_product_packaging_qty")
+    product_packaging_quantity = fields.Float(
+        inverse="_inverse_product_packaging_quantity"
+    )
+
+    def _inverse_product_packaging_qty(self):
+        """Inverse method to set product_uom_qty from product_packaging_qty."""
+        self._set_product_packaging_qty()
+
+    def _inverse_product_packaging_quantity(self):
+        """Inverse method to set quantity from product_packaging_quantity."""
+        self._set_product_packaging_quantity()
+
+    @api.onchange("product_packaging_qty")
+    def onchange_product_packaging_qty(self):
+        """Onchange method to set product_uom_qty from product_packaging_qty from UI."""
+        self._set_product_packaging_qty()
+
+    def _set_product_packaging_qty(self):
+        for move in self:
+            if not move.product_packaging_id or not move.is_initial_demand_editable:
+                continue
+            move.product_uom_qty = move.product_packaging_id._compute_contained_qty(
+                move.product_packaging_qty,
+                qty_uom=move.product_uom,
+            )
+
+    @api.onchange("product_packaging_quantity")
+    def onchange_product_packaging_quantity(self):
+        """Onchange method to set quantity from product_packaging_quantity from UI."""
+        self._set_product_packaging_quantity()
+
+    def _set_product_packaging_quantity(self):
+        for move in self:
+            if not move.product_packaging_id or not move.is_quantity_done_editable:
+                continue
+            move.quantity = move.product_packaging_id._compute_contained_qty(
+                move.product_packaging_quantity,
+                qty_uom=move.product_uom,
+            )
+
+    @api.onchange("product_id", "product_qty", "product_uom")
+    def _onchange_suggest_packaging(self):
+        """override to keep the product_packaging_id when it's from purchase line."""
+        if (
+            self.product_packaging_id
+            and self.product_packaging_id == self.purchase_line_id.product_packaging_id
+        ):
+            return None
+        return super()._onchange_suggest_packaging()
