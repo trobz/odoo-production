@@ -1,13 +1,15 @@
 [project]
 name = "odoo-addons-oca-sale-reporting"
-version = "18.0.20250925.0"
+version = "18.0.20251126.0"
 dependencies = [
     "odoo-addon-product_sold_by_delivery_week==18.0.*",
     "odoo-addon-sale_layout_category_hide_detail==18.0.*",
     "odoo-addon-sale_order_line_position==18.0.*",
     "odoo-addon-sale_order_product_recommendation_product_sold_by_delivery_week==18.0.*",
     "odoo-addon-sale_order_report_product_image==18.0.*",
+    "odoo-addon-sale_packaging_report==18.0.*",
     "odoo-addon-sale_report_delivered==18.0.*",
+    "odoo-addon-sale_report_delivered_attribute_values==18.0.*",
     "odoo-addon-sale_report_delivered_brand==18.0.*",
     "odoo-addon-sale_report_delivered_partner_priority==18.0.*",
     "odoo-addon-sale_report_delivered_subtotal==18.0.*",
