@@ -101,17 +101,6 @@ msgid "<span class=\"pe-4\"><i class=\"fa fa-retweet\"/> EDI actions</span>"
 msgstr ""
 
 #. module: edi_core_oca
-#: model_terms:ir.ui.view,arch_db:edi_core_oca.edi_exchange_record_view_form
-msgid ""
-"<span class=\"text-warning\" invisible=\"related_record_exists\">\n"
-"                                The related record is not available "
-"anymore.\n"
-"                                Consider deleting this record too or fixing "
-"its relation.\n"
-"                            </span>"
-msgstr ""
-
-#. module: edi_core_oca
 #: model_terms:ir.ui.view,arch_db:edi_core_oca.message_edi_exchange_link
 msgid "<strong>EDI exchange:</strong>"
 msgstr "<strong>Échange EDI:</strong>"
@@ -598,6 +587,11 @@ msgid "EDI OCA Handler Send"
 msgstr ""
 
 #. module: edi_core_oca
+#: model:res.groups,name:edi_core_oca.group_edi_override_exchange_file_content
+msgid "EDI Override Exchange File Content"
+msgstr ""
+
+#. module: edi_core_oca
 #: model:ir.model,name:edi_core_oca.model_edi_exchange_record
 msgid "EDI exchange Record"
 msgstr ""
@@ -720,6 +714,11 @@ msgstr "Génération automatique de fichiers Exchange"
 #: model:ir.model.fields,field_description:edi_core_oca.field_edi_exchange_type__exchange_file_ext
 msgid "Exchange File Ext"
 msgstr "Extension de fichier Exchange"
+
+#. module: edi_core_oca
+#: model:ir.model.fields,field_description:edi_core_oca.field_edi_exchange_record__exchange_file_frozen
+msgid "Exchange File Frozen"
+msgstr ""
 
 #. module: edi_core_oca
 #: model:ir.model.fields,field_description:edi_core_oca.field_edi_exchange_record__exchange_filechecksum
@@ -946,15 +945,11 @@ msgstr ""
 msgid ""
 "For output exchange types this should be a formatting string with the "
 "following variables available (to be used between brackets, `{}`): "
-"`exchange_record`, `record_name`, `type`, `dt` and `seq`. For instance, a "
-"valid string would be {record_name}-{type.code}-{dt}-{seq}\n"
-"For more information:\n"
-"- `exchange_record` means exchange record\n"
-"- `record_name` means name of the exchange record\n"
-"- `type` means code of the exchange record type\n"
-"- `dt` means datetime\n"
-"- `seq` means sequence. You need a sequence to be defined in `Exchange "
-"Filename Sequence` to use `seq`\n"
+"`exchange_record`, `record_name`, `type` and `dt`. For instance, a valid "
+"string would be {record_name}-{type.code}-{dt}\n"
+"For input exchange types related to storage backends it should be a regex "
+"expression to filter the files to be fetched from the pending directory in "
+"the related storage. E.g: `.*my-type-[0-9]*.\\.csv`"
 msgstr ""
 
 #. module: edi_core_oca
@@ -1241,6 +1236,11 @@ msgstr "Nouveau"
 #. odoo-python
 #: code:addons/edi_core_oca/models/edi_backend.py:0
 msgid "No handler for %(action)s"
+msgstr ""
+
+#. module: edi_core_oca
+#: model:ir.model.fields,help:edi_core_oca.field_edi_exchange_record__exchange_file_frozen
+msgid "Not allowed to change the file anymore."
 msgstr ""
 
 #. module: edi_core_oca
@@ -1574,6 +1574,14 @@ msgstr ""
 #. module: edi_core_oca
 #: model:ir.model.fields,help:edi_core_oca.field_edi_exchange_record__retryable
 msgid "The record state can be rolled back manually in case of failure."
+msgstr ""
+
+#. module: edi_core_oca
+#: model_terms:ir.ui.view,arch_db:edi_core_oca.edi_exchange_record_view_form
+msgid ""
+"The related record is not available anymore.\n"
+"                                    Consider deleting this record too or "
+"fixing its relation."
 msgstr ""
 
 #. module: edi_core_oca

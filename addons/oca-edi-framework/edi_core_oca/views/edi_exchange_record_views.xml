@@ -123,33 +123,25 @@
                         </group>
                         <group name="status" string="Status">
                             <field name="exchanged_on" />
-                            <field name="exchange_file" filename="exchange_filename" />
-                            <field name="exchange_filename" invisible="exchange_file" />
+                            <field
+                                name="exchange_file"
+                                filename="exchange_filename"
+                                readonly="exchange_file_frozen"
+                            />
+                            <field
+                                name="exchange_filename"
+                                invisible="exchange_file"
+                                readonly="exchange_file_frozen"
+                            />
                             <field
                                 name="exchange_filechecksum"
-                                invisible="exchange_file"
+                                invisible="not exchange_file"
                             />
                         </group>
                         <group name="ack" string="ACK" invisible="not ack_expected">
                             <field name="ack_expected" />
                             <field name="ack_exchange_id" />
                             <field name="ack_received_on" />
-                        </group>
-                        <group
-                            name="related_odoo_record"
-                            string="Related record"
-                            groups="base.group_no_one"
-                            invisible="res_id == 0"
-                        >
-                            <field name="res_id" readonly="1" />
-                            <field name="model" readonly="1" />
-                            <span
-                                class="text-warning"
-                                invisible="related_record_exists"
-                            >
-                                The related record is not available anymore.
-                                Consider deleting this record too or fixing its relation.
-                            </span>
                         </group>
                     </group>
                     <notebook>
@@ -196,6 +188,20 @@
                                     />
                                 </list>
                             </field>
+                            <group
+                                name="related_odoo_record"
+                                groups="base.group_no_one"
+                                invisible="res_id == 0"
+                            >
+                                <div
+                                    class="alert alert-danger"
+                                    role="alert"
+                                    invisible="related_record_exists"
+                                >
+                                    The related record is not available anymore.
+                                    Consider deleting this record too or fixing its relation.
+                                </div>
+                            </group>
                         </page>
                     </notebook>
                 </sheet>
