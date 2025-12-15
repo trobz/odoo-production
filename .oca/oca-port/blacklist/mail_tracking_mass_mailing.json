@@ -1,0 +1,6 @@
+{
+  "pull_requests": {
+    "OCA/social#1244": "skip precommit changes",
+    "OCA/social#1048": "(auto) Nothing to port from PR #1048"
+  }
+}
