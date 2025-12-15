@@ -22,6 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [crm_claim](crm_claim/) | 18.0.1.0.0 |  | Track your customers/vendors claims and grievances.
+[crm_date_deadline_required](crm_date_deadline_required/) | 18.0.1.0.0 | <a href='https://github.com/EmilioPascual'><img src='https://github.com/EmilioPascual.png' width='32' height='32' style='border-radius:50%;' alt='EmilioPascual'/></a> <a href='https://github.com/rafaelbn'><img src='https://github.com/rafaelbn.png' width='32' height='32' style='border-radius:50%;' alt='rafaelbn'/></a> | Field date deadline required in the opportunity
 [crm_industry](crm_industry/) | 18.0.1.0.2 |  | Link leads/opportunities to industries
 [crm_lead_code](crm_lead_code/) | 18.0.1.0.0 |  | Sequential Code for Leads / Opportunities
 [crm_lead_currency](crm_lead_currency/) | 18.0.1.0.0 | <a href='https://github.com/luisg123v'><img src='https://github.com/luisg123v.png' width='32' height='32' style='border-radius:50%;' alt='luisg123v'/></a> | On leads/opportunities, add the amount in the customer's currency.
@@ -37,7 +38,10 @@ addon | version | maintainers | summary
 [crm_phonecall_result](crm_phonecall_result/) | 18.0.1.0.0 |  | Adds phone call result tracking and reporting to CRM phonecalls
 [crm_phonecall_summary_predefined](crm_phonecall_summary_predefined/) | 18.0.1.0.0 |  | Allows to choose from a defined summary list
 [crm_project_create](crm_project_create/) | 18.0.1.0.1 | <a href='https://github.com/EmilioPascual'><img src='https://github.com/EmilioPascual.png' width='32' height='32' style='border-radius:50%;' alt='EmilioPascual'/></a> <a href='https://github.com/rafaelbn'><img src='https://github.com/rafaelbn.png' width='32' height='32' style='border-radius:50%;' alt='rafaelbn'/></a> | Allow create projects from lead/opportunity
-[crm_security_group](crm_security_group/) | 18.0.1.0.0 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | Add new group in Sales to show only CRM
+[crm_salesperson_planner](crm_salesperson_planner/) | 18.0.1.1.0 |  | Crm Salesperson Planner
+[crm_security_group](crm_security_group/) | 18.0.1.2.0 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | Add new group in Sales to show only CRM
+[crm_stage_mail](crm_stage_mail/) | 18.0.1.0.0 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | Crm Stage Mail
+[crm_stage_multi_team](crm_stage_multi_team/) | 18.0.1.0.1 |  | Allows multiple teams in crm stage
 [crm_stage_probability](crm_stage_probability/) | 18.0.1.0.0 |  | Define fixed probability on the stages
 [crm_team_parent](crm_team_parent/) | 18.0.1.0.0 |  | Add a parent field on sales teams.
 [crm_won_restrict_per_stage](crm_won_restrict_per_stage/) | 18.0.1.0.0 | <a href='https://github.com/victoralmau'><img src='https://github.com/victoralmau.png' width='32' height='32' style='border-radius:50%;' alt='victoralmau'/></a> | CRM Won Restrict Per Stage
