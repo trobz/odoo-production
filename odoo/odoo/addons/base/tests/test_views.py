@@ -14,7 +14,7 @@ from lxml.builder import E
 from psycopg2 import IntegrityError
 from psycopg2.extras import Json
 
-from odoo.exceptions import AccessError, ValidationError
+from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests import common, tagged
 from odoo.addons.base.tests.common import TransactionCaseWithUserDemo
 from odoo.tools import mute_logger, view_validation, safe_eval
@@ -1953,6 +1953,25 @@ class TestViews(ViewCase):
                 'arch': '<template></template>',
                 'inherit_id': False,
             })
+
+    def test_xml_editor_rejects_encoding_declaration(self):
+        """Must raise a UserError when encoding declaration is included."""
+        with self.assertRaises(UserError):
+            self.View.create({
+                'name': 'encoding_declaration_view',
+                'arch_base': "<?xml version='1.0' encoding='utf-8'?>",
+                'inherit_id': False,
+            })
+
+        view = self.assertValid("<form string='Test'></form>", name="test_xml_encoding_view")
+        for field in ("arch", "arch_base"):
+            with self.subTest(field=field):
+                original_value = view[field]
+
+                with self.assertRaises(UserError):
+                    view.write({field: "<?xml version='1.0' encoding='utf-8'?><form/>"})
+
+                self.assertXMLEqual(view[field], original_value)
 
     def test_context_in_view(self):
         arch = """
@@ -4431,7 +4450,6 @@ class TestInvisibleField(TransactionCaseWithUserDemo):
             'appointment',
             'approvals',
             'approvals_purchase_stock',
-            'auth_signup',
             'auth_totp',
             'barcodes_gs1_nomenclature',
             'base_address_extended',
@@ -4471,7 +4489,6 @@ class TestInvisibleField(TransactionCaseWithUserDemo):
             'documents_l10n_hk_hr_payroll',
             'documents_l10n_ke_hr_payroll',
             'documents_project',
-            'documents_project_sale',
             'documents_spreadsheet',
             'event',
             'event_booth',
@@ -4525,7 +4542,6 @@ class TestInvisibleField(TransactionCaseWithUserDemo):
             'hr_work_entry',
             'hr_work_entry_contract',
             'hr_work_entry_holidays_enterprise',
-            'iap',
             'im_livechat',
             'industry_fsm',
             'industry_fsm_report',
@@ -4535,7 +4551,6 @@ class TestInvisibleField(TransactionCaseWithUserDemo):
             'iot',
             'knowledge',
             'l10n_ae_hr_payroll',
-            'l10n_ae_hr_payroll_account',
             'l10n_ar',
             'l10n_ar_edi',
             'l10n_ar_withholding',
@@ -4557,7 +4572,6 @@ class TestInvisibleField(TransactionCaseWithUserDemo):
             'l10n_ch',
             'l10n_ch_hr_payroll',
             'l10n_ch_hr_payroll_elm_transmission',
-            'l10n_ch_hr_payroll_elm_transmission_account',
             'l10n_cl',
             'l10n_cl_edi',
             'l10n_cl_edi_exports',
@@ -4581,11 +4595,9 @@ class TestInvisibleField(TransactionCaseWithUserDemo):
             'l10n_es_edi_tbai_pos',
             'l10n_es_reports',
             'l10n_es_reports_modelo130',
-            'l10n_fr_fec_import',
             'l10n_fr_hr_holidays',
             'l10n_fr_hr_payroll',
             'l10n_fr_intrastat',
-            'l10n_fr_intrastat_services',
             'l10n_fr_pos_cert',
             'l10n_fr_reports',
             'l10n_gr_edi',
@@ -4595,7 +4607,6 @@ class TestInvisibleField(TransactionCaseWithUserDemo):
             'l10n_id_efaktur_coretax',
             'l10n_in_hr_holidays',
             'l10n_in_hr_payroll',
-            'l10n_in_hr_payroll_account',
             'l10n_it_edi',
             'l10n_it_edi_doi',
             'l10n_it_edi_sale',
@@ -4623,8 +4634,6 @@ class TestInvisibleField(TransactionCaseWithUserDemo):
             'l10n_mx_edi_pos',
             'l10n_mx_edi_stock',
             'l10n_mx_gr_edi',
-            'l10n_mx_hr_payroll',
-            'l10n_mx_hr_payroll_account',
             'l10n_mx_hr_payroll_localisation',
             'l10n_mx_jo_hr_payroll',
             'l10n_mx_jo_hr_payroll_account',
@@ -4638,12 +4647,9 @@ class TestInvisibleField(TransactionCaseWithUserDemo):
             'l10n_nz_eft',
             'l10n_pe',
             'l10n_pe_edi',
-            'l10n_pe_edi_pos',
             'l10n_pe_edi_stock',
-            'l10n_pe_pos',
             'l10n_pe_reports',
             'l10n_pe_reports_stock',
-            'l10n_pe_website_sale',
             'l10n_ph',
             'l10n_ph_check_printing',
             'l10n_pl_reports',
@@ -4758,7 +4764,6 @@ class TestInvisibleField(TransactionCaseWithUserDemo):
             'sign',
             'sms',
             'snailmail',
-            'snailmail_account',
             'social',
             'social_crm',
             'social_facebook',
@@ -4825,7 +4830,7 @@ class TestInvisibleField(TransactionCaseWithUserDemo):
             'worksheet',
         )
 
-        modules_without_error = set(self.env['ir.module.module'].search([('state', '=', 'intalled'), ('name', 'in', only_log_modules)]).mapped('name'))
+        modules_without_error = set(self.env['ir.module.module'].search([('state', '=', 'installed'), ('name', 'in', only_log_modules)]).mapped('name'))
         module_log_views = defaultdict(list)
         module_error_views = defaultdict(lambda: defaultdict(list)) 
         uncommented_regexp = r'''(<field [^>]*invisible=['"](True|1)['"][^>]*>)[\s\t\n ]*(.*)'''

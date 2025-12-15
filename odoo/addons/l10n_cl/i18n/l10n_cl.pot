@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.5alpha1+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-07 07:42+0000\n"
-"PO-Revision-Date: 2023-09-07 07:42+0000\n"
+"POT-Creation-Date: 2025-12-05 19:00+0000\n"
+"PO-Revision-Date: 2025-12-05 19:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -422,6 +422,11 @@ msgid "Declaration of Entry to Primary Free Trade Zone"
 msgstr ""
 
 #. module: l10n_cl
+#: model:ir.model.fields.selection,name:l10n_cl.selection__l10n_latam_document_type__internal_type__stock_picking
+msgid "Delivery Guide"
+msgstr ""
+
+#. module: l10n_cl
 #: model:res.currency,currency_unit_label:l10n_cl.UF
 #: model:res.currency,l10n_cl_short_name:l10n_cl.UF
 msgid "Development Unit"
@@ -439,6 +444,11 @@ msgid ""
 "Document types for foreign customers must be export type (codes 110, 111 or "
 "112) or you should define the customer as an end consumer and use receipts "
 "(codes 39 or 41)"
+msgstr ""
+
+#. module: l10n_cl
+#: model:ir.model,name:l10n_cl.model_account_tax
+msgid "ETA tax codes mixin"
 msgstr ""
 
 #. module: l10n_cl
@@ -994,6 +1004,11 @@ msgid "Purchases - Non Recoverable VAT Amount"
 msgstr ""
 
 #. module: l10n_cl
+#: model:account.account.tag,name:l10n_cl.tag_cl_purchase_mnt_iec
+msgid "Purchases - Specific Fuel Tax"
+msgstr ""
+
+#. module: l10n_cl
 #: model:account.account.tag,name:l10n_cl.tag_cl_purchase_imp_sin_cred
 msgid "Purchases - Tax No Credit"
 msgstr ""
@@ -1323,8 +1338,8 @@ msgid "Source Document"
 msgstr ""
 
 #. module: l10n_cl
-#: model:ir.model.fields.selection,name:l10n_cl.selection__l10n_latam_document_type__internal_type__stock_picking
-msgid "Stock Delivery"
+#: model:account.account.tag,name:l10n_cl.tag_cl_specific_fuel_tax
+msgid "Specific Fuel Tax"
 msgstr ""
 
 #. module: l10n_cl
@@ -1358,7 +1373,6 @@ msgid "TMN"
 msgstr ""
 
 #. module: l10n_cl
-#: model:ir.model,name:l10n_cl.model_account_tax
 #: model_terms:ir.ui.view,arch_db:l10n_cl.view_complete_invoice_refund_tree
 msgid "Tax"
 msgstr ""

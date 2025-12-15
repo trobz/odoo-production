@@ -73,7 +73,10 @@ class PosOrder(models.Model):
         :returns: id of created/updated pos.order
         :rtype: int
         """
-        draft = True if order.get('state') == 'draft' else False
+        draft = order.get('state') == 'draft'
+        paid = order.get('state') == 'paid'
+        if 'state' in order:
+            order['state'] = 'draft' if paid else order['state']  # paid state will be set later
         pos_session = self.env['pos.session'].browse(order['session_id'])
         if pos_session.state == 'closing_control' or pos_session.state == 'closed':
             order['session_id'] = self._get_valid_session(order).id
@@ -113,9 +116,6 @@ class PosOrder(models.Model):
 
             del order['uuid']
             del order['access_token']
-            if order.get('state') == 'paid':
-                # The "paid" state will be assigned later by `_process_saved_order`
-                order['state'] = pos_order.state
             pos_order.write(order)
 
         pos_order._link_combo_items(combo_child_uuids_by_parent_uuid)
@@ -182,9 +182,10 @@ class PosOrder(models.Model):
         :type draft: bool.
         """
         prec_acc = order.currency_id.decimal_places
+        order = order.with_context(backend_recomputation=True)
 
         # Recompute amount paid because we don't trust the client
-        order.with_context(backend_recomputation=True).write({'amount_paid': sum(order.payment_ids.mapped('amount'))})
+        order.write({'amount_paid': sum(order.payment_ids.mapped('amount'))})
 
         if not draft and not float_is_zero(pos_order['amount_return'], prec_acc):
             cash_payment_method = pos_session.payment_method_ids.filtered('is_cash_count')[:1]
@@ -373,6 +374,8 @@ class PosOrder(models.Model):
                        AND MOD(session_id, 10) = %s
                     )""", '% _____-___-__' + value[1:], int(value[0]))
                 return [('id', 'in', sql)]
+            else:
+                raise UserError(_("The search on Order Number only supports up to 3 digits."))
 
         raise NotImplementedError(_("Unsupported search operation"))
 
@@ -777,6 +780,7 @@ class PosOrder(models.Model):
             'move_type': 'out_invoice' if self.amount_total >= 0 else 'out_refund',
             'ref': self.name,
             'partner_id': self.partner_id.address_get(['invoice'])['invoice'],
+            'partner_shipping_id': self.partner_id.address_get(['delivery'])['delivery'],
             'partner_bank_id': self._get_partner_bank_id(),
             'currency_id': self.currency_id.id,
             'invoice_user_id': self.user_id.id,
@@ -1034,6 +1038,8 @@ class PosOrder(models.Model):
     def action_pos_order_cancel(self):
         cancellable_orders = self.filtered(lambda order: order.state == 'draft')
         cancellable_orders.write({'state': 'cancel'})
+        for config in self.config_id:
+            config.notify_synchronisation(config.current_session_id.id, self.env.context.get('login_number', 0))
         return {
             'pos.order': cancellable_orders.read(self._load_pos_data_fields(self.config_id.ids[0]), load=False)
         }
@@ -1567,7 +1573,7 @@ class PosOrderLine(models.Model):
                 self.price_subtotal = taxes['total_excluded']
                 self.price_subtotal_incl = taxes['total_included']
 
-    @api.depends('order_id', 'order_id.fiscal_position_id')
+    @api.depends('order_id', 'order_id.fiscal_position_id', 'tax_ids')
     def _get_tax_ids_after_fiscal_position(self):
         for line in self:
             line.tax_ids_after_fiscal_position = line.order_id.fiscal_position_id.map_tax(line.tax_ids)

@@ -15,7 +15,7 @@ from odoo.addons.base.models.res_partner import _tz_get
 from odoo.addons.resource.models.utils import float_to_time, HOURS_PER_DAY, Intervals
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tools.float_utils import float_round, float_compare
-from odoo.tools.misc import format_date
+from odoo.tools.misc import clean_context, format_date
 from odoo.tools.translate import _
 from odoo.osv import expression
 
@@ -434,7 +434,7 @@ class HolidaysRequest(models.Model):
                 continue
             if leave.employee_id:
                 # For flexible employees, if it's a single day leave, we force it to the real duration since the virtual intervals might not match reality on that day, especially for custom hours
-                if leave.employee_id.is_flexible and leave.date_to.date() == leave.date_from.date():
+                if leave.employee_id.is_flexible and leave.request_date_to == leave.request_date_from:
                     public_holidays = self.env['resource.calendar.leaves'].search([
                         ('resource_id', '=', False),
                         ('date_from', '<', leave.date_to),
@@ -912,15 +912,17 @@ Attempting to double-book your time off won't magically make your vacation 2x be
         meeting_holidays = holidays.filtered(lambda l: l.holiday_status_id.create_calendar_meeting)
         meetings = self.env['calendar.event']
         if meeting_holidays:
+            Meeting = self.env['calendar.event']
+            Meeting.check_access('create')
             meeting_values_for_user_id = meeting_holidays._prepare_holidays_meeting_values()
             Meeting = self.env['calendar.event']
             for user_id, meeting_values in meeting_values_for_user_id.items():
-                meetings += Meeting.with_user(user_id or self.env.uid).with_context(
+                meetings += Meeting.with_user(user_id or self.env.uid).sudo().with_context(clean_context({**self.env.context, **dict(
                                 allowed_company_ids=[],
                                 no_mail_to_attendees=True,
                                 calendar_no_videocall=True,
                                 active_model=self._name
-                            ).create(meeting_values)
+                            )})).create(meeting_values)
         Holiday = self.env['hr.leave']
         for meeting in meetings:
             Holiday.browse(meeting.res_id).meeting_id = meeting
@@ -950,9 +952,14 @@ Attempting to double-book your time off won't magically make your vacation 2x be
             if holiday.leave_type_request_unit == 'hour':
                 allday_value = float_compare(holiday.number_of_days, 1.0, 1) >= 0
 
-            leave_tz = timezone(holiday.tz) if holiday.tz else UTC
-            start_value = UTC.localize(holiday.date_from).astimezone(leave_tz).replace(tzinfo=None)
-            stop_value = UTC.localize(holiday.date_to).astimezone(leave_tz).replace(tzinfo=None)
+            if allday_value:
+                # `start` and `stop` are not in UTC for allday events
+                leave_tz = timezone(holiday.tz) if holiday.tz else UTC
+                start_value = UTC.localize(holiday.date_from).astimezone(leave_tz).replace(tzinfo=None)
+                stop_value = UTC.localize(holiday.date_to).astimezone(leave_tz).replace(tzinfo=None)
+            else:
+                start_value = holiday.date_from
+                stop_value = holiday.date_to
 
             meeting_values = {
                 'name': meeting_name,

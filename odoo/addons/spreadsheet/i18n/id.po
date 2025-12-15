@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet
+# * spreadsheet
 #
 # Translators:
 # Tiffany Chang, 2024
@@ -8,20 +8,22 @@
 # Martin Trigaux, 2024
 # Wil Odoo, 2025
 # Abe Manyo, 2025
-#
+# Weblate <noreply-mt-weblate@weblate.org>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-27 01:49+0000\n"
-"PO-Revision-Date: 2024-09-25 09:41+0000\n"
-"Last-Translator: Abe Manyo, 2025\n"
-"Language-Team: Indonesian (https://app.transifex.com/odoo/teams/41243/id/)\n"
+"POT-Creation-Date: 2025-10-16 18:39+0000\n"
+"PO-Revision-Date: 2025-12-09 17:36+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-18/"
+"spreadsheet/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: spreadsheet
 #. odoo-javascript
@@ -2004,7 +2006,7 @@ msgstr "Bandingkan2 nilai numerik, kembalikkan 1 bila mereka sama."
 #. odoo-javascript
 #: code:addons/spreadsheet/static/src/o_spreadsheet/o_spreadsheet.xml:0
 msgid "Compute from totals"
-msgstr ""
+msgstr "Hitung dari total"
 
 #. module: spreadsheet
 #. odoo-javascript
@@ -3694,10 +3696,30 @@ msgstr ""
 #. module: spreadsheet
 #. odoo-javascript
 #: code:addons/spreadsheet/static/src/o_spreadsheet/o_spreadsheet.js:0
-msgid "Function [[FUNCTION_NAME]] expects number values for %s, but got a %s."
+msgid ""
+"Function [[FUNCTION_NAME]] expects number values for %s, but got a boolean."
 msgstr ""
-"Fungsi [[FUNCTION_NAME]] mengharapkan nilai nomor untuk %s, tapi mendapatkan "
-"%s."
+"Fungsi [[FUNCTION_NAME]] mengharapkan value angka untuk %s, tapi mendapatkan "
+"boolean."
+
+#. module: spreadsheet
+#. odoo-javascript
+#: code:addons/spreadsheet/static/src/o_spreadsheet/o_spreadsheet.js:0
+msgid ""
+"Function [[FUNCTION_NAME]] expects number values for %s, but got a string."
+msgstr ""
+"Fungsi [[FUNCTION_NAME]] mengharapkan value angka untuk %s, tapi mendapatkan "
+"string."
+
+#. module: spreadsheet
+#. odoo-javascript
+#: code:addons/spreadsheet/static/src/o_spreadsheet/o_spreadsheet.js:0
+msgid ""
+"Function [[FUNCTION_NAME]] expects number values for %s, but got an empty "
+"value."
+msgstr ""
+"Fungsi [[FUNCTION_NAME]] mengharapkan value angka untuk %s, tapi mendapatkan "
+"value kosong."
 
 #. module: spreadsheet
 #. odoo-javascript
@@ -7980,6 +8002,8 @@ msgid ""
 "The first and second arguments of [[FUNCTION_NAME]] must be non-empty "
 "matrices."
 msgstr ""
+"Argument pertama dan kedua dari [[FUNCTION_NAME]] harus merupakan matrix non-"
+"empty."
 
 #. module: spreadsheet
 #. odoo-javascript
@@ -8275,7 +8299,7 @@ msgstr "future_value (%s) harus selalu positif."
 #. odoo-javascript
 #: code:addons/spreadsheet/static/src/o_spreadsheet/o_spreadsheet.js:0
 msgid "The header row of a table can't be moved."
-msgstr ""
+msgstr "Baris header dari table tidak dapat dipindahkan."
 
 #. module: spreadsheet
 #. odoo-javascript
@@ -8545,7 +8569,7 @@ msgstr "Maxpoint harus merupakan bilangan"
 
 #. module: spreadsheet
 #. odoo-javascript
-#: code:addons/spreadsheet/static/src/chart/odoo_menu/figure_component.js:0
+#: code:addons/spreadsheet/static/src/helpers/helpers.js:0
 msgid ""
 "The menu linked to this chart doesn't have an corresponding action. Please "
 "link the chart to another menu."
@@ -11081,7 +11105,7 @@ msgstr "Perubahan value dari key value"
 #. odoo-javascript
 #: code:addons/spreadsheet/static/src/o_spreadsheet/o_spreadsheet.js:0
 msgid "Value for parameter %s is missing in [[FUNCTION_NAME]]."
-msgstr ""
+msgstr "Value untuk parameter %s tidak ada di [[FUNCTION_NAME]]."
 
 #. module: spreadsheet
 #. odoo-javascript
@@ -11680,6 +11704,8 @@ msgid ""
 "[[FUNCTION_NAME]] expects the provided values of %(argName)s to be a non-"
 "empty matrix."
 msgstr ""
+"[[FUNCTION_NAME]] mengharapkan value yang disediakan dari %(argName)s untuk "
+"merupakan matrix non-empty."
 
 #. module: spreadsheet
 #. odoo-javascript
@@ -11930,6 +11956,12 @@ msgstr "kemarin"
 #: code:addons/spreadsheet/static/src/o_spreadsheet/o_spreadsheet.js:0
 msgid "zero"
 msgstr "zero"
+
+#~ msgid ""
+#~ "Function [[FUNCTION_NAME]] expects number values for %s, but got a %s."
+#~ msgstr ""
+#~ "Fungsi [[FUNCTION_NAME]] mengharapkan nilai nomor untuk %s, tapi "
+#~ "mendapatkan %s."
 
 #~ msgid ""
 #~ "Value for parameter %d is missing, while the function [[FUNCTION_NAME]] "

@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import date, timedelta
+from unittest.mock import patch
 
 from odoo import Command
 from odoo.tests import tagged
@@ -414,7 +415,7 @@ class TestUi(TestPointOfSaleHttpCommon):
                 'product_ids': self.desk_organizer,
                 'reward_point_amount': 1,
                 'reward_point_mode': 'order',
-                'minimum_qty': 2,
+                'minimum_qty': 3,
             })],
             'reward_ids': [(0, 0, {
                 'reward_type': 'product',
@@ -526,6 +527,7 @@ class TestUi(TestPointOfSaleHttpCommon):
         self.env.ref('loyalty.gift_card_product_50').write({'active': True})
         # Create gift card program
         gift_card_program = self.create_programs([('arbitrary_name', 'gift_card')])['arbitrary_name']
+        gift_card_program.pos_report_print_id = self.env.ref('loyalty.report_gift_card')
         # Run the tour to create a gift card
         self.start_pos_tour("GiftCardProgramTour1")
         # Check that gift cards are created
@@ -556,6 +558,7 @@ class TestUi(TestPointOfSaleHttpCommon):
             'limit_categories': True,
             'iface_available_categ_ids': [(6, 0, [pos_category.id])],
         })
+        self.whiteboard_pen.write({'pos_categ_ids': [(6, 0, [pos_category.id])]})
         self.main_pos_config.open_ui()
 
         LoyaltyProgram = self.env['loyalty.program']
@@ -584,7 +587,6 @@ class TestUi(TestPointOfSaleHttpCommon):
         ewallet_bbb = self.env['loyalty.card'].search([('partner_id', '=', partner_bbb.id), ('program_id', '=', ewallet_program.id)])
         self.assertEqual(len(ewallet_bbb), 1)
         self.assertAlmostEqual(ewallet_bbb.points, 10, places=2)
-        self.whiteboard_pen.write({'pos_categ_ids': [(6, 0, [pos_category.id])]})
         self.desk_pad.write({'pos_categ_ids': [(6, 0, [pos_category.id])]})
         # Run the tour consume ewallets.
         self.start_pos_tour("EWalletProgramTour2")
@@ -1305,6 +1307,37 @@ class TestUi(TestPointOfSaleHttpCommon):
             'pos_config_ids': [Command.link(self.main_pos_config.id)],
         })
 
+        # Adding a third program whose first reward should not be applied during the Tour
+        # Its purpose is to confirm that the 'not ilike' logic is properly converted into 'in'
+        self.env['loyalty.program'].create({
+            'name': 'Discount on Specific Products - Product B',
+            'program_type': 'promotion',
+            'trigger': 'auto',
+            'applies_on': 'current',
+            'rule_ids': [(0, 0, {
+                'minimum_qty': 1,
+                'reward_point_amount': 2,
+            })],
+            'reward_ids': [(0, 0, {
+                'reward_type': 'discount',
+                'required_points': 1,
+                'description': '10$ on your order - Product B - Not Saleable',
+                'discount_mode': 'per_order',
+                'discount': 10,
+                'discount_applicability': 'specific',
+                'discount_product_domain': '["&", ("categ_id", "not ilike", "Saleable"), ("name", "=", "Product B")]',
+            }),
+            (0, 0, {
+                'reward_type': 'discount',
+                'required_points': 1,
+                'description': '10$ on your order - Product B - Saleable',
+                'discount_mode': 'per_order',
+                'discount': 10,
+                'discount_applicability': 'specific',
+                'discount_product_domain': '["&", ("categ_id", "ilike", "Saleable"), ("name", "=", "Product B")]',
+            })],
+            'pos_config_ids': [Command.link(self.main_pos_config.id)],
+        })
         self.main_pos_config.open_ui()
         self.start_pos_tour("PosLoyaltySpecificDiscountWithRewardProductDomainTour")
 
@@ -3130,3 +3163,20 @@ class TestUi(TestPointOfSaleHttpCommon):
             login="pos_user",
         )
         self.assertEqual(loyalty_card.points, 90)
+
+    def test_confirm_coupon_programs_one_by_one(self):
+        """
+        Sync from UI is now syncing orders one by one.
+        confirm_coupon_programs should be called 6 times in this tour (6 orders created).
+        """
+        self.create_programs([('arbitrary_name', 'gift_card')])['arbitrary_name']
+        pos_order = self.env.registry.models['pos.order']
+        sync_counter = {'count': 0}
+
+        def confirm_coupon_programs_patch(self, coupon_data):
+            sync_counter['count'] += 1
+            return super(pos_order, self).confirm_coupon_programs(coupon_data)
+
+        with patch.object(pos_order, "confirm_coupon_programs", confirm_coupon_programs_patch):
+            self.start_pos_tour("test_confirm_coupon_programs_one_by_one", login="pos_user")
+            self.assertEqual(sync_counter['count'], 6)

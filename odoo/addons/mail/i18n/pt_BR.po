@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-03 18:38+0000\n"
+"POT-Creation-Date: 2025-12-05 18:36+0000\n"
 "PO-Revision-Date: 2024-09-25 09:41+0000\n"
 "Last-Translator: Maitê Dietze, 2025\n"
 "Language-Team: Portuguese (Brazil) (https://app.transifex.com/odoo/teams/"
@@ -8930,6 +8930,12 @@ msgid "Select the content filter used for filtering GIFs"
 msgstr "Selecione o filtro de conteúdo usado para filtrar GIFs"
 
 #. module: mail
+#. odoo-python
+#: code:addons/mail/wizard/mail_activity_schedule.py:0
+msgid "Selected user '%(user)s' cannot upload documents on model '%(model)s'"
+msgstr ""
+
+#. module: mail
 #. odoo-javascript
 #: code:addons/mail/static/src/chatter/web/mail_composer_send_dropdown.xml:0
 #: code:addons/mail/static/src/core/common/composer.js:0
@@ -10605,6 +10611,12 @@ msgstr "Desmutar"
 #: code:addons/mail/static/src/discuss/core/common/notification_settings.xml:0
 msgid "Unmute Conversation"
 msgstr "Dessilenciar conversa"
+
+#. module: mail
+#. odoo-python
+#: code:addons/mail/models/mail_tracking_value.py:0
+msgid "Unnamed %(record_model_name)s (%(record_id)s)"
+msgstr ""
 
 #. module: mail
 #. odoo-javascript

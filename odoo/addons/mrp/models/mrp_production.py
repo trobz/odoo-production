@@ -379,7 +379,16 @@ class MrpProduction(models.Model):
         # Force to prefetch more than 1000 by 1000
         all_raw_moves._fields['forecast_availability'].compute_value(all_raw_moves)
         for production in productions:
-            if any(float_compare(move.forecast_availability, 0 if move.state == 'draft' else move.product_qty, precision_rounding=move.product_id.uom_id.rounding) == -1 for move in production.move_raw_ids):
+            if any(
+                move.product_id
+                and float_compare(
+                    move.forecast_availability,
+                    0 if move.state == 'draft' else move.product_qty,
+                    precision_rounding=move.product_id.uom_id.rounding,
+                ) == -1
+                for move in production.move_raw_ids
+            ):
+
                 production.components_availability = _('Not Available')
                 production.components_availability_state = 'unavailable'
             else:
@@ -629,7 +638,18 @@ class MrpProduction(models.Model):
             if production.state in ('draft', 'done', 'cancel'):
                 production.reservation_state = False
                 continue
-            relevant_move_state = production.move_raw_ids.filtered(lambda m: not (m.picked or float_is_zero(m.product_uom_qty, precision_rounding=m.product_uom.rounding)))._get_relevant_state_among_moves()
+            relevant_move_state = production.move_raw_ids.filtered(
+                lambda m: (
+                    m.product_id
+                    and not (
+                        m.picked
+                        or float_is_zero(
+                            m.product_uom_qty,
+                            precision_rounding=m.product_uom.rounding,
+                        )
+                    )
+                )
+            )._get_relevant_state_among_moves()
             # Compute reservation state according to its component's moves.
             if relevant_move_state == 'partially_available':
                 if production.workorder_ids.operation_id and production.bom_id.ready_to_produce == 'asap':
@@ -1011,6 +1031,11 @@ class MrpProduction(models.Model):
             workorders_to_delete.unlink()
         return super(MrpProduction, self).unlink()
 
+    @api.ondelete(at_uninstall=True)
+    def _unlink_if_not_done(self):
+        if any(mo.state == 'done' for mo in self):
+            raise UserError(_("You cannot delete a manufacturing order that is already done."))
+
     def copy_data(self, default=None):
         default = dict(default or {})
         vals_list = super().copy_data(default=default)
@@ -1162,7 +1187,7 @@ class MrpProduction(models.Model):
             'origin': self.product_id.partner_ref,
             'group_id': self.procurement_group_id.id,
             'propagate_cancel': self.propagate_cancel,
-            'move_dest_ids': [(4, x.id) for x in self.move_dest_ids if not byproduct_id],
+            'move_dest_ids': [(4, x.id) for x in move_dest_ids if not byproduct_id],
             'cost_share': cost_share,
         }
 
@@ -1687,6 +1712,8 @@ class MrpProduction(models.Model):
     def action_cancel(self):
         """ Cancels production order, unfinished stock moves and set procurement
         orders in exception """
+        if any(mo.state == 'done' for mo in self):
+            raise UserError(_("You cannot cancel a manufacturing order that is already done."))
         self._action_cancel()
         return True
 
@@ -2856,6 +2883,21 @@ class MrpProduction(models.Model):
             action = self.env.ref("stock.label_lot_template").report_action(lot_id.id, config=False)
             clean_action(action, self.env)
             return action
+
+    def _autoprint_mass_generated_lots(self):
+        actions = []
+        productions_to_print = self.filtered(lambda p: p.picking_type_id.auto_print_generated_mrp_lot)
+        productions_by_print_formats = productions_to_print.grouped(lambda p: p.picking_type_id.generated_mrp_lot_label_to_print)
+        for print_format in productions_to_print.picking_type_id.mapped('generated_mrp_lot_label_to_print'):
+            grouped_productions = productions_by_print_formats.get(print_format)
+            lots_to_print = grouped_productions.mapped('lot_producing_id')
+            if print_format == 'pdf':
+                action = self.env.ref("stock.action_report_lot_label").report_action(lots_to_print.ids, config=False)
+            elif print_format == 'zpl':
+                action = self.env.ref("stock.label_lot_template").report_action(lots_to_print.ids, config=False)
+            clean_action(action, self.env)
+            actions.append(action)
+        return actions
 
     def _prepare_finished_extra_vals(self):
         self.ensure_one()

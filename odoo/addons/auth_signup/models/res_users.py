@@ -250,7 +250,7 @@ class ResUsers(models.Model):
         email_template = self.env.ref('auth_signup.mail_template_data_unregistered_users', raise_if_not_found=False)
         if not email_template:
             _logger.warning("Template 'auth_signup.mail_template_data_unregistered_users' was not found. Cannot send reminder notifications.")
-            self.env['ir.cron']._commit_progress(deactivate=True)
+            self.env['ir.cron']._notify_progress(deactivate=True)
             return
         datetime_min = fields.Datetime.today() - relativedelta(days=after_days)
         datetime_max = datetime_min + relativedelta(days=1)
@@ -356,6 +356,18 @@ class ResUsers(models.Model):
                 except MailDeliveryException:
                     users_with_email.partner_id.with_context(create_user=True).signup_cancel()
         return users
+
+    def write(self, vals):
+        if 'active' in vals and not vals['active']:
+            self.partner_id.signup_cancel()
+        return super().write(vals)
+
+    @api.ondelete(at_uninstall=False)
+    def _ondelete_signup_cancel(self):
+        # Cancel pending partner signup when the user is deleted.
+        for user in self:
+            if user.partner_id:
+                user.partner_id.signup_cancel()
 
     def copy(self, default=None):
         if not default or not default.get('email'):

@@ -338,7 +338,9 @@ export class Thread extends Record {
     /** @type {integer|null} */
     highlightMessage = Record.one("Message", {
         onAdd(msg) {
-            msg.thread = this;
+            if (!msg.thread) {
+                msg.thread = this;
+            }
         },
     });
     /** @type {String|undefined} */
@@ -596,7 +598,7 @@ export class Thread extends Record {
                 return;
             }
             const otherMembers = this.channelMembers.filter((member) =>
-                member.persona.notEq(this.store.self)
+                member.notEq(this.selfMember)
             );
             if (otherMembers.length === 0) {
                 return;
