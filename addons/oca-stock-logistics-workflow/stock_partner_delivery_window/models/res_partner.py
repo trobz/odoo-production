@@ -2,11 +2,13 @@
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 
+import datetime
+
+import pytz
+
 from odoo import Command, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.osv import expression
-
-from odoo.addons.partner_tz.tools import tz_utils
 
 WORKDAYS = list(range(5))
 
@@ -91,30 +93,29 @@ class ResPartner(models.Model):
             )
         return weekdays
 
-    def is_in_delivery_window(self, date_time):
+    def is_in_delivery_window(self, date):
         """
-        Checks if provided date_time is in a delivery window for actual partner
+        Checks if provided date is in a delivery window for actual partner
 
-        :param date_time: Datetime object
+        :param date: Datetime or Date object
         :return: Boolean
         """
         self.ensure_one()
+        tz = pytz.timezone(self.tz or self.env.company.partner_id.tz or "UTC")
+        if isinstance(date, datetime.datetime):
+            date = date.astimezone(pytz.utc).astimezone(tz)
         if self.delivery_time_preference == "workdays":
-            if date_time.weekday() > 4:
+            if date.weekday() > 4:
                 return False
             return True
-        windows = self.get_delivery_windows(date_time.weekday()).get(self.id)
+        windows = self.get_delivery_windows(date.weekday()).get(self.id)
         if windows:
+            if not isinstance(date, datetime.datetime):
+                return True
             for w in windows:
                 start_time = w.get_time_window_start_time()
                 end_time = w.get_time_window_end_time()
-                if self.tz:
-                    utc_start = tz_utils.tz_to_utc_time(self.tz, start_time)
-                    utc_end = tz_utils.tz_to_utc_time(self.tz, end_time)
-                else:
-                    utc_start = start_time
-                    utc_end = end_time
-                if utc_start <= date_time.time() <= utc_end:
+                if start_time <= date.time() <= end_time:
                     return True
         return False
 
