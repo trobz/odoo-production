@@ -1,8 +1,9 @@
 [project]
 name = "odoo-addons-oca-crm"
-version = "18.0.20251007.0"
+version = "18.0.20251111.0"
 dependencies = [
     "odoo-addon-crm_claim==18.0.*",
+    "odoo-addon-crm_date_deadline_required==18.0.*",
     "odoo-addon-crm_industry==18.0.*",
     "odoo-addon-crm_lead_code==18.0.*",
     "odoo-addon-crm_lead_currency==18.0.*",
@@ -18,7 +19,10 @@ dependencies = [
     "odoo-addon-crm_phonecall_result==18.0.*",
     "odoo-addon-crm_phonecall_summary_predefined==18.0.*",
     "odoo-addon-crm_project_create==18.0.*",
+    "odoo-addon-crm_salesperson_planner==18.0.*",
     "odoo-addon-crm_security_group==18.0.*",
+    "odoo-addon-crm_stage_mail==18.0.*",
+    "odoo-addon-crm_stage_multi_team==18.0.*",
     "odoo-addon-crm_stage_probability==18.0.*",
     "odoo-addon-crm_team_parent==18.0.*",
     "odoo-addon-crm_won_restrict_per_stage==18.0.*",
