@@ -44,6 +44,7 @@ msgstr "Städer"
 #: model:ir.model.fields,field_description:base_location.field_res_city_zip__city_id
 #: model:ir.model.fields,field_description:base_location.field_res_partner__city
 #: model:ir.model.fields,field_description:base_location.field_res_users__city
+#: model_terms:ir.ui.view,arch_db:base_location.view_company_form_city
 msgid "City"
 msgstr "Stad"
 
@@ -64,6 +65,11 @@ msgstr "Färdigställande av stad"
 #: model:ir.model,name:base_location.model_res_city_zip
 msgid "City/locations completion object"
 msgstr "Kompletteringsobjekt för stad/ort"
+
+#. module: base_location
+#: model:ir.model.fields,field_description:base_location.field_res_city__code
+msgid "Code"
+msgstr ""
 
 #. module: base_location
 #: model:ir.model,name:base_location.model_res_company
