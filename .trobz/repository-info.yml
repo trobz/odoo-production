@@ -65,30 +65,30 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-partner-contact
-        branch: '18.0'
+        branch: 'merge-branch-foodcoop-18.0'
         prefix: addons/oca-partner-contact
-        repository: git@github.com:OCA/partner-contact.git
+        repository: git@github.com:trobz/partner-contact.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-stock-logistics-warehouse
-        branch: '18.0'
+        branch: 'merge-branch-foodcoop-18.0'
         prefix: addons/oca-stock-logistics-warehouse
-        repository: git@github.com:OCA/stock-logistics-warehouse.git
+        repository: git@github.com:trobz/stock-logistics-warehouse.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-product-attribute
-        branch: '18.0'
+        branch: 'merge-branch-foodcoop-18.0'
         prefix: addons/oca-product-attribute
-        repository: git@github.com:OCA/product-attribute.git
+        repository: git@github.com:trobz/product-attribute.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-product-variant
-        branch: '18.0'
+        branch: 'merge-branch-foodcoop-18.0'
         prefix: addons/oca-product-variant
-        repository: git@github.com:OCA/product-variant.git
+        repository: git@github.com:trobz/product-variant.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
@@ -107,9 +107,9 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-purchase-workflow
-        branch: '18.0'
+        branch: 'merge-branch-foodcoop-18.0'
         prefix: addons/oca-purchase-workflow
-        repository: git@github.com:OCA/purchase-workflow.git
+        repository: git@github.com:trobz/purchase-workflow.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
@@ -261,9 +261,9 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-account-analytic
-        branch: '18.0'
+        branch: 'merge-branch-foodcoop-18.0'
         prefix: addons/oca-account-analytic
-        repository: git@github.com:OCA/account-analytic.git
+        repository: git@github.com:trobz/account-analytic.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
@@ -324,9 +324,9 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-stock-logistics-workflow
-        branch: '18.0'
+        branch: 'merge-branch-foodcoop-18.0'
         prefix: addons/oca-stock-logistics-workflow
-        repository: git@github.com:OCA/stock-logistics-workflow.git
+        repository: git@github.com:trobz/stock-logistics-workflow.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
@@ -338,9 +338,9 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-stock-logistics-barcode
-        branch: '18.0'
+        branch: 'merge-branch-foodcoop-18.0'
         prefix: addons/oca-stock-logistics-barcode
-        repository: git@github.com:OCA/stock-logistics-barcode.git
+        repository: git@github.com:trobz/stock-logistics-barcode.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
@@ -372,15 +372,16 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
+        alias: oca-mail
+        branch: 'merge-branch-foodcoop-18.0'
+        prefix: addons/oca-mail
+        repository: git@github.com:trobz/mail.git
+        squash: true
+        watch-contributions: false
+    - !!python/object:emoi.config.repo.Subtree
         alias: foodcoop-project-addon
         branch: '18.0'
         prefix: project
         repository: git@gitlab.trobz.com:project/foodcoop-project-addon.git
         squash: true
         watch-contributions: false
-    - !!python/object:emoi.config.repo.Subtree
-        alias: project
-        branch: null
-        prefix: project
-        repository: null
-        squash: true
