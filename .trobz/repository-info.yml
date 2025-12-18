@@ -385,9 +385,3 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         repository: git@gitlab.trobz.com:project/foodcoop-project-addon.git
         squash: true
         watch-contributions: false
-    - !!python/object:emoi.config.repo.Subtree
-        alias: project
-        branch: null
-        prefix: project
-        repository: null
-        squash: true
