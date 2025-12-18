@@ -58,9 +58,9 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-l10n-france
-        branch: '18.0'
+        branch: merge-branch-foodcoop-18.0
         prefix: addons/oca-l10n-france
-        repository: git@github.com:OCA/l10n-france.git
+        repository: git@github.com:trobz/l10n-france.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
@@ -233,16 +233,16 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-account-invoicing
-        branch: '18.0'
+        branch: merge-branch-foodcoop-18.0
         prefix: addons/oca-account-invoicing
-        repository: git@github.com:OCA/account-invoicing.git
+        repository: git@github.com:trobz/account-invoicing.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-account-invoice-reporting
-        branch: '18.0'
+        branch: merge-branch-foodcoop-18.0
         prefix: addons/oca-account-invoice-reporting
-        repository: git@github.com:OCA/account-invoice-reporting.git
+        repository: git@github.com:trobz/account-invoice-reporting.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
@@ -254,9 +254,9 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-account-financial-tools
-        branch: '18.0'
+        branch: merge-branch-foodcoop-18.0
         prefix: addons/oca-account-financial-tools
-        repository: git@github.com:OCA/account-financial-tools.git
+        repository: git@github.com:trobz/account-financial-tools.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
@@ -268,16 +268,16 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-account-payment
-        branch: '18.0'
+        branch: merge-branch-foodcoop-18.0
         prefix: addons/oca-account-payment
-        repository: git@github.com:OCA/account-payment.git
+        repository: git@github.com:trobz/account-payment.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-account-reconcile
-        branch: '18.0'
+        branch: merge-branch-foodcoop-18.0
         prefix: addons/oca-account-reconcile
-        repository: git@github.com:OCA/account-reconcile.git
+        repository: git@github.com:trobz/account-reconcile.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
@@ -303,9 +303,9 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-bank-statement-import
-        branch: '18.0'
+        branch: merge-branch-foodcoop-18.0
         prefix: addons/oca-bank-statement-import
-        repository: git@github.com:OCA/bank-statement-import.git
+        repository: git@github.com:trobz/bank-statement-import.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
