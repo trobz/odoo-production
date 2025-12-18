@@ -33,7 +33,7 @@ addon | version | maintainers | summary
 [crm_location](crm_location/) | 18.0.1.0.1 |  | CRM location
 [crm_partner_assign](crm_partner_assign/) | 18.0.1.0.0 | <a href='https://github.com/Shide'><img src='https://github.com/Shide.png' width='32' height='32' style='border-radius:50%;' alt='Shide'/></a> | Assign a Partner to an Opportunity/Lead/Partner to indicate Partnership
 [crm_partner_required](crm_partner_required/) | 18.0.1.0.2 | <a href='https://github.com/EmilioPascual'><img src='https://github.com/EmilioPascual.png' width='32' height='32' style='border-radius:50%;' alt='EmilioPascual'/></a> <a href='https://github.com/rafaelbn'><img src='https://github.com/rafaelbn.png' width='32' height='32' style='border-radius:50%;' alt='rafaelbn'/></a> | Field partner required in the opportunity
-[crm_phonecall](crm_phonecall/) | 18.0.1.0.2 |  | CRM Phone Calls
+[crm_phonecall](crm_phonecall/) | 18.0.1.0.3 |  | CRM Phone Calls
 [crm_phonecall_planner](crm_phonecall_planner/) | 18.0.1.0.0 |  | Schedule phone calls according to some criteria
 [crm_phonecall_result](crm_phonecall_result/) | 18.0.1.0.0 |  | Adds phone call result tracking and reporting to CRM phonecalls
 [crm_phonecall_summary_predefined](crm_phonecall_summary_predefined/) | 18.0.1.0.0 |  | Allows to choose from a defined summary list
