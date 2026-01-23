@@ -198,7 +198,7 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-pos
-        branch: 'merge-branch-foodcoop-18.0'
+        branch: merge-branch-foodcoop-18.0
         prefix: addons/oca-pos
         repository: git@github.com:trobz/pos.git
         squash: true
@@ -385,3 +385,9 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         repository: git@gitlab.trobz.com:project/foodcoop-project-addon.git
         squash: true
         watch-contributions: false
+    - !!python/object:emoi.config.repo.Subtree
+        alias: project
+        branch: null
+        prefix: project
+        repository: null
+        squash: true
