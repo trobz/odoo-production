@@ -1,8 +1,14 @@
 common:
 
   modules:
-    - foodcoop18_module
-    - delivery
+    # - foodcoop18_module
+    # - delivery
+    - pos_automatic_validation
+    - pos_order_return
+    - pos_order_return_scrap
+    - pos_order_report
+    - pos_payment_terminal
+    - pos_payment_terminal_return
 
   load:
     - base
