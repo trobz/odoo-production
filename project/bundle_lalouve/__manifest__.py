@@ -7,6 +7,9 @@
     'category': 'Bundle',
     'website': 'http://www.trobz.com',
     'depends': [
+        # oca/account-invoicing
+        "partner_account_move_line",
+
         # oca/stock-logistics-workflow
         "scrap_reason_mandatory",
 
