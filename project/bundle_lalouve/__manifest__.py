@@ -7,8 +7,14 @@
     'category': 'Bundle',
     'website': 'http://www.trobz.com',
     'depends': [
+        # oca/account-analytic
+        "product_analytic_pos",
+
         # oca/account-invoicing
         "partner_account_move_line",
+
+        # oca/pos
+        "pos_product_multi_barcode",
 
         # oca/stock-logistics-workflow
         "scrap_reason_mandatory",
