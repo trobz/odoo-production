@@ -1,0 +1,7 @@
+- Sylvain LE GAL \<https://twitter.com/legalsylvain\>
+- Druidoo \<https://www.druidoo.io\>
+- Dhara Solanki \<dhara.solanki@initos.com\>
+- Iván Todorovich \<ivan.todorovich@gmail.com\>
+- Helly kapatel \<helly.kapatel@initos.com\>
+- [Trobz](https://www.trobz.com)
+  - Phan Hong Phuc \<phucph@trobz.com\>
