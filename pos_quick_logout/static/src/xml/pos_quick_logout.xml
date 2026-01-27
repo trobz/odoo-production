@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright (C) 2016-Today: La Louve (<http://www.lalouve.net/>)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<templates id="template" xml:space="preserve">
+    <t
+        t-name="pos_quick_logout.Navbar"
+        t-inherit="point_of_sale.Navbar"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//div[hasclass('oe_status')]" position="after">
+            <button
+                id="pos-quick-logout"
+                class="btn btn-light btn-lg lh-lg"
+                title="Logout"
+                t-if="showQuickLogout.isVisible"
+                t-on-click="onClickLogout"
+            >
+                <i class="fa fa-fw fa-lg fa-sign-out" />
+            </button>
+        </xpath>
+    </t>
+</templates>
