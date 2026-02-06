@@ -1,22 +1,35 @@
-
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import models
 
 
 class GeneralLedgerReportMoveLine(models.TransientModel):
-
     _inherit = 'report_general_ledger_move_line'
 
     def group_by_move_partner(self):
         """
         Group line by date, entry, account, taxes, partner, cost center
         """
-        class DataLine(object):
-            def __init__(self, date, entry, account, taxes_description,
-                    partner, label, cost_center, tags, matching_number,
-                    currency_id, debit, credit,
-                    cumul_balance, amount_currency, data_dict={}):
+
+        class DataLine:
+            def __init__(
+                self,
+                date,
+                entry,
+                account,
+                taxes_description,
+                partner,
+                label,
+                cost_center,
+                tags,
+                matching_number,
+                currency_id,
+                debit,
+                credit,
+                cumul_balance,
+                amount_currency,
+                data_dict={},
+            ):
                 self.date = date
                 self.entry = entry
                 self.account = account
@@ -55,6 +68,7 @@ class GeneralLedgerReportMoveLine(models.TransientModel):
                 h=line.matching_number,
                 i=line.currency_id,
             )
+
         data_dict = {}
 
         for line in self:
