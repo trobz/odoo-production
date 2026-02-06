@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<!-- ********************************************************************** -->
-<!-- See __manifest__.py file for Copyright and Licence Informations. -->
-<!-- ********************************************************************** -->
+<!-- Copyright (C) 2019-Today: Druidoo (<https://www.druidoo.io>)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html). -->
 <odoo>
     <record id="view_partner_property_form" model="ir.ui.view">
         <field name="name">res.partner.form.journal</field>
@@ -12,7 +11,6 @@
             <field name="property_account_payable_id" position="after">
                 <field
                     name="default_purchase_journal_id"
-                    required="supplier_rank &gt; 0"
                     invisible="supplier_rank &lt;= 0"
                     groups="account.group_account_manager"
                     context="{'default_type': 'purchase'}"
