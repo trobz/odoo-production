@@ -11,6 +11,7 @@
         "partner_account_move_line",
 
         # oca/pos
+        "pos_payment_change_account",
         "pos_product_multi_barcode",
 
         # oca/stock-logistics-workflow
