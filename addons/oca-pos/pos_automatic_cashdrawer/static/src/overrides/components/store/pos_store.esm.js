@@ -248,6 +248,7 @@ patch(PosStore.prototype, {
     _getCashlogyIP() {
         const IPAdress = this.config.iface_automatic_cashdrawer_ip_address;
         const TCPPort = this.config.iface_automatic_cashdrawer_tcp_port;
+        if (!TCPPort) return IPAdress;
         return `${IPAdress}:${TCPPort}`;
     },
 
