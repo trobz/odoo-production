@@ -1,1 +1,0 @@
-This module will set the analytic distributions for invoice lines of pos order
