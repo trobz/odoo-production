@@ -1,16 +1,17 @@
-
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     'name': 'Account Financial Reports Custom',
-    'version': '12.0.1.0.0',
+    'version': '18.0.1.0.0',
     'category': 'Reporting',
     'summary': 'OCA Financial Reports',
-    'author': 'Camptocamp SA,'
-              'initOS GmbH,'
-              'redCOR AG,'
-              'Eficent,'
-              'Odoo Community Association (OCA)',
-              'Trobz'
+    'author': (
+        'Camptocamp SA, '
+        'initOS GmbH, '
+        'redCOR AG, '
+        'Eficent, '
+        'Odoo Community Association (OCA), '
+        'Trobz'
+    ),
     "website": "https://trobz.com",
     'depends': [
         'account_financial_report'

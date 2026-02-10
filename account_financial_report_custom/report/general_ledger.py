@@ -3,95 +3,96 @@
 from odoo import models
 
 
-class GeneralLedgerReportMoveLine(models.TransientModel):
-    _inherit = 'report_general_ledger_move_line'
+class GeneralLedgerReportCustom(models.AbstractModel):
 
-    def group_by_move_partner(self):
-        """
-        Group line by date, entry, account, taxes, partner, cost center
-        """
+    _inherit = "report.account_financial_report.general_ledger"
 
-        class DataLine:
-            def __init__(
-                self,
+    def _group_move_lines_custom(self, move_lines):
+        """Group lines by date, entry, account, taxes, partner, cost center and currency.
+
+        This emulates the behaviour of the old group_by_move_partner method but on
+        the dict-based structure used in account_financial_report for Odoo 18.
+        """
+        grouped = {}
+
+        for line in move_lines:
+            date = line.get("date")
+            entry = line.get("entry") or line.get("move_name")
+            account_code = line.get("account") or line.get("account_code")
+            taxes_description = line.get("taxes_description", "")
+            partner_name = line.get("partner") or line.get("partner_name", "")
+            label = line.get("ref_label") or line.get("label") or ""
+            analytic_distribution = line.get("analytic_distribution") or {}
+            if isinstance(analytic_distribution, dict):
+                cost_center = tuple(sorted(analytic_distribution.items()))
+            else:
+                cost_center = analytic_distribution
+            matching_number = line.get("rec_name") or line.get("matching_number")
+            currency_val = line.get("currency_id")
+            if isinstance(currency_val, (list, tuple)) and currency_val:
+                currency = currency_val[0]
+            else:
+                currency = currency_val
+
+            key = (
                 date,
                 entry,
-                account,
+                account_code,
                 taxes_description,
-                partner,
+                partner_name,
                 label,
                 cost_center,
-                tags,
                 matching_number,
-                currency_id,
-                debit,
-                credit,
-                cumul_balance,
-                amount_currency,
-                data_dict={},
-            ):
-                self.date = date
-                self.entry = entry
-                self.account = account
-                self.taxes_description = taxes_description
-                self.partner = partner
-                self.label = label
-                self.cost_center = cost_center
-                self.tags = tags
-                self.matching_number = matching_number
-                self.currency_id = currency_id
-                self.debit = 0
-                self.credit = 0
-                self.cumul_balance = 0
-                self.amount_currency = 0
-                self.dict = data_dict
-
-            def __getattr__(self, attr):
-                return attr in self.dict and self.dict.__getitem__(attr) or 0.0
-
-        def get_move_ref_and_k(line):
-            # to get the reference of the account move
-            # we could use line.move_line_id.ref, but
-            # it's too costly in terms of performances;
-            # we know that line.label is built as follow:
-            # https://github.com/OCA/account-financial-reporting/blob/12.0/account_financial_report/report/general_ledger.py#L1158
-            # so we can use this trick:
-            move_ref = line.label.split(" - ")[0]
-            return move_ref, '{a}_{b}_{c}_{d}_{e}_{f}_{g}_{h}_{i}'.format(
-                a=line.date,
-                b=line.entry,
-                c=line.account,
-                d=line.taxes_description,
-                e=line.partner,
-                f=move_ref,
-                g=line.cost_center,
-                h=line.matching_number,
-                i=line.currency_id,
+                currency,
             )
 
-        data_dict = {}
-
-        for line in self:
-            move_ref, k = get_move_ref_and_k(line)
-            if k not in data_dict:
-                data_dict[k] = DataLine(
-                    line.date,
-                    line.entry,
-                    line.account,
-                    line.taxes_description,
-                    line.partner,
-                    move_ref,
-                    line.cost_center,
-                    line.tags,
-                    line.matching_number,
-                    line.currency_id,
-                    0,
-                    0,
-                    0,
-                    0,
+            if key not in grouped:
+                base = line.copy()
+                base.update(
+                    {
+                        "debit": 0.0,
+                        "credit": 0.0,
+                        "balance": 0.0,
+                    }
                 )
-            data_dict[k].debit += line.debit
-            data_dict[k].credit += line.credit
-            data_dict[k].cumul_balance += line.cumul_balance
-            data_dict[k].amount_currency += line.amount_currency
-        return data_dict.values()
+                if "bal_curr" in base:
+                    base["bal_curr"] = 0.0
+                grouped[key] = base
+
+            grouped[key]["debit"] += line.get("debit", 0.0)
+            grouped[key]["credit"] += line.get("credit", 0.0)
+            grouped[key]["balance"] += line.get("balance", 0.0)
+            if "bal_curr" in grouped[key]:
+                grouped[key]["bal_curr"] += line.get("bal_curr", 0.0)
+
+        return list(grouped.values())
+
+    def _create_general_ledger(
+        self,
+        gen_led_data,
+        accounts_data,
+        grouped_by,
+        rec_after_date_to_ids,
+        hide_account_at_0,
+    ):
+        general_ledger = super()._create_general_ledger(
+            gen_led_data,
+            accounts_data,
+            grouped_by,
+            rec_after_date_to_ids,
+            hide_account_at_0,
+        )
+
+        for account in general_ledger:
+            if "list_grouped" in account:
+                for group_item in account["list_grouped"]:
+                    if "move_lines" in group_item:
+                        group_item["move_lines"] = self._group_move_lines_custom(
+                            group_item["move_lines"]
+                        )
+            elif "move_lines" in account:
+                account["move_lines"] = self._group_move_lines_custom(
+                    account["move_lines"]
+                )
+
+        return general_ledger
