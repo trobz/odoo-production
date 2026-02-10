@@ -2,106 +2,207 @@
 <odoo>
 
     <template id="report_general_ledger_lines_inherit" inherit_id="account_financial_report.report_general_ledger_lines">
-        <xpath expr="//t[@t-foreach='account_or_partner_object.move_line_ids']" position="replace">
-            <!-- Display each lines -->
-            <t t-set="data_lines" t-value="account_or_partner_object.move_line_ids.group_by_move_partner()"/>
-            <t t-foreach="data_lines" t-as="line">
-                <!-- # lines or centralized lines -->
+        <xpath expr="//t[@t-foreach=&quot;account_or_group_item_object['move_lines']&quot;]" position="replace">
+            <t t-set="total_bal_curr" t-value="0" />
+            <t t-foreach="account_or_group_item_object['move_lines']" t-as="line">
                 <div class="act_as_row lines">
                     <!--## date-->
                     <div class="act_as_cell left">
-                        <span>
-                            <t t-esc="line.date" t-options="{'widget': 'date'}"/>
-                        </span>
+                        <t t-if="line['id']">
+                            <span
+                                t-att-res-id="line['id']"
+                                res-model="account.move.line"
+                                view-type="form"
+                            >
+                                <t
+                                    t-out="line['date']"
+                                    t-options="{'widget': 'date'}"
+                                />
+                            </span>
+                        </t>
+                        <t t-else="">
+                            <span>
+                                <t
+                                    t-out="line['date']"
+                                    t-options="{'widget': 'date'}"
+                                />
+                            </span>
+                        </t>
                     </div>
                     <!--## move-->
                     <div class="act_as_cell left">
-                        <span>
-                            <t t-raw="line.entry"/>
-                        </span>
+                        <t t-if="line['entry_id']">
+                            <span
+                                t-att-res-id="line['entry_id']"
+                                res-model="account.move"
+                                view-type="form"
+                            >
+                                <t t-out="line['entry']" />
+                            </span>
+                        </t>
                     </div>
                     <!--## journal-->
                     <div class="act_as_cell left">
-                        <span>
-                            <t t-raw="line.journal"/>
+                        <span
+                            t-att-res-id="line['journal_id']"
+                            res-model="account.journal"
+                            view-type="form"
+                        >
+                            <t
+                                t-out="o._get_atr_from_dict(line['journal_id'], journals_data, 'code')"
+                            />
                         </span>
                     </div>
                     <!--## account code-->
                     <div class="act_as_cell left">
-                        <span>
-                            <t t-raw="line.account"/>
+                        <span
+                            t-att-res-id="account['id']"
+                            res-model="account.account"
+                            view-type="form"
+                        >
+                            <t t-out="account['code']" />
                         </span>
                     </div>
                     <!--## taxes-->
-                    <div class="act_as_cell left"><span t-raw="line.taxes_description"/></div>
+                    <div class="act_as_cell left">
+                        <t t-if="taxes_data and line['tax_ids']">
+                            <t t-foreach="line['tax_ids']" t-as="tax_id">
+                                <span
+                                    t-out="o._get_atr_from_dict(tax_id, taxes_data, 'tax_name')"
+                                />
+                            </t>
+                        </t>
+                        <t t-if="line['tax_line_id']">
+                            <span t-out="line['tax_line_id'][1]" />
+                        </t>
+                    </div>
                     <!--## partner-->
                     <div class="act_as_cell left">
-                        <span t-if="line.partner">
-                            <t t-raw="line.partner"/>
-                        </span>
+                        <t t-if="line['partner_id']">
+                            <span
+                                t-att-res-id="line['partner_id']"
+                                res-model="res.partner"
+                                view-type="form"
+                            >
+                                <t t-out="line['partner_name']" />
+                            </span>
+                        </t>
                     </div>
                     <!--## ref - label-->
                     <div class="act_as_cell left">
-                        <span>
-                            <t t-raw="line.label"/>
-                        </span>
+                        <t t-if="line['id']">
+                            <span
+                                t-att-res-id="line['id']"
+                                res-model="account.move.line"
+                                view-type="form"
+                            >
+                                <t
+                                    t-out="limit_text(line['ref_label'], 'label_text_limit')"
+                                />
+                            </span>
+                        </t>
+                        <t t-else="">
+                            <span>
+                                <t
+                                    t-out="limit_text(line['ref_label'], 'label_text_limit')"
+                                />
+                            </span>
+                        </t>
                     </div>
                     <!--## cost_center-->
                     <t t-if="show_cost_center">
                         <div class="act_as_cell left">
-                            <span t-if="line.cost_center">
-                                <t t-raw="line.cost_center"/>
-                            </span>
+                            <t
+                                t-foreach="line['analytic_distribution']"
+                                t-as="analytic_id"
+                            >
+                                <div>
+                                    <t
+                                        t-foreach="analytic_id.split(',')"
+                                        t-as="analytic_account_id"
+                                    >
+                                        <span
+                                            t-att-res-id="analytic_account_id"
+                                            res-model="account.analytic.account"
+                                            view-type="form"
+                                        >
+                                            <t
+                                                t-out="o._get_atr_from_dict(int(analytic_account_id), analytic_data, 'name')"
+                                            />
+                                            <t
+                                                t-if="int(line['analytic_distribution'][analytic_id]) &lt; 100"
+                                            >
+                                                <t
+                                                    t-out="int(line['analytic_distribution'][analytic_id])"
+                                                />%
+                                            </t>
+                                        </span>
+                                    </t>
+                                </div>
+                            </t>
                         </div>
                     </t>
+                    <!--## analytic tags-->
                     <t t-if="show_analytic_tags">
-                        <!--## analytic tags-->
-                        <div class="act_as_cell left"><span t-raw="line.tags"/></div>
+                        <div class="act_as_cell left">
+                            <t t-if="line['tag_ids']">
+                                <t t-foreach="line['tag_ids']" t-as="tag_id">
+                                    <span
+                                        t-out="o._get_atr_from_dict(tag_id, tags_data, 'name')"
+                                    />
+                                </t>
+                            </t>
+                        </div>
                     </t>
                     <!--## matching_number-->
                     <div class="act_as_cell">
-                        <span t-if="line.matching_number">
-                            <t t-raw="line.matching_number"/>
+                        <span t-if="line['rec_id']">
+                            <t t-out="line['rec_name']" />
                         </span>
                     </div>
                     <!--## debit-->
                     <div class="act_as_cell amount">
                         <span>
-                            <t t-raw="line.debit" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            <t
+                                t-out="line['debit']"
+                                t-options="{'widget': 'monetary', 'display_currency': company_currency}"
+                            />
                         </span>
                     </div>
                     <!--## credit-->
                     <div class="act_as_cell amount">
                         <span>
-                            <t t-raw="line.credit" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            <t
+                                t-out="line['credit']"
+                                t-options="{'widget': 'monetary', 'display_currency': company_currency}"
+                            />
                         </span>
                     </div>
-
                     <!--## balance cumulated-->
                     <div class="act_as_cell amount">
                         <span>
-                            <t t-raw="line.cumul_balance" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                            <t
+                                t-out="line['balance']"
+                                t-options="{'widget': 'monetary', 'display_currency': company_currency}"
+                            />
                         </span>
                     </div>
                     <t t-if="foreign_currency">
-                        <t t-if="line.currency_id.id">
-                            <!--## currency_name-->
-                            <div class="act_as_cell amount" style="width: 2.08%;">
-                                <span t-esc="line.currency_id.display_name"/>
-                            </div>
-                            <!--## amount_currency-->
-                            <div class="act_as_cell amount" style="width: 5.19%;">
+                        <div class="act_as_cell amount" style="width: 3.63%;">
+                            <t t-if="line['currency_id']">
+                                <span t-out="line['currency_id'][1]" />
+                            </t>
+                        </div>
+                        <div class="act_as_cell amount" style="width: 3.63%;">
+                            <t t-if="line['currency_id']">
                                 <span>
-                                    <t t-raw="line.amount_currency" t-options="{'widget': 'monetary', 'display_currency': line.currency_id}"/>
+                                    <t
+                                        t-out="line['bal_curr']"
+                                        t-options="{'widget': 'monetary', 'display_currency': company_currency}"
+                                    />
                                 </span>
-                            </div>
-                        </t>
-                        <t t-if="not line.currency_id.id">
-                            <!--## currency_name-->
-                            <div class="act_as_cell amount" style="width: 2.08%;"/>
-                            <!--## amount_currency-->
-                            <div class="act_as_cell amount" style="width: 5.19%;"/>
-                        </t>
+                            </t>
+                        </div>
                     </t>
                 </div>
             </t>
