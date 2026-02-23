@@ -380,7 +380,7 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: foodcoop
-        branch: '18.0_dev'
+        branch: 18.0_dev
         prefix: addons/foodcoop
         repository: git@github.com:trobz/odoo-production.git
         squash: true
