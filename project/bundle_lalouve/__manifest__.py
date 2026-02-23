@@ -12,6 +12,7 @@
 
         # oca/pos
         "pos_payment_change_account",
+        "pos_payment_credit_amount",
         "pos_product_multi_barcode",
 
         # oca/stock-logistics-workflow
