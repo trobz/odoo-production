@@ -11,9 +11,11 @@
         "point_of_sale",
     ],
     "data": [
-        "data/payment_method_data.xml",
         "views/payment_method_view.xml",
         "views/res_partner_view.xml",
+    ],
+    "demo": [
+        "demo/pos_payment_credit_demo.xml",
     ],
     "assets": {
         "point_of_sale._assets_pos": [
