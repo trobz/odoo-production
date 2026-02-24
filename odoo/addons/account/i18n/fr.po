@@ -12,15 +12,15 @@
 # Camille Dantinne <cmd@odoo.com>, 2025
 # Wil Odoo, 2025
 # Manon Rondou, 2025
-# "Manon Rondou (ronm)" <ronm@odoo.com>, 2025.
+# "Manon Rondou (ronm)" <ronm@odoo.com>, 2025, 2026.
 # Rémi CAZENAVE <remi@le-filament.com>, 2025.
-# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:36+0000\n"
-"PO-Revision-Date: 2025-12-06 17:08+0000\n"
+"POT-Creation-Date: 2026-02-20 18:37+0000\n"
+"PO-Revision-Date: 2026-02-21 18:01+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-18/account/"
 "fr/>\n"
@@ -28,8 +28,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
-"1000000 == 0) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : "
+"((n != 0 && n % 1000000 == 0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.14.3\n"
 
 #. module: account
@@ -77,6 +77,14 @@ msgstr ""
 "        par ex. 180 / (1 - 10%) = 200 (prix exprimé HT)\n"
 "        par ex. 200 * (1 - 10%) = 180 (prix exprimé TTC)\n"
 "        "
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_move_send.py:0
+msgid ""
+"\n"
+"Please contact your administrator."
+msgstr ""
 
 #. module: account
 #. odoo-python
@@ -1950,6 +1958,8 @@ msgid ""
 "Account Code Mapping cannot be accessed directly. It is designed to be used "
 "only through the Chart of Accounts."
 msgstr ""
+"La correspondance des codes comptables n’est pas accessible directement. "
+"Elle est conçue pour être utilisée uniquement via le plan comptable."
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_report_line__account_codes_formula
@@ -3414,7 +3424,7 @@ msgstr "Pièces jointes"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_send_wizard__attachments_not_supported
 msgid "Attachments Not Supported"
-msgstr ""
+msgstr "Pièces jointes non prises en charge"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_mail_mail__account_audit_log_activated
@@ -4618,6 +4628,8 @@ msgid "Chart of accounts set!"
 msgstr "Plan comptable défini !"
 
 #. module: account
+#. odoo-python
+#: code:addons/account/models/account_move_send.py:0
 #: model_terms:ir.ui.view,arch_db:account.report_hash_integrity
 msgid "Check"
 msgstr "Contrôle"
@@ -6625,7 +6637,7 @@ msgstr "Afficher le montant"
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_send_wizard__display_attachments_widget
 msgid "Display Attachments Widget"
-msgstr ""
+msgstr "Afficher le widget des pièces jointes"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_payment_term_line__display_days_next_month
@@ -9275,6 +9287,11 @@ msgid "Invoice Outstanding Credits Debits Widget"
 msgstr "Widget Débits Crédits En suspens Facture"
 
 #. module: account
+#: model:ir.actions.report,name:account.account_invoices
+msgid "Invoice PDF"
+msgstr "Facture PDF"
+
+#. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line__invoice_partner_display_name
 #: model:ir.model.fields,field_description:account.field_account_move__invoice_partner_display_name
 msgid "Invoice Partner Display Name"
@@ -9950,6 +9967,7 @@ msgstr "Journal :"
 #: model:ir.actions.act_window,name:account.action_account_journal_form
 #: model:ir.model.fields,field_description:account.field_account_report__filter_journals
 #: model:ir.ui.menu,name:account.menu_action_account_journal_form
+#: model_terms:ir.ui.view,arch_db:account.view_account_move_line_filter
 msgid "Journals"
 msgstr "Journaux"
 
@@ -11985,7 +12003,6 @@ msgstr "PAY001"
 #. module: account
 #. odoo-python
 #: code:addons/account/models/account_move.py:0
-#: model:ir.actions.report,name:account.account_invoices
 msgid "PDF"
 msgstr "PDF"
 
@@ -12360,7 +12377,7 @@ msgstr "Mode de paiement"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_payment_search
 msgid "Payment Method Line"
-msgstr "Lignes de mode de paiement"
+msgstr "Ligne de mode de paiement"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_payment_method_line_tree
@@ -15818,6 +15835,14 @@ msgstr ""
 "associées."
 
 #. module: account
+#. odoo-python
+#: code:addons/account/models/account_move.py:0
+msgid ""
+"The company bank account linked to this invoice is not trusted, please "
+"double-check and trust it before confirming, or remove it"
+msgstr ""
+
+#. module: account
 #: model:ir.model.fields,help:account.field_account_tax_repartition_line__company_id
 msgid "The company this distribution line belongs to."
 msgstr "La société à laquelle appartient cette ligne de distribution."
@@ -15981,6 +16006,16 @@ msgstr "La pièce comptable %(name)s (id %(id)s) doit être en brouillon."
 #: model:ir.model.fields,help:account.field_account_move__secured
 msgid "The entry is secured with an inalterable hash."
 msgstr "La pièce comptable est sécurisée par un hachage inaltérable."
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_move.py:0
+msgid ""
+"The entry is using accounts (%(accounts_codes_names)s) from a different "
+"company."
+msgstr ""
+"Cette écriture utilise des comptes (%(accounts_codes_names)s) provenant "
+"d’une autre société."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_product_category__property_account_expense_categ_id
@@ -16474,6 +16509,14 @@ msgstr "Le solde courant (%s) ne correspond pas au solde de clôture précisé."
 
 #. module: account
 #. odoo-python
+#: code:addons/account/models/account_move_send.py:0
+msgid ""
+"The scheduled action 'Send Invoices automatically' is archived. You won't be "
+"able to send invoices in batch."
+msgstr ""
+
+#. module: account
+#. odoo-python
 #: code:addons/account/models/account_report.py:0
 msgid "The sections defined on a report cannot have sections themselves."
 msgstr ""
@@ -16849,18 +16892,6 @@ msgstr "Cette semaine"
 #: model:ir.model.fields.selection,name:account.selection__account_report__default_opening_date_filter__this_year
 msgid "This Year"
 msgstr "Cette année"
-
-#. module: account
-#. odoo-python
-#: code:addons/account/models/account_account.py:0
-msgid ""
-"This account is configured in %(journal_names)s journal(s) (ids %"
-"(journal_ids)s) as payment debit or credit account. This means that this "
-"account's type should be reconcilable."
-msgstr ""
-"Ce compte est configuré sur le(s) journal(aux) %(journal_names)s (ids %"
-"(journal_ids)s) comme compte débiteur ou créditeur de paiement. Cela "
-"signifie que le type de ce compte devrait pouvoir être lettré."
 
 #. module: account
 #. odoo-python
@@ -18130,7 +18161,7 @@ msgstr "Validé"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.validate_account_move_view
 msgid "Validating"
-msgstr "En cours de validation"
+msgstr "Valider"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_payment_term_line__value
@@ -18840,6 +18871,15 @@ msgstr ""
 
 #. module: account
 #. odoo-python
+#: code:addons/account/models/account_payment.py:0
+msgid ""
+"You cannot change the amount of a payment with multiple liquidity lines."
+msgstr ""
+"Vous ne pouvez pas modifier le montant d'un paiement comportant plusieurs "
+"lignes de liquidité."
+
+#. module: account
+#. odoo-python
 #: code:addons/account/models/company.py:0
 msgid ""
 "You cannot change the currency of the company since some journal items "
@@ -19129,6 +19169,12 @@ msgstr ""
 
 #. module: account
 #. odoo-python
+#: code:addons/account/models/account_move.py:0
+msgid "You cannot post an entry with an archived analytic account: %s"
+msgstr ""
+
+#. module: account
+#. odoo-python
 #: code:addons/account/models/res_currency.py:0
 msgid ""
 "You cannot reduce the number of decimal places of a currency which has "
@@ -19234,9 +19280,11 @@ msgstr ""
 #. module: account
 #. odoo-python
 #: code:addons/account/models/account_move.py:0
-msgid "You cannot switch the type of a document which has been posted once."
+msgid ""
+"You cannot switch the type of a document with an existing sequence number."
 msgstr ""
-"Vous ne pouvez pas changer le type d'une pièce qui a déjà été comptabilisée."
+"Vous ne pouvez pas modifier le type d'un document dont le numéro de séquence "
+"existe déjà."
 
 #. module: account
 #. odoo-python
@@ -19358,6 +19406,16 @@ msgstr ""
 
 #. module: account
 #. odoo-python
+#: code:addons/account/models/account_journal_dashboard.py:0
+msgid ""
+"You may only use samples in demo mode, try uploading one of your invoices "
+"instead."
+msgstr ""
+"Vous ne pouvez utiliser des exemples qu’en mode démo. Essayez plutôt de "
+"télécharger l’une de vos factures."
+
+#. module: account
+#. odoo-python
 #: code:addons/account/wizard/account_merge_wizard.py:0
 msgid "You must select at least 2 accounts."
 msgstr "Vous devez sélectionner au moins 2 comptes."
@@ -19475,7 +19533,7 @@ msgstr "alias"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.validate_account_move_view
 msgid "amounts for"
-msgstr "montants pour"
+msgstr "avec des montants relatifs à"
 
 #. module: account
 #. odoo-javascript
@@ -19648,7 +19706,7 @@ msgstr "tout le monde"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.validate_account_move_view
 msgid "fall outside the typical range."
-msgstr "se situent en dehors de la place habituelle."
+msgstr "se situent en dehors de la plage habituelle."
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_payment_register_form
@@ -19935,8 +19993,19 @@ msgstr ""
 "{{ object.company_id.name }} Reçu de paiement (Ref {{ object.name or 'n/"
 "a' }})"
 
-#~ msgid "Invoice PDF"
-#~ msgstr "Facture PDF"
+#~ msgid "You cannot switch the type of a document which has been posted once."
+#~ msgstr ""
+#~ "Vous ne pouvez pas changer le type d'une pièce qui a déjà été "
+#~ "comptabilisée."
+
+#~ msgid ""
+#~ "This account is configured in %(journal_names)s journal(s) (ids %"
+#~ "(journal_ids)s) as payment debit or credit account. This means that this "
+#~ "account's type should be reconcilable."
+#~ msgstr ""
+#~ "Ce compte est configuré sur le(s) journal(aux) %(journal_names)s (ids %"
+#~ "(journal_ids)s) comme compte débiteur ou créditeur de paiement. Cela "
+#~ "signifie que le type de ce compte devrait pouvoir être lettré."
 
 #~ msgid "This setting cannot be changed after an invoice is created."
 #~ msgstr ""

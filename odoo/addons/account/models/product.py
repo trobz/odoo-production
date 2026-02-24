@@ -61,9 +61,22 @@ class ProductTemplate(models.Model):
 
     def _get_product_accounts(self):
         return {
-            'income': self.property_account_income_id or self.categ_id.property_account_income_categ_id,
-            'expense': self.property_account_expense_id or self.categ_id.property_account_expense_categ_id
+            'income': self.property_account_income_id or self._get_category_account('property_account_income_categ_id'),
+            'expense': self.property_account_expense_id or self._get_category_account('property_account_expense_categ_id')
         }
+
+    def _get_category_account(self, field_name):
+        """
+        Return the first account defined on the product category hierarchy
+        for the given field.
+        """
+        categ = self.categ_id
+        while categ:
+            account = categ[field_name]
+            if account:
+                return account
+            categ = categ.parent_id
+        return self.env['account.account']
 
     def _get_asset_accounts(self):
         res = {}
@@ -309,14 +322,16 @@ class ProductProduct(models.Model):
             [*self.env['res.partner']._check_company_domain(company), ('company_id', '!=', False)],
             [('company_id', '=', False)],
         ):
-            products = self.env['product.product'].search(
-                expression.AND([
-                    expression.OR(domains),
-                    company_domain,
-                    extra_domain or [],
-                ]),
-            )
             for domain in domains:
-                if products_by_domain := products.filtered_domain(domain):
-                    return products_by_domain[0]
+                product = self.env['product.product'].search(
+                    expression.AND([
+                        domain,
+                        company_domain,
+                        extra_domain or [],
+                    ]),
+                    limit=1
+                )
+                # We need a single product. Exit early if one is found (implements the priority logic).
+                if product:
+                    return product
         return self.env['product.product']

@@ -39,6 +39,9 @@ class ResPartner(models.Model):
 
     @api.onchange('invoice_edi_format', 'peppol_endpoint', 'peppol_eas')
     def _onchange_verify_peppol_status(self):
+        if not self.commercial_partner_id:
+            # avoid issue when commercial_partner_id is on the view
+            self._compute_commercial_partner()
         self.button_account_peppol_check_partner_endpoint()
 
     # -------------------------------------------------------------------------
@@ -147,13 +150,13 @@ class ResPartner(models.Model):
             if not service_href:
                 return True
 
-            access_point_contact = True
+            access_point_description = True
             with contextlib.suppress(requests.exceptions.RequestException, etree.XMLSyntaxError):
                 response = requests.get(service_href, timeout=TIMEOUT)
                 if response.status_code == 200:
                     access_point_info = etree.fromstring(response.content)
-                    access_point_contact = access_point_info.findtext('.//{*}TechnicalContactUrl') or access_point_info.findtext('.//{*}TechnicalInformationUrl')
-            return access_point_contact
+                    access_point_description = access_point_info.findtext('.//{*}ServiceDescription')
+            return access_point_description
 
         return True
 
@@ -191,7 +194,11 @@ class ResPartner(models.Model):
         return decoded_response.get('result')
 
     def _check_document_type_support(self, participant_info, ubl_cii_format):
-        expected_customization_id = self.env['account.edi.xml.ubl_21']._get_customization_ids()[ubl_cii_format]
+        if self.env.context.get('check_self_billing_support'):
+            # This context key can be `True` only if the `account_peppol_selfbilling` module is installed.
+            expected_customization_id = self.env['account.edi.xml.ubl_bis3']._get_selfbilling_customization_ids()[ubl_cii_format]
+        else:
+            expected_customization_id = self.env['account.edi.xml.ubl_21']._get_customization_ids()[ubl_cii_format]
         if isinstance(participant_info, dict):
             return any(expected_customization_id in (service.get('document_id') or '') for service in participant_info.get('services', []))
 

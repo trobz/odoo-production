@@ -27,13 +27,14 @@
 # Tamás Németh <ntomasz81@gmail.com>, 2025
 # Krisztián Juhász <juhasz.krisztian@uzletimegoldasok.hu>, 2025.
 # Tamás Dombos <tdombos@gmail.com>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:36+0000\n"
-"PO-Revision-Date: 2025-08-22 22:21+0000\n"
-"Last-Translator: Tamás Dombos <tdombos@gmail.com>\n"
+"POT-Creation-Date: 2026-02-20 18:37+0000\n"
+"PO-Revision-Date: 2026-02-14 18:01+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-18/"
 "account/hu/>\n"
 "Language: hu\n"
@@ -41,7 +42,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_journal__type
@@ -84,6 +85,14 @@ msgstr ""
 "- Százalékos adót tartalmaz: Az adó összege az ár valamekkora hányada:\n"
 "    pl.: 180 / (1 - 10%) = 200 (az ár nem tartalmazza az adót)\n"
 "    pl.: 200 * (1 - 10%) = 180 (az ár tartalmazza az adót)"
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_move_send.py:0
+msgid ""
+"\n"
+"Please contact your administrator."
+msgstr ""
 
 #. module: account
 #. odoo-python
@@ -1488,7 +1497,7 @@ msgstr "<strong class=\"mr16\">Részösszeg</strong>"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document
 msgid "<strong>Credit Note Date</strong>"
-msgstr "<strong>Jóváírás Értesítés Dátum</strong>"
+msgstr "<strong>Jóváírás dátuma</strong>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document
@@ -1503,7 +1512,7 @@ msgstr "<strong>Dátum</strong>"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document
 msgid "<strong>Delivery Date</strong>"
-msgstr "<strong>Szállítási Dátum</strong>"
+msgstr "<strong>Teljesítési Dátum</strong>"
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.bill_preview
@@ -4568,6 +4577,8 @@ msgid "Chart of accounts set!"
 msgstr "Számlakeret beállítva!"
 
 #. module: account
+#. odoo-python
+#: code:addons/account/models/account_move_send.py:0
 #: model_terms:ir.ui.view,arch_db:account.report_hash_integrity
 msgid "Check"
 msgstr "Ellenőrzés"
@@ -9183,6 +9194,11 @@ msgid "Invoice Outstanding Credits Debits Widget"
 msgstr "Számla Kintlévőségek Hitelek Terhelések Widget"
 
 #. module: account
+#: model:ir.actions.report,name:account.account_invoices
+msgid "Invoice PDF"
+msgstr "Számla PDF"
+
+#. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line__invoice_partner_display_name
 #: model:ir.model.fields,field_description:account.field_account_move__invoice_partner_display_name
 msgid "Invoice Partner Display Name"
@@ -9860,6 +9876,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:account.action_account_journal_form
 #: model:ir.model.fields,field_description:account.field_account_report__filter_journals
 #: model:ir.ui.menu,name:account.menu_action_account_journal_form
+#: model_terms:ir.ui.view,arch_db:account.view_account_move_line_filter
 msgid "Journals"
 msgstr "Naplók"
 
@@ -11861,7 +11878,6 @@ msgstr "PAY001"
 #. module: account
 #. odoo-python
 #: code:addons/account/models/account_move.py:0
-#: model:ir.actions.report,name:account.account_invoices
 msgid "PDF"
 msgstr "PDF"
 
@@ -13493,7 +13509,7 @@ msgstr "Reverzálása"
 #. odoo-python
 #: code:addons/account/wizard/account_move_reversal.py:0
 msgid "Reversal of: %(move_name)s, %(reason)s"
-msgstr ""
+msgstr "Jóváírva: %(move_name)s, %(reason)s"
 
 #. module: account
 #. odoo-python
@@ -15661,6 +15677,14 @@ msgid ""
 msgstr ""
 
 #. module: account
+#. odoo-python
+#: code:addons/account/models/account_move.py:0
+msgid ""
+"The company bank account linked to this invoice is not trusted, please "
+"double-check and trust it before confirming, or remove it"
+msgstr ""
+
+#. module: account
 #: model:ir.model.fields,help:account.field_account_tax_repartition_line__company_id
 msgid "The company this distribution line belongs to."
 msgstr "A cég, amelyhez ez a terjesztési vonal tartozik"
@@ -15819,6 +15843,14 @@ msgstr "A(z) %(name)s (id %(id)s) bejegyzésnek vázlatban kell lennie"
 #: model:ir.model.fields,help:account.field_account_move__secured
 msgid "The entry is secured with an inalterable hash."
 msgstr "A bejegyzés egy megváltoztathatatlan hash-sel van biztosítva"
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_move.py:0
+msgid ""
+"The entry is using accounts (%(accounts_codes_names)s) from a different "
+"company."
+msgstr ""
 
 #. module: account
 #: model:ir.model.fields,help:account.field_product_category__property_account_expense_categ_id
@@ -16262,6 +16294,14 @@ msgstr "A folyó egyenleg (%s) nem egyezik meg a megadott záró egyenleggel"
 
 #. module: account
 #. odoo-python
+#: code:addons/account/models/account_move_send.py:0
+msgid ""
+"The scheduled action 'Send Invoices automatically' is archived. You won't be "
+"able to send invoices in batch."
+msgstr ""
+
+#. module: account
+#. odoo-python
 #: code:addons/account/models/account_report.py:0
 msgid "The sections defined on a report cannot have sections themselves."
 msgstr ""
@@ -16620,18 +16660,6 @@ msgstr "Ezen a héten"
 #: model:ir.model.fields.selection,name:account.selection__account_report__default_opening_date_filter__this_year
 msgid "This Year"
 msgstr "Tárgyév"
-
-#. module: account
-#. odoo-python
-#: code:addons/account/models/account_account.py:0
-msgid ""
-"This account is configured in %(journal_names)s journal(s) (ids %"
-"(journal_ids)s) as payment debit or credit account. This means that this "
-"account's type should be reconcilable."
-msgstr ""
-"Ez a fiók a %(journal_names)s naplóban (azonosítók: %(journal_ids)s) van "
-"beállítva mint kifizetési terhelési vagy jóváírási fiók. Ez azt jelenti, "
-"hogy ennek a fióknak a típusa összeegyeztethető kell, hogy legyen"
 
 #. module: account
 #. odoo-python
@@ -17196,24 +17224,26 @@ msgstr "Összes aláírt"
 msgid ""
 "Total amount due (including sales orders and this document): %(total_credit)s"
 msgstr ""
+"Fizetendő összesen (vevői rendelésekkel plusz jelen dokumentummal): %"
+"(total_credit)s"
 
 #. module: account
 #. odoo-python
 #: code:addons/account/models/account_move.py:0
 msgid "Total amount due (including sales orders): %(total_credit)s"
-msgstr ""
+msgstr "Fizetendő összesen (vevői rendelésekkel): %(total_credit)s"
 
 #. module: account
 #. odoo-python
 #: code:addons/account/models/account_move.py:0
 msgid "Total amount due (including this document): %(total_credit)s"
-msgstr ""
+msgstr "Fizetendő összesen (jelen dokumentummal): %(total_credit)s"
 
 #. module: account
 #. odoo-python
 #: code:addons/account/models/account_move.py:0
 msgid "Total amount due: %(total_credit)s"
-msgstr ""
+msgstr "Fizetendő összesen: %(total_credit)s"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_automatic_entry_wizard__total_amount
@@ -18565,6 +18595,13 @@ msgstr ""
 
 #. module: account
 #. odoo-python
+#: code:addons/account/models/account_payment.py:0
+msgid ""
+"You cannot change the amount of a payment with multiple liquidity lines."
+msgstr ""
+
+#. module: account
+#. odoo-python
 #: code:addons/account/models/company.py:0
 msgid ""
 "You cannot change the currency of the company since some journal items "
@@ -18831,6 +18868,12 @@ msgstr "Nem tudsz bejegyzést közzétenni egy archivált naplóban (%(journal)s
 
 #. module: account
 #. odoo-python
+#: code:addons/account/models/account_move.py:0
+msgid "You cannot post an entry with an archived analytic account: %s"
+msgstr ""
+
+#. module: account
+#. odoo-python
 #: code:addons/account/models/res_currency.py:0
 msgid ""
 "You cannot reduce the number of decimal places of a currency which has "
@@ -18932,10 +18975,9 @@ msgstr ""
 #. module: account
 #. odoo-python
 #: code:addons/account/models/account_move.py:0
-msgid "You cannot switch the type of a document which has been posted once."
+msgid ""
+"You cannot switch the type of a document with an existing sequence number."
 msgstr ""
-"Nem lehet megváltoztatni egy olyan dokumentum típusát, amelyet egyszer már "
-"közzétettek."
 
 #. module: account
 #. odoo-python
@@ -19050,6 +19092,14 @@ msgstr ""
 "A 'Valuta nyereség vagy veszteség naplót' a vállalati beállításokban kell "
 "konfigurálnod, hogy automatikusan kezeld a valutaárfolyamok közötti "
 "eltérésekhez kapcsolódó könyvelési tételek rögzítését"
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_journal_dashboard.py:0
+msgid ""
+"You may only use samples in demo mode, try uploading one of your invoices "
+"instead."
+msgstr ""
 
 #. module: account
 #. odoo-python
@@ -19554,7 +19604,7 @@ msgstr ""
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document
 msgid "units"
-msgstr "egységek"
+msgstr "db"
 
 #. module: account
 #. odoo-javascript
@@ -19629,8 +19679,19 @@ msgstr ""
 "{{ object.company_id.name }} Fizetési bizonylat (Hivatkozás {{ object.name "
 "or 'n/a' }})"
 
-#~ msgid "Invoice PDF"
-#~ msgstr "Számla PDF"
+#~ msgid "You cannot switch the type of a document which has been posted once."
+#~ msgstr ""
+#~ "Nem lehet megváltoztatni egy olyan dokumentum típusát, amelyet egyszer "
+#~ "már közzétettek."
+
+#~ msgid ""
+#~ "This account is configured in %(journal_names)s journal(s) (ids %"
+#~ "(journal_ids)s) as payment debit or credit account. This means that this "
+#~ "account's type should be reconcilable."
+#~ msgstr ""
+#~ "Ez a fiók a %(journal_names)s naplóban (azonosítók: %(journal_ids)s) van "
+#~ "beállítva mint kifizetési terhelési vagy jóváírási fiók. Ez azt jelenti, "
+#~ "hogy ennek a fióknak a típusa összeegyeztethető kell, hogy legyen"
 
 #~ msgid "This setting cannot be changed after an invoice is created."
 #~ msgstr "Ez a beállítás nem módosítható, miután egy számla létrejött."

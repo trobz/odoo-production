@@ -191,3 +191,40 @@ class TestUi(TestPosHrHttpCommon):
             "test_maximum_closing_difference",
             login="pos_admin"
         )
+
+    def test_scan_employee_barcode_with_pos_hr_disabled(self):
+        """
+        Ensure that scanning an employee barcode when module_pos_hr is disabled does not
+        trigger any traceback.
+        """
+        self.main_pos_config.module_pos_hr = False
+        self.main_pos_config.with_user(self.pos_admin).open_ui()
+
+        self.start_tour(
+            "/pos/ui?config_id=%d" % self.main_pos_config.id,
+            "test_scan_employee_barcode_with_pos_hr_disabled",
+            login="pos_admin"
+        )
+
+    def test_cost_and_margin_visibility(self):
+        self.product_a.available_in_pos = True
+        self.main_pos_config.write({
+            'is_margins_costs_accessible_to_every_user': True,
+        })
+        self.main_pos_config.with_user(self.pos_admin).open_ui()
+
+        self.start_tour(
+            "/pos/ui?config_id=%d" % self.main_pos_config.id,
+            "test_cost_and_margin_visibility",
+            login="pos_admin",
+        )
+
+        self.main_pos_config.write({
+            'is_margins_costs_accessible_to_every_user': False,
+        })
+
+        self.start_tour(
+            "/pos/ui?config_id=%d" % self.main_pos_config.id,
+            "test_cost_and_margin_visibility_no_access",
+            login="pos_admin",
+        )

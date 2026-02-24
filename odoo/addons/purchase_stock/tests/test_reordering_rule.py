@@ -3,9 +3,10 @@
 
 from datetime import datetime as dt, time
 from datetime import timedelta as td
+from dateutil.relativedelta import relativedelta
 from json import loads
 
-from odoo import SUPERUSER_ID, Command
+from odoo import SUPERUSER_ID, Command, fields
 from odoo.fields import Date
 from odoo.tests import Form, tagged, freeze_time
 from odoo.tests.common import TransactionCase
@@ -790,7 +791,7 @@ class TestReorderingRule(TransactionCase):
         orderpoint.with_user(french_user).action_replenish()
         self.assertRecordValues(po_line, [{"name": "[A] produit en français", "product_qty": 9.0}])
         self.assertEqual(len(po_line.order_id.order_line), 1)
-        self.assertRecordValues(po_line.move_dest_ids, [{"product_uom_qty": 9.0}])
+        self.assertRecordValues(po_line.move_dest_ids, [{"product_uom_qty": 5.0}, {"product_uom_qty": 4.0}])
         orderpoint.product_min_qty = 10.0
         orderpoint.product_max_qty = 20.0
         # run the scheduler to test the use case where the user is always the SUPERUSER
@@ -801,7 +802,8 @@ class TestReorderingRule(TransactionCase):
         self.assertEqual(len(po_line.order_id.order_line), 1)
         # the moves_dest_ids are not expected to be merged since the scheduler is excuted by robodoo in en_US rather fr_FR
         self.assertRecordValues(po_line.move_dest_ids.sorted('product_uom_qty'), [
-            {"description_picking": "produit en français", "product_uom_qty": 9.0},
+            {"description_picking": "produit en français", "product_uom_qty": 4.0},
+            {"description_picking": "produit en français", "product_uom_qty": 5.0},
             {"description_picking": "product TEST", "product_uom_qty": 11.0},
         ])
 
@@ -1447,6 +1449,56 @@ class TestReorderingRule(TransactionCase):
             [("product_id", "=", self.product_01.id)])
         self.assertTrue(po_line)
         self.assertEqual(po_line.order_id.currency_id, foreign_currency)
+
+    def test_partners_validity_dates(self):
+        """
+        Check that the expiry dates of suppliers is taken into accounts for MTO + Buy products.
+        """
+        company = self.env.company
+        warehouse = self.env['stock.warehouse'].search([('company_id', '=', company.id)], limit=1)
+        route_mto = self.env.ref('stock.route_warehouse0_mto')
+        route_mto.active = True
+        route_buy = warehouse.buy_pull_id.route_id
+        supplier = self.env["res.partner"].create({
+            "name": "John",
+        })
+        product = self.env['product.product'].create({
+            'name': 'mto buy product',
+            'purchase_ok': True,
+            'is_storable': True,
+            'seller_ids': [Command.create({
+                'company_id': company.id,
+                'partner_id': self.partner.id,
+                'date_start': fields.Date.today() - relativedelta(days=2),
+                'date_end': fields.Date.today() - relativedelta(days=1),
+            }), Command.create({
+                'company_id': company.id,
+                'partner_id': supplier.id,
+                'date_start': fields.Date.today() - relativedelta(days=2),
+                'date_end': fields.Date.today() + relativedelta(days=1),
+            })],
+            'route_ids': [Command.link(route_mto.id), Command.link(route_buy.id)]
+        })
+        proc_group = self.env["procurement.group"].create({
+            "partner_id": supplier.id
+        })
+
+        procurement = self.env["procurement.group"].Procurement(
+            product, 1, product.uom_id,
+            supplier.property_stock_customer,
+            "Test default vendor",
+            "/",
+            self.env.company,
+            {
+                "warehouse_id": warehouse,
+                "date_planned": fields.Date.today(),
+                "group_id": proc_group,
+                "route_ids": [],
+            }
+        )
+        self.env["procurement.group"].run([procurement])
+        po_line = self.env["purchase.order.line"].search([("product_id", "=", product.id)], limit=1)
+        self.assertEqual(po_line.order_id.partner_id.id, supplier.id)
 
     def test_intercompany_reordering_rules(self):
         """

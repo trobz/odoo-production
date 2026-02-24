@@ -67,6 +67,9 @@ class AccountEdiXmlUBL20(models.AbstractModel):
     def _get_partner_party_tax_scheme_vals_list(self, partner, role):
         # Old helper used only for non-BIS3 UBLs, removed in saas-18.4.
         # If you change this method, please change the corresponding new helper as well (at the end of this file).
+        if not partner.vat or partner.vat == '/':
+            return []
+
         # [BR-CO-09] if the PartyTaxScheme/TaxScheme/ID == 'VAT', CompanyID must start with a country code prefix.
         # In some countries however, the CompanyID can be with or without country code prefix and still be perfectly
         # valid (RO, HU, non-EU countries).
@@ -811,8 +814,8 @@ class AccountEdiXmlUBL20(models.AbstractModel):
             'vat': self._find_value(f'.//cac:{role}Party/cac:Party//cbc:CompanyID[string-length(text()) > 5]', tree),
             'phone': self._find_value(f'.//cac:{role}Party/cac:Party//cbc:Telephone', tree),
             'email': self._find_value(f'.//cac:{role}Party/cac:Party//cbc:ElectronicMail', tree),
-            'name': self._find_value(f'.//cac:{role}Party/cac:Party//cbc:Name', tree) or
-                    self._find_value(f'.//cac:{role}Party/cac:Party//cbc:RegistrationName', tree),
+            'name': self._find_value(f'.//cac:{role}Party/cac:Party//cbc:RegistrationName', tree) or
+                    self._find_value(f'.//cac:{role}Party/cac:Party//cbc:Name', tree),
             'country_code': self._find_value(f'.//cac:{role}Party/cac:Party//cac:Country//cbc:IdentificationCode', tree),
             'street': self._find_value(f'.//cac:{role}Party/cac:Party//cbc:StreetName', tree),
             'street2': self._find_value(f'.//cac:{role}Party/cac:Party//cbc:AdditionalStreetName', tree),
@@ -834,7 +837,11 @@ class AccountEdiXmlUBL20(models.AbstractModel):
         invoice_values['invoice_date_due'] = self._find_value(('./cbc:DueDate', './/cbc:PaymentDueDate'), tree)
         # ==== partner_bank_id ====
         bank_detail_nodes = tree.findall('.//{*}PaymentMeans')
-        bank_details = [bank_detail_node.findtext('{*}PayeeFinancialAccount/{*}ID') for bank_detail_node in bank_detail_nodes]
+        bank_details = [
+            bank_detail_node.findtext('{*}PayeeFinancialAccount/{*}ID')
+            for bank_detail_node in bank_detail_nodes
+            if bank_detail_node.findtext('{*}PayeeFinancialAccount/{*}ID')
+        ]
         if bank_details:
             self._import_partner_bank(invoice, bank_details)
 
@@ -1096,6 +1103,11 @@ class AccountEdiXmlUBL20(models.AbstractModel):
         invoice = vals['invoice']
         supplier = invoice.company_id.partner_id.commercial_partner_id
         customer = invoice.partner_id
+        partner_shipping = invoice.partner_shipping_id or invoice.partner_id
+
+        if invoice.is_purchase_document():
+            supplier, customer = customer, supplier
+            partner_shipping = customer
 
         vals.update({
             'document_type': 'debit_note' if 'debit_origin_id' in self.env['account.move']._fields and invoice.debit_origin_id
@@ -1104,11 +1116,12 @@ class AccountEdiXmlUBL20(models.AbstractModel):
 
             'supplier': supplier,
             'customer': customer,
-            'partner_shipping': invoice.partner_shipping_id or invoice.partner_id,
+            'partner_shipping': partner_shipping,
 
             'currency_id': invoice.currency_id,
             'company_currency_id': invoice.company_id.currency_id,
             'company': invoice.company_id,
+            'journal': invoice.journal_id,
 
             'use_company_currency': False,  # If true, use the company currency for the amounts instead of the invoice currency
             'fixed_taxes_as_allowance_charges': True,  # If true, include fixed taxes as AllowanceCharges on lines instead of as taxes
@@ -1167,44 +1180,9 @@ class AccountEdiXmlUBL20(models.AbstractModel):
                     new_taxes_data.append(tax_data)
 
     def _turn_emptying_taxes_as_new_base_lines(self, base_lines, company, vals):
-        """ Extract emptying taxes such as "Vidanges" on bottles from the current base lines and turn them into
-        additional base lines.
-
-        :param base_lines:  The original 'base_lines' of the document.
-        :param company:     The company owning the 'base_lines'.
-        :param vals:        Some custom data.
-        """
-        AccountTax = self.env['account.tax']
         if not vals['fixed_taxes_as_allowance_charges']:
             return base_lines
-
-        def exclude_function(base_line, tax_data):
-            if not tax_data:
-                return
-
-            tax = tax_data['tax']
-            return tax.amount_type == 'fixed' and not tax.include_base_amount
-
-        new_base_lines = AccountTax._dispatch_taxes_into_new_base_lines(base_lines, company, exclude_function)
-
-        def aggregate_function(target_base_line, base_line):
-            target_base_line.setdefault('_aggregated_quantity', 0.0)
-            target_base_line['_aggregated_quantity'] += base_line['quantity']
-
-        extra_base_lines = AccountTax._turn_removed_taxes_into_new_base_lines(
-            base_lines=new_base_lines,
-            company=company,
-            aggregate_function=aggregate_function,
-        )
-
-        # Restore back the values per quantity.
-        for base_line in extra_base_lines:
-            base_line['quantity'] = base_line['_aggregated_quantity']
-            base_line['price_unit'] /= base_line['_aggregated_quantity']
-            base_line['_line_name'] = base_line['_removed_tax_data']['tax'].name
-            base_line['product_id'] = self.env['product.product']
-
-        return new_base_lines + extra_base_lines
+        return self._ubl_turn_emptying_taxes_as_new_base_lines(base_lines, company, vals)
 
     def _add_invoice_base_lines_vals(self, vals):
         invoice = vals['invoice']
@@ -1251,7 +1229,7 @@ class AccountEdiXmlUBL20(models.AbstractModel):
             'cbc:ID': {'_text': invoice.name},
             'cbc:IssueDate': {'_text': invoice.invoice_date},
             'cbc:InvoiceTypeCode': {'_text': 380} if vals['document_type'] == 'invoice' else None,
-            'cbc:Note': {'_text': html2plaintext(invoice.narration)} if invoice.narration else None,
+            'cbc:Note': {'_text': html2plaintext(invoice.narration) if invoice.narration else None},
             'cbc:DocumentCurrencyCode': {'_text': invoice.currency_id.name},
             'cac:OrderReference': {
                 # OrderReference/ID (order_reference) is mandatory inside the OrderReference node
@@ -1362,9 +1340,9 @@ class AccountEdiXmlUBL20(models.AbstractModel):
         line_node = {}
         self._add_invoice_line_id_nodes(line_node, vals)
         self._add_invoice_line_note_nodes(line_node, vals)
-        self._add_invoice_line_amount_nodes(line_node, vals)
         self._add_invoice_line_period_nodes(line_node, vals)
         self._add_invoice_line_allowance_charge_nodes(line_node, vals)
+        self._add_invoice_line_amount_nodes(line_node, vals)
         self._add_invoice_line_tax_total_nodes(line_node, vals)
         self._add_invoice_line_item_nodes(line_node, vals)
         self._add_invoice_line_tax_category_nodes(line_node, vals)
@@ -1459,7 +1437,10 @@ class AccountEdiXmlUBL20(models.AbstractModel):
             return {
                 'tax_category_code': self._get_tax_category_code(customer.commercial_partner_id, supplier, tax),
                 **self._get_tax_exemption_reason(customer.commercial_partner_id, supplier, tax),
-                'amount': tax.amount if tax else 0.0,
+                # Reverse-charge taxes with +100/-100% repartition lines are used in vendor bills.
+                # In a self-billed invoice, we report them from the seller's perspective, so
+                # we change their percentage to 0%.
+                'amount': tax.amount if tax and not tax.has_negative_factor else 0.0,
                 'amount_type': tax.amount_type if tax else 'percent',
             }
 
@@ -1554,26 +1535,18 @@ class AccountEdiXmlUBL20(models.AbstractModel):
         """ Generic helper to generate the Party node for a res.partner. """
         partner = vals['partner']
         commercial_partner = partner.commercial_partner_id
-        return {
+        party_node = {
+            'cbc:EndpointID': {
+                '_text': None,
+                'schemeID': None,
+            },
             'cac:PartyIdentification': {
                 'cbc:ID': {'_text': commercial_partner.ref},
             },
             'cac:PartyName': {
-                'cbc:Name': {'_text': partner.display_name},
+                'cbc:Name': {'_text': partner.display_name if partner.name else partner.commercial_partner_id.display_name},
             },
             'cac:PostalAddress': self._get_address_node(vals),
-            'cac:PartyTaxScheme': {
-                'cbc:RegistrationName': {'_text': commercial_partner.name},
-                'cbc:CompanyID': {'_text': commercial_partner.vat},
-                'cac:RegistrationAddress': self._get_address_node({**vals, 'partner': commercial_partner}),
-                'cac:TaxScheme': {
-                    'cbc:ID': {
-                        '_text': ('NOT_EU_VAT' if commercial_partner.country_id and
-                                commercial_partner.vat and
-                                not commercial_partner.vat[:2].isalpha() else 'VAT')
-                    }
-                },
-            },
             'cac:PartyLegalEntity': {
                 'cbc:RegistrationName': {'_text': commercial_partner.name},
                 'cbc:CompanyID': {'_text': commercial_partner.vat},
@@ -1586,6 +1559,24 @@ class AccountEdiXmlUBL20(models.AbstractModel):
                 'cbc:ElectronicMail': {'_text': partner.email},
             },
         }
+        if partner.vat and partner.vat != '/':
+            party_node['cac:PartyTaxScheme'] = {
+                'cbc:RegistrationName': {'_text': commercial_partner.name},
+                'cbc:CompanyID': {'_text': commercial_partner.vat},
+                'cac:RegistrationAddress': self._get_address_node({**vals, 'partner': commercial_partner}),
+                'cac:TaxScheme': {
+                    'cbc:ID': {
+                        '_text': (
+                            'NOT_EU_VAT'
+                            if commercial_partner.country_id
+                            and commercial_partner.vat
+                            and not commercial_partner.vat[:2].isalpha()
+                            else 'VAT'
+                        )
+                    }
+                },
+            }
+        return party_node
 
     def _get_financial_account_node(self, vals):
         """ Generic helper to generate the FinancialAccount node for a res.partner.bank """

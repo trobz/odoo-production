@@ -102,6 +102,17 @@ class AccountMoveSend(models.AbstractModel):
         - action the action to run when the link is clicked
         """
         alerts = {}
+        send_cron = self.env.ref('account.ir_cron_account_move_send', raise_if_not_found=False)
+        if len(moves) > 1 and send_cron and not send_cron.sudo().active:
+            has_cron_access = send_cron.has_access('write')
+            has_access_message = _("The scheduled action 'Send Invoices automatically' is archived. You won't be able to send invoices in batch.")
+            no_access_addendum = _("\nPlease contact your administrator.")
+            alerts['account_send_cron_archived'] = {
+                'level': 'warning',
+                'message': has_access_message if has_cron_access else has_access_message + no_access_addendum,
+                'action_text': _("Check") if has_cron_access else None,
+                'action': send_cron._get_records_action() if has_cron_access else None,
+            }
         if len(moves) > 1 and (partners_without_mail := moves.filtered(
                 lambda m: 'email' in moves_data[m]['sending_methods'] and not m.partner_id.email).partner_id
         ):
@@ -273,10 +284,18 @@ class AccountMoveSend(models.AbstractModel):
 
     @api.model
     def _check_move_constrains(self, moves):
-        if any(move.state != 'posted' for move in moves):
-            raise UserError(_("You can't generate invoices that are not posted."))
-        if any(not move.is_sale_document(include_receipts=True) for move in moves):
-            raise UserError(_("You can only generate sales documents."))
+        for move in moves:
+            if move_constraints := self._get_move_constraints(move):
+                raise UserError(next(iter(move_constraints.values()), None))
+
+    @api.model
+    def _get_move_constraints(self, move):
+        constraints = {}
+        if move.state != 'posted':
+            constraints['not_posted'] = _("You can't generate invoices that are not posted.")
+        if not move.is_sale_document(include_receipts=True):
+            constraints['not_sale_document'] = _("You can only generate sales documents.")
+        return constraints
 
     @api.model
     def _check_invoice_report(self, moves, **custom_settings):

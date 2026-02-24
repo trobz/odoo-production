@@ -674,7 +674,7 @@ export const accountTaxHelpers = {
         const factors = target_factors.map((x, i) => [i, Math.abs(x.factor)]);
         factors.sort((a, b) => b[1] - a[1]);
         const sum_of_factors = factors.reduce((sum, x) => sum + x[1], 0.0);
-        return factors.map((x) => [x[0], sum_of_factors ? x[1] / sum_of_factors : 0.0]);
+        return factors.map((x) => [x[0], sum_of_factors ? x[1] / sum_of_factors : 1 / factors.length]);
     },
 
     /**
@@ -764,7 +764,7 @@ export const accountTaxHelpers = {
                 const total_tax_amount = values[`tax_amount${delta_currency_indicator}`];
                 const delta_total_tax_amount = rounded_raw_total_tax_amount - total_tax_amount;
 
-                if (raw_total_tax_amount) {
+                if (!floatIsZero(delta_total_tax_amount, delta_currency.decimal_places)) {
                     const target_factors = values.base_line_x_taxes_data.flatMap(
                         ([_, taxes_data]) =>
                             taxes_data.map((tax_data) => ({
@@ -811,7 +811,7 @@ export const accountTaxHelpers = {
                     delta_total_base_amount = rounded_raw_total_base_amount - total_base_amount;
                 }
 
-                if (raw_total_base_amount) {
+                if (!floatIsZero(delta_total_base_amount, delta_currency.decimal_places)) {
                     const target_factors = values.base_line_x_taxes_data.flatMap(
                         ([_, taxes_data]) =>
                             taxes_data.map((tax_data) => ({
@@ -1450,5 +1450,17 @@ export const accountTaxHelpers = {
             }
         }
         return values_per_grouping_key;
+    },
+
+    // -------------------------------------------------------------------------
+    // ADVANCED LINES MANIPULATION HELPERS
+    // -------------------------------------------------------------------------
+
+    /**
+     * [!] Mirror of the same method in account_tax.py.
+     * PLZ KEEP BOTH METHODS CONSISTENT WITH EACH OTHERS.
+     */
+    can_be_discounted(tax) {
+        return !["fixed", "code"].includes(tax.amount_type);
     },
 };

@@ -10,13 +10,13 @@
 # Ronald Kung, 2025
 # Manav Shah, 2025
 # Ujjawal Pathak, 2025
-# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-28 18:36+0000\n"
-"PO-Revision-Date: 2025-12-09 08:20+0000\n"
+"POT-Creation-Date: 2026-02-20 18:37+0000\n"
+"PO-Revision-Date: 2026-02-21 18:01+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Hindi <https://translate.odoo.com/projects/odoo-18/"
 "point_of_sale/hi/>\n"
@@ -631,6 +631,12 @@ msgid "Action Needed"
 msgstr "कार्रवाई की ज़रूरत है"
 
 #. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Action cancelled (%(ACTION)s)"
+msgstr ""
+
+#. module: point_of_sale
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/screens/product_screen/action_pad/action_pad.xml:0
 #: code:addons/point_of_sale/static/src/app/screens/product_screen/control_buttons/control_buttons.xml:0
@@ -998,7 +1004,7 @@ msgstr ""
 #. module: point_of_sale
 #: model:ir.model.fields.selection,name:point_of_sale.selection__pos_config__picking_policy__direct
 msgid "As soon as possible"
-msgstr ""
+msgstr "जितना जल्दी हो सके"
 
 #. module: point_of_sale
 #. odoo-python
@@ -1213,7 +1219,7 @@ msgstr "बार"
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.res_config_settings_view_form
 msgid "Barcode Nomenclature"
-msgstr ""
+msgstr "बारकोड के नाम रखने के नियम"
 
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_barcode_rule
@@ -1224,7 +1230,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/debug/debug_widget.xml:0
 msgid "Barcode Scanner"
-msgstr ""
+msgstr "बारकोड स्कैनर"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.res_config_settings_view_form
@@ -1570,6 +1576,12 @@ msgid "Cash difference observed during the counting (Profit) - closing"
 msgstr ""
 
 #. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Cash drawer opened (%(ACTION)s)"
+msgstr ""
+
+#. module: point_of_sale
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/store/pos_store.js:0
 msgid "Cash in / out"
@@ -1599,7 +1611,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 #: model_terms:ir.ui.view,arch_db:point_of_sale.res_config_settings_view_form
 msgid "Cashdrawer"
-msgstr ""
+msgstr "कैशड्रावर"
 
 #. module: point_of_sale
 #. odoo-javascript
@@ -1892,7 +1904,25 @@ msgstr ""
 #. module: point_of_sale
 #. odoo-python
 #: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Closing counted: %s \n"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
 msgid "Closing difference in %(payment_method)s (%(session)s)"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Closing difference: %s \n"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Closing expected: %s \n"
 msgstr ""
 
 #. module: point_of_sale
@@ -1911,7 +1941,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/backend/pos_kanban_view/pos_kanban_view.js:0
 msgid "Clothes"
-msgstr ""
+msgstr "कपड़े"
 
 #. module: point_of_sale
 #. odoo-python
@@ -2107,7 +2137,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/customer_display/utils.js:0
 msgid "Connection failed"
-msgstr ""
+msgstr "कनेक्शन नहीं हो पाया"
 
 #. module: point_of_sale
 #. odoo-javascript
@@ -2550,7 +2580,7 @@ msgstr ""
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_order_line__product_uom_id
 msgid "Default unit of measure used for all stock operations."
-msgstr ""
+msgstr "स्टॉक से जुड़े सभी कामों के लिए इस्तेमाल होने वाली बेसिक यूनिट।"
 
 #. module: point_of_sale
 #: model_terms:ir.actions.act_window,help:point_of_sale.product_pos_category_action
@@ -2746,7 +2776,7 @@ msgstr "छूट"
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/debug/debug_widget.xml:0
 msgid "Dismiss"
-msgstr ""
+msgstr "खारिज करें"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_bill__display_name
@@ -3118,6 +3148,12 @@ msgid "For imprecise industrial touchscreens."
 msgstr ""
 
 #. module: point_of_sale
+#. odoo-javascript
+#: code:addons/point_of_sale/static/src/app/screens/payment_screen/payment_lines/payment_lines.xml:0
+msgid "Force Cancel"
+msgstr "जबरदस्ती रद्द करें"
+
+#. module: point_of_sale
 #. odoo-python
 #: code:addons/point_of_sale/models/pos_session.py:0
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_form_pos_close_session_wizard
@@ -3128,6 +3164,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/screens/payment_screen/payment_lines/payment_lines.xml:0
 msgid "Force Done"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-javascript
+#: code:addons/point_of_sale/static/src/app/screens/payment_screen/payment_lines/payment_lines.xml:0
+msgid "Force cancel"
 msgstr ""
 
 #. module: point_of_sale
@@ -3501,7 +3543,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/navbar/navbar.xml:0
 msgid "Install App"
-msgstr ""
+msgstr "ऐप्लिकेशन इंस्टॉल करें"
 
 #. module: point_of_sale
 #: model_terms:ir.actions.act_window,help:point_of_sale.action_pos_payment_method_form
@@ -3773,7 +3815,7 @@ msgstr "भाषा"
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_session_sales_details
 msgid "Laptop"
-msgstr ""
+msgstr "लैपटॉप"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_session_sales_details
@@ -4248,7 +4290,7 @@ msgstr "नया"
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/screens/receipt_screen/receipt_screen.xml:0
 msgid "New Order"
-msgstr ""
+msgstr "नया ऑर्डर"
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.product_product_action_add_pos
@@ -4661,6 +4703,24 @@ msgstr ""
 #. module: point_of_sale
 #. odoo-python
 #: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Opening cash counted: %s \n"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Opening cash difference: %s \n"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Opening cash expected: %s \n"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
 msgid "Opening control message: "
 msgstr ""
 
@@ -4677,7 +4737,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:point_of_sale.field_res_config_settings__pos_picking_type_id
 #: model_terms:ir.ui.view,arch_db:point_of_sale.res_config_settings_view_form
 msgid "Operation Type"
-msgstr ""
+msgstr "ऑपरेशन टाइप"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.res_config_settings_view_form
@@ -5188,7 +5248,7 @@ msgstr ""
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "पिकिंग टाइप"
 
 #. module: point_of_sale
 #. odoo-python
@@ -5670,7 +5730,7 @@ msgstr ""
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.res_config_settings_view_form
 msgid "Preparation"
-msgstr ""
+msgstr "तैयारी करना"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_res_config_settings__module_pos_preparation_display
@@ -5860,7 +5920,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/navbar/proxy_status/proxy_status.js:0
 msgid "Printer"
-msgstr ""
+msgstr "प्रिंटर"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_printer__name
@@ -5905,7 +5965,7 @@ msgstr ""
 #: model:ir.model,name:point_of_sale.model_procurement_group
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order__procurement_group_id
 msgid "Procurement Group"
-msgstr ""
+msgstr "प्रोक्युर्मन्ट ग्रुप"
 
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_product_template
@@ -5959,7 +6019,7 @@ msgstr "प्रॉडक्ट की जानकारी"
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/generic_components/product_card/product_card.xml:0
 msgid "Product Information"
-msgstr ""
+msgstr "प्रॉडक्ट की जानकारी"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order_line__note
@@ -5989,12 +6049,17 @@ msgstr "प्रॉडक्ट क्वांटिटी"
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_product_tag
 msgid "Product Tag"
-msgstr ""
+msgstr "प्रॉडक्ट टैग"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_report_pos_order__product_tmpl_id
 msgid "Product Template"
 msgstr "उत्पाद  प्रारूप"
+
+#. module: point_of_sale
+#: model:ir.model,name:point_of_sale.model_product_template_attribute_exclusion
+msgid "Product Template Attribute Exclusion"
+msgstr ""
 
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_product_template_attribute_line
@@ -6014,7 +6079,7 @@ msgstr "प्रॉडक्ट माप की इकाई"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order_line__product_uom_id
 msgid "Product UoM"
-msgstr ""
+msgstr "प्रॉडक्ट UoM"
 
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_uom_category
@@ -6230,7 +6295,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 #: model_terms:ir.ui.view,arch_db:point_of_sale.res_config_settings_view_form
 msgid "Receipt Printer"
-msgstr ""
+msgstr "रसीद निकालने वाला प्रिंटर"
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_payment_method__use_payment_terminal
@@ -6568,7 +6633,7 @@ msgstr "सेल्स"
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_daily_sales_reports_wizard
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_details_wizard
 msgid "Sales Details"
-msgstr ""
+msgstr "सेल्स की जानकारी"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order__sale_journal
@@ -6605,7 +6670,7 @@ msgstr "इस पेज को सेव करें और फिर इस �
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/navbar/proxy_status/proxy_status.js:0
 msgid "Scale"
-msgstr ""
+msgstr "स्केल"
 
 #. module: point_of_sale
 #. odoo-javascript
@@ -6764,7 +6829,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/screens/receipt_screen/receipt_screen.xml:0
 msgid "Sending"
-msgstr ""
+msgstr "भेजा जा रहा है"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_category__sequence
@@ -7165,7 +7230,7 @@ msgstr "चाल स्टॉक"
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_stock_rule
 msgid "Stock Rule"
-msgstr ""
+msgstr "स्टॉक रूल"
 
 #. module: point_of_sale
 #. odoo-python
@@ -7432,7 +7497,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/point_of_sale/models/pos_payment_method.py:0
 msgid "Terminal"
-msgstr ""
+msgstr "टर्मिनल"
 
 #. module: point_of_sale
 #. odoo-javascript
@@ -8160,6 +8225,10 @@ msgid ""
 "a hamburger from a customer’s hand mid-bite; chaos will ensue as ketchup and "
 "mayo go flying everywhere!"
 msgstr ""
+"प्रॉडक्ट मिटाने के लिए, पक्का करें कि सभी पॉइंट ऑफ़ सेल सेशन बंद हैं.\n"
+"\n"
+"सेशन में मौजूद प्रॉडक्ट को मिटाना किसी ग्राहक के हाथ से बीच में पिज़्ज़ा छीनने जैसा होगा; "
+"मतलब चलते काम में प्रोडक्ट हटाना सिस्टम में भारी गड़बड़ी पैदा कर सकता है!"
 
 #. module: point_of_sale
 #. odoo-javascript
@@ -8228,7 +8297,7 @@ msgstr "कुल भुगतान राशि"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_report_pos_order__price_total
 msgid "Total Price"
-msgstr ""
+msgstr "कुल कीमत"
 
 #. module: point_of_sale
 #. odoo-javascript
@@ -8409,7 +8478,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/components/product_info_banner/product_info_banner.xml:0
 msgid "Units"
-msgstr ""
+msgstr "यूनिट"
 
 #. module: point_of_sale
 #. odoo-javascript

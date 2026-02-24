@@ -14,6 +14,7 @@ import { omit } from "@web/core/utils/objects";
 let nextId = -1;
 const mutex = new Mutex();
 const updateRewardsMutex = new Mutex();
+const updateProgramsMutex = new Mutex();
 const pointsForProgramsCountedRules = {};
 const { DateTime } = luxon;
 
@@ -136,6 +137,13 @@ patch(PosStore.prototype, {
      * Update our couponPointChanges, meaning the points/coupons each program give etc.
      */
     async updatePrograms() {
+        return updateProgramsMutex.exec(async () => {
+            await this._updatePrograms();
+        });
+    },
+
+    // This method should never be called directly, use updatePrograms() instead
+    async _updatePrograms() {
         const order = this.get_order();
         // 'order.delivery_provider_id' check is used for UrbanPiper orders (as loyalty points and rewards are not allowed for UrbanPiper orders)
         if (!order || order.delivery_provider_id) {
@@ -206,14 +214,14 @@ patch(PosStore.prototype, {
                 }, {});
 
                 oldChanges.forEach((pointObj) => {
-                    const { points, barcode = "", gift_code = "" } = pointObj;
+                    const { points, barcode = "", code = "" } = pointObj;
                     const key =
-                        barcode && gift_code
-                            ? `${points}-${barcode}-${gift_code}`
+                        barcode && code
+                            ? `${points}-${barcode}-${code}`
                             : barcode
                             ? `${points}-${barcode}`
-                            : gift_code
-                            ? `${points}--${gift_code}`
+                            : code
+                            ? `${points}--${code}`
                             : `${points}`;
 
                     if (pointsCount[key] && pointsCount[key] > 0) {
@@ -776,7 +784,9 @@ patch(PosStore.prototype, {
                     });
                 }
             }
-            await this._postProcessLoyalty(order);
+            if (!["draft", "cancel"].includes(order.state)) {
+                await this._postProcessLoyalty(order);
+            }
         }
     },
     async _postProcessLoyalty(order) {
