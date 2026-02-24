@@ -9,13 +9,13 @@
 # Ronald Kung, 2025
 # Ujjawal Pathak, 2025
 #
-# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-31 18:38+0000\n"
-"PO-Revision-Date: 2025-12-09 08:20+0000\n"
+"POT-Creation-Date: 2026-02-20 18:38+0000\n"
+"PO-Revision-Date: 2026-02-07 18:00+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Hindi <https://translate.odoo.com/projects/odoo-18/"
 "html_editor/hi/>\n"
@@ -274,7 +274,7 @@ msgstr "एक कॉलम पर वापस जाएं"
 #: code:addons/html_editor/static/src/main/font/color_plugin.js:0
 #: code:addons/html_editor/static/src/main/media/icon_plugin.js:0
 msgid "Background Color"
-msgstr ""
+msgstr "बैकग्राउंड कलर"
 
 #. module: html_editor
 #. odoo-javascript
@@ -461,7 +461,7 @@ msgstr "अपना यूआरएल या एम्बेड किया �
 #. odoo-javascript
 #: code:addons/html_editor/static/src/main/chatgpt/chatgpt_alternatives_dialog.js:0
 msgid "Correct"
-msgstr ""
+msgstr "सही"
 
 #. module: html_editor
 #. odoo-javascript
@@ -1075,7 +1075,7 @@ msgstr "अपना हस्ताक्षर डालें"
 #. odoo-javascript
 #: code:addons/html_editor/static/src/main/media/media_dialog/video_selector.xml:0
 msgid "Instagram"
-msgstr ""
+msgstr "Instagram"
 
 #. module: html_editor
 #. odoo-javascript
@@ -1119,8 +1119,7 @@ msgstr "लिंक क्लिपबोर्ड पर कॉपी हो �
 #: code:addons/html_editor/controllers/main.py:0
 msgid ""
 "Link preview is not available because %s, please check if your url is correct"
-msgstr ""
-"लिंक का प्रीव्यू उपलब्ध नहीं है, क्योंकि %s. कृपया जांच करें कि आपका यूआरएल सही है"
+msgstr "लिंक का प्रीव्यू उपलब्ध नहीं है, क्योंकि %s. कृपया जांच करें कि आपका यूआरएल सही है"
 
 #. module: html_editor
 #. odoo-javascript
@@ -1181,7 +1180,7 @@ msgstr "फ़ाइल नहीं मिल रही"
 
 #. module: html_editor
 #. odoo-javascript
-#: code:addons/html_editor/static/src/main/powerbox/powerbox_plugin.js:0
+#: code:addons/html_editor/static/src/main/powerbox/search_powerbox_plugin.js:0
 msgid "More options"
 msgstr "ज़्यादा विकल्प"
 
@@ -1276,8 +1275,8 @@ msgid ""
 "Oops, the file %s could not be found. Please replace this file box by a new "
 "one to re-upload the file."
 msgstr ""
-"ओह, फ़ाइल %s नहीं मिल सकी. कृपया फ़ाइल को दोबारा अपलोड करने के लिए इस फ़ाइल बॉक्स को एक नए बॉक्स से "
-"बदलें।"
+"ओह, फ़ाइल %s नहीं मिल सकी. कृपया फ़ाइल को दोबारा अपलोड करने के लिए इस फ़ाइल बॉक्स को "
+"एक नए बॉक्स से बदलें।"
 
 #. module: html_editor
 #. odoo-javascript
@@ -1590,21 +1589,19 @@ msgstr "छोटे सेक्शन के लिए हेडिंग"
 #. odoo-javascript
 #: code:addons/html_editor/static/src/main/font/color_selector.xml:0
 msgid "Solid"
-msgstr ""
+msgstr "सॉलिड"
 
 #. module: html_editor
 #. odoo-python
 #: code:addons/html_editor/controllers/main.py:0
 msgid "Sorry, we could not generate a response. Please try again later."
-msgstr ""
-"माफ़ करें, हम अभी जवाब तैयार नहीं कर सकें. कृपया बाद में दोबारा कोशिश करें।"
+msgstr "माफ़ करें, हम अभी जवाब तैयार नहीं कर सकें. कृपया बाद में दोबारा कोशिश करें।"
 
 #. module: html_editor
 #. odoo-python
 #: code:addons/html_editor/controllers/main.py:0
 msgid "Sorry, your prompt is too long. Try to say it in fewer words."
-msgstr ""
-"माफ़ करें, आपका प्रॉम्प्ट बहुत लंबा है. इसे कम शब्दों में कहने का प्रयास करें।"
+msgstr "माफ़ करें, आपका प्रॉम्प्ट बहुत लंबा है. इसे कम शब्दों में कहने का प्रयास करें।"
 
 #. module: html_editor
 #. odoo-javascript
@@ -1721,8 +1718,8 @@ msgid ""
 "This type of image is not supported for cropping.<br/>If you want to crop "
 "it, please first download it from the original source and upload it in Odoo."
 msgstr ""
-"इस तस्वीर को क्रॉप नहीं किया जा सकता. <br/>क्रॉप करने के लिए, इसे पहले ओरिजिनल सोर्स से डाउनलोड करें और "
-"फिर Odoo में दोबारा अपलोड करें।"
+"इस तस्वीर को क्रॉप नहीं किया जा सकता. <br/>क्रॉप करने के लिए, इसे पहले ओरिजिनल सोर्स "
+"से डाउनलोड करें और फिर Odoo में दोबारा अपलोड करें।"
 
 #. module: html_editor
 #. odoo-javascript
@@ -1776,7 +1773,7 @@ msgstr "तस्वीर को बदलें (और ठीक करने
 #. odoo-javascript
 #: code:addons/html_editor/static/src/main/chatgpt/language_selector.xml:0
 msgid "Translate"
-msgstr ""
+msgstr "अनुवाद करें"
 
 #. module: html_editor
 #. odoo-javascript
@@ -1831,7 +1828,7 @@ msgstr "यूआरएल"
 #. odoo-javascript
 #: code:addons/html_editor/static/src/main/link/link_popover.xml:0
 msgid "Upload File"
-msgstr ""
+msgstr "फ़ाइल अपलोड करें"
 
 #. module: html_editor
 #. odoo-javascript
@@ -1912,8 +1909,7 @@ msgstr "विजेट"
 msgid ""
 "Wow, it feels a bit empty in here. Upload from the button in the top right "
 "corner!"
-msgstr ""
-"वाह, यहां थोड़ा खालीपन लग रहा है. ऊपर दाएं कोने में दिए गए बटन से अपलोड करें!"
+msgstr "वाह, यहां थोड़ा खालीपन लग रहा है. ऊपर दाएं कोने में दिए गए बटन से अपलोड करें!"
 
 #. module: html_editor
 #. odoo-javascript
@@ -1927,8 +1923,7 @@ msgstr "हाँ"
 msgid ""
 "You can upload documents with the button located in the top left of the "
 "screen."
-msgstr ""
-"आप दस्तावेज़ों को स्क्रीन के ऊपर बाएं कोने में स्थित बटन से अपलोड कर सकते हैं।"
+msgstr "आप दस्तावेज़ों को स्क्रीन के ऊपर बाएं कोने में स्थित बटन से अपलोड कर सकते हैं।"
 
 #. module: html_editor
 #. odoo-python
@@ -1937,15 +1932,15 @@ msgid ""
 "You have reached the maximum number of requests for this service. Try again "
 "later."
 msgstr ""
-"आप इस सेवा को जितनी बार इस्तेमाल कर सकते थे, वह सीमा पूरी हो गई है. बाद में फिर से कोशिश करें।"
+"आप इस सेवा को जितनी बार इस्तेमाल कर सकते थे, वह सीमा पूरी हो गई है. बाद में फिर से "
+"कोशिश करें।"
 
 #. module: html_editor
 #. odoo-javascript
 #: code:addons/html_editor/static/src/others/dynamic_placeholder_plugin.js:0
 msgid ""
 "You need to select a model before opening the dynamic placeholder selector."
-msgstr ""
-"डाइनैमिक प्लेसहोल्डर सिलेक्टर खोलने से पहले आपको एक मॉडल का चयन करना होगा।"
+msgstr "डाइनैमिक प्लेसहोल्डर सिलेक्टर खोलने से पहले आपको एक मॉडल का चयन करना होगा।"
 
 #. module: html_editor
 #. odoo-python
@@ -1957,8 +1952,7 @@ msgstr "अटैचमेंट बनाने के लिए, आपको 
 #. odoo-javascript
 #: code:addons/html_editor/static/src/others/embedded_components/core/video/video.xml:0
 msgid "Your browser does not support iframe."
-msgstr ""
-"आपके ब्राउज़र में दूसरी वेबसाइट को दिखाने वाला आईफ्रेम फीचर काम नहीं कर रहा है।"
+msgstr "आपके ब्राउज़र में दूसरी वेबसाइट को दिखाने वाला आईफ्रेम फीचर काम नहीं कर रहा है।"
 
 #. module: html_editor
 #. odoo-javascript

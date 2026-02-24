@@ -6,13 +6,14 @@
 # Wil Odoo, 2024
 # Junko Augias, 2025
 #
-# "Junko Augias (juau)" <juau@odoo.com>, 2025.
+# "Junko Augias (juau)" <juau@odoo.com>, 2025, 2026.
+# Weblate <noreply-mt-weblate@weblate.org>, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:36+0000\n"
-"PO-Revision-Date: 2025-11-12 08:26+0000\n"
+"POT-Creation-Date: 2026-02-20 18:37+0000\n"
+"PO-Revision-Date: 2026-02-14 09:11+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-18/"
 "mass_mailing/ja/>\n"
@@ -21,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.12.2\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: mass_mailing
 #. odoo-python
@@ -288,17 +289,6 @@ msgid ""
 "<font style=\"font-size: 62px; font-weight: bold;\">Catchy Headline</font>"
 msgstr ""
 "<font style=\"font-size: 62px; font-weight: bold;\">覚えやすい見出し</font>"
-
-#. module: mass_mailing
-#: model_terms:ir.ui.view,arch_db:mass_mailing.mailing_subscription_view_form
-msgid ""
-"<i class=\"fa fa-ban text-danger\" role=\"img\" title=\"This email is "
-"blacklisted for mass mailings\" aria-label=\"Blacklisted\" invisible=\"not "
-"is_blacklisted\" groups=\"base.group_user\"/>"
-msgstr ""
-"<i class=\"fa fa-ban text-danger\" role=\"img\" title=\"This email is "
-"blacklisted for mass mailings\" aria-label=\"Blacklisted\" invisible=\"not "
-"is_blacklisted\" groups=\"base.group_user\"/>"
 
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.view_mail_mass_mailing_form
@@ -790,7 +780,7 @@ msgstr "要アクション"
 #: model:ir.model.fields,field_description:mass_mailing.field_mailing_list__active
 #: model:ir.model.fields,field_description:mass_mailing.field_mailing_mailing__active
 msgid "Active"
-msgstr "アクティブ"
+msgstr "有効"
 
 #. module: mass_mailing
 #: model:ir.model.fields,field_description:mass_mailing.field_ir_mail_server__active_mailing_ids
@@ -815,7 +805,7 @@ msgstr "活動状態"
 #. module: mass_mailing
 #: model:ir.model.fields,field_description:mass_mailing.field_mailing_mailing__activity_type_icon
 msgid "Activity Type Icon"
-msgstr "活動種別アイコン"
+msgstr "活動タイプアイコン"
 
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.s_three_columns
@@ -1198,6 +1188,7 @@ msgstr "登録解除時のブラックリストオプション"
 
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.mailing_contact_view_search
+#: model_terms:ir.ui.view,arch_db:mass_mailing.mailing_subscription_view_form
 msgid "Blacklisted"
 msgstr "ブラックリスト"
 
@@ -1287,7 +1278,7 @@ msgstr "本文をメールに変換して送信"
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.snippet_options
 msgid "Bold"
-msgstr "ボールド"
+msgstr "太字"
 
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.s_product_list
@@ -2690,7 +2681,7 @@ msgstr "斜体"
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.email_designer_snippets
 msgid "Items"
-msgstr "件"
+msgstr "項目"
 
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.s_call_to_action
@@ -3348,7 +3339,7 @@ msgstr "モデル"
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.s_comparisons
 msgid "More"
-msgstr "さらに"
+msgstr "さらに表示"
 
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.s_color_blocks_2
@@ -3964,7 +3955,7 @@ msgstr "離陸準備完了！"
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.view_mail_mass_mailing_form
 msgid "Ready to unleash emails?"
-msgstr ""
+msgstr "メール配信の準備はできましたか?"
 
 #. module: mass_mailing
 #: model:ir.model.fields,field_description:mass_mailing.field_mailing_subscription__opt_out_reason_id
@@ -4190,7 +4181,7 @@ msgstr "スケジュール"
 #: model:ir.model.fields,field_description:mass_mailing.field_mailing_trace_report__scheduled
 #: model_terms:ir.ui.view,arch_db:mass_mailing.mailing_trace_view_search
 msgid "Scheduled"
-msgstr "予定"
+msgstr "スケジュール済"
 
 #. module: mass_mailing
 #: model:ir.model.fields,field_description:mass_mailing.field_mailing_trace_report__scheduled_date
@@ -4490,14 +4481,14 @@ msgstr "小"
 #: model_terms:ir.ui.view,arch_db:mass_mailing.snippet_options
 #: model_terms:ir.ui.view,arch_db:mass_mailing.snippet_options_border_line_widgets
 msgid "Solid"
-msgstr "ソリッド"
+msgstr "実線"
 
 #. module: mass_mailing
 #: model:ir.model.fields,field_description:mass_mailing.field_mailing_mailing__source_id
 #: model:ir.model.fields,field_description:mass_mailing.field_mailing_trace__source_id
 #: model_terms:ir.ui.view,arch_db:mass_mailing.view_mail_mass_mailing_form
 msgid "Source"
-msgstr "情報源"
+msgstr "流入元"
 
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.s_media_list
@@ -4559,7 +4550,7 @@ msgid ""
 "Planned: Future activities."
 msgstr ""
 "活動に基づくステータス\n"
-"遅延: 期限が既に過ぎています\n"
+"期限超過：期限日がすでに過ぎています\n"
 "今日: 活動日は今日です\n"
 "予定: 将来の活動。"
 
@@ -4824,6 +4815,11 @@ msgstr ""
 "このEメールはバウンスが多すぎるため、自動的にブロックリストに追加されました。"
 
 #. module: mass_mailing
+#: model_terms:ir.ui.view,arch_db:mass_mailing.mailing_subscription_view_form
+msgid "This email is blacklisted for mass mailings"
+msgstr ""
+
+#. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.mailing_contact_view_form
 msgid "This email is blacklisted for mass mailings. Click to unblacklist."
 msgstr ""
@@ -4884,7 +4880,7 @@ msgstr "件名"
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.s_rating_options
 msgid "Title Position"
-msgstr "件名ポジション"
+msgstr "タイトル位置"
 
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.s_three_columns
@@ -5210,8 +5206,8 @@ msgid ""
 "                by clicking on <i class=\"fa fa-floppy-o text-warning\"></i> "
 "icon next to \"Recipients\"."
 msgstr ""
-"メールのデザイン中に、受信者をフィルタリングするための規則を定義することがで"
-"きます。\n"
+"メールのデザイン中に、受信者をフィルタリングするためのルールを定義することが"
+"できます。\n"
 "                同じ条件を保存して後で使用するには、\n"
 "　　　　 \"受信者\"の隣にある <i class=\"fa fa-floppy-o text-warning\"></i>ア"
 "イコンをクリックして、お気に入りリストに追加します。"
@@ -5538,9 +5534,18 @@ msgstr "このバージョンを受信します。<br/>"
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.s_rating_options
 msgid "⌙ Active"
-msgstr "⌙ アクティブ"
+msgstr "⌙ 有効"
 
 #. module: mass_mailing
 #: model_terms:ir.ui.view,arch_db:mass_mailing.s_rating_options
 msgid "⌙ Inactive"
-msgstr "⌙ 非アクティブ"
+msgstr "⌙ 無効"
+
+#~ msgid ""
+#~ "<i class=\"fa fa-ban text-danger\" role=\"img\" title=\"This email is "
+#~ "blacklisted for mass mailings\" aria-label=\"Blacklisted\" "
+#~ "invisible=\"not is_blacklisted\" groups=\"base.group_user\"/>"
+#~ msgstr ""
+#~ "<i class=\"fa fa-ban text-danger\" role=\"img\" title=\"This email is "
+#~ "blacklisted for mass mailings\" aria-label=\"Blacklisted\" "
+#~ "invisible=\"not is_blacklisted\" groups=\"base.group_user\"/>"

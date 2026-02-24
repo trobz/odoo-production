@@ -10,13 +10,13 @@
 # Dorin Hongu <dhongu@gmail.com>, 2025
 # Larisa_nexterp, 2025
 # Comaniciu Ioana <ioana@dakai.ro>, 2025.
-# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-28 18:36+0000\n"
-"PO-Revision-Date: 2025-12-09 08:20+0000\n"
+"POT-Creation-Date: 2026-02-20 18:37+0000\n"
+"PO-Revision-Date: 2026-02-07 18:00+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Romanian <https://translate.odoo.com/projects/odoo-18/"
 "point_of_sale/ro/>\n"
@@ -24,8 +24,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n==1 ? 0 : "
-"(n==0 || (n%100 > 0 && n%100 < 20)) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2;\n"
 "X-Generator: Weblate 5.14.3\n"
 
 #. module: point_of_sale
@@ -687,6 +687,12 @@ msgid "Action Needed"
 msgstr "Acțiune necesară"
 
 #. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Action cancelled (%(ACTION)s)"
+msgstr ""
+
+#. module: point_of_sale
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/screens/product_screen/action_pad/action_pad.xml:0
 #: code:addons/point_of_sale/static/src/app/screens/product_screen/control_buttons/control_buttons.xml:0
@@ -1270,7 +1276,7 @@ msgstr "Bancă"
 #. odoo-python
 #: code:addons/point_of_sale/models/pos_payment_method.py:0
 msgid "Bank App (QR Code)"
-msgstr ""
+msgstr "Aplicația bancară (cod QR)"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_session__bank_payment_ids
@@ -1652,6 +1658,12 @@ msgid "Cash difference observed during the counting (Profit) - closing"
 msgstr "Diferență de numerar observată la numărare (Profit) - închidere"
 
 #. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Cash drawer opened (%(ACTION)s)"
+msgstr ""
+
+#. module: point_of_sale
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/store/pos_store.js:0
 msgid "Cash in / out"
@@ -1985,8 +1997,26 @@ msgstr "Închidere sesiune"
 #. module: point_of_sale
 #. odoo-python
 #: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Closing counted: %s \n"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
 msgid "Closing difference in %(payment_method)s (%(session)s)"
 msgstr "Diferență la închidere în %(payment_method)s (%(session)s)"
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Closing difference: %s \n"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Closing expected: %s \n"
+msgstr ""
 
 #. module: point_of_sale
 #. odoo-javascript
@@ -3241,6 +3271,12 @@ msgid "For imprecise industrial touchscreens."
 msgstr "Pentru ecrane tactile industriale imprecise."
 
 #. module: point_of_sale
+#. odoo-javascript
+#: code:addons/point_of_sale/static/src/app/screens/payment_screen/payment_lines/payment_lines.xml:0
+msgid "Force Cancel"
+msgstr "Forțează anularea"
+
+#. module: point_of_sale
 #. odoo-python
 #: code:addons/point_of_sale/models/pos_session.py:0
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_form_pos_close_session_wizard
@@ -3252,6 +3288,12 @@ msgstr "Forțează închiderea sesiunii"
 #: code:addons/point_of_sale/static/src/app/screens/payment_screen/payment_lines/payment_lines.xml:0
 msgid "Force Done"
 msgstr "Forțează finalizarea"
+
+#. module: point_of_sale
+#. odoo-javascript
+#: code:addons/point_of_sale/static/src/app/screens/payment_screen/payment_lines/payment_lines.xml:0
+msgid "Force cancel"
+msgstr ""
 
 #. module: point_of_sale
 #. odoo-javascript
@@ -4599,7 +4641,7 @@ msgstr "Nomenclator"
 #. odoo-python
 #: code:addons/point_of_sale/models/pos_payment_method.py:0
 msgid "None required"
-msgstr ""
+msgstr "Nu este necesar"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_report_pos_order_search
@@ -4848,6 +4890,24 @@ msgstr "Soldul de deschidere adunat la toate tranzacțiile cu numerar."
 #: code:addons/point_of_sale/static/src/app/store/opening_control_popup/opening_control_popup.xml:0
 msgid "Opening cash"
 msgstr "Numerar la deschidere"
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Opening cash counted: %s \n"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Opening cash difference: %s \n"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Opening cash expected: %s \n"
+msgstr ""
 
 #. module: point_of_sale
 #. odoo-python
@@ -6217,6 +6277,11 @@ msgstr "Etichetă produs"
 #: model:ir.model.fields,field_description:point_of_sale.field_report_pos_order__product_tmpl_id
 msgid "Product Template"
 msgstr "Șablon produs"
+
+#. module: point_of_sale
+#: model:ir.model,name:point_of_sale.model_product_template_attribute_exclusion
+msgid "Product Template Attribute Exclusion"
+msgstr "Excludere atribut șablon produs"
 
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_product_template_attribute_line
@@ -7673,7 +7738,7 @@ msgstr "Tel:"
 #. odoo-python
 #: code:addons/point_of_sale/models/pos_payment_method.py:0
 msgid "Terminal"
-msgstr ""
+msgstr "Terminal"
 
 #. module: point_of_sale
 #. odoo-javascript

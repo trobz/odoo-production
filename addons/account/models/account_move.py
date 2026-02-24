@@ -2,7 +2,7 @@
 
 import calendar
 from collections import defaultdict
-from contextlib import ExitStack, contextmanager
+from contextlib import ExitStack, contextmanager, nullcontext
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
 from hashlib import sha256
@@ -28,6 +28,7 @@ from odoo.tools import (
     float_repr,
     format_amount,
     format_date,
+    format_list,
     formatLang,
     frozendict,
     get_lang,
@@ -358,6 +359,7 @@ class AccountMove(models.Model):
         copy=False,
         store=True,
         compute='_compute_delivery_date',
+        inverse='_inverse_delivery_date',
         precompute=True,
         readonly=False,
     )
@@ -1029,10 +1031,10 @@ class AccountMove(models.Model):
     @api.depends('bank_partner_id')
     def _compute_partner_bank_id(self):
         for move in self:
-            # This will get the bank account from the partner in an order with the trusted first
+            # This will get the trusted bank accounts from the partner
             bank_ids = move.bank_partner_id.bank_ids.filtered(
-                lambda bank: not bank.company_id or bank.company_id == move.company_id
-            ).sorted(lambda bank: not bank.allow_out_payment)
+                lambda bank: (not bank.company_id or bank.company_id == move.company_id) and bank.allow_out_payment
+            )
             move.partner_bank_id = bank_ids[:1]
 
     @api.depends('partner_id')
@@ -1078,16 +1080,20 @@ class AccountMove(models.Model):
         self.ensure_one()
         return self.invoice_date or fields.Date.context_today(self)
 
+    def _get_expected_currency_rate_at(self, date):
+        self.ensure_one()
+        return self.env['res.currency']._get_conversion_rate(
+            from_currency=self.company_currency_id,
+            to_currency=self.currency_id,
+            company=self.company_id,
+            date=date,
+        )
+
     @api.depends('currency_id', 'company_currency_id', 'company_id', 'invoice_date')
     def _compute_expected_currency_rate(self):
         for move in self:
             if move.currency_id:
-                move.expected_currency_rate = move.env['res.currency']._get_conversion_rate(
-                    from_currency=move.company_currency_id,
-                    to_currency=move.currency_id,
-                    company=move.company_id,
-                    date=move._get_invoice_currency_rate_date(),
-                )
+                move.expected_currency_rate = move._get_expected_currency_rate_at(move._get_invoice_currency_rate_date())
             else:
                 move.expected_currency_rate = 1
 
@@ -1477,6 +1483,11 @@ class AccountMove(models.Model):
             else:
                 move.invoice_payments_widget = False
 
+    def _get_product_base_line_currency_rate(self, product_line):
+        if self.is_invoice(include_receipts=True):
+            return self.invoice_currency_rate
+        return abs(product_line.amount_currency / product_line.balance) if product_line.balance else 0.0
+
     def _prepare_product_base_line_for_taxes_computation(self, product_line):
         """ Convert an account.move.line having display_type='product' into a base line for the taxes computation.
 
@@ -1486,17 +1497,13 @@ class AccountMove(models.Model):
         self.ensure_one()
         is_invoice = self.is_invoice(include_receipts=True)
         sign = self.direction_sign if is_invoice else 1
-        if is_invoice:
-            rate = self.invoice_currency_rate
-        else:
-            rate = (abs(product_line.amount_currency) / abs(product_line.balance)) if product_line.balance else 0.0
 
         return self.env['account.tax']._prepare_base_line_for_taxes_computation(
             product_line,
             price_unit=product_line.price_unit if is_invoice else product_line.amount_currency,
             quantity=product_line.quantity if is_invoice else 1.0,
             discount=product_line.discount if is_invoice else 0.0,
-            rate=rate,
+            rate=self._get_product_base_line_currency_rate(product_line),
             sign=sign,
             special_mode=False if is_invoice else 'total_excluded',
             name=product_line.name,
@@ -2201,6 +2208,9 @@ class AccountMove(models.Model):
     # -------------------------------------------------------------------------
     # INVERSE METHODS
     # -------------------------------------------------------------------------
+
+    def _inverse_delivery_date(self):
+        pass
 
     def _inverse_tax_totals(self):
         with self._disable_recursion({'records': self}, 'skip_invoice_sync') as disabled:
@@ -3686,7 +3696,7 @@ class AccountMove(models.Model):
                 # "year range monthly"
                 param['anti_regex'] = self._make_regex_non_capturing(self._sequence_yearly_regex.split('(?P<seq>')[0]) + '$'
 
-            if param.get('anti_regex') and not self.journal_id.sequence_override_regex:
+            if param.get('anti_regex') and not self.journal_id.sequence_override_regex and not self.env.context.get('no_anti_regex'):
                 where_string += " AND sequence_prefix !~ %(anti_regex)s "
 
         if self.journal_id.refund_sequence:
@@ -4387,7 +4397,10 @@ class AccountMove(models.Model):
                         if success or file_data['type'] == 'pdf' or file_data['attachment'].mimetype in ALLOWED_MIMETYPES:
                             (invoice.invoice_line_ids - existing_lines).is_imported = True
                             if not extend_with_existing_lines:
-                                invoice.with_context(default_move_type=invoice.move_type)._link_bill_origin_to_purchase_orders(timeout=4)
+                                try:
+                                    invoice.with_context(default_move_type=invoice.move_type)._link_bill_origin_to_purchase_orders(timeout=4)
+                                except (UserError, ValueError):
+                                    _logger.exception("Failed to link bill to purchase order")
                             invoices |= invoice
                             current_invoice = self.env['account.move']
                             add_file_data_results(file_data, invoice)
@@ -5069,6 +5082,10 @@ class AccountMove(models.Model):
                     "The recipient bank account linked to this invoice is archived.\n"
                     "So you cannot confirm the invoice."
                 ))
+            if invoice.partner_bank_id and invoice.is_inbound() and not invoice.partner_bank_id.allow_out_payment:
+                raise UserError(_(
+                    "The company bank account linked to this invoice is not trusted, please double-check and trust it before confirming, or remove it"
+                ))
             if float_compare(invoice.amount_total, 0.0, precision_rounding=invoice.currency_id.rounding) < 0:
                 validation_msgs.add(_(
                     "You cannot validate an invoice with a negative total amount. "
@@ -5086,14 +5103,14 @@ class AccountMove(models.Model):
             # lines are recomputed accordingly.
             if not invoice.invoice_date:
                 if invoice.is_sale_document(include_receipts=True):
-                    invoice_currency_rate_inserted = invoice.invoice_currency_rate
-                    invoice.invoice_date = fields.Date.context_today(self)
-                    if invoice_currency_rate_inserted != invoice.expected_currency_rate:
-                        invoice.invoice_currency_rate = invoice_currency_rate_inserted
+                    is_manual_rate = invoice.invoice_currency_rate != invoice._get_expected_currency_rate_at(invoice.create_date.date())
+                    with self.env.protecting([self._fields['invoice_currency_rate']], invoice) if is_manual_rate else nullcontext():
+                        invoice.invoice_date = fields.Date.context_today(self)
                 elif invoice.is_purchase_document(include_receipts=True):
                     validation_msgs.add(_("The Bill/Refund date is required to validate this document."))
 
         for move in self:
+            move.line_ids._check_constrains_account_id_journal_id()
             if move.state in ['posted', 'cancel']:
                 validation_msgs.add(_('The entry %(name)s (id %(id)s) must be in draft.', name=move.name, id=move.id))
             if not move.line_ids.filtered(lambda line: line.display_type not in ('line_section', 'line_note')):
@@ -5119,9 +5136,23 @@ class AccountMove(models.Model):
             if move.journal_id.autocheck_on_post:
                 move.checked = move.journal_id.autocheck_on_post
 
+            move_company_and_parents = move.company_id.sudo().parent_ids
+            mismatched_accounts = move.line_ids.mapped('account_id').filtered(lambda account: not move_company_and_parents & account.sudo().company_ids)
+            if mismatched_accounts:
+                validation_msgs.add(self.env._(
+                    "The entry is using accounts (%(accounts_codes_names)s) from a different company.",
+                    accounts_codes_names=format_list(self.env, mismatched_accounts.mapped('display_name'))
+                ))
+
         if validation_msgs:
             msg = "\n".join([line for line in validation_msgs])
             raise UserError(msg)
+
+        if inactive_analytic_ids := self.line_ids.with_context(active_test=False).distribution_analytic_account_ids.filtered(lambda a: not a.active):
+            raise UserError(_(
+                "You cannot post an entry with an archived analytic account: %s",
+                ', '.join(inactive_analytic_ids.mapped('name')),
+            ))
 
         if soft:
             future_moves = self.filtered(lambda move: move.date > fields.Date.context_today(self))
@@ -5317,7 +5348,22 @@ class AccountMove(models.Model):
         }
 
     def action_update_fpos_values(self):
-        self.invoice_line_ids._compute_price_unit()
+        lines_to_recompute = self.env['account.move.line']
+        for line in self.invoice_line_ids:
+            if line.display_type in ('line_section', 'line_note'):
+                continue
+            if not line.price_unit:
+                lines_to_recompute |= line
+                continue
+            new_taxes = line._get_computed_taxes()
+            if line.tax_ids.filtered('price_include') != new_taxes.filtered('price_include'):
+                line.price_unit = line.product_id._get_tax_included_unit_price_from_price(
+                    line.price_unit,
+                    line.tax_ids,
+                    fiscal_position=line.move_id.fiscal_position_id,
+                    product_taxes_after_fp=new_taxes,
+                )
+        lines_to_recompute._compute_price_unit()
         self.invoice_line_ids._compute_tax_ids()
         self.line_ids._compute_account_id()
 
@@ -5333,8 +5379,8 @@ class AccountMove(models.Model):
         }
 
     def action_switch_move_type(self):
-        if any(move.posted_before for move in self):
-            raise ValidationError(_("You cannot switch the type of a document which has been posted once."))
+        if any((move.posted_before and move.name) for move in self):
+            raise ValidationError(_("You cannot switch the type of a document with an existing sequence number."))
         if any(move.move_type == "entry" for move in self):
             raise ValidationError(_("This action isn't available for this document."))
 
@@ -6534,9 +6580,6 @@ class AccountMove(models.Model):
         This is necessary to avoid the re-generation of the PDF through the action_report.
         Indeed, once a legal PDF is generated, it should be used and not re-generated.
         """
-        report = self.env['ir.actions.report'].search([('report_name', '=', 'account.report_invoice_with_payments'), ('binding_model_id', '!=', False)], limit=1)
-        if report:
-            return []
         return [{
             'key': 'download_pdf',
             'description': _('PDF'),

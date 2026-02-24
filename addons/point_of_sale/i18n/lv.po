@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* point_of_sale
+# * point_of_sale
 #
 # Translators:
 # Artjoms Ustinovs <artyom.ustinov2010@yandex.ru>, 2024
@@ -13,21 +13,22 @@
 # Armīns Jeltajevs <armins.jeltajevs@gmail.com>, 2025
 # Will Sensors, 2025
 # ievaputnina <ievai.putninai@gmail.com>, 2025
-#
+# Weblate <noreply-mt-weblate@weblate.org>, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-28 18:36+0000\n"
-"PO-Revision-Date: 2024-09-25 09:41+0000\n"
-"Last-Translator: ievaputnina <ievai.putninai@gmail.com>, 2025\n"
-"Language-Team: Latvian (https://app.transifex.com/odoo/teams/41243/lv/)\n"
+"POT-Creation-Date: 2026-02-20 18:37+0000\n"
+"PO-Revision-Date: 2026-02-07 18:01+0000\n"
+"Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
+"Language-Team: Latvian <https://translate.odoo.com/projects/odoo-18/"
+"point_of_sale/lv/>\n"
 "Language: lv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
-"2);\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;\n"
+"X-Generator: Weblate 5.14.3\n"
 
 #. module: point_of_sale
 #. odoo-python
@@ -550,7 +551,7 @@ msgstr ""
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.res_config_settings_view_form
 msgid "Accept payments with a Six payment terminal"
-msgstr ""
+msgstr "Pieņemt maksājumus ar Six maksājumu termināli"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.res_config_settings_view_form
@@ -631,6 +632,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_session__message_needaction
 msgid "Action Needed"
 msgstr "Nepieciešama darbība"
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Action cancelled (%(ACTION)s)"
+msgstr ""
 
 #. module: point_of_sale
 #. odoo-javascript
@@ -1576,6 +1583,12 @@ msgid "Cash difference observed during the counting (Profit) - closing"
 msgstr ""
 
 #. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Cash drawer opened (%(ACTION)s)"
+msgstr ""
+
+#. module: point_of_sale
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/store/pos_store.js:0
 msgid "Cash in / out"
@@ -1898,7 +1911,25 @@ msgstr ""
 #. module: point_of_sale
 #. odoo-python
 #: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Closing counted: %s \n"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
 msgid "Closing difference in %(payment_method)s (%(session)s)"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Closing difference: %s \n"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Closing expected: %s \n"
 msgstr ""
 
 #. module: point_of_sale
@@ -3126,6 +3157,12 @@ msgid "For imprecise industrial touchscreens."
 msgstr ""
 
 #. module: point_of_sale
+#. odoo-javascript
+#: code:addons/point_of_sale/static/src/app/screens/payment_screen/payment_lines/payment_lines.xml:0
+msgid "Force Cancel"
+msgstr "Atcelt piespiedu kārtā"
+
+#. module: point_of_sale
 #. odoo-python
 #: code:addons/point_of_sale/models/pos_session.py:0
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_form_pos_close_session_wizard
@@ -3136,6 +3173,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/app/screens/payment_screen/payment_lines/payment_lines.xml:0
 msgid "Force Done"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-javascript
+#: code:addons/point_of_sale/static/src/app/screens/payment_screen/payment_lines/payment_lines.xml:0
+msgid "Force cancel"
 msgstr ""
 
 #. module: point_of_sale
@@ -4671,6 +4714,24 @@ msgstr "Atvēršanas skaidrā nauda"
 #. module: point_of_sale
 #. odoo-python
 #: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Opening cash counted: %s \n"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Opening cash difference: %s \n"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+msgid "Opening cash expected: %s \n"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
 msgid "Opening control message: "
 msgstr ""
 
@@ -6007,6 +6068,11 @@ msgstr "Preces iezīme"
 #: model:ir.model.fields,field_description:point_of_sale.field_report_pos_order__product_tmpl_id
 msgid "Product Template"
 msgstr "Preces viedne"
+
+#. module: point_of_sale
+#: model:ir.model,name:point_of_sale.model_product_template_attribute_exclusion
+msgid "Product Template Attribute Exclusion"
+msgstr "Prečes veidnes atribūta izslēgšana"
 
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_product_template_attribute_line

@@ -11,14 +11,14 @@
 # Malaz Abuidris <msea@odoo.com>, 2025
 # Wil Odoo, 2025
 # MAHAMADASIF ANSARI <maan@odoo.com>, 2025.
-# "Malaz Siddig Elsayed Abuidris (msea)" <msea@odoo.com>, 2025.
-# Weblate <noreply-mt-weblate@weblate.org>, 2025.
+# "Malaz Siddig Elsayed Abuidris (msea)" <msea@odoo.com>, 2025, 2026.
+# Weblate <noreply-mt-weblate@weblate.org>, 2025, 2026.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:36+0000\n"
-"PO-Revision-Date: 2025-12-06 17:08+0000\n"
+"POT-Creation-Date: 2026-02-20 18:37+0000\n"
+"PO-Revision-Date: 2026-02-14 18:01+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-18/account/"
 "ar/>\n"
@@ -73,6 +73,14 @@ msgstr ""
 "         على سبيل المثال ، 180 ÷ (1 - 10%) = 200 (لا يشمل السعر)\n"
 "         على سبيل المثال ، 200 × (1 - 10%) = 180 (السعر مشمول)\n"
 "        "
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_move_send.py:0
+msgid ""
+"\n"
+"Please contact your administrator."
+msgstr ""
 
 #. module: account
 #. odoo-python
@@ -1899,6 +1907,8 @@ msgid ""
 "Account Code Mapping cannot be accessed directly. It is designed to be used "
 "only through the Chart of Accounts."
 msgstr ""
+"لا يمكن الوصول إلى تخطيط رموز الحسابات مباشرة. فهو مصمم للاستخدام فقط من "
+"خلال شجرة الحسابات."
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_report_line__account_codes_formula
@@ -2384,6 +2394,8 @@ msgid ""
 "Accrual entry created on %(date)s: %(accrual_entry)s.                And its "
 "reverse entry: %(reverse_entry)s."
 msgstr ""
+"تم إنشاء قيد الاستحقاق بتاريخ %(date)s: %(accrual_entry)s.                "
+"والقيد المعاكس له هو: %(reverse_entry)s."
 
 #. module: account
 #. odoo-python
@@ -3332,7 +3344,7 @@ msgstr "المرفقات "
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_send_wizard__attachments_not_supported
 msgid "Attachments Not Supported"
-msgstr ""
+msgstr "المرفقات غير مدعومة"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_mail_mail__account_audit_log_activated
@@ -3871,6 +3883,8 @@ msgid ""
 "Batch invoice sending is unavailable. Please, activate the cron to enable "
 "batch sending of invoices."
 msgstr ""
+"خاصية إرسال الفواتير المجمعة غير متوفرة في الوقت الحالي. يرجى تفعيل cron "
+"لتمكين خاصية إرسال الفواتير المجمعة."
 
 #. module: account
 #. odoo-python
@@ -3879,6 +3893,8 @@ msgid ""
 "Batch invoice sending is unavailable. Please, contact your system "
 "administrator to activate the cron to enable batch sending of invoices."
 msgstr ""
+"خاصية إرسال الفواتير المجمعة غير متوفرة. يرجى التواصل مع مسؤول النظام لتفعيل "
+"cron لتمكين إرسال الفواتير المجمعة."
 
 #. module: account
 #. odoo-javascript
@@ -4501,6 +4517,8 @@ msgid "Chart of accounts set!"
 msgstr "تم إعداد شجرة الحسابات! "
 
 #. module: account
+#. odoo-python
+#: code:addons/account/models/account_move_send.py:0
 #: model_terms:ir.ui.view,arch_db:account.report_hash_integrity
 msgid "Check"
 msgstr "فحص "
@@ -6476,7 +6494,7 @@ msgstr "مبلغ العرض "
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_send_wizard__display_attachments_widget
 msgid "Display Attachments Widget"
-msgstr ""
+msgstr "عرض أداة المرفقات"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_payment_term_line__display_days_next_month
@@ -7968,7 +7986,7 @@ msgstr "تاريخ الإقفال العام "
 #. odoo-python
 #: code:addons/account/wizard/account_move_send_batch_wizard.py:0
 msgid "Go to cron configuration"
-msgstr ""
+msgstr "انتقل إلى تهيئة cron"
 
 #. module: account
 #: model_terms:ir.actions.act_window,help:account.action_account_audit_trail_report
@@ -9074,6 +9092,11 @@ msgid "Invoice Outstanding Credits Debits Widget"
 msgstr "أداة الدائن والمدين المستحق في الفاتورة "
 
 #. module: account
+#: model:ir.actions.report,name:account.account_invoices
+msgid "Invoice PDF"
+msgstr "ملف PDF للفاتورة "
+
+#. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line__invoice_partner_display_name
 #: model:ir.model.fields,field_description:account.field_account_move__invoice_partner_display_name
 msgid "Invoice Partner Display Name"
@@ -9737,6 +9760,7 @@ msgstr "دفتر اليومية: "
 #: model:ir.actions.act_window,name:account.action_account_journal_form
 #: model:ir.model.fields,field_description:account.field_account_report__filter_journals
 #: model:ir.ui.menu,name:account.menu_action_account_journal_form
+#: model_terms:ir.ui.view,arch_db:account.view_account_move_line_filter
 msgid "Journals"
 msgstr "دفاتر اليومية"
 
@@ -11743,7 +11767,6 @@ msgstr "PAY001"
 #. module: account
 #. odoo-python
 #: code:addons/account/models/account_move.py:0
-#: model:ir.actions.report,name:account.account_invoices
 msgid "PDF"
 msgstr "PDF"
 
@@ -15485,6 +15508,14 @@ msgid ""
 msgstr "لقد قام الشريك التجاري بتحديث كافة القيود المحاسبية. "
 
 #. module: account
+#. odoo-python
+#: code:addons/account/models/account_move.py:0
+msgid ""
+"The company bank account linked to this invoice is not trusted, please "
+"double-check and trust it before confirming, or remove it"
+msgstr ""
+
+#. module: account
 #: model:ir.model.fields,help:account.field_account_tax_repartition_line__company_id
 msgid "The company this distribution line belongs to."
 msgstr "الشركة التي ينتمي إليها هذا التوزيع. "
@@ -15641,6 +15672,14 @@ msgstr "القيد %(name)s (المعرف %(id)s) يجب أن يكون في حا
 #: model:ir.model.fields,help:account.field_account_move__secured
 msgid "The entry is secured with an inalterable hash."
 msgstr "تم تأمين هذا القيد باستخدام تجزئة غير قابلة للتغيير. "
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_move.py:0
+msgid ""
+"The entry is using accounts (%(accounts_codes_names)s) from a different "
+"company."
+msgstr ""
 
 #. module: account
 #: model:ir.model.fields,help:account.field_product_category__property_account_expense_categ_id
@@ -16098,6 +16137,14 @@ msgstr "لا يطابق الرصيد الجاري (%s) الرصيد النهائ
 
 #. module: account
 #. odoo-python
+#: code:addons/account/models/account_move_send.py:0
+msgid ""
+"The scheduled action 'Send Invoices automatically' is archived. You won't be "
+"able to send invoices in batch."
+msgstr ""
+
+#. module: account
+#. odoo-python
 #: code:addons/account/models/account_report.py:0
 msgid "The sections defined on a report cannot have sections themselves."
 msgstr "لا يمكن أن يكون للأقسام المحددة في تقرير أقسام تابعة لها. "
@@ -16453,18 +16500,6 @@ msgstr "هذه السنة"
 #. module: account
 #. odoo-python
 #: code:addons/account/models/account_account.py:0
-msgid ""
-"This account is configured in %(journal_names)s journal(s) (ids %"
-"(journal_ids)s) as payment debit or credit account. This means that this "
-"account's type should be reconcilable."
-msgstr ""
-"تمت تهيئة الحساب في يومية/يوميات %(journal_names)s (المُعرّفات %"
-"(journal_ids)s) كحساب دفع عن طريق الخصم أو حساب الرصيد. هذا يعني أن نوع "
-"الحساب هذا قابل للتسوية. "
-
-#. module: account
-#. odoo-python
-#: code:addons/account/models/account_account.py:0
 msgid "This account was split off from %(account_name)s (%(company_name)s)."
 msgstr "تم تقسيم الحساب من %(account_name)s (%(company_name)s). "
 
@@ -16763,7 +16798,7 @@ msgstr "سيتم ترحيل هذخ الحركة الدورية حتى وفي ه�
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.res_config_settings_view_form
 msgid "This setting locks once a journal entry is created."
-msgstr ""
+msgstr "يتم قفل هذا الإعداد بمجرد أن يتم إنشاء قييد في دفتر اليومية."
 
 #. module: account
 #. odoo-python
@@ -18371,6 +18406,13 @@ msgstr "لا يمكنك إضافة/تعديل القيود قبل وأثناء %
 
 #. module: account
 #. odoo-python
+#: code:addons/account/models/account_payment.py:0
+msgid ""
+"You cannot change the amount of a payment with multiple liquidity lines."
+msgstr ""
+
+#. module: account
+#. odoo-python
 #: code:addons/account/models/company.py:0
 msgid ""
 "You cannot change the currency of the company since some journal items "
@@ -18628,6 +18670,12 @@ msgstr "لا يمكنك ترحيل قيد في يومية مؤرشفة (%(journa
 
 #. module: account
 #. odoo-python
+#: code:addons/account/models/account_move.py:0
+msgid "You cannot post an entry with an archived analytic account: %s"
+msgstr ""
+
+#. module: account
+#. odoo-python
 #: code:addons/account/models/res_currency.py:0
 msgid ""
 "You cannot reduce the number of decimal places of a currency which has "
@@ -18725,8 +18773,9 @@ msgstr ""
 #. module: account
 #. odoo-python
 #: code:addons/account/models/account_move.py:0
-msgid "You cannot switch the type of a document which has been posted once."
-msgstr "لا يمكنك تبديل نوع المستند الذي تم نشره مرة واحدة."
+msgid ""
+"You cannot switch the type of a document with an existing sequence number."
+msgstr ""
 
 #. module: account
 #. odoo-python
@@ -18841,6 +18890,16 @@ msgid ""
 msgstr ""
 "عليك تهيئة 'يومية أرباح أو خسائر الصرف' في إعدادات شركتك حتى تتمكن من إدارة "
 "تدوين القيود المحاسبية ذات الصلة بالاختلافات بين أسعار الصرف تلقائياً. "
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_journal_dashboard.py:0
+msgid ""
+"You may only use samples in demo mode, try uploading one of your invoices "
+"instead."
+msgstr ""
+"لا يمكنك استخدام النماذج إلا في الوضع التجريبي، حاول تحميل إحدى فواتيرك بدلاً "
+"من ذلك."
 
 #. module: account
 #. odoo-python
@@ -19411,8 +19470,17 @@ msgid ""
 msgstr ""
 "{{ object.company_id.name }} إيصال الدفع  (المرجع {{ object.name or 'n/a' }})"
 
-#~ msgid "Invoice PDF"
-#~ msgstr "ملف PDF للفاتورة "
+#~ msgid "You cannot switch the type of a document which has been posted once."
+#~ msgstr "لا يمكنك تبديل نوع المستند الذي تم نشره مرة واحدة."
+
+#~ msgid ""
+#~ "This account is configured in %(journal_names)s journal(s) (ids %"
+#~ "(journal_ids)s) as payment debit or credit account. This means that this "
+#~ "account's type should be reconcilable."
+#~ msgstr ""
+#~ "تمت تهيئة الحساب في يومية/يوميات %(journal_names)s (المُعرّفات %"
+#~ "(journal_ids)s) كحساب دفع عن طريق الخصم أو حساب الرصيد. هذا يعني أن نوع "
+#~ "الحساب هذا قابل للتسوية. "
 
 #~ msgid "This setting cannot be changed after an invoice is created."
 #~ msgstr "لا يمكن تغيير هذا الإعداد بعد إنشاء الفاتورة. "

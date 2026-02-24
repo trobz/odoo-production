@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-11 02:16+0000\n"
+"POT-Creation-Date: 2026-02-05 18:37+0000\n"
 "PO-Revision-Date: 2024-09-25 09:41+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
@@ -255,6 +255,12 @@ msgstr "附件數目"
 #: model_terms:ir.ui.view,arch_db:hr_attendance.view_employee_tree_inherit_leave
 msgid "Attendance"
 msgstr "出勤"
+
+#. module: hr_attendance
+#. odoo-javascript
+#: code:addons/hr_attendance/static/src/components/attendance_menu/attendance_menu.js:0
+msgid "Attendance Error"
+msgstr ""
 
 #. module: hr_attendance
 #: model:ir.model.fields,field_description:hr_attendance.field_res_company__attendance_from_systray
@@ -618,6 +624,12 @@ msgid "Connect an RFID reader, and scan a token."
 msgstr "連線至 RFID（射頻識別）讀取器，並掃瞄標籤。"
 
 #. module: hr_attendance
+#. odoo-javascript
+#: code:addons/hr_attendance/static/src/components/attendance_menu/attendance_menu.js:0
+msgid "Connection lost. Check in/out could not be recorded."
+msgstr ""
+
+#. module: hr_attendance
 #: model:ir.model.fields,field_description:hr_attendance.field_hr_attendance__in_country_name
 msgid "Country"
 msgstr "國家"
@@ -719,8 +731,9 @@ msgstr "顯示時間"
 #. odoo-python
 #: code:addons/hr_attendance/models/hr_attendance.py:0
 msgid ""
-"Do not have access, user cannot edit the attendances that are not his own."
-msgstr "無訪問權限，用戶無法編輯非本人的出勤情況"
+"Do not have access, user cannot edit the attendances that are not their own "
+"or if they are not the attendance manager of the employee."
+msgstr ""
 
 #. module: hr_attendance
 #: model:ir.model,name:hr_attendance.model_hr_employee
@@ -1693,6 +1706,10 @@ msgstr "或"
 #: code:addons/hr_attendance/static/src/public_kiosk/public_kiosk_app.xml:0
 msgid "with optional PIN code"
 msgstr "- 使用可選用的 PIN 個人密碼"
+
+#~ msgid ""
+#~ "Do not have access, user cannot edit the attendances that are not his own."
+#~ msgstr "無訪問權限，用戶無法編輯非本人的出勤情況"
 
 #~ msgid "Departement"
 #~ msgstr "部門"

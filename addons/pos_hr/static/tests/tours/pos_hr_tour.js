@@ -8,7 +8,7 @@ import * as NumberPopup from "@point_of_sale/../tests/tours/utils/number_popup_u
 import * as Dialog from "@point_of_sale/../tests/tours/utils/dialog_util";
 import * as SelectionPopup from "@point_of_sale/../tests/tours/utils/selection_popup_util";
 import { registry } from "@web/core/registry";
-import { negate } from "@point_of_sale/../tests/tours/utils/common";
+import { negate, scan_barcode } from "@point_of_sale/../tests/tours/utils/common";
 
 registry.category("web_tour.tours").add("PosHrTour", {
     steps: () =>
@@ -306,5 +306,58 @@ registry.category("web_tour.tours").add("test_maximum_closing_difference", {
             Chrome.hasBtn("Proceed anyway"),
             Chrome.clickBtn("Proceed anyway"),
             PosHr.loginScreenIsShown(),
+        ].flat(),
+});
+
+registry.category("web_tour.tours").add("test_scan_employee_barcode_with_pos_hr_disabled", {
+    steps: () =>
+        [
+            // scan a barcode with 041 as prefix for cashiers
+            scan_barcode("041123"),
+            Chrome.clickBtn("Open Register"),
+            ProductScreen.isShown(),
+        ].flat(),
+});
+
+registry.category("web_tour.tours").add("test_cost_and_margin_visibility", {
+    steps: () =>
+        [
+            Chrome.clickBtn("Open Register"),
+            PosHr.loginScreenIsShown(),
+            PosHr.clickLoginButton(),
+            SelectionPopup.has("Mitchell Admin", { run: "click" }),
+            Dialog.confirm("Open Register"),
+            ProductScreen.clickInfoProduct("product_a"),
+            {
+                trigger: ".section-financials :contains('Margin')",
+            },
+            Dialog.confirm("Ok"),
+            PosHr.clickCashierName(),
+            SelectionPopup.has("Test Employee 3", { run: "click" }),
+            ProductScreen.clickInfoProduct("product_a"),
+            {
+                trigger: negate(".section-financials :contains('Margin')"),
+            },
+        ].flat(),
+});
+
+registry.category("web_tour.tours").add("test_cost_and_margin_visibility_no_access", {
+    steps: () =>
+        [
+            Chrome.clickBtn("Unlock Register"),
+            PosHr.loginScreenIsShown(),
+            PosHr.clickLoginButton(),
+            SelectionPopup.has("Mitchell Admin", { run: "click" }),
+            ProductScreen.clickInfoProduct("product_a"),
+            {
+                trigger: negate(".section-financials :contains('Margin')"),
+            },
+            Dialog.confirm("Ok"),
+            PosHr.clickCashierName(),
+            SelectionPopup.has("Test Employee 3", { run: "click" }),
+            ProductScreen.clickInfoProduct("product_a"),
+            {
+                trigger: negate(".section-financials :contains('Margin')"),
+            },
         ].flat(),
 });

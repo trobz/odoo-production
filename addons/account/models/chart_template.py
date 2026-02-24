@@ -140,6 +140,9 @@ class AccountChartTemplate(models.AbstractModel):
         :param install_demo: whether or not we should load demo data right after loading the
             chart template.
         :type install_demo: bool
+        :param force_create: Determines the loading behavior. If True, forces the creation of new entries;
+            if False, prevents new creations and performs updates on existing data where applicable.
+        :type force_create: bool
         """
         if not company:
             return
@@ -1435,6 +1438,7 @@ class AccountChartTemplate(models.AbstractModel):
             chart_template_data = template_data or self.env['account.chart.template'] \
                 .with_context(ignore_missing_tags=True) \
                 .with_company(company) \
+                .sudo() \
                 ._get_chart_template_data(company.chart_template)
             chart_template_data.pop('template_data', None)
             for mname, data in chart_template_data.items():

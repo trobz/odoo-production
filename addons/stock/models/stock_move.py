@@ -558,7 +558,7 @@ Please change the quantity done or the rounding precision of your unit of measur
                     continue
                 if move_update.date_deadline and delta:
                     move_update.date_deadline -= delta
-                else:
+                elif not move_update.date_deadline or move_update.date_deadline != new_deadline:
                     move_update.date_deadline = new_deadline
 
     @api.depends('move_line_ids.lot_id', 'move_line_ids.quantity')
@@ -597,7 +597,7 @@ Please change the quantity done or the rounding precision of your unit of measur
                         mls_without_lots -= move_line
                     else:  # No line without serial number, creates a new one.
                         reserved_quants = self.env['stock.quant']._get_reserve_quantity(move.product_id, move.location_id, 1.0, lot_id=lot)
-                        if reserved_quants:
+                        if reserved_quants and reserved_quants[0][0].lot_id:
                             move_line_vals = self._prepare_move_line_vals(quantity=0, reserved_quant=reserved_quants[0][0])
                         else:
                             move_line_vals = self._prepare_move_line_vals(quantity=0)
@@ -696,8 +696,10 @@ Please change the quantity done or the rounding precision of your unit of measur
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if (vals.get('quantity') or vals.get('move_line_ids')) and 'lot_ids' in vals:
+            if vals.get('move_line_ids') and vals.get('lot_ids'):
                 vals.pop('lot_ids')
+            if vals.get('quantity') and vals.get('lot_ids'):
+                vals.pop('quantity')
             picking_id = self.env['stock.picking'].browse(vals.get('picking_id'))
             if picking_id.group_id and 'group_id' not in vals:
                 vals['group_id'] = picking_id.group_id.id
@@ -1344,8 +1346,8 @@ Please change the quantity done or the rounding precision of your unit of measur
     def _key_assign_picking(self):
         self.ensure_one()
         keys = (self.group_id, self.location_id, self.location_dest_id, self.picking_type_id)
-        if self.partner_id and not self.group_id:
-            keys += (self.partner_id, )
+        if self.move_orig_ids.picking_id and not self.group_id:
+            keys += (self.move_orig_ids.picking_id, )
         return keys
 
     def _search_picking_for_assignation_domain(self):
@@ -1356,12 +1358,12 @@ Please change the quantity done or the rounding precision of your unit of measur
             ('picking_type_id', '=', self.picking_type_id.id),
             ('printed', '=', False),
             ('state', 'in', ['draft', 'confirmed', 'waiting', 'partially_available', 'assigned'])]
-        if self.partner_id and not self.group_id:
-            domain += [('partner_id', '=', self.partner_id.id)]
         return domain
 
     def _search_picking_for_assignation(self):
         self.ensure_one()
+        if not self.group_id:
+            return self.env['stock.picking']
         domain = self._search_picking_for_assignation_domain()
         picking = self.env['stock.picking'].search(domain, limit=1)
         return picking
@@ -2009,7 +2011,13 @@ Please change the quantity done or the rounding precision of your unit of measur
             if move.propagate_cancel:
                 # only cancel the next move if all my siblings are also cancelled
                 if all(state == 'cancel' for state in siblings_states):
-                    move.move_dest_ids.filtered(lambda m: m.state != 'done' and move.location_dest_id == m.location_id)._action_cancel()
+                    move_dest_to_cancel = move.move_dest_ids.filtered(lambda m: m.state != 'done' and move.location_dest_id == m.location_id)
+                    move_dest_to_cancel._action_cancel()
+                    # Unlink from dest if dest is not in the chain
+                    (move.move_dest_ids - move_dest_to_cancel).write({
+                        'procure_method': 'make_to_stock',
+                        'move_orig_ids': [Command.unlink(move.id)]
+                    })
                     if cancel_moves_origin:
                         move.move_orig_ids.sudo().filtered(lambda m: m.state != 'done')._action_cancel()
             else:
@@ -2245,6 +2253,13 @@ Please change the quantity done or the rounding precision of your unit of measur
             return result
         else:
             return []
+
+    def _get_report_description_picking(self):
+        self.ensure_one()
+        description = self.description_picking or ""
+        if description.startswith(self.product_id.display_name):
+            description = description.removeprefix(self.product_id.display_name).strip()
+        return description
 
     def _set_quantity_done_prepare_vals(self, qty):
         def _move_qty(qty):

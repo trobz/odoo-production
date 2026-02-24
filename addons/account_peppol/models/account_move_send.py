@@ -1,3 +1,5 @@
+import logging
+
 from base64 import b64encode
 from datetime import timedelta
 
@@ -5,6 +7,8 @@ from odoo import _, api, fields, models
 
 from odoo.addons.account.models.company import PEPPOL_LIST
 from odoo.addons.account_edi_proxy_client.models.account_edi_proxy_user import AccountEdiProxyError
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountMoveSend(models.AbstractModel):
@@ -72,16 +76,18 @@ class AccountMoveSend(models.AbstractModel):
                 'message': _("You can send this invoice electronically via Peppol."),
                 **what_is_peppol_alert,
             }
-        elif (peppol_not_selected_partners := filter_peppol_state(not_peppol_moves, ['valid'])) and any_moves_not_sent_peppol:
-            # Check for not peppol partners that are on the network.
-            if len(peppol_not_selected_partners) == 1:
-                alerts['account_peppol_partner_want_peppol'] = {
-                    'message': _(
-                        "%s has requested electronic invoices reception on Peppol.",
-                        peppol_not_selected_partners.display_name
-                    ),
-                    **what_is_peppol_alert,
-                }
+        elif (
+            (peppol_not_selected_partners := filter_peppol_state(not_peppol_moves, ['valid']))
+            and any_moves_not_sent_peppol
+            and len(peppol_not_selected_partners) == 1  # Check for not peppol partners that are on the network
+        ):
+            alerts['account_peppol_partner_want_peppol'] = {
+                'message': _(
+                    "%s has requested electronic invoices reception on Peppol.",
+                    peppol_not_selected_partners.display_name
+                ),
+                **what_is_peppol_alert,
+            }
         return alerts
 
     # -------------------------------------------------------------------------
@@ -155,6 +161,7 @@ class AccountMoveSend(models.AbstractModel):
 
         params = {'documents': []}
         invoices_data_peppol = {}
+        to_lock_peppol_invoices = self.env['account.move']
         for invoice, invoice_data in invoices_data.items():
             partner = invoice.partner_id.commercial_partner_id.with_company(invoice.company_id)
             if 'peppol' in invoice_data['sending_methods']:
@@ -163,9 +170,16 @@ class AccountMoveSend(models.AbstractModel):
                     invoice_data['error'] = _('The partner is missing Peppol EAS and/or Endpoint identifier.')
                     continue
 
-                if self.env['res.partner']._get_peppol_verification_state(partner.peppol_endpoint, partner.peppol_eas, invoice_data['invoice_edi_format']) != 'valid':
+                if (
+                    peppol_verification_state := self.env['res.partner']
+                        .with_context(check_self_billing_support=invoice._is_exportable_as_self_invoice())
+                        ._get_peppol_verification_state(partner.peppol_endpoint, partner.peppol_eas, invoice_data['invoice_edi_format'])
+                 ) != 'valid':
                     invoice.peppol_move_state = 'error'
-                    invoice_data['error'] = _('Please verify partner configuration in partner settings.')
+                    if peppol_verification_state == 'not_valid_format':
+                        invoice_data['error'] = _('The partner has indicated it does not accept this document type, so you cannot send this invoice via Peppol.')
+                    else:
+                        invoice_data['error'] = _('Please verify partner configuration in partner settings.')
                     continue
 
                 if not self._is_applicable_to_move('peppol', invoice, **invoice_data):
@@ -186,6 +200,11 @@ class AccountMoveSend(models.AbstractModel):
                     )
                     continue
 
+                if invoice.invoice_pdf_report_id and self._needs_ubl_postprocessing(invoice_data):
+                    self._postprocess_invoice_ubl_xml(invoice, invoice_data)
+                    xml_file = invoice_data['ubl_cii_xml_attachment_values']['raw']
+                    filename = invoice_data['ubl_cii_xml_attachment_values']['name']
+
                 if len(xml_file) > 64000000:
                     invoice_data['error'] = _("Invoice %s is too big to send via peppol (64MB limit)", invoice.name)
                     continue
@@ -197,12 +216,16 @@ class AccountMoveSend(models.AbstractModel):
                     'ubl': b64encode(xml_file).decode(),
                 })
                 invoices_data_peppol[invoice] = invoice_data
+                to_lock_peppol_invoices |= invoice
 
         if not params['documents']:
             return
 
-        edi_user = next(iter(invoices_data)).company_id.account_edi_proxy_client_ids.filtered(
-            lambda u: u.proxy_type == 'peppol')
+        edi_user = next(iter(invoices_data)).company_id.account_peppol_edi_user
+
+        if not self.env['res.company']._with_locked_records(to_lock_peppol_invoices, allow_raising=False):
+            _logger.error('Failed to lock invoices for Peppol sending')
+            return
 
         try:
             response = edi_user._call_peppol_proxy(
@@ -245,10 +268,18 @@ class AccountMoveSend(models.AbstractModel):
                         for attachment in attachments_linked
                     ] + base_attachments
 
-                    invoice.with_context(no_new_invoice=True).message_post(
+                    new_message = invoice.with_context(no_new_invoice=True).message_post(
                         body=attachments_linked_message,
                         attachments=attachments_embedded
                     )
+
+                    if new_message.attachment_ids.ids:
+                        self.env.cr.execute("UPDATE ir_attachment SET res_id = NULL WHERE id IN %s", [tuple(new_message.attachment_ids.ids)])
+                        new_message.attachment_ids.invalidate_recordset(['res_id', 'res_model'], flush=False)
+                        new_message.attachment_ids.write({
+                            'res_model': new_message._name,
+                            'res_id': new_message.id,
+                        })
                 self.env.ref('account_peppol.ir_cron_peppol_get_message_status')._trigger(at=fields.Datetime.now() + timedelta(minutes=5))
 
         if self._can_commit():

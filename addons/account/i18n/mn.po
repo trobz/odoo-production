@@ -38,8 +38,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-12 18:36+0000\n"
-"PO-Revision-Date: 2025-12-13 16:38+0000\n"
+"POT-Creation-Date: 2026-02-20 18:37+0000\n"
+"PO-Revision-Date: 2025-12-26 15:41+0000\n"
 "Last-Translator: Weblate <noreply-mt-weblate@weblate.org>\n"
 "Language-Team: Mongolian <https://translate.odoo.com/projects/odoo-18/"
 "account/mn/>\n"
@@ -91,6 +91,14 @@ msgstr ""
 "- Хувь татвар орсон: Татварын хэмжээ үнийн хуваагдал байна:\n"
 "жишээ нь 180 / (1 - 10%) = 200 (үнэд татвар ороогүй)\n"
 "жишээ нь 200 * (1 - 10%) = 180 (үнэд татвар орсон)"
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_move_send.py:0
+msgid ""
+"\n"
+"Please contact your administrator."
+msgstr ""
 
 #. module: account
 #. odoo-python
@@ -4558,6 +4566,8 @@ msgid "Chart of accounts set!"
 msgstr ""
 
 #. module: account
+#. odoo-python
+#: code:addons/account/models/account_move_send.py:0
 #: model_terms:ir.ui.view,arch_db:account.report_hash_integrity
 msgid "Check"
 msgstr "Шалгах"
@@ -7109,7 +7119,7 @@ msgstr ""
 #. module: account
 #: model:ir.model.fields,help:account.field_account_journal__alias_domain
 msgid "Email domain e.g. 'example.com' in 'odoo@example.com'"
-msgstr ""
+msgstr "Имэй домэйн ж.ш 'example.com' цаашлаад 'odoo@example.com' гэх мэт"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_move_send_wizard__mail_template_id
@@ -9181,6 +9191,11 @@ msgid "Invoice Outstanding Credits Debits Widget"
 msgstr "Нэхэмжлэлийн тулгагдаагүй дебет ба кредит шалгах"
 
 #. module: account
+#: model:ir.actions.report,name:account.account_invoices
+msgid "Invoice PDF"
+msgstr ""
+
+#. module: account
 #: model:ir.model.fields,field_description:account.field_account_bank_statement_line__invoice_partner_display_name
 #: model:ir.model.fields,field_description:account.field_account_move__invoice_partner_display_name
 msgid "Invoice Partner Display Name"
@@ -9848,6 +9863,7 @@ msgstr "Журнал:"
 #: model:ir.actions.act_window,name:account.action_account_journal_form
 #: model:ir.model.fields,field_description:account.field_account_report__filter_journals
 #: model:ir.ui.menu,name:account.menu_action_account_journal_form
+#: model_terms:ir.ui.view,arch_db:account.view_account_move_line_filter
 msgid "Journals"
 msgstr "Журнал"
 
@@ -11575,7 +11591,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account/controllers/terms.py:0
 msgid "Oops"
-msgstr ""
+msgstr "Өө яанаа"
 
 #. module: account
 #. odoo-python
@@ -11872,7 +11888,6 @@ msgstr ""
 #. module: account
 #. odoo-python
 #: code:addons/account/models/account_move.py:0
-#: model:ir.actions.report,name:account.account_invoices
 msgid "PDF"
 msgstr "PDF"
 
@@ -13685,7 +13700,7 @@ msgstr ""
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.account_default_terms_and_conditions
 msgid "STANDARD TERMS AND CONDITIONS OF SALE"
-msgstr ""
+msgstr "БОРЛУУЛАЛТЫН СТАНДАРТ НӨХЦӨЛ БОЛОН ЖУРАМ"
 
 #. module: account
 #: model:account.account,name:account.1_expense_salary
@@ -15657,6 +15672,14 @@ msgid ""
 msgstr ""
 
 #. module: account
+#. odoo-python
+#: code:addons/account/models/account_move.py:0
+msgid ""
+"The company bank account linked to this invoice is not trusted, please "
+"double-check and trust it before confirming, or remove it"
+msgstr ""
+
+#. module: account
 #: model:ir.model.fields,help:account.field_account_tax_repartition_line__company_id
 msgid "The company this distribution line belongs to."
 msgstr ""
@@ -15817,6 +15840,14 @@ msgstr "Ажил гүйлгээ %(name)s (id %(id)s) нь ноорог төлө�
 #: model:ir.model.fields,help:account.field_account_bank_statement_line__secured
 #: model:ir.model.fields,help:account.field_account_move__secured
 msgid "The entry is secured with an inalterable hash."
+msgstr ""
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_move.py:0
+msgid ""
+"The entry is using accounts (%(accounts_codes_names)s) from a different "
+"company."
 msgstr ""
 
 #. module: account
@@ -16271,7 +16302,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account/controllers/terms.py:0
 msgid "The requested page is invalid, or doesn't exist anymore."
-msgstr ""
+msgstr "Гарын үсгийн хүсэлт дахь хуудас буруу, эсвэл алга болсон байна."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_move_line__amount_residual_currency
@@ -16297,6 +16328,14 @@ msgid "The running balance (%s) doesn't match the specified ending balance."
 msgstr ""
 "Гүйлгээний үлдэгдэл (%s) нь тодорхойлогдсон хаалтын үлдэгдэлтэй тэнцэхгүй "
 "байна."
+
+#. module: account
+#. odoo-python
+#: code:addons/account/models/account_move_send.py:0
+msgid ""
+"The scheduled action 'Send Invoices automatically' is archived. You won't be "
+"able to send invoices in batch."
+msgstr ""
 
 #. module: account
 #. odoo-python
@@ -16662,18 +16701,6 @@ msgstr "Энэ долоо хоног"
 #: model:ir.model.fields.selection,name:account.selection__account_report__default_opening_date_filter__this_year
 msgid "This Year"
 msgstr "Энэ Жил"
-
-#. module: account
-#. odoo-python
-#: code:addons/account/models/account_account.py:0
-msgid ""
-"This account is configured in %(journal_names)s journal(s) (ids %"
-"(journal_ids)s) as payment debit or credit account. This means that this "
-"account's type should be reconcilable."
-msgstr ""
-"Энэ данс нь %(journal_names)s журнал(ууд)д (ID-ууд: %(journal_ids)s) "
-"төлбөрийн дебет эсвэл кредит данс болгон тохируулагдсан байна. Иймд уг "
-"дансны төрөл тулгалт хийж болохоор байх шаардлагатай."
 
 #. module: account
 #. odoo-python
@@ -17426,7 +17453,7 @@ msgstr "Төрлийн нэр"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.partner_view_buttons
 msgid "Type a message..."
-msgstr ""
+msgstr "Зурвасын төрөл..."
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_bank_statement_line__qr_code_method
@@ -18621,6 +18648,13 @@ msgstr ""
 
 #. module: account
 #. odoo-python
+#: code:addons/account/models/account_payment.py:0
+msgid ""
+"You cannot change the amount of a payment with multiple liquidity lines."
+msgstr ""
+
+#. module: account
+#. odoo-python
 #: code:addons/account/models/company.py:0
 msgid ""
 "You cannot change the currency of the company since some journal items "
@@ -18897,6 +18931,12 @@ msgstr "Архивлагдсан журналд (%(journal)s) бичилт ба�
 
 #. module: account
 #. odoo-python
+#: code:addons/account/models/account_move.py:0
+msgid "You cannot post an entry with an archived analytic account: %s"
+msgstr ""
+
+#. module: account
+#. odoo-python
 #: code:addons/account/models/res_currency.py:0
 msgid ""
 "You cannot reduce the number of decimal places of a currency which has "
@@ -18996,7 +19036,8 @@ msgstr ""
 #. module: account
 #. odoo-python
 #: code:addons/account/models/account_move.py:0
-msgid "You cannot switch the type of a document which has been posted once."
+msgid ""
+"You cannot switch the type of a document with an existing sequence number."
 msgstr ""
 
 #. module: account
@@ -19116,6 +19157,14 @@ msgstr ""
 
 #. module: account
 #. odoo-python
+#: code:addons/account/models/account_journal_dashboard.py:0
+msgid ""
+"You may only use samples in demo mode, try uploading one of your invoices "
+"instead."
+msgstr ""
+
+#. module: account
+#. odoo-python
 #: code:addons/account/wizard/account_merge_wizard.py:0
 msgid "You must select at least 2 accounts."
 msgstr ""
@@ -19160,6 +19209,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account.account_default_terms_and_conditions
 msgid "You should update this document to reflect your T&amp;C."
 msgstr ""
+"Энэ баримтыг таны Үйлчилгээний нөхцөл (T&amp;C)-ийг тусгахаар шинэчлэх "
+"шаардлагатай."
 
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.portal_my_home_invoice
@@ -19381,7 +19432,7 @@ msgstr "ж.нь. https://www.odoo.com"
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.view_account_journal_form
 msgid "e.g. mycompany.com"
-msgstr ""
+msgstr "ж.ш mycompany.com"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_res_partner__invoice_edi_format
@@ -19616,7 +19667,7 @@ msgstr ""
 #. module: account
 #: model_terms:ir.ui.view,arch_db:account.report_invoice_document
 msgid "units"
-msgstr ""
+msgstr "ширхэг"
 
 #. module: account
 #. odoo-javascript
@@ -19691,6 +19742,15 @@ msgid ""
 msgstr ""
 "{{ object.company_id.name }} Төлбөрийн баримт (Лавлах {{ object.name or 'n/"
 "a' }})"
+
+#~ msgid ""
+#~ "This account is configured in %(journal_names)s journal(s) (ids %"
+#~ "(journal_ids)s) as payment debit or credit account. This means that this "
+#~ "account's type should be reconcilable."
+#~ msgstr ""
+#~ "Энэ данс нь %(journal_names)s журнал(ууд)д (ID-ууд: %(journal_ids)s) "
+#~ "төлбөрийн дебет эсвэл кредит данс болгон тохируулагдсан байна. Иймд уг "
+#~ "дансны төрөл тулгалт хийж болохоор байх шаардлагатай."
 
 #~ msgid "This setting cannot be changed after an invoice is created."
 #~ msgstr "Нэхэмжлэл үүсгэсний дараа энэ тохиргоог өөрчлөх боломжгүй."

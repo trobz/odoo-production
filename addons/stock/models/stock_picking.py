@@ -14,6 +14,7 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.osv import expression
 from odoo.tools import format_datetime, format_date, format_list, groupby, SQL
 from odoo.tools.float_utils import float_compare, float_is_zero
+from odoo.tools.misc import clean_context
 
 
 class PickingType(models.Model):
@@ -1210,6 +1211,7 @@ class Picking(models.Model):
             'views': [(view_id, 'list')],
             'domain': [('id', 'in', self.move_line_ids.ids)],
             'context': {
+                'sml_specific_default': True,
                 'default_picking_id': self.id,
                 'default_location_id': self.location_id.id,
                 'default_location_dest_id': self.location_dest_id.id,
@@ -1787,7 +1789,7 @@ class Picking(models.Model):
             return {}
 
     def _put_in_pack(self, move_line_ids):
-        package = self.env['stock.quant.package'].create({})
+        package = self._get_put_in_pack_package()
         package_type = move_line_ids.move_id.product_packaging_id.package_type_id
         if len(package_type) == 1:
             package.package_type_id = package_type
@@ -1810,6 +1812,9 @@ class Picking(models.Model):
                 'company_id': self.company_id.id,
             })
         return package
+
+    def _get_put_in_pack_package(self):
+        return self.env['stock.quant.package'].create({})
 
     def _post_put_in_pack_hook(self, package_id):
         if package_id and self.picking_type_id.auto_print_package_label:
@@ -1842,6 +1847,8 @@ class Picking(models.Model):
 
     def action_put_in_pack(self, move_lines_to_pack=False):
         self.ensure_one()
+        if self.env.context.get('sml_specific_default'):
+            self = self.with_context(clean_context(self.env.context))
         if self.state not in ('done', 'cancel'):
             move_line_ids = self._package_move_lines(move_lines_to_pack=move_lines_to_pack)
             if move_line_ids:

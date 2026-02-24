@@ -347,6 +347,7 @@
                     <filter string="Cash" name="cash" domain="[('journal_id.type', '=', 'cash')]" context="{'default_journal_type': 'cash'}"/>
                     <filter string="Credit" name="credit" domain="[('journal_id.type', '=', 'credit')]" context="{'default_journal_type': 'credit'}"/>
                     <filter string="Miscellaneous" domain="[('journal_id.type', '=', 'general')]" name="misc_filter" context="{'default_journal_type': 'general'}"/>
+                    <filter string="Journals" name="journal_ids" domain="[('journal_id', 'in', context.get('journal_ids'))]" invisible="not context.get('journal_ids')"/>
                     <separator/>
                     <filter string="Payable" domain="[('account_id.account_type', '=', 'liability_payable'), ('account_id.non_trade', '=', False)]" help="From Trade Payable accounts" name="trade_payable"/>
                     <filter string="Receivable" domain="[('account_id.account_type', '=', 'asset_receivable'), ('account_id.non_trade', '=', False)]" help="From Trade Receivable accounts" name="trade_receivable"/>
@@ -1406,7 +1407,7 @@
                                         <field name="debit" sum="Total Debit"/>
                                         <field name="credit" sum="Total Credit"/>
                                         <field name="balance" invisible="1"/>
-                                        <field name="tax_ids" string="Taxes Applied" widget="autosave_many2many_tags" options="{'no_create': True}"/>
+                                        <field name="tax_ids" string="Taxes Applied" widget="many2many_tags" options="{'no_create': True}"/>
                                         <field name="date_maturity" required="0" invisible="context.get('view_no_maturity', False)"/>
                                       </group>
                                     </form>

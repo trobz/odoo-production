@@ -1,9 +1,9 @@
 from markupsafe import Markup
 
-from odoo import _, models, Command
+from odoo import _, api, models
 from odoo.addons.base.models.res_bank import sanitize_account_number
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import float_is_zero, float_repr, format_list
+from odoo.tools import float_compare, float_is_zero, float_repr, format_list
 from odoo.tools.float_utils import float_round
 from odoo.tools.misc import clean_context, formatLang, html_escape
 from odoo.tools.xml_utils import find_xml_value
@@ -19,6 +19,7 @@ UOM_TO_UNECE_CODE = {
     'uom.product_uom_gram': 'GRM',
     'uom.product_uom_day': 'DAY',
     'uom.product_uom_hour': 'HUR',
+    'uom.product_uom_minute': 'MIN',
     'uom.product_uom_ton': 'TNE',
     'uom.product_uom_meter': 'MTR',
     'uom.product_uom_km': 'KMT',
@@ -39,6 +40,7 @@ UOM_TO_UNECE_CODE = {
     'uom.uom_square_foot': 'FTK',
     'uom.product_uom_yard': 'YRD',
     'uom.product_uom_millimeter': 'MMT',
+    'uom.product_uom_kwh': 'KWH',
 }
 
 # -------------------------------------------------------------------------
@@ -65,7 +67,7 @@ EAS_MAPPING = {
     'SG': {'0195': 'l10n_sg_unique_entity_number'},
     'GB': {'9932': 'vat'},
     'GR': {'9933': 'vat'},
-    'HR': {'9934': 'vat'},
+    'HR': {'9934': 'vat', '0088': 'company_registry'},
     'HU': {'9910': 'l10n_hu_eu_vat'},
     'IE': {'9935': 'vat'},
     'IS': {'0196': 'vat'},
@@ -108,6 +110,24 @@ EAS_MAPPING = {
     'TF': {'0009': 'siret', '9957': 'vat', '0002': None},  # French Southern and Antarctic Lands
     'WF': {'0009': 'siret', '9957': 'vat', '0002': None},  # Wallis and Futuna
     'YT': {'0009': 'siret', '9957': 'vat', '0002': None},  # Mayotte
+}
+
+# -------------------------------------------------------------------------
+# AREA of countries
+# -------------------------------------------------------------------------
+
+GST_COUNTRY_CODES = {
+    'AU', 'NZ', 'IN', 'SG', 'MY', 'PK', 'BD', 'LK', 'NP', 'BT', 'PG', 'SA',
+    'AG', 'BS', 'BB', 'DM', 'GD', 'JM', 'KN', 'LC', 'VC', 'TT',
+}
+
+EUROPEAN_ECONOMIC_AREA_COUNTRY_CODES = {
+    # EU Member States
+    'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE',
+    'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE', 'CH',
+
+    # EFTA Countries in the EEA
+    'IS', 'LI', 'NO',
 }
 
 # -------------------------------------------------------------------------
@@ -170,6 +190,9 @@ class AccountEdiCommon(models.AbstractModel):
     # HELPERS
     # -------------------------------------------------------------------------
 
+    def module_installed(self, module_name):
+        return self.env['ir.module.module']._get(module_name).state == 'installed'
+
     def format_float(self, amount, precision_digits):
         if amount is None:
             return None
@@ -199,6 +222,9 @@ class AccountEdiCommon(models.AbstractModel):
             val = find_xml_value(xpath, tree, nsmap)
             if val:
                 return val
+
+    def _can_export_selfbilling(self):
+        return False
 
     # -------------------------------------------------------------------------
     # TAXES
@@ -234,8 +260,6 @@ class AccountEdiCommon(models.AbstractModel):
             }
 
         # add Norway, Iceland, Liechtenstein
-        european_economic_area = self.env.ref('base.europe').country_ids.mapped('code') + ['NO', 'IS', 'LI']
-
         if customer.country_id.code == 'ES' and customer.zip:
             if customer.zip[:2] in ('35', '38'):  # Canary
                 # [BR-IG-10]-A VAT breakdown (BG-23) with VAT Category code (BT-118) "IGIC" shall not have a VAT
@@ -248,20 +272,31 @@ class AccountEdiCommon(models.AbstractModel):
             if not tax or tax.amount == 0:
                 # in theory, you should indicate the precise law article
                 return create_dict(tax_category_code='E', tax_exemption_reason=_('Articles 226 items 11 to 15 Directive 2006/112/EN'))
+            elif tax.has_negative_factor:
+                # Special case: Purchase reverse-charge taxes for self-billed invoices.
+                # From the buyer's perspective, this is a standard tax with a non-zero percentage but
+                # two tax repartition lines that cancel each other out.
+                # But from the seller's perspective, this is a zero-percent tax (VAT liability is deferred
+                # to the buyer).
+                # For a self-billed invoice we, the buyer, create the invoice on behalf of the seller.
+                # So in the XML we put the zero-percent tax with code 'AE' that the seller would have used.
+                return create_dict(tax_category_code='AE')
             else:
                 return create_dict(tax_category_code='S')  # standard VAT
 
-        if supplier.country_id.code in european_economic_area and supplier.vat:
-            if tax.amount != 0:
+        if supplier.country_id.code in EUROPEAN_ECONOMIC_AREA_COUNTRY_CODES and supplier.vat:
+            if tax.amount != 0 and not tax.has_negative_factor:
                 # otherwise, the validator will complain because G and K code should be used with 0% tax
+                # For purchase reverse-charge taxes for self-billed invoices, we put the zero-percent tax
+                # with code 'G' or 'K' that the buyer would have used, see explanation above.
                 return create_dict(tax_category_code='S')
-            if customer.country_id.code not in european_economic_area:
+            if customer.country_id.code not in EUROPEAN_ECONOMIC_AREA_COUNTRY_CODES:
                 return create_dict(
                     tax_category_code='G',
                     tax_exemption_reason_code='VATEX-EU-G',
                     tax_exemption_reason=_('Export outside the EU'),
                 )
-            if customer.country_id.code in european_economic_area:
+            if customer.country_id.code in EUROPEAN_ECONOMIC_AREA_COUNTRY_CODES:
                 return create_dict(
                     tax_category_code='K',
                     tax_exemption_reason_code='VATEX-EU-IC',
@@ -392,9 +427,8 @@ class AccountEdiCommon(models.AbstractModel):
 
         # Update the invoice.
         invoice.move_type = move_type
-        with invoice._get_edi_creation() as invoice:
+        with invoice.with_context(disable_onchange_name_predictive=True)._get_edi_creation() as invoice:
             logs = self._import_fill_invoice(invoice, tree, qty_factor)
-
         if invoice:
             body = Markup("<strong>%s</strong>") % \
                 _("Format used to import the invoice: %s",
@@ -409,7 +443,7 @@ class AccountEdiCommon(models.AbstractModel):
         # For UBL, we should override the computed tax amount if it is less than 0.05 different of the one in the xml.
         # In order to support use case where the tax total is adapted for rounding purpose.
         # This has to be done after the first import in order to let Odoo compute the taxes before overriding if needed.
-        with invoice._get_edi_creation() as invoice:
+        with invoice.with_context(disable_onchange_name_predictive=True)._get_edi_creation() as invoice:
             self._correct_invoice_tax_amount(tree, invoice)
 
         attachments = self._import_attachments(invoice, tree)
@@ -478,32 +512,9 @@ class AccountEdiCommon(models.AbstractModel):
         return partner, logs
 
     def _import_partner_bank(self, invoice, bank_details):
-        """ Retrieve the bank account, if no matching bank account is found, create it """
-        # clear the context, because creation of partner when importing should not depend on the context default values
-        ResPartnerBank = self.env['res.partner.bank'].with_env(self.env(context=clean_context(self.env.context)))
         bank_details = list(set(map(sanitize_account_number, bank_details)))
-        partner = self.env.company.partner_id if invoice.is_inbound() else invoice.partner_id
-        banks_to_create = []
-        acc_number_partner_bank_dict = {
-            bank.sanitized_acc_number: bank
-            for bank in ResPartnerBank.with_context(active_test=False).search(
-                [('company_id', 'in', [False, invoice.company_id.id]), ('acc_number', 'in', bank_details)]
-            )
-        }
-        for account_number in bank_details:
-            partner_bank = acc_number_partner_bank_dict.get(account_number, ResPartnerBank)
-            if partner_bank.partner_id == partner:
-                if not partner_bank.active:
-                    partner_bank.active = True
-                invoice.partner_bank_id = partner_bank
-                return
-            elif not partner_bank and account_number:
-                banks_to_create.append({
-                    'acc_number': account_number,
-                    'partner_id': partner.id,
-                })
-        if banks_to_create:
-            invoice.partner_bank_id = ResPartnerBank.create(banks_to_create)[0]
+        body = _("The following bank account numbers got retrieved during the import : %s", ", ".join(bank_details))
+        invoice.with_context(no_new_invoice=True).message_post(body=body)
 
     def _import_document_allowance_charges(self, tree, record, tax_type, qty_factor=1):
         logs = []
@@ -621,6 +632,9 @@ class AccountEdiCommon(models.AbstractModel):
         lines_values = []
         for line_tree in tree.iterfind(xpath):
             line_values = self.with_company(invoice.company_id)._retrieve_invoice_line_vals(line_tree, invoice.move_type, qty_factor)
+            if line_values is None:
+                continue
+
             line_values['tax_ids'], tax_logs = self._retrieve_taxes(
                 invoice, line_values, invoice.journal_id.type,
             )
@@ -647,10 +661,48 @@ class AccountEdiCommon(models.AbstractModel):
                 'deferred_end_date': end_date,
             }
 
+        line_vals = self._retrieve_line_vals(tree, document_type, qty_factor)
+        if line_vals is None:
+            return None
+
         return {
-            **self._retrieve_line_vals(tree, document_type, qty_factor),
+            **line_vals,
             **deferred_values,
         }
+
+    @api.model
+    def _retrieve_rebate_val(self, tree, xpath_dict, quantity):
+        # Discount. /!\ as no percent discount can be set on a line, need to infer the percentage
+        # from the amount of the actual amount of the discount (the allowance charge)
+        rebate = 0
+        rebate_node = tree.find(xpath_dict['rebate'])
+        net_price_unit_node = tree.find(xpath_dict['net_price_unit'])
+        gross_price_unit_node = tree.find(xpath_dict['gross_price_unit'])
+        if rebate_node is not None:
+            rebate = float(rebate_node.text)
+        elif net_price_unit_node is not None and gross_price_unit_node is not None:
+            rebate = float(gross_price_unit_node.text) - float(net_price_unit_node.text)
+        return rebate
+
+    @api.model
+    def _retrieve_charge_allowance_vals(self, tree, xpath_dict, quantity):
+        charges = []
+        discount_amount = 0
+        for allowance_charge_node in tree.iterfind(xpath_dict['allowance_charge']):
+            charge_indicator = allowance_charge_node.findtext(xpath_dict['allowance_charge_indicator'])
+            amount = float(allowance_charge_node.findtext(xpath_dict['allowance_charge_amount'], default='0'))
+            reason_code = allowance_charge_node.findtext(xpath_dict['allowance_charge_reason_code'], default='')
+            reason = allowance_charge_node.findtext(xpath_dict['allowance_charge_reason'], default='')
+            if charge_indicator.lower() == 'true':
+                charges.append({
+                    'amount': amount,
+                    'line_quantity': quantity,
+                    'reason': reason,
+                    'reason_code': reason_code,
+                })
+            else:
+                discount_amount += amount
+        return discount_amount, charges
 
     def _retrieve_line_vals(self, tree, document_type=False, qty_factor=1):
         """
@@ -702,19 +754,9 @@ class AccountEdiCommon(models.AbstractModel):
         if gross_price_unit_node is not None:
             gross_price_unit = float(gross_price_unit_node.text)
 
-        # rebate (optional)
-        # Discount. /!\ as no percent discount can be set on a line, need to infer the percentage
-        # from the amount of the actual amount of the discount (the allowance charge)
-        rebate = 0
-        rebate_node = tree.find(xpath_dict['rebate'])
-        net_price_unit_node = tree.find(xpath_dict['net_price_unit'])
-        if rebate_node is not None:
-            rebate = float(rebate_node.text)
-        elif net_price_unit_node is not None and gross_price_unit_node is not None:
-            rebate = float(gross_price_unit_node.text) - float(net_price_unit_node.text)
-
         # net_price_unit (mandatory)
         net_price_unit = None
+        net_price_unit_node = tree.find(xpath_dict['net_price_unit'])
         if net_price_unit_node is not None:
             net_price_unit = float(net_price_unit_node.text)
 
@@ -740,29 +782,20 @@ class AccountEdiCommon(models.AbstractModel):
         # line_net_subtotal (mandatory)
         price_subtotal = None
         line_total_amount_node = tree.find(xpath_dict['line_total_amount'])
-        if line_total_amount_node is not None:
-            price_subtotal = float(line_total_amount_node.text)
+        if line_total_amount_node is None or line_total_amount_node.text is None or not line_total_amount_node.text.strip():
+            return None
+        price_subtotal = float(line_total_amount_node.text)
+        if price_subtotal == 0:
+            return None
 
         # quantity
         quantity = delivered_qty * qty_factor
 
+        # rebate (optional)
+        rebate = self._retrieve_rebate_val(tree, xpath_dict, quantity)
+
         # Charges are collected (they are used to create new lines), Allowances are transformed into discounts
-        charges = []
-        discount_amount = 0
-        for allowance_charge_node in tree.iterfind(xpath_dict['allowance_charge']):
-            charge_indicator = allowance_charge_node.findtext(xpath_dict['allowance_charge_indicator'])
-            amount = float(allowance_charge_node.findtext(xpath_dict['allowance_charge_amount'], default='0'))
-            reason_code = allowance_charge_node.findtext(xpath_dict['allowance_charge_reason_code'], default='')
-            reason = allowance_charge_node.findtext(xpath_dict['allowance_charge_reason'], default='')
-            if charge_indicator.lower() == 'true':
-                charges.append({
-                    'amount': amount,
-                    'line_quantity': quantity,
-                    'reason': reason,
-                    'reason_code': reason_code,
-                })
-            else:
-                discount_amount += amount
+        discount_amount, charges = self._retrieve_charge_allowance_vals(tree, xpath_dict, quantity)
 
         # price_unit
         charge_amount = sum(d['amount'] for d in charges)
@@ -789,7 +822,7 @@ class AccountEdiCommon(models.AbstractModel):
         #   * unit price = 1, qty = 0, but price_subtotal = -200
         # for instance, when filling a down payment as an document line. The equation in the docstring is not
         # respected, and the result will not be correct, so we just follow the simple rule below:
-        if net_price_unit is not None and price_subtotal != net_price_unit * (delivered_qty / basis_qty) - allow_charge_amount:
+        if net_price_unit is not None and float_compare(price_subtotal, net_price_unit * (delivered_qty / basis_qty) - allow_charge_amount, currency.decimal_places):
             if net_price_unit == 0 and delivered_qty == 0:
                 quantity = 1
                 price_unit = price_subtotal
@@ -835,7 +868,7 @@ class AccountEdiCommon(models.AbstractModel):
                     return tax
         return self.env['account.tax']
 
-    def _retrieve_taxes(self, record, line_values, tax_type):
+    def _retrieve_taxes(self, record, line_values, tax_type, tax_exigibility=False):
         """
         Retrieve the taxes on the document line at import.
 
@@ -856,7 +889,18 @@ class AccountEdiCommon(models.AbstractModel):
             ]
             tax = self.env['account.tax']
             if hasattr(record, '_get_specific_tax'):
-                tax = record._get_specific_tax(line_values['name'], 'percent', amount, tax_type)
+                tax = record._get_specific_tax(line_values['name'], 'percent', amount, tax_type).filtered_domain(domain)[:1]
+            if tax_exigibility:
+                if not tax and tax_exigibility:
+                    tax = self.env['account.tax'].search(domain + [('price_include', '=', False), ('tax_exigibility', '=', tax_exigibility)], limit=1)
+                if not tax and tax_exigibility:
+                    tax = self.env['account.tax'].search(domain + [('price_include', '=', True), ('tax_exigibility', '=', tax_exigibility)], limit=1)
+                if not tax:
+                    logs.append(
+                        _("Tax with matching exigibility could not be retrieved: '%(exigibility)s' for line '%(line)s'.",
+                        exigibility=tax_exigibility,
+                        line=line_values['name']),
+                    )
             if not tax:
                 tax = self.env['account.tax'].search(domain + [('price_include', '=', False)], limit=1)
             if not tax:
