@@ -4,8 +4,12 @@
 
 
 def conflict_period(
-        obj1_date_start, obj1_date_stop, obj2_date_start, obj2_date_stop,
-        limit_allowed=False):
+    obj1_date_start,
+    obj1_date_stop,
+    obj2_date_start,
+    obj2_date_stop,
+    limit_allowed=False,
+):
     """Seen 2 periods ; 2 objects with start dates, and optional stop /
     dates, indicate if period are conflicted or not.
 
@@ -17,6 +21,7 @@ def conflict_period(
     param limit_allowed indicated if objX.date_start == objY.date_stop is
     allowed or not.
     """
+
     def _conflict(date_start, date_stop):
         if not date_start:
             return True
@@ -30,60 +35,63 @@ def conflict_period(
     if not obj1_date_stop and not obj2_date_stop:
         # No stop Dates defined
         return {
-            'conflict': True,
-            'date_start': max(obj1_date_start, obj2_date_start),
-            'date_stop': False,
-            'type': 'partial',
+            "conflict": True,
+            "date_start": max(obj1_date_start, obj2_date_start),
+            "date_stop": False,
+            "type": "partial",
         }
 
     if not obj1_date_stop and _conflict(obj1_date_start, obj2_date_stop):
         # Stop date undefined for object 1
         return {
-            'conflict': True,
-            'date_start': obj2_date_start,
-            'date_stop': False,
-            'type': 'partial',
+            "conflict": True,
+            "date_start": obj2_date_start,
+            "date_stop": False,
+            "type": "partial",
         }
 
     if not obj2_date_stop and _conflict(obj2_date_start, obj1_date_stop):
         # Stop date undefined for object 2
         return {
-            'conflict': True,
-            'start_date': obj1_date_start,
-            'date_stop': False,
-            'type': 'partial',
+            "conflict": True,
+            "start_date": obj1_date_start,
+            "date_stop": False,
+            "type": "partial",
         }
 
-    if (_conflict(obj2_date_start, obj1_date_stop) and
-            _conflict(obj1_date_start, obj2_date_stop)):
+    if _conflict(obj2_date_start, obj1_date_stop) and _conflict(
+        obj1_date_start, obj2_date_stop
+    ):
         # Full superposition
         return {
-            'conflict': True,
-            'date_start': max(obj1_date_start, obj2_date_start),
-            'date_stop': min(obj1_date_stop, obj2_date_stop),
-            'type': 'full',
+            "conflict": True,
+            "date_start": max(obj1_date_start, obj2_date_start),
+            "date_stop": min(obj1_date_stop, obj2_date_stop),
+            "type": "full",
         }
 
-    if (_conflict(obj2_date_start, obj1_date_stop) and
-            not _conflict(obj2_date_stop, obj1_date_stop)):
+    if _conflict(obj2_date_start, obj1_date_stop) and not _conflict(
+        obj2_date_stop, obj1_date_stop
+    ):
         # Partial conflict on end of obj1
         return {
-            'conflict': True,
-            'date_start': obj2_date_start,
-            'date_stop': obj1_date_stop,
-            'type': 'partial',
+            "conflict": True,
+            "date_start": obj2_date_start,
+            "date_stop": obj1_date_stop,
+            "type": "partial",
         }
 
-    if (_conflict(obj1_date_start, obj2_date_stop) and
-            not _conflict(obj1_date_stop, obj2_date_stop)):
+    if _conflict(obj1_date_start, obj2_date_stop) and not _conflict(
+        obj1_date_stop, obj2_date_stop
+    ):
         # Partial conflict on begin of obj1
         return {
-            'conflict': True,
-            'date_start': obj1_date_start,
-            'date_stop': obj2_date_stop,
-            'type': 'partial',
+            "conflict": True,
+            "date_start": obj1_date_start,
+            "date_stop": obj2_date_stop,
+            "type": "partial",
         }
     return {
-        'conflict': False,
-        'type': 'none',
+        "conflict": False,
+        "type": "none",
     }

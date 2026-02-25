@@ -4,50 +4,50 @@
 # @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from datetime import datetime, timedelta, date
-from odoo import api, models, fields, _
+from datetime import date, datetime, timedelta
+
+from odoo import _, api, fields, models
+
 from .report_wallchart_common import rounding_limit
 
 WEEK_DAYS = {
-    'mo': _('Monday'),
-    'tu': _('Tuesday'),
-    'we': _('Wednesday'),
-    'th': _('Thursday'),
-    'fr': _('Friday'),
-    'sa': _('Saturday'),
-    'su': _('Sunday'),
+    "mo": _("Monday"),
+    "tu": _("Tuesday"),
+    "we": _("Wednesday"),
+    "th": _("Thursday"),
+    "fr": _("Friday"),
+    "sa": _("Saturday"),
+    "su": _("Sunday"),
 }
 
 
 class ReportWallchartFTOP(models.AbstractModel):
-    _name = 'report.coop_shift.report_wallchart_ftop'
-    _inherit = 'report.coop_shift.report_wallchart_common'
+    _name = "report.coop_shift.report_wallchart_ftop"
+    _inherit = "report.coop_shift.report_wallchart_common"
 
     @api.model
     def _get_weekday_number(self, wd):
-        if wd == 'mo':
+        if wd == "mo":
             return 0
-        elif wd == 'tu':
+        elif wd == "tu":
             return 1
-        elif wd == 'we':
+        elif wd == "we":
             return 2
-        elif wd == 'th':
+        elif wd == "th":
             return 3
-        elif wd == 'fr':
+        elif wd == "fr":
             return 4
-        elif wd == 'sa':
+        elif wd == "sa":
             return 5
-        elif wd == 'su':
+        elif wd == "su":
             return 6
         else:
             return False
 
     @api.model
-    def _get_tickets(
-            self, shift, product_name='coop_shift.product_product_shift_ftop'):
-        product_name = 'coop_shift.product_product_shift_ftop'
-        return super(ReportWallchartFTOP, self)._get_tickets(
-            shift, product_name)
+    def _get_tickets(self, shift, product_name="coop_shift.product_product_shift_ftop"):
+        product_name = "coop_shift.product_product_shift_ftop"
+        return super()._get_tickets(shift, product_name)
 
     @api.model
     def _get_report_info(self, data):
@@ -64,20 +64,20 @@ class ReportWallchartFTOP(models.AbstractModel):
             for week in range(1, n_weeks_cycle + 1):
                 next_weekday_date = (
                     date.today()
-                    + timedelta(
-                        days=(weekday_number - today_weekday_number) % 7)
+                    + timedelta(days=(weekday_number - today_weekday_number) % 7)
                     + timedelta(weeks=week)
                 )
                 week_number = self._get_week_number(next_weekday_date)
-                header.append({
-                    'date': next_weekday_date,
-                    'date_string': fields.Date.to_string(next_weekday_date),
-                    'week_number': week_number[0],
-                    'week_letter': week_number[1],
-                })
+                header.append(
+                    {
+                        "date": next_weekday_date,
+                        "date_string": fields.Date.to_string(next_weekday_date),
+                        "week_number": week_number[0],
+                        "week_letter": week_number[1],
+                    }
+                )
 
-            dates = [
-                datetime.strftime(h['date'], "\'%Y-%m-%d\'") for h in header]
+            dates = [datetime.strftime(h["date"], "'%Y-%m-%d'") for h in header]
 
             sql = """SELECT begin_time, end_time
                 FROM shift_shift as ss, shift_type as st
@@ -91,39 +91,36 @@ class ReportWallchartFTOP(models.AbstractModel):
             result = []
             for t in self.env.cr.fetchall():
                 res = {}
-                res['start_time'] = self.format_float_time(t[0])
-                res['end_time'] = self.format_float_time(t[1])
+                res["start_time"] = self.format_float_time(t[0])
+                res["end_time"] = self.format_float_time(t[1])
                 base_search = [
-                    ('begin_time', '>=', t[0] - rounding_limit),
-                    ('begin_time', '<=', t[0] + rounding_limit),
-                    ('end_time', '>=', t[1] - rounding_limit),
-                    ('end_time', '<=', t[1] + rounding_limit),
-                    ('shift_type_id.is_ftop', '=', False),
+                    ("begin_time", ">=", t[0] - rounding_limit),
+                    ("begin_time", "<=", t[0] + rounding_limit),
+                    ("end_time", ">=", t[1] - rounding_limit),
+                    ("end_time", "<=", t[1] + rounding_limit),
+                    ("shift_type_id.is_ftop", "=", False),
                 ]
                 shift_list = []
                 for h in header:
-                    shift = self.env['shift.shift'].search(
-                        base_search + [
-                            ('date_without_time', '=', h['date_string'])])
+                    shift = self.env["shift.shift"].search(
+                        base_search + [("date_without_time", "=", h["date_string"])]
+                    )
                     if not shift:
-                        shift_list.append({
-                            'partners': [],
-                            'free_seats': 0
-                        })
+                        shift_list.append({"partners": [], "free_seats": 0})
                         continue
                     shift = shift[0]
                     partners, seats_max = self._get_shift_info(shift)
-                    shift_list.append({
-                        'partners': partners,
-                        'free_seats': max(0, seats_max - len(partners))
-                    })
-                res['shift_list'] = shift_list
+                    shift_list.append(
+                        {
+                            "partners": partners,
+                            "free_seats": max(0, seats_max - len(partners)),
+                        }
+                    )
+                res["shift_list"] = shift_list
                 result.append(res)
-            final_result.append({
-                'day': WEEK_DAYS[week_day],
-                'times': result,
-                'header': header
-            })
+            final_result.append(
+                {"day": WEEK_DAYS[week_day], "times": result, "header": header}
+            )
         return final_result
 
     @api.model
@@ -145,16 +142,16 @@ class ReportWallchartFTOP(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids, data=None):
-        model = self.env.context.get('active_model')
-        docs = self.env[model].browse(self.env.context.get('active_id'))
+        model = self.env.context.get("active_model")
+        docs = self.env[model].browse(self.env.context.get("active_id"))
         # docs = self.env[self.model].browse(self.env.context.get('active_id'))
-        Wallcharts = self._get_report_info(data['form'])
+        Wallcharts = self._get_report_info(data["form"])
         return {
-            'doc_ids': self.ids,
-            'partner_id': self.env.user.partner_id,
-            'doc_model': model,
-            'data': data['form'],
-            'Wallcharts': Wallcharts,
-            'docs': docs,
-            'date': date,
+            "doc_ids": self.ids,
+            "partner_id": self.env.user.partner_id,
+            "doc_model": model,
+            "data": data["form"],
+            "Wallcharts": Wallcharts,
+            "docs": docs,
+            "date": date,
         }

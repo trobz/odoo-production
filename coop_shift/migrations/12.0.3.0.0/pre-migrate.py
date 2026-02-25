@@ -1,7 +1,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from openerp import api, SUPERUSER_ID
-
 import logging
+
+from openerp import SUPERUSER_ID, api
+
 _logger = logging.getLogger(__name__)
 
 
@@ -28,8 +29,8 @@ def migrate(cr, version):
     with api.Environment.manage():
         env = api.Environment(cr, SUPERUSER_ID, {})
         # Get parameters
-        get_param = env['ir.config_parameter'].sudo().get_param
-        weekA_date = get_param('coop_shift.week_a_date')
+        get_param = env["ir.config_parameter"].sudo().get_param
+        weekA_date = get_param("coop_shift.week_a_date")
         n_weeks_cycle = 4  # hardcoded as this was the default value
 
         # Helper function
@@ -42,10 +43,10 @@ def migrate(cr, version):
             That's why we copy & paste here
             """
 
-            _logger.info(
-                'Recomputing week_number and week_name for table %s', table)
+            _logger.info("Recomputing week_number and week_name for table %s", table)
             # Update week_number
-            env.cr.execute("""
+            env.cr.execute(
+                f"""
                 UPDATE {table}
                 SET {field_week_number} = (
                     1 +
@@ -53,24 +54,20 @@ def migrate(cr, version):
                     %s)
                 )::integer
                 WHERE {field_date} IS NOT NULL
-            """.format(
-                table=table,
-                field_date=field_date,
-                field_week_number=field_week_number,
-            ), (weekA_date, n_weeks_cycle))
+            """,
+                (weekA_date, n_weeks_cycle),
+            )
             # Update week_name
             if field_week_name:
-                env.cr.execute("""
+                env.cr.execute(f"""
                     UPDATE {table}
                     SET {field_week_name} = CHR(64 + {field_week_number})
                     WHERE {field_week_number} IS NOT NULL
-                """.format(
-                    table=table,
-                    field_week_name=field_week_name,
-                    field_week_number=field_week_number,
-                ))
+                """)
 
         _recompute_week_number(
-            'shift_template', 'start_date', 'week_number', 'week_name')
+            "shift_template", "start_date", "week_number", "week_name"
+        )
         _recompute_week_number(
-            'shift_shift', 'date_without_time', 'week_number', 'week_name')
+            "shift_shift", "date_without_time", "week_number", "week_name"
+        )

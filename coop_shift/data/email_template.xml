@@ -1,14 +1,20 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo noupdate="1">
-        <record id="shift_subscription" model="mail.template">
-            <field name="name">Shift subscription</field>
-            <field name="model_id" ref="coop_shift.model_shift_registration"/>
-            <field name="email_from">${(object.shift_id.organizer_id.email or object.shift_id.user_ids[0].email or '')|safe}</field>
-            <field name="email_to" >${object.email|safe}</field>
-            <field name="lang">${object.partner_id.lang}</field>
-            <field name="reply_to">${object.shift_id.reply_to or (object.shift_id.shift_type_id and object.shift_id.shift_type_id.default_reply_to) or ''|safe}</field>
-            <field name="subject">Your subscription at ${object.shift_id.name}</field>
-            <field name="body_html"><![CDATA[<p>Hello ${object.name},</p>
+  <record id="shift_subscription" model="mail.template">
+    <field name="name">Shift subscription</field>
+    <field name="model_id" ref="coop_shift.model_shift_registration" />
+    <field
+      name="email_from"
+    >${(object.shift_id.organizer_id.email or object.shift_id.user_ids[0].email or '')|safe}</field>
+    <field name="email_to">${object.email|safe}</field>
+    <field name="lang">${object.partner_id.lang}</field>
+    <field
+      name="reply_to"
+    >${object.shift_id.reply_to or (object.shift_id.shift_type_id and object.shift_id.shift_type_id.default_reply_to) or ''|safe}</field>
+    <field name="subject">Your subscription at ${object.shift_id.name}</field>
+    <field
+      name="body_html"
+    ><![CDATA[<p>Hello ${object.name},</p>
 <p>
     We remind you that your next shift is scheduled for <bold>${object.shift_id.begin_date_without_time_string}</bold> and will begin at ${object.shift_id.begin_time_string}
 </p>
@@ -25,5 +31,5 @@
 <p>${object.partner_id.company_id.phone or ''}</p>
 <p>Thank you for your participation!</p>
 <p>Best regards</p>]]></field>
-        </record>
+  </record>
 </odoo>

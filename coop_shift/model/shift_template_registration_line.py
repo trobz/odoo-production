@@ -5,63 +5,69 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import datetime
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
 STATES = [
-    ('cancel', 'Cancelled'),
-    ('draft', 'Unconfirmed'),
-    ('open', 'Confirmed'),
-    ('done', 'Attended'),
-    ('absent', 'Absent'),
-    ('waiting', 'Waiting'),
-    ('excused', 'Excused'),
-    ('replaced', 'Replaced'),
-    ('replacing', 'Replacing'),
+    ("cancel", "Cancelled"),
+    ("draft", "Unconfirmed"),
+    ("open", "Confirmed"),
+    ("done", "Attended"),
+    ("absent", "Absent"),
+    ("waiting", "Waiting"),
+    ("excused", "Excused"),
+    ("replaced", "Replaced"),
+    ("replacing", "Replacing"),
 ]
 
 
 class ShiftTemplateRegistrationLine(models.Model):
-    _name = 'shift.template.registration.line'
-    _description = 'Attendee Line'
-    _order = 'date_begin desc'
+    _name = "shift.template.registration.line"
+    _description = "Attendee Line"
+    _order = "date_begin desc"
 
     registration_id = fields.Many2one(
-        'shift.template.registration',
-        string='Registration',
+        "shift.template.registration",
+        string="Registration",
         required=True,
-        ondelete='cascade',
+        ondelete="cascade",
     )
     date_begin = fields.Date("Begin Date", required=True)
     date_end = fields.Date("End Date")
     state = fields.Selection(STATES, string="State", default="open")
     shift_registration_ids = fields.One2many(
-        'shift.registration', 'tmpl_reg_line_id',
-        'Registrations',)
+        "shift.registration",
+        "tmpl_reg_line_id",
+        "Registrations",
+    )
     partner_id = fields.Many2one(
-        related="registration_id.partner_id", store=True, readonly=False)
+        related="registration_id.partner_id", store=True, readonly=False
+    )
     shift_template_id = fields.Many2one(
-        related="registration_id.shift_template_id", readonly=False)
+        related="registration_id.shift_template_id", readonly=False
+    )
     shift_ticket_id = fields.Many2one(
-        related="registration_id.shift_ticket_id", readonly=False)
+        related="registration_id.shift_ticket_id", readonly=False
+    )
     is_current = fields.Boolean(
-        string="Current", compute="_compute_current", multi="current")
-    is_past = fields.Boolean(
-        string="Past", compute="_compute_current", multi="current")
+        string="Current", compute="_compute_current", multi="current"
+    )
+    is_past = fields.Boolean(string="Past", compute="_compute_current", multi="current")
     is_future = fields.Boolean(
-        string="Future", compute="_compute_current", multi="current")
+        string="Future", compute="_compute_current", multi="current"
+    )
 
-    leave_id = fields.Many2one('shift.leave', string='Leave')
+    leave_id = fields.Many2one("shift.leave", string="Leave")
 
     # constraints Section
     @api.multi
-    @api.constrains('date_begin', 'date_end')
+    @api.constrains("date_begin", "date_end")
     def _check_dates(self):
         for leave in self:
             if leave.date_end and leave.date_end < leave.date_begin:
-                raise ValidationError(_(
-                    "Stop Date should be greater than Start Date."))
+                raise ValidationError(_("Stop Date should be greater than Start Date."))
             leave._check_over_lap()
 
     @api.multi
@@ -74,13 +80,15 @@ class ShiftTemplateRegistrationLine(models.Model):
                 and (not self.date_end or line.date_begin <= self.date_end)
                 and (not line.date_end or line.date_end >= self.date_begin)
             ):
-                raise ValidationError(_(
-                    "You can't register this line because it would "
-                    "create an overlap with another line for this member.\n\n"
-                    "Line: %s - %s\n"
-                    "Overlap: %s - %s") % (
-                        self.date_begin, self.date_end,
-                        line.date_begin, line.date_end))
+                raise ValidationError(
+                    _(
+                        "You can't register this line because it would "
+                        "create an overlap with another line for this member.\n\n"
+                        "Line: %s - %s\n"
+                        "Overlap: %s - %s"
+                    )
+                    % (self.date_begin, self.date_end, line.date_begin, line.date_end)
+                )
 
     @api.multi
     def _compute_current(self):
@@ -89,128 +97,149 @@ class ShiftTemplateRegistrationLine(models.Model):
             line.is_current = False
             line.is_past = False
             line.is_future = False
-            if (line.date_begin and line.date_begin > now):
+            if line.date_begin and line.date_begin > now:
                 line.is_future = True
-            elif (line.date_end and line.date_end < now):
+            elif line.date_end and line.date_end < now:
                 line.is_past = True
             else:
                 line.is_current = True
 
     @api.model
     def create(self, vals):
-        begin = vals.get('date_begin', False)
-        end = vals.get('date_end', False)
+        begin = vals.get("date_begin", False)
+        end = vals.get("date_end", False)
         if begin:
             # convert to datetime
-            begin = fields.Date.from_string(begin).strftime(DF) + ' 00:00:00'
-            begin = self.env['ir.fields.converter']._str_to_datetime(
-                None, None, begin)[0]
+            begin = fields.Date.from_string(begin).strftime(DF) + " 00:00:00"
+            begin = self.env["ir.fields.converter"]._str_to_datetime(None, None, begin)[
+                0
+            ]
 
         if end:
             # convert to datetime
-            end = fields.Date.from_string(end).strftime(DF) + ' 00:00:00'
-            end = self.env['ir.fields.converter']._str_to_datetime(
-                None, None, end)[0]
+            end = fields.Date.from_string(end).strftime(DF) + " 00:00:00"
+            end = self.env["ir.fields.converter"]._str_to_datetime(None, None, end)[0]
 
-        st_reg_id = vals.get('registration_id', False)
+        st_reg_id = vals.get("registration_id", False)
         if not st_reg_id:
-            registration_id = self.env['shift.template.registration'].search(
+            registration_id = self.env["shift.template.registration"].search(
                 [
-                    ('partner_id', '=', vals.get('partner_id')),
-                    ('shift_template_id', '=', vals.get('shift_template_id')),
-                ], limit=1)
+                    ("partner_id", "=", vals.get("partner_id")),
+                    ("shift_template_id", "=", vals.get("shift_template_id")),
+                ],
+                limit=1,
+            )
             st_reg_id = registration_id and registration_id.id or False
-            vals['registration_id'] = st_reg_id
+            vals["registration_id"] = st_reg_id
         if not st_reg_id:
-            registration_id = \
-                self.env['shift.template.registration'].with_context({
-                    'no_default_line': True,
-                }).create({
-                    'shift_template_id': vals.get('shift_template_id'),
-                    'partner_id': vals.get('partner_id'),
-                    'shift_ticket_id': vals.get('shift_ticket_id', False),
-                })
+            registration_id = (
+                self.env["shift.template.registration"]
+                .with_context(
+                    {
+                        "no_default_line": True,
+                    }
+                )
+                .create(
+                    {
+                        "shift_template_id": vals.get("shift_template_id"),
+                        "partner_id": vals.get("partner_id"),
+                        "shift_ticket_id": vals.get("shift_ticket_id", False),
+                    }
+                )
+            )
             st_reg_id = registration_id.id
-            vals['registration_id'] = st_reg_id
+            vals["registration_id"] = st_reg_id
 
-        st_reg = self.env['shift.template.registration'].browse(st_reg_id)
+        st_reg = self.env["shift.template.registration"].browse(st_reg_id)
         partner = st_reg.partner_id
 
         # Get shifts affected by this registratation line
         shift_domain = [
-            ('shift_template_id', '=', st_reg.shift_template_id.id),
-            ('state', '!=', 'done')
+            ("shift_template_id", "=", st_reg.shift_template_id.id),
+            ("state", "!=", "done"),
         ]
         if begin:
             # F#T66337 - [Chaudron] BdM: date of the first service prior to subscription date
             # Don't take into account shifts in the past
-            today = fields.Datetime.to_string(fields.Datetime.context_timestamp(
-                self, fields.Datetime.now()
-            ))
-            shift_domain.append(('date_begin', '>', max(begin, today)))
+            today = fields.Datetime.to_string(
+                fields.Datetime.context_timestamp(self, fields.Datetime.now())
+            )
+            shift_domain.append(("date_begin", ">", max(begin, today)))
         if end:
-            shift_domain.append(('date_end', '<', end))
-        shifts = self.env['shift.shift'].search(shift_domain)
+            shift_domain.append(("date_end", "<", end))
+        shifts = self.env["shift.shift"].search(shift_domain)
 
         # Compute registrations to create
-        v = {
-            'partner_id': partner.id,
-            'state': vals.get('state', 'open')
-        }
+        v = {"partner_id": partner.id, "state": vals.get("state", "open")}
 
         created_registrations = []
         for shift in shifts:
             ticket_id = shift.shift_ticket_ids.filtered(
-                lambda t: t.product_id == st_reg.shift_ticket_id.product_id)
+                lambda t: t.product_id == st_reg.shift_ticket_id.product_id
+            )
             if ticket_id:
                 ticket_id = ticket_id[0]
             else:
-                shift.write({
-                    'shift_ticket_ids': [(0, 0, {
-                        'name': st_reg.shift_ticket_id.name,
-                        'product_id': st_reg.shift_ticket_id.product_id.id,
-                        'seats_max': st_reg.shift_ticket_id.seats_max,
-                    })]
-                })
+                shift.write(
+                    {
+                        "shift_ticket_ids": [
+                            (
+                                0,
+                                0,
+                                {
+                                    "name": st_reg.shift_ticket_id.name,
+                                    "product_id": st_reg.shift_ticket_id.product_id.id,
+                                    "seats_max": st_reg.shift_ticket_id.seats_max,
+                                },
+                            )
+                        ]
+                    }
+                )
                 ticket_id = shift.shift_ticket_ids.filtered(
                     lambda t: t.product_id == st_reg.shift_ticket_id.product_id
                 )[0]
-            values = dict(v, **{
-                'shift_id': shift.id,
-                'shift_ticket_id': ticket_id.id,
-                'template_created': True,
-            })
+            values = dict(
+                v,
+                **{
+                    "shift_id": shift.id,
+                    "shift_ticket_id": ticket_id.id,
+                    "template_created": True,
+                },
+            )
             created_registrations.append((0, 0, values))
 
-        vals['shift_registration_ids'] = created_registrations
+        vals["shift_registration_ids"] = created_registrations
         return super(
-            ShiftTemplateRegistrationLine,
-            self.with_context(creation_in_progress=True)
+            ShiftTemplateRegistrationLine, self.with_context(creation_in_progress=True)
         ).create(vals)
 
     @api.multi
     def write(self, vals):
-        res = super(ShiftTemplateRegistrationLine, self).write(vals)
+        res = super().write(vals)
         self.mapped(lambda s: s.partner_id).sudo()._compute_registration_counts()
         for line in self:
             bypass_leave_change_check = self._context.get(
-                'bypass_leave_change_check', False)
+                "bypass_leave_change_check", False
+            )
             if not bypass_leave_change_check and line.leave_id:
-                raise ValidationError(_(
-                    "You cannot make changes on this template registration. "
-                    "Please make your changes directly on the leave recorded "
-                    "for this period. You will need to cancel it then set to "
-                    "draft before you can make required changes.\n\n"
-                    "Registration: (ID: %s) - %s") % (
-                        line, line.partner_id.name))
+                raise ValidationError(
+                    _(
+                        "You cannot make changes on this template registration. "
+                        "Please make your changes directly on the leave recorded "
+                        "for this period. You will need to cancel it then set to "
+                        "draft before you can make required changes.\n\n"
+                        "Registration: (ID: %s) - %s"
+                    )
+                    % (line, line.partner_id.name)
+                )
 
-            sr_obj = self.env['shift.registration']
+            sr_obj = self.env["shift.registration"]
             st_reg = line.registration_id
             partner = st_reg.partner_id
 
-            state = vals.get('state', line.state)
-            begin = vals.get('date_begin', line.date_begin)
-            end = vals.get('date_end', line.date_end)
+            state = vals.get("state", line.state)
+            begin = vals.get("date_begin", line.date_begin)
+            end = vals.get("date_end", line.date_end)
             if isinstance(end, str):
                 end = fields.Date.from_string(end)
             if isinstance(begin, str):
@@ -236,51 +265,55 @@ class ShiftTemplateRegistrationLine(models.Model):
                 if shift.state == "done":
                     continue
                 # if dates ok, just update state
-                if sr.state in ['draft', 'open', 'waiting']:
-                    if (
-                        (not begin or shift.date_begin.date() >= begin)
-                        and (not end or shift.date_end.date() <= end)
+                if sr.state in ["draft", "open", "waiting"]:
+                    if (not begin or shift.date_begin.date() >= begin) and (
+                        not end or shift.date_end.date() <= end
                     ):
                         sr.state = state
                     # if dates not ok, unlink the shift_registration
                     else:
                         sr.unlink()
                 elif not (
-                        (not begin or shift.date_begin.date() >= begin)
-                        and (not end or shift.date_end.date() <= end)
+                    (not begin or shift.date_begin.date() >= begin)
+                    and (not end or shift.date_end.date() <= end)
                 ):
-                    if sr.state == 'cancel':
+                    if sr.state == "cancel":
                         sr.unlink()
                     else:
                         state_dict = {
-                            'cancel': 'Cancelled',
-                            'draft': 'Unconfirmed',
-                            'open': 'Confirmed',
-                            'done': 'Attended',
-                            'absent': 'Absent',
-                            'waiting': 'Waiting',
-                            'excused': 'Excused',
-                            'replaced': 'Replaced',
-                            'replacing': 'Replacing',
+                            "cancel": "Cancelled",
+                            "draft": "Unconfirmed",
+                            "open": "Confirmed",
+                            "done": "Attended",
+                            "absent": "Absent",
+                            "waiting": "Waiting",
+                            "excused": "Excused",
+                            "replaced": "Replaced",
+                            "replacing": "Replacing",
                         }
-                        raise ValidationError(_(
-                            "Cannot process because of the attendance: \n"
-                            "- Registration: (ID: %s, State: %s) %s\n"
-                            "- Shift: %s \n"
-                            "- Partner: %s") % (
-                                sr.id, state_dict.get(sr.state),
+                        raise ValidationError(
+                            _(
+                                "Cannot process because of the attendance: \n"
+                                "- Registration: (ID: %s, State: %s) %s\n"
+                                "- Shift: %s \n"
+                                "- Partner: %s"
+                            )
+                            % (
+                                sr.id,
+                                state_dict.get(sr.state),
                                 sr.display_name,
                                 sr.shift_id.display_name,
-                                sr.partner_id.display_name))
-
+                                sr.partner_id.display_name,
+                            )
+                        )
 
             # for shifts within dates: if partner has no registration, create
             # it
             shifts = st_reg.shift_template_id.shift_ids.filtered(
-                lambda s, b=begin, e=end: (
-                    not b or s.date_begin.date() >= b) and (
-                    not e or s.date_end.date() <= e) and (
-                    s.state not in ('done', 'cancel')))
+                lambda s, b=begin, e=end: (not b or s.date_begin.date() >= b)
+                and (not e or s.date_end.date() <= e)
+                and (s.state not in ("done", "cancel"))
+            )
 
             today = fields.Datetime.context_timestamp(self, fields.Datetime.now())
             for shift in shifts:
@@ -300,15 +333,15 @@ class ShiftTemplateRegistrationLine(models.Model):
                         # F#T66337 - [Chaudron] BdM: date of the first service ...
                         # Don't take into account shifts in the past
                         ticket_id = shift.shift_ticket_ids.filtered(
-                            lambda t: t.product_id ==
-                            st_reg.shift_ticket_id.product_id)[0]
+                            lambda t: t.product_id == st_reg.shift_ticket_id.product_id
+                        )[0]
                         values = {
-                            'partner_id': partner.id,
-                            'state': state,
-                            'shift_id': shift.id,
-                            'shift_ticket_id': ticket_id.id,
-                            'tmpl_reg_line_id': line.id,
-                            'template_created': True,
+                            "partner_id": partner.id,
+                            "state": state,
+                            "shift_id": shift.id,
+                            "shift_ticket_id": ticket_id.id,
+                            "tmpl_reg_line_id": line.id,
+                            "template_created": True,
                         }
                         sr_obj.create(values)
         return res
@@ -318,4 +351,4 @@ class ShiftTemplateRegistrationLine(models.Model):
         for strl in self:
             for reg in strl.shift_registration_ids:
                 reg.unlink()
-        return super(ShiftTemplateRegistrationLine, self).unlink()
+        return super().unlink()
