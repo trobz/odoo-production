@@ -8,7 +8,7 @@
     "version": "12.0.1.0.0",
     "category": "stock",
     "author": "La Louve",
-    "website": "https://cooplalouve.fr",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": [
         "purchase_stock",
