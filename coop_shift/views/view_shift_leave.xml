@@ -5,125 +5,149 @@
     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
  -->
 <odoo>
-  <record id="view_shift_leave_search" model="ir.ui.view">
-    <field name="model">shift.leave</field>
-    <field name="arch" type="xml">
-      <search>
-        <field name="partner_id" />
-        <field name="type_id" />
-        <field name="duration" />
-        <field name="state" />
-      </search>
-    </field>
-  </record>
+    <record id="view_shift_leave_search" model="ir.ui.view">
+        <field name="model">shift.leave</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id" />
+                <field name="type_id" />
+                <field name="duration" />
+                <field name="state" />
+            </search>
+        </field>
+    </record>
 
-  <record id="view_shift_leave_calendar" model="ir.ui.view">
-    <field name="model">shift.leave</field>
-    <field name="arch" type="xml">
-      <calendar date_start="start_date" date_stop="stop_date" color="type_id">
-        <field name="name" />
-        <field name="partner_id" />
-        <field name="type_id" />
-        <field name="start_date" />
-        <field name="stop_date" />
-        <field name="duration" />
-        <field name="state" />
-      </calendar>
-    </field>
-  </record>
+    <record id="view_shift_leave_calendar" model="ir.ui.view">
+        <field name="model">shift.leave</field>
+        <field name="arch" type="xml">
+            <calendar date_start="start_date" date_stop="stop_date" color="type_id">
+                <field name="name" />
+                <field name="partner_id" />
+                <field name="type_id" />
+                <field name="start_date" />
+                <field name="stop_date" />
+                <field name="duration" />
+                <field name="state" />
+            </calendar>
+        </field>
+    </record>
 
-  <record id="view_shift_leave_tree" model="ir.ui.view">
-    <field name="model">shift.leave</field>
-    <field name="arch" type="xml">
-      <tree decoration-info="state == 'draft'" decoration-muted="state == 'cancel'">
-        <field name="partner_id" />
-        <field name="type_id" />
-        <field name="start_date" />
-        <field name="stop_date" />
-        <field name="duration" />
-        <field name="state" />
-      </tree>
-    </field>
-  </record>
+    <record id="view_shift_leave_tree" model="ir.ui.view">
+        <field name="model">shift.leave</field>
+        <field name="arch" type="xml">
+            <list
+                decoration-info="state == 'draft'"
+                decoration-muted="state == 'cancel'"
+            >
+                <field name="partner_id" />
+                <field name="type_id" />
+                <field name="start_date" />
+                <field name="stop_date" />
+                <field name="duration" />
+                <field name="state" />
+            </list>
+        </field>
+    </record>
 
-  <record id="view_shift_leave_form" model="ir.ui.view">
-    <field name="model">shift.leave</field>
-    <field name="arch" type="xml">
-      <form>
-        <header>
-          <field name="state" widget="statusbar" nolabel="1" readonly="1" />
-          <button
-            name="%(action_shift_leave_wizard)d"
-            type="action"
-            class="oe_highlight"
-            string="Validate"
-            attrs="{'invisible': [('state', '!=', 'draft')]}"
-            groups="coop_shift.group_shift_future_changes"
-          />
-          <button
-            name="button_cancel"
-            type="object"
-            string="Cancel"
-            attrs="{'invisible': [('state', '!=', 'done')]}"
-            groups="coop_shift.group_shift_future_changes"
-          />
-          <button
-            name="button_draft"
-            type="object"
-            string="Set in a draft state"
-            attrs="{'invisible': [('state', '!=', 'cancel')]}"
-            groups="coop_shift.group_shift_future_changes"
-          />
-        </header>
-        <sheet>
-          <div class="oe_button_box" name="button_box" />
-          <div class="oe_title">
-            <h1>
-              <label for="name" class="oe_edit_only" />
-              <field name="name" default_focus="1" />
-            </h1>
-          </div>
-          <group col="4">
-            <field
-              name="partner_id"
-              options="{'no_create_edit': True, 'no_create': True, 'no_open': True }"
-              tabindex="1"
-            />
-            <field
-              name="type_id"
-              options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"
-              tabindex="2"
-            />
-            <field name="start_date" tabindex="3" />
-            <field
-              name="stop_date"
-              attrs="{'required': [('require_stop_date', '=', True)]}"
-              tabindex="4"
-            />
-            <field name="duration" />
-            <field name="partner_state" />
-            <field name="require_stop_date" invisible="1" />
-          </group>
-          <notebook colspan="4">
-            <page name="general" string="Other Leaves">
-              <group>
-                <field name="other_leave_ids" nolabel="1">
-                  <tree
-                    decoration-info="state == 'draft'"
-                    decoration-muted="state == 'cancel'"
-                  >
-                    <field name="type_id" />
-                    <field name="start_date" />
-                    <field name="stop_date" />
-                    <field name="duration" />
-                    <field name="state" />
-                  </tree>
-                </field>
-              </group>
-            </page>
-          </notebook>
-        </sheet>
-      </form>
-    </field>
-  </record>
+    <record id="view_shift_leave_form" model="ir.ui.view">
+        <field name="model">shift.leave</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" nolabel="1" readonly="1" />
+                    <button
+                        name="%(action_shift_leave_wizard)d"
+                        type="action"
+                        class="oe_highlight"
+                        string="Validate"
+                        invisible="state != 'draft'"
+                        groups="coop_shift.group_shift_future_changes"
+                    />
+                    <button
+                        name="button_cancel"
+                        type="object"
+                        string="Cancel"
+                        invisible="state != 'done'"
+                        groups="coop_shift.group_shift_future_changes"
+                    />
+                    <button
+                        name="button_draft"
+                        type="object"
+                        string="Set in a draft state"
+                        invisible="state != 'cancel'"
+                        groups="coop_shift.group_shift_future_changes"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box" />
+                    <div class="oe_title">
+                        <h1>
+                            <label for="name" class="oe_edit_only" />
+                            <field name="name" default_focus="1" />
+                        </h1>
+                    </div>
+                    <group col="4">
+                        <field
+                            name="partner_id"
+                            options="{'no_create_edit': True, 'no_create': True, 'no_open': True }"
+                            tabindex="1"
+                            readonly="state != 'draft'"
+                        />
+                        <field
+                            name="type_id"
+                            options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"
+                            tabindex="2"
+                            readonly="state != 'draft'"
+                        />
+                        <field
+                            name="start_date"
+                            tabindex="3"
+                            readonly="state != 'draft'"
+                        />
+                        <field
+                            name="stop_date"
+                            required="require_stop_date"
+                            tabindex="4"
+                            readonly="state != 'draft'"
+                        />
+                        <field name="duration" />
+                        <field name="partner_state" />
+                        <field name="require_stop_date" invisible="1" />
+                    </group>
+                    <notebook colspan="4">
+                        <page name="general" string="Other Leaves">
+                            <group>
+                                <field name="other_leave_ids" nolabel="1">
+                                    <list
+                                        decoration-info="state == 'draft'"
+                                        decoration-muted="state == 'cancel'"
+                                    >
+                                        <field name="type_id" />
+                                        <field name="start_date" />
+                                        <field name="stop_date" />
+                                        <field name="duration" />
+                                        <field name="state" />
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_shift_leave">
+        <field name="name">Leaves</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">shift.leave</field>
+        <field name="view_mode">list,form,calendar</field>
+    </record>
+    <record id="act_shift_leave_from_partner" model="ir.actions.act_window">
+        <field name="name">Leaves</field>
+        <field name="res_model">shift.leave</field>
+        <field name="view_mode">list,form,calendar</field>
+        <field
+            name="context"
+        >{'search_default_partner_id': active_id, 'default_partner_id': active_id}</field>
+    </record>
 </odoo>

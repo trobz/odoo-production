@@ -4,20 +4,8 @@
 # @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
-
-STATES = [
-    ("cancel", "Cancelled"),
-    ("draft", "Unconfirmed"),
-    ("open", "Confirmed"),
-    ("done", "Attended"),
-    ("absent", "Absent"),
-    ("waiting", "Waiting"),
-    ("excused", "Excused"),
-    ("replaced", "Replaced"),
-    ("replacing", "Replacing"),
-]
 
 
 class ShiftRegistration(models.Model):
@@ -26,13 +14,7 @@ class ShiftRegistration(models.Model):
     _description = "Attendee"
     _order = "shift_ticket_id,name"
 
-    SHIFT_TYPE_SELECTION = [
-        ("standard", "Standard"),
-        ("ftop", "FTOP"),
-    ]
-
     shift_type = fields.Selection(
-        selection=SHIFT_TYPE_SELECTION,
         string="Shift type",
         related="shift_ticket_id.shift_type",
         store=True,
@@ -49,7 +31,7 @@ class ShiftRegistration(models.Model):
     phone = fields.Char(readonly=True, related="partner_id.phone")
     name = fields.Char(readonly=True, related="partner_id.name", store=True)
     partner_id = fields.Many2one(required=True)
-    user_ids = fields.Many2many(related="shift_id.user_ids")
+    user_ids = fields.Many2many("res.partner", related="shift_id.user_ids")
     shift_ticket_id = fields.Many2one(
         "shift.ticket", "Shift Ticket", required=True, ondelete="cascade"
     )
@@ -59,9 +41,30 @@ class ShiftRegistration(models.Model):
         related="shift_ticket_id.product_id",
         store=True,
     )
-    state = fields.Selection(STATES)
+    state = fields.Selection(
+        selection_add=[
+            ("absent", "Absent"),
+            ("waiting", "Waiting"),
+            ("excused", "Excused"),
+            ("replaced", "Replaced"),
+            ("replacing", "Replacing"),
+        ],
+        ondelete={
+            "absent": lambda records: records.write({"state": "draft"}),
+            "waiting": lambda records: records.write({"state": "draft"}),
+            "excused": lambda records: records.write({"state": "draft"}),
+            "replaced": lambda records: records.write({"state": "draft"}),
+            "replacing": lambda records: records.write({"state": "draft"}),
+        },
+        default="draft",
+    )
     tmpl_reg_line_id = fields.Many2one(
         "shift.template.registration.line", "Template Registration Line"
+    )
+    date_open = fields.Datetime(
+        string="Registration Date",
+        readonly=True,
+        default=lambda self: fields.Datetime.now(),
     )
     date_begin = fields.Datetime(related="shift_id.date_begin", store=True)
     date_end = fields.Datetime(related="shift_id.date_end")
@@ -104,30 +107,6 @@ class ShiftRegistration(models.Model):
         ),
     ]
 
-    @api.multi
-    def button_reg_close(self):
-        """Close Registration"""
-        self.ensure_one()
-        if self.state in ("cancel", "absent"):
-            return
-        today = fields.Datetime.now()
-        if self.date_begin <= today and self.shift_id.state in ["confirm", "entry"]:
-            self.write(
-                {
-                    "state": "done",
-                    "date_closed": today,
-                }
-            )
-        elif self.shift_id.state == "draft":
-            raise UserError(
-                _("You must wait the event confirmation " "before doing this action.")
-            )
-        else:
-            raise UserError(
-                _("You must wait the event starting " "day before doing this action.")
-            )
-
-    @api.multi
     @api.depends("shift_id.shift_template_id.is_technical")
     def _compute_is_technical(self):
         for registration in self:
@@ -135,7 +114,6 @@ class ShiftRegistration(models.Model):
                 registration.shift_id.shift_template_id.is_technical
             )
 
-    @api.multi
     def _compute_is_related_shift_ftop(self):
         """
         @Function to compute the value for field `is_related_shift_ftop`
@@ -149,33 +127,66 @@ class ShiftRegistration(models.Model):
                 and registration.shift_id.shift_type_id.is_ftop
             )
 
-    @api.multi
     def button_reg_absent(self):
         for reg in self:
             if reg.shift_id.date_begin <= fields.Datetime.now():
                 reg.state = "absent"
             else:
                 raise UserError(
-                    _(
+                    self.env._(
                         "You must wait for the starting day of the "
                         "shift to do this action."
                     )
                 )
 
-    @api.multi
     def button_reg_excused(self):
         for reg in self:
             if reg.shift_id.date_begin <= fields.Datetime.now():
                 reg.state = "excused"
             else:
                 raise UserError(
-                    _(
+                    self.env._(
                         "You must wait for the starting day of the "
                         "shift to do this action."
                     )
                 )
 
-    @api.multi
+    def do_draft(self):
+        self.update({"state": "draft"})
+
+    def confirm_registration(self):
+        self.update({"state": "open"})
+
+        # auto-trigger after_sub (on subscribe) mail schedulers, if needed
+        for reg in self:
+            if reg.exchange_state == "replacing":
+                continue
+            onsubscribe_schedulers = reg.shift_id.shift_mail_ids.filtered(
+                lambda s: s.interval_type == "after_sub"
+            )
+            onsubscribe_schedulers.execute()
+
+    def button_reg_close(self):
+        """Close Registration"""
+        today = fields.Datetime.now()
+        if self.shift_id.date_begin <= today and self.shift_id.state == "confirm":
+            self.write({"state": "done", "date_closed": today})
+        elif self.shift_id.state == "draft":
+            raise UserError(
+                self.env._(
+                    "You must wait the event confirmation before doing this action."
+                )
+            )
+        else:
+            raise UserError(
+                self.env._(
+                    "You must wait the event starting day before doing this action."
+                )
+            )
+
+    def button_reg_cancel(self):
+        self.update({"state": "cancel"})
+
     @api.onchange("shift_id")
     def onchange_shift_id(self):
         FTOP_product = self.env.ref("coop_shift.product_product_shift_ftop")
@@ -184,39 +195,29 @@ class ShiftRegistration(models.Model):
                 lambda t: t.product_id == FTOP_product
             )
 
-    @api.model
-    def create(self, vals):
-        if not vals.get("template_created", False):
-            shift_ticket_id = vals.get("shift_ticket_id", False)
-            shift_ticket = self.env["shift.ticket"].browse(shift_ticket_id)
-            if (
-                shift_ticket
-                and shift_ticket.shift_type != "standard"
-                and shift_ticket.seats_max
-                and shift_ticket.seats_available <= 0
-            ):
-                raise UserError(_("No more available seats for this ticket"))
-        reg_id = super().create(vals)
-        if reg_id.shift_id.state == "confirm":
-            reg_id.confirm_registration()
-            # Restore the state
-            if (
-                reg_id.tmpl_reg_line_id
-                and reg_id.state != reg_id.tmpl_reg_line_id.state
-            ):
-                reg_id.state = reg_id.tmpl_reg_line_id.state
-        return reg_id
-
-    @api.multi
-    def confirm_registration(self):
-        super().confirm_registration()
-        for reg in self:
-            if reg.exchange_state == "replacing":
-                continue
-            onsubscribe_schedulers = reg.shift_id.shift_mail_ids.filtered(
-                lambda s: s.interval_type == "after_sub"
-            )
-            onsubscribe_schedulers.execute()
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if not vals.get("template_created", False):
+                shift_ticket_id = vals.get("shift_ticket_id", False)
+                shift_ticket = self.env["shift.ticket"].browse(shift_ticket_id)
+                if (
+                    shift_ticket
+                    and shift_ticket.shift_type != "standard"
+                    and shift_ticket.seats_max
+                    and shift_ticket.seats_available <= 0
+                ):
+                    raise UserError(
+                        self.env._("No more available seats for this ticket")
+                    )
+        regs = super().create(vals_list)
+        for reg in regs:
+            if reg.shift_id.state == "confirm":
+                reg.confirm_registration()
+                # Restore the state
+                if reg.tmpl_reg_line_id and reg.state != reg.tmpl_reg_line_id.state:
+                    reg.state = reg.tmpl_reg_line_id.state
+        return regs
 
     @api.constrains("event_ticket_id", "state")
     def _check_ticket_seats_limit(self):

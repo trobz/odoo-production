@@ -40,3 +40,12 @@ ir_model_access_event_ticket_access,event.ticket access,event_sale.model_event_e
 ir_model_access_event_mail_registration,event.mail.registration access,event.model_event_mail_registration,coop_shift.group_shift_user,1,1,1,1
 access_shift_type_mail_event_user,shift.type.mail.event.user,model_shift_type_mail,coop_shift.group_shift_user,1,0,0,0
 access_shift_type_mail_event_manager,shift.type.mail.event.manager,model_shift_type_mail,coop_shift.group_shift_manager,1,1,1,1
+
+coop_shift.access_create_shifts_wizard,access_create_shifts_wizard,coop_shift.model_create_shifts_wizard,base.group_user,1,1,1,1
+coop_shift.access_update_shifts_wizard,access_update_shifts_wizard,coop_shift.model_update_shifts_wizard,base.group_user,1,1,1,1
+coop_shift.access_update_shifts_wizard_line,access_update_shifts_wizard_line,coop_shift.model_update_shifts_wizard_line,base.group_user,1,1,1,1
+coop_shift.access_replace_registration_wizard,access_replace_registration_wizard,coop_shift.model_replace_registration_wizard,base.group_user,1,1,1,1
+coop_shift.access_shift_leave_wizard,access_shift_leave_wizard,coop_shift.model_shift_leave_wizard,base.group_user,1,1,1,1
+coop_shift.access_add_template_registration_wizard,access_add_template_registration_wizard,coop_shift.model_add_template_registration_wizard,base.group_user,1,1,1,1
+coop_shift.access_report_timesheet,access_report_timesheet,coop_shift.model_report_timesheet,base.group_user,1,1,1,1
+coop_shift.access_report_wallchart,access_report_wallchart,coop_shift.model_report_wallchart,base.group_user,1,1,1,1

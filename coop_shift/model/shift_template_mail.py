@@ -16,7 +16,7 @@ class ShiftTemplateMailScheduler(models.Model):
     _description = "Shift Template Mail"
 
     shift_template_id = fields.Many2one(
-        "shift.template", string="Shift Template", required=True, ondelete="cascade"
+        "shift.template", required=True, ondelete="cascade"
     )
     sequence = fields.Integer("Display order")
     interval_nbr = fields.Integer("Interval", default=1)

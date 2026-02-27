@@ -6,18 +6,18 @@
 
 from datetime import date, datetime, timedelta
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 from .report_wallchart_common import rounding_limit
 
 WEEK_DAYS = {
-    "mo": _("Monday"),
-    "tu": _("Tuesday"),
-    "we": _("Wednesday"),
-    "th": _("Thursday"),
-    "fr": _("Friday"),
-    "sa": _("Saturday"),
-    "su": _("Sunday"),
+    "mo": "Monday",
+    "tu": "Tuesday",
+    "we": "Wednesday",
+    "th": "Thursday",
+    "fr": "Friday",
+    "sa": "Saturday",
+    "su": "Sunday",
 }
 
 weekday_list = [
@@ -34,6 +34,7 @@ weekday_list = [
 class ReportWallchartTemplate(models.AbstractModel):
     _name = "report.coop_shift.report_wallchart_template"
     _inherit = "report.coop_shift.report_wallchart_common"
+    _description = "Wallchart report for shift templates"
 
     @api.model
     def _get_ticket_partners(self, ticket):
@@ -57,13 +58,13 @@ class ReportWallchartTemplate(models.AbstractModel):
                         fields.Date.from_string(line.date_begin) - timedelta(days=1),
                         "%x",
                     )
-                    dates = ("+ until %s " % date_begin) + dates
+                    dates = f"+ until {date_begin} " + dates
                     future_seats += 1
                 if line.date_end:
                     date_end = datetime.strftime(
                         fields.Date.from_string(line.date_end) + timedelta(days=1), "%x"
                     )
-                    dates = ("+ from %s " % date_end) + dates
+                    dates = f"+ from {date_end} " + dates
                     future_seats -= 1
             dates = dates and (" (" + dates[2:-1] + ")")
             if ok:
@@ -98,18 +99,16 @@ class ReportWallchartTemplate(models.AbstractModel):
         for week_day in data.keys():
             if week_day == "id" or not data.get(week_day, False):
                 continue
+            if week_day not in weekday_list:
+                continue
 
             result = []
-            sql = f"""
-                SELECT start_time, end_time
-                FROM shift_template
-                WHERE {week_day} is True
-                GROUP BY start_time, end_time
-                ORDER BY start_time
-            """
-            self.env.cr.execute(sql)
-
-            for t in self.env.cr.fetchall():
+            templates = self.env["shift.template"].search([(week_day, "=", True)])
+            time_slots = sorted(
+                {(template.start_time, template.end_time) for template in templates},
+                key=lambda slot: slot[0],
+            )
+            for t in time_slots:
                 res = {}
                 res["start_time"] = self.format_float_time(t[0])
                 res["end_time"] = self.format_float_time(t[1])
@@ -150,7 +149,7 @@ class ReportWallchartTemplate(models.AbstractModel):
                 ]
                 final_result.append(
                     {
-                        "day": WEEK_DAYS[week_day],
+                        "day": self.env._(WEEK_DAYS[week_day]),
                         "weeks": weeks,
                         "next_dates": self._get_next_dates(
                             weekday_list.index(week_day)
@@ -170,40 +169,25 @@ class ReportWallchartTemplate(models.AbstractModel):
         for i in range(1, n_weeks_cycle + 1):
             delta = (i - week_number[0]) % n_weeks_cycle
             key = "week" + self.env["shift.template"]._number_to_letters(i)
-            result[key] = "(%s, %s, %s, %s, %s, %s, %s, ...)" % (
+            week_dates = [
                 datetime.strftime(
-                    next_date + timedelta(weeks=delta + (n_weeks_cycle * 0)), "%d/%m"
-                ),
-                datetime.strftime(
-                    next_date + timedelta(weeks=delta + (n_weeks_cycle * 1)), "%d/%m"
-                ),
-                datetime.strftime(
-                    next_date + timedelta(weeks=delta + (n_weeks_cycle * 2)), "%d/%m"
-                ),
-                datetime.strftime(
-                    next_date + timedelta(weeks=delta + (n_weeks_cycle * 3)), "%d/%m"
-                ),
-                datetime.strftime(
-                    next_date + timedelta(weeks=delta + (n_weeks_cycle * 4)), "%d/%m"
-                ),
-                datetime.strftime(
-                    next_date + timedelta(weeks=delta + (n_weeks_cycle * 5)), "%d/%m"
-                ),
-                datetime.strftime(
-                    next_date + timedelta(weeks=delta + (n_weeks_cycle * 6)), "%d/%m"
-                ),
-            )
+                    next_date + timedelta(weeks=delta + (n_weeks_cycle * week_offset)),
+                    "%d/%m",
+                )
+                for week_offset in range(7)
+            ]
+            result[key] = f"({', '.join(week_dates)}, ...)"
         return result
 
     @api.model
     def _get_report_values(self, docids, data=None):
-        self.model = self.env.context.get("active_model")
+        model_name = self.env.context.get("active_model")
         docs = {}
         docs["Wallcharts"] = self._get_templates(data["form"])
         return {
             "doc_ids": self.ids,
             "partner_id": self.env.user.partner_id,
-            "doc_model": self.model,
+            "doc_model": model_name,
             "data": data["form"],
             "docs": docs,
             "date": date,

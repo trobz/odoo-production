@@ -7,183 +7,182 @@
     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
  -->
 <odoo>
-  <record id="action_add_template_registration" model="ir.actions.act_window">
-    <field name="name">Add Template Registration</field>
-    <field name="type">ir.actions.act_window</field>
-    <field name="res_model">add.template.registration.wizard</field>
-    <field name="view_type">form</field>
-    <field name="view_mode">form</field>
-    <field name="target">new</field>
-  </record>
+    <record id="action_add_template_registration" model="ir.actions.act_window">
+        <field name="name">Add Template Registration</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">add.template.registration.wizard</field>
 
-  <!--
-        We give it priority = 200 so that:
-            - it's after coop_membership base view
-    -->
-  <record id="view_res_partner_shift_form" model="ir.ui.view">
-    <field name="model">res.partner</field>
-    <field name="inherit_id" ref="base.view_partner_form" />
-    <field name="groups_id" eval="[(6, 0, [ref('coop_shift.group_shift_user')])]" />
-    <field name="priority">200</field>
-    <field name="arch" type="xml">
-      <!-- Add header -->
-      <sheet position="before">
-        <header>
-          <field name="cooperative_state" widget="statusbar" />
-        </header>
-      </sheet>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
 
-      <!-- Add Shifts page -->
-      <page name="sales_purchases" position="after">
-        <page name="shifts" string="Shifts" groups="coop_shift.group_shift_manager">
-          <group class="o_label_nowrap">
-            <group name="shift_squedleader">
-              <field name="is_squadleader" />
-              <field name="template_ids" invisible="1" />
-            </group>
-            <group name="shift_states">
-              <field name="shift_type" />
-              <field name="is_blocked" />
-              <field name="is_exempted" />
-              <field name="is_vacation" />
-              <field name="date_alert_stop" />
-              <field name="date_delay_stop" />
-              <field name="working_state" />
-            </group>
-            <group name="shift_buttons" groups="coop_shift.group_shift_manager">
-              <button
-                name="%(coop_shift.action_add_template_registration)d"
-                type="action"
-                class="oe_highlight"
-                icon="fa-cogs"
-                string="Add Template Registration"
-                id="add_template_registration"
-              />
-            </group>
-          </group>
-        </page>
-      </page>
-      <!-- Add buttons -->
-      <div name="button_box" position="inside">
-        <button
-          name="%(coop_shift.act_template_registration_line_from_partner)d"
-          type="action"
-          class="oe_stat_button oe_event_attendee_button"
-          icon="fa-calendar-plus-o"
-          help="View partner Template Registrations"
-          groups="coop_shift.group_shift_manager"
-          id="view_partner_template_registrations"
-        >
-          <field
-            name="current_tmpl_reg_line"
-            attrs="{'invisible':[('current_tmpl_reg_line', '=', False)]}"
-          />
-          <span
-            attrs="{'invisible':[('current_tmpl_reg_line', '!=', False)]}"
-          >Tmpl. Registr.</span>
-        </button>
-        <button
-          name="%(coop_shift.act_shift_registration_from_partner)d"
-          type="action"
-          class="oe_stat_button oe_event_attendee_button"
-          icon="fa-calendar"
-          help="View partner Registrations"
-          groups="coop_shift.group_shift_user"
-          id="view_partner_registrations"
-        >
-          <field
-            name="upcoming_registration_count"
-            widget="statinfo"
-            string="Upc. Registr."
-          />
-        </button>
+    <record id="view_res_partner_shift_form" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <!-- Add header -->
+            <sheet position="before">
+                <header>
+                    <field name="cooperative_state" widget="statusbar" />
+                </header>
+            </sheet>
 
-        <button
-          name="%(coop_shift.act_shift_leave_from_partner)d"
-          type="action"
-          attrs="{'invisible':[('current_leave_info', '=', False)]}"
-          class="oe_stat_button oe_event_attendee_button"
-          icon="fa-sign-out"
-          help="View partner Leaves"
-          groups="coop_shift.group_shift_see_leave"
-          id="view_shift_leaves"
-        >
-          <field
-            name="current_leave_info"
-            attrs="{'invisible':[('current_leave_info', '=', False)]}"
-          />
-          <span
-            attrs="{'invisible':[('current_leave_info', '!=', False)]}"
-          >Leaves</span>
-        </button>
+            <!-- Add Shifts page -->
+            <page name="sales_purchases" position="after">
+                <page
+                    name="shifts"
+                    string="Shifts"
+                    groups="coop_shift.group_shift_manager"
+                >
+                    <group class="o_label_nowrap">
+                        <group name="shift_squedleader">
+                            <field name="is_squadleader" />
+                            <field name="template_ids" invisible="1" />
+                        </group>
+                        <group name="shift_states">
+                            <field name="shift_type" />
+                            <field name="is_blocked" />
+                            <field name="is_exempted" />
+                            <field name="is_vacation" />
+                            <field name="date_alert_stop" />
+                            <field name="date_delay_stop" />
+                            <field name="working_state" />
+                        </group>
+                        <group
+                            name="shift_buttons"
+                            groups="coop_shift.group_shift_manager"
+                        >
+                            <button
+                                name="%(coop_shift.action_add_template_registration)d"
+                                type="action"
+                                class="oe_highlight"
+                                icon="fa-cogs"
+                                string="Add Template Registration"
+                                id="add_template_registration"
+                            />
+                        </group>
+                    </group>
+                </page>
+            </page>
+            <!-- Add buttons -->
+            <div name="button_box" position="inside">
+                <button
+                    name="%(coop_shift.act_template_registration_line_from_partner)d"
+                    type="action"
+                    class="oe_stat_button oe_event_attendee_button"
+                    icon="fa-calendar-plus-o"
+                    help="View partner Template Registrations"
+                    groups="coop_shift.group_shift_manager"
+                    id="view_partner_template_registrations"
+                >
+                    <field
+                        name="current_tmpl_reg_line"
+                        invisible="not current_tmpl_reg_line"
+                    />
+                    <span invisible="current_tmpl_reg_line">Tmpl. Registr.</span>
+                </button>
+                <button
+                    name="%(coop_shift.act_shift_registration_from_partner)d"
+                    type="action"
+                    class="oe_stat_button oe_event_attendee_button"
+                    icon="fa-calendar"
+                    help="View partner Registrations"
+                    groups="coop_shift.group_shift_user"
+                    id="view_partner_registrations"
+                >
+                    <field
+                        name="upcoming_registration_count"
+                        widget="statinfo"
+                        string="Upc. Registr."
+                    />
+                </button>
 
-        <button
-          name="%(coop_shift.action_shift_extension_from_partner)d"
-          type="action"
-          class="oe_stat_button oe_event_attendee_button"
-          icon="fa-calendar"
-          help="View partner Extensions"
-          groups="coop_shift.group_shift_manager"
-          id="view_res_partner_shift_extension_from_partner"
-        >
-          <field
-            name="current_extension_day_end"
-            attrs="{'invisible':[('current_extension_day_end', '=', False)]}"
-          />
-          <span
-            attrs="{'invisible':[('current_extension_day_end', '!=', False)]}"
-          >Ext.</span>
-        </button>
-        <button
-          name="%(coop_shift.action_res_partner_point_counter_view_standard)d"
-          type="action"
-          class="oe_stat_button"
-          icon="fa-star-o"
-          help="View Partner Points Standard Counter"
-          groups="coop_shift.group_shift_manager"
-          id="view_res_partner_point_counter_standard"
-        >
-          <field name="display_std_points" widget="statinfo" string="ABCD" />
-        </button>
+                <button
+                    name="%(coop_shift.act_shift_leave_from_partner)d"
+                    type="action"
+                    invisible="not current_leave_info"
+                    class="oe_stat_button oe_event_attendee_button"
+                    icon="fa-sign-out"
+                    help="View partner Leaves"
+                    groups="coop_shift.group_shift_see_leave"
+                    id="view_shift_leaves"
+                >
+                    <field
+                        name="current_leave_info"
+                        invisible="not current_leave_info"
+                    />
+                    <span invisible="current_leave_info">Leaves</span>
+                </button>
 
-        <button
-          name="%(coop_shift.action_res_partner_point_counter_view_ftop)d"
-          type="action"
-          class="oe_stat_button"
-          icon="fa-star-o"
-          help="View Partner Points FTOP Counter"
-          groups="coop_shift.group_shift_manager"
-          id="view_res_partner_point_counter_ftop"
-        >
-          <field name="display_ftop_points" widget="statinfo" string="Vacations" />
-        </button>
-      </div>
+                <button
+                    name="%(coop_shift.action_shift_extension_from_partner)d"
+                    type="action"
+                    class="oe_stat_button oe_event_attendee_button"
+                    icon="fa-calendar"
+                    help="View partner Extensions"
+                    groups="coop_shift.group_shift_manager"
+                    id="view_res_partner_shift_extension_from_partner"
+                >
+                    <field
+                        name="current_extension_day_end"
+                        invisible="not current_extension_day_end"
+                    />
+                    <span invisible="current_extension_day_end">Ext.</span>
+                </button>
+                <button
+                    name="%(coop_shift.action_res_partner_point_counter_view_standard)d"
+                    type="action"
+                    class="oe_stat_button"
+                    icon="fa-star-o"
+                    help="View Partner Points Standard Counter"
+                    groups="coop_shift.group_shift_manager"
+                    id="view_res_partner_point_counter_standard"
+                >
+                    <field name="display_std_points" widget="statinfo" string="ABCD" />
+                </button>
 
-      <!-- Child contacts -->
-      <xpath
-        expr="//field[@name='child_ids']/form/sheet/field[@name='type']"
-        position="after"
-      >
-        <label
-          for="default_addess_for_shifts"
-          attrs="{'invisible':[('type','!=','other')]}"
-          groups="coop_shift.group_shift_see_default_setting_address"
-        >
+                <button
+                    name="%(coop_shift.action_res_partner_point_counter_view_ftop)d"
+                    type="action"
+                    class="oe_stat_button"
+                    icon="fa-star-o"
+                    help="View Partner Points FTOP Counter"
+                    groups="coop_shift.group_shift_manager"
+                    id="view_res_partner_point_counter_ftop"
+                >
+                    <field
+                        name="display_ftop_points"
+                        widget="statinfo"
+                        string="Vacations"
+                    />
+                </button>
+            </div>
+
+            <!-- Child contacts -->
+            <xpath
+                expr="//field[@name='child_ids']/form/sheet/field[@name='type']"
+                position="after"
+            >
+                <label
+                    for="default_addess_for_shifts"
+                    invisible="type != 'other'"
+                    groups="coop_shift.group_shift_see_default_setting_address"
+                >
                        Use as default for Shifts
                 </label>
-        <field
-          name="default_addess_for_shifts"
-          attrs="{'invisible':[('type','!=','other')]}"
-          groups="coop_shift.group_shift_see_default_setting_address"
-        />
-      </xpath>
-      <field name="type" position="before">
-        <field
-          name="default_addess_for_shifts"
-          attrs="{'invisible':['|',('parent_id','==',False),('type','!=','other')]}"
-          groups="coop_shift.group_shift_see_default_setting_address"
-        />
-      </field>
-    </field>
-  </record>
+                <field
+                    name="default_addess_for_shifts"
+                    invisible="type != 'other'"
+                    groups="coop_shift.group_shift_see_default_setting_address"
+                />
+            </xpath>
+            <field name="type" position="before">
+                <field
+                    name="default_addess_for_shifts"
+                    invisible="not parent_id or type != 'other'"
+                    groups="coop_shift.group_shift_see_default_setting_address"
+                />
+            </field>
+        </field>
+    </record>
 </odoo>

@@ -47,6 +47,7 @@ class ShiftTicket(models.Model):
         compute="_compute_begin_date_fields",
         store=True,
     )
+    deadline = fields.Date(string="Sales End")
 
     user_ids = fields.Many2many("res.partner", related="shift_id.user_ids")
 
@@ -59,18 +60,11 @@ class ShiftTicket(models.Model):
         store=True,
     )
     state = fields.Selection(
-        [
-            ("draft", "Unconfirmed"),
-            ("cancel", "Cancelled"),
-            ("confirm", "Confirmed"),
-            ("done", "Done"),
-        ],
         related="shift_id.state",
         store=True,
     )
     ticket_active = fields.Boolean(related="shift_id.active", store=True)
 
-    @api.multi
     @api.depends("shift_id.shift_type_id.is_ftop")
     def _compute_hide_in_member_space(self):
         for ticket in self:
@@ -79,7 +73,6 @@ class ShiftTicket(models.Model):
             else:
                 ticket.hide_in_member_space = False
 
-    @api.multi
     @api.depends("date_begin")
     def _compute_begin_date_fields(self):
         for ticket in self:
@@ -89,16 +82,14 @@ class ShiftTicket(models.Model):
                 or False
             )
 
-    seats_availability = fields.Selection(
-        compute="_compute_seats", store=False, required=False
-    )
+    seats_availability = fields.Selection(related="shift_id.seats_availability")
+
     seats_reserved = fields.Integer(compute="_compute_seats", store=False)
     seats_available = fields.Integer(compute="_compute_seats", store=False)
     seats_unconfirmed = fields.Integer(compute="_compute_seats", store=False)
     seats_used = fields.Integer(compute="_compute_seats", store=False)
 
     @api.depends("product_id")
-    @api.multi
     def _compute_shift_type(self):
         for ticket in self:
             if (
@@ -109,7 +100,6 @@ class ShiftTicket(models.Model):
             else:
                 ticket.shift_type = "standard"
 
-    @api.multi
     @api.depends("seats_max", "registration_ids.state")
     def _compute_seats(self):
         """Determine reserved, available, reserved but unconfirmed and used

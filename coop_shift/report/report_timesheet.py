@@ -85,17 +85,17 @@ class ReportTimesheet(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids, data=None):
-        self.model = self.env.context.get("active_model")
-        docs = self.env[self.model].browse(self.env.context.get("active_id"))
+        model_name = self.env.context.get("active_model")
+        docs = self.env[model_name].browse(self.env.context.get("active_id"))
         date_report = data["form"].get("date_report", date.today().strftime("%Y-%m-%d"))
         shifts = data["form"].get("shift_ids", [])
         shifts_res = self.with_context(
-            data["form"].get("used_context", {})
+            **data["form"].get("used_context", {})
         )._get_shifts(date_report, shifts)
         return {
             "doc_ids": self.ids,
             "partner_id": self.env.user.partner_id,
-            "doc_model": self.model,
+            "doc_model": model_name,
             "data": data["form"],
             "docs": docs,
             "date": date,

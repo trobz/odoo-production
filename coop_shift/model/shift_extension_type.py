@@ -9,8 +9,6 @@ class ShiftExtensionType(models.Model):
     _name = "shift.extension.type"
     _description = "Shift Extension Type"
 
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(required=True)
 
-    duration = fields.Integer(
-        string="Duration", required=True, help="Default duration (in days)"
-    )
+    duration = fields.Integer(required=True, help="Default duration (in days)")

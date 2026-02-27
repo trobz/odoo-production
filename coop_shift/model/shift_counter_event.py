@@ -17,33 +17,34 @@ class ShiftCounterEvent(models.Model):
 
     name = fields.Char(string="Description", required=True)
     shift_id = fields.Many2one("shift.shift", string="Shift")
-    type = fields.Selection(string="Type", required=True, selection=TYPE_SELECTION)
+    type = fields.Selection(required=True, selection=TYPE_SELECTION)
     partner_id = fields.Many2one("res.partner", string="Partner", required=True)
     is_manual = fields.Boolean("Manual", readonly=True, default=True)
     point_qty = fields.Float(string="Point Quantity", required=True)
     ignored = fields.Boolean(
-        string="Ignored",
         readonly=True,
         help="Don't take into account when evaluating the member's status",
     )
-    notes = fields.Text(string="Notes")
+    notes = fields.Text()
     is_changed = fields.Boolean("Changed", compute="_compute_is_changed")
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """
         Overwrite the function to
             - Update manual update
         """
         context = self._context
-        if context.get("automatic", False):
-            vals["is_manual"] = False
+        if context.get("automatic"):
+            for vals in vals_list:
+                vals["is_manual"] = False
 
-        return super().create(vals)
+        return super().create(vals_list)
 
-    @api.multi
     @api.depends("create_date", "write_date")
     def _compute_is_changed(self):
         for record in self:
             if record.create_date != record.write_date:
                 record.is_changed = True
+            else:
+                record.is_changed = False

@@ -6,11 +6,9 @@
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools.misc import format_date
-
-from odoo.addons.queue_job.job import job
 
 from ..date_tools import conflict_period
 
@@ -35,13 +33,11 @@ class ResPartner(models.Model):
     ]
 
     # temp remove after coop membership
-    is_member = fields.Boolean("Is Member")
-    is_unsubscribed = fields.Boolean("Is Unsubscribed")
+    is_member = fields.Boolean()
+    is_unsubscribed = fields.Boolean()
 
     # Columns Section
-    leave_ids = fields.One2many(
-        comodel_name="shift.leave", inverse_name="partner_id", string="Leaves"
-    )
+    leave_ids = fields.One2many(comodel_name="shift.leave", inverse_name="partner_id")
 
     leave_qty = fields.Integer(
         string="Number of Shift Leaves", compute="_compute_leave_qty"
@@ -122,7 +118,7 @@ class ResPartner(models.Model):
         string="Leader on these templates",
     )
 
-    is_exempted = fields.Boolean("Is Exempted", compute="_compute_is_exempted")
+    is_exempted = fields.Boolean(compute="_compute_is_exempted")
 
     is_vacation = fields.Boolean("Is on Vacation", compute="_compute_is_vacation")
 
@@ -131,16 +127,11 @@ class ResPartner(models.Model):
     )
 
     shift_type = fields.Selection(
-        readonly=1,
-        required=1,
         selection=SHIFT_TYPE_SELECTION,
-        string="Shift type",
-        default="standard",
     )
 
     working_state = fields.Selection(
         selection=WORKING_STATE_SELECTION,
-        string="Working State",
         help="This state depends on the" " shifts realized by the partner.",
         compute="_compute_working_state",
         compute_sudo=True,
@@ -148,7 +139,6 @@ class ResPartner(models.Model):
     )
     cooperative_state = fields.Selection(
         selection=WORKING_STATE_SELECTION,
-        string="Cooperative State",
         store=True,
         compute="_compute_cooperative_state",
         help="This state" " depends on the 'Working State' and extra custom settings.",
@@ -213,8 +203,7 @@ class ResPartner(models.Model):
         store=True,
     )
     current_extension_day_end = fields.Char(
-        string="Current Extension Day End",
-        compute="_compute_extension_qty",
+        compute="_compute_current_extension_day_end",
         compute_sudo=True,
     )
     counter_event_ids = fields.One2many(
@@ -231,7 +220,6 @@ class ResPartner(models.Model):
     )
 
     # Constrains section
-    @api.multi
     @api.constrains("display_std_points")
     def check_display_standard_point(self):
         """
@@ -241,9 +229,9 @@ class ResPartner(models.Model):
         """
         for partner in self:
             if partner.display_std_points > 0:
-                partner_name = "%s - %s" % (partner.barcode_base, partner.name)
+                partner_name = f"{partner.barcode_base} - {partner.name}"
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "The member %s cannot accumulate more points "
                         + "on the standard counter. if you "
                         + "want this attendance to count, you "
@@ -259,27 +247,27 @@ class ResPartner(models.Model):
             today = fields.Date.context_today(self)
             partner.leave_qty = len(
                 partner.leave_ids.filtered(
-                    lambda l: l.stop_date and l.stop_date >= today
+                    lambda leave, current_day=today: leave.stop_date
+                    and leave.stop_date >= current_day
                 )
             )
             current_leave = partner.leave_ids.filtered(
-                lambda l: (
-                    l.stop_date
-                    and l.stop_date >= today
-                    and (not l.start_date or l.start_date <= today)
-                    and l.state != "cancel"
+                lambda leave, current_day=today: (
+                    leave.stop_date
+                    and leave.stop_date >= current_day
+                    and (not leave.start_date or leave.start_date <= current_day)
+                    and leave.state != "cancel"
                 )
             )
             if current_leave:
                 leave_type_name = current_leave[0].type_id.name.split()
-                partner.current_leave_info = "%s-%s" % (
+                partner.current_leave_info = "{}-{}".format(
                     "".join(word[0] for word in leave_type_name).upper(),
                     format_date(self.env, current_leave[0].stop_date),
                 )
             else:
                 partner.current_leave_info = False
 
-    @api.multi
     def get_next_registration(self, next_registrations):
         self.ensure_one()
         rturn_vals = [False, [(6, 0, [])]]
@@ -298,7 +286,6 @@ class ResPartner(models.Model):
                 num_abcd += 1
         return rturn_vals
 
-    @api.multi
     def _compute_registration_counts(self):
         d = fields.Datetime.now()
         for partner in self:
@@ -319,11 +306,11 @@ class ResPartner(models.Model):
             partner.tmpl_registration_count = len(partner.sudo().tmpl_reg_line_ids)
             partner.active_tmpl_reg_line_count = len(
                 partner.sudo().tmpl_reg_line_ids.filtered(
-                    lambda l: l.is_current or l.is_future
+                    lambda reg_line: reg_line.is_current or reg_line.is_future
                 )
             )
             current_tmpl_reg_line = partner.tmpl_reg_line_ids.filtered(
-                lambda l: l.is_current
+                lambda reg_line: reg_line.is_current
             )
             if current_tmpl_reg_line:
                 if not current_tmpl_reg_line[0].shift_template_id.shift_type_id.is_ftop:
@@ -334,8 +321,9 @@ class ResPartner(models.Model):
                     partner.current_tmpl_reg_line = current_tmpl_reg_line[
                         0
                     ].shift_template_id.name
+            else:
+                partner.current_tmpl_reg_line = False
 
-    @api.multi
     def _compute_current_template_name(self):
         for partner in self:
             reg = partner.tmpl_reg_ids.filtered(lambda r: r.is_current)
@@ -346,7 +334,6 @@ class ResPartner(models.Model):
                 if reg:
                     partner.current_template_name = reg[0].shift_template_id.name
 
-    @api.multi
     def _compute_is_squadleader(self):
         for partner in self:
             partner.is_squadleader = False
@@ -360,13 +347,21 @@ class ResPartner(models.Model):
                 partner.is_squadleader = True
 
     @api.depends("extension_ids.partner_id")
-    @api.multi
     def _compute_extension_qty(self):
         for partner in self:
             partner.extension_qty = len(partner.sudo().extension_ids)
+
+    @api.depends(
+        "extension_ids.partner_id",
+        "extension_ids.date_start",
+        "extension_ids.date_stop",
+    )
+    def _compute_current_extension_day_end(self):
+        for partner in self:
             today = fields.Date.today()
             current_extension = partner.extension_ids.filtered(
-                lambda e: e.date_start <= today and e.date_stop >= today
+                lambda extension, current_day=today: extension.date_start <= current_day
+                and extension.date_stop >= current_day
             )
             if current_extension:
                 partner.current_extension_day_end = format_date(
@@ -382,7 +377,6 @@ class ResPartner(models.Model):
         "counter_event_ids.partner_id",
         "counter_event_ids.ignored",
     )
-    @api.multi
     def _compute_final_standard_point(self):
         for partner in self:
             partner.final_standard_point = sum(
@@ -400,7 +394,6 @@ class ResPartner(models.Model):
         "counter_event_ids.partner_id",
         "counter_event_ids.ignored",
     )
-    @api.multi
     def _compute_final_ftop_point(self):
         for partner in self:
             partner.final_ftop_point = sum(
@@ -441,7 +434,8 @@ class ResPartner(models.Model):
         for partner in self:
             conflict = False
             for leave in partner.leave_ids.filtered(
-                lambda l: l.partner_state == "vacation" and l.state == "done"
+                lambda leave_line: leave_line.partner_state == "vacation"
+                and leave_line.state == "done"
             ):
                 conflict = (
                     conflict
@@ -459,7 +453,8 @@ class ResPartner(models.Model):
         for partner in self:
             conflict = False
             for leave in partner.leave_ids.filtered(
-                lambda l: l.partner_state == "exempted" and l.state == "done"
+                lambda leave_line: leave_line.partner_state == "exempted"
+                and leave_line.state == "done"
             ):
                 conflict = (
                     conflict
@@ -541,7 +536,6 @@ class ResPartner(models.Model):
         "date_delay_stop",
         "leave_ids.state",
     )
-    @api.multi
     def _compute_working_state(self):
         """@This function should be called in a daily CRON."""
         current_datetime = fields.Date.today()
@@ -582,7 +576,6 @@ class ResPartner(models.Model):
             if partner.working_state != state:
                 partner.working_state = state
 
-    @api.multi
     def _compute_in_ftop_team(self):
         ftop_type_ids = (
             self.env["shift.type"].sudo().search([("is_ftop", "=", True)]).ids
@@ -596,7 +589,6 @@ class ResPartner(models.Model):
             partner.in_ftop_team = len(tmpl_reg) > 0
 
     @api.depends("working_state")
-    @api.multi
     def _compute_cooperative_state(self):
         """Overwrite me in a custom module, to add extra state."""
         for partner in self:
@@ -621,19 +613,16 @@ class ResPartner(models.Model):
         for partner_list in splited_partner_list:
             partner_obj.with_delay().update_member_working_state(partner_list)
 
-    @api.multi
     def write(self, vals):
-        if "default_addess_for_shifts" in vals:
+        if vals.get("default_addess_for_shifts"):
             for record in self:
                 if record.parent_id:
-                    if vals.get("default_addess_for_shifts"):
-                        for child in record.parent_id.child_ids:
-                            if child.id != record.id:
-                                child.write({"default_addess_for_shifts": False})
+                    for child in record.parent_id.child_ids:
+                        if child.id != record.id:
+                            child.write({"default_addess_for_shifts": False})
 
         return super().write(vals)
 
-    @job
     def update_member_working_state(self, partner_ids):
         """Job for Updating Member Working State."""
         model_name = "res.partner"

@@ -2,8 +2,10 @@
 
 import logging
 
-from openerp import _, api, fields, models
-from openerp.exceptions import ValidationError
+from psycopg2 import sql
+
+from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -28,31 +30,28 @@ class ResConfigSettings(models.TransientModel):
 
     # Constraints
 
-    @api.multi
     @api.constrains("shift_weeks_per_cycle")
     def _check_shift_weeks_per_cycle(self):
         for res in self:
             if res.shift_weeks_per_cycle <= 0:
                 raise ValidationError(
-                    _("Number of Weeks per Cycle has to be bigger than 0.")
+                    self.env._("Number of Weeks per Cycle has to be bigger than 0.")
                 )
 
-    @api.multi
     @api.constrains("shift_week_a_date")
     def _check_shift_week_a_date(self):
         for rec in self:
             if rec.shift_week_a_date > fields.Date.today():
                 raise ValidationError(
-                    _("The Week A start date can't be a future date.")
+                    self.env._("The Week A start date can't be a future date.")
                 )
 
-    @api.multi
     @api.constrains("shift_state_delay_duration")
     def _check_shift_state_delay_duration(self):
         for res in self:
             if res.shift_state_delay_duration <= 0:
                 raise ValidationError(
-                    _("Alert State Duration has to be bigger than 0.")
+                    self.env._("Alert State Duration has to be bigger than 0.")
                 )
 
     @api.model
@@ -66,15 +65,15 @@ class ResConfigSettings(models.TransientModel):
         return res
 
     def set_values(self):
-        super().set_values()
+        res = super().set_values()
         set_param = self.env["ir.config_parameter"].sudo().set_param
         if self.shift_week_a_date:
             shift_week_a_date = fields.Date.to_string(self.shift_week_a_date)
             set_param("coop_shift.week_a_date", shift_week_a_date)
+        return res
 
     # Actions
 
-    @api.multi
     def action_recompute_shift_weeks(self):
         self.ensure_one()
         self.execute()
@@ -111,21 +110,32 @@ class ResConfigSettings(models.TransientModel):
         weekA_date = get_param("coop_shift.week_a_date")
         n_weeks_cycle = int(get_param("coop_shift.number_of_weeks_per_cycle"))
 
-        self.env.cr.execute(
-            f"""
+        query = sql.SQL(
+            """
             UPDATE {table}
             SET {field_week_number} = (
                 1 +
                 MOD(DIV(ABS({field_date}::date - %s::date)::integer, 7), %s)
             )::integer
             WHERE {field_date} IS NOT NULL
-        """,
-            (weekA_date, n_weeks_cycle),
+            """
+        ).format(
+            table=sql.Identifier(table),
+            field_week_number=sql.Identifier(field_week_number),
+            field_date=sql.Identifier(field_date),
         )
+        self.env.cr.execute(query, (weekA_date, n_weeks_cycle))
         # Update week_name
         if field_week_name:
-            self.env.cr.execute(f"""
+            query = sql.SQL(
+                """
                 UPDATE {table}
                 SET {field_week_name} = CHR(64 + {field_week_number})
                 WHERE {field_week_number} IS NOT NULL
-            """)
+                """
+            ).format(
+                table=sql.Identifier(table),
+                field_week_name=sql.Identifier(field_week_name),
+                field_week_number=sql.Identifier(field_week_number),
+            )
+            self.env.cr.execute(query)

@@ -1,125 +1,140 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-  <template id="report_wallchart_template">
-    <t t-call="web.html_container">
-      <tr t-foreach="docs['Wallcharts']" t-as="wallchart">
-        <t t-call="web.external_layout">
-          <div class="page" style="page-break-after:always">
-            <div class="row mt8 mb8 ">
-              <div class="col-6">
-                <h3>Template Inscriptions: <span
-                  t-esc="wallchart['day']"
-                  t-lang="o.partner_id.lang"
-                /></h3>
-              </div>
-              <div class="col-6 text-right">
-                <h4>Regular workers sign-ups as of<br /><span
-                  t-esc="date.strftime(date.today(),'%d/%m/%Y')"
-                /></h4>
-              </div>
-            </div>
-            <table class="table table-bordered" style="font-size: 11px;">
-              <thead>
-                <tr>
-                  <th width="8%">Time</th>
-                  <th t-foreach="wallchart['weeks']" t-as="week">
+    <template id="report_wallchart_template">
+        <t t-call="web.html_container">
+            <tr t-foreach="docs['Wallcharts']" t-as="wallchart">
+                <t t-call="web.external_layout">
+                    <div class="page" style="page-break-after:always">
+                        <div class="row mt8 mb8 ">
+                            <div class="col-6">
+                                <h3>Template Inscriptions: <span
+                                    t-esc="wallchart['day']"
+                                /></h3>
+                            </div>
+                            <div class="col-6 text-right">
+                                <h4>Regular workers sign-ups as of<br /><span
+                                    t-esc="date.strftime(date.today(),'%d/%m/%Y')"
+                                /></h4>
+                            </div>
+                        </div>
+                        <table class="table table-bordered" style="font-size: 11px;">
+                            <thead>
+                                <tr>
+                                    <th width="8%">Time</th>
+                                    <th t-foreach="wallchart['weeks']" t-as="week">
                                     Week <t t-esc="week[1]" /> <span
-                    t-esc="wallchart['next_dates']['week%s' % week[1]]"
-                  />
+                                        t-esc="wallchart['next_dates']['week%s' % week[1]]"
+                                    />
                                 </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  t-foreach="wallchart['times']"
-                  t-as="time"
-                  style="page-break-inside:avoid; page-break-after:auto"
-                >
-                  <td><span t-esc="time['start_time']" /> - <span
-                    t-esc="time['end_time']"
-                  /></td>
-                  <td t-foreach="wallchart['weeks']" t-as="week">
-                    <t t-set="num" t-value="1" />
-                    <t t-foreach="time['partners%s' % week[1]]" t-as="partner">
-                      <t t-if="partner['dates']">
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    t-foreach="wallchart['times']"
+                                    t-as="time"
+                                    style="page-break-inside:avoid; page-break-after:auto"
+                                >
+                                    <td><span t-esc="time['start_time']" /> - <span
+                                        t-esc="time['end_time']"
+                                    /></td>
+                                    <td t-foreach="wallchart['weeks']" t-as="week">
+                                        <t t-set="num" t-value="1" />
+                                        <t
+                                            t-foreach="time['partners%s' % week[1]]"
+                                            t-as="partner"
+                                        >
+                                            <t t-if="partner['dates']">
                                             <span t-esc="num" /> - <span
-                        t-esc="partner['dates']"
-                      /><br /><br />
+                                                t-esc="partner['dates']"
+                                            /><br /><br />
                                             <t t-set="num" t-value="num + 1" />
                                         </t>
-                    </t>
-                    <t t-foreach="time['free_seats%s' % week[1]]" t-as="free_seat">
+                                        </t>
                                         <t
-                      t-set="number"
-                      t-value="free_seat_index + num"
-                    />
+                                            t-foreach="time['free_seats%s' % week[1]]"
+                                            t-as="free_seat"
+                                        >
+                                        <t
+                                            t-set="number"
+                                            t-value="free_seat_index + num"
+                                        />
                                         <span t-esc="number" /> - <br /><br />
                                     </t>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </tr>
         </t>
-      </tr>
-    </t>
-  </template>
-  <template id="report_wallchart_ftop">
-    <t t-call="web.html_container">
-      <tr t-foreach="Wallcharts" t-as="wallchart">
-        <t t-call="web.external_layout">
-          <div class="page" style="page-break-after:always">
-            <div class="row mt8 mb8 ">
-              <div class="col-6">
-                <h3>Shift Inscriptions: <span t-esc="wallchart['day']" /></h3>
-              </div>
-              <br />
-              <div class="col-6 text-right">
-                <h4>FTOP Workers sign-ups as of<br /><span
-                  t-esc="date.strftime(date.today(),'%d/%m/%Y')"
-                /></h4>
-              </div>
-            </div>
-            <table class="table table-bordered" style="font-size: 11px;">
-              <thead>
-                <tr>
-                  <th width="8%">Time</th>
-                  <t t-foreach="wallchart['header']" t-as="header">
-                    <th>Week <span t-esc="header['week_letter']" /> - <span
-                      t-esc="date.strftime(header['date'],'%d/%m/%Y')"
-                    /></th>
-                  </t>
-                </tr>
-              </thead>
-              <tbody>
-                <tr t-foreach="wallchart['times']" t-as="time">
-                  <t t-set="num" t-value="1" />
-                  <td><span t-esc="time['start_time']" /> - <span
-                    t-esc="time['end_time']"
-                  /></td>
-                  <t t-foreach="time['shift_list']" t-as="shift">
-                    <td>
-                      <t t-foreach="shift['partners']" t-as="partner">
+    </template>
+    <template id="report_wallchart_ftop">
+        <t t-call="web.html_container">
+            <tr t-foreach="Wallcharts" t-as="wallchart">
+                <t t-call="web.external_layout">
+                    <div class="page" style="page-break-after:always">
+                        <div class="row mt8 mb8 ">
+                            <div class="col-6">
+                                <h3>Shift Inscriptions: <span
+                                    t-esc="wallchart['day']"
+                                /></h3>
+                            </div>
+                            <br />
+                            <div class="col-6 text-right">
+                                <h4>FTOP Workers sign-ups as of<br /><span
+                                    t-esc="date.strftime(date.today(),'%d/%m/%Y')"
+                                /></h4>
+                            </div>
+                        </div>
+                        <table class="table table-bordered" style="font-size: 11px;">
+                            <thead>
+                                <tr>
+                                    <th width="8%">Time</th>
+                                    <t t-foreach="wallchart['header']" t-as="header">
+                                        <th>Week <span
+                                            t-esc="header['week_letter']"
+                                        /> - <span
+                                            t-esc="date.strftime(header['date'],'%d/%m/%Y')"
+                                        /></th>
+                                    </t>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="wallchart['times']" t-as="time">
+                                    <t t-set="num" t-value="1" />
+                                    <td><span t-esc="time['start_time']" /> - <span
+                                        t-esc="time['end_time']"
+                                    /></td>
+                                    <t t-foreach="time['shift_list']" t-as="shift">
+                                        <td>
+                                            <t
+                                                t-foreach="shift['partners']"
+                                                t-as="partner"
+                                            >
                                             <span t-esc="partner_index + 1" /> - <span
-                        t-esc="partner.name"
-                      /><br />
+                                                t-esc="partner.name"
+                                            /><br />
                                             <t t-set="num" t-value="partner_size + 1" />
                                         </t>
-                      <t t-foreach="shift['free_seats']" t-as="free_seat">
                                             <t
-                        t-set="number"
-                        t-value="free_seat_index + num"
-                      />
+                                                t-foreach="shift['free_seats']"
+                                                t-as="free_seat"
+                                            >
+                                            <t
+                                                t-set="number"
+                                                t-value="free_seat_index + num"
+                                            />
                                             <span t-esc="number" /> - <br /><br />
                                         </t>
-                    </td>
-                  </t>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                                        </td>
+                                    </t>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </tr>
         </t>
-      </tr>
-    </t>
-  </template>
+    </template>
 </odoo>

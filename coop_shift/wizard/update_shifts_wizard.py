@@ -75,7 +75,6 @@ class UpdateShiftsWizard(models.TransientModel):
         string="""Changes to repercute on selected shifts""",
     )
 
-    @api.multi
     def update_lines(self, date_from=None, date_to=None):
         for wizard in self:
             wizard.line_ids = [(5, 0, 0)]
@@ -83,7 +82,6 @@ class UpdateShiftsWizard(models.TransientModel):
                 wizard.template_id, date_from=wizard.date_from, date_to=wizard.date_to
             )
 
-    @api.multi
     def update_shifts(self):
         shift_obj = self.env["shift.shift"]
         for wizard in self:
@@ -98,8 +96,10 @@ class UpdateShiftsWizard(models.TransientModel):
                     del vals["shift_ticket_ids"]
                 # S#T34357 - Chaudron : reminder email before suscribed shift
                 # Issue: when vals contains shift_mail_ids, like
-                # {'shift_mail_ids': [[1, 10, {'interval_nbr': 7, 'interval_type': 'after_shift'}]]}
-                # 10 here is the id if shift.template.mail, but we need id of shift.mail instead
+                # {'shift_mail_ids': [[1, 10, {'interval_nbr': 7,
+                # 'interval_type': 'after_shift'}]]}
+                # 10 here is the id if shift.template.mail,
+                # but we need id of shift.mail instead
                 # Fix value for shift_mail_ids
                 if vals.get("shift_mail_ids"):
                     shift_mail_vals = [(6, 0, [])]
@@ -133,24 +133,20 @@ class UpdateShiftsWizardLine(models.TransientModel):
         "update.shifts.wizard",
         "Wizard Reference",
         required=True,
-        ondelete="cascade",
     )
     shift_id = fields.Many2one(
         "shift.shift",
         "Shift Reference",
         required=True,
-        ondelete="cascade",
     )
-    name = fields.Char("Name")
+    name = fields.Char()
     user_ids = fields.Many2many(
         "res.partner",
         string="Shift Leader",
-        ondelete="set null",
     )
     shift_type_id = fields.Many2one(
         "shift.type",
         string="Category",
-        ondelete="cascade",
     )
     date_begin = fields.Datetime(string="Start Date")
     date_end = fields.Datetime(string="End Date")

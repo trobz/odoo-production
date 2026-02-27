@@ -14,9 +14,9 @@ class ShiftLeaveType(models.Model):
     _name = "shift.leave.type"
     _description = "Shift Leave Type"
 
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(required=True)
 
-    active = fields.Boolean(string="Active", default=True)
+    active = fields.Boolean(default=True)
 
     state = fields.Selection(
         selection=LEAVE_TYPE_STATE_SELECTION,

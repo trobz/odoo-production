@@ -12,7 +12,7 @@ class ShiftExtension(models.Model):
     _description = "Shift Extension"
     _order = "date_start, partner_id"
 
-    name = fields.Char(string="Name", readonly=True)
+    name = fields.Char(readonly=True)
 
     partner_id = fields.Many2one(
         string="Partner", comodel_name="res.partner", required=True
@@ -26,12 +26,16 @@ class ShiftExtension(models.Model):
 
     date_stop = fields.Date(string="End Date", required=True)
 
-    @api.model
-    def create(self, vals):
-        vals["name"] = self.env["ir.sequence"].next_by_code("shift.extension")
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        """
+        Overwrite the function to
+            - Generate name with sequence
+        """
+        for vals in vals_list:
+            vals["name"] = self.env["ir.sequence"].next_by_code("shift.extension")
+        return super().create(vals_list)
 
-    @api.multi
     @api.onchange("type_id", "date_start")
     def onchange_type_id(self):
         for extension in self:

@@ -7,16 +7,6 @@
 from odoo import api, fields, models
 
 
-class ShiftTypeMail(models.Model):
-    _inherit = "event.type.mail"
-    _name = "shift.type.mail"
-    _description = "Mail Scheduling on Shift Category"
-
-    event_type_id = fields.Many2one(
-        "shift.type", string="Event Type", ondelete="cascade", required=True
-    )
-
-
 class ShiftType(models.Model):
     """Shift Type"""
 
@@ -44,9 +34,8 @@ class ShiftType(models.Model):
     )
     is_ftop = fields.Boolean("FTOP Shift", default=False)
     prefix_name = fields.Char(
-        "Prefix Name",
         help="""this is configuration field, it uses to add prefix to
-        the name of shift template or shift shift.""",
+        the name of shift template or shift shift."""
     )
     event_type_mail_ids = fields.One2many(
         "shift.type.mail",
@@ -55,4 +44,4 @@ class ShiftType(models.Model):
         default=_default_to_none,
         copy=False,
     )
-    event_ticket_ids = fields.One2many(default=_default_to_none)
+    event_type_ticket_ids = fields.One2many(default=_default_to_none)

@@ -7,7 +7,7 @@
 
 from datetime import datetime
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -25,7 +25,7 @@ class ShiftTemplateRegistration(models.Model):
     phone = fields.Char(readonly=True, related="partner_id.phone")
     name = fields.Char(readonly=True, related="partner_id.name", store=True)
     partner_id = fields.Many2one(required=True)
-    user_ids = fields.Many2many(related="shift_template_id.user_ids")
+    user_ids = fields.Many2many("res.partner", related="shift_template_id.user_ids")
     shift_ticket_id = fields.Many2one(
         "shift.template.ticket",
         "Shift Ticket",
@@ -57,9 +57,14 @@ class ShiftTemplateRegistration(models.Model):
         related="shift_template_id.start_time",
         readonly=True,
     )
-    is_current = fields.Boolean(compute="_compute_current", multi="current")
-    is_future = fields.Boolean(compute="_compute_current", multi="current")
-    is_past = fields.Boolean(compute="_compute_current", multi="current")
+    is_current = fields.Boolean(compute="_compute_current")
+    is_future = fields.Boolean(compute="_compute_current")
+    is_past = fields.Boolean(compute="_compute_current")
+    date_open = fields.Datetime(
+        string="Registration Date",
+        readonly=True,
+        default=lambda self: fields.Datetime.now(),
+    )
 
     _sql_constraints = [
         (
@@ -69,7 +74,6 @@ class ShiftTemplateRegistration(models.Model):
         ),
     ]
 
-    @api.multi
     @api.constrains("shift_template_id", "shift_ticket_product_id")
     def _check_registration_type(self):
         for rec in self:
@@ -79,7 +83,7 @@ class ShiftTemplateRegistration(models.Model):
                 "coop_shift.product_product_shift_standard"
             ):
                 raise ValidationError(
-                    _("Inscriptions on ABCD Templates must be Standard type!")
+                    self.env._("Inscriptions on ABCD Templates must be Standard type!")
                 )
             if rec.shift_template_id.shift_type_id == rec.env.ref(
                 "coop_shift.shift_type_ftop"
@@ -87,10 +91,9 @@ class ShiftTemplateRegistration(models.Model):
                 "coop_shift.product_product_shift_ftop"
             ):
                 raise ValidationError(
-                    _("Inscriptions on FTOP Templates must be FTOP type!")
+                    self.env._("Inscriptions on FTOP Templates must be FTOP type!")
                 )
 
-    @api.multi
     @api.model
     def _compute_current(self):
         for reg in self:
@@ -155,7 +158,6 @@ class ShiftTemplateRegistration(models.Model):
                 return line.state, line.id
         return False, False
 
-    @api.multi
     @api.constrains("line_ids")
     def _check_dates(self):
         for reg in self:
@@ -167,11 +169,17 @@ class ShiftTemplateRegistration(models.Model):
                     and line.date_begin > line.date_end
                 ):
                     raise ValidationError(
-                        _(
+                        self.env._(
                             "Begin date is greater than End date.\n\n"
-                            "begin: %s\nend: %s\nstate: %s"
+                            "begin: %(begin)s\n"
+                            "end: %(end)s\n"
+                            "state: %(state)s"
                         )
-                        % (line.date_begin, line.date_end, line.state)
+                        % {
+                            "begin": line.date_begin,
+                            "end": line.date_end,
+                            "state": line.state,
+                        }
                     )
                 for line2 in reg.line_ids:
                     if line2 == line:
@@ -195,22 +203,23 @@ class ShiftTemplateRegistration(models.Model):
                     break
             if not ok:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "These dates overlap:\n"
-                        "- Line1: begin: %s    end: %s    state: %s\n"
-                        "- Line2: begin: %s    end: %s    state: %s"
+                        "- Line1: begin: %(line1_begin)s    end: %(line1_end)s"
+                        "    state: %(line1_state)s\n"
+                        "- Line2: begin: %(line2_begin)s    end: %(line2_end)s"
+                        "    state: %(line2_state)s"
                     )
-                    % (
-                        line.date_begin,
-                        line.date_end,
-                        line.state,
-                        line2.date_begin,
-                        line2.date_end,
-                        line2.state,
-                    )
+                    % {
+                        "line1_begin": line.date_begin,
+                        "line1_end": line.date_end,
+                        "line1_state": line.state,
+                        "line2_begin": line2.date_begin,
+                        "line2_end": line2.date_end,
+                        "line2_state": line2.state,
+                    }
                 )
 
-    @api.multi
     @api.onchange("shift_template_id")
     def onchange_shift_id(self):
         standard_product = self.env.ref("coop_shift.product_product_shift_standard")

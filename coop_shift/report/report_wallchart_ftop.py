@@ -6,24 +6,16 @@
 
 from datetime import date, datetime, timedelta
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 from .report_wallchart_common import rounding_limit
-
-WEEK_DAYS = {
-    "mo": _("Monday"),
-    "tu": _("Tuesday"),
-    "we": _("Wednesday"),
-    "th": _("Thursday"),
-    "fr": _("Friday"),
-    "sa": _("Saturday"),
-    "su": _("Sunday"),
-}
+from .report_wallchart_template import WEEK_DAYS
 
 
 class ReportWallchartFTOP(models.AbstractModel):
     _name = "report.coop_shift.report_wallchart_ftop"
     _inherit = "report.coop_shift.report_wallchart_common"
+    _description = "Wallchart report for FTOP shifts"
 
     @api.model
     def _get_weekday_number(self, wd):
@@ -119,7 +111,11 @@ class ReportWallchartFTOP(models.AbstractModel):
                 res["shift_list"] = shift_list
                 result.append(res)
             final_result.append(
-                {"day": WEEK_DAYS[week_day], "times": result, "header": header}
+                {
+                    "day": self.env._(WEEK_DAYS[week_day]),
+                    "times": result,
+                    "header": header,
+                }
             )
         return final_result
 
@@ -144,7 +140,6 @@ class ReportWallchartFTOP(models.AbstractModel):
     def _get_report_values(self, docids, data=None):
         model = self.env.context.get("active_model")
         docs = self.env[model].browse(self.env.context.get("active_id"))
-        # docs = self.env[self.model].browse(self.env.context.get('active_id'))
         Wallcharts = self._get_report_info(data["form"])
         return {
             "doc_ids": self.ids,

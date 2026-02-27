@@ -2,11 +2,10 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 from ..date_tools import conflict_period
-from .shift_leave_type import LEAVE_TYPE_STATE_SELECTION
 
 
 class ShiftLeave(models.Model):
@@ -20,49 +19,37 @@ class ShiftLeave(models.Model):
         ("cancel", "Canceled"),
     ]
 
-    name = fields.Char(string="Name", compute="_compute_name", store=True)
+    name = fields.Char(compute="_compute_name", store=True)
 
     type_id = fields.Many2one(
         comodel_name="shift.leave.type",
         string="Type",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
 
     partner_id = fields.Many2one(
         string="Partner",
         comodel_name="res.partner",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
 
     start_date = fields.Date(
         string="Begin Date",
         required=True,
-        readonly=True,
-        states={"draft": [("readonly", False)]},
     )
 
     stop_date = fields.Date(
-        string="Stop Date",
-        readonly=True,
-        states={"draft": [("readonly", False)]},
         help="Last day of the period, during wich the partner is not"
         " available to work.",
     )
 
-    state = fields.Selection(
-        selection=LEAVE_STATE_SELECTION, string="State", default="draft"
-    )
+    state = fields.Selection(selection=LEAVE_STATE_SELECTION, default="draft")
 
     partner_state = fields.Selection(
-        selection=LEAVE_TYPE_STATE_SELECTION,
+        string="Partner State",
         related="type_id.state",
         readonly=True,
         store=True,
-        string="Partner State",
         help=" State"
         " of the people during the leave.\n * 'Exempted' : The customer"
         " can buy.\n * 'On vacation' : The customer can not buy.",
@@ -73,15 +60,12 @@ class ShiftLeave(models.Model):
     )
 
     duration = fields.Integer(
-        string="Duration",
         compute="_compute_duration",
         store=True,
         help="Duration (in Days)",
     )
 
-    require_stop_date = fields.Boolean(
-        string="Required Stop Date", related="type_id.require_stop_date"
-    )
+    require_stop_date = fields.Boolean(related="type_id.require_stop_date")
 
     shift_template_registration_line_ids = fields.One2many(
         "shift.template.registration.line", "leave_id"
@@ -100,7 +84,7 @@ class ShiftLeave(models.Model):
     def _compute_name(self):
         for leave in self:
             if leave.partner_id and leave.type_id:
-                leave.name = "%s - %s" % (leave.type_id.name, leave.partner_id.name)
+                leave.name = f"{leave.type_id.name} - {leave.partner_id.name}"
             else:
                 leave.name = ""
 
@@ -112,14 +96,14 @@ class ShiftLeave(models.Model):
             )
 
     # constraints Section
-    @api.multi
     @api.constrains("start_date", "stop_date")
     def _check_dates(self):
         for leave in self:
             if leave.stop_date and leave.stop_date < leave.start_date:
-                raise ValidationError(_("Stop Date should be greater than Start Date."))
+                raise ValidationError(
+                    self.env._("Stop Date should be greater than Start Date.")
+                )
 
-    @api.multi
     @api.constrains("start_date", "stop_date", "partner_id", "state")
     def _check_partner_leaves(self):
         for leave in self:
@@ -135,42 +119,40 @@ class ShiftLeave(models.Model):
                     other_leave.stop_date,
                 )["conflict"]:
                     raise ValidationError(
-                        _(
+                        self.env._(
                             "The partner has an incompatible draft of done leave\n"
-                            " * start date : %s\n * stop date : %s\n"
+                            " * start date : %(start_date)s\n"
+                            " * stop date : %(stop_date)s\n"
                         )
-                        % (
-                            other_leave.start_date,
-                            other_leave.stop_date
-                            and other_leave.stop_date
-                            or _("Undefined"),
-                        )
+                        % {
+                            "start_date": other_leave.start_date,
+                            "stop_date": other_leave.stop_date
+                            or self.env._("Undefined"),
+                        }
                     )
 
-    @api.multi
     def copy_data(self, default=None):
         raise ValidationError(
-            _("You can not duplicate a leave : Unimplemented Feature.")
+            self.env._("You can not duplicate a leave : Unimplemented Feature.")
         )
 
-    @api.multi
     def unlink(self):
         for leave in self:
             if leave.state == "done":
-                raise ValidationError(_("You can not unlink leaves in a done state."))
+                raise ValidationError(
+                    self.env._("You can not unlink leaves in a done state.")
+                )
         return super().unlink()
 
-    @api.multi
     def button_cancel(self):
         for leave in self:
             if leave.state == "done":
+                leave.state = "cancel"
                 leave.shift_template_registration_line_ids.with_context(
                     bypass_leave_change_check=True
                 ).write({"state": "open"})
-                leave.state = "cancel"
                 leave.shift_template_registration_line_ids = False
 
-    @api.multi
     def button_draft(self):
         for leave in self:
             if leave.state == "cancel":

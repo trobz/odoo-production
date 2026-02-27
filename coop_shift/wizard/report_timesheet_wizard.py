@@ -44,7 +44,6 @@ class ReportTimesheet(models.TransientModel):
         default=_get_selected_shifts,
     )
 
-    @api.multi
     def check_report(self):
         self.ensure_one()
         data = {}

@@ -4,7 +4,7 @@
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 from ..date_tools import conflict_period
@@ -62,7 +62,6 @@ class ShiftLeaveWizard(models.TransientModel):
     )
 
     # View Section
-    @api.multi
     def button_confirm(self):
         self.ensure_one()
 
@@ -72,7 +71,7 @@ class ShiftLeaveWizard(models.TransientModel):
             and leave.state != "draft"
         ):
             raise ValidationError(
-                _("You can not confirm a leave in a non draft state.")
+                self.env._("You can not confirm a leave in a non draft state.")
             )
 
         registration_line_ids = self.shift_template_registration_line_ids

@@ -28,9 +28,9 @@ class ReportWallchartCommon(models.AbstractModel):
 
     @api.model
     def format_float_time(self, time):
-        return "%s:%s" % (
+        return "{}:{}".format(
             str(time).split(".")[0],
-            int(float(str("%.2f" % time).split(".")[1]) / 100 * 60) or "00",
+            int(float(str(f"{time:.2f}").split(".")[1]) / 100 * 60) or "00",
         )
 
     @api.model

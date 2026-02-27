@@ -1,50 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-  <data>
     <!-- QWeb Reports -->
-    <report
-      id="timesheet_label"
-      model="report.timesheet"
-      string="Timesheet"
-      report_type="qweb-pdf"
-      name="coop_shift.report_timesheet"
-      file="coop_shift.report_timesheet"
-      attachment_use="False"
-    />
-
-    <report
-      id="wallchart_template"
-      model="report.wallchart"
-      string="Wall Chart - Template"
-      report_type="qweb-pdf"
-      name="coop_shift.report_wallchart_template"
-      file="coop_shift.report_wallchart_template"
-      attachment_use="False"
-    />
-
-    <report
-      id="wallchart_ftop"
-      model="report.wallchart"
-      string="Wall Chart - FTOP"
-      report_type="qweb-pdf"
-      name="coop_shift.report_wallchart_ftop"
-      file="coop_shift.report_wallchart_ftop"
-      attachment_use="False"
-    />
 
     <record id="timesheet_label" model="ir.actions.report">
-      <field name="paperformat_id" ref="event.paperformat_euro_lowmargin" />
-      <field name="attachment_use" eval="0" />
+        <field name="paperformat_id" ref="coop_shift.paperformat_euro_lowmargin" />
+        <field name="attachment_use" eval="False" />
+        <field name="name">Timesheet</field>
+        <field name="model">report.timesheet</field>
+        <field name="report_name">coop_shift.report_timesheet</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_file">coop_shift.report_timesheet</field>
     </record>
 
     <record id="wallchart_template" model="ir.actions.report">
-      <field name="paperformat_id" ref="base.paperformat_euro" />
-      <field name="attachment_use" eval="0" />
+        <field name="paperformat_id" ref="base.paperformat_euro" />
+        <field name="attachment_use" eval="False" />
+        <field name="name">Wall Chart - Template</field>
+        <field name="model">report.wallchart</field>
+        <field name="report_name">coop_shift.report_wallchart_template</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_file">coop_shift.report_wallchart_template</field>
     </record>
 
     <record id="wallchart_ftop" model="ir.actions.report">
-      <field name="paperformat_id" ref="base.paperformat_euro" />
-      <field name="attachment_use" eval="0" />
+        <field name="paperformat_id" ref="base.paperformat_euro" />
+        <field name="attachment_use" eval="False" />
+        <field name="name">Wall Chart - FTOP</field>
+        <field name="model">report.wallchart</field>
+        <field name="report_name">coop_shift.report_wallchart_ftop</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_file">coop_shift.report_wallchart_ftop</field>
     </record>
-  </data>
 </odoo>

@@ -4,7 +4,7 @@
 # @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -46,12 +46,11 @@ class CreateShifts(models.TransientModel):
     date_from = fields.Date("Plan this Template from")
     date_to = fields.Date("Plan this Template until")
 
-    @api.multi
     def create_shifts(self):
         for wizard in self:
             if wizard.last_shift_date and wizard.date_from < wizard.last_shift_date:
                 raise ValidationError(
-                    _("'From date' can't be before 'Last shift date'")
+                    self.env._("'From date' can't be before 'Last shift date'")
                 )
             for template in wizard.template_ids:
                 template.create_shifts_from_template(

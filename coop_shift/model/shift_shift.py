@@ -8,11 +8,9 @@ from datetime import datetime, timedelta
 
 import pytz
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.osv import expression
-
-from odoo.addons.queue_job.job import job
 
 # this variable is used for shift confirmation. It tells how many days before
 # its date_begin a shift is confirmed
@@ -41,7 +39,11 @@ class ShiftShift(models.Model):
     name = fields.Char(
         string="Shift Name",
         related="shift_template_id.name",
+        translate=False,
         store=True,
+    )
+    shift_template_id = fields.Many2one(
+        "shift.template", string="Shift Template", ondelete="restrict"
     )
     event_mail_ids = fields.One2many(default=None, string="Even Mail Schedule")
     shift_mail_ids = fields.One2many(
@@ -55,7 +57,6 @@ class ShiftShift(models.Model):
         string="Shift Category",
         required=False,
         readonly=False,
-        states={"done": [("readonly", True)]},
     )
     week_number = fields.Integer(
         compute="_compute_week_number",
@@ -83,11 +84,20 @@ class ShiftShift(models.Model):
         "shift_id",
         string="Attendees",
         readonly=False,
-        states={"done": [("readonly", True)]},
     )
-    shift_template_id = fields.Many2one(
-        "shift.template", string="Template", ondelete="restrict"
+    seats_availability = fields.Selection(
+        [("limited", "Limited"), ("unlimited", "Unlimited")],
+        required=True,
+        default="unlimited",
     )
+    seats_min = fields.Integer(
+        string="Minimum Attendees",
+        help="For each event you can define a minimum reserved seats "
+        "(number of attendees), if it does not reach the mentioned "
+        "registrations the event can not be confirmed (keep 0 to "
+        "ignore this rule)",
+    )
+
     seats_reserved = fields.Integer(compute="_compute_seats_shift")
     seats_available = fields.Integer(compute="_compute_seats_shift")
     seats_unconfirmed = fields.Integer(compute="_compute_seats_shift")
@@ -113,39 +123,32 @@ class ShiftShift(models.Model):
     date_end_tz = fields.Datetime(string="End Date Time")
     date_without_time = fields.Date(
         string="Date",
-        compute="_compute_begin_date_fields",
+        compute="_compute_begin_date_fields_stored",
         store=True,
-        multi="begin_date",
     )
     begin_date_string = fields.Char(
         string="Begin Date",
-        compute="_compute_begin_date_fields",
+        compute="_compute_begin_date_fields_stored",
         store=True,
-        multi="begin_date",
     )
     begin_date_without_time_string = fields.Char(
         string="Begin Date for mail without time",
-        multi="begin_date",
-        compute="_compute_begin_date_fields",
+        compute="_compute_begin_date_fields_display",
     )
     begin_time = fields.Float(
         string="Start Time",
-        compute="_compute_begin_date_fields",
+        compute="_compute_begin_date_fields_stored",
         store=True,
-        multi="begin_date",
     )
     begin_time_string = fields.Char(
-        string="Begin Time", compute="_compute_begin_date_fields", multi="begin_date"
+        string="Begin Time", compute="_compute_begin_date_fields_display"
     )
     end_time = fields.Float(
-        string="End Time",
-        compute="_compute_end_date_fields",
+        string="End Time (Hours)",
+        compute="_compute_end_time",
         store=True,
-        multi="end_date",
     )
-    end_time_string = fields.Char(
-        string="End Time", compute="_compute_end_date_fields", multi="end_date"
-    )
+    end_time_string = fields.Char(string="End Time", compute="_compute_end_time_string")
     user_ids = fields.Many2many(
         "res.partner",
         "res_partner_shift_shift_rel",
@@ -155,6 +158,22 @@ class ShiftShift(models.Model):
     )
     user_id = fields.Many2one("res.partner", default=False)
     seats_max = fields.Integer()
+
+    # TODO: consider to replace it by stage_id as event.event
+    state = fields.Selection(
+        [
+            ("draft", "Unconfirmed"),
+            ("cancel", "Cancelled"),
+            ("confirm", "Confirmed"),
+            ("done", "Done"),
+        ],
+        string="Status",
+        default="draft",
+        required=True,
+        copy=False,
+    )
+    question_ids = fields.One2many(compute=False)
+    color = fields.Integer("Kanban Color Index")
 
     @api.constrains("shift_template_id", "date_begin", "company_id")
     def _check_uniq_date_shift(self):
@@ -167,12 +186,12 @@ class ShiftShift(models.Model):
             existed = self.env["shift.shift"].search(args, limit=2)
             if len(existed) >= 2:
                 raise UserError(
-                    _(
-                        "The same template cannot be planned several time at the same date !"
+                    self.env._(
+                        "The same template cannot be planned several time "
+                        "at the same date !"
                     )
                 )
 
-    @api.multi
     @api.depends("shift_template_id", "date_without_time")
     def _compute_week_number(self):
         records_with_date = self.filtered("date_without_time")
@@ -191,7 +210,6 @@ class ShiftShift(models.Model):
             else:
                 rec.week_number = week_number
 
-    @api.multi
     @api.depends("week_number")
     def _compute_week_name(self):
         for shift in self:
@@ -217,7 +235,6 @@ class ShiftShift(models.Model):
         shifts = self.search(domain + args, limit=limit)
         return shifts.name_get()
 
-    @api.multi
     @api.depends("name", "date_begin")
     def name_get(self):
         result = []
@@ -239,12 +256,12 @@ class ShiftShift(models.Model):
             product2 = self.env.ref("coop_shift.product_product_shift_ftop")
             return [
                 {
-                    "name": _("Standard"),
+                    "name": self.env._("Standard"),
                     "product_id": product.id,
                     "price": 0,
                 },
                 {
-                    "name": _("FTOP"),
+                    "name": self.env._("FTOP"),
                     "product_id": product2.id,
                     "price": 0,
                 },
@@ -252,7 +269,6 @@ class ShiftShift(models.Model):
         except ValueError:
             return self.env["shift.ticket"]
 
-    @api.multi
     def _compute_auto_confirm(self):
         for shift in self:
             shift.auto_confirm = False
@@ -261,7 +277,6 @@ class ShiftShift(models.Model):
     def _default_event_mail_ids(self):
         return None
 
-    @api.multi
     @api.depends("seats_max", "registration_ids.state")
     def _compute_seats_shift(self):
         """Determine reserved, available, reserved but unconfirmed and used
@@ -310,7 +325,6 @@ class ShiftShift(models.Model):
             "week_name",
         ]
 
-    @api.multi
     def write(self, vals):
         special = self._context.get("special", False)
         if any(shift.state == "done" for shift in self):
@@ -318,7 +332,9 @@ class ShiftShift(models.Model):
             for field in vals.keys():
                 if field in ignore_fields:
                     break
-                raise UserError(_("You can only repercute changes on draft shifts."))
+                raise UserError(
+                    self.env._("You can only repercute changes on draft shifts.")
+                )
         res = super().write(vals)
         if special:
             for field in special:
@@ -378,13 +394,12 @@ class ShiftShift(models.Model):
                     )
                 self.registration_ids = vals
 
-    @api.multi
     @api.depends("date_begin_tz")
     def _compute_date_begin(self):
         tz_name = self._context.get("tz") or self.env.user.tz
         if not tz_name:
             raise UserError(
-                _("You can not create Shift if your timezone is not defined.")
+                self.env._("You can not create Shift if your timezone is not defined.")
             )
         context_tz = pytz.timezone(tz_name)
         for shift in self:
@@ -412,12 +427,11 @@ class ShiftShift(models.Model):
                 )
 
     @api.depends("date_end_tz")
-    @api.multi
     def _compute_date_end(self):
         tz_name = self._context.get("tz") or self.env.user.tz
         if not tz_name:
             raise UserError(
-                _("You can not create Shift if your timezone is not defined.")
+                self.env._("You can not create Shift if your timezone is not defined.")
             )
         context_tz = pytz.timezone(tz_name)
         for shift in self:
@@ -444,18 +458,13 @@ class ShiftShift(models.Model):
                     end_date.second,
                 )
 
-    @api.multi
     @api.depends("date_begin_tz")
-    def _compute_begin_date_fields(self):
+    def _compute_begin_date_fields_stored(self):
         for shift in self:
             if shift.date_begin_tz:
                 start_date_object_tz = shift.date_begin_tz
                 shift.begin_time = start_date_object_tz.hour + (
                     start_date_object_tz.minute / 60.0
-                )
-                shift.begin_time_string = "%02d:%02d" % (
-                    start_date_object_tz.hour,
-                    start_date_object_tz.minute,
                 )
                 shift.begin_date_string = "%02d/%02d/%s " "%02d:%02d" % (
                     start_date_object_tz.day,
@@ -464,24 +473,33 @@ class ShiftShift(models.Model):
                     start_date_object_tz.hour,
                     start_date_object_tz.minute,
                 )
-                shift.begin_date_without_time_string = "%02d/%02d/%s" % (
-                    start_date_object_tz.day,
-                    start_date_object_tz.month,
-                    start_date_object_tz.year,
-                )
                 shift.date_without_time = "%s-%02d-%02d" % (
                     start_date_object_tz.year,
                     start_date_object_tz.month,
                     start_date_object_tz.day,
                 )
 
-    @api.multi
+    @api.depends("date_begin_tz")
+    def _compute_begin_date_fields_display(self):
+        for shift in self:
+            if shift.date_begin_tz:
+                start_date_object_tz = shift.date_begin_tz
+                shift.begin_time_string = "%02d:%02d" % (
+                    start_date_object_tz.hour,
+                    start_date_object_tz.minute,
+                )
+                shift.begin_date_without_time_string = "%02d/%02d/%s" % (
+                    start_date_object_tz.day,
+                    start_date_object_tz.month,
+                    start_date_object_tz.year,
+                )
+
     @api.depends("date_end")
-    def _compute_end_date_fields(self):
+    def _compute_end_time(self):
         tz_name = self._context.get("tz") or self.env.user.tz
         if not tz_name:
             raise UserError(
-                _("You can not create Shift if your timezone is not defined.")
+                self.env._("You can not create Shift if your timezone is not defined.")
             )
         for shift in self:
             if shift.date_end:
@@ -491,14 +509,47 @@ class ShiftShift(models.Model):
                 shift.end_time = start_date_object_tz.hour + (
                     start_date_object_tz.minute / 60.0
                 )
+
+    @api.depends("date_end")
+    def _compute_end_time_string(self):
+        tz_name = self._context.get("tz") or self.env.user.tz
+        if not tz_name:
+            raise UserError(
+                self.env._("You can not create Shift if your timezone is not defined.")
+            )
+        for shift in self:
+            if shift.date_end:
+                utc_timestamp = pytz.utc.localize(shift.date_end, is_dst=False)
+                context_tz = pytz.timezone(tz_name)
+                start_date_object_tz = utc_timestamp.astimezone(context_tz)
                 shift.end_time_string = "%02d:%02d" % (
                     start_date_object_tz.hour,
                     start_date_object_tz.minute,
                 )
 
-    @api.multi
+    def button_draft(self):
+        shifts = self.filtered(lambda s: s.state in ["cancel", "done"])
+        shifts.write({"state": "draft"})
+
+    def button_cancel(self):
+        shifts = self.filtered(lambda s: s.state in ["draft", "confirm"])
+        if any("done" in shift.mapped("registration_ids.state") for shift in shifts):
+            raise UserError(
+                self.env._(
+                    "There are already attendees who attended this shift. "
+                    "Please reset it to draft if you want to cancel this shift."
+                )
+            )
+        shifts.mapped("registration_ids").write({"state": "cancel"})
+        shifts.write({"state": "cancel"})
+
+    def button_done(self):
+        shifts = self.filtered(lambda s: s.state == "confirm")
+        shifts.write({"state": "done"})
+
     def button_confirm(self):
-        super().button_confirm()
+        shifts = self.filtered(lambda s: s.state == "draft")
+        shifts.write({"state": "confirm"})
 
     @api.model
     def run_shift_confirmation(self):
@@ -514,11 +565,6 @@ class ShiftShift(models.Model):
         )
         shifts.button_confirm()
 
-    @api.constrains("seats_max", "seats_available")
-    def _check_seats_limit(self):
-        return True
-
-    @api.multi
     def _recompute_week_number_async(self):
         NUM_RECORDS_PER_JOB = 200
         chunked = [
@@ -526,10 +572,9 @@ class ShiftShift(models.Model):
             for i in range(0, len(self), NUM_RECORDS_PER_JOB)
         ]
         # Create jobs
-        for chunk in chunked:
+        for _chunk in chunked:
             self.with_delay()._job_recompute_week_number_async()
         return True
 
-    @job
     def _job_recompute_week_number_async(self):
         self._compute_week_number()

@@ -29,9 +29,8 @@ class AddTemplateRegistration(models.TransientModel):
     shift_ticket_id = fields.Many2one("shift.template.ticket", "Ticket", required=True)
     date_begin = fields.Date("Begin Date", default=lambda *a: fields.Date.today())
     date_end = fields.Date("End Date")
-    state = fields.Selection(STATES, "State", default="open")
+    state = fields.Selection(STATES, default="open")
 
-    @api.multi
     def add_template_registration(self):
         partner = self.env["res.partner"].browse(
             self.env.context.get("active_id", False)

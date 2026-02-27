@@ -5,6 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import logging
+import threading
 
 from dateutil.relativedelta import relativedelta
 
@@ -28,11 +29,10 @@ class ShiftMailScheduler(models.Model):
 
     _inherit = "event.mail"
     _name = "shift.mail"
+    _description = "Shift Mail Scheduler"
 
     event_id = fields.Many2one(required=False)
-    shift_id = fields.Many2one(
-        "shift.shift", string="Shift", required=True, ondelete="cascade"
-    )
+    shift_id = fields.Many2one("shift.shift", required=True, ondelete="cascade")
     mail_registration_ids = fields.One2many("shift.mail.registration", "scheduler_id")
     template_id = fields.Many2one(
         "mail.template",
@@ -44,25 +44,6 @@ class ShiftMailScheduler(models.Model):
         automatically sent""",
     )
 
-    @api.multi
-    @api.depends(
-        "mail_sent",
-        "interval_type",
-        "shift_id.registration_ids",
-        "mail_registration_ids",
-    )
-    def _compute_done(self):
-        for rec in self:
-            if rec.interval_type in ["before_event", "after_event"]:
-                rec.done = rec.mail_sent
-            else:
-                rec.done = len(rec.mail_registration_ids) == len(
-                    rec.shift_id.registration_ids
-                ) and all(
-                    filter(lambda line: line.mail_sent, rec.mail_registration_ids)
-                )
-
-    @api.multi
     @api.depends(
         "shift_id.state",
         "shift_id.date_begin",
@@ -85,7 +66,6 @@ class ShiftMailScheduler(models.Model):
                     sign * rec.interval_nbr
                 )
 
-    @api.multi
     def execute(self):
         for sm in self:
             if sm.shift_id.shift_type_id.is_ftop:
@@ -110,33 +90,47 @@ class ShiftMailScheduler(models.Model):
                 today = fields.Datetime.now()
                 # filter mails with ignoring conditions.
                 sm.mail_registration_ids.filtered(
-                    lambda reg: reg.scheduled_date
-                    and reg.scheduled_date <= today
+                    lambda reg, current_time=today: reg.scheduled_date
+                    and reg.scheduled_date <= current_time
                     and not reg.mail_ignored
                 ).sudo().execute()
             else:
-                if not sm.mail_sent:
+                if not sm.mail_done:
                     sm.shift_id.mail_attendees(sm.template_id.id)
-                    sm.write({"mail_sent": True})
+                    sm.write({"mail_done": True})
             return True
 
     @api.model
-    def run(self, autocommit=False):
-        today = fields.Datetime.to_string(fields.Datetime.now())
+    def schedule_communications(self, autocommit=False):
         schedulers = self.search(
             [
-                ("done", "=", False),
-                ("scheduled_date", "<=", today),
+                # skip archived events
+                ("shift_id.active", "=", True),
+                # scheduled
+                ("scheduled_date", "<=", fields.Datetime.now()),
+                # event-based: todo / attendee-based: running until event is not done
+                ("mail_done", "=", False),
+                "|",
+                ("interval_type", "!=", "after_sub"),
+                ("shift_id.date_end", ">", self.env.cr.now()),
             ]
         )
+
         for scheduler in schedulers:
             try:
-                with self.env.cr.savepoint():
-                    scheduler.execute()
+                # Prevent a mega prefetch of the registration ids of all the shifts
+                # of all the schedulers
+                self.browse(scheduler.id).execute()
             except Exception as e:
+                _logger.info(e)
                 _logger.exception(e)
-                self.invalidate_cache()
-                self._warn_template_error(scheduler, e)
+                self.env.invalidate_all()
+                # self._warn_template_error(scheduler, e)
+            else:
+                if autocommit and not getattr(
+                    threading.current_thread(), "testing", False
+                ):
+                    self.env.cr.commit()  # pylint: disable=E8102
         return True
 
     def update_interval_type(self, vals):
@@ -146,13 +140,24 @@ class ShiftMailScheduler(models.Model):
             vals["interval_type"] = vals["interval_type"].replace("shift", "event")
         return vals
 
-    @api.model
-    def create(self, vals):
+    def update_template_ref(self, vals):
+        """Update template_ref field for backward compatibility"""
+        if vals.get("template_id"):
+            vals["template_ref"] = f"mail.template,{vals['template_id']}"
+        return vals
+
+    def sync_event_mail_values(self, vals):
+        """Sync values with event.mail for backward compatibility"""
         self.update_interval_type(vals)
-        res = super().create(vals)
+        self.update_template_ref(vals)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            self.sync_event_mail_values(vals)
+        res = super().create(vals_list)
         return res
 
-    @api.multi
     def write(self, vals):
-        self.update_interval_type(vals)
+        self.sync_event_mail_values(vals)
         return super().write(vals)

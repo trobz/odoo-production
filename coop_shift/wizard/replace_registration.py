@@ -13,7 +13,7 @@ class ReplaceRegistration(models.TransientModel):
 
     @api.model
     def _get_registration_id(self):
-        return self.env.context.get("active_id", False)
+        return self.env.context.get("active_id")
 
     registration_id = fields.Many2one(
         "shift.registration",
@@ -36,10 +36,9 @@ class ReplaceRegistration(models.TransientModel):
     phone = fields.Char(readonly=True, related="new_partner_id.phone")
     name = fields.Char(readonly=True, related="new_partner_id.name")
 
-    @api.multi
     def replace_member(self):
         for wizard in self:
-            new_reg_id = wizard.registration_id.copy(
+            new_reg = wizard.registration_id.copy(
                 {
                     "partner_id": wizard.new_partner_id.id,
                     "replaced_reg_id": wizard.registration_id.id,
@@ -49,5 +48,5 @@ class ReplaceRegistration(models.TransientModel):
                 }
             )
             wizard.registration_id.state = "replaced"
-            wizard.registration_id.replacing_reg_id = new_reg_id.id
+            wizard.registration_id.replacing_reg_id = new_reg.id
         return True

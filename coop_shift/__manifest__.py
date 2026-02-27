@@ -7,9 +7,9 @@
 
 {
     "name": "Coop Shift",
-    "version": "12.0.5.0.0",
+    "version": "18.0.1.0.0",
     "category": "Tools",
-    "author": "Julien WESTE, Sylvain LE GAL, Cyril Gaspard, La Louve, Druidoo",
+    "author": ("Julien WESTE, Sylvain LE GAL, " "Cyril Gaspard, La Louve, Druidoo"),
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": [
@@ -30,7 +30,6 @@
         "data/report_paperformat.xml",
         "data/email_template.xml",
         "views/action.xml",
-        "views/menu.xml",
         "views/product_view.xml",
         "views/shift_mail_view.xml",
         "views/shift_registration_view.xml",
@@ -57,6 +56,7 @@
         "wizard/view_shift_leave_wizard.xml",
         "wizard/report_timesheet_wizard_view.xml",
         "wizard/report_wallchart_wizard_view.xml",
+        "views/menu.xml",
     ],
     "demo": [
         "demo/res_groups.xml",

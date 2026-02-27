@@ -4,12 +4,13 @@
 # @author Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class ShiftMailRegistration(models.Model):
     _inherit = "event.mail.registration"
     _name = "shift.mail.registration"
+    _description = "Shift Mail Registration"
 
     scheduler_id = fields.Many2one(
         "shift.mail", "Mail Scheduler", required=True, ondelete="cascade"
@@ -22,7 +23,6 @@ class ShiftMailRegistration(models.Model):
         "Scheduled Time", related="scheduler_id.scheduled_date", store=True
     )
 
-    @api.multi
     def execute(self):
         today = fields.datetime.now()
         records_to_execute = self.filtered(

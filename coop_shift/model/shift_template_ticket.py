@@ -22,7 +22,9 @@ class ShiftTemplateTicket(models.Model):
         "shift.template.registration", "shift_ticket_id", "Registrations"
     )
 
-    seats_availability = fields.Selection(compute="_compute_seats")
+    seats_availability = fields.Selection(
+        string="Seats Availability", related="shift_template_id.seats_availability"
+    )
 
     seats_reserved = fields.Integer(compute="_compute_seats")
 
@@ -43,7 +45,6 @@ class ShiftTemplateTicket(models.Model):
     )
 
     # Compute Section
-    @api.multi
     @api.depends("shift_template_id.shift_type_id.is_ftop")
     def _compute_hide_in_member_space(self):
         for ticket in self:
@@ -52,7 +53,6 @@ class ShiftTemplateTicket(models.Model):
             else:
                 ticket.hide_in_member_space = False
 
-    @api.multi
     @api.depends("seats_max", "registration_ids.line_ids")
     def _compute_seats(self):
         """Determine reserved, available, reserved but unconfirmed and used
@@ -71,11 +71,12 @@ class ShiftTemplateTicket(models.Model):
             "open": "seats_reserved",
             "done": "seats_used",
         }
+        allowed_states = tuple(state_field)
 
         # compute seats_available
         for ticket in self:
             for reg in ticket.registration_ids.filtered(
-                lambda r, states=state_field.keys(): r.state in states
+                lambda registration, states=allowed_states: registration.state in states
             ):
                 if reg.is_current:
                     ticket[state_field[reg.state]] += 1
@@ -87,7 +88,6 @@ class ShiftTemplateTicket(models.Model):
                 )
 
     # Overload Section
-    @api.multi
     def write(self, vals):
         new_vals = {}
         if "seats_max" in vals.keys():
