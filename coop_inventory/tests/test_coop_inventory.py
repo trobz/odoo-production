@@ -6,13 +6,13 @@ class TestCoopInventory(TransactionCase):
     def setUp(self):
         super().setUp()
         self.storable_product = self.env["product.product"].create(
-            {"name": "Storable Product", "type": "product"}
+            {"name": "Storable Product", "type": "consu", "is_storable": True}
         )
         self.consumable_product = self.env["product.product"].create(
-            {"name": "Consumable Product", "type": "consu"}
+            {"name": "Consumable Product", "type": "consu", "is_storable": False}
         )
         self.customer = self.env["res.partner"].create(
-            {"name": "Test Customer1", "customer": True}
+            {"name": "Test Customer1", "customer_rank": 1}
         )
         self.purchase_order = self.env["purchase.order"].create(
             {"partner_id": self.customer.id}
@@ -24,11 +24,10 @@ class TestCoopInventory(TransactionCase):
                 "date_planned": fields.Datetime.now(),
                 "name": "Storable",
                 "product_qty": 5,
-                "product_uom": self.env.ref("uom.product_uom_categ_unit").id,
+                "product_uom": self.env.ref("uom.product_uom_unit").id,
                 "price_unit": 10.0,
             }
         )
-        self.po_line_1.onchange_product_id()
         self.po_line_2 = self.env["purchase.order.line"].create(
             {
                 "order_id": self.purchase_order.id,
@@ -36,11 +35,10 @@ class TestCoopInventory(TransactionCase):
                 "date_planned": fields.Datetime.now(),
                 "name": "Consumable",
                 "product_qty": 3,
-                "product_uom": self.env.ref("uom.product_uom_categ_unit").id,
+                "product_uom": self.env.ref("uom.product_uom_unit").id,
                 "price_unit": 5.0,
             }
         )
-        self.po_line_2.onchange_product_id()
 
     def test_001_check_picking(self):
         self.purchase_order.button_confirm()
