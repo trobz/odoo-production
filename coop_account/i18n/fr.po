@@ -1,47 +1,171 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* coop_account
+# 	* coop_account
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-31 09:19+0000\n"
-"PO-Revision-Date: 2020-07-01 10:27+0000\n"
-"Last-Translator: Simon Mas <simon.mas@druidoo.io>\n"
-"Language-Team: French <https://translate.druidoo.io/projects/foodcoops-12-0/"
-"foodcoops-12-0-coop_account/fr/>\n"
-"Language: fr\n"
+"POT-Creation-Date: 2026-03-02 08:09+0000\n"
+"PO-Revision-Date: 2026-03-02 08:09+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.8\n"
+"Plural-Forms: \n"
 
 #. module: coop_account
 #: model:ir.model,name:coop_account.model_account_account
+#: model:ir.model.fields,field_description:coop_account.field_bank_statement_line_reconcile_wizard__account_id
 msgid "Account"
 msgstr "Compte"
 
 #. module: coop_account
-#: model:ir.model.fields,field_description:coop_account.field_account_account_journal_credit_ids
-msgid "Account Journal Credit"
-msgstr "Compte créditeur par défaut"
+#: model_terms:ir.ui.view,arch_db:coop_account.view_account_payment_form_extend
+msgid "Account Journal"
+msgstr "Journal comptable"
 
 #. module: coop_account
-#: model:ir.model.fields,field_description:coop_account.field_account_account_journal_debit_ids
-msgid "Account Journal Debit"
-msgstr "Compte débiteur par défaut"
+#. odoo-javascript
+#: code:addons/coop_account/static/src/js/export_wrong_reconciliation_move_lines.esm.js:0
+msgid "An error occurred while exporting the move lines."
+msgstr "Une erreur s’est produite lors de l’exportation des lignes d’écriture."
 
 #. module: coop_account
-#: model:res.groups,name:coop_account.group_account_chief
-msgid "Chief Accountant"
-msgstr "Chef comptable"
+#. odoo-python
+#: code:addons/coop_account/models/account_move.py:0
+#: code:addons/coop_account/models/account_move_line.py:0
+msgid "Are you sure you want to unmatch %s transactions?"
+msgstr "Souhaitez-vous dé-rapprocher %s transactions?"
 
 #. module: coop_account
-#: model:ir.ui.view,arch_db:coop_account.view_account_config_setting_inherit
-msgid "Fiscal Year"
-msgstr "Exercice fiscal"
+#: model:ir.model.fields,field_description:coop_account.field_account_account__reconciled_account
+msgid "Bank Reconciliation"
+msgstr "Rapprochement bancaire"
+
+#. module: coop_account
+#: model:ir.model,name:coop_account.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Ligne de relevé bancaire"
+
+#. module: coop_account
+#: model:ir.model,name:coop_account.model_bank_statement_line_reconcile_wizard
+msgid "Bank Statement Line Reconcile Wizard"
+msgstr "Assistant de lettrage des lignes de relevé bancaire"
+
+#. module: coop_account
+#: model:ir.model.fields,field_description:coop_account.field_account_payment__partner_code
+msgid "Barcode Base"
+msgstr "Base de code-barres"
+
+#. module: coop_account
+#. odoo-python
+#: code:addons/coop_account/models/account_move_line.py:0
+msgid ""
+"Before using this feature, please select a few journals to analyze.\n"
+"Go to 'Accounting > Configuration > Journals' and enable the 'Export Wrong Reconciliation' checkbox."
+msgstr ""
+"Avant d’utiliser cette fonctionnalité, veuillez sélectionner quelques journaux à analyser.\n"
+"Allez dans 'Comptabilité > Configuration > Journaux' et activez la case 'Exporter les rapprochements erronés.'"
+
+#. module: coop_account
+#: model_terms:ir.ui.view,arch_db:coop_account.view_bank_statement_line_reconcile_wizard_form
+#: model_terms:ir.ui.view,arch_db:coop_account.view_unmatch_bank_statement_wizard_form
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: coop_account
+#: model:ir.model.fields.selection,name:coop_account.selection__account_payment__state__cancelled
+msgid "Cancelled"
+msgstr "Annulé"
+
+#. module: coop_account
+#: model:ir.model.fields.selection,name:coop_account.selection__account_payment__operation_type__check
+msgid "Check"
+msgstr "Chèque"
+
+#. module: coop_account
+#: model:ir.model.fields,field_description:coop_account.field_account_payment__text_check_code
+msgid "Check Code"
+msgstr "Code du chèque"
+
+#. module: coop_account
+#. odoo-python
+#: code:addons/coop_account/models/account_payment.py:0
+msgid "Check nb "
+msgstr "Numéro de chèque "
+
+#. module: coop_account
+#: model_terms:ir.ui.view,arch_db:coop_account.view_unmatch_bank_statement_wizard_form
+msgid "Confirm"
+msgstr "Confirmer"
+
+#. module: coop_account
+#: model:ir.model.fields,help:coop_account.field_account_journal__export_wrong_reconciliation
+msgid "Consider this journal to export wrong reconcilation entries"
+msgstr "Considérer ce journal pour exporter les écritures de rapprochement erronées"
+
+#. module: coop_account
+#: model:ir.model.fields,field_description:coop_account.field_bank_statement_line_reconcile_wizard__create_uid
+#: model:ir.model.fields,field_description:coop_account.field_unmatch_bank_statement_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: coop_account
+#: model:ir.model.fields,field_description:coop_account.field_bank_statement_line_reconcile_wizard__create_date
+#: model:ir.model.fields,field_description:coop_account.field_unmatch_bank_statement_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: coop_account
+#. odoo-python
+#: code:addons/coop_account/models/account_payment.py:0
+msgid "Credit Card "
+msgstr "Carte de crédit "
+
+#. module: coop_account
+#: model:ir.model.fields.selection,name:coop_account.selection__account_payment__operation_type__credit_card
+msgid "Credit card"
+msgstr "Carte de crédit"
+
+#. module: coop_account
+#: model:ir.model.fields,field_description:coop_account.field_account_bank_statement_line__search_day
+#: model:ir.model.fields,field_description:coop_account.field_account_move__search_day
+#: model:ir.model.fields,field_description:coop_account.field_account_move_line__search_day
+#: model_terms:ir.ui.view,arch_db:coop_account.view_account_move_line_filter_inherit
+#: model_terms:ir.ui.view,arch_db:coop_account.view_account_move_search
+msgid "Day (Search)"
+msgstr "Jour (recherche)"
+
+#. module: coop_account
+#: model:ir.model.fields,field_description:coop_account.field_bank_statement_line_reconcile_wizard__display_name
+#: model:ir.model.fields,field_description:coop_account.field_unmatch_bank_statement_wizard__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: coop_account
+#. odoo-javascript
+#: code:addons/coop_account/static/src/js/export_wrong_reconciliation_move_lines.esm.js:0
+msgid "Error"
+msgstr ""
+
+#. module: coop_account
+#. odoo-python
+#: code:addons/coop_account/models/account_move_line.py:0
+msgid "Everything is ok. There's nothing to export."
+msgstr ""
+
+#. module: coop_account
+#: model:ir.model.fields,field_description:coop_account.field_account_journal__export_wrong_reconciliation
+msgid "Export Wrong Reconciliation"
+msgstr ""
+
+#. module: coop_account
+#: model:ir.actions.client,name:coop_account.action_export_wrong_reconciliation_ml_client
+#: model:ir.ui.menu,name:coop_account.menu_export_wrong_reconciliation_ml
+msgid "Export wrong reconciliation move lines"
+msgstr ""
 
 #. module: coop_account
 #: model:ir.actions.server,name:coop_account.action_server_statement_line_reconcile
@@ -49,29 +173,43 @@ msgid "Generate Account Moves"
 msgstr "Générer les pièces"
 
 #. module: coop_account
-#: model:ir.ui.view,arch_db:coop_account.view_account_config_setting_inherit
-msgid "Fiscal Year Last Day"
-msgstr "Dernier jour de l'exercice fiscal"
-
-#. module: coop_account
-#: model:ir.ui.view,arch_db:coop_account.view_bank_statement_line_reconcile_wizard_form
+#: model_terms:ir.ui.view,arch_db:coop_account.view_bank_statement_line_reconcile_wizard_form
 msgid "Generate and reconcille"
 msgstr "Générer et rapprocher"
 
 #. module: coop_account
-#: model:ir.model.fields,field_description:coop_account.field_account_move_line_other_balance
-msgid "Other Balance"
-msgstr "Solde"
+#: model:ir.model.fields,field_description:coop_account.field_bank_statement_line_reconcile_wizard__id
+#: model:ir.model.fields,field_description:coop_account.field_unmatch_bank_statement_wizard__id
+msgid "ID"
+msgstr ""
 
 #. module: coop_account
-#: model:ir.ui.view,arch_db:coop_account.view_move_line_tree_inherit
-msgid "Total Balance"
-msgstr "Total solde"
+#: model:ir.model.fields,help:coop_account.field_account_account__reconciled_account
+msgid ""
+"If true, account moves will be able to have at most only one account move "
+"line linked to this account (or to another account with 'Bank "
+"reconciliation' is true)"
+msgstr ""
+"Si vrai, une pièce comptable ne pourra tout au plus avoir qu'une seule "
+"écriture comptable liée à ce compte comptable (ou à un autre compte "
+"comptable où 'Rapprochement bancaire' est vrai)"
 
 #. module: coop_account
-#: model:ir.ui.view,arch_db:coop_account.view_account_move_line_filter_inherit
-msgid "Unmatched"
-msgstr "Non-rapprochées"
+#: model:ir.actions.act_window,name:coop_account.inter_tranfer_payment_action
+#: model:ir.ui.menu,name:coop_account.menu_inter_tranfer_payment
+msgid "Inter Account Transfer"
+msgstr "Tranfert interne"
+
+#. module: coop_account
+#: model:ir.model,name:coop_account.model_account_journal
+#: model:ir.model.fields,field_description:coop_account.field_account_account__journal_ids
+msgid "Journal"
+msgstr ""
+
+#. module: coop_account
+#: model:ir.model,name:coop_account.model_account_move
+msgid "Journal Entry"
+msgstr "Pièce comptable"
 
 #. module: coop_account
 #: model:ir.model,name:coop_account.model_account_move_line
@@ -79,145 +217,164 @@ msgid "Journal Item"
 msgstr "Écriture comptable"
 
 #. module: coop_account
-#: code:addons/coop_account/models/account_move_line.py:32
-#, python-format
-msgid "Only one journal item on an account requiring bank reconciliation can be booked in this account move. It is impossible to add another one. Please create a distinct account move to registrer this account.move.line and its counterpart."
-msgstr "Une seule écriture sur un compte faisant l'objet de rapprochement bancaire peut être saisie sur une pièce comptable, vous ne pouvez pas en ajouter de nouvelle. Veuillez créer un nouvelle pièce comptable pour cette écriture et sa contre-partie."
-
-#. module: coop_account
-#: model:ir.ui.view,arch_db:coop_account.view_account_asset_asset_inherit
-msgid "Salvage Value"
-msgstr "Valeur non amortissable"
-
-#. module: coop_account
-#: code:addons/coop_account/models/account_move.py:41
-#: code:addons/coop_account/models/account_move_line.py:90
-#: model:ir.actions.server,name:coop_account.action_server_unmatch_bankstatement
-#: model:ir.actions.server,name:coop_account.action_server_unmatch_bankstatement_line
-#: model:ir.ui.view,arch_db:coop_account.view_unmatch_bank_statement_wizard_form
-#, python-format
-msgid "Unmatch Bank Statement"
-msgstr "Dé-rapprocher"
-
-#. module: coop_account
-#: code:addons/coop_account/models/account_bank_statement_line.py:13
-#, python-format
-msgid "This wizzard is only available on non reconcilled bank statement lines. Please unselect already reconcilled lines."
-msgstr "Cet assistant n'est disponible que pour les lignes non encore rapprochées. Merci de dé-selectionner les lignes déjà rapprochées."
-
-#. module: coop_account
-#: model:ir.model.fields,help:coop_account.field_account_account_reconciled_account
-msgid "If true, account moves will be able to have at most only one account move line linked to this account (or to another account with 'Bank reconciliation' is true)"
-msgstr "Si vrai, une pièce comptable ne pourra tout au plus avoir qu'une seule écriture comptable liée à ce compte comptable (ou à un autre compte comptable où 'Rapprochement bancaire' est vrai)"
-
-#. module: coop_account
-#: model:ir.model.fields,field_description:coop_account.field_account_account_reconciled_account
-msgid "Bank Reconciliation"
-msgstr "Rapprochement bancaire"
-
-#. module: coop_account
-#: code:addons/coop_account/models/account_move.py:33
-#: code:addons/coop_account/models/account_move_line.py:82
-#, python-format
-msgid "Are you sure you want to unmatch %s transactions?"
-msgstr "Souhaitez-vous dé-rapprocher %s transactions?"
-
-#. module: coop_account
-#: model:ir.ui.view,arch_db:coop_account.view_unmatch_bank_statement_wizard_form
-msgid "Confirm"
-msgstr "Confirmer"
-
-#. module: coop_account
-#: model:ir.ui.view,arch_db:coop_account.view_account_payment_form_extend_inherit
-msgid "Re-Generate"
-msgstr "Régénérer"
-
-#. module: coop_account
-#: model:ir.ui.view,arch_db:coop_account.view_account_payment_form_extend_inherit
-msgid "Reverse Payment"
-msgstr "Extourner le paiement"
-
-#. module: coop_account
-#: model:ir.model.fields,field_description:coop_account.field_account_journal_search_limit_days
-msgid "Search Limit Days"
-msgstr "Période de rapprochement"
-
-#. module: coop_account
-#: model:ir.model.fields,help:coop_account.field_account_journal_search_limit_days
-msgid "Set here the number of days before and after the bank transaction on which Journal Items can be proposed for reconciliation"
-msgstr "Définissez le nombre de jours avant et après la transaction bancaire pour la proposition d'écritures comptables à rapprocher"
-
-#. module: coop_account
-#: code:addons/coop_account/models/account_bank_statement_line.py:34
-#, python-format
-msgid " Reconcile"
-msgstr " Rapprochement"
-
-#. module: coop_account
-#: model:ir.ui.view,arch_db:coop_account.view_bank_statement_line_reconcile_wizard_form
-#: model:ir.ui.view,arch_db:coop_account.view_unmatch_bank_statement_wizard_form
-msgid "Cancel"
-msgstr "Annuler"
-
-#. module: coop_account
-#: code:addons/coop_account/models/account_move.py:32
-#, python-format
-msgid "You cannot reconcile that account move with a bank statement line that is not related to bank journal."
+#: model:ir.model.fields.selection,name:coop_account.selection__account_payment__operation_type__lcr
+msgid "LCR"
 msgstr ""
-"Vous ne pouvez pas rapprocher cette pièce comptable avec une ligne d'un "
-"relevé qui n'est pas liée à un journal de banque."
-
-#: model:ir.actions.act_window,name:coop_account.inter_tranfer_payment_action
-#: model:ir.ui.menu,name:coop_account.menu_inter_tranfer_payment
-msgid "Inter Account Transfer"
-msgstr "Tranfert interne"
 
 #. module: coop_account
-#: code:addons/coop_account/models/account_bank_statement_line.py:53
-#, python-format
-msgid "You cannot reconcile with an account.move posterior to the transaction date except if you reconcile the transaction with only one account move."
-msgstr "Vous ne pouvez pas rapprocher une transaction avec une pièce postérieure, sauf si vous ne rapprochez qu'avec une seule écriture."
+#: model:ir.model.fields,field_description:coop_account.field_account_payment__text_lcr_code
+msgid "LCR Code"
+msgstr ""
 
 #. module: coop_account
-#: model:ir.model,name:coop_account.model_account_move
-msgid "Account Entry"
-msgstr "Écriture comptable"
+#. odoo-python
+#: code:addons/coop_account/models/account_payment.py:0
+msgid "LCR nb "
+msgstr ""
 
 #. module: coop_account
-#: model:ir.model.fields,field_description:coop_account.field_account_move_line_search_day
-#: model:ir.model.fields,field_description:coop_account.field_account_move_search_day
-#: model:ir.ui.view,arch_db:coop_account.view_account_move_line_filter_inherit
-#: model:ir.ui.view,arch_db:coop_account.view_account_move_search
-msgid "Day (Search)"
-msgstr "Jour (recherche)"
+#: model:ir.model.fields,field_description:coop_account.field_bank_statement_line_reconcile_wizard__write_uid
+#: model:ir.model.fields,field_description:coop_account.field_unmatch_bank_statement_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
 
 #. module: coop_account
-#: model:ir.model.fields,field_description:coop_account.field_account_move_line_search_month
-#: model:ir.model.fields,field_description:coop_account.field_account_move_search_month
-#: model:ir.ui.view,arch_db:coop_account.view_account_move_line_filter_inherit
-#: model:ir.ui.view,arch_db:coop_account.view_account_move_search
+#: model:ir.model.fields,field_description:coop_account.field_bank_statement_line_reconcile_wizard__write_date
+#: model:ir.model.fields,field_description:coop_account.field_unmatch_bank_statement_wizard__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: coop_account
+#: model:ir.actions.server,name:coop_account.action_server_merge_lines
+msgid "Merge Invoice Lines"
+msgstr "Fusionner les lignes de facture"
+
+#. module: coop_account
+#: model:ir.model.fields,field_description:coop_account.field_unmatch_bank_statement_wizard__mess_confirm
+msgid "Message Confirm"
+msgstr "Message de confirmation"
+
+#. module: coop_account
+#: model:ir.model.fields,field_description:coop_account.field_account_bank_statement_line__search_month
+#: model:ir.model.fields,field_description:coop_account.field_account_move__search_month
+#: model:ir.model.fields,field_description:coop_account.field_account_move_line__search_month
+#: model_terms:ir.ui.view,arch_db:coop_account.view_account_move_line_filter_inherit
+#: model_terms:ir.ui.view,arch_db:coop_account.view_account_move_search
 msgid "Month (Search)"
 msgstr "Mois (recherche)"
 
 #. module: coop_account
-#: model:ir.model,name:coop_account.model_pos_order
-msgid "Point of Sale"
-msgstr "Point de vente"
+#: model:ir.model.fields,field_description:coop_account.field_account_payment__operation_type
+msgid "Operation Type"
+msgstr "Type d’opération"
 
 #. module: coop_account
-#: model:ir.model.fields,field_description:coop_account.field_account_move_line_search_year
-#: model:ir.model.fields,field_description:coop_account.field_account_move_search_year
-#: model:ir.ui.view,arch_db:coop_account.view_account_move_line_filter_inherit
-#: model:ir.ui.view,arch_db:coop_account.view_account_move_search
+#: model:ir.model.fields.selection,name:coop_account.selection__account_payment__operation_type__other
+msgid "Other"
+msgstr "Autre"
+
+#. module: coop_account
+#: model:ir.model.fields,field_description:coop_account.field_account_move_line__other_balance
+msgid "Other Balance"
+msgstr "Solde"
+
+#. module: coop_account
+#: model:ir.model,name:coop_account.model_account_payment
+msgid "Payments"
+msgstr "Paiements"
+
+#. module: coop_account
+#. odoo-python
+#: code:addons/coop_account/models/account_bank_statement_line.py:0
+#: code:addons/coop_account/models/account_move_line.py:0
+msgid "Reconcile"
+msgstr "Rapprocher"
+
+#. module: coop_account
+#. odoo-python
+#: code:addons/coop_account/models/account_payment.py:0
+#: model:ir.model.fields.selection,name:coop_account.selection__account_payment__operation_type__sepa_credit
+msgid "SEPA Direct Credit"
+msgstr "Virement SEPA"
+
+#. module: coop_account
+#. odoo-python
+#: code:addons/coop_account/models/account_payment.py:0
+#: model:ir.model.fields.selection,name:coop_account.selection__account_payment__operation_type__sepa_debit
+msgid "SEPA Direct Debit"
+msgstr "Prélèvement SEPA"
+
+#. module: coop_account
+#: model:ir.model.fields,field_description:coop_account.field_account_payment__state
+msgid "State"
+msgstr "État"
+
+#. module: coop_account
+#: model:ir.model.fields,help:coop_account.field_account_payment__partner_code
+msgid ""
+"This value is used to generate barcode according to the setting of the "
+"barcode rule."
+msgstr ""
+"Cette valeur est utilisée pour générer le code-barres selon la configuration de la règle "
+"de code-barres."
+
+#. module: coop_account
+#. odoo-python
+#: code:addons/coop_account/models/account_bank_statement_line.py:0
+#: code:addons/coop_account/models/account_move_line.py:0
+msgid ""
+"This wizard is only available on non reconcilled bank statement lines. "
+"Please unselect already reconcilled lines."
+msgstr ""
+"Cet assistant est disponible uniquement pour les lignes de relevé bancaire non rapprochées. "
+"Veuillez désélectionner les lignes déjà rapprochées."
+
+#. module: coop_account
+#: model_terms:ir.ui.view,arch_db:coop_account.view_move_line_tree_inherit
+msgid "Total Balance"
+msgstr "Total solde"
+
+#. module: coop_account
+#. odoo-python
+#: code:addons/coop_account/models/account_move.py:0
+#: code:addons/coop_account/models/account_move_line.py:0
+#: model:ir.actions.server,name:coop_account.action_server_unmatch_bankstatement
+#: model:ir.actions.server,name:coop_account.action_server_unmatch_bankstatement_line
+#: model_terms:ir.ui.view,arch_db:coop_account.view_unmatch_bank_statement_wizard_form
+msgid "Unmatch Bank Statement"
+msgstr "Dé-rapprocher"
+
+#. module: coop_account
+#: model:ir.model,name:coop_account.model_unmatch_bank_statement_wizard
+msgid "Unmatch Bank Statement Wizard"
+msgstr "Assistant d’annulation du rapprochement des relevés bancaires"
+
+#. module: coop_account
+#: model_terms:ir.ui.view,arch_db:coop_account.view_account_move_line_filter_inherit
+msgid "Unmatched"
+msgstr "Non-rapprochées"
+
+#. module: coop_account
+#: model:ir.model.fields,field_description:coop_account.field_account_bank_statement_line__search_year
+#: model:ir.model.fields,field_description:coop_account.field_account_move__search_year
+#: model:ir.model.fields,field_description:coop_account.field_account_move_line__search_year
+#: model_terms:ir.ui.view,arch_db:coop_account.view_account_move_line_filter_inherit
+#: model_terms:ir.ui.view,arch_db:coop_account.view_account_move_search
 msgid "Year (Search)"
 msgstr "Année (recherche)"
 
 #. module: coop_account
-#: model:ir.model.fields,field_description:coop_account.field_account_invoice_line__date_invoice
-msgid "Invoice Date"
-msgstr "Date de facturation"
+#. odoo-python
+#: code:addons/coop_account/models/account_move.py:0
+msgid "You can only merge draft invoice!"
+msgstr "Vous ne pouvez fusionner que des factures brouillon!"
 
 #. module: coop_account
-#: model:ir.model.fields,field_description:coop_account.field_account_invoice_line__product_categ_id
-msgid "Product Category"
-msgstr "Catégorie d'articles"
+#. odoo-python
+#: code:addons/coop_account/models/account_move.py:0
+msgid ""
+"You cannot reconcile that account move with a bank statement line that is "
+"not related to bank journal."
+msgstr ""
+"Vous ne pouvez pas rapprocher cette pièce comptable avec une ligne d'un "
+"relevé qui n'est pas liée à un journal de banque."

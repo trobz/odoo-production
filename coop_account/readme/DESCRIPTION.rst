@@ -1,1 +1,0 @@
-Customizations for foodcoops

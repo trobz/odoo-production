@@ -1,36 +1,52 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
-
     <record id="view_account_move_line_filter_inherit" model="ir.ui.view">
         <field name="model">account.move.line</field>
-        <field name="inherit_id" ref="account.view_account_move_line_filter"/>
+        <field name="inherit_id" ref="account.view_account_move_line_filter" />
         <field name="arch" type="xml">
             <xpath expr="//filter[@name='posted']" position="after">
-                <separator/>
-                <filter name="statement_line_id" string="Unmatched" domain="[('statement_line_id','=', False)]"/>
+                <separator />
+                <filter
+                    name="statement_line_id"
+                    string="Unmatched"
+                    domain="[('statement_line_id','=', False)]"
+                />
             </xpath>
             <field name="date" position="after">
-                <field name="search_year"/>
-                <field name="search_month"/>
-                <field name="search_day"/>
+                <field name="search_year" />
+                <field name="search_month" />
+                <field name="search_day" />
             </field>
             <xpath expr="//group" position="inside">
-                <filter string="Year (Search)" name="year" context="{'group_by':'search_year'}"/>
-                <filter string="Month (Search)" name="month" context="{'group_by':'search_month'}"/>
-                <filter string="Day (Search)" name="day" context="{'group_by':'search_day'}"/>
+                <filter
+                    string="Year (Search)"
+                    name="year"
+                    context="{'group_by':'search_year'}"
+                />
+                <filter
+                    string="Month (Search)"
+                    name="month"
+                    context="{'group_by':'search_month'}"
+                />
+                <filter
+                    string="Day (Search)"
+                    name="day"
+                    context="{'group_by':'search_day'}"
+                />
             </xpath>
         </field>
     </record>
 
     <record id="view_move_line_tree_inherit" model="ir.ui.view">
         <field name="model">account.move.line</field>
-        <field name="inherit_id" ref="account.view_move_line_tree"/>
+        <field name="inherit_id" ref="account.view_move_line_tree" />
         <field name="arch" type="xml">
-            <field name="credit" position="after">
-                <field name="other_balance" sum="Total Balance"/>
+            <field name="name" position="after">
+                <field name="invoice_date" />
+                <field name="product_category_id" />
             </field>
-            <field name="analytic_account_id" position="after">
-                <field name="tax_ids" widget="many2many_tags"/>
+            <field name="credit" position="after">
+                <field name="other_balance" sum="Total Balance" />
             </field>
         </field>
     </record>
@@ -39,9 +55,8 @@
         <field name="name">Unmatch Bank Statement</field>
         <field name="type">ir.actions.server</field>
         <field name="state">code</field>
-        <field name="model_id" ref="account.model_account_move_line"/>
-        <field name="binding_model_id" ref="account.model_account_move_line"/>
+        <field name="model_id" ref="account.model_account_move_line" />
+        <field name="binding_model_id" ref="account.model_account_move_line" />
         <field name="code">action = records.unmatch_bankstatement_wizard()</field>
     </record>
-
 </odoo>
