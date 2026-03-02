@@ -4,7 +4,7 @@
     "name": "Point of Sale Payment Credit: Amount Handling",
     "version": "18.0.1.0.0",
     "category": "Point Of Sale",
-    "author": "Trobz",
+    "author": "Trobz, La Louve",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": [

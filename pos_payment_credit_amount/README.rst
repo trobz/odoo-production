@@ -50,6 +50,7 @@ Authors
 -------
 
 * Trobz
+* La Louve
 
 Maintainers
 -----------
