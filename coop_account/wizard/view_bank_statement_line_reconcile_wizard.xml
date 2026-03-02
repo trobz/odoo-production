@@ -1,20 +1,24 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
-    <!-- Views -->
     <record model="ir.ui.view" id="view_bank_statement_line_reconcile_wizard_form">
+        <field name="name">bank.statement.line.reconcile.wizard.form</field>
         <field name="model">bank.statement.line.reconcile.wizard</field>
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="account_id"/>
+                    <field name="account_id" />
                 </group>
                 <footer>
-                    <button string="Generate and reconcille" name="bank_statement_line_reconcile" type="object" default_focus="1" class="btn-primary"/>
-                    <button string="Cancel" class="btn-default" special="cancel"/>
+                    <button
+                        string="Generate and reconcille"
+                        name="bank_statement_line_reconcile"
+                        type="object"
+                        default_focus="1"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-default" special="cancel" />
                 </footer>
             </form>
         </field>
     </record>
-
 </odoo>

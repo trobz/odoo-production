@@ -1,12 +1,19 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
+    <record id="action_server_merge_lines" model="ir.actions.server">
+        <field name="name">Merge Invoice Lines</field>
+        <field name="model_id" ref="account.model_account_move" />
+        <field name="binding_model_id" ref="account.model_account_move" />
+        <field name="state">code</field>
+        <field name="code">records.merge_move_lines()</field>
+    </record>
 
     <record model="ir.actions.server" id="action_server_unmatch_bankstatement">
         <field name="name">Unmatch Bank Statement</field>
         <field name="type">ir.actions.server</field>
         <field name="state">code</field>
-        <field name="model_id" ref="account.model_account_move"/>
-        <field name="binding_model_id" ref="account.model_account_move"/>
+        <field name="model_id" ref="account.model_account_move" />
+        <field name="binding_model_id" ref="account.model_account_move" />
         <field name="code">action = records.unmatch_bankstatement_wizard()</field>
     </record>
 
@@ -17,19 +24,30 @@
     <record id="view_account_move_search" model="ir.ui.view">
         <field name="name">account.move.search.inherit</field>
         <field name="model">account.move</field>
-        <field name="inherit_id" ref="account.view_account_move_filter"/>
+        <field name="inherit_id" ref="account.view_account_move_filter" />
         <field name="arch" type="xml">
             <field name="date" position="after">
-                <field name="search_year"/>
-                <field name="search_month"/>
-                <field name="search_day"/>
+                <field name="search_year" />
+                <field name="search_month" />
+                <field name="search_day" />
             </field>
             <xpath expr="//group" position="inside">
-                <filter string="Year (Search)" name="year" context="{'group_by':'search_year'}"/>
-                <filter string="Month (Search)" name="month" context="{'group_by':'search_month'}"/>
-                <filter string="Day (Search)" name="day" context="{'group_by':'search_day'}"/>
+                <filter
+                    string="Year (Search)"
+                    name="year"
+                    context="{'group_by':'search_year'}"
+                />
+                <filter
+                    string="Month (Search)"
+                    name="month"
+                    context="{'group_by':'search_month'}"
+                />
+                <filter
+                    string="Day (Search)"
+                    name="day"
+                    context="{'group_by':'search_day'}"
+                />
             </xpath>
         </field>
     </record>
-
 </odoo>
