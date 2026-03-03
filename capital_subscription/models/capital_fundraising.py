@@ -2,32 +2,41 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields
+from odoo import fields, models
 
 
 class CapitalFundraising(models.Model):
-    _name = 'capital.fundraising'
+    _name = "capital.fundraising"
     _description = "Capital Fundraising"
 
-    name = fields.Char(string='Name')
+    name = fields.Char(string="Name")
 
     company_id = fields.Many2one(
-        comodel_name='res.company', string='Company', required=True,
-        default=lambda self: self.env.user.company_id.id)
+        comodel_name="res.company",
+        string="Company",
+        required=True,
+        default=lambda self: self.env.user.company_id.id,
+    )
 
-    share_value = fields.Float(string='Share Value')
+    share_value = fields.Float(string="Share Value")
 
     category_ids = fields.One2many(
-        string='Categories', comodel_name='capital.fundraising.category',
-        inverse_name='fundraising_id')
+        string="Categories",
+        comodel_name="capital.fundraising.category",
+        inverse_name="fundraising_id",
+    )
 
     journal_id = fields.Many2one(
-        comodel_name='account.journal', string='Journal', required=True,
-        domain="[('type', '=', 'sale')]")
+        comodel_name="account.journal",
+        string="Journal",
+        required=True,
+        domain="[('type', '=', 'sale')]",
+    )
 
     journal_ids = fields.Many2many(
-        comodel_name="account.journal", string="Journals for Capital Entries",
+        comodel_name="account.journal",
+        string="Journals for Capital Entries",
         domain="[('type', '=', 'sale')]",
         help="""Specify the journals used for transfer
-        capital between paid and unpaid accounts"""
+        capital between paid and unpaid accounts""",
     )

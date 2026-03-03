@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
     <record model="ir.ui.view" id="view_capital_fundraising_deficit_form">
         <field name="model">capital.fundraising.deficit</field>
@@ -6,9 +6,9 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="start_date"/>
-                        <field name="end_date"/>
-                        <field name="amount_by_share"/>
+                        <field name="start_date" />
+                        <field name="end_date" />
+                        <field name="amount_by_share" />
                     </group>
                 </sheet>
             </form>
@@ -19,9 +19,9 @@
         <field name="model">capital.fundraising.deficit</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="start_date"/>
-                <field name="end_date"/>
-                <field name="amount_by_share"/>
+                <field name="start_date" />
+                <field name="end_date" />
+                <field name="amount_by_share" />
             </tree>
         </field>
     </record>
