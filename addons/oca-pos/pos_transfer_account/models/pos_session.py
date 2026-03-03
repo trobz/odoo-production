@@ -4,12 +4,6 @@ from odoo import models
 class PosSession(models.Model):
     _inherit = "pos.session"
 
-    def try_cash_in_out(self, _type, amount, reason, extras):
-        if self.config_id.suspense_account_id:
-            extras = extras or {}
-            extras["counterpart_account_id"] = self.config_id.suspense_account_id.id
-        return super().try_cash_in_out(_type, amount, reason, extras)
-
     def _prepare_account_bank_statement_line_vals(
         self, session, sign, amount, reason, extras
     ):
@@ -19,3 +13,12 @@ class PosSession(models.Model):
         if extras.get("counterpart_account_id"):
             res["counterpart_account_id"] = extras["counterpart_account_id"]
         return res
+
+    def try_cash_in_out(self, _type, amount, reason, extras):
+        extras = extras or {}
+        if self.config_id.suspense_account_id:
+            counterpart_account = self.config_id.suspense_account_id
+        else:
+            counterpart_account = self.config_id.company_id.transfer_account_id
+        extras["counterpart_account_id"] = counterpart_account.id
+        return super().try_cash_in_out(_type, amount, reason, extras)
