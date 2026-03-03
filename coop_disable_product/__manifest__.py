@@ -6,22 +6,15 @@
 
 {
     "name": "Coop Limit Creation of Product",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Product",
     "author": "La Louve, Druidoo",
-    "website": "http://www.lalouve.net",
-    'license': 'AGPL-3',
-    "depends": [
-        "purchase",
-        "account",
-        "account_voucher",
-        "stock",
-        "sale_management"
-    ],
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
+    "license": "AGPL-3",
+    "depends": ["purchase", "account", "stock", "sale_management"],
     "data": [
-        "views/view_account_invoice.xml",
+        "views/account_move_views.xml",
         "views/view_purchase_order.xml",
-        "views/view_account_voucher.xml",
         "views/view_sale_order.xml",
         "views/view_stock_picking.xml",
         "views/view_stock_move.xml",
