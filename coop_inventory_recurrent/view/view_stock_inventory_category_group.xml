@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="view_stock_category_group_form" model="ir.ui.view">
         <field name="name">stock.inventory.category.group.form</field>
         <field name="model">stock.inventory.category.group</field>
@@ -8,12 +7,12 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="name"/>
-                        <field name="category_ids"/>
+                        <field name="name" />
+                        <field name="category_ids" />
                         <field name="line_ids">
                             <tree editable="top">
-                                <field name="category_id"/>
-                                <field name="copies"/>
+                                <field name="category_id" />
+                                <field name="copies" />
                             </tree>
                         </field>
                     </group>
@@ -22,13 +21,12 @@
         </field>
     </record>
 
-    
     <record id="view_stock_category_group_tree" model="ir.ui.view">
         <field name="name">stock.inventory.category.group.tree</field>
         <field name="model">stock.inventory.category.group</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="name"/>
+                <field name="name" />
             </tree>
         </field>
     </record>
@@ -46,6 +44,6 @@
         id="menu_stock_category_group"
         sequence="6"
         action="action_stock_category_group"
-        parent="stock.menu_stock_config_settings"/>
-
+        parent="stock.menu_stock_config_settings"
+    />
 </odoo>

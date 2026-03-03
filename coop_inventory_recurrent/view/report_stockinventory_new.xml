@@ -1,55 +1,108 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <data>
         <template id="report_inventory_new_layout">
             <t t-call="web.html_container">
-                <t t-set="variants" t-value="docs.get_copi_variants()"/>
+                <t t-set="variants" t-value="docs.get_copi_variants()" />
                 <t t-foreach="variants" t-as="variant">
-                    <t t-set="o" t-value="variant['obj']"/>
+                    <t t-set="o" t-value="variant['obj']" />
                     <t t-call="coop_inventory.external_layout_standard_inventory">
                         <div class="page">
-                            <t t-set="style" t-value="variant.get('color') and 'color: ' + variant['color'] + ';' or ''"/>
-                            <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 18px;"><span t-att-style="style"><span t-field="o.name"/><span t-esc="variant.get('extra_title') and ': ' + variant['extra_title'] or ''"/></span></div>
-                            <table class="table table-sm" style="font-size: 14px" >
+                            <t
+                                t-set="style"
+                                t-value="variant.get('color') and 'color: ' + variant['color'] + ';' or ''"
+                            />
+                            <div
+                                style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 18px;"
+                            >
+                                <span t-att-style="style">
+                                    <span t-field="o.name" />
+                                    <span
+                                        t-esc="variant.get('extra_title') and ': ' + variant['extra_title'] or ''"
+                                    />
+                                </span>
+                            </div>
+                            <table class="table table-sm" style="font-size: 14px">
                                 <thead>
                                     <tr>
-                                        <th><strong>Date</strong></th>
-                                        <th style="width: 60%;"><strong>Inventoried by:</strong></th>
+                                        <th>
+                                            <strong>Date</strong>
+                                        </th>
+                                        <th style="width: 60%;">
+                                            <strong>Inventoried by:</strong>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <span t-field="o.date"/>
+                                            <span t-field="o.date" />
                                         </td>
-                                        <td>
-                                        </td>
+                                        <td />
                                     </tr>
                                 </tbody>
                             </table>
-                            <table class="table table-sm table-bordered" style="font-size: 11px">
+                            <table
+                                class="table table-sm table-bordered"
+                                style="font-size: 11px"
+                            >
                                 <thead>
                                     <tr>
-                                        <th class="text-right" style="width: 40px;"><strong>Package Qty</strong></th>
-                                        <th style="width: 70px;"><strong>Internal Reference</strong></th>
-                                        <th><strong>Product</strong></th>
-                                        <th class="text-right" style="width: 45px;"><strong>G.F. Qty</strong></th>
-                                        <th class="text-right" style="width: 40px;"><strong>UG. Qty</strong></th>
-                                        <th class="text-right" style="width: 60px;"><strong>Total</strong></th>
-                                        <th class="text-right" style="width: 60px;"><strong>Theoretical Qty</strong></th>
+                                        <th class="text-right" style="width: 40px;">
+                                            <strong>Package Qty</strong>
+                                        </th>
+                                        <th style="width: 70px;">
+                                            <strong>Internal Reference</strong>
+                                        </th>
+                                        <th>
+                                            <strong>Product</strong>
+                                        </th>
+                                        <th class="text-right" style="width: 45px;">
+                                            <strong>G.F. Qty</strong>
+                                        </th>
+                                        <th class="text-right" style="width: 40px;">
+                                            <strong>UG. Qty</strong>
+                                        </th>
+                                        <th class="text-right" style="width: 60px;">
+                                            <strong>Total</strong>
+                                        </th>
+                                        <th class="text-right" style="width: 60px;">
+                                            <strong>Theoretical Qty</strong>
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr t-foreach="o.line_ids.sorted(key=lambda l: l.product_name)" t-as="line">
-                                        <td class="text-right"><span t-field="line.package_qty"/></td>
-                                        <td><span t-field="line.product_id.default_code"/></td>
-                                        <td style="white-space: nowrap; max-width: 150px; overflow: hidden; text-overflow: ellipsis;">
-                                            <span t-field="line.product_id.name"/>
+                                    <tr
+                                        t-foreach="o.line_ids.sorted(key=lambda l: l.product_name)"
+                                        t-as="line"
+                                    >
+                                        <td class="text-right">
+                                            <span t-field="line.package_qty" />
                                         </td>
-                                        <td class="text-right"/>
-                                        <td class="text-right"/>
-                                        <td class="text-right"></td>
-                                        <td class="text-right"><span class="text-right" t-field="line.theoretical_qty"/> <span class="text-right" t-field="line.product_uom_id" groups="product.group_uom"/></td>
+                                        <td>
+                                            <span
+                                                t-field="line.product_id.default_code"
+                                            />
+                                        </td>
+                                        <td
+                                            style="white-space: nowrap; max-width: 150px; overflow: hidden; text-overflow: ellipsis;"
+                                        >
+                                            <span t-field="line.product_id.name" />
+                                        </td>
+                                        <td class="text-right" />
+                                        <td class="text-right" />
+                                        <td class="text-right" />
+                                        <td class="text-right">
+                                            <span
+                                                class="text-right"
+                                                t-field="line.theoretical_qty"
+                                            />
+                                            <span
+                                                class="text-right"
+                                                t-field="line.product_uom_id"
+                                                groups="product.group_uom"
+                                            />
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -58,9 +111,14 @@
                                     <div class="col-4">
                                         <table class="table table-sm">
                                             <tr class="border-black">
-                                                <td><strong>Total Quantity</strong></td>
+                                                <td>
+                                                    <strong>Total Quantity</strong>
+                                                </td>
                                                 <td class="text-right">
-                                                    <span t-field="o.total_qty"/> <span t-field="o.product_id.uom_id"/>
+                                                    <span t-field="o.total_qty" />
+                                                    <span
+                                                        t-field="o.product_id.uom_id"
+                                                    />
                                                 </td>
                                             </tr>
                                         </table>
@@ -68,10 +126,13 @@
                                 </div>
                             </t>
                         </div>
-                        <div t-if="o.check_duplex()" style="page-break-before: left; visibility: hidden;">End</div>
+                        <div
+                            t-if="o.check_duplex()"
+                            style="page-break-before: left; visibility: hidden;"
+                        >End</div>
                     </t>
-                 </t>
-             </t>
+                </t>
+            </t>
         </template>
         <report
             string="Inventory"
