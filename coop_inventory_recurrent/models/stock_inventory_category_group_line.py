@@ -8,14 +8,16 @@ class StockInventoryCategoryGroupLine(models.Model):
     _description = "Category Group Line"
 
     group_id = fields.Many2one(
-        comodel_name="stock.inventory.category.group",
-        ondelete="cascade"
+        comodel_name="stock.inventory.category.group", ondelete="cascade"
     )
     category_id = fields.Many2one(
-        'product.category', string='Product category',
-        required=True
+        "product.category", string="Product category", required=True
     )
-    copies = fields.Selection([
-        ('1', '1'),
-        ('2', '2'),
-    ], required=True, default='2')
+    copies = fields.Selection(
+        [
+            ("1", "1"),
+            ("2", "2"),
+        ],
+        required=True,
+        default="2",
+    )
