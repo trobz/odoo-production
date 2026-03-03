@@ -1,41 +1,53 @@
 from dateutil.relativedelta import relativedelta
 
-from odoo import fields, models
+from odoo import Command, fields, models
 
 from odoo.addons.queue_job.job import identity_exact
 
 
-class AccountFrFec(models.TransientModel):
-    _inherit = "l10n_fr.fec.export.wizard"
+class AccountFrFecOca(models.TransientModel):
+    _inherit = "account.fr.fec.oca"
 
     def write(self, vals):
         if self._context.get("extension", "") == "txt" and vals.get("filename"):
             vals["filename"] = vals["filename"][:-3] + "txt"
         return super().write(vals)
 
-    def export_fec_txt(self):
-        self.ensure_one()
-        return self.with_context(extension="txt").create_fec_report_action()
+    def generate_fec(self):
+        action = super().generate_fec()
+        action.update(
+            {
+                "url": f"web/content/?model={self._name}&id={self.id}&filename_field="
+                f"filename&field=fec_data&download=true&filename={self.filename}",
+            }
+        )
+        return action
 
-    def export_fec_csv_background(self):
+    def generate_fec_txt(self):
+        self.ensure_one()
+        return self.with_context(extension="txt").generate_fec()
+
+    def generate_fec_background(self):
         self.ensure_one()
         return self.generate_fec_file_in_background()
 
-    def export_fec_txt_background(self):
+    def generate_fec_txt_background(self):
         self.ensure_one()
         return self.generate_fec_file_in_background("txt")
 
-    def create_attachment(self, date_from, date_to, extension):
+    def send_fec(self, date_from, date_to, extension):
         self.ensure_one()
         self.date_from = date_from
         self.date_to = date_to
-        results = self.with_context(extension=extension).generate_fec()
-        attachment = self.env["ir.attachment"].create(
-            {
-                "name": results.get("file_name"),
-                "store_fname": self.filename,
-                "db_datas": results.get("file_content"),
-            }
+        _ = self.with_context(extension=extension).generate_fec()
+        attachments = self.env["ir.attachment"].search(
+            [
+                ("res_model", "=", self._name),
+                ("res_field", "=", "fec_data"),
+                ("res_id", "in", self.ids),
+            ],
+            limit=1,
+            order="create_date desc",
         )
         email_template = self.env.ref(
             "l10n_fr_fec_background.send_fec_file_mail_template"
@@ -43,7 +55,7 @@ class AccountFrFec(models.TransientModel):
         email_template.send_mail(
             self.id,
             force_send=True,
-            email_values={"attachment_ids": [(4, attachment.id)]},
+            email_values={"attachment_ids": Command.set(attachments.ids)},
         )
         return True
 
@@ -78,4 +90,4 @@ class AccountFrFec(models.TransientModel):
         self.with_delay(
             identity_key=identity_exact,
             description="Create FEC attachment",
-        ).create_attachment(date_from, date_to, extension)
+        ).send_fec(date_from, date_to, extension)

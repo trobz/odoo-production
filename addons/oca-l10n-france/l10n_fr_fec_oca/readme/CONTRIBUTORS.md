@@ -1,4 +1,2 @@
-- Alexis de Lattre \<alexis.delattre@akretion.com\>
-- Odoo S.A. \<https://www.odoo.com/\>
-- Trobz \<https://www.trobz.com/\>
-  - Phan Hong Phuc \<phucph@trobz.com\>
+- Odoo S.A. \<<https://www.odoo.com\>
+- Alexis de Lattre \<<alexis.delattre@akretion.com>\>

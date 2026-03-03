@@ -2,37 +2,31 @@
 <odoo>
     <record id="account_fr_fec_view_inherit" model="ir.ui.view">
         <field name="name">l10n_fr.fec.export.wizard.view.inherit</field>
-        <field name="model">l10n_fr.fec.export.wizard</field>
+        <field name="model">account.fr.fec.oca</field>
         <field name="priority">100</field>
         <field name="inherit_id" ref="l10n_fr_fec_oca.account_fr_fec_oca_form" />
         <field name="arch" type="xml">
-            <xpath
-                expr="//footer/button[@name='create_fec_report_action']"
-                position="after"
-            >
+            <xpath expr="//footer/button[@name='generate_fec']" position="after">
                 <button
                     string="TXT"
-                    name="export_fec_txt"
+                    name="generate_fec_txt"
                     type="object"
                     class="oe_highlight"
                 />
                 <button
                     string="CSV Background"
-                    name="export_fec_csv_background"
+                    name="generate_fec_background"
                     type="object"
                     class="oe_highlight"
                 />
                 <button
                     string="TXT Background"
-                    name="export_fec_txt_background"
+                    name="generate_fec_txt_background"
                     type="object"
                     class="oe_highlight"
                 />
             </xpath>
-            <xpath
-                expr="//footer/button[@name='create_fec_report_action']"
-                position="attributes"
-            >
+            <xpath expr="//footer/button[@name='generate_fec']" position="attributes">
                 <attribute name="string">CSV</attribute>
             </xpath>
         </field>

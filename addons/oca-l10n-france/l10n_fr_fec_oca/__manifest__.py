@@ -1,6 +1,5 @@
-# Copyright 2013-2020 Akretion France (http://www.akretion.com/)
-# @author: Alexis de Lattre <alexis.delattre@akretion.com>
-# Copyright 2016-2020 Odoo SA (https://www.odoo.com/fr_FR/)
+# Copyright 2016-2025 Odoo SA (https://www.odoo.com/fr_FR/)
+# Copyright 2013-2025 Akretion France (http://www.akretion.com/)
 # @author: Alexis de Lattre <alexis.delattre@akretion.com>
 
 {
@@ -9,17 +8,14 @@
     "version": "18.0.1.0.0",
     "license": "LGPL-3",
     "summary": "Fichier d'Échange Informatisé (FEC) for France",
-    "author": "Akretion,Odoo Community Association (OCA)",
+    "author": "Odoo S.A.,Akretion,Odoo Community Association (OCA)",
     "maintainers": ["alexis-via"],
     "website": "https://github.com/OCA/l10n-france",
-    "depends": ["account", "date_range", "l10n_fr_account"],
-    "external_dependencies": {
-        "python": ["unidecode"],
-    },
+    "depends": ["l10n_fr_account", "date_range"],
     "data": [
         "security/ir.model.access.csv",
         "security/ir_rule.xml",
-        "wizard/account_fr_fec_oca_view.xml",
+        "wizards/account_fr_fec_oca_view.xml",
     ],
     "installable": True,
 }
