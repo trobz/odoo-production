@@ -1,147 +1,145 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <data>
-        <template id="report_inventory_new_layout">
-            <t t-call="web.html_container">
-                <t t-set="variants" t-value="docs.get_copi_variants()" />
+    <template id="report_inventory_new_layout">
+        <t t-call="web.html_container">
+            <t t-set="variants" t-value="quants.get_copi_variants()" />
+            <t
+                t-set="o"
+                t-value="variants[0]['obj'][0] if variants and variants[0]['obj'] else False"
+            />
+            <t t-call="coop_inventory.external_layout_standard_inventory">
                 <t t-foreach="variants" t-as="variant">
-                    <t t-set="o" t-value="variant['obj']" />
-                    <t t-call="coop_inventory.external_layout_standard_inventory">
-                        <div class="page">
-                            <t
-                                t-set="style"
-                                t-value="variant.get('color') and 'color: ' + variant['color'] + ';' or ''"
-                            />
-                            <div
-                                style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 18px;"
-                            >
-                                <span t-att-style="style">
-                                    <span t-field="o.name" />
-                                    <span
-                                        t-esc="variant.get('extra_title') and ': ' + variant['extra_title'] or ''"
-                                    />
-                                </span>
-                            </div>
-                            <table class="table table-sm" style="font-size: 14px">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <strong>Date</strong>
-                                        </th>
-                                        <th style="width: 60%;">
-                                            <strong>Inventoried by:</strong>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <span t-field="o.date" />
-                                        </td>
-                                        <td />
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <table
-                                class="table table-sm table-bordered"
-                                style="font-size: 11px"
-                            >
-                                <thead>
-                                    <tr>
-                                        <th class="text-right" style="width: 40px;">
-                                            <strong>Package Qty</strong>
-                                        </th>
-                                        <th style="width: 70px;">
-                                            <strong>Internal Reference</strong>
-                                        </th>
-                                        <th>
-                                            <strong>Product</strong>
-                                        </th>
-                                        <th class="text-right" style="width: 45px;">
-                                            <strong>G.F. Qty</strong>
-                                        </th>
-                                        <th class="text-right" style="width: 40px;">
-                                            <strong>UG. Qty</strong>
-                                        </th>
-                                        <th class="text-right" style="width: 60px;">
-                                            <strong>Total</strong>
-                                        </th>
-                                        <th class="text-right" style="width: 60px;">
-                                            <strong>Theoretical Qty</strong>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr
-                                        t-foreach="o.line_ids.sorted(key=lambda l: l.product_name)"
-                                        t-as="line"
-                                    >
-                                        <td class="text-right">
-                                            <span t-field="line.package_qty" />
-                                        </td>
-                                        <td>
-                                            <span
-                                                t-field="line.product_id.default_code"
-                                            />
-                                        </td>
-                                        <td
-                                            style="white-space: nowrap; max-width: 150px; overflow: hidden; text-overflow: ellipsis;"
-                                        >
-                                            <span t-field="line.product_id.name" />
-                                        </td>
-                                        <td class="text-right" />
-                                        <td class="text-right" />
-                                        <td class="text-right" />
-                                        <td class="text-right">
-                                            <span
-                                                class="text-right"
-                                                t-field="line.theoretical_qty"
-                                            />
-                                            <span
-                                                class="text-right"
-                                                t-field="line.product_uom_id"
-                                                groups="product.group_uom"
-                                            />
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <t t-if="o.filter == 'product' and o.product_id">
-                                <div class="row justify-content-end">
-                                    <div class="col-4">
-                                        <table class="table table-sm">
-                                            <tr class="border-black">
-                                                <td>
-                                                    <strong>Total Quantity</strong>
-                                                </td>
-                                                <td class="text-right">
-                                                    <span t-field="o.total_qty" />
-                                                    <span
-                                                        t-field="o.product_id.uom_id"
-                                                    />
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                            </t>
-                        </div>
+                    <t t-set="quants" t-value="variant['obj']" />
+                    <t t-set="o" t-value="quants[0] if quants else False" />
+                    <div
+                        class="page"
+                        t-att-style="not variant_first and 'page-break-before: always;' or ''"
+                    >
+                        <t
+                            t-set="style"
+                            t-value="variant.get('color') and 'color: ' + variant['color'] + ';' or ''"
+                        />
                         <div
-                            t-if="o.check_duplex()"
-                            style="page-break-before: left; visibility: hidden;"
-                        >End</div>
-                    </t>
+                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 18px;"
+                        >
+                            <span t-att-style="style">
+                                <span t-out="o.product_id.categ_id.name if o else ''" />
+                                <span
+                                    t-out="variant.get('extra_title') and ': ' + variant['extra_title'] or ''"
+                                />
+                            </span>
+                        </div>
+                        <table class="table table-sm" style="font-size: 14px">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <strong>Date</strong>
+                                    </th>
+                                    <th style="width: 60%;">
+                                        <strong>Inventoried by:</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span t-out="time.strftime('%d/%m/%Y')" />
+                                    </td>
+                                    <td />
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table
+                            class="table table-sm table-bordered"
+                            style="font-size: 11px"
+                        >
+                            <thead>
+                                <tr>
+                                    <th class="text-right" style="width: 40px;">
+                                        <strong>Package Qty</strong>
+                                    </th>
+                                    <th style="width: 70px;">
+                                        <strong>Internal Reference</strong>
+                                    </th>
+                                    <th>
+                                        <strong>Product</strong>
+                                    </th>
+                                    <th class="text-right" style="width: 45px;">
+                                        <strong>G.F. Qty</strong>
+                                    </th>
+                                    <th class="text-right" style="width: 40px;">
+                                        <strong>UG. Qty</strong>
+                                    </th>
+                                    <th class="text-right" style="width: 60px;">
+                                        <strong>Total</strong>
+                                    </th>
+                                    <th class="text-right" style="width: 60px;">
+                                        <strong>Theoretical Qty</strong>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr
+                                    t-foreach="quants.sorted(key=lambda l: l.product_name)"
+                                    t-as="line"
+                                >
+                                    <td class="text-right">
+                                        <span t-field="line.package_qty" />
+                                    </td>
+                                    <td>
+                                        <span t-field="line.product_id.default_code" />
+                                    </td>
+                                    <td
+                                        style="white-space: nowrap; max-width: 150px; overflow: hidden; text-overflow: ellipsis;"
+                                    >
+                                        <span t-field="line.product_id.name" />
+                                    </td>
+                                    <td class="text-right" />
+                                    <td class="text-right" />
+                                    <td class="text-right" />
+                                    <td class="text-right">
+                                        <span
+                                            class="text-right"
+                                            t-field="line.quantity"
+                                        />
+                                        <span
+                                            class="text-right"
+                                            t-field="line.product_uom_id"
+                                            groups="product.group_uom"
+                                        />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div
+                        t-if="quants.check_duplex()"
+                        style="page-break-before: left; visibility: hidden;"
+                    >End</div>
                 </t>
             </t>
-        </template>
-        <report
-            string="Inventory"
-            id="stock.action_report_inventory"
-            model="stock.inventory"
-            report_type="qweb-pdf"
-            name="coop_inventory_recurrent.report_inventory_new_layout"
-            file="coop_inventory_recurrent.report_inventory_new_layout"
-            print_report_name="'Inventory - %s' % (object.name)"
-        />
-    </data>
+        </t>
+    </template>
+    <record id="action_report_inventory_recurrent" model="ir.actions.report">
+        <field name="name">Inventory</field>
+        <field name="model">stock.inventory</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >coop_inventory_recurrent.report_inventory_new_layout</field>
+        <field
+            name="report_file"
+        >coop_inventory_recurrent.report_inventory_new_layout</field>
+        <field name="print_report_name">'Inventory - %s' % object.name</field>
+    </record>
+
+    <template
+        id="external_layout_standard_inventory_inherit_recurrent"
+        inherit_id="coop_inventory.external_layout_standard_inventory"
+        priority="99"
+    >
+        <xpath expr="//t[@t-call='web.address_layout']" position="replace">
+            <t />
+        </xpath>
+    </template>
 </odoo>

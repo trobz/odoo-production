@@ -2,10 +2,10 @@
 
 {
     "name": "Coop - Inventory Recurrent",
-    "version": "12.0.1.0.1",
+    "version": "18.0.1.0.1",
     "category": "stock",
-    "author": "Trobz",
-    "website": "https://trobz.com",
+    "author": "Trobz, La Louve",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": [
         "coop_inventory",

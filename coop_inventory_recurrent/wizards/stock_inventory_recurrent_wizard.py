@@ -1,6 +1,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html
 
-from odoo import api, fields, models
+from odoo import Command, fields, models
 
 
 class StockInventoryRecurrentWizard(models.TransientModel):
@@ -13,43 +13,55 @@ class StockInventoryRecurrentWizard(models.TransientModel):
         string="Category Groups",
     )
 
-    @api.multi
-    def _execute(self):
+    def _get_internal_locations(self):
+        return self.env["stock.location"].search(
+            [("usage", "=", "internal"), ("company_id", "=", self.env.company.id)]
+        )
+
+    def action_execute(self):
         self.ensure_one()
-        vals = []
         inventories = self.env["stock.inventory"]
+        locations = self._get_internal_locations()
         for categ_group in self.category_group_ids:
             for line in categ_group.line_ids:
-                vals.append(
-                    {
-                        "name": line.category_id.name,
-                        "filter": "category",
-                        "category_id": line.category_id.id,
-                        "category_group_line_id": line.id,
-                    }
+                existing = self.env["stock.inventory"].search(
+                    [
+                        ("category_group_line_id", "=", line.id),
+                        ("state", "=", "in_progress"),
+                    ],
+                    limit=1,
                 )
-
-        if vals:
-            inventories = self.env["stock.inventory"].create(vals)
-        inventories.action_start()
-        return inventories
-
-    @api.multi
-    def action_execute(self):
-        inventories = self.env["stock.inventory"]
-        for rec in self:
-            inventories |= rec._execute()
-        act_window = self.env.ref("stock.action_inventory_form")
-        form_view = self.env.ref("stock.view_inventory_form")
+                if existing:
+                    inventories |= existing
+                else:
+                    inventory = self.env["stock.inventory"].create(
+                        {
+                            "name": line.category_id.name,
+                            "product_selection": "category",
+                            "category_id": line.category_id.id,
+                            "category_group_line_id": line.id,
+                            "location_ids": [Command.set(locations.ids)],
+                        }
+                    )
+                    quants = inventory._get_quants(locations)
+                    inventory.write({"stock_quant_ids": [Command.set(quants.ids)]})
+                    inventory.action_state_to_in_progress()
+                    quants.write(
+                        {
+                            "to_do": True,
+                            "inventory_date": inventory.date,
+                            "current_inventory_id": inventory.id,
+                        }
+                    )
+                    inventories |= inventory
+        tree_view_id = self.env.ref("stock_inventory.view_inventory_group_tree").id
+        form_view_id = self.env.ref("stock_inventory.view_inventory_group_form").id
         return {
-            "name": act_window.name,
+            "name": self.env._("Physical Inventory"),
             "type": "ir.actions.act_window",
             "res_model": "stock.inventory",
-            "view_type": "form",
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
+            "views": [(tree_view_id, "list"), (form_view_id, "form")],
+            "domain": [("id", "in", inventories.ids)],
             "target": "current",
-            "views": [
-                (act_window and act_window.view_id.id or False, "tree"),
-                (form_view and form_view.id or False, "form"),
-            ],
         }
