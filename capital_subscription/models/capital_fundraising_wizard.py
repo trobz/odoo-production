@@ -49,7 +49,6 @@ class CapitalFundraisingWizard(models.TransientModel):
     )
 
     confirm_payment = fields.Boolean(
-        string="Confirm Payment",
         help="Check this box to confirm the"
         " payment(s). In that case, the second account move will be"
         " written to transfer amount from unpaid account to paid account",
@@ -80,23 +79,18 @@ class CapitalFundraisingWizard(models.TransientModel):
             self.confirm_payment = False
 
     # Action Section
-    @api.multi
     def button_confirm(self):
         self.ensure_one()
-
-        imd_obj = self.env["ir.model.data"]
-        invoice_obj = self.env["account.invoice"]
-        payment_obj = self.env["account.payment"]
+        invoice_obj = self.env["account.move"]
         wizard = self[0]
         product = wizard.category_id.product_id
         invoice_vals = invoice_obj.default_get(invoice_obj._fields.keys())
         invoice_vals.update(
             {
-                "type": "out_invoice",
-                "date_invoice": wizard.date_invoice,
+                "move_type": "out_invoice",
+                "invoice_date": wizard.date_invoice,
                 "journal_id": wizard.category_id.fundraising_id.journal_id.id,
-                "account_id": wizard.category_id.partner_account_id.id,
-                "payment_term_id": wizard.payment_term_id.id,
+                "invoice_payment_term_id": wizard.payment_term_id.id,
                 "partner_id": wizard.partner_id.id,
                 "is_capital_fundraising": True,
                 "fundraising_category_id": wizard.category_id.id,
@@ -105,7 +99,7 @@ class CapitalFundraisingWizard(models.TransientModel):
                         0,
                         False,
                         {
-                            "uom_id": product.uom_id.id,
+                            "product_uom_id": product.uom_id.id,
                             "product_id": product.id,
                             "price_unit": product.lst_price,
                             "name": product.name,
@@ -121,49 +115,37 @@ class CapitalFundraisingWizard(models.TransientModel):
         invoice = invoice_obj.create(invoice_vals)
         invoice.onchange_fundraising_category_id()
 
-        # Validate Invoice, calling workflow
-        invoice.action_invoice_open()
+        # Validate Invoice
+        invoice.action_post()
 
         # Mark Payment
-        payment_methods = (
-            wizard.category_id.fundraising_id.journal_id.inbound_payment_method_ids
-        )
-
         if wizard.payment_journal_id:
             # Force confirm_payment is True in case
             # Confirm Fundraising Payments is always
             if wizard.confirm_fundraising_payment in ["allways"]:
                 wizard.confirm_payment = True
-            # create one payment per line in the account move just created,
-            # to have correct date
-            for move_line in invoice.move_id.line_ids.filtered(
-                lambda r: r.debit != 0
-            ).sorted(key=lambda r: r.date_maturity):
-                vals = {
-                    "payment_type": "inbound",
-                    "partner_type": "customer",
-                    "partner_id": wizard.partner_id.id,
-                    "payment_method_id": payment_methods[0].id,
+            if wizard.confirm_payment:
+                payment_vals = {
                     "journal_id": wizard.payment_journal_id.id,
-                    "amount": move_line.debit,
-                    "payment_date": move_line.date_maturity,
-                    "communication": invoice.number,
-                    "invoice_ids": [(4, invoice.id, None)],
+                    "payment_date": wizard.date_invoice,
                 }
-                payment = payment_obj.create(vals)
-                if wizard.confirm_payment:
-                    payment.post()
+                payment_register = (
+                    self.env["account.payment.register"]
+                    .with_context(active_model="account.move", active_ids=invoice.ids)
+                    .create(payment_vals)
+                )
+                payment_register._create_payments()
 
         # Return view on the new invoice
-        action = imd_obj.xmlid_to_object("account.action_invoice_tree1")
-        form_view_id = imd_obj.xmlid_to_res_id("account.invoice_form")
-        return {
-            "name": action.name,
-            "help": action.help,
-            "type": action.type,
-            "views": [(form_view_id, "form")],
-            "target": action.target,
-            "context": action.context,
-            "res_model": action.res_model,
-            "res_id": invoice.id,
-        }
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "account.action_move_out_invoice_type"
+        )
+        form_view_id = self.env.ref("account.view_move_form").id
+        action.update(
+            {
+                "views": [(form_view_id, "form")],
+                "view_mode": "form",
+                "res_id": invoice.id,
+            }
+        )
+        return action

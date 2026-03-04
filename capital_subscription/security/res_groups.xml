@@ -8,5 +8,9 @@
     <record model="res.groups" id="manage_fundraising_partner_type">
         <field name="name">Manage Fundraising Partner Type</field>
         <field name="category_id" ref="base.module_category_usability" />
+        <field
+            name="users"
+            eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
+        />
     </record>
 </odoo>

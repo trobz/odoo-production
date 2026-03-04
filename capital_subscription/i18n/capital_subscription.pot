@@ -1,12 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* capital_subscription
+# 	* capital_subscription
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2026-03-04 05:16+0000\n"
+"PO-Revision-Date: 2026-03-04 05:16+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,30 +18,38 @@ msgstr ""
 #. module: capital_subscription
 #: model:ir.model.fields,help:capital_subscription.field_product_product__is_deficit_product
 #: model:ir.model.fields,help:capital_subscription.field_product_template__is_deficit_product
-msgid " Check this box if you want to use this product for Capital Fundraising Deficit."
+msgid ""
+" Check this box if you want to use this product for Capital Fundraising "
+"Deficit."
 msgstr ""
 
 #. module: capital_subscription
 #: model:ir.model.fields,help:capital_subscription.field_product_product__is_capital_fundraising
 #: model:ir.model.fields,help:capital_subscription.field_product_template__is_capital_fundraising
-msgid " Check this box if you want to use this product for capital fundraising.\n"
+msgid ""
+" Check this box if you want to use this product for capital fundraising.\n"
 " If yes, please check accounting and fiscal settings."
 msgstr ""
 
 #. module: capital_subscription
-#: code:addons/capital_subscription/models/account_invoice.py:88
-#, python-format
-msgid "%s category do not allow %s products"
+#. odoo-python
+#: code:addons/capital_subscription/models/account_move.py:0
+msgid "%(category)s category do not allow %(products)s products"
 msgstr ""
 
 #. module: capital_subscription
-#: code:addons/capital_subscription/models/account_invoice.py:74
-#, python-format
+#. odoo-python
+#: code:addons/capital_subscription/models/account_move.py:0
 msgid "A Capital fundraising must have a capital category defined"
 msgstr ""
 
 #. module: capital_subscription
-#: selection:account.journal,confirm_fundraising_payment:0
+#: model:ir.model,name:capital_subscription.model_account_move_reversal
+msgid "Account Move Reversal"
+msgstr ""
+
+#. module: capital_subscription
+#: model:ir.model.fields.selection,name:capital_subscription.selection__account_journal__confirm_fundraising_payment__allways
 msgid "Allways"
 msgstr ""
 
@@ -49,7 +59,6 @@ msgid "Amount By Share"
 msgstr ""
 
 #. module: capital_subscription
-#: model_terms:ir.ui.view,arch_db:capital_subscription.view_account_invoice_refund_capital_subscription_form
 #: model_terms:ir.ui.view,arch_db:capital_subscription.view_capital_fundraising_wizard_form
 msgid "Cancel"
 msgstr ""
@@ -107,7 +116,9 @@ msgstr ""
 
 #. module: capital_subscription
 #: model:ir.model.fields,help:capital_subscription.field_capital_fundraising_wizard__confirm_payment
-msgid "Check this box to confirm the payment(s). In that case, the second account move will be written to transfer amount from unpaid account to paid account"
+msgid ""
+"Check this box to confirm the payment(s). In that case, the second account "
+"move will be written to transfer amount from unpaid account to paid account"
 msgstr ""
 
 #. module: capital_subscription
@@ -117,7 +128,8 @@ msgid "Company"
 msgstr ""
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_account_invoice__is_capital_fundraising
+#: model:ir.model.fields,field_description:capital_subscription.field_account_bank_statement_line__is_capital_fundraising
+#: model:ir.model.fields,field_description:capital_subscription.field_account_move__is_capital_fundraising
 #: model:ir.model.fields,field_description:capital_subscription.field_product_product__is_capital_fundraising
 #: model:ir.model.fields,field_description:capital_subscription.field_product_template__is_capital_fundraising
 msgid "Concerns Capital Fundraising"
@@ -145,11 +157,6 @@ msgid "Contact"
 msgstr ""
 
 #. module: capital_subscription
-#: model_terms:ir.ui.view,arch_db:capital_subscription.view_account_invoice_refund_capital_subscription_form
-msgid "Create Refund"
-msgstr ""
-
-#. module: capital_subscription
 #: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising__create_uid
 #: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category__create_uid
 #: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_line__create_uid
@@ -170,27 +177,16 @@ msgid "Created on"
 msgstr ""
 
 #. module: capital_subscription
-#: model:ir.model,name:capital_subscription.model_account_invoice_refund
-msgid "Credit Note"
-msgstr ""
-
-#. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category__minimum_share_qty
-msgid "Default Minimum qty"
-msgstr ""
-
-#. module: capital_subscription
 #: model:ir.model.fields,field_description:capital_subscription.field_product_product__is_deficit_product
 #: model:ir.model.fields,field_description:capital_subscription.field_product_template__is_deficit_product
 msgid "Deficit Product"
 msgstr ""
 
 #. module: capital_subscription
-#: code:addons/capital_subscription/models/account_invoice.py:230
+#. odoo-python
+#: code:addons/capital_subscription/models/account_move.py:0
 #: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category__deficit_share_amount_ids
-#: model:product.product,name:capital_subscription.product_deficit_share
 #: model:product.template,name:capital_subscription.product_deficit_share_product_template
-#, python-format
 msgid "Deficit Share"
 msgstr ""
 
@@ -201,14 +197,59 @@ msgid "Deficit Share Account"
 msgstr ""
 
 #. module: capital_subscription
-#: code:addons/capital_subscription/models/account_invoice.py:204
-#, python-format
+#. odoo-python
+#: code:addons/capital_subscription/models/account_move.py:0
 msgid "Deficit Share Account has not been configured for %s."
 msgstr ""
 
 #. module: capital_subscription
 #: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category__deficit_product_id
 msgid "Deficit Share Product"
+msgstr ""
+
+#. module: capital_subscription
+#: model:account.account,name:capital_subscription.partner_account_category_A
+msgid "Demo Account Payable (Fundraising Category A)"
+msgstr ""
+
+#. module: capital_subscription
+#: model:account.account,name:capital_subscription.partner_account_category_B
+msgid "Demo Account Payable (Fundraising Category B)"
+msgstr ""
+
+#. module: capital_subscription
+#: model:account.account,name:capital_subscription.partner_account_category_C
+msgid "Demo Account Payable (Fundraising Category C)"
+msgstr ""
+
+#. module: capital_subscription
+#: model:account.account,name:capital_subscription.paid_capital_account_category_A
+msgid "Demo Subscribed and Paid Capital (Fundraising Category A)"
+msgstr ""
+
+#. module: capital_subscription
+#: model:account.account,name:capital_subscription.paid_capital_account_category_B
+msgid "Demo Subscribed and Paid Capital (Fundraising Category B)"
+msgstr ""
+
+#. module: capital_subscription
+#: model:account.account,name:capital_subscription.paid_capital_account_category_C
+msgid "Demo Subscribed and Paid Capital (Fundraising Category C)"
+msgstr ""
+
+#. module: capital_subscription
+#: model:account.account,name:capital_subscription.unpaid_capital_account_category_A
+msgid "Demo Subscribed and Unpaid Capital (Fundraising Category A)"
+msgstr ""
+
+#. module: capital_subscription
+#: model:account.account,name:capital_subscription.unpaid_capital_account_category_B
+msgid "Demo Subscribed and Unpaid Capital (Fundraising Category B)"
+msgstr ""
+
+#. module: capital_subscription
+#: model:account.account,name:capital_subscription.unpaid_capital_account_category_C
+msgid "Demo Subscribed and Unpaid Capital (Fundraising Category C)"
 msgstr ""
 
 #. module: capital_subscription
@@ -227,14 +268,9 @@ msgid "End Date"
 msgstr ""
 
 #. module: capital_subscription
-#: code:addons/capital_subscription/models/account_invoice_refund.py:47
-#, python-format
+#. odoo-python
+#: code:addons/capital_subscription/models/account_move_reversal.py:0
 msgid "Error! The refund quantity must be greater than 0."
-msgstr ""
-
-#. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category__line_ids
-msgid "Exception rules for minimum qty"
 msgstr ""
 
 #. module: capital_subscription
@@ -259,7 +295,8 @@ msgid "Fundraising Categories"
 msgstr ""
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_account_invoice__fundraising_category_id
+#: model:ir.model.fields,field_description:capital_subscription.field_account_bank_statement_line__fundraising_category_id
+#: model:ir.model.fields,field_description:capital_subscription.field_account_move__fundraising_category_id
 #: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_deficit__fund_cate_id
 msgid "Fundraising Category"
 msgstr ""
@@ -295,19 +332,24 @@ msgid "ID"
 msgstr ""
 
 #. module: capital_subscription
-#: model:ir.model,name:capital_subscription.model_account_invoice
-msgid "Invoice"
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard__date_invoice
+msgid "Invoice Date"
 msgstr ""
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard__date_invoice
-msgid "Invoice Date"
+#: model:ir.model.fields,field_description:capital_subscription.field_account_move_reversal__is_capital_fundraising
+msgid "Is Capital Fundraising"
 msgstr ""
 
 #. module: capital_subscription
 #: model:ir.model,name:capital_subscription.model_account_journal
 #: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising__journal_id
 msgid "Journal"
+msgstr ""
+
+#. module: capital_subscription
+#: model:ir.model,name:capital_subscription.model_account_move
+msgid "Journal Entry"
 msgstr ""
 
 #. module: capital_subscription
@@ -318,16 +360,6 @@ msgstr ""
 #. module: capital_subscription
 #: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category__journal_refund_ids
 msgid "Journals for Capital Refund"
-msgstr ""
-
-#. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising____last_update
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category____last_update
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_line____last_update
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_deficit____last_update
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_partner_type____last_update
-#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: capital_subscription
@@ -351,11 +383,17 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: capital_subscription
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category__line_ids
+msgid "Lines"
+msgstr ""
+
+#. module: capital_subscription
 #: model:res.groups,name:capital_subscription.manage_fundraising_partner_type
 msgid "Manage Fundraising Partner Type"
 msgstr ""
 
 #. module: capital_subscription
+#: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category__minimum_share_qty
 #: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_category_line__minimum_share_qty
 msgid "Minimum Share Quantity"
 msgstr ""
@@ -368,7 +406,7 @@ msgid "Name"
 msgstr ""
 
 #. module: capital_subscription
-#: selection:account.journal,confirm_fundraising_payment:0
+#: model:ir.model.fields.selection,name:capital_subscription.selection__account_journal__confirm_fundraising_payment__never
 msgid "Never"
 msgstr ""
 
@@ -378,19 +416,21 @@ msgid "New Capital Subscription"
 msgstr ""
 
 #. module: capital_subscription
-#: selection:account.journal,confirm_fundraising_payment:0
+#: model:ir.model.fields.selection,name:capital_subscription.selection__account_journal__confirm_fundraising_payment__no
 msgid "No by Default"
 msgstr ""
 
 #. module: capital_subscription
-#: code:addons/capital_subscription/models/account_invoice.py:111
-#, python-format
-msgid "Non capital invoice do not accept line with capital subscription products : %s"
+#. odoo-python
+#: code:addons/capital_subscription/models/account_move.py:0
+msgid ""
+"Non capital invoice do not accept line with capital subscription products : "
+"%s"
 msgstr ""
 
 #. module: capital_subscription
-#: code:addons/capital_subscription/models/account_full_reconcile.py:93
-#, python-format
+#. odoo-python
+#: code:addons/capital_subscription/models/account_full_reconcile.py:0
 msgid "Paid Capital"
 msgstr ""
 
@@ -410,6 +450,16 @@ msgid "Partner Type"
 msgstr ""
 
 #. module: capital_subscription
+#: model:ir.model,name:capital_subscription.model_account_payment_register
+msgid "Pay"
+msgstr ""
+
+#. module: capital_subscription
+#: model:account.journal,name:capital_subscription.capital_journal
+msgid "Payment Demo Capital Fundraising Journal"
+msgstr ""
+
+#. module: capital_subscription
 #: model:ir.model.fields,field_description:capital_subscription.field_capital_fundraising_wizard__payment_journal_id
 msgid "Payment Method"
 msgstr ""
@@ -425,15 +475,14 @@ msgid "Payment Terms"
 msgstr ""
 
 #. module: capital_subscription
-#: code:addons/capital_subscription/models/account_full_reconcile.py:66
-#: code:addons/capital_subscription/models/account_full_reconcile.py:76
-#, python-format
+#. odoo-python
+#: code:addons/capital_subscription/models/account_full_reconcile.py:0
 msgid "Payment of Capital"
 msgstr ""
 
 #. module: capital_subscription
 #: model:ir.model,name:capital_subscription.model_product_template
-msgid "Product Template"
+msgid "Product"
 msgstr ""
 
 #. module: capital_subscription
@@ -442,19 +491,14 @@ msgid "Products"
 msgstr ""
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_account_invoice_refund__refund_quantity
+#: model:ir.model.fields,field_description:capital_subscription.field_account_move_reversal__refund_quantity
 msgid "Quantity Of Shares To Refund"
 msgstr ""
 
 #. module: capital_subscription
-#: model:ir.model.fields,field_description:capital_subscription.field_account_invoice_refund__description
-msgid "Reason"
-msgstr ""
-
-#. module: capital_subscription
-#: code:addons/capital_subscription/models/account_invoice_refund.py:18
-#, python-format
-msgid "Redemption %s - %d"
+#. odoo-python
+#: code:addons/capital_subscription/models/account_move.py:0
+msgid "Redemption %(move)s - %(barcode)s"
 msgstr ""
 
 #. module: capital_subscription
@@ -463,9 +507,15 @@ msgid "Refund Account"
 msgstr ""
 
 #. module: capital_subscription
+#: model:account.journal,name:capital_subscription.sale_capital_journal
+msgid "Sale Demo Capital Fundraising Journal"
+msgstr ""
+
+#. module: capital_subscription
 #: model:ir.model.fields,help:capital_subscription.field_account_journal__confirm_fundraising_payment
 #: model:ir.model.fields,help:capital_subscription.field_capital_fundraising_wizard__confirm_fundraising_payment
-msgid "Setting for the payment in the wizard that create Subscriptions.\n"
+msgid ""
+"Setting for the payment in the wizard that create Subscriptions.\n"
 " * Allways : Payment is allways confirmed\n"
 " * Yes : Payment confirmed by default\n"
 " * No : Payment not confirmed by default\n"
@@ -473,24 +523,16 @@ msgid "Setting for the payment in the wizard that create Subscriptions.\n"
 msgstr ""
 
 #. module: capital_subscription
-#: model:product.category,name:capital_subscription.product_category_fundraising
-msgid "Share Fundraising"
-msgstr ""
-
-#. module: capital_subscription
-#: model:product.product,name:capital_subscription.product_fundraising_category_A
 #: model:product.template,name:capital_subscription.product_fundraising_category_A_product_template
 msgid "Share Fundraising Product (Category A)"
 msgstr ""
 
 #. module: capital_subscription
-#: model:product.product,name:capital_subscription.product_fundraising_category_B
 #: model:product.template,name:capital_subscription.product_fundraising_category_B_product_template
 msgid "Share Fundraising Product (Category B)"
 msgstr ""
 
 #. module: capital_subscription
-#: model:product.product,name:capital_subscription.product_fundraising_category_C
 #: model:product.template,name:capital_subscription.product_fundraising_category_C_product_template
 msgid "Share Fundraising Product (Category C)"
 msgstr ""
@@ -507,7 +549,8 @@ msgstr ""
 
 #. module: capital_subscription
 #: model:ir.model.fields,help:capital_subscription.field_capital_fundraising__journal_ids
-msgid "Specify the journals used for transfer\n"
+msgid ""
+"Specify the journals used for transfer\n"
 "        capital between paid and unpaid accounts"
 msgstr ""
 
@@ -517,8 +560,8 @@ msgid "Start Date"
 msgstr ""
 
 #. module: capital_subscription
-#: code:addons/capital_subscription/models/capital_fundraising_deficit.py:42
-#, python-format
+#. odoo-python
+#: code:addons/capital_subscription/models/capital_fundraising_deficit.py:0
 msgid "Stop Date should be greater than Start Date."
 msgstr ""
 
@@ -529,30 +572,21 @@ msgstr ""
 
 #. module: capital_subscription
 #: model:ir.model.fields,help:capital_subscription.field_capital_fundraising_category__partner_account_id
-msgid "This account will be used instead of the default partner one, if defined."
+msgid ""
+"This account will be used instead of the default partner one, if defined."
 msgstr ""
 
 #. module: capital_subscription
 #: model:ir.model.fields,help:capital_subscription.field_capital_fundraising_category__capital_account_id
-msgid "This account will be used to write a move between default product account and capital account when the payment is done."
+msgid ""
+"This account will be used to write a move between default product account "
+"and capital account when the payment is done."
 msgstr ""
 
 #. module: capital_subscription
 #: model:ir.model.fields,field_description:capital_subscription.field_res_partner__amount_subscription
 #: model:ir.model.fields,field_description:capital_subscription.field_res_users__amount_subscription
 msgid "Total Subscribed Amount"
-msgstr ""
-
-#. module: capital_subscription
-#: model:product.product,uom_name:capital_subscription.product_deficit_share
-#: model:product.product,uom_name:capital_subscription.product_fundraising_category_A
-#: model:product.product,uom_name:capital_subscription.product_fundraising_category_B
-#: model:product.product,uom_name:capital_subscription.product_fundraising_category_C
-#: model:product.template,uom_name:capital_subscription.product_deficit_share_product_template
-#: model:product.template,uom_name:capital_subscription.product_fundraising_category_A_product_template
-#: model:product.template,uom_name:capital_subscription.product_fundraising_category_B_product_template
-#: model:product.template,uom_name:capital_subscription.product_fundraising_category_C_product_template
-msgid "Unit(s)"
 msgstr ""
 
 #. module: capital_subscription
@@ -582,47 +616,38 @@ msgid "Wizard"
 msgstr ""
 
 #. module: capital_subscription
-#: selection:account.journal,confirm_fundraising_payment:0
+#: model:ir.model.fields.selection,name:capital_subscription.selection__account_journal__confirm_fundraising_payment__yes
 msgid "Yes by Default"
 msgstr ""
 
 #. module: capital_subscription
-#: code:addons/capital_subscription/models/account_full_reconcile.py:36
-#, python-format
+#. odoo-python
+#: code:addons/capital_subscription/models/account_full_reconcile.py:0
 msgid "You can not reconcile Capital Invoices for many Categories: %s"
 msgstr ""
 
 #. module: capital_subscription
-#: code:addons/capital_subscription/models/capital_fundraising_deficit.py:67
-#, python-format
-msgid "You cannot have two Capital Fundraising Deficit configuration lines that overlap"
+#. odoo-python
+#: code:addons/capital_subscription/models/capital_fundraising_deficit.py:0
+msgid ""
+"You cannot have two Capital Fundraising Deficit configuration lines that "
+"overlap"
 msgstr ""
 
 #. module: capital_subscription
-#: code:addons/capital_subscription/models/account_invoice.py:165
-#, python-format
-msgid "You try to make an operation after which the partner will have %d share(s) of capital of kind '%s'.\n"
+#. odoo-python
+#: code:addons/capital_subscription/models/account_move.py:0
+msgid ""
+"You try to make an operation after which the partner will have %(qty)s share(s) of capital of kind '%(category)s'.\n"
 "\n"
-" Minimum quantity : %d."
+" Minimum quantity : %(minimum_qty)s."
 msgstr ""
 
 #. module: capital_subscription
-#: code:addons/capital_subscription/models/account_invoice.py:150
-#, python-format
-msgid "You try to make an operation after which the partner will have %d shares of capital of kind '%s'.\n"
+#. odoo-python
+#: code:addons/capital_subscription/models/account_move.py:0
+msgid ""
+"You try to make an operation after which the partner will have %(qty)s shares of capital of kind '%(category)s'.\n"
 "\n"
 " Incorrect Value."
 msgstr ""
-
-#. module: capital_subscription
-#: model:product.product,weight_uom_name:capital_subscription.product_deficit_share
-#: model:product.product,weight_uom_name:capital_subscription.product_fundraising_category_A
-#: model:product.product,weight_uom_name:capital_subscription.product_fundraising_category_B
-#: model:product.product,weight_uom_name:capital_subscription.product_fundraising_category_C
-#: model:product.template,weight_uom_name:capital_subscription.product_deficit_share_product_template
-#: model:product.template,weight_uom_name:capital_subscription.product_fundraising_category_A_product_template
-#: model:product.template,weight_uom_name:capital_subscription.product_fundraising_category_B_product_template
-#: model:product.template,weight_uom_name:capital_subscription.product_fundraising_category_C_product_template
-msgid "kg"
-msgstr ""
-

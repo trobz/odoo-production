@@ -2,7 +2,7 @@
 # @author: La Louve
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -10,26 +10,24 @@ class CapitalFundraisingDeficit(models.Model):
     _name = "capital.fundraising.deficit"
     _description = "Capital Fundraising Deficit"
 
-    start_date = fields.Date("Start Date", required=True)
-    end_date = fields.Date("End Date")
-    amount_by_share = fields.Float("Amount By Share", required=True, digits=(6, 6))
+    start_date = fields.Date(required=True)
+    end_date = fields.Date()
+    amount_by_share = fields.Float(required=True, digits=(6, 6))
     fund_cate_id = fields.Many2one(
         comodel_name="capital.fundraising.category", string="Fundraising Category"
     )
 
-    @api.model
-    def create(self, vals):
-        res = super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super().create(vals_list)
         res._check_overlap_dates()
         return res
 
-    @api.multi
     def write(self, vals):
         res = super().write(vals)
         self._check_overlap_dates()
         return res
 
-    @api.multi
     def _check_overlap_dates(self):
         for deficit_line in self:
             fund_cate = deficit_line.fund_cate_id
@@ -38,7 +36,7 @@ class CapitalFundraisingDeficit(models.Model):
 
             if end_date and start_date > end_date:
                 raise ValidationError(
-                    _("Stop Date should be greater than " "Start Date.")
+                    self.env._("Stop Date should be greater than " "Start Date.")
                 )
 
             # Searching for deficit of the same category
@@ -66,7 +64,7 @@ class CapitalFundraisingDeficit(models.Model):
                         is_overlap = True
                 if is_overlap:
                     raise ValidationError(
-                        _(
+                        self.env._(
                             "You cannot have two Capital Fundraising "
                             "Deficit configuration lines that overlap"
                         )

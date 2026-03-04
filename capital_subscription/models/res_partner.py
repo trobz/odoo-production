@@ -3,7 +3,7 @@
 # @author: Julien Weste
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class ResPartner(models.Model):
@@ -19,27 +19,15 @@ class ResPartner(models.Model):
     )
 
     # Compute section
-    @api.multi
     def _compute_amount_subscription(self):
-        inv_obj = self.env["account.invoice"].sudo()
+        inv_obj = self.env["account.move"].sudo()
         for partner in self:
-            amount_subscription = sum(
-                inv_obj.search(
-                    [
-                        ("type", "=", "out_invoice"),
-                        ("partner_id", "=", partner.id),
-                        ("is_capital_fundraising", "=", True),
-                        ("state", "in", ["paid", "open"]),
-                    ]
-                ).mapped("amount_total_signed")
+            invoices = inv_obj.search(
+                [
+                    ("move_type", "in", ["out_invoice", "out_refund"]),
+                    ("partner_id", "=", partner.id),
+                    ("is_capital_fundraising", "=", True),
+                    ("state", "=", "posted"),
+                ]
             )
-            partner.amount_subscription = amount_subscription + sum(
-                inv_obj.search(
-                    [
-                        ("type", "=", "out_refund"),
-                        ("partner_id", "=", partner.id),
-                        ("is_capital_fundraising", "=", True),
-                        ("state", "in", ["paid", "open"]),
-                    ]
-                ).mapped("amount_total_signed")
-            )
+            partner.amount_subscription = sum(invoices.mapped("amount_total_signed"))

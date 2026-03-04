@@ -9,24 +9,21 @@
         <field name="name">Fundraisings</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">capital.fundraising</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <record model="ir.actions.act_window" id="action_capital_fundraising_category">
         <field name="name">Fundraising Categories</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">capital.fundraising.category</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <record model="ir.actions.act_window" id="action_capital_fundraising_partner_type">
         <field name="name">Fundraising Partner Types</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">capital.fundraising.partner.type</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="groups_id" eval="[(4, ref('manage_fundraising_partner_type'))]" />
     </record>
 
@@ -34,7 +31,6 @@
         <field name="name">Wizard</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">capital.fundraising.wizard</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>

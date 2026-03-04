@@ -24,7 +24,8 @@
                     <field name="confirm_fundraising_payment" invisible="1" />
                     <field
                         name="confirm_payment"
-                        attrs="{'invisible': [('payment_journal_id', '=', False)], 'readonly': [('confirm_fundraising_payment', 'in', ['allways', 'never'])]}"
+                        invisible="not payment_journal_id"
+                        readonly="confirm_fundraising_payment in ['allways', 'never']"
                     />
                     <field name="payment_term_id" widget="selection" />
                 </group>

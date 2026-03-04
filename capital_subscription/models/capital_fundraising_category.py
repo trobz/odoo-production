@@ -2,7 +2,7 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class CapitalFundraisingCategory(models.Model):
@@ -10,7 +10,7 @@ class CapitalFundraisingCategory(models.Model):
     _description = "Capital Fundraising Category"
 
     # Column Section
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(required=True)
 
     fundraising_id = fields.Many2one(
         comodel_name="capital.fundraising",
@@ -40,11 +40,7 @@ class CapitalFundraisingCategory(models.Model):
         comodel_name="account.account",
         string="Partner Account",
         domain=lambda self: [
-            (
-                "user_type_id.id",
-                "=",
-                self.env.ref("account.data_account_type_receivable").id,
-            ),
+            ("account_type", "=", "asset_receivable"),
             ("deprecated", "=", False),
         ],
         help="This account will be used"
@@ -55,11 +51,7 @@ class CapitalFundraisingCategory(models.Model):
         comodel_name="account.account",
         string="Final Capital Account",
         domain=lambda self: [
-            (
-                "user_type_id.id",
-                "=",
-                self.env.ref("account.data_account_type_equity").id,
-            ),
+            ("account_type", "=", "equity"),
             ("deprecated", "=", False),
         ],
         help="This account will be used"
@@ -99,10 +91,9 @@ class CapitalFundraisingCategory(models.Model):
     )
 
     # Custom Section
-    @api.multi
     def check_minimum_qty(self, partner):
         assert len(self) == 1, "Incorrect call"
-        invoice_obj = self.env["account.invoice"]
+        invoice_obj = self.env["account.move"]
         category = self[0]
         # check minimum qty
         minimum_qty = category.minimum_share_qty
@@ -121,15 +112,26 @@ class CapitalFundraisingCategory(models.Model):
         previous_invoices = invoice_obj.search(
             [
                 ("partner_id", "=", partner.id),
-                ("state", "in", ["open", "paid"]),
+                ("state", "=", "posted"),
+                ("move_type", "in", ["out_invoice", "out_refund"]),
                 ("fundraising_category_id", "in", category_ids),
             ]
         )
-        previous_qty = sum(previous_invoices.mapped("invoice_line_ids.quantity"))
+        previous_qty = 0
+        for previous_invoice in previous_invoices:
+            qty = sum(
+                previous_invoice.invoice_line_ids.filtered(
+                    lambda line: line.product_id
+                    and line.product_id.is_capital_fundraising
+                ).mapped("quantity")
+            )
+            if previous_invoice.move_type == "out_invoice":
+                previous_qty += qty
+            else:
+                previous_qty -= qty
 
         return minimum_qty - previous_qty
 
-    @api.multi
     def get_deficit_share_amount(self, date_invoice):
         """
         @Function to get the deficit share amount at the current time

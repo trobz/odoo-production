@@ -6,21 +6,20 @@
 -->
 <odoo>
     <record model="ir.ui.view" id="view_account_invoice_form">
-        <field name="model">account.invoice</field>
-        <field name="inherit_id" ref="account.invoice_form" />
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
         <field name="arch" type="xml">
-            <field name="partner_id" position="after">
+            <group id="header_left_group" position="inside">
                 <field name="is_capital_fundraising" />
                 <field
                     name="fundraising_category_id"
-                    attrs="{'invisible': [('is_capital_fundraising', '=', False)]}"
+                    invisible="not is_capital_fundraising"
                 />
-            </field>
+            </group>
             <field name="invoice_line_ids" position="attributes">
-                <attribute
-                    name="readonly"
-                    eval="[('type', '=', 'out_refund'), ('is_capital_fundraising', '=', True)]"
-                />
+                <attribute name="readonly">
+                    move_type == 'out_refund' and is_capital_fundraising
+                </attribute>
             </field>
         </field>
     </record>

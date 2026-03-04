@@ -21,9 +21,9 @@
     <record model="ir.ui.view" id="view_capital_fundraising_partner_type_tree">
         <field name="model">capital.fundraising.partner.type</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
-            </tree>
+            </list>
         </field>
     </record>
 

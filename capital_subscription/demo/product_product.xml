@@ -14,8 +14,8 @@
         <field name="categ_id" ref="product_category_fundraising" />
         <field name="uom_id" ref="uom.product_uom_unit" />
         <field name="uom_po_id" ref="uom.product_uom_unit" />
-        <field name="taxes_id">[[6, False, []]]</field>
-        <field name="supplier_taxes_id">[[6, False, []]]</field>
+        <field name="taxes_id" eval="[[6, False, []]]" />
+        <field name="supplier_taxes_id" eval="[[6, False, []]]" />
         <field
             name="property_account_income_id"
             ref="unpaid_capital_account_category_A"
@@ -31,8 +31,8 @@
         <field name="categ_id" ref="product_category_fundraising" />
         <field name="uom_id" ref="uom.product_uom_unit" />
         <field name="uom_po_id" ref="uom.product_uom_unit" />
-        <field name="taxes_id">[[6, False, []]]</field>
-        <field name="supplier_taxes_id">[[6, False, []]]</field>
+        <field name="taxes_id" eval="[[6, False, []]]" />
+        <field name="supplier_taxes_id" eval="[[6, False, []]]" />
         <field
             name="property_account_income_id"
             ref="unpaid_capital_account_category_B"
@@ -48,8 +48,8 @@
         <field name="categ_id" ref="product_category_fundraising" />
         <field name="uom_id" ref="uom.product_uom_unit" />
         <field name="uom_po_id" ref="uom.product_uom_unit" />
-        <field name="taxes_id">[[6, False, []]]</field>
-        <field name="supplier_taxes_id">[[6, False, []]]</field>
+        <field name="taxes_id" eval="[[6, False, []]]" />
+        <field name="supplier_taxes_id" eval="[[6, False, []]]" />
         <field
             name="property_account_income_id"
             ref="unpaid_capital_account_category_C"

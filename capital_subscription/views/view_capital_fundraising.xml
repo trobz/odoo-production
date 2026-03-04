@@ -26,11 +26,11 @@
     <record model="ir.ui.view" id="view_capital_fundraising_tree">
         <field name="model">capital.fundraising</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="company_id" groups="base.group_multi_company" />
                 <field name="share_value" />
-            </tree>
+            </list>
         </field>
     </record>
 

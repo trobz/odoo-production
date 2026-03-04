@@ -7,19 +7,16 @@ class CapitalSubscriptionTest(common.TransactionCase):
 
     def setUp(self):
         super().setUp()
-        ModelData = self.env["ir.model.data"]
         self.CapitalFund = self.env["capital.fundraising.wizard"]
 
         self.date_invoice = fields.Date.today()
 
-        self.partner_agrolite_id = ModelData.xmlid_to_res_id("base.res_partner_2")
-        self.category_id = ModelData.xmlid_to_res_id(
+        self.partner_agrolite_id = self.env.ref("base.res_partner_2").id
+        self.category_id = self.env.ref(
             "capital_subscription.capital_fundraising_category_A"
-        )
+        ).id
         self.share_qty = 10
-        self.payment_journal_id = ModelData.xmlid_to_res_id(
+        self.payment_journal_id = self.env.ref(
             "capital_subscription.capital_journal"
-        )
-        self.payment_term_id = ModelData.xmlid_to_res_id(
-            "account.account_payment_term_immediate"
-        )
+        ).id
+        self.payment_term_id = self.env.ref("account.account_payment_term_immediate").id

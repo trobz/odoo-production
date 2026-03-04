@@ -82,6 +82,7 @@ Contributors
 
 -  Sylvain LE GAL <https://twitter.com/legalsylvain>
 -  Druidoo <https://www.druidoo.io>
+-  Nguyễn Minh Chiến <chien@trobz.com>
 
 Maintainers
 -----------

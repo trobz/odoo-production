@@ -9,7 +9,7 @@ class CapitalFundraising(models.Model):
     _name = "capital.fundraising"
     _description = "Capital Fundraising"
 
-    name = fields.Char(string="Name")
+    name = fields.Char()
 
     company_id = fields.Many2one(
         comodel_name="res.company",
@@ -18,7 +18,7 @@ class CapitalFundraising(models.Model):
         default=lambda self: self.env.user.company_id.id,
     )
 
-    share_value = fields.Float(string="Share Value")
+    share_value = fields.Float()
 
     category_ids = fields.One2many(
         string="Categories",

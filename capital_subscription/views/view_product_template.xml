@@ -29,7 +29,7 @@
             <field name="property_account_expense_id" position="after">
                 <field
                     name="deficit_share_account_id"
-                    attrs="{'invisible': [('is_capital_fundraising', '=', False)]}"
+                    invisible="not is_capital_fundraising"
                 />
             </field>
         </field>

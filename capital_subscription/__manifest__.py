@@ -5,7 +5,7 @@
 
 {
     "name": "Capital Subscription",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Accounting",
     "summary": "Provide extra accounting features for Capital Subscription",
     "author": "La Louve, Druidoo",
@@ -13,7 +13,7 @@
     "license": "AGPL-3",
     "depends": [
         "account",
-        "l10n_generic_coa",
+        "barcodes_generator_partner",
     ],
     "data": [
         "data/data_product_product.xml",
@@ -23,8 +23,8 @@
         "views/view_capital_fundraising_wizard.xml",
         "views/view_product_template.xml",
         "views/view_res_partner.xml",
-        "views/view_account_invoice.xml",
-        "views/view_account_invoice_refund.xml",
+        "views/view_account_move.xml",
+        "views/view_account_move_reversal.xml",
         "views/view_account_journal.xml",
         "views/view_capital_fundraising_deficit.xml",
         "views/view_capital_fundraising_partner_type.xml",

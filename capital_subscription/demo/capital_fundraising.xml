@@ -8,6 +8,6 @@
     <record model="capital.fundraising" id="capital_fundraising">
         <field name="name">Demo Capital Fundraising</field>
         <field name="share_value">10</field>
-        <field name="journal_id" ref="capital_journal" />
+        <field name="journal_id" ref="sale_capital_journal" />
     </record>
 </odoo>
