@@ -108,15 +108,4 @@
         <field name="name">Shifts Tickets</field>
         <field name="res_model">shift.ticket</field>
     </record>
-
-    <menuitem
-        name="Shift Tickets"
-        id="menu_shift_ticket"
-        action="action_shift_ticket"
-        parent="shift_menu"
-        groups="coop_shift.group_shift_config"
-    />
-    <record model="ir.ui.menu" id="menu_shift_ticket">
-        <field name="active" eval="False" />
-    </record>
 </odoo>

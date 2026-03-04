@@ -54,12 +54,4 @@
         <field name="res_model">shift.mail</field>
     </record>
 
-    <menuitem
-        name="Mail Schedulers"
-        sequence="30"
-        id="menu_mail_schedule"
-        action="action_shift_mail"
-        parent="menu_shift_configuration"
-        groups="base.group_no_one"
-    />
 </odoo>

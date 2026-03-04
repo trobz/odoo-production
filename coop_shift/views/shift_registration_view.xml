@@ -504,17 +504,6 @@
         <field name="search_view_id" ref="view_registration_search1" />
     </record>
 
-    <menuitem
-        name="Attendees"
-        id="menu_action_registration"
-        parent="coop_shift.shift_menu"
-        action="action_registration"
-        sequence="20"
-        groups="coop_shift.group_shift_user"
-    />
-    <record model="ir.ui.menu" id="menu_action_registration">
-        <field name="active" eval="False" />
-    </record>
     <record model="ir.ui.view" id="view_shift_registration_tree_exchanges">
         <field name="name">shift.registration.tree.exchanges</field>
         <field name="model">shift.registration</field>
@@ -546,15 +535,5 @@
         <field
             name="domain"
         >[('replacing_reg_id', '!=', False), ('state', '=', 'replaced')]</field>
-    </record>
-
-    <record model="ir.ui.menu" id="menu_shift_registration_exchanges">
-        <field name="name">Exchanges</field>
-        <field
-            name="action"
-            ref="coop_shift.action_shift_shift_registration_exchanges"
-        />
-        <field name="parent_id" ref="coop_shift.shift_menu" />
-        <field name="sequence">30</field>
     </record>
 </odoo>

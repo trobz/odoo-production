@@ -228,15 +228,4 @@
         <field name="search_view_id" ref="view_template_registration_search" />
     </record>
 
-    <menuitem
-        name="Template Attendees"
-        id="menu_action_template_registration"
-        parent="coop_shift.template_menu"
-        action="action_template_registration"
-        groups="coop_shift.group_shift_manager"
-        sequence="20"
-    />
-    <record model="ir.ui.menu" id="menu_action_template_registration">
-        <field name="active" eval="False" />
-    </record>
 </odoo>

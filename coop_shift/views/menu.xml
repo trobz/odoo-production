@@ -15,6 +15,45 @@
         sequence="11"
         groups="coop_shift.group_shift_user"
     />
+
+    <menuitem
+        name="Shifts"
+        id="menu_shift_shift"
+        action="action_shift_view"
+        parent="shift_menu"
+        sequence="10"
+    />
+    <menuitem
+        name="Attendees"
+        id="menu_action_registration"
+        parent="shift_menu"
+        action="action_registration"
+        sequence="20"
+        groups="coop_shift.group_shift_user"
+    />
+    <record model="ir.ui.menu" id="menu_action_registration">
+        <field name="active" eval="False" />
+    </record>
+
+    <record model="ir.ui.menu" id="menu_shift_registration_exchanges">
+        <field name="name">Exchanges</field>
+        <field
+            name="action"
+            ref="coop_shift.action_shift_shift_registration_exchanges"
+        />
+        <field name="parent_id" ref="coop_shift.shift_menu" />
+        <field name="sequence">30</field>
+    </record>
+    <menuitem
+        name="Shift Tickets"
+        id="menu_shift_ticket"
+        action="action_shift_ticket"
+        parent="shift_menu"
+        groups="coop_shift.group_shift_config"
+    />
+    <record model="ir.ui.menu" id="menu_shift_ticket">
+        <field name="active" eval="False" />
+    </record>
     <menuitem
         name="Templates"
         parent="shift_main_menu"
@@ -22,6 +61,25 @@
         sequence="22"
         groups="coop_shift.group_shift_manager"
     />
+    <menuitem
+        id="menu_shift_template"
+        action="action_shift_template"
+        name="Templates"
+        parent="coop_shift.template_menu"
+        groups="group_shift_manager"
+        sequence="14"
+    />
+    <menuitem
+        name="Template Attendees"
+        id="menu_action_template_registration"
+        parent="coop_shift.template_menu"
+        action="action_template_registration"
+        groups="coop_shift.group_shift_manager"
+        sequence="20"
+    />
+    <record model="ir.ui.menu" id="menu_action_template_registration">
+        <field name="active" eval="False" />
+    </record>
     <menuitem
         name="Reports"
         parent="shift_main_menu"
@@ -37,6 +95,22 @@
         groups="base.group_system"
     />
 
+    <menuitem
+        name="Shifts Types"
+        id="menu_shift_type"
+        action="action_shift_type"
+        sequence="1"
+        parent="menu_shift_configuration"
+    />
+
+    <menuitem
+        name="Mail Schedulers"
+        sequence="30"
+        id="menu_mail_schedule"
+        action="action_shift_mail"
+        parent="menu_shift_configuration"
+        groups="base.group_no_one"
+    />
     <record model="ir.ui.menu" id="menu_shift_counter_event">
         <field name="name">Counter Events</field>
         <field name="action" ref="action_shift_counter_event" />

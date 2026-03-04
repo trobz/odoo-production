@@ -364,12 +364,5 @@
         <field name="target">current</field>
         <field name="domain">[]</field>
     </record>
-    <menuitem
-        id="menu_shift_template"
-        action="action_shift_template"
-        name="Templates"
-        parent="coop_shift.template_menu"
-        groups="group_shift_manager"
-        sequence="14"
-    />
+
 </odoo>
