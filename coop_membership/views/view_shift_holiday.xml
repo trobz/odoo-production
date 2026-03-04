@@ -3,7 +3,7 @@
     <record id="view_shift_holiday_tree" model="ir.ui.view">
         <field name="model">shift.holiday</field>
         <field name="arch" type="xml">
-            <tree
+            <list
                 decoration-info="state == 'draft'"
                 decoration-muted="state == 'cancel'"
             >
@@ -12,7 +12,7 @@
                 <field name="date_end" />
                 <field name="holiday_type" />
                 <field name="state" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -24,29 +24,28 @@
                     <button
                         string="Confirm"
                         name="button_confirm"
-                        states="draft"
                         class="oe_highlight"
                         type="object"
-                        attrs="{'invisible': [('state', '!=', 'draft')]}"
+                        invisible="(state != 'draft') or (state != 'draft')"
                     />
                     <button
                         string="Approve"
                         name="button_done"
                         class="oe_highlight"
                         type="object"
-                        attrs="{'invisible': ['|', ('state', '!=', 'confirmed'), ('state', '=', 'done')]}"
+                        invisible="(state != 'confirmed') or (state == 'done')"
                     />
                     <button
                         string="Set To Draft"
                         name="button_draft"
                         type="object"
-                        attrs="{'invisible': [('state', 'in', ['draft', 'done'])]}"
+                        invisible="state in ['draft', 'done']"
                     />
                     <button
                         string="Cancel"
                         name="button_cancel"
                         type="object"
-                        attrs="{'invisible': [('state', '=', 'cancel')]}"
+                        invisible="state == 'cancel'"
                     />
                     <field name="state" widget="statusbar" nolabel="1" readonly="1" />
                 </header>
@@ -58,30 +57,23 @@
                             <field
                                 name="name"
                                 default_focus="1"
-                                attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                readonly="state != 'draft'"
                             />
                         </h1>
                     </div>
                     <group>
                         <group>
-                            <field
-                                name="holiday_type"
-                                attrs="{'readonly': [('state', '!=', 'draft')]}"
-                            />
+                            <field name="holiday_type" readonly="state != 'draft'" />
                             <field
                                 name="make_up_type"
-                                attrs="{'invisible': [('holiday_type', '!=', 'long_period')], 'required': [('holiday_type', '=', 'long_period')], 'readonly': [('state', '!=', 'draft')]}"
+                                invisible="holiday_type != 'long_period'"
+                                required="holiday_type == 'long_period'"
+                                readonly="state != 'draft'"
                             />
                         </group>
                         <group>
-                            <field
-                                name="date_begin"
-                                attrs="{'readonly': [('state', '!=', 'draft')]}"
-                            />
-                            <field
-                                name="date_end"
-                                attrs="{'readonly': [('state', '!=', 'draft')]}"
-                            />
+                            <field name="date_begin" readonly="state != 'draft'" />
+                            <field name="date_end" readonly="state != 'draft'" />
                         </group>
                     </group>
                     <notebook colspan="4">
@@ -91,9 +83,10 @@
                                     name="single_day_shift_ids"
                                     nolabel="1"
                                     colspan="4"
-                                    attrs="{'readonly': [('state', '!=', 'draft')] , 'invisible' : [('holiday_type', '!=', 'single_day')]}"
+                                    readonly="state != 'draft'"
+                                    invisible="holiday_type != 'single_day'"
                                 >
-                                    <tree create="false">
+                                    <list create="false">
                                         <field name="name" />
                                         <field name="week_name" />
                                         <field name="shift_type_id" />
@@ -117,25 +110,26 @@
                                             name="open_in_holiday"
                                             string="Open"
                                             type="object"
-                                            attrs="{'invisible': ['|',('state_in_holiday', '=', 'open'), ('holiday_single_state', 'in', ['done', 'cancel'])]}"
                                             icon="fa-check"
+                                            invisible="(state_in_holiday == 'open') or (holiday_single_state in ['done', 'cancel'])"
                                         />
                                         <button
                                             name="close_in_holiday"
                                             string="Closed"
-                                            attrs="{'invisible': ['|', ('state_in_holiday', '=', 'closed'), ('holiday_single_state', 'in', ['done', 'cancel'])]}"
                                             type="object"
                                             icon="fa-times"
+                                            invisible="(state_in_holiday == 'closed') or (holiday_single_state in ['done', 'cancel'])"
                                         />
-                                    </tree>
+                                    </list>
                                 </field>
                                 <field
                                     name="long_period_shift_ids"
                                     nolabel="1"
                                     colspan="4"
-                                    attrs="{'readonly': [('state', '!=', 'draft')], 'invisible' : [('holiday_type', '!=', 'long_period')]}"
+                                    readonly="state != 'draft'"
+                                    invisible="holiday_type != 'long_period'"
                                 >
-                                    <tree create="false">
+                                    <list create="false">
                                         <field name="name" />
                                         <field name="week_name" />
                                         <field name="shift_type_id" />
@@ -150,7 +144,7 @@
                                             name="message_needaction"
                                             invisible="1"
                                         />
-                                    </tree>
+                                    </list>
                                 </field>
                             </group>
                         </page>
@@ -159,11 +153,12 @@
                                 <group>
                                     <field
                                         name="send_email_reminder"
-                                        attrs="{'readonly': [('state', '!=', 'draft')]}"
+                                        readonly="state != 'draft'"
                                     />
                                     <field
                                         name="reminder_template_id"
-                                        attrs="{'invisible': [('send_email_reminder', '=', False)], 'readonly': [('state', '!=', 'draft')]}"
+                                        invisible="not send_email_reminder"
+                                        readonly="state != 'draft'"
                                     />
                                 </group>
                                 <group />

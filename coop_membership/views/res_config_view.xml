@@ -5,236 +5,154 @@
         <field name="priority" eval="65" />
         <field name="inherit_id" ref="base.res_config_settings_view_form" />
         <field name="arch" type="xml">
-            <xpath expr="//div[hasclass('settings')]" position="inside">
-                <div
-                    class="app_settings_block"
-                    data-string="Membership"
+            <xpath expr="//form" position="inside">
+                <app
                     string="Membership"
-                    data-key="coop_membership"
+                    data-string="Membership"
+                    name="coop_membership"
+                    groups="coop_shift.group_shift_manager"
                 >
-                    <h2>Shifts</h2>
-                    <div
-                        class="row mt16 o_settings_container"
+                    <block
+                        title="Shifts"
+                        name="shift_settings"
                         groups="base.group_system"
                     >
-                        <div class="col-12 col-lg-6 o_setting_box">
-                            <div class="o_setting_left_pane" />
-                            <div class="o_setting_right_pane">
+                        <setting
+                            id="shift_cycles"
+                            string="Shift Cycles"
+                            help="Control how weeks are named, and your cycles. Changes on this settings could have undesireable results. Do it with caution."
+                        >
+                            <div class="content-group">
+                                <div class="mt16">
+                                    <label
+                                        for="shift_weeks_per_cycle"
+                                        class="o_light_label"
+                                    />
+                                    <field
+                                        name="shift_weeks_per_cycle"
+                                        class="oe_inline"
+                                    />
+                                </div>
+                                <div class="mt8">
+                                    <label
+                                        for="shift_week_a_date"
+                                        class="o_light_label"
+                                    />
+                                    <field name="shift_week_a_date" class="oe_inline" />
+                                </div>
+                                <div class="mt8">
+                                    <button
+                                        type="object"
+                                        name="action_recompute_shift_weeks"
+                                        string="Recompute shifts' week names"
+                                        confirm="This will recompute all week numbers and names based on your new configuration. It will affect all existing shifts (past and future). Are you sure you want to continue?"
+                                        class="oe_link"
+                                    />
+                                </div>
+                            </div>
+                        </setting>
+                        <setting id="shift_state_delay_duration_setting">
+                            <label for="shift_state_delay_duration" />
+                            <div class="content-group">
+                                <div class="mt16">
+                                    <field name="shift_state_delay_duration" /> days.
+                                </div>
+                            </div>
+                        </setting>
+                        <setting id="shift_leave_remind_days_setting">
+                            <label for="shift_leave_remind_days" />
+                            <div class="content-group">
+                                <div class="mt16">
+                                    <field name="shift_leave_remind_days" /> days.
+                                </div>
+                            </div>
+                        </setting>
+                    </block>
+
+                    <block title="Membership" name="membership_settings">
+                        <setting id="associated_people_available_setting">
+                            <field
+                                name="associated_people_available"
+                                widget="radio"
+                                class="o_light_label"
+                            />
+                            <div
+                                class="mt16"
+                                invisible="associated_people_available == 'unlimited'"
+                                required="associated_people_available == 'limited'"
+                            >
                                 <label
-                                    for="shift_weeks_per_cycle"
-                                    string="Shift Cycles"
+                                    for="max_nb_associated_people"
+                                    class="o_light_label"
                                 />
-                                <div class="text-muted">
-                                    Control how weeks are named, and your cycles.<br />
-                                    Changes on this settings could have undesireable results. Do it with caution.
-                                </div>
-                                <div class="content-group">
-                                    <div class="mt16">
-                                        <label
-                                            for="shift_weeks_per_cycle"
-                                            class="o_light_label"
-                                        />
-                                        <field
-                                            name="shift_weeks_per_cycle"
-                                            class="oe_inline"
-                                        />
-                                    </div>
-                                    <div class="mt8">
-                                        <label
-                                            for="shift_week_a_date"
-                                            class="o_light_label"
-                                        />
-                                        <field
-                                            name="shift_week_a_date"
-                                            class="oe_inline"
-                                        />
-                                    </div>
-                                    <div class="mt8">
-                                        <button
-                                            type="object"
-                                            name="action_recompute_shift_weeks"
-                                            string="Recompute shifts' week names"
-                                            confirm="
-                                                    This will recompute all week numbers and names based on your new configuration.
-                                                    It will affect all existing shifts (past and future).
-                                                    Are you sure you want to continue?"
-                                            class="oe_link"
-                                        />
-                                    </div>
-                                </div>
+                                <field
+                                    name="max_nb_associated_people"
+                                    class="oe_inline"
+                                />
                             </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box">
-                            <div class="o_setting_right_pane">
-                                <label for="shift_state_delay_duration" />
-                                <div class="content-group">
-                                    <div class="mt16">
-                                        <field
-                                        name="shift_state_delay_duration"
-                                    /> days.
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="o_setting_right_pane">
-                                <label for="shift_leave_remind_days" />
-                                <div class="content-group">
-                                    <div class="mt16">
-                                        <field name="shift_leave_remind_days" /> days.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h2>Membership</h2>
-                    <div class="row mt16 o_settings_container">
-                        <div class="col-12 col-lg-6 o_setting_box">
-                            <div class="o_setting_right_pane">
-                                <label for="associated_people_available" />
-                                <div class="content-group">
-                                    <div class="mt16">
-                                        <field
-                                            name="associated_people_available"
-                                            widget="radio"
-                                            class="o_light_label"
-                                        />
-                                    </div>
-                                    <div
-                                        class="mt16"
-                                        attrs="{'invisible':[('associated_people_available','=','unlimited')], 'required':[('associated_people_available', '=', 'limited')]}"
-                                    >
-                                        <label
-                                            for="max_nb_associated_people"
-                                            class="o_light_label"
-                                        />
-                                        <field
-                                            name="max_nb_associated_people"
-                                            class="oe_inline"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box">
-                            <div class="o_setting_right_pane">
-                                <label for="contact_us_messages" />
-                                <div class="content-group">
-                                    <div class="mt16">
-                                        <field
-                                            name="contact_us_messages"
-                                            class="oe_inline"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h2>FTOP Registration Limits</h2>
-                    <div class="row mt16 o_settings_container">
-                        <div class="col-12 col-lg-6 o_setting_box">
-                            <div class="o_setting_right_pane">
-                                <label for="max_registrations_per_day" />
-                                <div class="contect-group">
-                                    <div class="mt16">
-                                        <field name="max_registrations_per_day" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box">
-                            <div class="o_setting_right_pane">
-                                <label for="max_registration_per_period" />
-                                <div class="content-group">
-                                    <div class="mt16">
-                                        <field name="max_registration_per_period" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box">
-                            <div class="o_setting_right_pane">
-                                <label for="number_of_days_in_period" />
-                                <div class="content-group">
-                                    <div class="mt16">
-                                        <field name="number_of_days_in_period" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h2>Maximum Active Days</h2>
-                    <div class="row mt16 o_settings_container">
-                        <div class="col-12 col-lg-6 o_setting_box">
-                            <div class="o_setting_right_pane">
-                                <label for="maximum_active_days" />
-                                <div class="content-group">
-                                    <div class="mt16">
-                                        <field name="maximum_active_days" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h2>Message Settings</h2>
-                    <div class="row mt16 o_settings_container">
-                        <div class="col-12 col-lg-6 o_setting_box">
-                            <div class="o_setting_right_pane">
-                                <label for="company_name" />
-                                <div class="content-group">
-                                    <div class="mt16">
-                                        <field name="company_name" class="oe_inline" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box">
-                            <div class="o_setting_right_pane">
-                                <label for="email_meeting_contact" />
-                                <div class="content-group">
-                                    <div class="mt16">
-                                        <field
-                                            name="email_meeting_contact"
-                                            class="oe_inline"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-12 col-lg-6 o_setting_box">
-                            <div class="o_setting_right_pane">
-                                <label for="members_office_open_hours" />
-                                <div class="content-group">
-                                    <span class="text-muted">
-                                        Configure Members Office Open Hours Here. This Text will appear in email templates.
-                                    </span>
-                                    <div class="mt16">
-                                        <field
-                                            name="members_office_open_hours"
-                                            class="oe_inline"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                        </setting>
+                        <setting id="contact_us_messages_setting">
+                            <field name="contact_us_messages" class="oe_inline" />
+                        </setting>
+                    </block>
+
+                    <block
+                        title="FTOP Registration Limits"
+                        name="ftop_registration_limits"
+                    >
+                        <setting id="max_registrations_per_day_setting">
+                            <field name="max_registrations_per_day" />
+                        </setting>
+                        <setting id="max_registration_per_period_setting">
+                            <field name="max_registration_per_period" />
+                        </setting>
+                        <setting id="number_of_days_in_period_setting">
+                            <field name="number_of_days_in_period" />
+                        </setting>
+                    </block>
+
+                    <block
+                        title="Maximum Active Days"
+                        name="maximum_active_days_settings"
+                    >
+                        <setting id="maximum_active_days_setting">
+                            <field name="maximum_active_days" />
+                        </setting>
+                    </block>
+
+                    <block title="Message Settings" name="message_settings">
+                        <setting id="company_name_setting">
+                            <field name="company_name" class="oe_inline" />
+                        </setting>
+                        <setting id="email_meeting_contact_setting">
+                            <field name="email_meeting_contact" class="oe_inline" />
+                        </setting>
+                        <setting
+                            id="members_office_open_hours_setting"
+                            help="Configure Members Office Open Hours Here. This text will appear in email templates."
+                        >
+                            <field name="members_office_open_hours" class="oe_inline" />
+                        </setting>
+                    </block>
+                </app>
             </xpath>
         </field>
     </record>
 
     <record id="action_coop_membership_config_settings" model="ir.actions.act_window">
         <field name="name">Settings</field>
-        <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.config.settings</field>
         <field name="view_mode">form</field>
+        <field name="view_id" ref="res_config_settings_view_form" />
         <field name="target">inline</field>
-        <field name="context">{'module' : 'coop_membership'}</field>
+        <field name="context">{'module' : 'coop_membership', 'bin_size': False}</field>
     </record>
-
     <menuitem
-        id="menu_shift_type_seting"
+        id="menu_shift_type_setting"
         name="Settings"
         action="action_coop_membership_config_settings"
         parent="coop_shift.menu_shift_configuration"
         sequence="0"
+        groups="base.group_system"
     />
 </odoo>

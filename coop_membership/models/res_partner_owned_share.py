@@ -33,7 +33,7 @@ class ResPartnerOwnedShare(models.Model):
         store=True,
     )
     related_invoice_ids = fields.One2many(
-        "account.invoice",
+        "account.move",
         "partner_owned_share_id",
         string="Related Invoices",
     )
@@ -46,8 +46,8 @@ class ResPartnerOwnedShare(models.Model):
         for partner_share in self:
             owned_share = 0
             for invoice in partner_share.related_invoice_ids:
-                if invoice.state in ["open", "paid"]:
-                    if invoice.type == "out_invoice":
+                if invoice.state == "posted":
+                    if invoice.move_type == "out_invoice":
                         owned_share += sum(
                             [
                                 inv_line.quantity
@@ -76,4 +76,4 @@ class ResPartnerOwnedShare(models.Model):
         for partner_share in self:
             partner_name = partner_share.partner_id.name or ""
             category_name = partner_share.category_id.name or ""
-            partner_share.name = "%s - %s" % (partner_name, category_name)
+            partner_share.name = f"{partner_name} - {category_name}"

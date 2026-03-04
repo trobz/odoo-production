@@ -12,7 +12,6 @@ _logger = logging.getLogger(__name__)
 class ShiftTemplateRegistrationLine(models.Model):
     _inherit = "shift.template.registration.line"
 
-    @api.multi
     def update_partner_shift_type(self):
         for record in self:
             ticket_shift_type = record.registration_id.shift_ticket_id.shift_type
@@ -24,7 +23,6 @@ class ShiftTemplateRegistrationLine(models.Model):
             if ticket_shift_type != partner_shift_type:
                 partner.shift_type = ticket_shift_type
 
-    @api.multi
     def check_update_partner_shift_type(self):
         today = fields.Date.context_today(self)
         for record in self:
@@ -34,15 +32,14 @@ class ShiftTemplateRegistrationLine(models.Model):
                 elif not record.date_end:
                     record.update_partner_shift_type()
 
-    @api.multi
     def write(self, vals):
         res = super().write(vals)
         self.check_update_partner_shift_type()
         return res
 
-    @api.model
-    def create(self, vals):
-        res = super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super().create(vals_list)
         res.check_update_partner_shift_type()
         return res
 

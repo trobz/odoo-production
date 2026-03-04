@@ -1,10 +1,10 @@
-from odoo import api, models
+# pylint: disable=consider-merging-classes-inherited
+from odoo import models
 
 
 class ShiftLeaveWizard(models.TransientModel):
     _inherit = "shift.leave.wizard"
 
-    @api.multi
     def button_confirm(self):
         res = super().button_confirm()
         anticipated_leave_type = self.env["shift.leave.type"].search(

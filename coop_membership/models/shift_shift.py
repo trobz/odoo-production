@@ -12,6 +12,43 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 class ShiftShift(models.Model):
     _inherit = "shift.shift"
 
+    room_preparation_member_ids = fields.Many2many(
+        "res.partner",
+        "shift_rel_preparation_member_ids",
+        "shift_shift_id",
+        "res_partner_id",
+        string="Room preparation delegates",
+        domain="[('is_member', '=', True)]",
+        help="1 or 2 people to prepare the room (chairs,     tables, ...)",
+    )
+    leader_member_ids = fields.Many2many(
+        "res.partner",
+        "shift_rel_leader_member_ids",
+        "shift_shift_id",
+        "res_partner_id",
+        string="Meeting leaders",
+        domain="[('is_member', '=', True)]",
+        help="1 or 2 people",
+    )
+    subscription_help_member_ids = fields.Many2many(
+        "res.partner",
+        "shift_rel_help_member_ids",
+        "shift_shift_id",
+        "res_partner_id",
+        string="Subscription helpers",
+        domain="[('is_member', '=', True)]",
+        help="2 people (+ 1 or 2 members in shift)",
+    )
+    subscription_member_ids = fields.Many2many(
+        "res.partner",
+        "shift_rel_subscription_member_ids",
+        "shift_shift_id",
+        "res_partner_id",
+        string="Subscription delegates",
+        domain="[('is_member', '=', True)]",
+        help="2 or 3 people",
+    )
+
     standard_registration_ids = fields.One2many(
         "shift.registration",
         "shift_id",
@@ -24,16 +61,6 @@ class ShiftShift(models.Model):
         string="FTOP Attendances",
         domain=[("shift_type", "=", "ftop")],
     )
-    state = fields.Selection(
-        [
-            ("draft", "Unconfirmed"),
-            ("cancel", "Cancelled"),
-            ("confirm", "Confirmed"),
-            ("entry", "Entry"),
-            ("done", "Done"),
-        ],
-    )
-
     shift_name_read = fields.Char(related="name", string="Shift Name Read")
     is_send_reminder = fields.Boolean("Send Reminder", default=False)
 
@@ -56,12 +83,6 @@ class ShiftShift(models.Model):
         string="State in holiday",
     )
     holiday_single_state = fields.Selection(
-        [
-            ("draft", "Draft"),
-            ("confirmed", "Confirmed"),
-            ("done", "Done"),
-            ("cancel", "Canceled"),
-        ],
         related="single_holiday_id.state",
         string="Single Holiday Status",
     )
@@ -70,12 +91,21 @@ class ShiftShift(models.Model):
         readonly=True,
     )
 
+    def _get_state_selection(self):
+        state_selection = super()._get_state_selection()
+        # insert entry state before done state
+        done_index = next(
+            (i for i, state in enumerate(state_selection) if state[0] == "done"), None
+        )
+        if done_index is not None:
+            state_selection.insert(done_index, ("entry", "Entry"))
+        return state_selection
+
     @api.depends("long_holiday_id", "single_holiday_id")
     def _compute_holiday_id(self):
         for rec in self:
             rec.holiday_id = rec.long_holiday_id or rec.single_holiday_id
 
-    @api.multi
     def button_done(self):
         """
         @Overide the function to validate the registration before allowing
@@ -92,7 +122,7 @@ class ShiftShift(models.Model):
                         ticket_name = att.shift_ticket_id.name or ""
                         partner_name = att.partner_id.name or ""
                         shift_ticket_partners.append(
-                            "- [%s] %s" % (ticket_name, partner_name)
+                            f"- [{ticket_name}] {partner_name}"
                         )
                     raise UserError(
                         _(
@@ -148,15 +178,15 @@ class ShiftShift(models.Model):
                             point = -2
                     # Create Point Counter
                     shift.add_closing_shift_point(partner, point)
+                return True
 
-    @api.multi
     def add_closing_shift_point(self, partner, point):
         counters = point_counter_env = self.env["shift.counter.event"]
         for shift in self:
             # Create Point Counter
             counters |= (
                 point_counter_env.sudo()
-                .with_context({"automatic": True})
+                .with_context(automatic=True)
                 .create(
                     {
                         "name": _("Shift Cloture"),
@@ -169,7 +199,6 @@ class ShiftShift(models.Model):
             )
         return counters
 
-    @api.multi
     def button_makeupok(self):
         """
         @Function trigger to change the state from Confirm to Entry
@@ -177,19 +206,6 @@ class ShiftShift(models.Model):
         for shift in self:
             shift.state = "entry"
 
-            # Automatically mark attendance as "Attended" for
-            # makeup (ABCD Member)
-            """
-            for reg in shift.registration_ids:
-                if (
-                    not reg.partner_id.in_ftop_team
-                    and not reg.tmpl_reg_line_id
-                    and reg.state != 'replacing'
-                ):
-                    reg.button_reg_close()
-            """
-
-    @api.multi
     def write(self, vals):
         res = super().write(vals)
         # change to unconfirmed registrations to confirmed if this shift state
@@ -204,10 +220,11 @@ class ShiftShift(models.Model):
                         reg.confirm_registration()
         return res
 
-    @api.model
-    def create(self, vals):
-        self.update_create_vals(vals)
-        res = super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            self.update_create_vals(vals)
+        res = super().create(vals_list)
         return res
 
     @api.model
@@ -234,13 +251,11 @@ class ShiftShift(models.Model):
                 else:
                     vals.update({"single_holiday_id": holiday.id})
 
-    @api.multi
     def open_in_holiday(self):
         for shift in self:
             if shift.state_in_holiday != "open":
                 shift.state_in_holiday = "open"
 
-    @api.multi
     def close_in_holiday(self):
         for shift in self:
             if shift.state_in_holiday != "closed":

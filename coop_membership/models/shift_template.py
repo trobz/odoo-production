@@ -29,7 +29,6 @@ class ShiftTemplate(models.Model):
     required_skill_ids = fields.Many2many(
         "hr.skill",
         string="Required Skills",
-        domain=[("child_ids", "=", False)],
     )
     original_shift_template_id = fields.Many2one(
         "shift.template",
@@ -55,7 +54,6 @@ class ShiftTemplate(models.Model):
         string="Removed Leaders",
     )
 
-    @api.multi
     @api.depends("registration_ids")
     def _compute_current_registration_ids(self):
         for rec in self:
@@ -63,13 +61,11 @@ class ShiftTemplate(models.Model):
                 "is_current_participant"
             )
 
-    @api.multi
     @api.depends("current_registration_ids")
     def _compute_registration_qty(self):
         for rec in self:
             rec.registration_qty = len(rec.current_registration_ids)
 
-    @api.multi
     @api.depends("user_ids", "user_ids.is_unsubscribed")
     def _compute_warning_leader_unsubscribed(self):
         for template in self:

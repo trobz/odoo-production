@@ -8,8 +8,6 @@ class CoopMembershipTest(common.TransactionCase):
     def setUp(self):
         super().setUp()
 
-        ModelData = self.env["ir.model.data"]
-
         self.date_invoice = fields.Date.today()
 
         self.ResPartner = self.env["res.partner"]
@@ -18,19 +16,23 @@ class CoopMembershipTest(common.TransactionCase):
 
         self.ShiftTemplateTicket = self.env["shift.template.ticket"]
 
-        self.standard_member_1 = ModelData.xmlid_to_res_id(
-            "coop_shift.standard_member_1"
+        # self.standard_member_1 = self.env.ref(
+        #     "coop_shift.standard_member_1"
+        # )
+        self.standard_member_1 = self.ResPartner.create(
+            {
+                "name": "Test Standard Member 1",
+                "email": "test_standard_member_1@example.com",
+                "customer_rank": 1,
+                "shift_type": "standard",
+            }
         )
-        self.capital_fundraising_category_A = ModelData.xmlid_to_res_id(
+        self.capital_fundraising_category_A = self.env.ref(
             "capital_subscription.capital_fundraising_category_A"
-        )
-        self.payment_journal_id = ModelData.xmlid_to_res_id(
+        ).id
+        self.payment_journal_id = self.env.ref(
             "capital_subscription.capital_journal"
-        )
-        self.payment_term_id = ModelData.xmlid_to_res_id(
-            "account.account_payment_term_immediate"
-        )
+        ).id
+        self.payment_term_id = self.env.ref("account.account_payment_term_immediate").id
 
-        self.shift_template = ModelData.xmlid_to_res_id(
-            "coop_shift.standard_template_1"
-        )
+        self.shift_template_id = self.env.ref("coop_shift.standard_template_1").id

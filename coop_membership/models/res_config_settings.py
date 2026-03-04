@@ -5,13 +5,37 @@ from odoo.exceptions import ValidationError
 class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
 
-    description = fields.Html()
-    notice = fields.Html()
+    # description = fields.Char(
+    #     config_parameter="account_export.description",
+    # )
+    # notice = fields.Char(
+    #     config_parameter="account_export.notice",
+    # )
+    discovery_meeting_captcha_site_key = fields.Char(
+        config_parameter="captcha_site_key",
+    )
+    discovery_meeting_captcha_secret_key = fields.Char(
+        config_parameter="captcha_secret_key",
+    )
+    discovery_meeting_description = fields.Html(
+        related="company_id.discovery_meeting_description",
+        readonly=False,
+    )
+    discovery_meeting_notice = fields.Html(
+        related="company_id.discovery_meeting_notice",
+        readonly=False,
+    )
+    discovery_meeting_event_stage_ids = fields.Many2many(
+        "event.stage",
+        related="company_id.discovery_meeting_event_stage_ids",
+        readonly=False,
+    )
     email_meeting_contact = fields.Char(
         related="company_id.email_meeting_contact",
         readonly=False,
     )
     company_name = fields.Char(
+        string="Company Name",
         related="company_id.company_name",
         readonly=False,
     )
@@ -60,7 +84,6 @@ class ResConfigSettings(models.TransientModel):
         readonly=False,
     )
 
-    @api.multi
     @api.constrains("number_of_days_in_period")
     def _check_positive_number_of_days_in_period(self):
         for config in self:
@@ -72,7 +95,6 @@ class ResConfigSettings(models.TransientModel):
                     )
                 )
 
-    @api.multi
     @api.constrains("max_nb_associated_people")
     def _check_positive_number_of_associated_people(self):
         for rec in self:
@@ -83,29 +105,3 @@ class ResConfigSettings(models.TransientModel):
                         "positive number !"
                     )
                 )
-
-    @api.model
-    def get_values(self):
-        res = super().get_values()
-        description = (
-            self.env["ir.config_parameter"]
-            .sudo()
-            .get_param("account_export.notice", default=None)
-        )
-        notice = (
-            self.env["ir.config_parameter"]
-            .sudo()
-            .get_param("account_export.notice", default=None)
-        )
-        res.update(description=description or False)
-        res.update(notice=notice or False)
-        return res
-
-    def set_values(self):
-        super().set_values()
-        self.env["ir.config_parameter"].sudo().set_param(
-            "account_export.description", self.description or ""
-        )
-        self.env["ir.config_parameter"].sudo().set_param(
-            "account_export.notice", self.notice or ""
-        )

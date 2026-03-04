@@ -10,8 +10,7 @@
         <field name="name">All</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.partner</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="view_bdm_search" />
         <field
             name="domain"
@@ -25,8 +24,7 @@
         <field name="name">Members</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.partner</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">list,form,kanban</field>
         <field name="domain">[('is_member', '=', True)]</field>
         <field name="context">{'default_is_member':1}</field>
     </record>
@@ -35,8 +33,7 @@
         <field name="name">Associated People</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.partner</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">list,form,kanban</field>
         <field name="domain">[('is_associated_people', '=', True)]</field>
         <field name="context">{}</field>
     </record>
@@ -45,8 +42,7 @@
         <field name="name">Interested People</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.partner</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">list,form,kanban</field>
         <field name="domain">[('is_interested_people', '=', True)]</field>
         <field name="context">{}</field>
     </record>
@@ -55,8 +51,7 @@
         <field name="name">Former Members</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.partner</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">list,form,kanban</field>
         <field name="domain">[('is_former_member', '=', True)]</field>
         <field name="context">{}</field>
     </record>
@@ -68,8 +63,7 @@
         <field name="name">Former Associated People</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">res.partner</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">list,form,kanban</field>
         <field name="domain">[('is_former_associated_people', '=', True)]</field>
         <field name="context">{}</field>
     </record>
@@ -80,14 +74,13 @@
     >
         <field name="name">Subscriptions</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="res_model">account.invoice</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="res_model">account.move</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[('is_capital_fundraising', '=', True),
-            ('type','in', ['out_invoice', 'out_refund'])]
+            ('move_type','in', ['out_invoice', 'out_refund'])]
         </field>
         <field name="context">{'default_is_capital_fundraising':1,
-            'default_type':'out_invoice', 'type':'out_invoice', 'journal_type': 'sale'}
+            'default_move_type':'out_invoice', 'move_type':'out_invoice', 'journal_type': 'sale'}
         </field>
     </record>
 
@@ -95,8 +88,7 @@
         <field name="name">Payments</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">account.payment</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[('partner_type', '!=', 'supplier')]</field>
     </record>
 
@@ -104,7 +96,6 @@
         <field name="name">Wizard</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">capital.fundraising.wizard</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
@@ -115,8 +106,8 @@
         model="ir.actions.act_window.view"
     >
         <field eval="1" name="sequence" />
-        <field name="view_mode">tree</field>
-        <field name="view_id" ref="account.invoice_tree" />
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="account.view_out_invoice_tree" />
         <field
             name="act_window_id"
             ref="coop_membership.action_account_invoice_customer_subscriptions"
@@ -129,7 +120,7 @@
     >
         <field eval="2" name="sequence" />
         <field name="view_mode">form</field>
-        <field name="view_id" ref="account.invoice_form" />
+        <field name="view_id" ref="account.view_move_form" />
         <field
             name="act_window_id"
             ref="coop_membership.action_account_invoice_customer_subscriptions"
@@ -139,7 +130,7 @@
     <!-- Member -->
     <record id="bdm_action1" model="ir.actions.act_window.view">
         <field eval="1" name="sequence" />
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
         <field name="view_id" ref="coop_membership.view_bdm_tree_no_create" />
         <field name="act_window_id" ref="action_coop_membership_access_rights" />
     </record>
@@ -154,7 +145,7 @@
     <!-- Associated People : New form and tree view for new group 'group_membership_access_user' -->
     <record id="bdm_action1_associated_people" model="ir.actions.act_window.view">
         <field eval="1" name="sequence" />
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
         <field name="view_id" ref="coop_membership.view_bdm_tree_no_create" />
         <field
             name="act_window_id"
@@ -174,7 +165,7 @@
     <!-- Interested People : New form and tree view for new group 'group_membership_access_user' -->
     <record id="bdm_action1_interested_people" model="ir.actions.act_window.view">
         <field eval="1" name="sequence" />
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
         <field name="view_id" ref="coop_membership.view_bdm_tree_no_create" />
         <field
             name="act_window_id"
@@ -194,7 +185,7 @@
     <!-- Former Members : New form and tree view for new group 'group_membership_access_user' -->
     <record id="bdm_action1_former_members" model="ir.actions.act_window.view">
         <field eval="1" name="sequence" />
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
         <field name="view_id" ref="coop_membership.view_bdm_tree_no_create" />
         <field
             name="act_window_id"
@@ -217,7 +208,7 @@
         model="ir.actions.act_window.view"
     >
         <field eval="1" name="sequence" />
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
         <field name="view_id" ref="coop_membership.view_bdm_tree_no_create" />
         <field
             name="act_window_id"
@@ -243,7 +234,7 @@
         model="ir.actions.act_window.view"
     >
         <field eval="1" name="sequence" />
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
         <field name="view_id" ref="coop_shift.view_shift_tree" />
         <field
             name="act_window_id"
@@ -266,7 +257,7 @@
 
     <record id="view_all_partner_tree_action" model="ir.actions.act_window.view">
         <field eval="1" name="sequence" />
-        <field name="view_mode">tree</field>
+        <field name="view_mode">list</field>
         <field name="view_id" ref="coop_membership.view_res_partner_all_members_tree" />
         <field
             name="act_window_id"
@@ -291,11 +282,10 @@
         <field
             name="view_ids"
             eval="[(5, 0, 0),
-            (0, 0, {'view_mode': 'tree', 'view_id': ref('coop_membership.view_shift_ticket_seats_tree')}),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('coop_membership.view_shift_ticket_seats_tree')}),
             (0, 0, {'view_mode': 'form', 'view_id': ref('coop_membership.view_shift_ticket_no_edit_form')})]"
         />
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="coop_shift.view_shift_ticket_search" />
         <field name="domain">[('shift_type', '=', 'ftop')]</field>
         <field name="context">{"search_default_upcoming": 1}</field>
@@ -316,17 +306,15 @@
         <field name="name">Holidays</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">shift.holiday</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <record model="ir.actions.act_window" id="action_shift_change_teams">
         <field name="name">Change Teams</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">shift.change.team</field>
-        <field name="view_type">form</field>
         <field name="domain" />
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{'not_show_button_next_member': True,
             'not_show_button_change_team': False}
         </field>
@@ -336,15 +324,13 @@
         <field name="name">Justifications</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">shift.counter.event.reason</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <record model="ir.actions.act_window" id="action_incite_o_matic">
         <field name="name">Incite-o-matique</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">shift.credit.config</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 </odoo>

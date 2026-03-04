@@ -14,8 +14,6 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools.safe_eval import safe_eval
 
-from odoo.addons.queue_job.job import job
-
 NUMBER_OF_PARTNERS_PER_JOB = 100
 
 EXTRA_COOPERATIVE_STATE_SELECTION = [
@@ -44,48 +42,41 @@ class ResPartner(models.Model):
     opt_out = fields.Boolean(default=False)
 
     is_member = fields.Boolean(
-        "Is Member",
         compute="_compute_is_member",
         compute_sudo=True,
         store=True,
         readonly=True,
     )
     is_former_member = fields.Boolean(
-        "Is Former Member",
         compute="_compute_is_former_member",
         compute_sudo=True,
         store=True,
         readonly=True,
     )
     is_former_associated_people = fields.Boolean(
-        "Is Former Associated People",
         compute="_compute_is_former_associated_people",
         compute_sudo=True,
         store=True,
         readonly=True,
     )
     is_interested_people = fields.Boolean(
-        "Is Interested People",
         compute="_compute_is_interested_people",
         compute_sudo=True,
         readonly=True,
         store=True,
     )
     is_worker_member = fields.Boolean(
-        "Is Worker Member",
         compute="_compute_is_worker_member",
         compute_sudo=True,
         readonly=True,
         store=True,
     )
     is_unpayed = fields.Boolean(
-        string="Unpayed",
         help="Check this box, if the partner has late"
         " payments for him capital subscriptions. this will prevent him"
         " to buy.",
     )
     is_unsubscribed = fields.Boolean(
-        string="Unsubscribed",
         help="Computed field."
         " This box is checked if the user is not linked"
         " to a template registration.",
@@ -94,7 +85,6 @@ class ResPartner(models.Model):
         store=True,
     )
     unsubscription_date = fields.Date(
-        string="Unsubscription Date",
         compute="_compute_is_unsubscribed",
         compute_sudo=True,
         store=True,
@@ -104,35 +94,30 @@ class ResPartner(models.Model):
         compute="_compute_is_underclass_population",
     )
     is_associated_people = fields.Boolean(
-        string="Is Associated People",
         compute="_compute_is_associated_people",
         compute_sudo=True,
         store=True,
     )
-    is_designated_buyer = fields.Boolean(string="Designated buyer")
-    temp_coop_number = fields.Char("Temporary number")
+    is_designated_buyer = fields.Boolean()
+    temp_coop_number = fields.Char()
     contact_origin_id = fields.One2many(
         "event.registration",
         "partner_id",
-        string="Contact Origin",
     )
-    is_deceased = fields.Boolean(string="Is Deceased")
-    date_of_death = fields.Date(string="Date of Death")
-    age = fields.Integer("Age", compute="_compute_age")
+    is_deceased = fields.Boolean()
+    date_of_death = fields.Date()
+    age = fields.Integer(compute="_compute_age")
 
-    partner_owned_share_ids = fields.One2many(
-        "res.partner.owned.share", "partner_id", string="Partner Owned Shares"
-    )
+    partner_owned_share_ids = fields.One2many("res.partner.owned.share", "partner_id")
 
     total_partner_owned_share = fields.Integer(
-        string="Total Owned Shares",
         compute="_compute_total_partner_owned_share",
         store=True,
     )
 
     deactivated_date = fields.Date()
 
-    welcome_email = fields.Boolean(string="Welcome email sent", default=False)
+    welcome_email = fields.Boolean(default=False)
 
     # Important : Overloaded Field Section
     customer = fields.Boolean(
@@ -141,67 +126,60 @@ class ResPartner(models.Model):
         readonly=True,
     )
 
-    # Note we use selection instead of selection_add, to have a correct
-    # order in the status widget
     cooperative_state = fields.Selection(
-        selection=EXTRA_COOPERATIVE_STATE_SELECTION, default="not_concerned"
+        default="not_concerned",
+        recursive=True,
     )
 
-    working_state = fields.Selection(selection=EXTRA_COOPERATIVE_STATE_SELECTION)
-
     nb_associated_people = fields.Integer(
-        "Number of Associated People",
         compute="_compute_number_of_associated_people",
         store=True,
     )
 
     parent_member_num = fields.Integer(
-        string="Parent Number",
+        string="Parent Member Number",
         related="parent_id.barcode_base",
         store=True,
     )
-    badge_distribution_date = fields.Date("Badge Distribution")
+    badge_distribution_date = fields.Date()
     badge_to_distribute = fields.Boolean(
-        "Badge to distribute",
         store=True,
         compute="_compute_badge_to_distribute",
     )
-    badge_print_date = fields.Date("Badge Print Date")
+    badge_print_date = fields.Date()
     contact_us_message = fields.Html(
-        string="Contact Us Message",
         translate=True,
     )
-    force_customer = fields.Boolean(
-        "Force Customer",
-        default=False,
-    )
+    force_customer = fields.Boolean(default=False)
     inform_ids = fields.Many2many(
         "res.partner.inform",
-        string="Informé que",
     )
     shift_type = fields.Selection(
-        string="Shift type",
         compute="_compute_shift_type",
         store=True,
+        recursive=True,
     )
-    current_template_name = fields.Char(
-        string="Current Template", compute="_compute_current_template", store=True
-    )
+    current_template_name = fields.Char(compute="_compute_current_template", store=True)
     current_template_week_name = fields.Char(
-        string="Current Template Week", compute="_compute_current_template", store=True
+        compute="_compute_current_template", store=True
     )
-    is_minor_child = fields.Boolean(string="Enfant mineur")
+    is_minor_child = fields.Boolean()
     leader_ids = fields.Many2many(
-        string="Shift Leaders",
         comodel_name="res.partner",
         relation="partner_leader_rel",
         column1="leader_id",
         column2="partner_id",
-        compute="_compute_current_template",
+        compute="_compute_leader_ids",
     )
 
     event_event_id = fields.Many2one("event.event")
     display_name = fields.Char(compute="_compute_display_name", store=True, index=True)
+
+    def get_working_state_selection(self):
+        return EXTRA_COOPERATIVE_STATE_SELECTION
+
+    def get_cooperative_state_selection(self):
+        return EXTRA_COOPERATIVE_STATE_SELECTION
 
     @api.depends(
         "is_company", "name", "parent_id.name", "type", "company_name", "barcode_base"
@@ -210,7 +188,7 @@ class ResPartner(models.Model):
         """
         Override this function to add dependency to barcode_base
         """
-        super()._compute_display_name()
+        return super()._compute_display_name()
 
     # Constraint Section
     @api.constrains("birthdate_date", "is_minor_child")
@@ -251,7 +229,6 @@ class ResPartner(models.Model):
                     )
                 )
 
-    @api.multi
     @api.constrains("nb_associated_people")
     def _check_number_of_associated_people(self):
         """
@@ -273,7 +250,6 @@ class ResPartner(models.Model):
                     _("The maximum number of associated people has " "been exceeded.")
                 )
 
-    @api.multi
     @api.depends("is_associated_people", "parent_id.shift_type")
     def _compute_shift_type(self):
         for partner in self.sorted(key=lambda p: p.is_associated_people):
@@ -282,7 +258,6 @@ class ResPartner(models.Model):
             else:
                 partner.shift_type = "standard"
 
-    @api.multi
     @api.depends("badge_distribution_date", "badge_print_date")
     def _compute_badge_to_distribute(self):
         for record in self:
@@ -295,25 +270,21 @@ class ResPartner(models.Model):
                     badge_to_distribute = True
             record.badge_to_distribute = badge_to_distribute
 
-    @api.multi
     def force_customer_button(self):
         for record in self:
             record.force_customer = True
         return True
 
-    @api.multi
     def force_supplier_button(self):
         for record in self:
             record.force_customer = False
         return True
 
-    @api.multi
     def update_badge_print_date(self):
         for record in self:
             record.badge_print_date = fields.Date.context_today(self)
 
     # Compute Section
-    @api.multi
     @api.depends("birthdate_date")
     def _compute_age(self):
         for partner in self:
@@ -321,16 +292,20 @@ class ResPartner(models.Model):
                 d1 = partner.birthdate_date
                 d2 = fields.Date.today()
                 partner.age = relativedelta(d2, d1).years
+            else:
+                partner.age = 0
 
-    @api.multi
     def set_messages_contact(self):
         self.ensure_one()
         message = self.env.user.company_id.contact_us_message
         self.write({"contact_us_message": message})
         return True
 
-    @api.multi
-    @api.depends("tmpl_reg_line_ids.date_begin", "tmpl_reg_line_ids.date_end")
+    @api.depends(
+        "tmpl_reg_line_ids",
+        "tmpl_reg_line_ids.date_begin",
+        "tmpl_reg_line_ids.date_end",
+    )
     def _compute_is_unsubscribed(self):
         for partner in self:
             # Optimization. As this function will be call by cron
@@ -338,9 +313,11 @@ class ResPartner(models.Model):
             # useless triger for state
             today = fields.Date.context_today(self)
             leave_none_defined = partner.leave_ids.filtered(
-                lambda l: (l.start_date or today) <= today <= (l.stop_date or today)
-                and l.non_defined_leave
-                and l.state == "done"
+                lambda leave, today=today: (
+                    (leave.start_date or today) <= today <= (leave.stop_date or today)
+                    and leave.non_defined_leave
+                    and leave.state == "done"
+                )
             )
             no_reg_line = partner.active_tmpl_reg_line_count == 0
             is_unsubscribed = no_reg_line and not leave_none_defined
@@ -372,7 +349,6 @@ class ResPartner(models.Model):
                         tmpl_reg_lines[-1].date_end
                     )
 
-    @api.multi
     @api.depends("fundraising_partner_type_ids")
     def _compute_is_underclass_population(self):
         xml_id = self.env.ref("coop_membership.underclass_population_type").id
@@ -381,7 +357,6 @@ class ResPartner(models.Model):
                 xml_id in partner.fundraising_partner_type_ids.ids
             )
 
-    @api.multi
     @api.depends("partner_owned_share_ids", "partner_owned_share_ids.owned_share")
     def _compute_total_partner_owned_share(self):
         for partner in self:
@@ -392,7 +367,6 @@ class ResPartner(models.Model):
             # Update when number of shares reaches "0"
             partner._update_when_number_of_shares_reaches_0()
 
-    @api.multi
     @api.depends("total_partner_owned_share")
     def _compute_is_member(self):
         """
@@ -402,7 +376,6 @@ class ResPartner(models.Model):
         for partner in self:
             partner.is_member = partner.total_partner_owned_share > 0
 
-    @api.multi
     @api.depends("total_partner_owned_share")
     def _compute_is_former_member(self):
         """
@@ -411,13 +384,14 @@ class ResPartner(models.Model):
         for partner in self:
             if partner.total_partner_owned_share == 0:
                 fundraising_count = (
-                    self.env["account.invoice"]
+                    self.env["account.move"]
                     .sudo()
                     .search_count(
                         [
                             ("partner_id", "=", partner.id),
                             ("fundraising_category_id", "!=", False),
-                            ("state", "in", ("open", "paid")),
+                            ("move_type", "in", ("out_invoice", "out_refund")),
+                            ("state", "=", "posted"),
                         ]
                     )
                 )
@@ -428,13 +402,12 @@ class ResPartner(models.Model):
             else:
                 partner.is_former_member = False
 
-    @api.multi
     @api.depends(
         "is_member",
         "is_associated_people",
         "is_former_member",
         "is_former_associated_people",
-        "supplier",
+        "supplier_rank",
     )
     def _compute_is_interested_people(self):
         """
@@ -448,11 +421,10 @@ class ResPartner(models.Model):
                 and (not partner.is_associated_people)
                 and (not partner.is_former_associated_people)
                 and (not partner.is_former_member)
-                and (not partner.supplier)
+                and (partner.supplier_rank < 1)
                 or False
             )
 
-    @api.multi
     @api.depends("is_member", "parent_id.is_member")
     def _compute_is_associated_people(self):
         for partner in self:
@@ -462,7 +434,6 @@ class ResPartner(models.Model):
                 and (not partner.is_member)
             )
 
-    @api.multi
     @api.depends("parent_id", "parent_id.is_former_member")
     def _compute_is_former_associated_people(self):
         for partner in self:
@@ -470,7 +441,6 @@ class ResPartner(models.Model):
                 partner.parent_id and partner.parent_id.is_former_member
             )
 
-    @api.multi
     @api.depends(
         "partner_owned_share_ids",
         "partner_owned_share_ids.category_id",
@@ -501,7 +471,6 @@ class ResPartner(models.Model):
         "is_associated_people",
         "parent_id.cooperative_state",
     )
-    @api.multi
     def _compute_cooperative_state(self):
         for partner in self:
             if partner.is_associated_people:
@@ -541,7 +510,6 @@ class ResPartner(models.Model):
             else:
                 partner.nb_associated_people = 0
 
-    @api.multi
     @api.depends("tmpl_reg_ids", "tmpl_reg_ids.is_current")
     def _compute_current_template(self):
         for partner in self:
@@ -554,34 +522,28 @@ class ResPartner(models.Model):
                 if reg:
                     current_template = reg[0].shift_template_id
             if current_template:
-                partner.leader_ids = current_template.user_ids
                 partner.current_template_name = current_template.name
                 partner.current_template_week_name = current_template.week_name
             else:
-                partner.leader_ids = False
                 partner.current_template_name = False
                 partner.current_template_week_name = False
 
+    @api.depends("current_template_name")
+    def _compute_leader_ids(self):
+        for partner in self:
+            leader_ids = False
+            if partner.current_template_name:
+                current_template = self.env["shift.template"].search(
+                    [("name", "=", partner.current_template_name)], limit=1
+                )
+                if current_template:
+                    leader_ids = current_template.user_ids
+            partner.leader_ids = leader_ids
+
     # Overload Section
     @api.model
-    def search(self, args, offset=0, limit=None, order=None, count=False):
-        if self._context.get("allow_to_search_barcode_base", False):
-            barcode_base_clauses = filter(
-                lambda clause: clause[0] == "barcode_base" and not clause[-1].isdigit(),
-                args,
-            )
-            for barcode_base_clause in barcode_base_clauses:
-                barcode_base_clause[0] = "display_name"
-                barcode_base_clause[1] = "ilike"
-        return super().search(
-            args=args, offset=offset, limit=limit, order=order, count=count
-        )
-
-    @api.model
-    def read_group(
-        self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True
-    ):
-        if self._context.get("allow_to_search_barcode_base", False):
+    def _search(self, domain, *args, **kwargs):
+        if self.env.context.get("allow_to_search_barcode_base"):
             barcode_base_clauses = filter(
                 lambda clause: clause[0] == "barcode_base" and not clause[-1].isdigit(),
                 domain,
@@ -589,24 +551,28 @@ class ResPartner(models.Model):
             for barcode_base_clause in barcode_base_clauses:
                 barcode_base_clause[0] = "display_name"
                 barcode_base_clause[1] = "ilike"
-        return super().read_group(
-            domain,
-            fields,
-            groupby,
-            offset=offset,
-            limit=limit,
-            orderby=orderby,
-            lazy=lazy,
-        )
+        return super()._search(domain, *args, **kwargs)
 
     @api.model
-    def create(self, vals):
-        partner = super().create(vals)
-        self._generate_associated_barcode(partner)
-        self.check_designated_buyer(partner)
-        return partner
+    def read_group(self, domain, *args, **kwargs):
+        if self.env.context.get("allow_to_search_barcode_base"):
+            barcode_base_clauses = filter(
+                lambda clause: clause[0] == "barcode_base" and not clause[-1].isdigit(),
+                domain,
+            )
+            for barcode_base_clause in barcode_base_clauses:
+                barcode_base_clause[0] = "display_name"
+                barcode_base_clause[1] = "ilike"
+        return super().read_group(domain, *args, **kwargs)
 
-    @api.multi
+    @api.model_create_multi
+    def create(self, vals_list):
+        partners = super().create(vals_list)
+        for partner in partners:
+            self._generate_associated_barcode(partner)
+            self.check_designated_buyer(partner)
+        return partners
+
     def write(self, vals):
         res = super().write(vals)
         if not (
@@ -663,7 +629,6 @@ class ResPartner(models.Model):
                 partner.generate_base()
                 partner.generate_barcode()
 
-    @api.multi
     def send_welcome_email(self):
         mail_template = self.env.ref("coop_membership.welcome_email")
         if not mail_template:
@@ -778,13 +743,11 @@ class ResPartner(models.Model):
             )
 
     # View section
-    @api.multi
     def set_underclass_population(self):
         xml_id = self.env.ref("coop_membership.underclass_population_type").id
         for partner in self:
             partner.fundraising_partner_type_ids = [(4, xml_id)]
 
-    @api.multi
     def remove_underclass_population(self):
         xml_id = self.env.ref("coop_membership.underclass_population_type").id
         for partner in self:
@@ -792,7 +755,7 @@ class ResPartner(models.Model):
 
     @api.model
     def name_search(self, name, args=None, operator="ilike", limit=100):
-        is_member_unsubscribed = self._context.get("member_unsubscribed", False)
+        is_member_unsubscribed = self.env.context.get("member_unsubscribed", False)
         if name.isdigit():
             domain = [("barcode_base", "=", name), ("is_member", "=", True)]
 
@@ -804,12 +767,11 @@ class ResPartner(models.Model):
                 return partners.name_get()
         return super().name_search(name=name, args=args, operator=operator, limit=limit)
 
-    @api.multi
     def name_get(self):
         res = []
         i = 0
         original_res = super().name_get()
-        only_show_barcode_base = self._context.get("only_show_barcode_base", False)
+        only_show_barcode_base = self.env.context.get("only_show_barcode_base", False)
 
         for partner in self:
             original_value = original_res[i][1]
@@ -822,7 +784,7 @@ class ResPartner(models.Model):
             if partner.barcode_base:
                 name_get_values = (
                     partner.id,
-                    "%s - %s" % (partner.barcode_base, original_value),
+                    f"{partner.barcode_base} - {original_value}",
                 )
             if only_show_barcode_base:
                 name_get_values = (partner.id, str(partner.barcode_base))
@@ -831,7 +793,6 @@ class ResPartner(models.Model):
             i += 1
         return res
 
-    @api.multi
     def get_next_shift_date(self, start_date=None):
         """
         @Function to get Next Shift Date of a member
@@ -846,7 +807,7 @@ class ResPartner(models.Model):
 
         # Convert Next Shift Time into Local Time
         if next_shift_time:
-            tz_name = self._context.get("tz", self.env.user.tz) or "utc"
+            tz_name = self.env.context.get("tz", self.env.user.tz) or "utc"
             utc_timestamp = pytz.utc.localize(next_shift_time, is_dst=False)
             context_tz = pytz.timezone(tz_name)
             start_date_object_tz = utc_timestamp.astimezone(context_tz)
@@ -854,7 +815,6 @@ class ResPartner(models.Model):
 
         return next_shift_time, next_shift_date
 
-    @api.multi
     def get_next_shift(self, start_date=None):
         shift_registration_env = self.env["shift.registration"]
         for partner in self:
@@ -876,9 +836,8 @@ class ResPartner(models.Model):
 
         return False
 
-    @api.multi
     def _mass_change_team(self):
-        active_ids = self._context.get("active_ids", [])
+        active_ids = self.env.context.get("active_ids", [])
         partner_ids = active_ids
         if partner_ids:
             partner_id = partner_ids[0]
@@ -888,7 +847,6 @@ class ResPartner(models.Model):
                 "name": _("Change Team"),
                 "type": "ir.actions.act_window",
                 "res_model": "shift.change.team",
-                "view_type": "form",
                 "target": "new",
                 "view_mode": "form",
                 "context": {
@@ -898,7 +856,6 @@ class ResPartner(models.Model):
                 },
             }
 
-    @api.multi
     def _update_when_number_of_shares_reaches_0(self):
         self.ensure_one()
         # only take into count member that already
@@ -940,7 +897,6 @@ class ResPartner(models.Model):
             self.write({"opt_out": True})
         return True
 
-    @api.multi
     def generate_pdf(self, report_name):
         return (
             self.env["report"]
@@ -951,7 +907,6 @@ class ResPartner(models.Model):
             .get_pdf(self, report_name)
         )
 
-    @api.multi
     def attach_report_in_mail(self):
         self.ensure_one()
         report_name = "coop_membership.member_contract_template"
@@ -969,7 +924,6 @@ class ResPartner(models.Model):
         new_attachment = self.env["ir.attachment"].create(attachment_value)
         return new_attachment
 
-    @api.multi
     def update_shift_type(self):
         partners_ids = self.ids
         chunks = [
@@ -990,7 +944,6 @@ class ResPartner(models.Model):
             "name": _("Users"),
             "type": "ir.actions.act_window",
             "view_mode": "form",
-            "view_type": "form",
             "res_model": "res.users",
             "target": "current",
             "view_id": view.id,
@@ -1019,7 +972,6 @@ class ResPartner(models.Model):
             user = ResUsers.create(vals)
         return user
 
-    @api.multi
     def create_job_to_compute_current_template(self):
         partners_ids = self.ids
         chunks = [
@@ -1035,7 +987,10 @@ class ResPartner(models.Model):
     def cron_compute_current_template(self, offset=0, partner_limit=1000):
         partner_count = self.env["res.partner"].search_count([])
         while offset < partner_count:
-            description = f"Update current template name from {offset} to {offset+partner_limit-1}"
+            description = (
+                "Update current template name "
+                f"from {offset} to {offset + partner_limit - 1}"
+            )
             if partner_count < partner_limit:
                 self.update_member_current_template_name_limit(offset, partner_limit)
             else:
@@ -1044,19 +999,16 @@ class ResPartner(models.Model):
                 ).update_member_current_template_name_limit(offset, partner_limit)
             offset += partner_limit
 
-    @job
     def update_member_current_template_name_limit(self, offset, limit):
         """Job for Updating Current Shift Template Name"""
         partners = self.env["res.partner"].search([], offset, limit)
         partners._compute_current_template()
 
-    @job
     def update_shift_type_res_partner_session_job(self, session_list):
         """Job for compute shift type"""
         partners = self.browse(session_list)
         partners._compute_shift_type()
 
-    @job
     def update_member_current_template_name(self, partner_ids):
         """Job for Updating Current Shift Template Name"""
         partners = self.browse(partner_ids)

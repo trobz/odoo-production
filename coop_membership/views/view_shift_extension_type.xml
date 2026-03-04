@@ -11,10 +11,11 @@
             </xpath>
             <field name="duration" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'invisible': [('extension_method', '!=', 'fixed_duration')], 'required':
-                    [('extension_method', '==', 'fixed_duration')]}
-                </attribute>
+                    name="invisible"
+                >extension_method != 'fixed_duration'</attribute>
+                <attribute
+                    name="required"
+                >extension_method == 'fixed_duration'</attribute>
             </field>
         </field>
     </record>

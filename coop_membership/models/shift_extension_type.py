@@ -14,7 +14,6 @@ class ShiftExtensionType(models.Model):
             ("to_next_regular_shift", "Extend to next regular shift"),
         ],
         required=True,
-        string="Extension Method",
         default="fixed_duration",
     )
 

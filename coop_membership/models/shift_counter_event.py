@@ -5,7 +5,6 @@
 from lxml import etree
 
 from odoo import api, fields, models
-from odoo.osv.orm import setup_modifiers
 
 
 class ShiftCounterEvent(models.Model):
@@ -20,24 +19,25 @@ class ShiftCounterEvent(models.Model):
         comodel_name="shift.counter.event.reason", string="Justification"
     )
 
-    @api.multi
     @api.depends("point_qty", "partner_id", "type")
     def _compute_sum_current_qty(self):
         for record in self:
             if record.partner_id and record.type == "ftop":
+                record_id = record.id
                 counter_event_before = record.partner_id.counter_event_ids.filtered(
                     # lambda c: c.create_date < record.create_date
-                    lambda c: c.id < record.id and c.type == "ftop"
+                    lambda c, record_id=record_id: c.id < record_id and c.type == "ftop"
                 )
                 record.sum_current_qty = record.point_qty
                 for event in counter_event_before:
                     record.sum_current_qty += event.point_qty
 
-    @api.model
-    def create(self, vals):
-        record = super().create(vals)
-        self.send_unsubscribed_ftop_member_email(record.partner_id)
-        return record
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        for record in records:
+            self.send_unsubscribed_ftop_member_email(record.partner_id)
+        return records
 
     @api.model
     def send_unsubscribed_ftop_member_email(self, partner):
@@ -55,7 +55,6 @@ class ShiftCounterEvent(models.Model):
                     partner.is_unsubscribed = True
                     notify_un_subscription_ftpop_email.send_mail(partner.id)
 
-    @api.multi
     def update_write_date(self):
         sql = """
             UPDATE shift_counter_event
@@ -72,7 +71,7 @@ class ShiftCounterEvent(models.Model):
             view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu
         )
         doc = etree.fromstring(res["arch"])
-        access_inform = self.user_has_groups(
+        access_inform = self.env.user.has_group(
             "coop_membership.coop_group_access_res_partner_inform"
         )
         if not access_inform:
@@ -84,6 +83,5 @@ class ShiftCounterEvent(models.Model):
             }
             if node:
                 node[0].set("options", repr(options))
-                setup_modifiers(node[0], res["fields"]["reason_ids"])
                 res["arch"] = etree.tostring(doc)
         return res

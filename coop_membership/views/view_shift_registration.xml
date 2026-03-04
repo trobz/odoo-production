@@ -20,8 +20,8 @@
                     string="Create Extension until next regular shift"
                     type="object"
                     icon="fa-expand fa-lg"
-                    attrs="{'invisible': ['|',('related_extension_id', '!=', False),('related_shift_state', '!=', 'entry')]}"
                     groups="coop_membership.group_shift_create_extension_from_attendance"
+                    invisible="(related_extension_id != False) or (related_shift_state != 'entry')"
                 />
             </button>
         </field>
@@ -36,14 +36,16 @@
         />
         <field name="mode">primary</field>
         <field name="arch" type="xml">
-            <xpath expr="//tree" position="attributes">
+            <xpath expr="//list" position="attributes">
                 <attribute name="limit">10000</attribute>
             </xpath>
-            <xpath expr="//tree[@name='registration_list']" position="attributes">
+            <xpath expr="//list[@name='registration_list']" position="attributes">
                 <attribute name="editable">bottom</attribute>
-                <attribute name="decoration-bf" eval="False" />
+                <attribute name="decoration-bf">False</attribute>
             </xpath>
-            <field name="message_needaction" position="replace" />
+            <field name="message_needaction" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
 
             <field name="date_begin" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -71,49 +73,42 @@
             </xpath>
 
             <button name="button_reg_close" position="attributes">
-                <attribute name="groups">
-                    coop_shift.group_shift_user,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_user,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
             <button name="confirm_registration" position="attributes">
-                <attribute name="groups">
-                    coop_shift.group_shift_manager,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_manager,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
             <button name="button_reg_absent" position="attributes">
-                <attribute name="groups">
-                    coop_shift.group_shift_user,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_user,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
             <button name="button_reg_cancel" position="attributes">
-                <attribute name="groups">
-                    coop_shift.group_shift_manager,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_manager,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
             <button name="button_reg_excused" position="attributes">
-                <attribute name="groups">
-                    coop_shift.group_shift_user,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_user,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
             <button name="do_draft" position="attributes">
-                <attribute name="groups">
-                    coop_shift.group_shift_manager,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_manager,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
             <xpath
                 expr="//button[@name=%(coop_shift.action_replace_registration)d]"
                 position="attributes"
             >
-                <attribute name="groups">
-                    coop_shift.group_shift_user,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_user,coop_membership.group_membership_bdm_saisie</attribute>
             </xpath>
 
             <xpath
@@ -125,8 +120,8 @@
                     string="Create Extension until next regular shift"
                     type="object"
                     icon="fa-expand fa-lg"
-                    attrs="{'invisible': ['|',('related_extension_id', '!=', False),('related_shift_state', '!=', 'entry')]}"
                     groups="coop_membership.group_shift_create_extension_from_attendance"
+                    invisible="(related_extension_id != False) or (related_shift_state != 'entry')"
                 />
                 <field name="replacing_partner_id" readonly="1" />
             </xpath>
@@ -146,56 +141,41 @@
             </field>
             <button name="button_reg_close" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'invisible': ['|', '|', ('state', '!=', 'open'),('is_related_shift_ftop', '=',
-                    True), ('related_shift_state', '!=', 'entry')]}
-                </attribute>
+                    name="invisible"
+                >((state != 'open') or (is_related_shift_ftop)) or (related_shift_state != 'entry')</attribute>
             </button>
             <button name="confirm_registration" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'invisible': ['|', '|', ('state', '!=', 'draft'),('is_related_shift_ftop', '=',
-                    True), ('related_shift_state', '!=', 'entry')]}
-                </attribute>
+                    name="invisible"
+                >((state != 'draft') or (is_related_shift_ftop)) or (related_shift_state != 'entry')</attribute>
             </button>
             <button name="button_reg_absent" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'invisible': ['|', '|', ('state', '!=', 'open'),('is_related_shift_ftop', '=',
-                    True), ('related_shift_state', '!=', 'entry')]}
-                </attribute>
+                    name="invisible"
+                >((state != 'open') or (is_related_shift_ftop)) or (related_shift_state != 'entry')</attribute>
             </button>
             <button name="button_reg_cancel" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'invisible': ['|', '|', ('state', '!=', 'draft'),('is_related_shift_ftop', '=',
-                    True), ('related_shift_state', '!=', 'entry')]}
-                </attribute>
+                    name="invisible"
+                >((state != 'draft') or (is_related_shift_ftop)) or (related_shift_state != 'entry')</attribute>
             </button>
             <button name="button_reg_excused" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'invisible': ['|', '|', ('state', '!=', 'open'),('is_related_shift_ftop', '=',
-                    True), ('related_shift_state', '!=', 'entry')]}
-                </attribute>
+                    name="invisible"
+                >((state != 'open') or (is_related_shift_ftop)) or (related_shift_state != 'entry')</attribute>
             </button>
             <button name="do_draft" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'invisible': ['|', '|', ('state', 'not in', ['cancel', 'done', 'absent',
-                    'excused', 'replaced', 'replacing', 'open']),('is_related_shift_ftop', '=', True),
-                    ('related_shift_state', '!=', 'entry')]}
-                </attribute>
+                    name="invisible"
+                >((state not in ['cancel', 'done', 'absent', 'excused', 'replaced', 'replacing', 'open']) or (is_related_shift_ftop)) or (related_shift_state != 'entry')</attribute>
             </button>
             <button
                 name="%(coop_shift.action_replace_registration)d"
                 position="attributes"
             >
                 <attribute
-                    name="attrs"
-                >{'invisible': ['|', '|', ('state', '!=', 'open'),('is_related_shift_ftop', '=',
-                    True), ('related_shift_state', '!=', 'entry')]}
-                </attribute>
+                    name="invisible"
+                >((state != 'open') or (is_related_shift_ftop)) or (related_shift_state != 'entry')</attribute>
             </button>
         </field>
     </record>
@@ -215,94 +195,73 @@
             </field>
 
             <button name="action_send_badge_email" position="attributes">
-                <attribute name="groups">
-                    coop_shift.group_shift_manager,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_manager,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
 
             <button name="button_reg_close" position="attributes">
-                <attribute name="states" />
                 <attribute
-                    name="attrs"
-                >{'invisible': ['|', ('related_shift_state', '!=', 'entry'), ('state', '!=',
-                    'open')]}
-                </attribute>
-                <attribute name="groups">
-                    coop_shift.group_shift_manager,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                    name="invisible"
+                >(related_shift_state != 'entry') or (state != 'open')</attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_manager,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
 
             <button name="button_reg_absent" position="attributes">
-                <attribute name="states" />
                 <attribute
-                    name="attrs"
-                >{'invisible': ['|', ('related_shift_state', '!=', 'entry'), ('state', '!=',
-                    'open')]}
-                </attribute>
-                <attribute name="groups">
-                    coop_shift.group_shift_manager,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                    name="invisible"
+                >(related_shift_state != 'entry') or (state != 'open')</attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_manager,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
 
             <button name="confirm_registration" position="attributes">
-                <attribute name="groups">
-                    coop_shift.group_shift_manager,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_manager,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
 
             <button name="button_reg_cancel" position="attributes">
-                <attribute name="groups">
-                    coop_shift.group_shift_manager,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_manager,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
 
             <button name="button_reg_excused" position="attributes">
-                <attribute name="states" />
                 <attribute
-                    name="attrs"
-                >{'invisible': ['|', ('related_shift_state', '!=', 'entry'), ('state', '!=',
-                    'open')]}
-                </attribute>
-                <attribute name="groups">
-                    coop_shift.group_shift_manager,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                    name="invisible"
+                >(related_shift_state != 'entry') or (state != 'open')</attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_manager,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
 
             <button name="do_draft" position="attributes">
-                <attribute name="groups">
-                    coop_shift.group_shift_manager,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_manager,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
 
             <button
                 name="%(coop_shift.action_replace_registration)d"
                 position="attributes"
             >
-                <attribute name="states" />
                 <attribute
-                    name="attrs"
-                >{'invisible': ['|', ('related_shift_state', '!=', 'entry'), ('state', '!=',
-                    'open')]}
-                </attribute>
-                <attribute name="groups">
-                    coop_shift.group_shift_manager,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                    name="invisible"
+                >(related_shift_state != 'entry') or (state != 'open')</attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_manager,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
 
-            <xpath expr="//div[hasclass('oe_chatter')]" position="attributes">
-                <attribute name="groups">
-                    coop_shift.group_shift_manager,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
-            </xpath>
+            <chatter position="attributes">
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_manager,coop_membership.group_membership_bdm_saisie</attribute>
+            </chatter>
         </field>
     </record>
 

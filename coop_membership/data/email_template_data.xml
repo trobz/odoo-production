@@ -3,30 +3,28 @@
     <record id="welcome_email" model="mail.template">
         <field name="name">Welcome Email</field>
         <field name="model_id" ref="base.model_res_partner" />
-        <field name="email_from">${(object.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.email|safe}</field>
-        <field name="lang">${object.lang}</field>
-        <field name="reply_to">${(object.company_id.email or '')|safe}</field>
+        <field name="email_from">{{ (object.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="lang">{{ object.lang }}</field>
+        <field name="reply_to">{{ (object.company_id.email or '') }}</field>
         <field name="subject">Welcome to Coop</field>
         <field
             name="body_html"
         ><![CDATA[
-<p>Hello ${object.name},</p>
+<p>Hello <span t-esc="object.name"/>,</p>
 
-<p>Your subscription to ${object.company_id.name} has been registered. Welcome !</p>
+<p>Your subscription to <span t-esc="object.company_id.name"/> has been registered. Welcome !</p>
 
-% if object.shift_type == 'standard':
-<p>Your member number is ${object.barcode_base} and you have been registered on the niche ${object.current_template_name}.</p>
-% endif
-
-% if object.shift_type == 'ftop':
-<p>Your membership number is ${object.barcode_base} and you have been enrolled in the steering wheel team. You will find attached a document which explains the functioning of this team as well as a calendar which indicates the settlement dates.</p>
-% endif
-
+<t t-if="object.shift_type == 'standard'">
+<p>Your member number is <span t-esc="object.barcode_base"/> and you have been registered on the niche <span t-esc="object.current_template_name"/>.</p>
+</t>
+<t t-if="object.shift_type == 'ftop'">
+<p>Your membership number is <span t-esc="object.barcode_base"/> and you have been enrolled in the steering wheel team. You will find attached a document which explains the functioning of this team as well as a calendar which indicates the settlement dates.</p>
+</t>
 <p>You will receive a reminder a few days before your next service. <br/>
 You can now come and discover the store and do your shopping, upon presentation of an identity document.</p>
 
-<p>We invite you to connect to <a href="${(object.company_id.website or '')|safe}" style="background-color:transparent;text-decoration-thickness:auto;color:rgb(124, 123, 173);"> The Members Area </a> (in attachment, the procedure to activate it). You will find there a lot of information, in particular your next services, and a forum which will allow you to communicate between members. The current version of the site will evolve and new functionalities will be added in the coming months. A team of volunteer members works to enrich this space to make it useful and convivial.</p>
+<p>We invite you to connect to <a t-att-href="object.company_id.website or ''" style="background-color:transparent;text-decoration-thickness:auto;color:rgb(124, 123, 173);"> The Members Area </a> (in attachment, the procedure to activate it). You will find there a lot of information, in particular your next services, and a forum which will allow you to communicate between members. The current version of the site will evolve and new functionalities will be added in the coming months. A team of volunteer members works to enrich this space to make it useful and convivial.</p>
 
 <p>Access to the store is then on presentation of the cooperator badge. To obtain your badge, you must first come to a photo session organized either at the store or during the general meetings of La Louve. The photo sessions are announced on the Members Area and at the store. As with the Members' Area, the making of badges is carried out by volunteers and requires several stages which can take several days. The complete procedure is described in the Members Area forum (FAQ section). As soon as your badge has been printed, you can collect it at the supermarket reception.</p>
 
@@ -41,24 +39,24 @@ Tom Boothe</p>
     <record id="unsubscribe_email" model="mail.template">
         <field name="name">Unbsubscribed Email</field>
         <field name="model_id" ref="base.model_res_partner" />
-        <field name="email_from">${(object.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.email|safe}</field>
-        <field name="lang">${object.lang}</field>
-        <field name="reply_to">${(object.company_id.email or '')|safe}</field>
+        <field name="email_from">{{ (object.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="lang">{{ object.lang }}</field>
+        <field name="reply_to">{{ (object.company_id.email or '') }}</field>
         <field name="subject">You have been unsubscribed from your team</field>
         <field
             name="body_html"
         ><![CDATA[
-<p>Dear ${object.name},</p>
+<p>Dear <span t-esc="object.name"/>,</p>
 
 <p>You missed 2 consecutive programmed shifts and did not come to a make-up in-between. You have been unsubscribed from your team. The "Unsubscribed" status will show when you swipe your badge at the shop. This does not allow you to shop at your favorite co-op.</p>
 <p>If you think there was a mistake or wish to subscribe to another team please contact us as soon as possible.</p>
 
 <p><b>Member Office Opening Times:</b></p>
 <br/>
-<pre>${object.company_id.members_office_open_hours}</pre>
+<pre><span t-esc="object.company_id.members_office_open_hours"/></pre>
 <br/>
-<p><b>Phone</b> : ${(object.company_id.phone or '')|safe}</p>
+<p><b>Phone</b> : <span t-esc="(object.company_id.phone or '')"/></p>
 ]]></field>
     </record>
 
@@ -67,24 +65,22 @@ Tom Boothe</p>
         <field name="model_id" ref="coop_membership.model_shift_leave" />
         <field
             name="email_from"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.partner_id.email|safe}</field>
-        <field name="lang">${object.partner_id.lang}</field>
-        <field
-            name="reply_to"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
+        >{{ (object.partner_id.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="reply_to">{{ (object.partner_id.company_id.email or '') }}</field>
         <field name="subject">Confirmation of your leave request</field>
         <field
             name="body_html"
         ><![CDATA[
-<p>Hello ${object.partner_id.name}</p>
+<p>Hello <span t-esc="object.partner_id.name"/></p>
 <br/>
-<p>We have registered your temporary leave from ${object.start_date} to ${object.stop_date}. During this period, you do not need to come and you will not be able to go shopping.</p>
-<p>We may have extended the duration of your requested leave. You will be able to continue shopping when you come for a shift. The date of your first shift after leave is ${object.return_date}.</p>
+<p>We have registered your temporary leave from <span t-esc="object.start_date"/> to <span t-esc="object.stop_date"/>. During this period, you do not need to come and you will not be able to go shopping.</p>
+<p>We may have extended the duration of your requested leave. You will be able to continue shopping when you come for a shift. The date of your first shift after leave is <span t-esc="object.return_date"/>.</p>
 <br/>
 <p>Have a good day,</p>
 <br/>
-<p>${object.partner_id.company_id.name}</p>
+<p><span t-esc="object.partner_id.company_id.name"/></p>
 <p>Members office</p>
 ]]>
         </field>
@@ -95,24 +91,22 @@ Tom Boothe</p>
         <field name="model_id" ref="coop_membership.model_shift_leave" />
         <field
             name="email_from"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.partner_id.email|safe}</field>
-        <field name="lang">${object.partner_id.lang}</field>
-        <field
-            name="reply_to"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
+        >{{ (object.partner_id.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="reply_to">{{ (object.partner_id.company_id.email or '') }}</field>
         <field name="subject">Confirmation of your leave request</field>
         <field
             name="body_html"
         ><![CDATA[
-<p>Hello ${object.partner_id.name}</p>
+<p>Hello <span t-esc="object.partner_id.name"/></p>
 <br/>
-<p>We have registered your temporary leave from ${object.start_date} to ${object.stop_date}. During this period, you do not need to come and you will not be able to go shopping.</p>
-<p>We may have extended the duration of your requested leave because your proposed return date is too closed to the shift of FTOP team. Remember that you have to be on the shift that follows your return${object.shift_date_after_return and (' on ' + str(object.shift_date_after_return)) or ''}.</p>
+<p>We have registered your temporary leave from <span t-esc="object.start_date"/> to <span t-esc="object.stop_date"/>. During this period, you do not need to come and you will not be able to go shopping.</p>
+<p>We may have extended the duration of your requested leave because your proposed return date is too closed to the shift of FTOP team. Remember that you have to be on the shift that follows your return<span t-esc="object.shift_date_after_return and (' on ' + str(object.shift_date_after_return)) or ''"/>.</p>
 <br/>
 <p>Have a good day,</p>
 <br/>
-<p>${object.partner_id.company_id.name}</p>
+<p><span t-esc="object.partner_id.company_id.name"/></p>
 <p>Members office</p>
 ]]>
         </field>
@@ -121,17 +115,17 @@ Tom Boothe</p>
     <record id="register_confirm_email" model="mail.template">
         <field name="name">Register Confirm Email</field>
         <field name="model_id" ref="event.model_event_registration" />
-        <field name="email_from">${(object.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.email|safe}</field>
-        <field name="lang">${(object.partner_id.lang)|safe}</field>
-        <field name="reply_to">${(object.company_id.email or '')|safe}</field>
+        <field name="email_from">{{ (object.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="lang">{{ (object.partner_id.lang) }}</field>
+        <field name="reply_to">{{ (object.company_id.email or '') }}</field>
         <field name="subject">Register Confirmation Email</field>
         <field
             name="body_html"
         ><![CDATA[
-<p>Hello ${object.name}</p>
+<p>Hello <span t-esc="object.name"/></p>
 <br/>
-<p>We confirm your registration for the ${object.company_id.name or ''} meeting scheduled on ${object.event_id.date_begin}. IF YOU ARE NOT A CO-OPERATOR AND WISH TO SUBSCRIBE ON THE DAY OF THE MEETING, YOU SHOULD HAVE:<br/>
+<p>We confirm your registration for the <span t-esc="object.company_id.name or ''"/> meeting scheduled on <span t-esc="object.event_id.date_begin"/>. IF YOU ARE NOT A CO-OPERATOR AND WISH TO SUBSCRIBE ON THE DAY OF THE MEETING, YOU SHOULD HAVE:<br/>
 - Your check book or bank card<br/>
 - An ID</p>
 <p>Proof of reduced subscription: social minimums (document of less than 3 months attesting the payment of the RSA, the ASS, the AER-R, the ATS, the ATA, the ADA, the AAH, the 'ASI, AV, ASV or ASPA) or scholarship students 6 or 7 (scholarship certificate).</p>
@@ -148,31 +142,31 @@ Tom Boothe</p>
         <field name="model_id" ref="coop_membership.model_shift_registration" />
         <field
             name="email_from"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.partner_id.email|safe}</field>
-        <field name="lang">${object.partner_id.lang}</field>
-        <field name="reply_to">${(object.company_id.email or '')|safe}</field>
+        >{{ (object.partner_id.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="reply_to">{{ (object.company_id.email or '') }}</field>
         <field
             name="subject"
-        >Count flying on ${object.convert_format_datatime()}</field>
+        >Count flying on {{ object.convert_format_datatime() }}</field>
         <field
             name="body_html"
         ><![CDATA[
 <p>Hello flying team members-- </p>
 <br/>
-<p>Just a reminder to tell you that <h3> the next counting day will be next Thursday, the ${object.convert_format_datatime()}</h3>... it's the last day to perform a flying service and avoid catching up.</p>
+<p>Just a reminder to tell you that <h3> the next counting day will be next Thursday, the <span t-esc="object.convert_format_datatime()"/></h3>... it's the last day to perform a flying service and avoid catching up.</p>
 <p>The programming of the flying services is done via the members area. Click on “tools”, then “program a steering wheel service”, then “registration”. If you do not have access to the members area, it is always possible to schedule a flying service by contacting the Members' office during its opening hours. </p>
 <p>Since the 1st steering wheel count in August 2017, experience shows that the vast majority of steering wheels registers for a service the 3 days preceding the day of the count. The flying places created for Tuesday, Wednesday and Thursday of week A are therefore systematically taken, which is not the case for all the other days of weeks A, B, C, D. This creates an imbalance. As far as possible, we kindly ask you to try to spread the programming of your services over the 4 weeks A, B, C, D. For information, the most "critical" slots are Sunday morning at 7.15 am, Saturday evening at 7 p.m., Monday from 9 a.m. to 12 p.m.</p>
-<h3>What happens if I don't have a credit in my "account" the ${object.convert_format_datatime()}?</h3>
-<p>Like the members of all the other teams, you will need 2 catch-ups. So, in total, you will have three services to program and perform before the next countdown day: the 2 catch-ups, and the service you need anyway before the next countdown. (These three services to do are in addition to the catch-ups that you may already need at ${object.company_id.name or ''}).</p>
+<h3>What happens if I don't have a credit in my "account" the <span t-esc="object.convert_format_datatime()"/>?</h3>
+<p>Like the members of all the other teams, you will need 2 catch-ups. So, in total, you will have three services to program and perform before the next countdown day: the 2 catch-ups, and the service you need anyway before the next countdown. (These three services to do are in addition to the catch-ups that you may already need at <span t-esc="object.company_id.name or ''"/>).</p>
 <h3>How to catch up? </h3>
 <p>Unlike the ABCD team members, the flying team members must schedule their overtakes, without exception ... simply by scheduling additional shifts. A member of the flying team cannot use the same catch-up system as that of the ABCD teams. If he shows up at any service to catch up, without having scheduled it, he will not be credited.</p>
 <h3>Cancel a scheduled service?</h3>
 <p>Scheduling a vacation then missing it without first canceling it will result in the withdrawal of a credit from its service savings account. Members of the flying team may cancel their vacations without penalty up to one hour before their start, at the members' office during opening hours.</p>
-<h3>For more information, contact the Membership Office during its opening hours: ${(object.company_id.phone or '')|safe}.</h3>
+<h3>For more information, contact the Membership Office during its opening hours: <span t-esc="(object.company_id.phone or '')"/>.</h3>
 <p>Opening hours of the Members' Office:</p>
 <br/>
-<pre>${object.partner_id.company_id.members_office_open_hours}</pre>
+<pre><span t-esc="object.partner_id.company_id.members_office_open_hours"/></pre>
 <br/>
 <p>Sincerely,</p>
 ]]>
@@ -184,26 +178,24 @@ Tom Boothe</p>
         <field name="model_id" ref="coop_shift.model_shift_leave" />
         <field
             name="email_from"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.partner_id.email|safe}</field>
-        <field name="lang">${(object.partner_id.lang)|safe}</field>
-        <field
-            name="reply_to"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
+        >{{ (object.partner_id.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="lang">{{ (object.partner_id.lang) }}</field>
+        <field name="reply_to">{{ (object.partner_id.company_id.email or '') }}</field>
         <field name="subject">Reminder End Leave Email</field>
         <field
             name="body_html"
         ><![CDATA[
-<p>Hello ${object.partner_id.name.split(',')[0]}</p>
-<p>The end of your leave at ${(object.partner_id.company_id.name or '')|safe} is approaching. To ensure that you can do your shopping as soon as you return, it is strongly recommended that you contact the Members' Office to reintegrate a new team.</p>
-<p>End date of your leave: ${object.stop_date}</p>
+<p>Hello <span t-esc="object.partner_id.name.split(',')[0]"/></p>
+<p>The end of your leave at <span t-esc="(object.partner_id.company_id.name or '')"/> is approaching. To ensure that you can do your shopping as soon as you return, it is strongly recommended that you contact the Members' Office to reintegrate a new team.</p>
+<p>End date of your leave: <span t-esc="object.stop_date"/></p>
 <p>Opening hours of the Members' Office:
 <br/>
-<pre>${object.partner_id.company_id.members_office_open_hours}</pre>
+<pre><span t-esc="object.partner_id.company_id.members_office_open_hours"/></pre>
 <br/>
-<p>Tel: ${(object.partner_id.company_id.phone or '')|safe}</p>
+<p>Tel: <span t-esc="(object.partner_id.company_id.phone or '')"/></p>
 <p>Have a nice day,</p>
-<p>The Membership Office of ${(object.partner_id.company_id.name or '')|safe}</p>
+<p>The Membership Office of <span t-esc="(object.partner_id.company_id.name or '')"/></p>
 ]]>
         </field>
     </record>
@@ -213,26 +205,24 @@ Tom Boothe</p>
         <field name="model_id" ref="coop_shift.model_shift_leave" />
         <field
             name="email_from"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.partner_id.email|safe}</field>
-        <field name="lang">${(object.partner_id.lang)|safe}</field>
-        <field
-            name="reply_to"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
+        >{{ (object.partner_id.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="lang">{{ (object.partner_id.lang) }}</field>
+        <field name="reply_to">{{ (object.partner_id.company_id.email or '') }}</field>
         <field name="subject">Confirmation of your leave request non defined</field>
         <field
             name="body_html"
         ><![CDATA[
-<p>Hello ${object.partner_id.name}</p>
-<p>We have recorded your "undefined" leave from ${object.start_date}. During this period you do not need to come and do your services.</p>
+<p>Hello <span t-esc="object.partner_id.name"/></p>
+<p>We have recorded your "undefined" leave from <span t-esc="object.start_date"/>. During this period you do not need to come and do your services.</p>
 <p>If it's temporary leave, you can't do your shopping.</p>
-<p>If it's parental leave, you can do your shopping at ${(object.partner_id.company_id.name or '')|safe}.</p>
+<p>If it's parental leave, you can do your shopping at <span t-esc="(object.partner_id.company_id.name or '')"/>.</p>
 <p>10 days before the estimated end of leave date you have given us, you will receive a message reminding you to contact the Members' Office to join a team again.</p><br/>
 <p>Have a nice day,</p>
-<p>Members office ${(object.partner_id.company_id.phone or '')|safe}</p>
+<p>Members office <span t-esc="(object.partner_id.company_id.phone or '')"/></p>
 <p>For any questions or requests, please call or drop by the Membership Office during regular business hours.</p>
 <br/>
-<pre>${object.partner_id.company_id.members_office_open_hours}</pre>
+<pre><span t-esc="object.partner_id.company_id.members_office_open_hours"/></pre>
 <br/>
 ]]>
         </field>
@@ -243,28 +233,28 @@ Tom Boothe</p>
         <field name="model_id" ref="coop_membership.model_shift_registration" />
         <field
             name="email_from"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.partner_id.email|safe}</field>
-        <field name="lang">${object.partner_id.lang}</field>
-        <field name="reply_to">${(object.company_id.email or '')|safe}</field>
+        >{{ (object.partner_id.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="reply_to">{{ (object.company_id.email or '') }}</field>
         <field
             name="subject"
-        >The store will be open on ${object.convert_format_datatime()}</field>
+        >The store will be open on {{ object.convert_format_datatime() }}</field>
         <field
             name="body_html"
         ><![CDATA[
-<p>Hello team members ${object.shift_id.shift_template_id.name},</p>
+<p>Hello team members <span t-esc="object.shift_id.shift_template_id.name"/>,</p>
 <br/>
-<p>You have a service that falls on ${object.convert_format_datatime()}.</p>
-<p>During your service, the store will be open. As this is a public holiday or other special day for ${(object.company_id.name or '')|safe}, if you cannot provide your service, you will be allocated only one catch instead of two .</p>
+<p>You have a service that falls on <span t-esc="object.convert_format_datatime()"/>.</p>
+<p>During your service, the store will be open. As this is a public holiday or other special day for <span t-esc="(object.company_id.name or '')"/>, if you cannot provide your service, you will be allocated only one catch instead of two .</p>
 <p>However, so that the supermarket can function normally, we remind you that the ideal solution remains the exchange of service with another cooperator.</p>
 <p>Sincerely,</p>
 <p>Membership office
 <br/>
-${(object.company_id.phone or '')|safe}</p>
+<span t-esc="(object.company_id.phone or '')"/></p>
 <p>The members' office does not take any requests by email. For any questions or requests, please call or drop by the Membership Office during regular business hours.</p>
 <br/>
-<pre>${object.partner_id.company_id.members_office_open_hours}</pre>
+<pre><span t-esc="object.partner_id.company_id.members_office_open_hours"/></pre>
 <br/>
 <br/>
 ]]>
@@ -276,27 +266,27 @@ ${(object.company_id.phone or '')|safe}</p>
         <field name="model_id" ref="coop_membership.model_shift_registration" />
         <field
             name="email_from"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.partner_id.email|safe}</field>
-        <field name="lang">${object.partner_id.lang}</field>
-        <field name="reply_to">${(object.company_id.email or '')|safe}</field>
+        >{{ (object.partner_id.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="reply_to">{{ (object.company_id.email or '') }}</field>
         <field
             name="subject"
-        >The store will be closed on ${object.convert_format_datatime()}</field>
+        >The store will be closed on {{ object.convert_format_datatime() }}</field>
         <field
             name="body_html"
         ><![CDATA[
-<p>Hello team members ${object.shift_id.shift_template_id.name},</p>
+<p>Hello team members <span t-esc="object.shift_id.shift_template_id.name"/>,</p>
 <br/>
-<p>You have a service that falls on ${object.convert_format_datatime()}.</p>
-<p>During your service, the store will be closed. As this is a holiday or other special day for ${(object.company_id.name or '')|safe}, you are exempt from this service. Which means you don't have to come and you won't have to catch up.</p>
+<p>You have a service that falls on <span t-esc="object.convert_format_datatime()"/>.</p>
+<p>During your service, the store will be closed. As this is a holiday or other special day for <span t-esc="(object.company_id.name or '')"/>, you are exempt from this service. Which means you don't have to come and you won't have to catch up.</p>
 <p>Sincerely,</p>
 <p>Membership office
 <br/>
-${(object.company_id.phone or '')|safe}</p>
+<span t-esc="(object.company_id.phone or '')"/></p>
 <p>The members' office does not take any requests by email. For any questions or requests, please call or drop by the Membership Office during regular business hours.</p>
 <br/>
-<pre>${object.partner_id.company_id.members_office_open_hours}</pre><br/>
+<pre><span t-esc="object.partner_id.company_id.members_office_open_hours"/></pre><br/>
 ]]>
         </field>
     </record>
@@ -306,30 +296,28 @@ ${(object.company_id.phone or '')|safe}</p>
         <field name="model_id" ref="coop_membership.model_shift_change_team" />
         <field
             name="email_from"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.partner_id.email|safe}</field>
-        <field name="lang">${(object.partner_id.lang)|safe}</field>
-        <field
-            name="reply_to"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
+        >{{ (object.partner_id.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="lang">{{ (object.partner_id.lang) }}</field>
+        <field name="reply_to">{{ (object.partner_id.company_id.email or '') }}</field>
         <field name="subject">Change team to Classic messages</field>
         <field
             name="body_html"
         ><![CDATA[
-<p>Hello ${object.partner_id.name}</p>
-<p>You are registered from ${object.new_next_shift_date} in the team ${object.new_shift_template_id.name}</p>
+<p>Hello <span t-esc="object.partner_id.name"/></p>
+<p>You are registered from <span t-esc="object.new_next_shift_date"/> in the team <span t-esc="object.new_shift_template_id.name"/></p>
 <p>Your next two services are therefore:<br/>
-- ${object.convert_format_datatime(object.first_next_shift_date)}<br/>
-- ${object.convert_format_datatime(object.second_next_shift_date)}<br/>
+- <span t-esc="object.convert_format_datatime(object.first_next_shift_date)"/><br/>
+- <span t-esc="object.convert_format_datatime(object.second_next_shift_date)"/><br/>
 </p>
-<p>For information, your status is ${object.convert_state_partner()}.</p>
+<p>For information, your status is <span t-esc="object.convert_state_partner()"/>.</p>
 <p>You may have been awarded a catch-up if a difference of more than 6 weeks has been noted between the date of your last service with the old team and the date of your first service in the new team. This is to respect the rule of 13 services to be performed over the year.</p>
-<p>For more information, contact the Membership Office during its opening hours: ${(object.partner_id.company_id.phone or '')|safe}</p>
+<p>For more information, contact the Membership Office during its opening hours: <span t-esc="(object.partner_id.company_id.phone or '')"/></p>
 <p>Opening hours of the Members' Office:</p>
 <br/>
-<pre>${object.partner_id.company_id.members_office_open_hours}</pre><br/>
+<pre><span t-esc="object.partner_id.company_id.members_office_open_hours"/></pre><br/>
 <p>Have a good day,</p>
-<p>${(object.partner_id.company_id.name or '')|safe}</p>
+<p><span t-esc="(object.partner_id.company_id.name or '')"/></p>
 ]]>
         </field>
     </record>
@@ -339,12 +327,10 @@ ${(object.company_id.phone or '')|safe}</p>
         <field name="model_id" ref="coop_membership.model_shift_change_team" />
         <field
             name="email_from"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.partner_id.email|safe}</field>
-        <field name="lang">${(object.partner_id.lang)|safe}</field>
-        <field
-            name="reply_to"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
+        >{{ (object.partner_id.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="lang">{{ (object.partner_id.lang) }}</field>
+        <field name="reply_to">{{ (object.partner_id.company_id.email or '') }}</field>
         <field name="subject">Change Team by Flying Messages</field>
         <field
             name="attachment_ids"
@@ -356,16 +342,16 @@ ${(object.company_id.phone or '')|safe}</p>
         <field
             name="body_html"
         ><![CDATA[
-<p>Hello ${object.partner_id.name}</p>
-<p>You are registered from the ${object.new_next_shift_date} in the flying team.</p>
-<p>You must have programmed and made at least one flying service between this date and the next count of the ${object.convert_format_datatime(object.first_next_shift_date)}.</p>
+<p>Hello <span t-esc="object.partner_id.name"/></p>
+<p>You are registered from the <span t-esc="object.new_next_shift_date"/> in the flying team.</p>
+<p>You must have programmed and made at least one flying service between this date and the next count of the <span t-esc="object.convert_format_datatime(object.first_next_shift_date)"/>.</p>
 <p>Attached is the calendar of ABCD weeks, as well as the description of the functioning of the flying team. The operation of this team is quite complex, please read this sheet carefully.</p>
-<p>For more information, contact the Membership Office during its opening hours: ${(object.partner_id.company_id.phone or '')|safe}</p>
+<p>For more information, contact the Membership Office during its opening hours: <span t-esc="(object.partner_id.company_id.phone or '')"/></p>
 <p>Opening hours of the Members' Office:</p>
 <br/>
-<pre>${object.partner_id.company_id.members_office_open_hours}</pre><br/>
+<pre><span t-esc="object.partner_id.company_id.members_office_open_hours"/></pre><br/>
 <p>Have a good day,</p>
-<p>${(object.partner_id.company_id.name or '')|safe}</p>
+<p><span t-esc="(object.partner_id.company_id.name or '')"/></p>
 ]]>
         </field>
     </record>
@@ -373,26 +359,26 @@ ${(object.company_id.phone or '')|safe}</p>
     <record id="registration_reminder_meeting_email" model="mail.template">
         <field name="name">Registration Reminder Meeting Email</field>
         <field name="model_id" ref="event.model_event_registration" />
-        <field name="email_from">${(object.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.email|safe}</field>
-        <field name="lang">${(object.partner_id.lang)|safe}</field>
-        <field name="reply_to">${object.company_id.email|safe}</field>
+        <field name="email_from">{{ (object.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="lang">{{ (object.partner_id.lang) }}</field>
+        <field name="reply_to">{{ object.company_id.email }}</field>
         <field name="subject">Welcome meeting reminder email</field>
         <field
             name="body_html"
         ><![CDATA[
 <p>Hello</p>
-<p>You are registered for the welcome meeting of ${(object.company_id.name or '')|safe} which will take place on <strong>${object.event_id.date_begin_located}, ${object. get_address_meeting()}</strong></p>
+<p>You are registered for the welcome meeting of <span t-esc="(object.company_id.name or '')"/> which will take place on <strong><span t-esc="object.event_id.date_begin_located"/>, <span t-esc="object. get_address_meeting()"/></strong></p>
 <p>Metro: Marcadet-Poissonniers or Simplon.</p>
-<p>Reception will be provided from <span style = "color: red"><strong>${object.get_time_before(30)}</strong></span>.</p>
+<p>Reception will be provided from <span style = "color: red"><strong><span t-esc="object.get_time_before(30)"/></strong></span>.</p>
 <p>As the information transmitted during the meeting is essential, no delay will be accepted. Thank you for your understanding.</p>
 <p><strong>On the menu for this welcome meeting:</strong></p>
 <ul>
-    <li>Detailed presentation of what it means to join ${(object.company_id.name or '')|safe}: Principle of the cooperative, products that will be available, organization of voluntary work</li>
+    <li>Detailed presentation of what it means to join <span t-esc="(object.company_id.name or '')"/>: Principle of the cooperative, products that will be available, organization of voluntary work</li>
     <li>Answers to your general questions</li>
     <li>Answers to your individual questions</li>
     <li>Visit the store</li>
-    <li>Subscription if you decide to join ${(object.company_id.name or '')|safe}, registration on a working niche</li>
+    <li>Subscription if you decide to join <span t-esc="(object.company_id.name or '')"/>, registration on a working niche</li>
 </ul>
 <p>The meeting will last approximately 2.5 hours.</p>
 <p><strong>If you are not yet a cooperative member and wish to join us:</strong></p>
@@ -407,11 +393,11 @@ ${(object.company_id.phone or '')|safe}</p>
     </li>
 </ul>
 <p>For more information now on welcome meetings and slots, <a href="https://docs.google.com/document/d/1Ra6X_UoH2yKDjuR6JlLTjwFFrrpy04lvCwBp4nnpfWc/edit"> see this link.</a></p>
-<p>If you are unable to attend this meeting, you can contact the home meeting team ${object.get_email_contact_meeting()} to register for a future home meeting.</p>
+<p>If you are unable to attend this meeting, you can contact the home meeting team <span t-esc="object.get_email_contact_meeting()"/> to register for a future home meeting.</p>
 <p>Sincerely,</p>
 <p>Cécile and Philippe</p>
 <p>For the Welcome Meetings team</p>
-<p>${object.get_email_contact_meeting()}</p>
+<p><span t-esc="object.get_email_contact_meeting()"/></p>
 <img  src="/coop_membership/static/description/image_lalouve.png"/>
 ]]>
         </field>
@@ -421,17 +407,15 @@ ${(object.company_id.phone or '')|safe}</p>
     <record id="abandoned_message_leave_email" model="mail.template">
         <field name="name">Abandoned Message Absence Leave Email</field>
         <field name="model_id" ref="coop_membership.model_shift_leave" />
-        <field name="email_from">${(user.email or '')|safe}</field>
-        <field
-            name="email_to"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
+        <field name="email_from">{{ (user.email or '') }}</field>
+        <field name="email_to">{{ (object.partner_id.company_id.email or '') }}</field>
         <field name="subject">API failed</field>
         <field
             name="body_html"
         ><![CDATA[
 <p>Hello</p>
 <p>
-${object.partner_id.name.split(',')[0]} ${object.partner_id.barcode_base}
+<span t-esc="object.partner_id.name.split(',')[0]"/> <span t-esc="object.partner_id.barcode_base"/>
 has not provided proof of Absence due to incapacity. The proposed absence is therefore canceled.
 </p>
 ]]>
@@ -444,17 +428,15 @@ has not provided proof of Absence due to incapacity. The proposed absence is the
         <field name="model_id" ref="coop_membership.model_shift_leave" />
         <field
             name="email_from"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.partner_id.email|safe}</field>
-        <field name="lang">${(object.partner_id.lang)|safe}</field>
-        <field
-            name="reply_to"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
+        >{{ (object.partner_id.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="lang">{{ (object.partner_id.lang) }}</field>
+        <field name="reply_to">{{ (object.partner_id.company_id.email or '') }}</field>
         <field name="subject">Absence for unsuccessful incapacity</field>
         <field
             name="body_html"
         ><![CDATA[
-<p>Hello ${object.partner_id.name.split(',')[0]},</p>
+<p>Hello <span t-esc="object.partner_id.name.split(',')[0]"/>,</p>
 <div>
 You requested disability leave from the Membership Office.
 In order for this leave to be validated, you had 3 weeks to present us with medical proof.
@@ -464,14 +446,14 @@ Unless we are mistaken, we have not seen this document.
 <p>Services missed during your absence are now recorded as missed services.</p>
 <p>To regularize your situation, contact the members' office during its opening hours:</p>
 <br/>
-<pre>${object.partner_id.company_id.members_office_open_hours}</pre>
+<pre><span t-esc="object.partner_id.company_id.members_office_open_hours"/></pre>
 <br/>
-<p>${(object.partner_id.company_id.phone or '')|safe}</p>
+<p><span t-esc="(object.partner_id.company_id.phone or '')"/></p>
 <span>Have a nice day,</span>
 <br/>
 <span>The Membership Office</span>
 <br/>
-<span>${(object.partner_id.company_id.name or '')|safe}</span>
+<span><span t-esc="(object.partner_id.company_id.name or '')"/></span>
 ]]>
         </field>
     </record>
@@ -482,31 +464,29 @@ Unless we are mistaken, we have not seen this document.
         <field name="model_id" ref="coop_membership.model_shift_leave" />
         <field
             name="email_from"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.partner_id.email|safe}</field>
-        <field name="lang">${(object.partner_id.lang)|safe}</field>
-        <field
-            name="reply_to"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
+        >{{ (object.partner_id.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="lang">{{ (object.partner_id.lang) }}</field>
+        <field name="reply_to">{{ (object.partner_id.company_id.email or '') }}</field>
         <field name="subject">Absence due to incapacity</field>
         <field
             name="body_html"
         ><![CDATA[
-<p>Hello ${object.partner_id.name.split(',')[0]},</p>
-<p>Your absence for disability from ${object.start_date} to ${object.stop_date} has been recorded.</p>
+<p>Hello <span t-esc="object.partner_id.name.split(',')[0]"/>,</p>
+<p>Your absence for disability from <span t-esc="object.start_date"/> to <span t-esc="object.stop_date"/> has been recorded.</p>
 <p>As a reminder, during this period, you can do your shopping, and you are exempt from services.</p>
 <p>You have 3 weeks from the date of sending this email to show us or send us a medical proof.</p>
 <p>Without this document, your leave will be retroactively canceled.</p>
 <p>For any information, contact the members' office during its opening hours:</p>
 <br/>
-<pre>${object.partner_id.company_id.members_office_open_hours}</pre>
+<pre><span t-esc="object.partner_id.company_id.members_office_open_hours"/></pre>
 <br/>
-<p>${(object.partner_id.company_id.phone or '')|safe}</p>
+<p><span t-esc="(object.partner_id.company_id.phone or '')"/></p>
 <span>Have a nice day,</span>
 <br/>
 <span>The Membership Office</span>
 <br/>
-<span>${(object.partner_id.company_id.name or '')|safe}</span>
+<span><span t-esc="(object.partner_id.company_id.name or '')"/></span>
 ]]>
         </field>
     </record>
@@ -517,34 +497,32 @@ Unless we are mistaken, we have not seen this document.
         <field name="model_id" ref="coop_membership.model_shift_leave" />
         <field
             name="email_from"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.partner_id.email|safe}</field>
-        <field name="lang">${(object.partner_id.lang)|safe}</field>
-        <field
-            name="reply_to"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
+        >{{ (object.partner_id.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="lang">{{ (object.partner_id.lang) }}</field>
+        <field name="reply_to">{{ (object.partner_id.company_id.email or '') }}</field>
         <field name="subject">Supporting reminder</field>
         <field
             name="body_html"
         ><![CDATA[
-<p>Hello ${object.partner_id.name.split(',')[0]},</p>
-<p>Your absence for disability from ${object.start_date} to ${object.stop_date} has been recorded.</p>
+<p>Hello <span t-esc="object.partner_id.name.split(',')[0]"/>,</p>
+<p>Your absence for disability from <span t-esc="object.start_date"/> to <span t-esc="object.stop_date"/> has been recorded.</p>
 <span>Unless we’re mistaken, we still haven’t seen any medical evidence.</span>
 <br/>
 <span>You have one week left to present it or send it to:</span>
 <br/>
-<p>${(object.partner_id.company_id.email or '')|safe}.</p>
+<p><span t-esc="(object.partner_id.company_id.email or '')"/>.</p>
 <p>Without this document, your leave will be retroactively canceled.</p>
 <p>For any information, contact the members' office during its opening hours:</p>
 <br/>
-<pre>${object.partner_id.company_id.members_office_open_hours}</pre>
+<pre><span t-esc="object.partner_id.company_id.members_office_open_hours"/></pre>
 <br/>
-<p>${(object.partner_id.company_id.phone or '')|safe}</p>
+<p><span t-esc="(object.partner_id.company_id.phone or '')"/></p>
 <span>Have a nice day,</span>
 <br/>
 <span>The Membership Office</span>
 <br/>
-<span>${(object.partner_id.company_id.name or '')|safe}</span>
+<span><span t-esc="(object.partner_id.company_id.name or '')"/></span>
 ]]>
         </field>
     </record>
@@ -554,47 +532,43 @@ Unless we are mistaken, we have not seen this document.
         <field name="model_id" ref="coop_membership.model_shift_leave" />
         <field
             name="email_from"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.partner_id.email|safe}</field>
-        <field name="lang">${(object.partner_id.lang)|safe}</field>
-        <field
-            name="reply_to"
-        >${(object.partner_id.company_id.email or '')|safe}</field>
+        >{{ (object.partner_id.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="lang">{{ (object.partner_id.lang) }}</field>
+        <field name="reply_to">{{ (object.partner_id.company_id.email or '') }}</field>
         <field name="subject">Confirmation of your leave request</field>
         <field
             name="body_html"
         ><![CDATA[
 <p>
-Hello ${object.partner_id.name.split(',')[0]},
+Hello <span t-esc="object.partner_id.name.split(',')[0]"/>,
 </p>
 <p>
-Your request for early leave from ${object.start_date} to ${object.stop_date} has been received.
+Your request for early leave from <span t-esc="object.start_date"/> to <span t-esc="object.stop_date"/> has been received.
 During this period you can do your shopping without coming to do your services. Once the leave is over, you will be waited for your next service.
 </p>
 <p>
 For any information, contact the members' office during its opening hours:
 </p>
 <br/>
-<pre>${object.partner_id.company_id.members_office_open_hours}</pre>
+<pre><span t-esc="object.partner_id.company_id.members_office_open_hours"/></pre>
 <br/>
-<p> ${(object.partner_id.company_id.phone or '')|safe}</p>
+<p> <span t-esc="(object.partner_id.company_id.phone or '')"/></p>
 <span> Have a nice day,</span>
 <br/>
 <span>The Membership Office</span>
 <br/>
-<span>${(object.partner_id.company_id.name or '')|safe}</span>
+<span><span t-esc="(object.partner_id.company_id.name or '')"/></span>
 ]]></field>
     </record>
 
     <record id="notify_mirror_children_email" model="mail.template">
         <field name="name">Notify mirror children</field>
         <field name="model_id" ref="coop_membership.model_res_partner" />
-        <field name="email_from">${(object.company_id.email or '')|safe}</field>
-        <field
-            name="email_to"
-        >${object.parent_id and object.parent_id.email|safe}</field>
-        <field name="lang">${(object.lang)|safe}</field>
-        <field name="reply_to">${(object.company_id.email or '')|safe}</field>
+        <field name="email_from">{{ (object.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.parent_id and object.parent_id.email }}</field>
+        <field name="lang">{{ (object.lang) }}</field>
+        <field name="reply_to">{{ (object.company_id.email or '') }}</field>
         <field name="subject">Your child attached</field>
         <field
             name="body_html"
@@ -624,14 +598,14 @@ For any information, contact the members' office during its opening hours:
 Your related child will soon be 18 years old. We wish him a happy birthday in advance.
 </p>
 <p>
-On his birthday, he / she will be unlinked from your account and will lose buyer rights to ${(object.company_id.name or '')|safe}.
-If he / she wishes to continue shopping at ${(object.company_id.name or '')|safe}, there are 2 possibilities:
+On his birthday, he / she will be unlinked from your account and will lose buyer rights to <span t-esc="(object.company_id.name or '')"/>.
+If he / she wishes to continue shopping at <span t-esc="(object.company_id.name or '')"/>, there are 2 possibilities:
 </p>
 <ol>
-<li>He / she becomes a member of ${(object.company_id.name or '')|safe}.
-You must visit our website and register for a welcome meeting, then follow the steps you have taken to become a member of ${(object.company_id.name or '')|safe}.
+<li>He / she becomes a member of <span t-esc="(object.company_id.name or '')"/>.
+You must visit our website and register for a welcome meeting, then follow the steps you have taken to become a member of <span t-esc="(object.company_id.name or '')"/>.
 </li>
-<li>He / she becomes attached to an adult... a possibility only if you do not already have another adult in your household associated with your account at ${(object.company_id.name or '')|safe}.
+<li>He / she becomes attached to an adult... a possibility only if you do not already have another adult in your household associated with your account at <span t-esc="(object.company_id.name or '')"/>.
 For him / her to become a connected adult, you must both go to the Members' office during opening hours.
 Your child must bring a piece of identification and proof that he / she lives at the same address as you.
 </li>
@@ -639,7 +613,7 @@ Your child must bring a piece of identification and proof that he / she lives at
 <p>
 Have a good day,
 </p>
-<p>${(object.company_id.name or '')|safe}</p>
+<p><span t-esc="(object.company_id.name or '')"/></p>
 </div>
 ]]>
         </field>
@@ -648,15 +622,15 @@ Have a good day,
     <record id="notify_un_subscription_ftpop_email" model="mail.template">
         <field name="name">Notify Un Subscription FTOP Email</field>
         <field name="model_id" ref="coop_membership.model_res_partner" />
-        <field name="email_from">${(object.company_id.email or '')|safe}</field>
-        <field name="email_to">${object.email|safe}</field>
-        <field name="lang">${(object.lang)|safe}</field>
-        <field name="reply_to">${(object.company_id.email or '')|safe}</field>
+        <field name="email_from">{{ (object.company_id.email or '') }}</field>
+        <field name="email_to">{{ object.email }}</field>
+        <field name="lang">{{ (object.lang) }}</field>
+        <field name="reply_to">{{ (object.company_id.email or '') }}</field>
         <field name="subject">Unsubscribe from your team</field>
         <field
             name="body_html"
         ><![CDATA[
-<p>Hello ${object.name.split(',')[0]},</p>
+<p>Hello <span t-esc="object.name.split(',')[0]"/>,</p>
 <div>
     <span>
         Unless we are mistaken, you have accumulated 8 catches.
@@ -675,13 +649,13 @@ Have a good day,
     If you want to join a team again, you can contact the members' office during its opening hours:
 </p>
 <br/>
-<pre>${object.company_id.members_office_open_hours}</pre>
-<br/><p>${(object.company_id.phone or '')|safe}</p>
+<pre><span t-esc="object.company_id.members_office_open_hours"/></pre>
+<br/><p><span t-esc="(object.company_id.phone or '')"/></p>
 <span>Have a nice day,</span>
 <br/>
 <span>The Membership Office</span>
 <br/>
-<span>${(object.company_id.name or '')|safe}</span>
+<span><span t-esc="(object.company_id.name or '')"/></span>
 ]]>
         </field>
     </record>

@@ -7,7 +7,7 @@ class MergePartnerAutomatic(models.TransientModel):
 
     @api.model
     def _update_values(self, src_partners, dst_partner):
-        super()._update_values(src_partners, dst_partner)
+        res = super()._update_values(src_partners, dst_partner)
         dst_partner._compute_total_partner_owned_share()
         dst_partner._compute_is_worker_member()
         dst_partner._compute_number_of_associated_people()
@@ -15,6 +15,7 @@ class MergePartnerAutomatic(models.TransientModel):
         dst_partner._compute_is_underclass_population()
         dst_partner._compute_is_former_associated_people()
         dst_partner._compute_cooperative_state()
+        return res
 
     @api.model
     def update_for_already_merged(self):

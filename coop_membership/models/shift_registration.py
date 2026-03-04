@@ -36,7 +36,6 @@ class ShiftRegistration(models.Model):
         string="Reduced Extension",
     )
 
-    @api.multi
     @api.constrains("shift_id")
     def _check_limit_of_registration(self):
         check_limit = self._context.get("check_limit", False)
@@ -45,18 +44,20 @@ class ShiftRegistration(models.Model):
         self.check_limit_of_registration()
         return True
 
-    @api.model
-    def create(self, vals):
-        partner = self.env["res.partner"].browse(vals.get("partner_id"))
-        if partner.is_unsubscribed and not self.env.context.get("creation_in_progress"):
-            raise UserError(
-                _(
-                    "You can't register %s on a shift because "
-                    "he isn't registered on a template"
-                )
-                % partner.name
-            )
-        res = super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        if not self.env.context.get("creation_in_progress"):
+            for vals in vals_list:
+                partner = self.env["res.partner"].browse(vals.get("partner_id"))
+                if partner.is_unsubscribed:
+                    raise UserError(
+                        _(
+                            "You can't register %s on a shift because "
+                            "he isn't registered on a template"
+                        )
+                        % partner.name
+                    )
+        res = super().create(vals_list)
         # Do not allow member with Up to date status register make up
         # in a ABCD shift on a ABCD tickets
         res.checking_shift_attendance()
@@ -64,7 +65,6 @@ class ShiftRegistration(models.Model):
         res.check_leave_time()
         return res
 
-    @api.multi
     def check_limit_of_registration(self):
         """
         Limit a number of registration for shift type FTOP per partner
@@ -87,10 +87,13 @@ class ShiftRegistration(models.Model):
                 ):
                     raise ValidationError(
                         _(
-                            "The member %s already has %s registrations "
+                            "The member %(member)s already has %(count)s registrations "
                             "in the same day. You can't program more."
                         )
-                        % (rec.partner_id.name, len(registrations) - 1)
+                        % {
+                            "member": rec.partner_id.name,
+                            "count": len(registrations) - 1,
+                        }
                     )
                 # Check pass registration
                 self.check_registration_period(rec.shift_id.date_begin, rec.partner_id)
@@ -113,11 +116,13 @@ class ShiftRegistration(models.Model):
         check_begin_date = date_reg - timedelta(
             days=company.number_of_days_in_period - 1
         )
+        date_begin = check_begin_date.date()
+        date_end = date_reg.date()
         registrations = partner.registration_ids.filtered(
-            lambda r, d1=check_begin_date.date(), d2=date_reg.date(): (
+            lambda r, date_begin=date_begin, date_end=date_end: (
                 r.date_begin
-                and r.date_begin.date() >= d1
-                and r.date_begin.date() <= d2
+                and r.date_begin.date() >= date_begin
+                and r.date_begin.date() <= date_end
                 and r.state != "cancel"
                 and r.shift_type == "ftop"
                 and not r.is_related_shift_ftop
@@ -129,17 +134,16 @@ class ShiftRegistration(models.Model):
         ):
             raise ValidationError(
                 _(
-                    "The member %s already has %s registrations in the "
-                    "preceding %s days. You can't program more."
+                    "The member %(member)s already has %(count)s registrations in "
+                    "the preceding %(days)s days. You can't program more."
                 )
-                % (
-                    partner.name,
-                    len(registrations) - 1,
-                    company.number_of_days_in_period,
-                )
+                % {
+                    "member": partner.name,
+                    "count": len(registrations) - 1,
+                    "days": company.number_of_days_in_period,
+                }
             )
 
-    @api.multi
     def action_create_extension(self):
         """
         @Function triggered by a button on Attendance tree view
@@ -168,7 +172,6 @@ class ShiftRegistration(models.Model):
             res_extension = shift_extension_env.create(ext_vals)
             registration.related_extension_id = res_extension.id
 
-    @api.multi
     def button_reg_absent(self):
         # Store state before absent
         partner_cooperative_states = {}
@@ -204,7 +207,8 @@ class ShiftRegistration(models.Model):
                     )
                     # If no markup reg found, set date end for the reg shift
                     if not markup_shift_reg_count:
-                        # F#T61476 - [SQQ] Members going straight to unsubscribed after 2 consecutive absences
+                        # F#T61476 - [SQQ] Members going straight to
+                        # unsubscribed after 2 consecutive absences
                         if (
                             partner_cooperative_states.get(
                                 reg.partner_id, reg.partner_id.cooperative_state
@@ -244,10 +248,12 @@ class ShiftRegistration(models.Model):
         Args:
             shift_type (str): Type of the shift, e.g., 'standard', 'ftop'.
             registration_state (str): Registration status like 'done', 'absent', etc.
-            custom_reference_points (dict, optional): Dictionary to override or extend default point values.
+            custom_reference_points (dict, optional): Dictionary to override
+                or extend default point values.
 
         Returns:
-            int: Point value corresponding to the combination. Defaults to 0 if not defined.
+            int: Point value corresponding to the combination.
+                Defaults to 0 if not defined.
         """
         default_reference_points = {
             "ftop": {"done": 1, "replaced": 1, "absent": -1, "excused": -1},
@@ -259,8 +265,7 @@ class ShiftRegistration(models.Model):
 
         return default_reference_points.get(shift_type, {}).get(registration_state, 0)
 
-    @api.multi
-    def write(self, vals):
+    def write(self, vals):  # noqa: C901
         """
         Overide write function to update point counter for member
             + Standard:
@@ -368,7 +373,9 @@ class ShiftRegistration(models.Model):
                     if shift_reg.partner_id:
                         counter_events = (
                             shift_reg.partner_id.sudo().counter_event_ids.filtered(
-                                lambda c: c.shift_id.id == shift_reg.shift_id.id
+                                lambda c, shift_id=shift_reg.shift_id.id: (
+                                    c.shift_id.id == shift_id
+                                )
                             )
                         )
                         for event in counter_events:
@@ -378,7 +385,7 @@ class ShiftRegistration(models.Model):
                                     "point_qty": 0,
                                     "notes": "reset to 0 when clicking SET TO"
                                     + " UNCONFIRMED button for error correction"
-                                    + " (original point quantity: %s)" % (last_qty),
+                                    + f" (original point quantity: {last_qty})",
                                 }
                             )
                     shift_reg.related_extension_id.unlink()
@@ -398,7 +405,6 @@ class ShiftRegistration(models.Model):
     def _is_replacing_makeup_shift(self):
         return False
 
-    @api.multi
     def get_standard_supplemental_credit(self):
         self.ensure_one()
         standard_point = 1
@@ -435,7 +441,6 @@ class ShiftRegistration(models.Model):
             standard_point = balance_standard_point - current_standard_point
         return standard_point
 
-    @api.multi
     def get_volants_supplemental_credit(self):
         self.ensure_one()
         volant_point = 1
@@ -460,8 +465,7 @@ class ShiftRegistration(models.Model):
                 volant_point = float(credit_config.credited_make_ups)
         return volant_point
 
-    @api.multi
-    def adjust_qty_on_holiday(self, vals):
+    def adjust_qty_on_holiday(self, vals):  # noqa: C901
         """
         This method balance point qty for attendess that's on holiday
         flowwing the rule:
@@ -533,7 +537,6 @@ class ShiftRegistration(models.Model):
                 )
         return True
 
-    @api.multi
     def balance_point_qty_ftop_shift(self, holiday_id, current_point, state):
         self.ensure_one()
         point_counter_env = self.env["shift.counter.event"]
@@ -554,7 +557,7 @@ class ShiftRegistration(models.Model):
                 point = 1
         # Create Point Counter
         if point > 0:
-            point_counter_env.sudo().with_context({"automatic": True}).create(
+            point_counter_env.sudo().with_context(automatic=True).create(
                 {
                     "name": _("Balance Qty For Shift Cloture"),
                     "shift_id": self.shift_id.id,
@@ -565,16 +568,14 @@ class ShiftRegistration(models.Model):
                 }
             )
 
-    @api.multi
     def convert_format_datatime(self):
         for record in self:
             date = datetime.strftime(record.shift_id.date_begin_tz, "%d/%m/%Y")
             hour = datetime.strftime(record.shift_id.date_begin_tz, "%H")
             minute = datetime.strftime(record.shift_id.date_begin_tz, "%M")
-            res = "%s à %sh%s" % (date, hour, minute)
+            res = f"{date} à {hour}h{minute}"
             return res
 
-    @api.multi
     @api.onchange("shift_id")
     def onchange_shift_id(self):
         # Use the context value for default
@@ -591,7 +592,6 @@ class ShiftRegistration(models.Model):
                 lambda t: t.product_id == ticket_type_product
             )
 
-    @api.multi
     @api.depends("shift_id", "date_begin")
     def name_get(self):
         result = []
@@ -603,7 +603,6 @@ class ShiftRegistration(models.Model):
             result.append((registration.id, name))
         return result
 
-    @api.multi
     def checking_shift_attendance(self):
         """
         @Function to check the attendance:
@@ -626,8 +625,8 @@ class ShiftRegistration(models.Model):
                 and shift_reg.partner_id.working_state == "up_to_date"
             ):
                 uptodate_list.append(
-                    "- [%s] %s"
-                    % (shift_reg.partner_id.barcode_base, shift_reg.partner_id.name)
+                    f"- [{shift_reg.partner_id.barcode_base}]"
+                    f" {shift_reg.partner_id.name}"
                 )
         if uptodate_list:
             raise UserError(
@@ -639,7 +638,6 @@ class ShiftRegistration(models.Model):
                 % "\n".join(uptodate_list)
             )
 
-    @api.multi
     def check_leave_time(self):
         """
         Check leaving time when register the shift
@@ -650,9 +648,11 @@ class ShiftRegistration(models.Model):
         for reg in self.sudo():
             # Get leave
             leaves = reg.partner_id.leave_ids.filtered(
-                lambda l: (l.type_id.is_temp_leave or l.type_id.is_incapacity)
-                and l.stop_date
-                and l.state == "done"
+                lambda leave: (
+                    (leave.type_id.is_temp_leave or leave.type_id.is_incapacity)
+                    and leave.stop_date
+                    and leave.state == "done"
+                )
             )
 
             for leave in leaves:
@@ -678,16 +678,17 @@ class ShiftRegistration(models.Model):
                                 raise UserError(
                                     _(
                                         """
-                                You can't register the shift (%s - %s)
+                                You can't register the shift
+                                (%(reg_begin)s - %(reg_end)s)
                                 that falls within the period of the
-                                leave (%s - %s)"""
-                                        % (
-                                            reg.date_begin,
-                                            reg.date_end,
-                                            leave.start_date,
-                                            leave.stop_date,
-                                        )
+                                leave (%(leave_start)s - %(leave_stop)s)"""
                                     )
+                                    % {
+                                        "reg_begin": reg.date_begin,
+                                        "reg_end": reg.date_end,
+                                        "leave_start": leave.start_date,
+                                        "leave_stop": leave.stop_date,
+                                    }
                                 )
                     elif (
                         not reg.shift_id.shift_type_id.is_ftop
@@ -710,14 +711,15 @@ class ShiftRegistration(models.Model):
                                 raise UserError(
                                     _(
                                         """
-                                You can't register the shift (%s - %s)
+                                You can't register the shift
+                                (%(reg_begin)s - %(reg_end)s)
                                 that falls within the period of the
-                                leave (%s - %s)"""
-                                        % (
-                                            reg.date_begin,
-                                            reg.date_end,
-                                            leave.start_date,
-                                            leave.stop_date,
-                                        )
+                                leave (%(leave_start)s - %(leave_stop)s)"""
                                     )
+                                    % {
+                                        "reg_begin": reg.date_begin,
+                                        "reg_end": reg.date_end,
+                                        "leave_start": leave.start_date,
+                                        "leave_stop": leave.stop_date,
+                                    }
                                 )

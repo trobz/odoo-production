@@ -5,7 +5,7 @@
 
 {
     "name": "Coop - Membership",
-    "version": "12.0.9.0.0",
+    "version": "18.0.1.0.0",
     "category": "Custom",
     "summary": "Custom settings for membership",
     "author": "La Louve, Druidoo",
@@ -15,19 +15,19 @@
         "project",
         "stock",
         "hr_maintenance",
-        "hr_skill",
+        "hr_skills",
         "mass_mailing",
         "capital_subscription",
         "coop_shift",
         "purchase_compute_order",
-        "account_export",
+        # "account_export",
         "account_partner_journal",
         "account_asset_management",
-        "res_partner_account_move_line",
+        "partner_account_move_line",
         "partner_contact_birthdate",
         "partner_contact_gender",
         "sms",
-        "web_widget_image_webcam_portrait",
+        # "web_widget_image_webcam_portrait",
     ],
     "data": [
         # Security
@@ -45,15 +45,15 @@
         "data/res_partner_inform.xml",
         "data/shift_extension_type_data.xml",
         "data/email_template_data.xml",
-        # Wizard
+        # # Wizard
         "wizard/view_capital_fundraising_wizard.xml",
         "wizard/res_partner_generate_barcode_wizard.xml",
-        # Classical Data
+        # # Classical Data
         "views/view_shift_counter_event.xml",
         "views/view_res_partner_owned_share.xml",
         "views/view_res_partner.xml",
         "views/view_barcode_rule.xml",
-        "views/view_account_invoice.xml",
+        "views/view_account_move.xml",
         "views/view_capital_fundraising_category.xml",
         "views/view_shift_leave.xml",
         "views/view_shift_extension_type.xml",
@@ -61,16 +61,13 @@
         "views/view_shift_shift.xml",
         "views/res_config_view.xml",
         "views/view_shift_leave_type.xml",
-        "views/account_view.xml",
         "views/event_view.xml",
         "views/event_config_settings_view.xml",
         "views/view_shift_extension.xml",
         "views/view_shift_ticket.xml",
         "views/event_registration_view.xml",
         "views/web_templates.xml",
-        "views/view_web_access_buttons.xml",
         "views/view_shift_holiday.xml",
-        "views/custom_templates.xml",
         "views/view_shift_change_team.xml",
         "views/view_shift_template.xml",
         "views/view_mass_mailling.xml",
@@ -82,6 +79,14 @@
         "report/member_contract.xml",
         "report/member_contract_template.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "coop_membership/static/src/js/controller.esm.js",
+            "coop_membership/static/src/js/chatter_patch.esm.js",
+            "coop_membership/static/lib/scss/coop_membership_customs.scss",
+            "coop_membership/static/src/scss/ftop_seats.scss",
+        ],
+    },
     "demo": [
         "demo/capital_fundraising_category.xml",
         "demo/res_groups.xml",

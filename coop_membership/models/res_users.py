@@ -13,7 +13,6 @@ class ResUsers(models.Model):
         """
         self.login = self.partner_id and self.partner_id.email or ""
 
-    @api.multi
     def check_access_buttons(self, res_model):
         """
         Check group current user to hide buttons
@@ -54,69 +53,66 @@ class ResUsers(models.Model):
         else:
             return False
 
-    @api.multi
     def check_access_ui(self, res_model):
         """
         Check group current user to hide buttons / bars
         @return: dict({
             # For Form
-            "o_cp_sidebar": True / False,
-            "o_chatter_topbar": True / False,
-            "o_cp_buttons": True / False,
+            "actionMenuItems": True / False,
+            "o_mail_Chatter_top": True / False,
+            "can_Create_Edit": True / False,
 
             # For list
-            "o_button_import": True / False,
+            "cogMenuImport": True / False,
             # For list: when select the checkbox
-            "o_cp_sidebar": True / False,
+            "actionMenuItems": True / False,
         })
 
         """
         result = self.check_access_buttons(res_model)
         resp = {
-            "o_cp_sidebar": True,
-            "o_chatter_topbar": True,
-            "o_cp_buttons": True,
-            "o_button_import": True,
-            # "o_cp_sidebar": True
+            "actionMenuItems": True,
+            "o_mail_Chatter_top": True,
+            "can_Create_Edit": True,
+            "cogMenuImport": True,
             "result": result,
         }
         if result == "lecture_group_partner":
-            resp["o_cp_sidebar"] = False
-            resp["o_chatter_topbar"] = False
-            resp["o_cp_buttons"] = False
+            resp["actionMenuItems"] = False
+            resp["o_mail_Chatter_top"] = False
+            resp["can_Create_Edit"] = False
         elif result == "presence_group_partner":
-            resp["o_cp_sidebar"] = False
-            resp["o_chatter_topbar"] = False
-            resp["o_cp_buttons"] = False
+            resp["actionMenuItems"] = False
+            resp["o_mail_Chatter_top"] = False
+            resp["can_Create_Edit"] = False
         elif result == "saisie_group_partner":
-            resp["o_cp_sidebar"] = False
-            resp["o_chatter_topbar"] = False
+            resp["actionMenuItems"] = False
+            resp["o_mail_Chatter_top"] = False
         elif result == "presence_group_shift":
-            resp["o_cp_sidebar"] = False
-            resp["o_chatter_topbar"] = False
-            resp["o_cp_buttons"] = True
+            resp["actionMenuItems"] = False
+            resp["o_mail_Chatter_top"] = False
+            resp["can_Create_Edit"] = True
         elif result == "saisie_group_shift":
-            resp["o_cp_sidebar"] = False
-            resp["o_chatter_topbar"] = False
+            resp["actionMenuItems"] = False
+            resp["o_mail_Chatter_top"] = False
         elif result == "saisie_group_leave":
-            resp["o_cp_sidebar"] = False
-            resp["o_chatter_topbar"] = False
+            resp["actionMenuItems"] = False
+            resp["o_mail_Chatter_top"] = False
         # else:
-        #     resp["o_cp_sidebar"] = True
-        #     resp["o_chatter_topbar"] = True
-        #     resp["o_cp_buttons"] = True
+        #     resp["actionMenuItems"] = True
+        #     resp["o_mail_Chatter_top"] = True
+        #     resp["can_Create_Edit"] = True
         if result:
-            resp["o_button_import"] = False
+            resp["cogMenuImport"] = False
         self.check_access_ui_super_groups(resp)
         return resp
 
-    @api.multi
     def check_access_ui_super_groups(self, resp):
         if self.has_group("coop_membership.group_membership_chatter_topbar"):
-            resp["o_chatter_topbar"] = True
+            resp["o_mail_Chatter_top"] = True
         if self.has_group("coop_membership.group_membership_action_sidebar"):
-            resp["o_cp_sidebar"] = True
+            resp["actionMenuItems"] = True
         if self.has_group("base_import_security_group.group_import_csv"):
             # F#T66616 - [Chaudron] Membres/Contacts: show import btn
             # for users in this group
-            resp["o_button_import"] = True
+            resp["cogMenuImport"] = True

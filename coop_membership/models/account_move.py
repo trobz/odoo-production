@@ -5,25 +5,25 @@
 from odoo import api, fields, models
 
 
-class AccountInvoice(models.Model):
-    _inherit = "account.invoice"
+class AccountMove(models.Model):
+    _inherit = "account.move"
 
     partner_owned_share_id = fields.Many2one(
         "res.partner.owned.share", string="Partner Owned Share", readonly=True
     )
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """
         Modify the function to:
             - Assign the Partner Own Share for invoice with category assigned
         """
-        res = super().create(vals)
-        if vals.get("fundraising_category_id"):
-            res.assign_ownshare_to_invoice()
+        res = super().create(vals_list)
+        for invoice, vals in zip(res, vals_list, strict=True):
+            if vals.get("fundraising_category_id"):
+                invoice.assign_ownshare_to_invoice()
         return res
 
-    @api.multi
     def write(self, vals):
         """
         Modify the function to:
@@ -36,7 +36,6 @@ class AccountInvoice(models.Model):
                 invoice.assign_ownshare_to_invoice()
         return res
 
-    @api.multi
     def assign_ownshare_to_invoice(self):
         """
         @Function used for assigning an owned share record to invoices

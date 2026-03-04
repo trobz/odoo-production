@@ -4,9 +4,9 @@
         <field name="name">shift.change.team.tree</field>
         <field name="model">shift.change.team</field>
         <field name="arch" type="xml">
-            <tree
+            <list
                 decoration-info="state == 'draft'"
-                decoration-danger="has_delayed_execution_errors == True"
+                decoration-danger="has_delayed_execution_errors"
             >
                 <field name="partner_id" />
                 <field name="current_shift_template_id" />
@@ -16,7 +16,7 @@
                 <field name="is_abcd_to_abcd" invisible="1" />
                 <field name="has_delayed_execution_errors" invisible="1" />
                 <field name="state" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -56,8 +56,8 @@
                         name="button_close"
                         class="oe_highlight"
                         type="object"
-                        attrs="{'invisible': [('state', '=', 'closed')]}"
                         groups="coop_shift.group_shift_future_changes"
+                        invisible="state == 'closed'"
                     />
                     <field name="state" widget="statusbar" nolabel="1" readonly="1" />
                 </header>
@@ -67,49 +67,48 @@
                             <field
                                 name="partner_id"
                                 domain="[('is_member', '=', True)]"
-                                attrs="{'readonly' : [('state', '=', 'closed')]}"
+                                readonly="state == 'closed'"
                             />
                             <field name="show_partner_state" invisible="1" />
                             <field
                                 name="current_shift_template_id"
-                                attrs="{'invisible': [('show_partner_state', '=', True)]}"
+                                invisible="show_partner_state"
                             />
                             <field
                                 name="partner_state"
-                                attrs="{'invisible': ['|',('partner_id', '=', False), ('show_partner_state', '=', False)]}"
+                                invisible="(not partner_id) or (not show_partner_state)"
                             />
                             <field name="next_current_shift_date" />
                         </group>
                         <group>
                             <field
                                 name="new_shift_template_id"
-                                attrs="{'readonly' : [('state', '=', 'closed')]}"
+                                readonly="state == 'closed'"
                             />
                             <field
                                 name="new_next_shift_date"
-                                attrs="{'readonly' : [('state', '=', 'closed')]}"
+                                readonly="state == 'closed'"
                             />
                             <field name="is_abcd_to_abcd" invisible="1" />
                             <field
                                 name="is_catch_up"
-                                attrs="{'invisible': ['|', ('partner_state', '=', 'usubscribed'), ('is_abcd_to_abcd', '=', False)], 'readonly' : [('state', '=', 'closed')]}"
+                                invisible="(partner_state == 'usubscribed') or (not is_abcd_to_abcd)"
+                                readonly="state == 'closed'"
                             />
                         </group>
                         <group>
-                            <field
-                                name="send_mail"
-                                attrs="{'readonly' : [('state', '=', 'closed')]}"
-                            />
+                            <field name="send_mail" readonly="state == 'closed'" />
                             <field
                                 name="mail_template_id"
-                                attrs="{'invisible': [('send_mail', '=', False)], 'readonly' : [('state', '=', 'closed')]}"
+                                invisible="not send_mail"
+                                readonly="state == 'closed'"
                             />
                         </group>
                         <group>
                             <field
                                 name="shift_template_operation_id"
                                 groups="coop_membership.group_shift_template_operations"
-                                attrs="{'invisible': [('shift_template_operation_id', '=', False)]}"
+                                invisible="not shift_template_operation_id"
                             />
                         </group>
                     </group>
@@ -117,8 +116,8 @@
                         <field name="is_full_seats_mess" invisible="True" />
                         <p
                             class="alert alert-warning"
-                            attrs="{'invisible': [('is_full_seats_mess', '=', False)]}"
                             role="alert"
+                            invisible="not is_full_seats_mess"
                         >
                             <field name='full_seats_mess' nolabel='1' />
                             <button
@@ -132,8 +131,8 @@
                         <field name="is_mess_change_team" invisible="True" />
                         <p
                             class="alert alert-warning"
-                            attrs="{'invisible': [('is_mess_change_team', '=', False)]}"
                             role="alert"
+                            invisible="not is_mess_change_team"
                         >
                             <field name='mess_change_team' nolabel='1' />
                             <button

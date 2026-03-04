@@ -8,6 +8,8 @@ class Event(models.Model):
     room_preparation_member_ids = fields.Many2many(
         "res.partner",
         "rel_preparation_member_ids",
+        "event_event_id",
+        "res_partner_id",
         string="Room preparation delegates",
         domain="[('is_member', '=', True)]",
         help="1 or 2 people to prepare the room (chairs,     tables, ...)",
@@ -15,6 +17,8 @@ class Event(models.Model):
     leader_member_ids = fields.Many2many(
         "res.partner",
         "rel_leader_member_ids",
+        "event_event_id",
+        "res_partner_id",
         string="Meeting leaders",
         domain="[('is_member', '=', True)]",
         help="1 or 2 people",
@@ -22,6 +26,8 @@ class Event(models.Model):
     subscription_help_member_ids = fields.Many2many(
         "res.partner",
         "rel_help_member_ids",
+        "event_event_id",
+        "res_partner_id",
         string="Subscription helpers",
         domain="[('is_member', '=', True)]",
         help="2 people (+ 1 or 2 members in shift)",
@@ -29,11 +35,12 @@ class Event(models.Model):
     subscription_member_ids = fields.Many2many(
         "res.partner",
         "rel_subscription_member_ids",
+        "event_event_id",
+        "res_partner_id",
         string="Subscription delegates",
         domain="[('is_member', '=', True)]",
         help="2 or 3 people",
     )
-    seats_availability = fields.Selection(default="limited")
     seats_max = fields.Integer(default=lambda self: self._get_default_seats_max())
 
     @api.model
@@ -44,7 +51,7 @@ class Event(models.Model):
     def _get_event_data_for_register_form(self):
         data = []
         REGISTER_USER_ID = int(
-            self.env["ir.config_parameter"].sudo().sudo().get_param("register_user_id")
+            self.env["ir.config_parameter"].sudo().get_param("register_user_id")
         )
         user = self.env["res.users"].browse(REGISTER_USER_ID)
 

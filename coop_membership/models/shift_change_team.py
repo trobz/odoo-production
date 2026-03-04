@@ -8,18 +8,16 @@ from datetime import date, datetime, timedelta
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
-from odoo.addons.queue_job.job import job
-
 _logger = logging.getLogger(__name__)
 
 
 class ShiftChangeTeam(models.Model):
     _name = "shift.change.team"
+    _description = "Shift Change Team"
     _inherit = ["mail.thread"]
     _order = "id desc"
 
     name = fields.Char(
-        string="Name",
         compute="_compute_name_change_team",
         store=True,
         copy=False,
@@ -140,14 +138,12 @@ class ShiftChangeTeam(models.Model):
         copy=False,
     )
 
-    @api.multi
     @api.depends("partner_id")
     def _compute_name_change_team(self):
         for record in self:
             msg = _("Changes Team")
-            record.name = "%s %s" % (record.partner_id.name, msg)
+            record.name = f"{record.partner_id.name} {msg}"
 
-    @api.multi
     @api.constrains("current_shift_template_id", "new_shift_template_id")
     def change_team_constraints(self):
         for record in self:
@@ -179,7 +175,6 @@ class ShiftChangeTeam(models.Model):
                 else:
                     mail_template_abcd.send_mail(rec.id)
 
-    @api.multi
     def button_close(self):
         # Only draft records
         self = self.filtered(lambda rec: rec.state == "draft")
@@ -188,7 +183,7 @@ class ShiftChangeTeam(models.Model):
             not_members = self.mapped("partner_id").filtered(lambda r: not r.is_member)
             raise UserError(
                 _("A person you want to change team must be a member:\n\n" "%s")
-                % "\n".join(["* %s" % p.name for p in not_members])
+                % "\n".join([f"* {p.name}" for p in not_members])
             )
         # Process
         for record in self:
@@ -227,13 +222,11 @@ class ShiftChangeTeam(models.Model):
                 records.with_delay()._job_send_notification_email()
         return True
 
-    @api.multi
     def close_delayed(self):
         """Schedules a queue job to close it"""
         for rec in self:
             rec.with_delay()._job_validate_change_team()
 
-    @api.multi
     def _create_registration_in_new_template(self, vals):
         """
         Helper method to create a new registration in the new template
@@ -244,24 +237,23 @@ class ShiftChangeTeam(models.Model):
         shift_type = (
             self.new_shift_template_id.shift_type_id.is_ftop and "ftop" or "standard"
         )
-        shift_ticket_id = self.env["shift.template.ticket"]._search(
+        shift_ticket = self.env["shift.template.ticket"].search(
             [
                 ("shift_template_id", "=", self.new_shift_template_id.id),
                 ("shift_type", "=", shift_type),
             ],
             limit=1,
-        )[0]
+        )
         # Vals we know
         create_vals = {
             "partner_id": self.partner_id.id,
             "shift_template_id": self.new_shift_template_id.id,
-            "shift_ticket_id": shift_ticket_id,
+            "shift_ticket_id": shift_ticket.id,
         }
         create_vals.update(vals)
         res = self.env["shift.template.registration.line"].create(create_vals)
         return res
 
-    @api.multi
     def set_in_new_team(self):
         """
         This method set partner on new team and the date of shifts
@@ -383,7 +375,6 @@ class ShiftChangeTeam(models.Model):
         self.set_date_future_shifts(date_future_shifts)
         return True
 
-    @api.multi
     def set_date_future_shifts(self, date_next_shifts):
         self.ensure_one()
         range_dates, list_dates = self.compute_range_day()
@@ -401,7 +392,6 @@ class ShiftChangeTeam(models.Model):
                 if len(list_dates) >= 2:
                     self.second_next_shift_date = list_dates[1].date()
 
-    @api.multi
     @api.depends("new_shift_template_id")
     def _compute_full_seats_massagess(self):
         for record in self:
@@ -418,17 +408,14 @@ class ShiftChangeTeam(models.Model):
                     )
                     record.is_full_seats_mess = True
 
-    @api.multi
     def btn_full_seats_process(self):
         for record in self:
             record.is_full_seats_mess = False
 
-    @api.multi
     def btn_change_team_process(self):
         for record in self:
             record.is_mess_change_team = False
 
-    @api.multi
     def convert_state_partner(self):
         self.ensure_one()
         state = self.partner_id.cooperative_state
@@ -455,7 +442,6 @@ class ShiftChangeTeam(models.Model):
         else:
             return ""
 
-    @api.multi
     def convert_format_datatime(self, date_change):
         if date_change:
             if isinstance(date_change, str):
@@ -465,7 +451,6 @@ class ShiftChangeTeam(models.Model):
         else:
             return ""
 
-    @api.multi
     def compute_current_shift_template(self):
         self.ensure_one()
         if self.partner_id:
@@ -494,7 +479,6 @@ class ShiftChangeTeam(models.Model):
                     self.next_current_shift_date = False
                     self.current_shift_template_id = False
 
-    @api.multi
     def check_num_week(self, new_next_shift_date):
         """
         Gets the number of weeks that need to be substracted
@@ -509,7 +493,6 @@ class ShiftChangeTeam(models.Model):
         week_difference = week_number - self.new_shift_template_id.week_number
         return week_difference % n_weeks_cycle
 
-    @api.multi
     def compute_range_day(self):
         """
         Compute range day base on next shift
@@ -520,7 +503,7 @@ class ShiftChangeTeam(models.Model):
         next_shifts = self.current_shift_template_id.shift_ids.filtered(
             lambda s: s.date_begin
             < datetime.combine(self.new_next_shift_date, datetime.min.time())
-        ).sorted(key=lambda l: l.date_begin, reverse=True)
+        ).sorted(key=lambda shift: shift.date_begin, reverse=True)
         last_shift_date = next_shifts and next_shifts[0].date_begin or False
         new_team_start_date = fields.Datetime.from_string(
             self.new_next_shift_date
@@ -577,7 +560,6 @@ class ShiftChangeTeam(models.Model):
         else:
             return False, False
 
-    @api.multi
     @api.depends("new_shift_template_id", "new_next_shift_date", "partner_id")
     def _compute_mess_change_team(self):
         for record in self:
@@ -608,12 +590,11 @@ class ShiftChangeTeam(models.Model):
                             Souhaitez-vous continuer ?""")
                             record.is_mess_change_team = True
 
-    @api.multi
     def unlink(self):
         if any([rec.state == "closed" for rec in self]):
             raise ValidationError(_("You can't delete a validated operation."))
+        return super().unlink()
 
-    @job
     def _job_validate_change_team(self):
         """Validate Shift Change Team"""
         # We do it in a savepoint to avoid having the job stay in a failed state
@@ -625,7 +606,6 @@ class ShiftChangeTeam(models.Model):
         except Exception:
             self.write({"has_delayed_execution_errors": True})
 
-    @job
     def _job_send_notification_email(self):
         """Shift Change Team: Send notification email"""
         self._send_notification_email()

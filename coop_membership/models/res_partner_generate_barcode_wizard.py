@@ -4,7 +4,7 @@
 
 import logging
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -29,7 +29,6 @@ class ResPartnerGenerateBarcodeWizard(models.TransientModel):
 
     current_barcode = fields.Char(related="partner_id.barcode", readonly=True)
 
-    @api.multi
     def create_new_barcode(self):
         for wizard in self:
             barcode_rule = wizard.partner_id.barcode_rule_id

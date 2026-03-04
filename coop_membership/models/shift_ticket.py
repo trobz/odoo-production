@@ -24,7 +24,6 @@ class ShiftTicket(models.Model):
         readonly=True,
     )
 
-    @api.multi
     @api.depends(
         "shift_id",
         "shift_id.shift_ticket_ids",
@@ -46,7 +45,6 @@ class ShiftTicket(models.Model):
             record.max_available_seat_standard = max_standard_seat
             record.available_seat_ftop = available_ftop_seat
 
-    @api.multi
     def update_shift_available_seat(self):
         for shift in self:
             shift._compute_seats_ticket()

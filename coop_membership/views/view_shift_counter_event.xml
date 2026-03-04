@@ -4,7 +4,7 @@
         <field name="model">shift.counter.event</field>
         <field name="priority" eval="16" />
         <field name="arch" type="xml">
-            <tree decoration-danger="is_changed == True">
+            <list decoration-danger="is_changed">
                 <field name="shift_id" />
                 <field name="name" />
                 <field name="partner_id" invisible="1" />
@@ -13,7 +13,7 @@
                 <field name="reason_ids" widget="many2many_tags" />
                 <field name="sum_current_qty" />
                 <field name="notes" />
-            </tree>
+            </list>
         </field>
     </record>
 

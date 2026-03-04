@@ -45,7 +45,6 @@ class ShiftExtension(models.Model):
             else:
                 ext.current_extension = False
 
-    @api.multi
     @api.depends("partner_id.shift_type", "type_id.extension_method")
     def _compute_show_reduce_deduction(self):
         for record in self:
@@ -75,14 +74,14 @@ class ShiftExtension(models.Model):
                 date_stop = next_shift_date
         return date_stop
 
-    @api.model
-    def create(self, vals):
-        res = super().create(vals)
-        if res.reduce_deduction:
-            res._validate_reduced_deduction()
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super().create(vals_list)
+        for record in res:
+            if record.reduce_deduction:
+                record._validate_reduced_deduction()
         return res
 
-    @api.multi
     def _validate_reduced_deduction(self):
         """
         This method check the extension for calculating point of partner
@@ -108,7 +107,9 @@ class ShiftExtension(models.Model):
             # next_shift_date = record.partner_id.get_next_shift_date(
             #     record.date_start)
             past_reduced_attendees = record.partner_id.registration_ids.filtered(
-                lambda r: r.date_begin < date_stop and r.shift_id.shift_type_id.is_ftop
+                lambda r, date_stop=date_stop: (
+                    r.date_begin < date_stop and r.shift_id.shift_type_id.is_ftop
+                )
             ).sorted(key=lambda r: r.date_begin, reverse=True)
 
             attendees = self.env["shift.registration"]
@@ -134,7 +135,6 @@ class ShiftExtension(models.Model):
             elif shift_regs:
                 shift_regs[0].reduce_extension_id = record.id
 
-    @api.multi
     def write(self, vals):
         res = super().write(vals)
         for record in self:

@@ -10,20 +10,24 @@
                 <attribute name="statusbar_visible">draft,confirm,entry,done</attribute>
             </field>
             <button name="button_done" position="attributes">
-                <attribute name="states">entry</attribute>
+                <attribute name="invisible">state != 'entry'</attribute>
             </button>
             <button name="button_done" position="after">
                 <button
                     name="button_makeupok"
                     type="object"
-                    states="confirm"
                     class="oe_highlight"
                     string="Make-ups OK"
                     groups="coop_shift.group_shift_user,coop_membership.group_membership_bdm_saisie"
+                    invisible="state != 'confirm'"
                 />
             </button>
             <field name="date_end" position="after">
-                <field name="is_send_reminder" group="base.group_no_one" readonly="1" />
+                <field
+                    name="is_send_reminder"
+                    groups="base.group_no_one"
+                    readonly="1"
+                />
             </field>
             <group name="datetime" position="after">
                 <group name="other_info">
@@ -31,7 +35,7 @@
                         name="required_skill_ids"
                         widget="many2many_tags"
                         groups="coop_shift.group_shift_manager"
-                        attrs="{'invisible': [('required_skill_ids', '=', False)]}"
+                        invisible="not required_skill_ids"
                     />
                 </group>
             </group>
@@ -79,26 +83,21 @@
                 <page name="participants_list" string="Attendees">
                     <field
                         name="registration_ids"
-                        context="{'is_standard_ticket': True, 'default_shift_id': active_id, 'tree_view_ref' : 'coop_membership.view_shift_registration_tree_confirm_one2many'}"
+                        context="{'is_standard_ticket': True, 'default_shift_id': id, 'list_view_ref' : 'coop_membership.view_shift_registration_tree_confirm_one2many'}"
                     />
                 </page>
             </page>
 
             <!-- Set Readonly for Shift Name, Shift Leaders and Location for status <> Unconfirmed -->
             <field name="name" position="attributes">
-                <attribute
-                    name="attrs"
-                >{'readonly': [('state', '!=', 'draft')]}</attribute>
+                <attribute name="readonly">state != 'draft'</attribute>
             </field>
 
             <field name="user_ids" position="attributes">
-                <attribute
-                    name="attrs"
-                >{'readonly': [('state', '!=', 'draft')]}</attribute>
+                <attribute name="readonly">state != 'draft'</attribute>
                 <attribute
                     name="groups"
-                >coop_shift.group_shift_user,coop_membership.group_membership_access_user
-                </attribute>
+                >coop_shift.group_shift_user,coop_membership.group_membership_access_user</attribute>
             </field>
 
             <button name="button_confirm" position="attributes">
@@ -113,10 +112,9 @@
             </button>
 
             <xpath expr="//div[hasclass('oe_title')]" position="attributes">
-                <attribute name="groups">coop_shift.group_shift_user,
-                    coop_membership.group_membership_access_user,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
+                <attribute
+                    name="groups"
+                >coop_shift.group_shift_user,coop_membership.group_membership_access_user,coop_membership.group_membership_bdm_saisie</attribute>
             </xpath>
             <xpath expr="//div[@name='button_box']" position="after">
                 <div
@@ -127,8 +125,8 @@
                     <h1>
                         <field
                             name="shift_name_read"
-                            attrs="{'readonly': True}"
                             placeholder="Shift Name"
+                            readonly="True"
                         />
                     </h1>
                 </div>
@@ -156,8 +154,7 @@
         <field name="name">Attendance Entry</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">shift.shift</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="context">{"search_default_confirmed": 1}</field>
         <field name="search_view_id" ref="coop_shift.view_shift_search" />
     </record>

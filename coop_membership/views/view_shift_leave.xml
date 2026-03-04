@@ -16,8 +16,8 @@
                 <field name="show_alert_proposed_date" invisible="1" />
                 <p
                     class="alert alert-warning"
-                    attrs="{'invisible':['|', ('show_alert_proposed_date','=',False), ('state', '!=', 'draft')]}"
                     role="alert"
+                    invisible="(not show_alert_proposed_date) or (state != 'draft')"
                 >
                     <field name='alert_message' nolabel='1' />
                     <button
@@ -40,8 +40,8 @@
                 <field name="show_proceed_message" invisible="1" />
                 <p
                     class="alert alert-warning"
-                    attrs="{'invisible':['|', ('show_proceed_message','=',False), ('state', '!=', 'draft')]}"
                     role="alert"
+                    invisible="(not show_proceed_message) or (state != 'draft')"
                 >
                     <field name="proceed_message" />
                 </p>
@@ -51,7 +51,7 @@
                 <field name="absence_less_than_15days" invisible="1" />
                 <group
                     col="2"
-                    attrs="{'invisible': ['|', ('is_absence_leave', '=', False), ('absence_less_than_15days', '=', False)] }"
+                    invisible="(not is_absence_leave) or (not absence_less_than_15days)"
                 >
                     <p class='alert alert-warning' role="alert">
                         Le minimum pour une absence pour incapacité est de 15 jours.
@@ -62,16 +62,21 @@
             <field name="require_stop_date" position="before">
                 <field
                     name="non_defined_leave"
-                    attrs="{'invisible': [('non_defined_type', '=', False)], 'readonly': [('state', '!=', 'draft')]}"
                     tabindex="7"
+                    invisible="not non_defined_type"
+                    readonly="state != 'draft'"
                 />
                 <field
                     name="medical_excuse_provided"
-                    attrs="{'invisible': [('is_absence_leave', '=', False)]}"
                     tabindex="5"
+                    invisible="not is_absence_leave"
                 />
                 <field name="non_defined_type" invisible="1" />
-                <field name="is_send_reminder" group="base.group_no_one" readonly="1" />
+                <field
+                    name="is_send_reminder"
+                    groups="base.group_no_one"
+                    readonly="1"
+                />
             </field>
         </field>
     </record>

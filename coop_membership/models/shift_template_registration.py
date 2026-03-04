@@ -18,7 +18,6 @@ class ShiftTemplateRegistration(models.Model):
         string="Current Participant",
     )
 
-    @api.multi
     @api.constrains("partner_id")
     def _check_partner_subscription(self):
         for reg in self:
@@ -27,7 +26,6 @@ class ShiftTemplateRegistration(models.Model):
                     _("This partner does not have a type A capital subscription!")
                 )
 
-    @api.multi
     def _compute_current_participant(self):
         for reg in self:
             today = fields.Date.context_today(self)

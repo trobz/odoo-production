@@ -16,25 +16,19 @@
             <group name="main_field_group" position="after">
                 <p
                     class="alert alert-warning col-md-6"
-                    attrs="{'invisible': [('warning_leader_unsubscribed', '=', False)]}"
                     role="alert"
-                    groups="coop_shift.group_shift_manager, coop_membership.group_membership_bdm_saisie"
+                    groups="coop_shift.group_shift_manager,coop_membership.group_membership_bdm_saisie"
+                    invisible="not warning_leader_unsubscribed"
                 >
                     <field name='warning_leader_unsubscribed' nolabel='1' />
                 </p>
             </group>
-            <button name="toggle_active" position="attributes">
-                <attribute name="groups">
-                    coop_shift.group_shift_manager,
-                    coop_membership.group_membership_bdm_saisie
-                </attribute>
-            </button>
             <page name="technical_fields" position="inside">
                 <group>
                     <field
                         name="original_shift_template_id"
                         groups="coop_membership.group_shift_template_operations"
-                        attrs="{'invisible': [('original_shift_template_id', '=', False)]}"
+                        invisible="not original_shift_template_id"
                     />
                 </group>
             </page>
@@ -45,9 +39,9 @@
         <field name="name">shift.template.tree.view.leader.one2many</field>
         <field name="model">shift.template</field>
         <field name="arch" type="xml">
-            <tree name="Template Leaders">
+            <list name="Template Leaders">
                 <field name="user_ids" widget="many2many_tags" />
-            </tree>
+            </list>
         </field>
     </record>
 </odoo>

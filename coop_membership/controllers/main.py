@@ -6,51 +6,40 @@ import requests
 from odoo import fields, http
 from odoo.http import request
 
-from odoo.addons.web.controllers import main
-
 _logger = logging.getLogger(__name__)
 
 
 class WebsiteRegisterMeeting(http.Controller):
     @http.route(["/discovery"], type="http", auth="public", website=True)
     def get_discover_meeting(self, **post):
-        main.ensure_db()
-
         REGISTER_USER_ID = int(
-            request.env["ir.config_parameter"]
-            .sudo()
-            .sudo()
-            .get_param("register_user_id")
+            request.env["ir.config_parameter"].sudo().get_param("register_user_id")
         )
         captcha_site_key = (
             request.env["ir.config_parameter"].sudo().get_param("captcha_site_key")
         )
         user = request.env["res.users"].browse(REGISTER_USER_ID)
+        company = user.company_id
 
         # Get event available
-        event_obj = request.env["event.event"].sudo(user)
+        event_obj = request.env["event.event"].with_user(user)
         events = event_obj.search(
             [
                 ("is_discovery_meeting", "=", True),
-                ("state", "=", "confirm"),
+                ("stage_id", "in", company.discovery_meeting_event_stage_ids.ids),
                 ("date_begin", ">=", fields.Datetime.to_string(datetime.now())),
             ]
         )
         available_events = events.filtered(
-            lambda e: not (e.seats_availability == "limited" and e.seats_available < 1)
+            lambda e: not (e.seats_limited and e.seats_available < 1)
         )
         datas = available_events._get_event_data_for_register_form()
 
-        event_config = (
-            request.env["res.config.settings"]
-            .sudo()
-            .search([], limit=1, order="id desc")
-        )
         value = {
             "datas": datas,
             "captcha_site_key": captcha_site_key,
-            "description": event_config and event_config.description or "",
-            "notice": event_config and event_config.notice or "",
+            "description": company.discovery_meeting_description or "",
+            "notice": company.discovery_meeting_notice or "",
         }
         value = self._prepare_register_form_vals(value)
         return request.render("coop_membership.register_form", value)
@@ -64,40 +53,35 @@ class WebsiteRegisterMeeting(http.Controller):
         website=True,
     )
     def get_discover_meeting_again(self, **post):
-        main.ensure_db()
-
         REGISTER_USER_ID = int(
-            request.env["ir.config_parameter"]
-            .sudo()
-            .sudo()
-            .get_param("register_user_id")
+            request.env["ir.config_parameter"].sudo().get_param("register_user_id")
         )
         captcha_site_key = (
             request.env["ir.config_parameter"].sudo().get_param("captcha_site_key")
         )
         user = request.env["res.users"].browse(REGISTER_USER_ID)
         # Get event available
-        event_obj = request.env["event.event"].sudo(user)
+        event_obj = request.env["event.event"].with_user(user)
         events = event_obj.search(
             [
                 ("is_discovery_meeting", "=", True),
-                ("state", "!=", "cancel"),
+                (
+                    "stage_id",
+                    "in",
+                    user.company_id.discovery_meeting_event_stage_ids.ids,
+                ),
                 ("date_begin", ">=", fields.Datetime.to_string(datetime.now())),
             ]
         )
         available_events = events.filtered(
-            lambda e: not (
-                e.seats_availability == "limited"
-                and e.seats_available < 1
-                and e.state == "confirm"
-            )
+            lambda e: not (e.seats_limited and e.seats_available < 1)
         )
         datas = available_events._get_event_data_for_register_form()
 
         name = post.get("name", False)
         email = post.get("email", False)
         first_name = post.get("first_name", False)
-        gender = post.get("gender", False)
+        gender = post.get("gender", "male")
         mobile = post.get("mobile", False)
         phone = post.get("phone", False)
         street1 = post.get("street1", False)
@@ -141,18 +125,16 @@ class WebsiteRegisterMeeting(http.Controller):
         capcha_response = post.get("g-recaptcha-response")
         verify_url = "https://www.google.com/recaptcha/api/siteverify"
         payload = {"secret": captcha_secret_key, "response": capcha_response}
-        capcha_res = requests.post(verify_url, data=payload).json()
+        capcha_res = requests.post(verify_url, data=payload, timeout=10).json()
 
         if not capcha_res["success"]:
             return request.render("coop_membership.discovery_back")
 
         REGISTER_USER_ID = int(
-            request.env["ir.config_parameter"]
-            .sudo()
-            .sudo()
-            .get_param("register_user_id")
+            request.env["ir.config_parameter"].sudo().get_param("register_user_id")
         )
         user = request.env["res.users"].browse(REGISTER_USER_ID)
+        user_company = user.company_id
         # Get data from form
         name = post.get("name", False)
         email = post.get("email", False)
@@ -168,10 +150,10 @@ class WebsiteRegisterMeeting(http.Controller):
         event_id = post.get("select_event", False)
         dob = post.get("dob", False)
 
-        # conver dob to correct format in database
+        # convert dob to correct format in database
         try:
-            dob_date = datetime.strptime(dob, "%d/%m/%Y").date()
-            if dob_date < datetime.strptime("01/01/1900", "%d/%m/%Y").date():
+            dob_date = datetime.strptime(dob, "%Y-%m-%d").date()
+            if dob_date < datetime.strptime("1900-01-01", "%Y-%m-%d").date():
                 dob = False
             else:
                 dob = dob_date.strftime("%Y-%m-%d")
@@ -184,20 +166,20 @@ class WebsiteRegisterMeeting(http.Controller):
             )
 
         # Check email exist in database
-        partner_obj = request.env["res.partner"].sudo(user)
+        partner_obj = request.env["res.partner"].with_user(user)
         partner_id = partner_obj.search([("email", "=", email)])
 
-        event_obj = request.env["event.event"].sudo(user)
+        event_obj = request.env["event.event"].with_user(user)
         event = event_obj.browse(int(event_id))
         is_event_valid = True
 
         # Check invalid and available seat event
-        if event and event.is_discovery_meeting and event.state == "confirm":
-            if (
-                event.seats_availability == "limited"
-                and event.seats_max
-                and event.seats_available < 1
-            ):
+        if (
+            event
+            and event.is_discovery_meeting
+            and event.stage_id in user_company.discovery_meeting_event_stage_ids
+        ):
+            if event.seats_limited and event.seats_max and event.seats_available < 1:
                 is_event_valid = False
         else:
             is_event_valid = False
@@ -260,7 +242,8 @@ class WebsiteRegisterMeeting(http.Controller):
             if partner:
                 attendee.partner_id = partner.id
 
-                website = partner.company_id and partner.company_id.website
+                if partner.company_id.website:
+                    website = partner.company_id.website
 
                 if social_registration == "yes":
                     partner.set_underclass_population()
@@ -282,13 +265,13 @@ class WebsiteRegisterMeeting(http.Controller):
             return request.render("coop_membership.register_submit_form_success", value)
 
     def create_event_registration(self, val, user):
-        event_reg_obj = request.env["event.registration"].sudo(user)
+        event_reg_obj = request.env["event.registration"].with_user(user)
         event_registration = event_reg_obj.create(val)
-        event_registration.confirm_registration()
+        event_registration.action_confirm()
         return event_registration
 
     def create_contact_partner(self, partner_val, user):
-        partner_obj = request.env["res.partner"].sudo(user)
+        partner_obj = request.env["res.partner"].with_user(user)
         partner_id = partner_obj.create(partner_val)
         return partner_id
 

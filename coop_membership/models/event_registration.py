@@ -11,7 +11,6 @@ class EventRegistration(models.Model):
     )
     is_send_reminder = fields.Boolean("Send Reminder", default=False)
 
-    @api.multi
     def get_address_meeting(self):
         for record in self:
             event_address_obj = record.event_id.address_id
@@ -21,14 +20,12 @@ class EventRegistration(models.Model):
             address = f"{street} {zip_code} {city}"
             return address
 
-    @api.multi
     def get_email_contact_meeting(self):
         self.ensure_one()
         company = self.partner_id.company_id or self.env.user.company_id
         company_email = company.email_meeting_contact or company.email
         return company_email
 
-    @api.multi
     def get_time_before(self, number):
         for record in self:
             if record.event_id.date_tz:
@@ -41,13 +38,11 @@ class EventRegistration(models.Model):
             time = self.convert_meeting_time(time_ago)
             return time.encode("utf-8")
 
-    @api.multi
     def convert_meeting_time(self, time):
         self.ensure_one()
-        time = "%sh%s" % (time[11:].split(":")[0], time.split(":")[1])
+        time = f"{time[11:].split(':')[0]}h{time.split(':')[1]}"
         return time
 
-    @api.multi
     def convert_weekdays(self, wd):
         self.ensure_one()
         if wd == 0:
@@ -66,7 +61,6 @@ class EventRegistration(models.Model):
             wd = _("Sunday")
         return wd
 
-    @api.multi
     def convert_month(self, month):
         self.ensure_one()
         if month == 1:

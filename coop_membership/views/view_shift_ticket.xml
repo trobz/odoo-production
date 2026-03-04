@@ -4,7 +4,7 @@
         <field name="name">view.shift.ticket.seats.tree</field>
         <field name="model">shift.ticket</field>
         <field name="arch" type="xml">
-            <tree string="FTOP Seats" editable="top" class="ftop_seats">
+            <list editable="top" class="ftop_seats">
                 <field name="shift_id" readonly="1" />
                 <field name="state" invisible="1" />
                 <field name="max_available_seat_standard" type="char" />
@@ -14,9 +14,16 @@
                     readonly="1"
                     type="char"
                     string="Max Available Seats FTOP"
+                    groups="!coop_shift.group_shift_user,!coop_membership.group_membership_access_user"
+                />
+                <field
+                    name="seats_max"
+                    type="char"
+                    string="Max Available Seats FTOP"
+                    groups="coop_shift.group_shift_user,coop_membership.group_membership_access_user"
                 />
                 <field name="available_seat_ftop" readonly="1" type="char" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -37,22 +44,6 @@
                     <field name="seats_unconfirmed" readonly="1" />
                 </group>
             </form>
-        </field>
-    </record>
-
-    <record id="view_shift_ticket_seats_edit_tree" model="ir.ui.view">
-        <field name="name">view.shift.ticket.seats.edit_tree</field>
-        <field name="model">shift.ticket</field>
-        <field name="inherit_id" ref="coop_membership.view_shift_ticket_seats_tree" />
-        <field
-            name="groups_id"
-            eval="[(4, ref('coop_shift.group_shift_user')),
-                                       (4, ref('coop_membership.group_membership_access_user'))]"
-        />
-        <field name="arch" type="xml">
-            <field name="seats_max" position="attributes">
-                <attribute name="readonly">0</attribute>
-            </field>
         </field>
     </record>
 

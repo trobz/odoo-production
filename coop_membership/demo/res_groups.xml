@@ -6,18 +6,30 @@
 -->
 <odoo>
     <record model="res.groups" id="subscriptions_creator_payment">
-        <field name="users" eval="[(4, ref('base.user_root'))]" />
+        <field
+            name="users"
+            eval="[(4, ref('base.user_root')),(4, ref('base.user_admin'))]"
+        />
     </record>
 
     <record model="res.groups" id="subscriptions_can_change_fundraising_category">
-        <field name="users" eval="[(4, ref('base.user_root'))]" />
+        <field
+            name="users"
+            eval="[(4, ref('base.user_root')),(4, ref('base.user_admin'))]"
+        />
     </record>
 
     <record model="res.groups" id="coop_shift.group_shift_manager">
-        <field name="users" eval="[(4, ref('base.user_root'))]" />
+        <field
+            name="users"
+            eval="[(4, ref('base.user_root')),(4, ref('base.user_admin'))]"
+        />
     </record>
 
     <record model="res.groups" id="subscriptions_creator">
-        <field name="users" eval="[(4, ref('base.user_demo'))]" />
+        <field
+            name="users"
+            eval="[(4, ref('base.user_demo')),(4, ref('base.user_admin'))]"
+        />
     </record>
 </odoo>

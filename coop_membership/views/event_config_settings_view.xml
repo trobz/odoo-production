@@ -1,42 +1,58 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <record id="res_config_settings_view_form1" model="ir.ui.view">
+    <record id="event_res_config_settings_view_form_inherit" model="ir.ui.view">
         <field name="name">res.config.settings.view.form.inherit.coop.membership</field>
         <field name="model">res.config.settings</field>
         <field name="inherit_id" ref="event.res_config_settings_view_form" />
         <field name="arch" type="xml">
-            <div name="event_settings_website" position="after">
-                <div class="col-12 col-lg-6 o_setting_box">
-                    <div class="o_setting_left_pane" />
-                    <!--<div class="o_setting_right_pane">-->
-                    <!--<label for="seats_max"/>-->
-                    <!--<field name="seats_max"/>-->
-                    <!--</div>-->
-                </div>
-                <div class="col-12 col-lg-6 o_setting_box">
-                    <div class="o_setting_right_pane">
-                        <div class="content-group">
-                            <div class="row">
-                                <label
-                                    for="description"
-                                    class="col-lg-3 o_light_label"
-                                />
-                                <field name="description" />
-                            </div>
+            <block name="registration_setting_container" position="inside">
+                <setting
+                    id="discovery_meeting_event_stages"
+                    string="Discovery Meeting Event Stages"
+                    help="These stages will be used for discovery meetings."
+                >
+                    <field
+                        name="discovery_meeting_event_stage_ids"
+                        widget="many2many_tags"
+                    />
+                </setting>
+                <setting
+                    id="discovery_meeting_description"
+                    string="Discovery Meeting Description"
+                    help="This description will be displayed on the event page of discovery meetings."
+                >
+                    <field name="discovery_meeting_description" />
+                </setting>
+                <setting
+                    id="discovery_meeting_notice"
+                    string="Discovery Meeting Notice"
+                    help="This notice will be displayed on the event page of discovery meetings."
+                >
+                    <field name="discovery_meeting_notice" />
+                </setting>
+                <setting
+                    id="discovery_recaptcha"
+                    string="Discovery Meeting reCAPTCHA"
+                    help="This reCAPTCHA will be displayed on the event page of discovery meetings."
+                >
+                    <div class="content-group">
+                        <div class="mt16">
+                            <field
+                                name="discovery_meeting_captcha_site_key"
+                                placeholder="reCAPTCHA site key"
+                            />
                         </div>
                     </div>
-                </div>
-                <div class="col-12 col-lg-6 o_setting_box">
-                    <div class="o_setting_right_pane">
-                        <div class="content-group">
-                            <div class="mt16">
-                                <label for="notice" />
-                                <field name="notice" />
-                            </div>
+                    <div class="content-group">
+                        <div class="mt16">
+                            <field
+                                name="discovery_meeting_captcha_secret_key"
+                                placeholder="reCAPTCHA secret key"
+                            />
                         </div>
                     </div>
-                </div>
-            </div>
+                </setting>
+            </block>
         </field>
     </record>
 </odoo>

@@ -2,16 +2,16 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, models
+from odoo import _, models
 from odoo.exceptions import ValidationError
 
 
 class ShiftLeaveWizard(models.TransientModel):
     _inherit = "shift.leave.wizard"
 
-    @api.multi
     def button_confirm(self):
         self.ensure_one()
+        res = True
 
         leave = self.leave_id
         if (
@@ -27,4 +27,5 @@ class ShiftLeaveWizard(models.TransientModel):
         else:
             if leave.type_id.is_anticipated:
                 leave.update_info_anticipated_leave()
-            super().button_confirm()
+            res = super().button_confirm()
+        return res

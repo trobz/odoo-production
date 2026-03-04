@@ -8,10 +8,10 @@ class CapitalFundraisingCategory(models.Model):
     _inherit = "capital.fundraising.category"
 
     # Column Section
-    is_default = fields.Boolean(string="Is default")
+    is_default = fields.Boolean()
 
-    minimum_share_qty = fields.Integer(string="Default Minimum qty")
+    minimum_share_qty = fields.Integer()
 
-    line_ids = fields.One2many(string="Exception rules for minimum qty")
+    line_ids = fields.One2many()
 
-    is_worker_capital_category = fields.Boolean(string="Is Worker Capital Category")
+    is_worker_capital_category = fields.Boolean()

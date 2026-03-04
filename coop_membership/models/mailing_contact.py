@@ -1,8 +1,8 @@
 from odoo import api, fields, models
 
 
-class MailMassMailingContact(models.Model):
-    _inherit = "mail.mass_mailing.contact"
+class MailingContact(models.Model):
+    _inherit = "mailing.contact"
 
     partner_id = fields.Many2one(
         "res.partner", domain=[("is_worker_member", "=", True)], string="Number"

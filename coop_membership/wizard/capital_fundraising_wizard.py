@@ -2,14 +2,14 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class CapitalFundraisingWizard(models.TransientModel):
     _inherit = "capital.fundraising.wizard"
 
     def default_can_change_fundraising_category(self):
-        return self.user_has_groups(
+        return self.env.user.has_group(
             "coop_membership.subscriptions_can_change_fundraising_category"
         )
 
@@ -42,7 +42,6 @@ class CapitalFundraisingWizard(models.TransientModel):
     )
 
     # Action Section
-    @api.multi
     def button_confirm(self):
         self.ensure_one()
         if self.category_id.is_worker_capital_category:

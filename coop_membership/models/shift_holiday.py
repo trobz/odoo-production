@@ -22,20 +22,20 @@ class ShiftHoliday(models.Model):
         ("cancel", "Canceled"),
     ]
 
-    name = fields.Char(string="Name", required=True)
+    name = fields.Char(required=True)
     holiday_type = fields.Selection(
         [("long_period", "Long Period"), ("single_day", "Single Day")],
         required=True,
         string=" Holiday Type",
     )
     long_period_shift_ids = fields.One2many(
-        "shift.shift", "long_holiday_id", sring="Shifts"
+        "shift.shift", "long_holiday_id", string="Long Period Shifts"
     )
     single_day_shift_ids = fields.One2many(
         "shift.shift", "single_holiday_id", string="Shifts"
     )
-    date_end = fields.Date(string="Date End", required=True)
-    date_begin = fields.Date(string="Date Begin", required=True)
+    date_end = fields.Date(required=True)
+    date_begin = fields.Date(required=True)
     state = fields.Selection(selection=HOLIDAY_STATE_SELECTION, default="draft")
     make_up_type = fields.Selection(
         [("1_make_up", "1 Make Up"), ("0_make_up", "0 Make Up")], string="Make Up"
@@ -52,7 +52,6 @@ class ShiftHoliday(models.Model):
             sent instead of Template set in Shift Mail""",
     )
 
-    @api.multi
     @api.constrains("date_begin", "date_end")
     def check_over_lap(self):
         for record in self:
@@ -80,7 +79,6 @@ class ShiftHoliday(models.Model):
                         _("There is a holiday already exist in this period")
                     )
 
-    @api.multi
     @api.onchange("holiday_type")
     def onchange_holiday_type(self):
         self.ensure_one()
@@ -95,7 +93,6 @@ class ShiftHoliday(models.Model):
         if not self.send_email_reminder:
             self.reminder_template_id = False
 
-    @api.multi
     def button_confirm(self):
         for record in self:
             shifts = self.env["shift.shift"].search(
@@ -123,7 +120,6 @@ class ShiftHoliday(models.Model):
         record.state = "confirmed"
         return True
 
-    @api.multi
     def button_done(self):
         for record in self:
             if record.holiday_type == "long_period":
@@ -149,7 +145,6 @@ class ShiftHoliday(models.Model):
             record.state = "done"
         return True
 
-    @api.multi
     def attribute_point_qty_long_period(self):
         """
         This method attribute the point qty for attendee on long holiday
@@ -221,8 +216,7 @@ class ShiftHoliday(models.Model):
                 )
                 point_counter_env.sudo().with_context(automatic=True).create(count_vals)
 
-    @api.multi
-    def attribute_point_qty_single_day(self):
+    def attribute_point_qty_single_day(self):  # noqa: C901
         """This method attribute the point qty for attendees
         are on single holiday With Rule: Plus 2 in shift
         was closed with shift type standard and attendees
@@ -339,7 +333,6 @@ class ShiftHoliday(models.Model):
                 if attdendee_in_open.state != "waiting":
                     email_open_template.send_mail(attdendee_in_open.id)
 
-    @api.multi
     def reset_point_qty(self, holiday_ids):
         for holiday in self:
             events = self.env["shift.counter.event"].search(
@@ -352,14 +345,12 @@ class ShiftHoliday(models.Model):
                 last_qty = event.point_qty
                 last_notes = event.notes or ""
                 event.point_qty = 0
-                event.notes = "%s %s %s" % (
-                    last_notes,
-                    "\n Point qty was updated by overlap.",
-                    "(Last qty is %s)" % (last_qty),
+                event.notes = (
+                    f"{last_notes}\n Point qty was updated by overlap."
+                    f" (Last qty is {last_qty})"
                 )
         return True
 
-    @api.multi
     def button_cancel(self):
         for record in self:
             events = record.env["shift.counter.event"].search(
@@ -371,15 +362,13 @@ class ShiftHoliday(models.Model):
                 last_qty = event.point_qty
                 last_notes = event.notes or ""
                 event.point_qty = 0
-                event.notes = "%s %s %s" % (
-                    last_notes,
-                    "\n Point qty was updated by cancelling holiday.",
-                    "(Last qty is %s)" % (last_qty),
+                event.notes = (
+                    f"{last_notes}\n Point qty was updated by cancelling holiday."
+                    f" (Last qty is {last_qty})"
                 )
             record.state = "cancel"
         return True
 
-    @api.multi
     def button_draft(self):
         for record in self:
             if record.holiday_type == "long_period":

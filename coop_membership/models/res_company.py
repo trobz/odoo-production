@@ -8,8 +8,14 @@ from odoo import api, fields, models
 class ResCompany(models.Model):
     _inherit = "res.company"
 
+    discovery_meeting_description = fields.Html()
+    discovery_meeting_notice = fields.Html()
+    discovery_meeting_event_stage_ids = fields.Many2many(
+        "event.stage",
+        string="Discovery Meeting Event Stages",
+        default=lambda self: self.get_default_discovery_meeting_event_stages(),
+    )
     contact_us_message = fields.Html(
-        string="Contact Us Message",
         translate=True,
         default=lambda self: self.get_default_message(),
     )
@@ -18,12 +24,19 @@ class ResCompany(models.Model):
     number_of_days_in_period = fields.Integer(default=28)
     maximum_active_days = fields.Integer(default=180)
     email_meeting_contact = fields.Char()
-    company_name = fields.Char()
+    company_name = fields.Char(string="Other Name")
     members_office_open_hours = fields.Text(
-        string="Members Office Open Hours",
         translate=True,
         default=lambda self: self.get_default_timing(),
     )
+
+    @api.model
+    def get_default_discovery_meeting_event_stages(self):
+        stage_ids = (
+            self.env.ref("event.event_stage_booked", raise_if_not_found=False)
+            | self.env.ref("event.event_stage_announced", raise_if_not_found=False)
+        ).ids
+        return stage_ids
 
     @api.model
     def get_default_message(self):

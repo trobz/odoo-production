@@ -6,8 +6,9 @@ import logging
 
 import pytz
 from dateutil.relativedelta import relativedelta
-from openerp import _, api, fields, models
-from openerp.exceptions import UserError, ValidationError
+
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError, ValidationError
 
 _logger = logging.getLogger(__name__)
 
@@ -36,28 +37,18 @@ class ShiftTemplateOperation(models.Model):
         ],
         default="draft",
         required=True,
-        track_visibility="onchange",
+        tracking=True,
         copy=False,
     )
     name = fields.Char(
         required=True,
         default="/",
-        states={
-            "done": [("readonly", True)],
-            "in progress": [("readonly", True)],
-            "cancel": [("readonly", True)],
-        },
     )
     description = fields.Text()
     template_ids = fields.Many2many(
         "shift.template",
         string="Templates",
-        ondelete="set null",
-        states={
-            "done": [("readonly", True)],
-            "in progress": [("readonly", True)],
-            "cancel": [("readonly", True)],
-        },
+        ondelete="cascade",
         copy=False,
     )
     generated_template_ids = fields.One2many(
@@ -66,7 +57,6 @@ class ShiftTemplateOperation(models.Model):
         string="Generated Templates",
         readonly=True,
         copy=False,
-        ondelete="set null",
     )
     change_team_ids = fields.One2many(
         "shift.change.team",
@@ -74,18 +64,17 @@ class ShiftTemplateOperation(models.Model):
         string="Change Teams",
         readonly=True,
         copy=False,
-        ondelete="set null",
     )
     template_count = fields.Integer(
         "Selected Templates",
         compute="_compute_counts",
     )
     generated_template_count = fields.Integer(
-        "Generated Templates",
+        "Nb of Generated Templates",
         compute="_compute_counts",
     )
     change_team_count = fields.Integer(
-        "Change Teams",
+        "Nb of Change Teams",
         compute="_compute_counts",
     )
     change_team_draft_count = fields.Integer(
@@ -104,11 +93,6 @@ class ShiftTemplateOperation(models.Model):
         help="The date where the changes are applied",
         default=fields.Date.today,
         required=True,
-        states={
-            "done": [("readonly", True)],
-            "in progress": [("readonly", True)],
-            "cancel": [("readonly", True)],
-        },
     )
     strategy = fields.Selection(
         [
@@ -118,37 +102,17 @@ class ShiftTemplateOperation(models.Model):
             ("move to", "Move to another template"),
             ("cancel", "Cancel registrations"),
         ],
-        states={
-            "done": [("readonly", True)],
-            "in progress": [("readonly", True)],
-            "cancel": [("readonly", True)],
-        },
     )
     validate_team_change = fields.Boolean(
         help="If not, the change teams will be created, but not executed",
-        states={
-            "done": [("readonly", True)],
-            "in progress": [("readonly", True)],
-            "cancel": [("readonly", True)],
-        },
     )
     confirm_if_full_seats_mess = fields.Boolean(
         string="Confirm full seats warnings",
         help="Automatically ignore full seats warnings on change teams",
-        states={
-            "done": [("readonly", True)],
-            "in progress": [("readonly", True)],
-            "cancel": [("readonly", True)],
-        },
     )
     confirm_if_change_team_mess = fields.Boolean(
         string="Confirm date difference warnings",
         help="Automatically ignore date-related warnings on change teams",
-        states={
-            "done": [("readonly", True)],
-            "in progress": [("readonly", True)],
-            "cancel": [("readonly", True)],
-        },
     )
     send_mail = fields.Boolean(
         string="Send Email Notification",
@@ -160,11 +124,6 @@ class ShiftTemplateOperation(models.Model):
         help="If not set, the default change team notification will be sent",
         domain=[("model", "=", "shift.change.team")],
         required=False,
-        states={
-            "done": [("readonly", True)],
-            "in progress": [("readonly", True)],
-            "cancel": [("readonly", True)],
-        },
     )
 
     # move to strategy fields
@@ -173,11 +132,6 @@ class ShiftTemplateOperation(models.Model):
         string="Target Template",
         help="Used by the 'move to' strategy",
         copy=False,
-        states={
-            "done": [("readonly", True)],
-            "in progress": [("readonly", True)],
-            "cancel": [("readonly", True)],
-        },
     )
 
     # create strategy fields
@@ -191,20 +145,10 @@ class ShiftTemplateOperation(models.Model):
         string="Recurrency",
         help="Let the shift automatically repeat at that interval",
         default="weekly",
-        states={
-            "done": [("readonly", True)],
-            "in progress": [("readonly", True)],
-            "cancel": [("readonly", True)],
-        },
     )
     interval = fields.Integer(
         string="Repeat Every",
         help="Repeat every (Days/Week/Month/Year)",
-        states={
-            "done": [("readonly", True)],
-            "in progress": [("readonly", True)],
-            "cancel": [("readonly", True)],
-        },
         required=True,
         default=lambda self: int(
             self.env["ir.config_parameter"]
@@ -217,11 +161,6 @@ class ShiftTemplateOperation(models.Model):
         help="Number of templates to create",
         default=2,
         required=True,
-        states={
-            "done": [("readonly", True)],
-            "in progress": [("readonly", True)],
-            "cancel": [("readonly", True)],
-        },
     )
     offset = fields.Integer(
         string="Split Recurrence Offset",
@@ -232,18 +171,14 @@ class ShiftTemplateOperation(models.Model):
         "* If it's set: The created templates will be consecuently "
         "shifted the number of offset specified.",
         default=0,
-        states={
-            "done": [("readonly", True)],
-            "in progress": [("readonly", True)],
-            "cancel": [("readonly", True)],
-        },
     )
 
-    @api.model
-    def create(self, vals):
-        if vals.get("name") == "/":
-            vals["name"] = fields.Date.context_today(self)
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get("name") == "/":
+                vals["name"] = fields.Date.context_today(self)
+        return super().create(vals_list)
 
     @api.onchange("interval", "quantity")
     def _onchange_interval_quantity(self):
@@ -272,19 +207,16 @@ class ShiftTemplateOperation(models.Model):
                     * 100
                 )
 
-    @api.multi
     def action_view_templates(self):
         res = self.env.ref("coop_shift.action_shift_template").read()[0]
         res["domain"] = [("id", "in", self.template_ids.ids)]
         return res
 
-    @api.multi
     def action_view_generated_templates(self):
         res = self.env.ref("coop_shift.action_shift_template").read()[0]
         res["domain"] = [("shift_template_operation_id", "in", self.ids)]
         return res
 
-    @api.multi
     def action_view_change_teams(self):
         res = self.env.ref("coop_membership.action_shift_change_teams").read()[0]
         res["domain"] = [("shift_template_operation_id", "in", self.ids)]
@@ -315,7 +247,6 @@ class ShiftTemplateOperation(models.Model):
             )
         )
 
-    @api.multi
     def _mass_change_team(self, registrations, target_template):
         """Mass create and confirm change team objects"""
         self.ensure_one()
@@ -348,7 +279,6 @@ class ShiftTemplateOperation(models.Model):
                 else:
                     change_team.with_context(delay_email=True).button_close()
 
-    @api.multi
     def _execute_move(self, templates, target_template):
         self.ensure_one()
         self._mass_change_team(
@@ -356,7 +286,6 @@ class ShiftTemplateOperation(models.Model):
             target_template=target_template,
         )
 
-    @api.multi
     def _execute_create(self):
         """
         Creates child templates using the strategy 'create'
@@ -422,7 +351,6 @@ class ShiftTemplateOperation(models.Model):
             res[template.id] = child_template_ids
         return res
 
-    @api.multi
     def _execute_create_and_move(self):
         """
         This strategy was designed to migrate 4-week cycle templates
@@ -456,7 +384,6 @@ class ShiftTemplateOperation(models.Model):
                     target_template=child_template_ids[i],
                 )
 
-    @api.multi
     def _execute_move_back(self):
         self.ensure_one()
         missing_original_template_ids = self.template_ids.filtered(
@@ -489,7 +416,6 @@ class ShiftTemplateOperation(models.Model):
                 target_template=original_template,
             )
 
-    @api.multi
     def execute(self):
         self.ensure_one()
         if not self.strategy:
@@ -515,13 +441,11 @@ class ShiftTemplateOperation(models.Model):
         # Update state
         self.state = "in progress"
 
-    @api.multi
     def unlink(self):
         if any([rec.state != "draft" for rec in self]):
             raise ValidationError(_("You only delete draft operations."))
         return super().unlink()
 
-    @api.multi
     def action_close(self):
         if any(rec.change_team_draft_count > 0 for rec in self):
             raise UserError(
@@ -532,12 +456,10 @@ class ShiftTemplateOperation(models.Model):
             )
         self.write({"state": "done"})
 
-    @api.multi
     def action_cancel(self):
         self.mapped("change_team_ids").unlink()
         self.mapped("generated_template_ids").unlink()
         self.write({"state": "cancel"})
 
-    @api.multi
     def action_draft(self):
         self.write({"state": "draft"})

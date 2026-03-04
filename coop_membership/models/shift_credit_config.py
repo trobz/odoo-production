@@ -24,7 +24,6 @@ class ShiftCreditConfig(models.Model):
     apply_for_abcd = fields.Boolean(string="ABCD rattrapages")
     apply_for_volants = fields.Boolean(string="Volants")
 
-    @api.multi
     @api.constrains(
         "template_ids", "state", "end_date", "apply_for_abcd", "apply_for_volants"
     )
@@ -49,6 +48,5 @@ class ShiftCreditConfig(models.Model):
             if duplicated_credit_configs:
                 raise ValidationError(_("The configuration is duplicated"))
 
-    @api.multi
     def cancel(self):
         return self.write({"state": "cancel"})
