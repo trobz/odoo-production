@@ -1,6 +1,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html
 
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 
 
 class StockInventoryRecurrentReportWizard(models.TransientModel):
@@ -11,39 +11,20 @@ class StockInventoryRecurrentReportWizard(models.TransientModel):
         "stock.inventory",
         "stock_inventory_recurrent_report_rel",
         string="Inventory Adjustments",
-        default=lambda self: self.get_default_inventory(),
+        default=lambda self: self._get_default_inventories(),
     )
 
     @api.model
-    def get_default_inventory(self):
+    def _get_default_inventories(self):
         ctx = self._context
-        inventory_ids = []
         if ctx.get("active_ids") and ctx.get("active_model") == "stock.inventory":
-            inventory_ids = ctx["active_ids"]
-        return [(6, 0, inventory_ids)]
+            return [Command.set(ctx["active_ids"])]
+        return []
 
-    @api.multi
-    def _execute(self):
-        self.ensure_one()
-        vals = []
-        inventories = self.env["stock.inventory"]
-        for categ_group in self.category_group_ids:
-            for categ in categ_group.category_ids:
-                vals.append(
-                    {
-                        "name": categ.name,
-                        "filter": "category",
-                        "category_id": categ.id,
-                        "category_group_id": categ_group.id,
-                    }
-                )
-        if vals:
-            inventories = self.env["stock.inventory"].create(vals)
-        return inventories
-
-    @api.multi
     def action_print(self):
         self.ensure_one()
-        action = self.env.ref("stock.action_report_inventory")
+        action = self.env.ref(
+            "coop_inventory_recurrent.action_report_inventory_recurrent"
+        )
         inventories = self.inventory_ids.sorted(lambda i: i.name)
         return action.report_action(inventories, config=False)

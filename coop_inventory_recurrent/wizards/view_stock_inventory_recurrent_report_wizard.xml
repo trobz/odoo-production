@@ -8,7 +8,7 @@
                 <group>
                     <field
                         name="inventory_ids"
-                        context="{'tree_view_ref' : 'stock.view_inventory_tree'}"
+                        context="{'tree_view_ref': 'stock_inventory.view_stock_inventory_list'}"
                     />
                 </group>
                 <footer>
@@ -23,14 +23,12 @@
             </form>
         </field>
     </record>
-    <act_window
-        id="action_stock_inventory_report_wizard"
-        name="Print Recurring Inventories"
-        src_model="stock.inventory"
-        res_model="stock.inventory.recurrent.report.wizard"
-        view_mode="form"
-        multi="True"
-        target="new"
-        key2="client_action_multi"
-    />
+    <record id="action_stock_inventory_report_wizard" model="ir.actions.act_window">
+        <field name="name">Print Recurring Inventories</field>
+        <field name="res_model">stock.inventory.recurrent.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="stock_inventory.model_stock_inventory" />
+        <field name="binding_view_types">list</field>
+    </record>
 </odoo>
