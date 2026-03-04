@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="view_res_partner_inform_tree" model="ir.ui.view">
         <field name="name">res.partner.inform.tree</field>
         <field name="model">res.partner.inform</field>
         <field name="arch" type="xml">
             <tree editable="top">
-                <field name="name"/>
+                <field name="name" />
             </tree>
         </field>
     </record>
@@ -16,7 +16,7 @@
             <form>
                 <group>
                     <group>
-                        <field name="name"/>
+                        <field name="name" />
                     </group>
                 </group>
             </form>
@@ -27,7 +27,7 @@
         <field name="model">res.partner.inform</field>
         <field name="arch" type="xml">
             <search>
-                <field name="name"/>
+                <field name="name" />
             </search>
         </field>
     </record>
@@ -46,5 +46,5 @@
         id="menu_res_partner_inform"
         action="action_res_partner_inform"
         parent="coop_shift.menu_shift_configuration"
-        />
+    />
 </odoo>

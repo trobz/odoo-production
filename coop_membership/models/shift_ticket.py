@@ -6,39 +6,41 @@ from odoo import api, fields, models
 
 
 class ShiftTicket(models.Model):
-    _inherit = 'shift.ticket'
+    _inherit = "shift.ticket"
 
     max_available_seat_standard = fields.Integer(
         string="Max Available Seats Standard",
         compute="_compute_seats_ticket",
-        store=True)
+        store=True,
+    )
     available_seat_standard = fields.Integer(
-        string="Available Seats Standard",
-        compute="_compute_seats_ticket",
-        store=True)
+        string="Available Seats Standard", compute="_compute_seats_ticket", store=True
+    )
     available_seat_ftop = fields.Integer(
-        string="Available Seats FTOP",
-        compute="_compute_seats_ticket",
-        store=True)
+        string="Available Seats FTOP", compute="_compute_seats_ticket", store=True
+    )
     required_skill_ids = fields.Many2many(
         related="shift_id.required_skill_ids",
         readonly=True,
     )
 
     @api.multi
-    @api.depends('shift_id', 'shift_id.shift_ticket_ids',
-                 'shift_id.shift_ticket_ids.seats_max',
-                 'shift_id.shift_ticket_ids.registration_ids.state')
+    @api.depends(
+        "shift_id",
+        "shift_id.shift_ticket_ids",
+        "shift_id.shift_ticket_ids.seats_max",
+        "shift_id.shift_ticket_ids.registration_ids.state",
+    )
     def _compute_seats_ticket(self):
         for record in self:
             max_standard_seat = 0
             available_standard_seat = 0
             available_ftop_seat = 0
             for ticket in record.shift_id.shift_ticket_ids:
-                if ticket.shift_type == 'standard':
+                if ticket.shift_type == "standard":
                     max_standard_seat += ticket.seats_max
                     available_standard_seat += ticket.seats_available
-                if ticket.shift_type == 'ftop':
+                if ticket.shift_type == "ftop":
                     available_ftop_seat += ticket.seats_available
             record.available_seat_standard = available_standard_seat
             record.max_available_seat_standard = max_standard_seat

@@ -5,19 +5,41 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button type="object" name="cancel" string="Cancel" class="btn-danger" states="active"/>
-                    <field name="state" widget="statusbar"/>
+                    <button
+                        type="object"
+                        name="cancel"
+                        string="Cancel"
+                        class="btn-danger"
+                        states="active"
+                    />
+                    <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
                     <group col="4">
-                        <field name="credited_make_ups" attrs="{'readonly': [('state', '=', 'cancel')]}"/>
-                        <field name="end_date" attrs="{'readonly': [('state', '=', 'cancel')]}"/>
-                        <field name="apply_for_abcd" attrs="{'readonly': [('state', '=', 'cancel')]}"/>
-                        <field name="apply_for_volants" attrs="{'readonly': [('state', '=', 'cancel')]}"/>
+                        <field
+                            name="credited_make_ups"
+                            attrs="{'readonly': [('state', '=', 'cancel')]}"
+                        />
+                        <field
+                            name="end_date"
+                            attrs="{'readonly': [('state', '=', 'cancel')]}"
+                        />
+                        <field
+                            name="apply_for_abcd"
+                            attrs="{'readonly': [('state', '=', 'cancel')]}"
+                        />
+                        <field
+                            name="apply_for_volants"
+                            attrs="{'readonly': [('state', '=', 'cancel')]}"
+                        />
                     </group>
                     <notebook>
                         <page string="Templates">
-                            <field name="template_ids" nolabel="1" attrs="{'readonly': [('state', '=', 'cancel')]}"/>
+                            <field
+                                name="template_ids"
+                                nolabel="1"
+                                attrs="{'readonly': [('state', '=', 'cancel')]}"
+                            />
                         </page>
                     </notebook>
                 </sheet>
@@ -29,10 +51,10 @@
         <field name="model">shift.credit.config</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="template_ids" widget="many2many_tags"/>
-                <field name="credited_make_ups"/>
-                <field name="end_date"/>
-                <field name="state"/>
+                <field name="template_ids" widget="many2many_tags" />
+                <field name="credited_make_ups" />
+                <field name="end_date" />
+                <field name="state" />
             </tree>
         </field>
     </record>

@@ -1,19 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="view_shift_change_team_tree" model="ir.ui.view">
         <field name="name">shift.change.team.tree</field>
         <field name="model">shift.change.team</field>
         <field name="arch" type="xml">
-            <tree decoration-info="state == 'draft'" decoration-danger="has_delayed_execution_errors == True">
-                <field name="partner_id"/>
-                <field name="current_shift_template_id"/>
-                <field name="next_current_shift_date"/>
-                <field name="new_shift_template_id"/>
-                <field name="new_next_shift_date"/>
-                <field name="is_abcd_to_abcd" invisible="1"/>
-                <field name="has_delayed_execution_errors" invisible="1"/>
-                <field name="state"/>
+            <tree
+                decoration-info="state == 'draft'"
+                decoration-danger="has_delayed_execution_errors == True"
+            >
+                <field name="partner_id" />
+                <field name="current_shift_template_id" />
+                <field name="next_current_shift_date" />
+                <field name="new_shift_template_id" />
+                <field name="new_next_shift_date" />
+                <field name="is_abcd_to_abcd" invisible="1" />
+                <field name="has_delayed_execution_errors" invisible="1" />
+                <field name="state" />
             </tree>
         </field>
     </record>
@@ -22,15 +24,23 @@
         <field name="model">shift.change.team</field>
         <field name="arch" type="xml">
             <search>
-                <field name="partner_id"/>
-                <field name="new_next_shift_date"/>
-                <field name="create_date"/>
-                <field name="create_uid"/>
-                <separator/>
-                <filter name="pending" string="Pending" domain="[('state', '=', 'draft')]"/>
-                <filter name="done"    string="Done"    domain="[('state', '=', 'closed')]"/>
-                <separator/>
-                <filter name="delayed_errors" string="Errors" domain="[('has_delayed_execution_errors', '=', True)]"/>
+                <field name="partner_id" />
+                <field name="new_next_shift_date" />
+                <field name="create_date" />
+                <field name="create_uid" />
+                <separator />
+                <filter
+                    name="pending"
+                    string="Pending"
+                    domain="[('state', '=', 'draft')]"
+                />
+                <filter name="done" string="Done" domain="[('state', '=', 'closed')]" />
+                <separator />
+                <filter
+                    name="delayed_errors"
+                    string="Errors"
+                    domain="[('has_delayed_execution_errors', '=', True)]"
+                />
             </search>
         </field>
     </record>
@@ -41,55 +51,98 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button string="Confirm" name="button_close" class="oe_highlight" type="object"
-                            attrs="{'invisible': [('state', '=', 'closed')]}"
-                            groups="coop_shift.group_shift_future_changes"
+                    <button
+                        string="Confirm"
+                        name="button_close"
+                        class="oe_highlight"
+                        type="object"
+                        attrs="{'invisible': [('state', '=', 'closed')]}"
+                        groups="coop_shift.group_shift_future_changes"
                     />
-                    <field name="state" widget="statusbar" nolabel="1" readonly="1"/>
+                    <field name="state" widget="statusbar" nolabel="1" readonly="1" />
                 </header>
                 <sheet>
                     <group>
                         <group>
-                            <field name="partner_id" domain="[('is_member', '=', True)]"
-                                   attrs="{'readonly' : [('state', '=', 'closed')]}"/>
-                            <field name="show_partner_state" invisible="1"/>
-                            <field name="current_shift_template_id"
-                                   attrs="{'invisible': [('show_partner_state', '=', True)]}"/>
-                            <field name="partner_state"
-                                   attrs="{'invisible': ['|',('partner_id', '=', False), ('show_partner_state', '=', False)]}"/>
-                            <field name="next_current_shift_date"/>
+                            <field
+                                name="partner_id"
+                                domain="[('is_member', '=', True)]"
+                                attrs="{'readonly' : [('state', '=', 'closed')]}"
+                            />
+                            <field name="show_partner_state" invisible="1" />
+                            <field
+                                name="current_shift_template_id"
+                                attrs="{'invisible': [('show_partner_state', '=', True)]}"
+                            />
+                            <field
+                                name="partner_state"
+                                attrs="{'invisible': ['|',('partner_id', '=', False), ('show_partner_state', '=', False)]}"
+                            />
+                            <field name="next_current_shift_date" />
                         </group>
                         <group>
-                            <field name="new_shift_template_id" attrs="{'readonly' : [('state', '=', 'closed')]}"/>
-                            <field name="new_next_shift_date" attrs="{'readonly' : [('state', '=', 'closed')]}"/>
-                            <field name="is_abcd_to_abcd" invisible="1"/>
-                            <field name="is_catch_up"
-                                   attrs="{'invisible': ['|', ('partner_state', '=', 'usubscribed'), ('is_abcd_to_abcd', '=', False)], 'readonly' : [('state', '=', 'closed')]}"/>
+                            <field
+                                name="new_shift_template_id"
+                                attrs="{'readonly' : [('state', '=', 'closed')]}"
+                            />
+                            <field
+                                name="new_next_shift_date"
+                                attrs="{'readonly' : [('state', '=', 'closed')]}"
+                            />
+                            <field name="is_abcd_to_abcd" invisible="1" />
+                            <field
+                                name="is_catch_up"
+                                attrs="{'invisible': ['|', ('partner_state', '=', 'usubscribed'), ('is_abcd_to_abcd', '=', False)], 'readonly' : [('state', '=', 'closed')]}"
+                            />
                         </group>
                         <group>
-                            <field name="send_mail" attrs="{'readonly' : [('state', '=', 'closed')]}"/>
-                            <field name="mail_template_id" attrs="{'invisible': [('send_mail', '=', False)], 'readonly' : [('state', '=', 'closed')]}"/>
+                            <field
+                                name="send_mail"
+                                attrs="{'readonly' : [('state', '=', 'closed')]}"
+                            />
+                            <field
+                                name="mail_template_id"
+                                attrs="{'invisible': [('send_mail', '=', False)], 'readonly' : [('state', '=', 'closed')]}"
+                            />
                         </group>
                         <group>
-                            <field name="shift_template_operation_id"
-                                   groups="coop_membership.group_shift_template_operations"
-                                   attrs="{'invisible': [('shift_template_operation_id', '=', False)]}"/>
+                            <field
+                                name="shift_template_operation_id"
+                                groups="coop_membership.group_shift_template_operations"
+                                attrs="{'invisible': [('shift_template_operation_id', '=', False)]}"
+                            />
                         </group>
                     </group>
                     <group>
-                        <field name="is_full_seats_mess" invisible="True"/>
-                        <p class="alert alert-warning" attrs="{'invisible': [('is_full_seats_mess', '=', False)]}"
-                           role="alert">
-                            <field name='full_seats_mess' nolabel='1'/>
-                            <button string="Continue" name="btn_full_seats_process" type="object" default_focus="1"
-                                    class="btn-primary"/>
+                        <field name="is_full_seats_mess" invisible="True" />
+                        <p
+                            class="alert alert-warning"
+                            attrs="{'invisible': [('is_full_seats_mess', '=', False)]}"
+                            role="alert"
+                        >
+                            <field name='full_seats_mess' nolabel='1' />
+                            <button
+                                string="Continue"
+                                name="btn_full_seats_process"
+                                type="object"
+                                default_focus="1"
+                                class="btn-primary"
+                            />
                         </p>
-                        <field name="is_mess_change_team" invisible="True"/>
-                        <p class="alert alert-warning" attrs="{'invisible': [('is_mess_change_team', '=', False)]}"
-                           role="alert">
-                            <field name='mess_change_team' nolabel='1'/>
-                            <button string="Continue" name="btn_change_team_process" type="object" default_focus="1"
-                                    class="btn-primary"/>
+                        <field name="is_mess_change_team" invisible="True" />
+                        <p
+                            class="alert alert-warning"
+                            attrs="{'invisible': [('is_mess_change_team', '=', False)]}"
+                            role="alert"
+                        >
+                            <field name='mess_change_team' nolabel='1' />
+                            <button
+                                string="Continue"
+                                name="btn_change_team_process"
+                                type="object"
+                                default_focus="1"
+                                class="btn-primary"
+                            />
                         </p>
                     </group>
                 </sheet>
@@ -101,34 +154,39 @@
 
     <record id="action_shift_change_team_confirm" model="ir.actions.server">
         <field name="name">Validate</field>
-        <field name="model_id" ref="model_shift_change_team"/>
-        <field name="binding_model_id" ref="model_shift_change_team"/>
+        <field name="model_id" ref="model_shift_change_team" />
+        <field name="binding_model_id" ref="model_shift_change_team" />
         <field name="state">code</field>
         <field name="code">records.button_close()</field>
     </record>
 
     <record id="action_shift_change_team_confirm_delayed" model="ir.actions.server">
         <field name="name">Validate (asynchronously)</field>
-        <field name="model_id" ref="model_shift_change_team"/>
-        <field name="binding_model_id" ref="model_shift_change_team"/>
+        <field name="model_id" ref="model_shift_change_team" />
+        <field name="binding_model_id" ref="model_shift_change_team" />
         <field name="state">code</field>
         <field name="code">records.close_delayed()</field>
     </record>
 
-    <record id="action_shift_change_team_confirm_warning_date" model="ir.actions.server">
+    <record
+        id="action_shift_change_team_confirm_warning_date"
+        model="ir.actions.server"
+    >
         <field name="name">Confirm date related warnings</field>
-        <field name="model_id" ref="model_shift_change_team"/>
-        <field name="binding_model_id" ref="model_shift_change_team"/>
+        <field name="model_id" ref="model_shift_change_team" />
+        <field name="binding_model_id" ref="model_shift_change_team" />
         <field name="state">code</field>
         <field name="code">records.btn_change_team_process()</field>
     </record>
 
-    <record id="action_shift_change_team_confirm_warning_full_seats" model="ir.actions.server">
+    <record
+        id="action_shift_change_team_confirm_warning_full_seats"
+        model="ir.actions.server"
+    >
         <field name="name">Confirm seats related warnings</field>
-        <field name="model_id" ref="model_shift_change_team"/>
-        <field name="binding_model_id" ref="model_shift_change_team"/>
+        <field name="model_id" ref="model_shift_change_team" />
+        <field name="binding_model_id" ref="model_shift_change_team" />
         <field name="state">code</field>
         <field name="code">records.btn_full_seats_process()</field>
     </record>
-
 </odoo>

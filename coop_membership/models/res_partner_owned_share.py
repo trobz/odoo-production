@@ -6,8 +6,8 @@ from odoo import api, fields, models
 
 
 class ResPartnerOwnedShare(models.Model):
-    _name = 'res.partner.owned.share'
-    _description = 'Res Partner Owned Share'
+    _name = "res.partner.owned.share"
+    _description = "Res Partner Owned Share"
 
     name = fields.Char(
         compute="_compute_partner_owned_share_name",
@@ -15,13 +15,13 @@ class ResPartnerOwnedShare(models.Model):
         store=True,
     )
     partner_id = fields.Many2one(
-        'res.partner',
+        "res.partner",
         string="Partner",
         required=True,
         readonly=True,
     )
     category_id = fields.Many2one(
-        'capital.fundraising.category',
+        "capital.fundraising.category",
         string="Category",
         required=True,
         readonly=True,
@@ -33,41 +33,47 @@ class ResPartnerOwnedShare(models.Model):
         store=True,
     )
     related_invoice_ids = fields.One2many(
-        'account.invoice',
-        'partner_owned_share_id',
+        "account.invoice",
+        "partner_owned_share_id",
         string="Related Invoices",
     )
 
-    @api.depends('related_invoice_ids', 'related_invoice_ids.state')
+    @api.depends("related_invoice_ids", "related_invoice_ids.state")
     def _compute_owned_share(self):
-        '''
+        """
         @Function to compute the owned share based on related Invoice
-        '''
+        """
         for partner_share in self:
             owned_share = 0
             for invoice in partner_share.related_invoice_ids:
-                if invoice.state in ['open', 'paid']:
-                    if invoice.type == 'out_invoice':
+                if invoice.state in ["open", "paid"]:
+                    if invoice.type == "out_invoice":
                         owned_share += sum(
-                            [inv_line.quantity
-                             for inv_line in invoice.invoice_line_ids
-                             if inv_line.product_id and
-                             inv_line.product_id.is_capital_fundraising])
+                            [
+                                inv_line.quantity
+                                for inv_line in invoice.invoice_line_ids
+                                if inv_line.product_id
+                                and inv_line.product_id.is_capital_fundraising
+                            ]
+                        )
                     else:
                         owned_share -= sum(
-                            [inv_line.quantity
-                             for inv_line in invoice.invoice_line_ids
-                             if inv_line.product_id and
-                             inv_line.product_id.is_capital_fundraising])
+                            [
+                                inv_line.quantity
+                                for inv_line in invoice.invoice_line_ids
+                                if inv_line.product_id
+                                and inv_line.product_id.is_capital_fundraising
+                            ]
+                        )
             partner_share.owned_share = owned_share
 
-    @api.depends('partner_id.name', 'category_id.name')
+    @api.depends("partner_id.name", "category_id.name")
     def _compute_partner_owned_share_name(self):
-        '''
+        """
         @Function to compute the name for partner owned share
             - Partner_name - Category Name
-        '''
+        """
         for partner_share in self:
-            partner_name = partner_share.partner_id.name or ''
-            category_name = partner_share.category_id.name or ''
-            partner_share.name = '%s - %s' % (partner_name, category_name)
+            partner_name = partner_share.partner_id.name or ""
+            category_name = partner_share.category_id.name or ""
+            partner_share.name = "%s - %s" % (partner_name, category_name)

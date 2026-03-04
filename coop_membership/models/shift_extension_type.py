@@ -6,13 +6,17 @@ from odoo import fields, models
 
 
 class ShiftExtensionType(models.Model):
-    _inherit = 'shift.extension.type'
+    _inherit = "shift.extension.type"
 
     extension_method = fields.Selection(
-        selection=[('fixed_duration', 'Fixed Duration'),
-                   ('to_next_regular_shift', 'Extend to next regular shift')],
-        required=True, string="Extension Method",
-        default="fixed_duration")
+        selection=[
+            ("fixed_duration", "Fixed Duration"),
+            ("to_next_regular_shift", "Extend to next regular shift"),
+        ],
+        required=True,
+        string="Extension Method",
+        default="fixed_duration",
+    )
 
     # Required will be added in from view
     duration = fields.Integer(required=False)

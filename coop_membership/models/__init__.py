@@ -1,4 +1,3 @@
-
 from . import account_invoice
 from . import barcode_rule
 from . import capital_fundraising_category

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="coop_inform_1" model="res.partner.inform">
         <field name="name">que pas de rattrapages en avance</field>

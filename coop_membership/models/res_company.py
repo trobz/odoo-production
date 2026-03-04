@@ -11,7 +11,7 @@ class ResCompany(models.Model):
     contact_us_message = fields.Html(
         string="Contact Us Message",
         translate=True,
-        default=lambda self: self.get_default_message()
+        default=lambda self: self.get_default_message(),
     )
     max_registrations_per_day = fields.Integer(default=2)
     max_registration_per_period = fields.Integer(default=5)
@@ -22,16 +22,17 @@ class ResCompany(models.Model):
     members_office_open_hours = fields.Text(
         string="Members Office Open Hours",
         translate=True,
-        default=lambda self: self.get_default_timing())
+        default=lambda self: self.get_default_timing(),
+    )
 
     @api.model
     def get_default_message(self):
-        return u"""Hello,<br/>Please contact an employee or go at the members\'
+        return f"""Hello,<br/>Please contact an employee or go at the members\'
         office for administrative reasons.<br/>
-        Cordially, {} team""".format(self.env.user.company_id.name)
+        Cordially, {self.env.user.company_id.name} team"""
 
     @api.model
     def get_default_timing(self):
-        return u"""Tuesday: 1:30 p.m. - 4 p.m. \n
+        return """Tuesday: 1:30 p.m. - 4 p.m. \n
         Wednesday to Friday: 1:30 p.m. - 8 p.m.
         \n Saturday: 10 a.m. - 4 p.m."""

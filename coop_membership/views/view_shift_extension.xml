@@ -1,10 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="view_shift_extension_tree_no_create" model="ir.ui.view">
         <field name="name">view_shift_extension_tree_no_create</field>
         <field name="model">shift.extension</field>
-        <field name="inherit_id" ref="coop_shift.view_shift_extension_tree"/>
+        <field name="inherit_id" ref="coop_shift.view_shift_extension_tree" />
         <field name="priority">16</field>
         <field name="arch" type="xml">
             <xpath expr="//tree" position="attributes">
@@ -16,10 +15,16 @@
     <record id="view_shift_extension_tree_create" model="ir.ui.view">
         <field name="name">view_shift_extension_tree_create</field>
         <field name="model">shift.extension</field>
-        <field name="inherit_id" ref="coop_membership.view_shift_extension_tree_no_create"/>
+        <field
+            name="inherit_id"
+            ref="coop_membership.view_shift_extension_tree_no_create"
+        />
         <field name="priority">15</field>
-        <field name="groups_id" eval="[(4, ref('coop_shift.group_shift_manager')),
-                                       (4, ref('coop_membership.group_membership_bdm_saisie'))]"/>
+        <field
+            name="groups_id"
+            eval="[(4, ref('coop_shift.group_shift_manager')),
+                                       (4, ref('coop_membership.group_membership_bdm_saisie'))]"
+        />
         <field name="arch" type="xml">
             <xpath expr="//tree" position="attributes">
                 <attribute name="create">true</attribute>
@@ -30,7 +35,7 @@
     <record id="view_shift_extension_form_no_create" model="ir.ui.view">
         <field name="name">view_shift_extension_form_no_create</field>
         <field name="model">shift.extension</field>
-        <field name="inherit_id" ref="coop_shift.view_shift_extension_form"/>
+        <field name="inherit_id" ref="coop_shift.view_shift_extension_form" />
         <field name="arch" type="xml">
             <xpath expr="//form" position="attributes">
                 <attribute name="create">false</attribute>
@@ -42,9 +47,12 @@
     <record id="view_shift_extension_form_create" model="ir.ui.view">
         <field name="name">view_shift_extension_form_create</field>
         <field name="model">shift.extension</field>
-        <field name="inherit_id" ref="coop_membership.view_shift_extension_form_no_create"/>
+        <field
+            name="inherit_id"
+            ref="coop_membership.view_shift_extension_form_no_create"
+        />
         <field name="priority">15</field>
-        <field name="groups_id" eval="[(4, ref('coop_shift.group_shift_manager'))]"/>
+        <field name="groups_id" eval="[(4, ref('coop_shift.group_shift_manager'))]" />
         <field name="arch" type="xml">
             <xpath expr="//form" position="attributes">
                 <attribute name="create">true</attribute>
@@ -56,12 +64,12 @@
     <record id="view_shift_extension_tree_inherit" model="ir.ui.view">
         <field name="name">view.shift.extension.tree.inherit</field>
         <field name="model">shift.extension</field>
-        <field name="inherit_id" ref="coop_shift.view_shift_extension_tree"/>
+        <field name="inherit_id" ref="coop_shift.view_shift_extension_tree" />
         <field name="priority">16</field>
         <field name="arch" type="xml">
             <field name="type_id" position="after">
-                <field name="reduce_deduction" invisible="1"/>
-                <field name="current_extension" invisible="1"/>
+                <field name="reduce_deduction" invisible="1" />
+                <field name="current_extension" invisible="1" />
             </field>
             <xpath expr="//tree[@name='shift_extensions']" position="attributes">
                 <attribute name="decoration-danger">reduce_deduction == True</attribute>
@@ -73,12 +81,15 @@
     <record id="view_shift_extension_form_inherit" model="ir.ui.view">
         <field name="name">view.shift.extension.form.inherit</field>
         <field name="model">shift.extension</field>
-        <field name="inherit_id" ref="coop_shift.view_shift_extension_form"/>
+        <field name="inherit_id" ref="coop_shift.view_shift_extension_form" />
         <field name="priority">16</field>
         <field name="arch" type="xml">
             <field name="type_id" position="after">
-                <field name="is_show_reduce_deduction" invisible="1"/>
-                <field name="reduce_deduction" attrs="{'invisible': [('is_show_reduce_deduction', '=', False)]}"/>
+                <field name="is_show_reduce_deduction" invisible="1" />
+                <field
+                    name="reduce_deduction"
+                    attrs="{'invisible': [('is_show_reduce_deduction', '=', False)]}"
+                />
             </field>
         </field>
     </record>

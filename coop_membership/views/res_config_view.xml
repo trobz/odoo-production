@@ -1,58 +1,85 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="res_config_settings_view_form" model="ir.ui.view">
         <field name="model">res.config.settings</field>
-        <field name="priority" eval="65"/>
-        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="priority" eval="65" />
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//div[hasclass('settings')]" position="inside">
-                <div class="app_settings_block" data-string="Membership" string="Membership" data-key="coop_membership">
+                <div
+                    class="app_settings_block"
+                    data-string="Membership"
+                    string="Membership"
+                    data-key="coop_membership"
+                >
                     <h2>Shifts</h2>
-                    <div class="row mt16 o_settings_container" groups="base.group_system">
+                    <div
+                        class="row mt16 o_settings_container"
+                        groups="base.group_system"
+                    >
                         <div class="col-12 col-lg-6 o_setting_box">
-                            <div class="o_setting_left_pane">
-                            </div>
+                            <div class="o_setting_left_pane" />
                             <div class="o_setting_right_pane">
-                                <label for="shift_weeks_per_cycle" string="Shift Cycles"/>
+                                <label
+                                    for="shift_weeks_per_cycle"
+                                    string="Shift Cycles"
+                                />
                                 <div class="text-muted">
-                                    Control how weeks are named, and your cycles.<br/>
+                                    Control how weeks are named, and your cycles.<br />
                                     Changes on this settings could have undesireable results. Do it with caution.
                                 </div>
                                 <div class="content-group">
                                     <div class="mt16">
-                                        <label for="shift_weeks_per_cycle" class="o_light_label"/>
-                                        <field name="shift_weeks_per_cycle" class="oe_inline"/>
+                                        <label
+                                            for="shift_weeks_per_cycle"
+                                            class="o_light_label"
+                                        />
+                                        <field
+                                            name="shift_weeks_per_cycle"
+                                            class="oe_inline"
+                                        />
                                     </div>
                                     <div class="mt8">
-                                        <label for="shift_week_a_date" class="o_light_label"/>
-                                        <field name="shift_week_a_date" class="oe_inline"/>
+                                        <label
+                                            for="shift_week_a_date"
+                                            class="o_light_label"
+                                        />
+                                        <field
+                                            name="shift_week_a_date"
+                                            class="oe_inline"
+                                        />
                                     </div>
                                     <div class="mt8">
-                                        <button type="object" name="action_recompute_shift_weeks"
-                                                string="Recompute shifts' week names"
-                                                confirm="
+                                        <button
+                                            type="object"
+                                            name="action_recompute_shift_weeks"
+                                            string="Recompute shifts' week names"
+                                            confirm="
                                                     This will recompute all week numbers and names based on your new configuration.
                                                     It will affect all existing shifts (past and future).
                                                     Are you sure you want to continue?"
-                                                class="oe_link"/>
+                                            class="oe_link"
+                                        />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_right_pane">
-                                <label for="shift_state_delay_duration"/>
+                                <label for="shift_state_delay_duration" />
                                 <div class="content-group">
                                     <div class="mt16">
-                                        <field name="shift_state_delay_duration"/> days.
+                                        <field
+                                        name="shift_state_delay_duration"
+                                    /> days.
                                     </div>
                                 </div>
                             </div>
                             <div class="o_setting_right_pane">
-                                <label for="shift_leave_remind_days"/>
+                                <label for="shift_leave_remind_days" />
                                 <div class="content-group">
                                     <div class="mt16">
-                                        <field name="shift_leave_remind_days"/> days.
+                                        <field name="shift_leave_remind_days" /> days.
                                     </div>
                                 </div>
                             </div>
@@ -62,24 +89,40 @@
                     <div class="row mt16 o_settings_container">
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_right_pane">
-                                <label for="associated_people_available"/>
+                                <label for="associated_people_available" />
                                 <div class="content-group">
                                     <div class="mt16">
-                                        <field name="associated_people_available" widget="radio" class="o_light_label"/>
+                                        <field
+                                            name="associated_people_available"
+                                            widget="radio"
+                                            class="o_light_label"
+                                        />
                                     </div>
-                                    <div class="mt16" attrs="{'invisible':[('associated_people_available','=','unlimited')], 'required':[('associated_people_available', '=', 'limited')]}">
-                                        <label for="max_nb_associated_people" class="o_light_label"/>
-                                        <field name="max_nb_associated_people" class="oe_inline"/>
+                                    <div
+                                        class="mt16"
+                                        attrs="{'invisible':[('associated_people_available','=','unlimited')], 'required':[('associated_people_available', '=', 'limited')]}"
+                                    >
+                                        <label
+                                            for="max_nb_associated_people"
+                                            class="o_light_label"
+                                        />
+                                        <field
+                                            name="max_nb_associated_people"
+                                            class="oe_inline"
+                                        />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_right_pane">
-                                <label for="contact_us_messages"/>
+                                <label for="contact_us_messages" />
                                 <div class="content-group">
                                     <div class="mt16">
-                                        <field name="contact_us_messages" class="oe_inline"/>
+                                        <field
+                                            name="contact_us_messages"
+                                            class="oe_inline"
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -89,30 +132,30 @@
                     <div class="row mt16 o_settings_container">
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_right_pane">
-                                <label for="max_registrations_per_day"/>
+                                <label for="max_registrations_per_day" />
                                 <div class="contect-group">
                                     <div class="mt16">
-                                        <field name="max_registrations_per_day"/>
+                                        <field name="max_registrations_per_day" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_right_pane">
-                                <label for="max_registration_per_period"/>
+                                <label for="max_registration_per_period" />
                                 <div class="content-group">
                                     <div class="mt16">
-                                        <field name="max_registration_per_period"/>
+                                        <field name="max_registration_per_period" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_right_pane">
-                                <label for="number_of_days_in_period"/>
+                                <label for="number_of_days_in_period" />
                                 <div class="content-group">
                                     <div class="mt16">
-                                        <field name="number_of_days_in_period"/>
+                                        <field name="number_of_days_in_period" />
                                     </div>
                                 </div>
                             </div>
@@ -122,10 +165,10 @@
                     <div class="row mt16 o_settings_container">
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_right_pane">
-                                <label for="maximum_active_days"/>
+                                <label for="maximum_active_days" />
                                 <div class="content-group">
                                     <div class="mt16">
-                                        <field name="maximum_active_days"/>
+                                        <field name="maximum_active_days" />
                                     </div>
                                 </div>
                             </div>
@@ -135,33 +178,39 @@
                     <div class="row mt16 o_settings_container">
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_right_pane">
-                                <label for="company_name"/>
+                                <label for="company_name" />
                                 <div class="content-group">
                                     <div class="mt16">
-                                        <field name="company_name" class="oe_inline"/>
+                                        <field name="company_name" class="oe_inline" />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_right_pane">
-                                <label for="email_meeting_contact"/>
+                                <label for="email_meeting_contact" />
                                 <div class="content-group">
                                     <div class="mt16">
-                                        <field name="email_meeting_contact" class="oe_inline"/>
+                                        <field
+                                            name="email_meeting_contact"
+                                            class="oe_inline"
+                                        />
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_right_pane">
-                                <label for="members_office_open_hours"/>
+                                <label for="members_office_open_hours" />
                                 <div class="content-group">
                                     <span class="text-muted">
                                         Configure Members Office Open Hours Here. This Text will appear in email templates.
                                     </span>
                                     <div class="mt16">
-                                        <field name="members_office_open_hours" class="oe_inline"/>
+                                        <field
+                                            name="members_office_open_hours"
+                                            class="oe_inline"
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -182,10 +231,10 @@
     </record>
 
     <menuitem
-            id="menu_shift_type_seting"
-            name="Settings"
-            action="action_coop_membership_config_settings"
-            parent="coop_shift.menu_shift_configuration"
-            sequence="0"/>
-
+        id="menu_shift_type_seting"
+        name="Settings"
+        action="action_coop_membership_config_settings"
+        parent="coop_shift.menu_shift_configuration"
+        sequence="0"
+    />
 </odoo>
