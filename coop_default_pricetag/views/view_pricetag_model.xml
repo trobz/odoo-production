@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
     <record id="view_pricetag_model_search" model="ir.ui.view">
         <field name="model">pricetag.model</field>
         <field name="arch" type="xml">
             <search string="Paper Format">
-                <field name="name"/>
-                <field name="pricetag_paperformat_id"/>
+                <field name="name" />
+                <field name="pricetag_paperformat_id" />
             </search>
         </field>
     </record>
@@ -16,12 +15,14 @@
         <field name="arch" type="xml">
             <form>
                 <div class="oe_title">
-                    <label class="oe_edit_only" for="name" string="Name"/>
-                    <h1><field name="name" placeholder="Model Name"/></h1>
+                    <label class="oe_edit_only" for="name" string="Name" />
+                    <h1>
+                        <field name="name" placeholder="Model Name" />
+                    </h1>
                 </div>
                 <group cols="4">
-                    <field name="pricetag_paperformat_id"/>
-                    <field name="report_model"/>
+                    <field name="pricetag_paperformat_id" />
+                    <field name="report_model" />
                 </group>
             </form>
         </field>
@@ -33,14 +34,14 @@
         <field name="res_model">pricetag.model</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name="search_view_id" ref="view_pricetag_model_search"/>
+        <field name="search_view_id" ref="view_pricetag_model_search" />
     </record>
 
-    <menuitem id="menu_pricetag_model"
+    <menuitem
+        id="menu_pricetag_model"
         name="Pricetag Model"
         parent="sale.menu_sale_config"
         action="action_pricetag_model"
         sequence="12"
     />
-
 </odoo>

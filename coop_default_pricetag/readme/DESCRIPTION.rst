@@ -1,2 +1,0 @@
-
-* Print product barcode reports.

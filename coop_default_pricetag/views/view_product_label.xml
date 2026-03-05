@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
     <record id="view_product_label_tree" model="ir.ui.view">
         <field name="model">product.label</field>
         <field name="arch" type="xml">
@@ -30,16 +29,19 @@
                         <h2>
                             <field name="code" />
                         </h2>
-                        <label for="scale_logo_code" class="oe_edit_only"/>
+                        <label for="scale_logo_code" class="oe_edit_only" />
                         <h2>
-                            <field name="scale_logo_code"/>
+                            <field name="scale_logo_code" />
                         </h2>
                     </div>
                     <notebook>
                         <page string="Information">
                             <group col="4">
                                 <field name="active" />
-                                <field name="company_id" groups="base.group_multi_company" />
+                                <field
+                                    name="company_id"
+                                    groups="base.group_multi_company"
+                                />
                                 <newline />
                                 <field name="website" colspan="4" />
                                 <field name="note" widget="html" colspan="4" />
@@ -70,7 +72,8 @@
                                 <div class="product_label_kanban_image">
                                     <img
                                         t-att-src="kanban_image('product.label', 'image_small', record.id.raw_value)"
-                                        alt="product label" />
+                                        alt="product label"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -88,9 +91,10 @@
         <field name="view_mode">kanban,tree,form</field>
     </record>
 
-    <menuitem id="menu_product_label"
+    <menuitem
+        id="menu_product_label"
         parent="purchase.menu_procurement_management"
         action="action_product_label"
-        sequence="150" />
-
+        sequence="150"
+    />
 </odoo>

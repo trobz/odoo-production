@@ -1,29 +1,42 @@
-<?xml version="1.0" encoding="utf-8"?>
-
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="pricetag_model_default" model="pricetag.model">
         <field name="name">Default pricetag model</field>
-        <field name="pricetag_paperformat_id" ref="coop_default_pricetag.paperformat_pricetag"/>
+        <field
+            name="pricetag_paperformat_id"
+            ref="coop_default_pricetag.paperformat_pricetag"
+        />
         <field name="report_model">coop_default_pricetag.report_pricetag</field>
     </record>
 
     <record id="pricetag_model_barcode" model="pricetag.model">
         <field name="name">Default pricetag model with barcode</field>
-        <field name="pricetag_paperformat_id" ref="coop_default_pricetag.paperformat_pricetag"/>
+        <field
+            name="pricetag_paperformat_id"
+            ref="coop_default_pricetag.paperformat_pricetag"
+        />
         <field name="report_model">coop_default_pricetag.report_pricetag_barcode</field>
     </record>
 
     <record id="pricetag_model_vegetables" model="pricetag.model">
         <field name="name">Vegetables pricetag model</field>
-        <field name="pricetag_paperformat_id" ref="coop_default_pricetag.paperformat_pricetag_vegetables"/>
-        <field name="report_model">coop_default_pricetag.report_pricetag_vegetables</field>
+        <field
+            name="pricetag_paperformat_id"
+            ref="coop_default_pricetag.paperformat_pricetag_vegetables"
+        />
+        <field
+            name="report_model"
+        >coop_default_pricetag.report_pricetag_vegetables</field>
     </record>
 
     <record id="pricetag_model_simple_barcode" model="pricetag.model">
         <field name="name">Small Pricetag with Barcode</field>
-        <field name="pricetag_paperformat_id" ref="coop_default_pricetag.paperformat_pricetag"/>
-        <field name="report_model">coop_default_pricetag.report_pricetag_simple_barcode</field>
+        <field
+            name="pricetag_paperformat_id"
+            ref="coop_default_pricetag.paperformat_pricetag"
+        />
+        <field
+            name="report_model"
+        >coop_default_pricetag.report_pricetag_simple_barcode</field>
     </record>
-
 </odoo>

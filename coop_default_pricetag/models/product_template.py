@@ -4,7 +4,8 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, fields, models, _
+from odoo import _, api, fields, models
+
 import odoo.addons.decimal_precision as dp
 
 
@@ -52,8 +53,7 @@ class ProductTemplate(models.Model):
             if data.rack_location:
                 tmp = data.rack_location + (" - " + tmp if tmp else "")
             if data.rack_number_of_packages:
-                tmp = data.rack_number_of_packages + \
-                    (" - " + tmp if tmp else "")
+                tmp = data.rack_number_of_packages + (" - " + tmp if tmp else "")
             if data.default_seller_id.package_qty:
                 tmp = str(data.default_seller_id.package_qty) + (
                     " - " + tmp if tmp else ""
@@ -73,9 +73,7 @@ class ProductTemplate(models.Model):
         help="Field used to compute the"
         " expiration date. (Number of days after packaging the product)",
     )
-    expiration_comsumption_days = fields.Integer(
-        string="Expiration Consumption (Days)"
-    )
+    expiration_comsumption_days = fields.Integer(string="Expiration Consumption (Days)")
     ingredients = fields.Text()
     extra_note_bizerba_pricetag_1 = fields.Char(
         string="Extra Note printed on Bizerba Pricetags #1"
@@ -85,20 +83,19 @@ class ProductTemplate(models.Model):
     )
     is_mercuriale = fields.Boolean(
         "Mercuriale Product",
-        help="A product in mercuriale has price"
-        " that changes very regularly.",
+        help="A product in mercuriale has price" " that changes very regularly.",
     )
     price_volume = fields.Monetary(
         compute="_compute_price_volume",
         string="Price by liter",
         store=True,
-        currency_field='currency_id',
+        currency_field="currency_id",
     )
     price_weight = fields.Monetary(
         compute="_compute_price_weight",
         string="Price by kg",
         store=True,
-        currency_field='currency_id',
+        currency_field="currency_id",
     )
     country_id = fields.Many2one(
         string="Origin Country",
@@ -122,9 +119,7 @@ class ProductTemplate(models.Model):
         "Quality III - Bad Quality : Use this option only in"
         " specific situation.",
     )
-    fresh_range = fields.Selection(
-        _FRESH_RANGE_KEYS, "Range for Fresh Product"
-    )
+    fresh_range = fields.Selection(_FRESH_RANGE_KEYS, "Range for Fresh Product")
     extra_food_info = fields.Char(
         compute="_compute_extra_food_info",
         string="Extra information for invoices",
@@ -133,9 +128,7 @@ class ProductTemplate(models.Model):
         help="""For example, the number of packages that
         should be stored on the rack""",
     )
-    rack_location = fields.Char(
-        help="""The name or place of the rack"""
-    )
+    rack_location = fields.Char(help="""The name or place of the rack""")
     rack_number_of_packages = fields.Char("Number of packages on the rack")
     farming_method = fields.Char(help="""Organic Label""")
     other_information = fields.Char()
@@ -146,7 +139,7 @@ class ProductTemplate(models.Model):
         compute=_compute_pricetag_coopinfos, string="Coop custom fields"
     )
     scale_logo_code = fields.Char(readonly=True)
-    volume = fields.Float(digits=dp.get_precision('Volume'))
+    volume = fields.Float(digits=dp.get_precision("Volume"))
 
     # Compute Section
     @api.depends("list_price", "volume")
@@ -174,8 +167,7 @@ class ProductTemplate(models.Model):
             if data.origin_description:
                 tmp = data.origin_description
             if data.country_id:
-                tmp = data.country_id.name.upper() + \
-                    (" - " + tmp if tmp else "")
+                tmp = data.country_id.name.upper() + (" - " + tmp if tmp else "")
             if data.maker_description:
                 tmp = (tmp and (tmp + " - ") or "") + data.maker_description
             data.pricetag_origin = tmp
@@ -193,21 +185,23 @@ class ProductTemplate(models.Model):
 
     @api.model
     def create(self, vals):
-        vals['scale_logo_code'] = '1'
-        if 'label_ids' in vals:
+        vals["scale_logo_code"] = "1"
+        if "label_ids" in vals:
             label_ids_val = vals.get("label_ids", [])
-            if label_ids_val and isinstance(label_ids_val, list) and \
-                    len(label_ids_val[0]) == 3:
+            if (
+                label_ids_val
+                and isinstance(label_ids_val, list)
+                and len(label_ids_val[0]) == 3
+            ):
                 label_ids = label_ids_val[0][2]
-                labels = self.env['product.label'].browse(label_ids)
-                vals['scale_logo_code'] = labels and \
-                    labels[0].scale_logo_code or '1'
+                labels = self.env["product.label"].browse(label_ids)
+                vals["scale_logo_code"] = labels and labels[0].scale_logo_code or "1"
 
-        return super(ProductTemplate, self).create(vals)
+        return super().create(vals)
 
     @api.multi
     def write(self, vals):
-        if 'label_ids' in vals:
+        if "label_ids" in vals:
             res = True
             for product in self:
                 current_logo_code = product.scale_logo_code
@@ -215,13 +209,16 @@ class ProductTemplate(models.Model):
 
                 # Browse again to see check the value
                 updated_prod = self.browse(product.id)
-                new_logo_code = updated_prod.label_ids and \
-                    updated_prod.label_ids[0].scale_logo_code or '1'
+                new_logo_code = (
+                    updated_prod.label_ids
+                    and updated_prod.label_ids[0].scale_logo_code
+                    or "1"
+                )
 
                 # Only trigger the change if it is actually change
                 if current_logo_code != new_logo_code:
                     res = super(ProductTemplate, updated_prod).write(
-                        {'scale_logo_code': new_logo_code}
+                        {"scale_logo_code": new_logo_code}
                     )
             return res
-        return super(ProductTemplate, self).write(vals)
+        return super().write(vals)

@@ -29,12 +29,10 @@ class ReportPricetagBase(models.AbstractModel):
     @api.multi
     def render_html(self, data):
         self.model = self.env.context.get("active_model")
-        line_ids = data.get('line_data')
+        line_ids = data.get("line_data")
         report_context = self._context.copy()
         report_context.update(data.get("used_context", {}))
-        product_res = self.with_context(report_context)._get_products(
-            line_ids
-        )
+        product_res = self.with_context(report_context)._get_products(line_ids)
         docargs = {
             "partner_id": self.env.user.partner_id,
             "Products": product_res,
@@ -53,10 +51,10 @@ class ReportPricetagBarcode(models.AbstractModel):
 
 
 class ReportPricetagVegetables(models.AbstractModel):
-    _name = 'report.coop_default_pricetag.report_pricetag_vegetables'
-    _inherit = 'report.coop_default_pricetag.report_pricetag'
+    _name = "report.coop_default_pricetag.report_pricetag_vegetables"
+    _inherit = "report.coop_default_pricetag.report_pricetag"
 
 
 class ReportPricetagSimpleBarcode(models.AbstractModel):
-    _name = 'report.coop_default_pricetag.report_pricetag_simple_barcode'
-    _inherit = 'report.coop_default_pricetag.report_pricetag_base'
+    _name = "report.coop_default_pricetag.report_pricetag_simple_barcode"
+    _inherit = "report.coop_default_pricetag.report_pricetag_base"

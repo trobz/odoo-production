@@ -1,15 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
     <record id="view_uom_categ_form_inherited_coop_pricetag" model="ir.ui.view">
         <field name="name">uom.category.form.inherit</field>
         <field name="model">uom.category</field>
-        <field name="inherit_id" ref="uom.product_uom_categ_form_view"/>
+        <field name="inherit_id" ref="uom.product_uom_categ_form_view" />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='name']" position="after">
-                <field name="pricetag_printable" groups="base.group_no_one"/>
+                <field name="pricetag_printable" groups="base.group_no_one" />
             </xpath>
         </field>
     </record>
-
 </odoo>

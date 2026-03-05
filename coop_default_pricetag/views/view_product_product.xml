@@ -1,13 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
     <record id="view_product_product_search" model="ir.ui.view">
         <field name="model">product.product</field>
-        <field name="inherit_id" ref="product.product_search_form_view"/>
+        <field name="inherit_id" ref="product.product_search_form_view" />
         <field name="arch" type="xml">
             <filter name="filter_to_sell" position="after">
-                <separator/>
-                <filter string="Mercuriale Product" name="is_mercuriale" domain="[('is_mercuriale', '=', True)]"/>
+                <separator />
+                <filter
+                    string="Mercuriale Product"
+                    name="is_mercuriale"
+                    domain="[('is_mercuriale', '=', True)]"
+                />
             </filter>
         </field>
     </record>
@@ -16,10 +19,10 @@
         <field name="model">product.product</field>
         <field name="arch" type="xml">
             <tree editable="bottom">
-                <field name="name" readonly="1"/>
-                <field name="is_mercuriale"/>
-                <field name="fresh_category"/>
-                <field name="fresh_range"/>
+                <field name="name" readonly="1" />
+                <field name="is_mercuriale" />
+                <field name="fresh_category" />
+                <field name="fresh_range" />
             </tree>
         </field>
     </record>
@@ -28,10 +31,10 @@
         <field name="model">product.product</field>
         <field name="arch" type="xml">
             <tree editable="bottom">
-                <field name="name" readonly="1"/>
-                <field name="country_id" options="{'quick_create':false}"/>
-                <field name="maker_description"/>
-                <field name="origin_description"/>
+                <field name="name" readonly="1" />
+                <field name="country_id" options="{'quick_create':false}" />
+                <field name="maker_description" />
+                <field name="origin_description" />
             </tree>
         </field>
     </record>
@@ -42,7 +45,7 @@
         <field name="res_model">product.product</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree</field>
-        <field name="view_id" ref="view_product_product_food_tree"/>
+        <field name="view_id" ref="view_product_product_food_tree" />
     </record>
 
     <record id="action_product_product_origin" model="ir.actions.act_window">
@@ -51,7 +54,7 @@
         <field name="res_model">product.product</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree</field>
-        <field name="view_id" ref="view_product_product_origin_tree"/>
+        <field name="view_id" ref="view_product_product_origin_tree" />
     </record>
 
     <record id="action_product_product_pricetag" model="ir.actions.act_window">
@@ -61,22 +64,27 @@
         <field name="view_type">form</field>
         <field name="view_mode">tree</field>
         <field name="context">{'search_default_print_todo':1}</field>
-        <field name="search_view_id" ref="view_product_product_search"/>
+        <field name="search_view_id" ref="view_product_product_search" />
     </record>
 
-    <menuitem id="menu_product_product_food"
+    <menuitem
+        id="menu_product_product_food"
         parent="purchase.menu_procurement_management"
         action="action_product_product_food"
-        sequence="151" />
+        sequence="151"
+    />
 
-    <menuitem id="menu_product_product_origin_3"
+    <menuitem
+        id="menu_product_product_origin_3"
         parent="purchase.menu_procurement_management"
         action="action_product_product_origin"
-        sequence="152" />
+        sequence="152"
+    />
 
-    <menuitem id="menu_product_product_pricetag_3"
+    <menuitem
+        id="menu_product_product_pricetag_3"
         parent="purchase.menu_procurement_management"
         action="action_product_product_pricetag"
-        sequence="153" />
-
+        sequence="153"
+    />
 </odoo>

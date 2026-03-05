@@ -1,11 +1,11 @@
-from odoo import api, SUPERUSER_ID
+from odoo import SUPERUSER_ID, api
 
 
 def migrate(cr, version):
     if not version:
         return
     env = api.Environment(cr, SUPERUSER_ID, {})
-    products = env['product.template'].search([])
+    products = env["product.template"].search([])
     products._compute_weight()
     products._compute_price_weight()
     return

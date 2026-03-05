@@ -4,7 +4,7 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import tools, fields, models, api
+from odoo import api, fields, models, tools
 
 
 class ProductLabel(models.Model):
@@ -43,9 +43,9 @@ class ProductLabel(models.Model):
     @api.model
     def create(self, vals):
         tools.image_resize_images(vals)
-        return super(ProductLabel, self).create(vals)
+        return super().create(vals)
 
     @api.multi
     def write(self, vals):
         tools.image_resize_images(vals)
-        return super(ProductLabel, self).write(vals)
+        return super().write(vals)
