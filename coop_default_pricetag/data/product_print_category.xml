@@ -1,17 +1,26 @@
-<?xml version="1.0"?>
-
+<?xml version="1.0" ?>
 <odoo noupdate="1">
-
     <record model="product.print.category" id="ppc_demo_category">
         <field name="name">Default Category</field>
-        <field name="field_ids" eval="[(4, ref('product.field_product_product__name')),(4, ref('product.field_product_product__list_price'))]" />
-        <field name="pricetag_model_id" ref="coop_default_pricetag.pricetag_model_default"/>
+        <field
+            name="field_ids"
+            eval="[(4, ref('product.field_product_product__name')),(4, ref('product.field_product_product__list_price'))]"
+        />
+        <field
+            name="pricetag_model_id"
+            ref="coop_default_pricetag.pricetag_model_default"
+        />
     </record>
 
     <record model="product.print.category" id="vegetable_category">
         <field name="name">Vegetables</field>
-        <field name="pricetag_model_id" ref="coop_default_pricetag.pricetag_model_vegetables"/>
-        <field name="field_ids" eval="[(4, ref('product.field_product_product__name')),(4, ref('product.field_product_product__list_price'))]" />
+        <field
+            name="pricetag_model_id"
+            ref="coop_default_pricetag.pricetag_model_vegetables"
+        />
+        <field
+            name="field_ids"
+            eval="[(4, ref('product.field_product_product__name')),(4, ref('product.field_product_product__list_price'))]"
+        />
     </record>
-
 </odoo>

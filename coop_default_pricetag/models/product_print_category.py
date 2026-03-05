@@ -4,7 +4,7 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models, api
+from odoo import api, fields, models
 
 
 class ProductPrintCategory(models.Model):
@@ -12,10 +12,10 @@ class ProductPrintCategory(models.Model):
 
     @api.model
     def _get_default_model(self):
-        return self.env['pricetag.model'].search([], limit=1)
+        return self.env["pricetag.model"].search([], limit=1)
 
     pricetag_model_id = fields.Many2one(
-        'pricetag.model',
-        string='Pricetag Model',
-        default=lambda s: s._get_default_model()
+        "pricetag.model",
+        string="Pricetag Model",
+        default=lambda s: s._get_default_model(),
     )

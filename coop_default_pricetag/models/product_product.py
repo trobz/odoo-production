@@ -4,14 +4,14 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html
 
 from odoo import fields, models
+
 import odoo.addons.decimal_precision as dp
 
 
 class ProductProduct(models.Model):
-    _inherit = 'product.product'
+    _inherit = "product.product"
 
     scale_logo_code = fields.Char(
-        related="product_tmpl_id.scale_logo_code",
-        readonly=True,
-        store=True)
-    volume = fields.Float(digits=dp.get_precision('Volume'))
+        related="product_tmpl_id.scale_logo_code", readonly=True, store=True
+    )
+    volume = fields.Float(digits=dp.get_precision("Volume"))
