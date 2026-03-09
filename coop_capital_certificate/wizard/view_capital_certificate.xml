@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="capital_certificate_view" model="ir.ui.view">
         <field name="name">capital.certificate.wizard.form.view</field>
@@ -6,24 +6,27 @@
         <field name="arch" type="xml">
             <form string="Capital Fiscal Certificate Generation">
                 <group name="parameters">
-                    <field name="year"/>
+                    <field name="year" />
                 </group>
                 <group name="send_mail">
-                    <field name="send_mail"/>
+                    <field name="send_mail" />
                 </group>
-                <group name="message" attrs="{'invisible':[('send_mail', '=', False)]}">
-                    <p class="alert alert-warning" role="alert">Be careful!<br/>
+                <group name="message" invisible="not send_mail">
+                    <p class="alert alert-warning" role="alert">Be careful!<br />
                     By clicking on the Generate button, an email will be sent to every partner that suscribed capital in the selected year</p>
                 </group>
                 <group name="partners">
-                    <field name="partner_selection"/>
-                    <field name="partner_ids" attrs="{'invisible':[('partner_selection', '!=', 'list')]}"/>
+                    <field name="partner_selection" />
+                    <field name="partner_ids" invisible="partner_selection != 'list'" />
                 </group>
                 <footer>
-                    <button string="Generate" name="generate_certificates" type="object"
-                        class="oe_highlight"/>
-                    <button string="Cancel" special="cancel"
-                        class="oe_link"/>
+                    <button
+                        string="Generate"
+                        name="generate_certificates"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button string="Cancel" special="cancel" class="oe_link" />
                 </footer>
             </form>
         </field>
@@ -36,9 +39,11 @@
         <field name="target">new</field>
     </record>
 
-    <menuitem id="create_capital_certificate_menu"
+    <menuitem
+        id="create_capital_certificate_menu"
         parent="capital_subscription.menu_capital_main"
+        name="Generate Capital Certificates"
         action="create_capital_certificate_action"
-        sequence="100" />
-
+        sequence="100"
+    />
 </odoo>
