@@ -1,1 +1,1 @@
-from . import test_check_deposit
+from . import test_coop_account_check_deposit
