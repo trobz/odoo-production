@@ -6,9 +6,9 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = "res.company"
 
     capital_certificate_header = fields.Char(
-        "Capital Certificate Header",
-        help="example: 'La S.A.S. Coopérative à Capital Variable LA LOUVE'")
-    signature = fields.Binary("Signature", attachment=True)
+        help="example: 'La S.A.S. Coopérative à Capital Variable LA LOUVE'",
+    )
+    signature = fields.Binary(attachment=True)
