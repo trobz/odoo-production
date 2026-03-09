@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-09 04:41+0000\n"
-"PO-Revision-Date: 2026-03-09 04:41+0000\n"
+"POT-Creation-Date: 2026-03-09 04:42+0000\n"
+"PO-Revision-Date: 2026-03-09 04:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,44 +18,44 @@ msgstr ""
 #. module: coop_account_product_fiscal_classification
 #: model:ir.model.fields,field_description:coop_account_product_fiscal_classification.field_account_product_fiscal_classification__expense_account_id
 msgid "Expense Account"
-msgstr ""
+msgstr "Compte de charges"
 
 #. module: coop_account_product_fiscal_classification
 #: model:ir.model,name:coop_account_product_fiscal_classification.model_account_product_fiscal_classification
 msgid "Fiscal Classification"
-msgstr ""
+msgstr "Classification fiscale"
 
 #. module: coop_account_product_fiscal_classification
 #: model:ir.model.fields,field_description:coop_account_product_fiscal_classification.field_account_product_fiscal_classification__income_account_id
 msgid "Income Account"
-msgstr ""
+msgstr "Compte de produits"
 
 #. module: coop_account_product_fiscal_classification
 #: model:ir.model.fields,field_description:coop_account_product_fiscal_classification.field_product_product__is_expense_account_readonly
 #: model:ir.model.fields,field_description:coop_account_product_fiscal_classification.field_product_template__is_expense_account_readonly
 msgid "Is Expense Account Readonly"
-msgstr ""
+msgstr "Le compte de charges est en lecture seule"
 
 #. module: coop_account_product_fiscal_classification
 #: model:ir.model.fields,field_description:coop_account_product_fiscal_classification.field_product_product__is_income_account_readonly
 #: model:ir.model.fields,field_description:coop_account_product_fiscal_classification.field_product_template__is_income_account_readonly
 msgid "Is Income Account Readonly"
-msgstr ""
+msgstr "Le compte de produits est-il en lecture seule"
 
 #. module: coop_account_product_fiscal_classification
 #: model:ir.model,name:coop_account_product_fiscal_classification.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Produit"
 
 #. module: coop_account_product_fiscal_classification
 #: model:ir.model.fields,field_description:coop_account_product_fiscal_classification.field_account_product_fiscal_classification__purchase_tax_ids
 msgid "Purchase Taxes"
-msgstr ""
+msgstr "Taxes à l'achat"
 
 #. module: coop_account_product_fiscal_classification
 #: model:ir.model.fields,field_description:coop_account_product_fiscal_classification.field_account_product_fiscal_classification__sale_tax_ids
 msgid "Sale Taxes"
-msgstr ""
+msgstr "Taxes à la vente"
 
 #. module: coop_account_product_fiscal_classification
 #: model:ir.model.fields,help:coop_account_product_fiscal_classification.field_product_product__is_expense_account_readonly
@@ -63,4 +63,4 @@ msgstr ""
 #: model:ir.model.fields,help:coop_account_product_fiscal_classification.field_product_template__is_expense_account_readonly
 #: model:ir.model.fields,help:coop_account_product_fiscal_classification.field_product_template__is_income_account_readonly
 msgid "Technical field"
-msgstr ""
+msgstr "Champ technique"
