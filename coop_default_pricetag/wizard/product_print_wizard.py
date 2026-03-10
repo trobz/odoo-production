@@ -4,27 +4,30 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, models
+from odoo import models
 
 
 class ProductPrintWizard(models.TransientModel):
     _inherit = "product.print.wizard"
 
-    @api.multi
+    def _get_pricetag_report(self):
+        report_xmlid = "product_print_category.pricetag"
+        report = self.env.ref(report_xmlid)
+        if self.line_ids:
+            print_category = self.line_ids[0].print_category_id
+            report_name = print_category.pricetag_model_id.report_model
+            if report_name:
+                report2 = self.env["ir.actions.report"].search(
+                    [("report_name", "=", report_name)], limit=1
+                )
+                if report2:
+                    report = report2
+        return report
+
     def print_report(self):
         self.ensure_one()
         data = self._prepare_data()
-        # TODO: Clean this up. This method is overloaded without super()
-        report_name = "product_print_category.pricetag"
-        if self.line_ids:
-            print_category = self.line_ids[0].print_category_id
-            model = print_category.pricetag_model_id.report_model
-            if model == "coop_default_pricetag.report_pricetag_barcode":
-                report_name = "coop_default_pricetag.pricetag_barcode"
-            elif model == "coop_default_pricetag.report_pricetag_simple_barcode":
-                report_name = "coop_default_pricetag.pricetag_simple_barcode"
-            elif model and model[-26:] == "report_pricetag_vegetables":
-                report_name = "coop_default_pricetag.pricetag_vegetables"
+        report = self._get_pricetag_report()
         # Mark products as printed
         self.line_ids.mapped("product_id").write({"to_print": False})
-        return self.env.ref(report_name).report_action(self, data=data)
+        return report.report_action(self, data=data)

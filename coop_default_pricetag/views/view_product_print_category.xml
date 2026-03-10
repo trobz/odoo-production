@@ -4,7 +4,7 @@
         <field name="model">product.print.category</field>
         <field
             name="inherit_id"
-            ref="product_print_category.view_product_print_category_form"
+            ref="product_print_category.view_product_print_category_form_2"
         />
         <field name="arch" type="xml">
             <xpath expr="//field[@name='company_id']" position="after">

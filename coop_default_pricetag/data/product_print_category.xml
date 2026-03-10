@@ -4,12 +4,16 @@
         <field name="name">Default Category</field>
         <field
             name="field_ids"
-            eval="[(4, ref('product.field_product_product__name')),(4, ref('product.field_product_product__list_price'))]"
+            eval="[
+                Command.link(ref('product.field_product_product__name')),
+                Command.link(ref('product.field_product_product__list_price')),
+            ]"
         />
         <field
             name="pricetag_model_id"
             ref="coop_default_pricetag.pricetag_model_default"
         />
+        <field name="qweb_view_id" ref="coop_default_pricetag.report_pricetag" />
     </record>
 
     <record model="product.print.category" id="vegetable_category">
@@ -20,7 +24,14 @@
         />
         <field
             name="field_ids"
-            eval="[(4, ref('product.field_product_product__name')),(4, ref('product.field_product_product__list_price'))]"
+            eval="[
+                (4, ref('product.field_product_product__name')),
+                (4, ref('product.field_product_product__list_price')),
+            ]"
+        />
+        <field
+            name="qweb_view_id"
+            ref="coop_default_pricetag.report_pricetag_vegetables"
         />
     </record>
 </odoo>

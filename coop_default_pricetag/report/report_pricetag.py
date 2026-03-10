@@ -13,7 +13,9 @@ class ReportPricetagBase(models.AbstractModel):
 
     @api.model
     def _get_report_values(self, docids, data=None):
-        return self.render_html(data)
+        if not docids:
+            docids = self.env.context.get("active_ids") or []
+        return self.render_html(docids)
 
     @api.model
     def _get_products(self, lines):
@@ -26,35 +28,35 @@ class ReportPricetagBase(models.AbstractModel):
             result.append(val)
         return result
 
-    @api.multi
-    def render_html(self, data):
-        self.model = self.env.context.get("active_model")
-        line_ids = data.get("line_data")
-        report_context = self._context.copy()
-        report_context.update(data.get("used_context", {}))
-        product_res = self.with_context(report_context)._get_products(line_ids)
-        docargs = {
+    def render_html(self, docids):
+        wizard = self.env["product.print.wizard"].browse(docids)
+        line_ids = wizard.line_ids.ids
+        product_res = self._get_products(line_ids)
+        return {
             "partner_id": self.env.user.partner_id,
             "Products": product_res,
         }
-        return docargs
 
 
 class ReportPricetag(models.AbstractModel):
     _name = "report.coop_default_pricetag.report_pricetag"
     _inherit = "report.coop_default_pricetag.report_pricetag_base"
+    _description = "Pricetag Report"
 
 
 class ReportPricetagBarcode(models.AbstractModel):
     _name = "report.coop_default_pricetag.report_pricetag_barcode"
     _inherit = "report.coop_default_pricetag.report_pricetag_base"
+    _description = "Pricetag Report (Barcode)"
 
 
 class ReportPricetagVegetables(models.AbstractModel):
     _name = "report.coop_default_pricetag.report_pricetag_vegetables"
     _inherit = "report.coop_default_pricetag.report_pricetag"
+    _description = "Pricetag Report (Vegetables)"
 
 
 class ReportPricetagSimpleBarcode(models.AbstractModel):
     _name = "report.coop_default_pricetag.report_pricetag_simple_barcode"
     _inherit = "report.coop_default_pricetag.report_pricetag_base"
+    _description = "Pricetag Report (Simple Barcode)"
