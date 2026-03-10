@@ -4,7 +4,7 @@
 # Copyright (C) 2012-Today: Druidoo (<https://www.druidoo.io>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, api
+from odoo import api, models
 
 
 class ProductProduct(models.Model):

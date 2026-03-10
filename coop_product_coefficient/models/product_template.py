@@ -4,7 +4,8 @@
 # Copyright (C) 2012-Today: Druidoo (<https://www.druidoo.io>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields, api, _
+from odoo import _, api, fields, models
+
 from odoo.addons import decimal_precision as dp
 
 
@@ -12,10 +13,8 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     # Column Section
-    list_price = fields.Float(
-        digits=dp.get_precision('Product Sale Price'))
-    standard_price = fields.Float(
-        digits=dp.get_precision('Product Sale Price'))
+    list_price = fields.Float(digits=dp.get_precision("Product Sale Price"))
+    standard_price = fields.Float(digits=dp.get_precision("Product Sale Price"))
 
     coeff1_id = fields.Many2one(
         comodel_name="product.coefficient", string="Coefficient 1"
@@ -88,8 +87,7 @@ class ProductTemplate(models.Model):
         the product""",
     )
     coeff8_id = fields.Many2one(
-        comodel_name="product.coefficient",
-        string="Coefficient 8"
+        comodel_name="product.coefficient", string="Coefficient 8"
     )
     incl_in_standard_price_8 = fields.Boolean(
         string="Include in Standard Price",
@@ -181,7 +179,7 @@ class ProductTemplate(models.Model):
         string="With Coefficient 9",
         compute="_compute_coeff9_inter",
         store=True,
-        multi="coeff_inter_9"
+        multi="coeff_inter_9",
     )
 
     coeff1_inter_sp = fields.Float(
@@ -242,7 +240,7 @@ class ProductTemplate(models.Model):
         string="Theoritical Price VAT Incl.",
         compute="_compute_theoritical_price",
         store=True,
-        digits=dp.get_precision('Product Sale Price')
+        digits=dp.get_precision("Product Sale Price"),
     )
     has_theoritical_price_different = fields.Boolean(
         store=True,
@@ -253,9 +251,7 @@ class ProductTemplate(models.Model):
         compute="_compute_has_theoritical_cost_different",
     )
     theoritical_warning_label = fields.Char(
-        string="Label warning",
-        compute="_compute_theoritical_price",
-        store=True
+        string="Label warning", compute="_compute_theoritical_price", store=True
     )
 
     # Custom Section
@@ -266,15 +262,17 @@ class ProductTemplate(models.Model):
     @api.multi
     def use_theoritical_price(self):
         for template in self:
-            template.with_context(skip_price_update=True).write({
-                'list_price': template.theoritical_price})
+            template.with_context(skip_price_update=True).write(
+                {"list_price": template.theoritical_price}
+            )
         return True
 
     @api.multi
     def use_theoritical_cost(self):
         for template in self:
-            template.with_context(skip_price_update=True).write({
-                'standard_price': template.coeff9_inter_sp})
+            template.with_context(skip_price_update=True).write(
+                {"standard_price": template.coeff9_inter_sp}
+            )
         return True
 
     @api.model
@@ -308,14 +306,13 @@ class ProductTemplate(models.Model):
                 )
                 if seller:
                     if seller.product_uom.id == template.uom_id.id:
-                        base_price = (
-                            seller.price * (100 - seller.discount) / 100
-                        )
+                        base_price = seller.price * (100 - seller.discount) / 100
                     else:
                         base_price = (
-                            (seller.price / seller.product_uom.factor_inv) *
-                            template.uom_id.factor_inv *
-                            (100 - seller.discount) / 100
+                            (seller.price / seller.product_uom.factor_inv)
+                            * template.uom_id.factor_inv
+                            * (100 - seller.discount)
+                            / 100
                         )
             template.base_price = base_price
 
@@ -520,7 +517,7 @@ class ProductTemplate(models.Model):
     def _compute_theoritical_price(self):
         for template in self:
             multi = 1
-            theoritical_warning_label = ''
+            theoritical_warning_label = ""
             for tax in template.taxes_id:
                 if tax.amount_type == "percent" or tax.price_include:
                     multi *= 1 + (tax.amount / 100)
@@ -540,9 +537,9 @@ class ProductTemplate(models.Model):
             if template.theoritical_price and (
                 template.base_price or template.alternative_base_price_sale
             ):
-                template.has_theoritical_price_different = (
-                    round(template.list_price, 2) != round(template.theoritical_price, 2)
-                )
+                template.has_theoritical_price_different = round(
+                    template.list_price, 2
+                ) != round(template.theoritical_price, 2)
             else:
                 template.has_theoritical_price_different = False
 
@@ -551,10 +548,10 @@ class ProductTemplate(models.Model):
     def _compute_has_theoritical_cost_different(self):
         for template in self:
             if template.coeff9_inter_sp and (
-                    template.base_price or
-                    template.alternative_base_price_standard):
-                template.has_theoritical_cost_different = (round(
-                    template.standard_price, 2) != template.coeff9_inter_sp
+                template.base_price or template.alternative_base_price_standard
+            ):
+                template.has_theoritical_cost_different = (
+                    round(template.standard_price, 2) != template.coeff9_inter_sp
                 )
             else:
                 template.has_theoritical_cost_different = False
@@ -562,14 +559,13 @@ class ProductTemplate(models.Model):
     @api.multi
     @api.depends("coeff9_inter_sp", "standard_price")
     def _compute_has_theoritical_cost_different(self):
-        digits = self.env['decimal.precision'].precision_get('Product Price')
+        digits = self.env["decimal.precision"].precision_get("Product Price")
         for template in self:
             if template.coeff9_inter_sp and (
                 template.base_price or template.alternative_base_price_standard
             ):
                 template.has_theoritical_cost_different = (
-                    round(template.standard_price, digits) !=
-                    template.coeff9_inter_sp
+                    round(template.standard_price, digits) != template.coeff9_inter_sp
                 )
             else:
                 template.has_theoritical_cost_different = False
@@ -579,7 +575,8 @@ class ProductTemplate(models.Model):
         # Get Purchase Configuration: Updates Base Price automatically
         param_env = self.env["ir.config_parameter"]
         val = param_env.sudo().get_param(
-            "coop_product_coefficient.auto_update_base_price")
+            "coop_product_coefficient.auto_update_base_price"
+        )
         return val
 
     @api.model
@@ -587,7 +584,8 @@ class ProductTemplate(models.Model):
         # Get Purchase Configuration: Updates Theorical Cost automatically
         param_env = self.env["ir.config_parameter"]
         val = param_env.sudo().get_param(
-            "coop_product_coefficient.auto_update_theorical_cost")
+            "coop_product_coefficient.auto_update_theorical_cost"
+        )
         return val
 
     @api.model
@@ -595,7 +593,8 @@ class ProductTemplate(models.Model):
         # Get Purchase Configuration: Updates Theorical Price automatically
         param_env = self.env["ir.config_parameter"]
         val = param_env.sudo().get_param(
-            "coop_product_coefficient.auto_update_theorical_price")
+            "coop_product_coefficient.auto_update_theorical_price"
+        )
         return val
 
     @api.multi
@@ -605,19 +604,21 @@ class ProductTemplate(models.Model):
                 obj.get_auto_update_theorical_cost()
             ):
                 obj.use_theoritical_cost()
-            if obj.has_theoritical_price_different and \
-               obj.get_auto_update_theorical_price():
+            if (
+                obj.has_theoritical_price_different
+                and obj.get_auto_update_theorical_price()
+            ):
                 obj.use_theoritical_price()
 
     @api.multi
     def write(self, vals):
-        ret = super(ProductTemplate, self).write(vals)
-        if self._context.get('skip_price_update', False) is False:
+        ret = super().write(vals)
+        if self._context.get("skip_price_update", False) is False:
             self.auto_update_theoritical_cost_price()
         return ret
 
     @api.model
     def create(self, vals):
-        new_obj = super(ProductTemplate, self).create(vals)
+        new_obj = super().create(vals)
         new_obj.auto_update_theoritical_cost_price()
         return new_obj
