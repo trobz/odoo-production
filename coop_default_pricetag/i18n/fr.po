@@ -140,7 +140,7 @@ msgid "Expiration Date (Days)"
 msgstr "DLC (En jour)"
 
 #. module: coop_default_pricetag
-#: model:ir.model.fields,field_description:coop_default_pricetag.field_product_template_expiration_date_days
+#: model:ir.model.fields,field_description:coop_default_pricetag.field_product_template_expiration_comsumption_days
 msgid "Expiration Consumption (Days)"
 msgstr "Days before Consumption End (En jour)"
 
@@ -192,7 +192,6 @@ msgid "Food"
 msgstr "Alimentaire"
 
 #. module: coop_default_pricetag
-#: model:ir.ui.view,arch_db:coop_default_pricetag.product_template_form_view_food
 msgid "Food Informations"
 msgstr "Informations Alimentaires"
 
@@ -235,7 +234,6 @@ msgid "La Louve rack fields"
 msgstr "Champs rayonnage pour La Louve"
 
 #. module: coop_default_pricetag
-#: model:ir.ui.view,arch_db:coop_default_pricetag.view_product_label_form
 #: model:ir.ui.view,arch_db:coop_default_pricetag.view_product_label_tree
 msgid "Label"
 msgstr "Label"
@@ -315,7 +313,6 @@ msgid "Organic Label"
 msgstr "Label Bio"
 
 #. module: coop_default_pricetag
-#: model:ir.ui.view,arch_db:coop_default_pricetag.product_template_form_view_food
 msgid "Origin"
 msgstr "Origine"
 
@@ -335,7 +332,6 @@ msgid "Origin Department"
 msgstr "Département d'origine"
 
 #. module: coop_default_pricetag
-#: model:ir.ui.view,arch_db:coop_default_pricetag.report_pricetag
 msgid "Origine:"
 msgstr "Origine:"
 
@@ -345,7 +341,6 @@ msgid "Other Information"
 msgstr "Autres Informations"
 
 #. module: coop_default_pricetag
-#: model:ir.ui.view,arch_db:coop_default_pricetag.product_template_form_view_food
 msgid "Price Tag"
 msgstr "Etiquette"
 
@@ -430,7 +425,6 @@ msgid "Small-sized image of the product. It is automatically resized as a 64x64p
 msgstr "Vignette de l'article. Elle sera automatiquement redimensionnée à 64 x 64 px, en préservent le rapport hauteur/largeur. Utilisez ce champ partout où une petite image est nécessaire."
 
 #. module: coop_default_pricetag
-#: model:ir.ui.view,arch_db:coop_default_pricetag.product_template_form_view_food
 msgid "Pricetag Information"
 msgstr "Infos Étiquette"
 
@@ -455,7 +449,6 @@ msgid "Website"
 msgstr "Site Web"
 
 #. module: coop_default_pricetag
-#: model:ir.ui.view,arch_db:coop_default_pricetag.report_pricetag
 msgid "kg ---"
 msgstr "kg ---"
 
@@ -470,7 +463,6 @@ msgid "report.coop_default_pricetag.report_pricetag"
 msgstr "report.coop_default_pricetag.report_pricetag"
 
 #. module: coop_default_pricetag
-#: model:ir.ui.view,arch_db:coop_default_pricetag.report_pricetag
 msgid "€/kg<br/>"
 msgstr "€/kg<br/>"
 

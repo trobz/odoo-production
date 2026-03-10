@@ -4,7 +4,7 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, fields, models, tools
+from odoo import fields, models
 
 
 class ProductLabel(models.Model):
@@ -17,35 +17,9 @@ class ProductLabel(models.Model):
     company_id = fields.Many2one(string="Company", comodel_name="res.company")
     website = fields.Char()
     note = fields.Text()
-    image = fields.Binary(
-        attachment=True,
-        help="This field holds the image"
-        " used as image for the label, limited to 1024x1024px.",
-    )
-    image_medium = fields.Binary(
-        string="Medium-sized image",
-        attachment=True,
-        help="Medium-sized"
-        " image of the product. It is automatically resized as a 128x128px"
-        " image, with aspect ratio preserved, only when the image exceeds one"
-        " of those sizes. Use this field in form views or some kanban views.",
-    )
-    image_small = fields.Binary(
-        string="Small-sized image",
-        attachment=True,
-        help="Small-sized image"
-        " of the product. It is automatically resized as a 64x64px image,"
-        " with aspect ratio preserved. Use this field anywhere a small image"
-        " is required.",
+    image = fields.Image(
+        max_width=1024,
+        max_height=1024,
+        help=" used as image for the label, limited to 1024x1024px.",
     )
     scale_logo_code = fields.Char()
-
-    @api.model
-    def create(self, vals):
-        tools.image_resize_images(vals)
-        return super().create(vals)
-
-    @api.multi
-    def write(self, vals):
-        tools.image_resize_images(vals)
-        return super().write(vals)

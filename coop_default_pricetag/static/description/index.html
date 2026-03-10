@@ -376,17 +376,281 @@ ul.auto-toc {
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-1">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-2">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-3">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-4">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-5">Maintainers</a></li>
+<li><a class="reference internal" href="#usage" id="toc-entry-1">Usage</a></li>
+<li><a class="reference internal" href="#coop-default-price-tag-usage" id="toc-entry-2">Coop Default Price Tag — Usage</a><ul>
+<li><a class="reference internal" href="#overview" id="toc-entry-3">Overview</a></li>
+<li><a class="reference internal" href="#installation" id="toc-entry-4">Installation</a></li>
+<li><a class="reference internal" href="#permissions" id="toc-entry-5">Permissions</a></li>
+<li><a class="reference internal" href="#configuration" id="toc-entry-6">Configuration</a><ul>
+<li><a class="reference internal" href="#configure-paper-formats" id="toc-entry-7">1) Configure Paper Formats</a></li>
+<li><a class="reference internal" href="#configure-pricetag-models" id="toc-entry-8">2) Configure Pricetag Models</a></li>
+<li><a class="reference internal" href="#configure-product-print-categories" id="toc-entry-9">3) Configure Product Print Categories</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#printing-pricetags" id="toc-entry-10">Printing Pricetags</a><ul>
+<li><a class="reference internal" href="#entry-points-menus" id="toc-entry-11">Entry points (menus)</a></li>
+<li><a class="reference internal" href="#typical-printing-flow" id="toc-entry-12">Typical printing flow</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#product-fields-used-in-pricetags" id="toc-entry-13">Product fields used in pricetags</a><ul>
+<li><a class="reference internal" href="#fields-shown-on-qweb-pricetags" id="toc-entry-14">Fields shown on QWeb pricetags</a></li>
+<li><a class="reference internal" href="#editing-food-origin-pricetag-information" id="toc-entry-15">Editing Food/Origin/Pricetag information</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#labels" id="toc-entry-16">Labels</a></li>
+<li><a class="reference internal" href="#reports-provided" id="toc-entry-17">Reports provided</a></li>
+<li><a class="reference internal" href="#troubleshooting" id="toc-entry-18">Troubleshooting</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-19">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-20">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-21">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-22">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-23">Maintainers</a></li>
 </ul>
 </li>
 </ul>
 </div>
+<div class="section" id="usage">
+<h1><a class="toc-backref" href="#toc-entry-1">Usage</a></h1>
+</div>
+<div class="section" id="coop-default-price-tag-usage">
+<h1><a class="toc-backref" href="#toc-entry-2">Coop Default Price Tag — Usage</a></h1>
+<p>Module: <tt class="docutils literal">coop_default_pricetag</tt></p>
+<div class="section" id="overview">
+<h2><a class="toc-backref" href="#toc-entry-3">Overview</a></h2>
+<p><tt class="docutils literal">coop_default_pricetag</tt> extends the printing flow from
+<tt class="docutils literal">product_print_category</tt> to print price tags (pricetags) for products
+using QWeb reports.</p>
+<p>Key points:</p>
+<ul class="simple">
+<li>Price tag templates are defined as QWeb reports (several variants are
+provided).</li>
+<li>Each <em>Print Category</em> can be linked to a <em>Pricetag Model</em> which
+determines which report template to use.</li>
+<li>A wizard (<tt class="docutils literal">product.print.wizard</tt>) collects products to print and
+generates the report.</li>
+<li>After printing, selected products are marked as printed by setting
+<tt class="docutils literal">to_print = False</tt>.</li>
+</ul>
+</div>
+<div class="section" id="installation">
+<h2><a class="toc-backref" href="#toc-entry-4">Installation</a></h2>
+<ul class="simple">
+<li>Install the module <strong>Coop Default Price Tag</strong>.</li>
+<li>Ensure dependencies are installed:<ul>
+<li><tt class="docutils literal">product</tt></li>
+<li><tt class="docutils literal">product_print_category</tt></li>
+<li><tt class="docutils literal">purchase_package_qty</tt></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="permissions">
+<h2><a class="toc-backref" href="#toc-entry-5">Permissions</a></h2>
+<ul class="simple">
+<li><strong>Manage Food fields</strong> (<tt class="docutils literal">coop_default_pricetag.group_food_manager</tt>)<ul>
+<li>Implies <tt class="docutils literal">product_print_category.manager</tt>.</li>
+<li>Grants access to additional “Food Informations” and “Price Tag”
+fields on the product form.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="configuration">
+<h2><a class="toc-backref" href="#toc-entry-6">Configuration</a></h2>
+<div class="section" id="configure-paper-formats">
+<h3><a class="toc-backref" href="#toc-entry-7">1) Configure Paper Formats</a></h3>
+<p>The module provides default paper formats:</p>
+<ul class="simple">
+<li><strong>Default pricetag paper</strong>
+(<tt class="docutils literal">coop_default_pricetag.paperformat_pricetag</tt>)</li>
+<li><strong>Vegetables pricetag paper</strong>
+(<tt class="docutils literal">coop_default_pricetag.paperformat_pricetag_vegetables</tt>)</li>
+</ul>
+<p>You can review them in Odoo:</p>
+<ul class="simple">
+<li><em>Settings</em> -&gt; <em>Technical</em> -&gt; <em>Reports</em> -&gt; <em>Paper Format</em></li>
+</ul>
+</div>
+<div class="section" id="configure-pricetag-models">
+<h3><a class="toc-backref" href="#toc-entry-8">2) Configure Pricetag Models</a></h3>
+<p>A <strong>Pricetag Model</strong> links:</p>
+<ul class="simple">
+<li>A paper format (<tt class="docutils literal">report.paperformat</tt>)</li>
+<li>A report template identifier (<tt class="docutils literal">report_model</tt>), i.e. the
+<tt class="docutils literal">report_name</tt> of an <tt class="docutils literal">ir.actions.report</tt></li>
+</ul>
+<p>Menu:</p>
+<ul class="simple">
+<li><em>Sales</em> -&gt; <em>Configuration</em> -&gt; <em>Pricetag Model</em></li>
+</ul>
+<p>Provided records (examples):</p>
+<ul class="simple">
+<li><strong>Default pricetag model</strong> -&gt;
+<tt class="docutils literal">coop_default_pricetag.report_pricetag</tt></li>
+<li><strong>Default pricetag model with barcode</strong> -&gt;
+<tt class="docutils literal">coop_default_pricetag.report_pricetag_barcode</tt></li>
+<li><strong>Vegetables pricetag model</strong> -&gt;
+<tt class="docutils literal">coop_default_pricetag.report_pricetag_vegetables</tt></li>
+<li><strong>Small Pricetag with Barcode</strong> -&gt;
+<tt class="docutils literal">coop_default_pricetag.report_pricetag_simple_barcode</tt></li>
+</ul>
+</div>
+<div class="section" id="configure-product-print-categories">
+<h3><a class="toc-backref" href="#toc-entry-9">3) Configure Product Print Categories</a></h3>
+<p>Each <strong>Product Print Category</strong> can be assigned a <strong>Pricetag Model</strong>.</p>
+<p>In the <em>Product Print Category</em> form view, a new field is available:</p>
+<ul class="simple">
+<li><tt class="docutils literal">Pricetag Model</tt></li>
+</ul>
+<p>This is the field used by the printing wizard to decide which report to
+generate.</p>
+</div>
+</div>
+<div class="section" id="printing-pricetags">
+<h2><a class="toc-backref" href="#toc-entry-10">Printing Pricetags</a></h2>
+<div class="section" id="entry-points-menus">
+<h3><a class="toc-backref" href="#toc-entry-11">Entry points (menus)</a></h3>
+<p>This module adds additional product list menus under Purchasing:</p>
+<ul class="simple">
+<li><em>Purchase</em> -&gt; <em>Products</em> -&gt; <strong>Products (Food)</strong></li>
+<li><em>Purchase</em> -&gt; <em>Products</em> -&gt; <strong>Products (Origin)</strong></li>
+<li><em>Purchase</em> -&gt; <em>Products</em> -&gt; <strong>Products (Price Tags)</strong></li>
+</ul>
+<p>The <strong>Products (Price Tags)</strong> action opens a list view with a default
+search context <tt class="docutils literal">search_default_print_todo=1</tt> (typically showing
+products still to print, depending on <tt class="docutils literal">product_print_category</tt>
+configuration).</p>
+</div>
+<div class="section" id="typical-printing-flow">
+<h3><a class="toc-backref" href="#toc-entry-12">Typical printing flow</a></h3>
+<ol class="arabic simple">
+<li>Open the products list (for example <strong>Products (Price Tags)</strong>).</li>
+<li>Select products to print.</li>
+<li>Use the print action from <tt class="docutils literal">product_print_category</tt> (opens the
+<em>Print Wizard</em>).</li>
+<li>In the wizard:<ul>
+<li>Lines are grouped by <em>Print Category</em>.</li>
+<li>Quantity determines how many labels will be generated per product.</li>
+</ul>
+</li>
+<li>Click <strong>Print</strong>.</li>
+</ol>
+<p>What happens under the hood:</p>
+<ul class="simple">
+<li>The wizard checks the <em>Print Category</em> (from the first wizard line)
+and takes <tt class="docutils literal">print_category.pricetag_model_id.report_model</tt>.</li>
+<li>It searches an <tt class="docutils literal">ir.actions.report</tt> with <tt class="docutils literal">report_name</tt> matching
+that value.</li>
+<li>It executes that report.</li>
+<li>Finally, it sets <tt class="docutils literal">to_print</tt> to <tt class="docutils literal">False</tt> on printed products.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="product-fields-used-in-pricetags">
+<h2><a class="toc-backref" href="#toc-entry-13">Product fields used in pricetags</a></h2>
+<p>The provided report templates reference several product fields.</p>
+<div class="section" id="fields-shown-on-qweb-pricetags">
+<h3><a class="toc-backref" href="#toc-entry-14">Fields shown on QWeb pricetags</a></h3>
+<p>Common fields used by templates:</p>
+<ul class="simple">
+<li><tt class="docutils literal">name</tt></li>
+<li><tt class="docutils literal">list_price</tt></li>
+<li><tt class="docutils literal">barcode</tt></li>
+<li><tt class="docutils literal">code</tt> (in templates; depends on your database / other modules)</li>
+<li><tt class="docutils literal">weight</tt> and computed <tt class="docutils literal">price_weight</tt> (<tt class="docutils literal">list_price / weight</tt>)</li>
+<li><tt class="docutils literal">volume</tt> and computed <tt class="docutils literal">price_volume</tt> (<tt class="docutils literal">list_price / volume</tt>)</li>
+<li><tt class="docutils literal">pricetag_origin</tt> (computed from <tt class="docutils literal">country_id</tt>,
+<tt class="docutils literal">origin_description</tt>, <tt class="docutils literal">maker_description</tt>)</li>
+<li><tt class="docutils literal">pricetag_rackinfos</tt> (computed from rack fields and vendor package
+quantity if available)</li>
+<li><tt class="docutils literal">pricetag_coopinfos</tt> (computed from <tt class="docutils literal">farming_method</tt> and
+<tt class="docutils literal">other_information</tt>)</li>
+</ul>
+</div>
+<div class="section" id="editing-food-origin-pricetag-information">
+<h3><a class="toc-backref" href="#toc-entry-15">Editing Food/Origin/Pricetag information</a></h3>
+<p>On the product form (<tt class="docutils literal">product.template</tt>), this module adds:</p>
+<ul class="simple">
+<li>A <strong>Food Informations</strong> page (visible for <em>Manage Food fields</em> group)<ul>
+<li>Origin: <tt class="docutils literal">country_id</tt>, <tt class="docutils literal">origin_description</tt>,
+<tt class="docutils literal">maker_description</tt></li>
+<li>Food: <tt class="docutils literal">fresh_category</tt>, <tt class="docutils literal">fresh_range</tt>, <tt class="docutils literal">is_mercuriale</tt>,
+<tt class="docutils literal">label_ids</tt></li>
+<li>Price Tag: <tt class="docutils literal">expiration_date_days</tt>,
+<tt class="docutils literal">expiration_comsumption_days</tt>, extra notes, <tt class="docutils literal">ingredients</tt></li>
+</ul>
+</li>
+</ul>
+<p>Also, it adds extra fields in the main form:</p>
+<ul class="simple">
+<li><tt class="docutils literal">price_weight</tt></li>
+<li><tt class="docutils literal">price_volume</tt></li>
+<li>Pricetag Information group: <tt class="docutils literal">rack_instruction</tt>, <tt class="docutils literal">rack_location</tt>,
+<tt class="docutils literal">rack_number_of_packages</tt>, <tt class="docutils literal">farming_method</tt>, <tt class="docutils literal">other_information</tt></li>
+</ul>
+</div>
+</div>
+<div class="section" id="labels">
+<h2><a class="toc-backref" href="#toc-entry-16">Labels</a></h2>
+<p>The module introduces <tt class="docutils literal">product.label</tt>:</p>
+<p>Menu:</p>
+<ul class="simple">
+<li><em>Purchase</em> -&gt; <em>Products</em> -&gt; <strong>Labels</strong></li>
+</ul>
+<p>Purpose:</p>
+<ul class="simple">
+<li>Manage label records with an optional image and a <tt class="docutils literal">scale_logo_code</tt>.</li>
+<li>Selecting labels on a product can update the product’s
+<tt class="docutils literal">scale_logo_code</tt>.</li>
+</ul>
+<p>A sample label is included:</p>
+<ul class="simple">
+<li><strong>Eurofeuille</strong> (<tt class="docutils literal">EUROFEUILLE</tt>) with <tt class="docutils literal">scale_logo_code = 14</tt>.</li>
+</ul>
+</div>
+<div class="section" id="reports-provided">
+<h2><a class="toc-backref" href="#toc-entry-17">Reports provided</a></h2>
+<p>QWeb templates:</p>
+<ul class="simple">
+<li><tt class="docutils literal">coop_default_pricetag.report_pricetag</tt></li>
+<li><tt class="docutils literal">coop_default_pricetag.report_pricetag_barcode</tt></li>
+<li><tt class="docutils literal">coop_default_pricetag.report_pricetag_simple_barcode</tt></li>
+<li><tt class="docutils literal">coop_default_pricetag.report_pricetag_vegetables</tt></li>
+</ul>
+<p>Notes:</p>
+<ul class="simple">
+<li>Barcode templates generate the barcode image via <tt class="docutils literal">/report/barcode</tt>
+using EAN13.</li>
+</ul>
+</div>
+<div class="section" id="troubleshooting">
+<h2><a class="toc-backref" href="#toc-entry-18">Troubleshooting</a></h2>
+<ul class="simple">
+<li><strong>Wrong template printed</strong><ul>
+<li>Check the product’s <em>Print Category</em>.</li>
+<li>Check that the <em>Print Category</em> has the correct <strong>Pricetag Model</strong>
+set.</li>
+<li>Check that the <tt class="docutils literal">Pricetag Model</tt> field <tt class="docutils literal">report_model</tt> matches an
+existing <tt class="docutils literal">ir.actions.report.report_name</tt>.</li>
+</ul>
+</li>
+<li><strong>Barcode not shown</strong><ul>
+<li>Ensure the product has <tt class="docutils literal">barcode</tt> set.</li>
+<li>Ensure the barcode value matches expected format for EAN13
+(depending on your barcode settings/policy).</li>
+</ul>
+</li>
+<li><strong>Products disappear from “to print” list after printing</strong><ul>
+<li>Expected: printing sets <tt class="docutils literal">to_print = False</tt> on printed products.</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#toc-entry-1">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-19">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/AwesomeFoodCoops/odoo-production/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -394,17 +658,18 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#toc-entry-2">Credits</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-20">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#toc-entry-3">Authors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-21">Authors</a></h2>
 <ul class="simple">
 <li>GRAP</li>
 <li>Akretion - Julien WESTE</li>
 <li>Druidoo</li>
+<li>La Louve</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#toc-entry-4">Contributors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-22">Contributors</a></h2>
 <ul class="simple">
 <li>GRAP (<a class="reference external" href="http://www.grap.coop">http://www.grap.coop</a>)</li>
 <li>Sylvain LE GAL (<a class="reference external" href="https://twitter.com/legalsylvain">https://twitter.com/legalsylvain</a>)</li>
@@ -413,7 +678,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#toc-entry-5">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-23">Maintainers</a></h2>
 <p>This module is part of the <a class="reference external" href="https://github.com/AwesomeFoodCoops/odoo-production/tree/18.0/coop_default_pricetag">AwesomeFoodCoops/odoo-production</a> project on GitHub.</p>
 <p>You are welcome to contribute.</p>
 </div>

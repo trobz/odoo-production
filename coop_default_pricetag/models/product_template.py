@@ -4,9 +4,7 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, fields, models
-
-import odoo.addons.decimal_precision as dp
+from odoo import api, fields, models
 
 
 class ProductTemplate(models.Model):
@@ -28,7 +26,6 @@ class ProductTemplate(models.Model):
     ]
 
     @api.depends("farming_method", "other_information")
-    @api.multi
     def _compute_pricetag_coopinfos(self):
         for pt in self:
             tmp = ""
@@ -42,9 +39,8 @@ class ProductTemplate(models.Model):
         "rack_instruction",
         "rack_location",
         "rack_number_of_packages",
-        "default_seller_id",
+        "seller_ids",
     )
-    @api.multi
     def _compute_pricetag_rackinfos(self):
         for data in self:
             tmp = ""
@@ -54,10 +50,12 @@ class ProductTemplate(models.Model):
                 tmp = data.rack_location + (" - " + tmp if tmp else "")
             if data.rack_number_of_packages:
                 tmp = data.rack_number_of_packages + (" - " + tmp if tmp else "")
-            if data.default_seller_id.package_qty:
-                tmp = str(data.default_seller_id.package_qty) + (
-                    " - " + tmp if tmp else ""
-                )
+            default_seller = data.seller_ids[:1]
+            package_qty = default_seller and getattr(
+                default_seller, "package_qty", False
+            )
+            if package_qty:
+                tmp = str(package_qty) + (" - " + tmp if tmp else "")
             data.pricetag_rackinfos = tmp
 
     # Columns section
@@ -65,8 +63,8 @@ class ProductTemplate(models.Model):
         string="Labels",
         comodel_name="product.label",
         relation="product_label_product_rel",
-        column_1="product_id",
-        column_2="label_id",
+        column1="product_id",
+        column2="label_id",
     )
     expiration_date_days = fields.Integer(
         string="Expiration Date (Days)",
@@ -83,7 +81,7 @@ class ProductTemplate(models.Model):
     )
     is_mercuriale = fields.Boolean(
         "Mercuriale Product",
-        help="A product in mercuriale has price" " that changes very regularly.",
+        help="A product in mercuriale has price that changes very regularly.",
     )
     price_volume = fields.Monetary(
         compute="_compute_price_volume",
@@ -133,13 +131,13 @@ class ProductTemplate(models.Model):
     farming_method = fields.Char(help="""Organic Label""")
     other_information = fields.Char()
     pricetag_rackinfos = fields.Char(
-        compute=_compute_pricetag_rackinfos, string="Coop rack fields"
+        compute="_compute_pricetag_rackinfos", string="Coop rack fields"
     )
     pricetag_coopinfos = fields.Char(
-        compute=_compute_pricetag_coopinfos, string="Coop custom fields"
+        compute="_compute_pricetag_coopinfos", string="Coop custom fields"
     )
     scale_logo_code = fields.Char(readonly=True)
-    volume = fields.Float(digits=dp.get_precision("Volume"))
+    volume = fields.Float(digits="Volume")
 
     # Compute Section
     @api.depends("list_price", "volume")
@@ -178,28 +176,29 @@ class ProductTemplate(models.Model):
         for data in self:
             tmp = ""
             if data.fresh_range:
-                tmp += _(" - Range: ") + data.fresh_range
+                tmp += self.env._(" - Range: ") + data.fresh_range
             if data.fresh_category:
-                tmp += _(" - Category: ") + data.fresh_category
+                tmp += self.env._(" - Category: ") + data.fresh_category
             data.extra_food_info = tmp
 
-    @api.model
-    def create(self, vals):
-        vals["scale_logo_code"] = "1"
-        if "label_ids" in vals:
-            label_ids_val = vals.get("label_ids", [])
-            if (
-                label_ids_val
-                and isinstance(label_ids_val, list)
-                and len(label_ids_val[0]) == 3
-            ):
-                label_ids = label_ids_val[0][2]
-                labels = self.env["product.label"].browse(label_ids)
-                vals["scale_logo_code"] = labels and labels[0].scale_logo_code or "1"
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            vals["scale_logo_code"] = "1"
+            if "label_ids" in vals:
+                label_ids_val = vals.get("label_ids", [])
+                if (
+                    label_ids_val
+                    and isinstance(label_ids_val, list)
+                    and len(label_ids_val[0]) == 3
+                ):
+                    label_ids = label_ids_val[0][2]
+                    labels = self.env["product.label"].browse(label_ids)
+                    vals["scale_logo_code"] = (
+                        labels and labels[0].scale_logo_code or "1"
+                    )
+        return super().create(vals_list)
 
-        return super().create(vals)
-
-    @api.multi
     def write(self, vals):
         if "label_ids" in vals:
             res = True

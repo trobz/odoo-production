@@ -3,12 +3,12 @@
     <record id="view_product_label_tree" model="ir.ui.view">
         <field name="model">product.label</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="code" />
                 <field name="name" />
                 <field name="website" />
                 <field name="company_id" groups="base.group_multi_company" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -19,32 +19,30 @@
                 <sheet>
                     <field name="image" widget="image" class="oe_avatar oe_left" />
                     <div class="oe_title">
-                        <div class="oe_edit_only">
-                            <label for="name" />
-                        </div>
+                        <label for="name" />
                         <h1>
                             <field name="name" />
                         </h1>
-                        <label for="code" class="oe_edit_only" />
+                        <label for="code" />
                         <h2>
                             <field name="code" />
                         </h2>
-                        <label for="scale_logo_code" class="oe_edit_only" />
+                        <label for="scale_logo_code" />
                         <h2>
                             <field name="scale_logo_code" />
                         </h2>
                     </div>
                     <notebook>
                         <page string="Information">
-                            <group col="4">
+                            <group>
                                 <field name="active" />
                                 <field
                                     name="company_id"
                                     groups="base.group_multi_company"
                                 />
                                 <newline />
-                                <field name="website" colspan="4" />
-                                <field name="note" widget="html" colspan="4" />
+                                <field name="website" />
+                                <field name="note" widget="html" />
                             </group>
                         </page>
                     </notebook>
@@ -59,19 +57,17 @@
         <field name="arch" type="xml">
             <kanban>
                 <field name="id" />
-                <field name="image_small" />
+                <field name="image" />
                 <templates>
-                    <t t-name="kanban-box">
+                    <t t-name="card">
                         <div class="oe_kanban_box oe_kanban_color_border">
                             <div class="product_label_kanban">
                                 <div class="product_label_kanban_name">
-                                    <a type="edit">
-                                        <field name="name" />
-                                    </a>
+                                    <field name="name" />
                                 </div>
                                 <div class="product_label_kanban_image">
                                     <img
-                                        t-att-src="kanban_image('product.label', 'image_small', record.id.raw_value)"
+                                        t-att-src="'/web/image/product.label/' + record.id.raw_value + '/image'"
                                         alt="product label"
                                     />
                                 </div>
@@ -87,8 +83,7 @@
         <field name="name">Labels</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">product.label</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">kanban,tree,form</field>
+        <field name="view_mode">kanban,list,form</field>
     </record>
 
     <menuitem

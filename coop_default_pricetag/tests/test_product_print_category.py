@@ -4,70 +4,77 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo import Command
 from odoo.tests.common import TransactionCase
 
 
 class TestProductPrintCategory(TransactionCase):
     """Tests for 'Product Print Category' Module"""
 
-    def setUp(self):
-        super().setUp()
-        self.wizard_obj = self.env["product.print.wizard"]
-        self.pricetag = self.env.ref("coop_default_pricetag.pricetag_model_default")
-        self.custom_report_obj = self.env[
-            "report.product_print_category.report_pricetag"
-        ]
-        self.prod_categ = self.env.ref("product.product_category_all")
-        self.prod_uom = self.env.ref("uom.product_uom_categ_unit")
-        self.prod_name = self.env.ref("product.field_product_product__name")
-        self.print_category = self.env["product.print.category"].create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.wizard_obj = cls.env["product.print.wizard"]
+        cls.pricetag = cls.env.ref("coop_default_pricetag.pricetag_model_default")
+        cls.custom_report_obj = cls.env["report.product_print_category.report_pricetag"]
+        cls.prod_categ = cls.env.ref("product.product_category_all")
+        cls.prod_uom = cls.env.ref("uom.product_uom_categ_unit")
+        cls.prod_name = cls.env.ref("product.field_product_product__name")
+        cls.qweb_view = cls.env.ref("coop_default_pricetag.report_pricetag")
+        cls.print_category = cls.env["product.print.category"].create(
             {
                 "name": "Default Category",
-                "pricetag_model_id": self.pricetag.id,
-                "field_ids": [(4, self.prod_name.id)],
+                "pricetag_model_id": cls.pricetag.id,
+                "field_ids": [Command.link(cls.prod_name.id)],
+                "qweb_view_id": cls.qweb_view.id,
             }
         )
-        self.template_obj = self.env["product.template"]
-        self.product_obj = self.env["product.product"]
-        self.template0 = self.template_obj.create(
+        cls.template_obj = cls.env["product.template"]
+        cls.product_obj = cls.env["product.product"]
+        cls.template0 = cls.template_obj.create(
             {
                 "name": "template0",
-                "categ_id": self.prod_categ.id,
-                "uom_id": self.prod_uom.id,
-                "uom_po_id": self.prod_uom.id,
+                "categ_id": cls.prod_categ.id,
+                "uom_id": cls.prod_uom.id,
+                "uom_po_id": cls.prod_uom.id,
                 "description_sale": "template0",
                 "standard_price": 10.0,
                 "list_price": 12.0,
                 "type": "consu",
-                "print_category_id": self.print_category.id,
+                "print_category_id": cls.print_category.id,
             }
         )
-        self.product0 = self.product_obj.create(
-            {
-                "name": "template0",
-                "categ_id": self.prod_categ.id,
-                "uom_id": self.prod_uom.id,
-                "uom_po_id": self.prod_uom.id,
-                "default_code": "tmp0",
-                "standard_price": 10.0,
-                "list_price": 12.0,
-                "type": "consu",
-                "product_tmpl_id": self.template0.id,
-            }
-        )
-        self.template1 = self.template_obj.create(
+        # Use the auto-created variant; mark as already printed
+        cls.product0 = cls.template0.product_variant_ids[0]
+        cls.product0.write({"default_code": "tmp0", "to_print": False})
+        cls.template1 = cls.template_obj.create(
             {
                 "name": "template1",
-                "categ_id": self.prod_categ.id,
-                "uom_id": self.prod_uom.id,
-                "uom_po_id": self.prod_uom.id,
+                "categ_id": cls.prod_categ.id,
+                "uom_id": cls.prod_uom.id,
+                "uom_po_id": cls.prod_uom.id,
                 "description_sale": "template1",
                 "standard_price": 50.0,
                 "list_price": 60.0,
                 "type": "consu",
-                "print_category_id": self.print_category.id,
+                "print_category_id": cls.print_category.id,
             }
         )
+        # template2 provides the 3rd product; mark as already printed
+        cls.template2 = cls.template_obj.create(
+            {
+                "name": "template2",
+                "categ_id": cls.prod_categ.id,
+                "uom_id": cls.prod_uom.id,
+                "uom_po_id": cls.prod_uom.id,
+                "description_sale": "template2",
+                "standard_price": 20.0,
+                "list_price": 25.0,
+                "type": "consu",
+                "print_category_id": cls.print_category.id,
+            }
+        )
+        cls.template2.product_variant_ids[0].write({"to_print": False})
 
     # Test Section
     def test_01_test_wizard_obsolete(self):
@@ -87,13 +94,13 @@ class TestProductPrintCategory(TransactionCase):
         self.assertEqual(
             len(wizard.line_ids), 3, "Print all products should propose 3 products"
         )
-        data = wizard.print_report()
+        wizard.print_report()
         self.env["report.coop_default_pricetag.report_pricetag"]._get_report_values(
-            docids=None, data=data.get("data")
+            docids=[wizard.id]
         )
         self.env[
             "report.coop_default_pricetag.report_pricetag_barcode"
-        ]._get_report_values(docids=None, data=data.get("data"))
+        ]._get_report_values(docids=[wizard.id])
         self.env[
             "report.coop_default_pricetag.report_pricetag_simple_barcode"
-        ]._get_report_values(docids=None, data=data.get("data"))
+        ]._get_report_values(docids=[wizard.id])

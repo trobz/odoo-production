@@ -1,46 +1,65 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <report
-        id="product_print_category.pricetag"
-        model="report.pricetag"
-        string="Pricetags"
-        report_type="qweb-pdf"
-        name="coop_default_pricetag.report_pricetag"
-        file="coop_default_pricetag.report_pricetag"
-        attachment_use="False"
-        paperformat="paperformat_pricetag"
-    />
+    <record id="product_print_category.pricetag" model="ir.actions.report">
+        <field name="name">Pricetags</field>
+        <field name="model">product.print.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">coop_default_pricetag.report_pricetag</field>
+        <field name="report_file">coop_default_pricetag.report_pricetag</field>
+        <field name="attachment_use" eval="False" />
+        <field name="paperformat_id" ref="coop_default_pricetag.paperformat_pricetag" />
+        <field
+            name="print_report_name"
+        >(object.line_ids[0].print_category_id.name + ' Pricetags') if object.line_ids[0].print_category_id.name else 'Pricetags'</field>
+    </record>
 
-    <report
-        id="pricetag_barcode"
-        model="report.pricetag"
-        string="Pricetags with Barcode"
-        report_type="qweb-pdf"
-        name="coop_default_pricetag.report_pricetag_barcode"
-        file="coop_default_pricetag.report_pricetag_barcode"
-        attachment_use="False"
-        paperformat="paperformat_pricetag"
-    />
+    <record id="pricetag_barcode" model="ir.actions.report">
+        <field name="name">Pricetags with Barcode</field>
+        <field name="model">product.print.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">coop_default_pricetag.report_pricetag_barcode</field>
+        <field name="report_file">coop_default_pricetag.report_pricetag_barcode</field>
+        <field name="attachment_use" eval="False" />
+        <field name="paperformat_id" ref="coop_default_pricetag.paperformat_pricetag" />
+        <field
+            name="print_report_name"
+        >(object.line_ids[0].print_category_id.name + ' Pricetags') if object.line_ids[0].print_category_id.name else 'Pricetags'</field>
+    </record>
 
-    <report
-        id="pricetag_vegetables"
-        model="report.pricetag"
-        string="Vegetable Pricetags"
-        report_type="qweb-pdf"
-        name="coop_default_pricetag.report_pricetag_vegetables"
-        file="coop_default_pricetag.report_pricetag_vegetables"
-        attachment_use="False"
-        paperformat="coop_default_pricetag.paperformat_pricetag_vegetables"
-    />
+    <record id="pricetag_vegetables" model="ir.actions.report">
+        <field name="name">Vegetable Pricetags</field>
+        <field name="model">product.print.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >coop_default_pricetag.report_pricetag_vegetables</field>
+        <field
+            name="report_file"
+        >coop_default_pricetag.report_pricetag_vegetables</field>
+        <field name="attachment_use" eval="False" />
+        <field
+            name="paperformat_id"
+            ref="coop_default_pricetag.paperformat_pricetag_vegetables"
+        />
+        <field
+            name="print_report_name"
+        >(object.line_ids[0].print_category_id.name + ' Pricetags') if object.line_ids[0].print_category_id.name else 'Pricetags'</field>
+    </record>
 
-    <report
-        id="pricetag_simple_barcode"
-        model="report.pricetag"
-        string="Pricetags Barcode"
-        report_type="qweb-pdf"
-        name="coop_default_pricetag.report_pricetag_simple_barcode"
-        file="coop_default_pricetag.report_pricetag_simple_barcode"
-        attachment_use="False"
-        paperformat="paperformat_pricetag"
-    />
+    <record id="pricetag_simple_barcode" model="ir.actions.report">
+        <field name="name">Pricetags Barcode</field>
+        <field name="model">product.print.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field
+            name="report_name"
+        >coop_default_pricetag.report_pricetag_simple_barcode</field>
+        <field
+            name="report_file"
+        >coop_default_pricetag.report_pricetag_simple_barcode</field>
+        <field name="attachment_use" eval="False" />
+        <field name="paperformat_id" ref="coop_default_pricetag.paperformat_pricetag" />
+        <field
+            name="print_report_name"
+        >(object.line_ids[0].print_category_id.name + ' Pricetags') if object.line_ids[0].print_category_id.name else 'Pricetags'</field>
+    </record>
 </odoo>

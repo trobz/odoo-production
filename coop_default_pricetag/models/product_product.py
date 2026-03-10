@@ -5,8 +5,6 @@
 
 from odoo import fields, models
 
-import odoo.addons.decimal_precision as dp
-
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
@@ -14,4 +12,3 @@ class ProductProduct(models.Model):
     scale_logo_code = fields.Char(
         related="product_tmpl_id.scale_logo_code", readonly=True, store=True
     )
-    volume = fields.Float(digits=dp.get_precision("Volume"))

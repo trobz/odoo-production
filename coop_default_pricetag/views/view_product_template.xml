@@ -32,7 +32,7 @@
                             <field name="expiration_comsumption_days" />
                             <field name="extra_note_bizerba_pricetag_1" />
                             <field name="extra_note_bizerba_pricetag_2" />
-                            <field name="ingredients" widget="hmtl" />
+                            <field name="ingredients" widget="html" />
                         </group>
                     </group>
                 </page>
