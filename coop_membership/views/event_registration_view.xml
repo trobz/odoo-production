@@ -27,9 +27,9 @@
             <field name="event_ticket_id" position="attributes">
                 <attribute name="invisible">is_discovery_meeting_event</attribute>
             </field>
-            <field name="sale_order_id" position="attributes">
+            <!-- <field name="sale_order_id" position="attributes">
                 <attribute name="invisible">is_discovery_meeting_event</attribute>
-            </field>
+            </field> -->
         </field>
     </record>
 </odoo>
