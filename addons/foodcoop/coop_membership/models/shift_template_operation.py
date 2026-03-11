@@ -206,6 +206,8 @@ class ShiftTemplateOperation(models.Model):
                     )
                     * 100
                 )
+            else:
+                rec.change_team_done_percent = 0
 
     def action_view_templates(self):
         res = self.env.ref("coop_shift.action_shift_template").read()[0]
