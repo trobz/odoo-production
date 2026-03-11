@@ -423,8 +423,8 @@ each night.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#configuration" id="toc-entry-1">Configuration</a></li>
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-2">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-3">Credits</a></li>
+<li><a class="reference internal" href="#usage" id="toc-entry-2">Usage</a></li>
+<li><a class="reference internal" href="#usage-1" id="toc-entry-3">Usage</a></li>
 </ul>
 </div>
 <div class="section" id="configuration">
@@ -436,8 +436,89 @@ your coefficients</li>
 products.</li>
 </ul>
 </div>
+<div class="section" id="usage">
+<h2><a class="toc-backref" href="#toc-entry-2">Usage</a></h2>
+</div>
+<div class="section" id="usage-1">
+<h2><a class="toc-backref" href="#toc-entry-3">Usage</a></h2>
+</div>
+</div>
+<div class="section" id="coefficient-setup">
+<h1>Coefficient setup</h1>
+<ul class="simple">
+<li>Go to <tt class="docutils literal">Sales</tt> / <tt class="docutils literal">Configuration</tt> / <tt class="docutils literal">Product Coefficients</tt>.</li>
+<li>Create or update your coefficients.</li>
+</ul>
+</div>
+<div class="section" id="product-configuration">
+<h1>Product configuration</h1>
+<ul class="simple">
+<li>Open a product (menu <tt class="docutils literal">Sales</tt> / <tt class="docutils literal">Products</tt> / <tt class="docutils literal">Products</tt>).</li>
+<li>In the <tt class="docutils literal">Coefficients</tt> page, select coefficients (1..9) as needed.</li>
+<li>Use the <tt class="docutils literal">Include in Cost</tt> checkbox for the coefficients that must
+impact the product cost (<tt class="docutils literal">standard_price</tt>).</li>
+</ul>
+</div>
+<div class="section" id="understand-the-computed-prices">
+<h1>Understand the computed prices</h1>
+<ul class="simple">
+<li><strong>Base Price</strong>: derived from supplier information.</li>
+<li><strong>Theoretical Price</strong>: computed sale price based on Base Price and
+configured coefficients.</li>
+<li><strong>Theoretical Cost</strong>: computed cost based on Base Price and
+coefficients included in cost.</li>
+</ul>
+</div>
+<div class="section" id="apply-theoretical-prices-to-products">
+<h1>Apply theoretical prices to products</h1>
+<p><strong>Single product</strong></p>
+<p>On the product form:</p>
+<ul class="simple">
+<li>Use <tt class="docutils literal">Use Theoretical Price</tt> to update the product <tt class="docutils literal">Sales Price</tt>.</li>
+<li>Use <tt class="docutils literal">Use Theoretical Cost</tt> to update the product <tt class="docutils literal">Cost</tt>.</li>
+</ul>
+<p><strong>Multiple products (wizard)</strong></p>
+<p>From the product list view:</p>
+<ul class="simple">
+<li>Select products.</li>
+<li>Run the wizard <tt class="docutils literal">Use Theoretical Price</tt>.</li>
+</ul>
+</div>
+<div class="section" id="automatic-updates-settings">
+<h1>Automatic updates (Settings)</h1>
+<p>The module adds settings under <tt class="docutils literal">Sales</tt> settings (not in a dedicated
+app):</p>
+<ul class="simple">
+<li><tt class="docutils literal">Update Base Price Automatically</tt></li>
+<li><tt class="docutils literal">Update Theoretical Cost Automatically</tt></li>
+<li><tt class="docutils literal">Update Theoretical Price Automatically</tt></li>
+</ul>
+<p>These settings are stored in <tt class="docutils literal">ir.config_parameter</tt> and are parsed as
+booleans.</p>
+</div>
+<div class="section" id="nightly-base-price-recomputation-cron-queue-job">
+<h1>Nightly base price recomputation (Cron + queue.job)</h1>
+<p>A cron job exists to recompute base prices.</p>
+<p>For performance, recomputation is split into <strong>queue jobs</strong>:</p>
+<ul class="simple">
+<li>Templates are split by batch (default: 100 templates per job).</li>
+<li>Each job recomputes the base price for its batch.</li>
+</ul>
+<p>Prerequisites:</p>
+<ul class="simple">
+<li><tt class="docutils literal">queue_job</tt> must be installed and the job runner must be running.</li>
+</ul>
+</div>
+<div class="section" id="troubleshooting">
+<h1>Troubleshooting</h1>
+<ul class="simple">
+<li>If theoretical values are not updated after changing supplier info,
+run <tt class="docutils literal">Recompute Base price</tt> on the product template.</li>
+<li>If cron is enabled but jobs are not executed, verify that the job
+runner is running and that <tt class="docutils literal">queue_job</tt> is installed.</li>
+</ul>
 <div class="section" id="bug-tracker">
-<h2><a class="toc-backref" href="#toc-entry-2">Bug Tracker</a></h2>
+<h2>Bug Tracker</h2>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/AwesomeFoodCoops/odoo-production/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -445,7 +526,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h2><a class="toc-backref" href="#toc-entry-3">Credits</a></h2>
+<h2>Credits</h2>
 </div>
 </div>
 <div class="section" id="authors">

@@ -4,23 +4,22 @@
 # Copyright (C) 2012-Today: Druidoo (<https://www.druidoo.io>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, fields, models
-
-from odoo.addons import decimal_precision as dp
+from odoo import api, fields, models
+from odoo.tools import float_round
 
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     # Column Section
-    list_price = fields.Float(digits=dp.get_precision("Product Sale Price"))
-    standard_price = fields.Float(digits=dp.get_precision("Product Sale Price"))
+    list_price = fields.Float(digits="Product Sale Price")
+    standard_price = fields.Float(digits="Product Sale Price")
 
     coeff1_id = fields.Many2one(
         comodel_name="product.coefficient", string="Coefficient 1"
     )
     incl_in_standard_price_1 = fields.Boolean(
-        string="Include in Standard Price",
+        string="Include in Standard Price (Coefficient 1)",
         default=False,
         help="""If you check this
         box, this coefficient will be used to calculate the standard price of
@@ -30,7 +29,7 @@ class ProductTemplate(models.Model):
         comodel_name="product.coefficient", string="Coefficient 2"
     )
     incl_in_standard_price_2 = fields.Boolean(
-        string="Include in Standard Price",
+        string="Include in Standard Price (Coefficient 2)",
         default=False,
         help="""If you check this
         box, this coefficient will be used to calculate the standard price of
@@ -40,7 +39,7 @@ class ProductTemplate(models.Model):
         comodel_name="product.coefficient", string="Coefficient 3"
     )
     incl_in_standard_price_3 = fields.Boolean(
-        string="Include in Standard Price",
+        string="Include in Standard Price (Coefficient 3)",
         default=False,
         help="""If you check this
         box, this coefficient will be used to calculate the standard price of
@@ -50,7 +49,7 @@ class ProductTemplate(models.Model):
         comodel_name="product.coefficient", string="Coefficient 4"
     )
     incl_in_standard_price_4 = fields.Boolean(
-        string="Include in Standard Price",
+        string="Include in Standard Price (Coefficient 4)",
         default=False,
         help="""If you check this
         box, this coefficient will be used to calculate the standard price of
@@ -60,7 +59,7 @@ class ProductTemplate(models.Model):
         comodel_name="product.coefficient", string="Coefficient 5"
     )
     incl_in_standard_price_5 = fields.Boolean(
-        string="Include in Standard Price",
+        string="Include in Standard Price (Coefficient 5)",
         default=False,
         help="""If you check this
         box, this coefficient will be used to calculate the standard price of
@@ -70,7 +69,7 @@ class ProductTemplate(models.Model):
         comodel_name="product.coefficient", string="Coefficient 6"
     )
     incl_in_standard_price_6 = fields.Boolean(
-        string="Include in Standard Price",
+        string="Include in Standard Price (Coefficient 6)",
         default=False,
         help="""If you check this
         box, this coefficient will be used to calculate the standard price of
@@ -80,7 +79,7 @@ class ProductTemplate(models.Model):
         comodel_name="product.coefficient", string="Coefficient 7"
     )
     incl_in_standard_price_7 = fields.Boolean(
-        string="Include in Standard Price",
+        string="Include in Standard Price (Coefficient 7)",
         default=False,
         help="""If you check this
         box, this coefficient will be used to calculate the standard price of
@@ -90,7 +89,7 @@ class ProductTemplate(models.Model):
         comodel_name="product.coefficient", string="Coefficient 8"
     )
     incl_in_standard_price_8 = fields.Boolean(
-        string="Include in Standard Price",
+        string="Include in Standard Price (Coefficient 8)",
         default=False,
         help="""If you check this
         box, this coefficient will be used to calculate the standard price of
@@ -100,7 +99,7 @@ class ProductTemplate(models.Model):
         comodel_name="product.coefficient", string="Coefficient 9"
     )
     incl_in_standard_price_9 = fields.Boolean(
-        string="Include in Standard Price",
+        string="Include in Standard Price (Coefficient 9)",
         default=False,
         help="""If you check this
         box, this coefficient will be used to calculate the standard price of
@@ -109,7 +108,7 @@ class ProductTemplate(models.Model):
     base_price = fields.Float(
         compute="_compute_base_price",
         store=True,
-        digits=dp.get_precision("Product Price"),
+        digits="Product Price",
         help="Base Price is the Sale Price of your Supplier.\n"
         "If product is sold by many suppliers, the first one is selected.\n"
         "If a supplier sell the product with different prices, the bigger"
@@ -131,116 +130,98 @@ class ProductTemplate(models.Model):
         string="With Coefficient 1",
         compute="_compute_coeff1_inter",
         store=True,
-        multi="coeff_inter_1",
     )
     coeff2_inter = fields.Float(
         string="With Coefficient 2",
         compute="_compute_coeff2_inter",
         store=True,
-        multi="coeff_inter_2",
     )
     coeff3_inter = fields.Float(
         string="With Coefficient 3",
         compute="_compute_coeff3_inter",
         store=True,
-        multi="coeff_inter_3",
     )
     coeff4_inter = fields.Float(
         string="With Coefficient 4",
         compute="_compute_coeff4_inter",
         store=True,
-        multi="coeff_inter_4",
     )
     coeff5_inter = fields.Float(
         string="With Coefficient 5",
         compute="_compute_coeff5_inter",
         store=True,
-        multi="coeff_inter_5",
     )
     coeff6_inter = fields.Float(
         string="With Coefficient 6",
         compute="_compute_coeff6_inter",
         store=True,
-        multi="coeff_inter_6",
     )
     coeff7_inter = fields.Float(
         string="With Coefficient 7",
         compute="_compute_coeff7_inter",
         store=True,
-        multi="coeff_inter_7",
     )
     coeff8_inter = fields.Float(
         string="With Coefficient 8",
         compute="_compute_coeff8_inter",
         store=True,
-        multi="coeff_inter_8",
     )
     coeff9_inter = fields.Float(
         string="With Coefficient 9",
         compute="_compute_coeff9_inter",
         store=True,
-        multi="coeff_inter_9",
     )
 
     coeff1_inter_sp = fields.Float(
         string="With Supplier Discount Coefficient",
         compute="_compute_coeff1_inter",
         store=True,
-        multi="coeff_inter_1",
     )
     coeff2_inter_sp = fields.Float(
         string="With Shipping Coefficient",
         compute="_compute_coeff2_inter",
         store=True,
-        multi="coeff_inter_2",
     )
     coeff3_inter_sp = fields.Float(
         string="With Loss Coefficient",
         compute="_compute_coeff3_inter",
         store=True,
-        multi="coeff_inter_3",
     )
     coeff4_inter_sp = fields.Float(
-        string="With Coefficient 4",
+        string="With Coefficient 4 (Cost)",
         compute="_compute_coeff4_inter",
         store=True,
-        multi="coeff_inter_4",
     )
     coeff5_inter_sp = fields.Float(
-        string="With Coefficient 5",
+        string="With Coefficient 5 (Cost)",
         compute="_compute_coeff5_inter",
         store=True,
-        multi="coeff_inter_5",
     )
     coeff6_inter_sp = fields.Float(
-        string="With Coefficient 6",
+        string="With Coefficient 6 (Cost)",
         compute="_compute_coeff6_inter",
         store=True,
-        multi="coeff_inter_6",
     )
     coeff7_inter_sp = fields.Float(
-        string="With Coefficient 7",
+        string="With Coefficient 7 (Cost)",
         compute="_compute_coeff7_inter",
         store=True,
-        multi="coeff_inter_7",
     )
     coeff8_inter_sp = fields.Float(
-        string="With Coefficient 8",
+        string="With Coefficient 8 (Cost)",
         compute="_compute_coeff8_inter",
         store=True,
-        multi="coeff_inter_8",
     )
     coeff9_inter_sp = fields.Float(
         string="With Margin Coefficient",
         compute="_compute_coeff9_inter",
         store=True,
-        multi="coeff_inter_9",
     )
     theoritical_price = fields.Float(
         string="Theoritical Price VAT Incl.",
         compute="_compute_theoritical_price",
         store=True,
-        digits=dp.get_precision("Product Sale Price"),
+        digits="Product Sale Price",
     )
     has_theoritical_price_different = fields.Boolean(
         store=True,
@@ -255,11 +236,9 @@ class ProductTemplate(models.Model):
     )
 
     # Custom Section
-    @api.multi
     def recompute_base_price(self):
         self._compute_base_price()
 
-    @api.multi
     def use_theoritical_price(self):
         for template in self:
             template.with_context(skip_price_update=True).write(
@@ -267,7 +246,6 @@ class ProductTemplate(models.Model):
             )
         return True
 
-    @api.multi
     def use_theoritical_cost(self):
         for template in self:
             template.with_context(skip_price_update=True).write(
@@ -276,14 +254,22 @@ class ProductTemplate(models.Model):
         return True
 
     @api.model
+    def recompute_base_price_batch(self, template_ids):
+        self.browse(template_ids).recompute_base_price()
+        return True
+
+    @api.model
     def cron_recompute_base_price(self):
         auto_update_base_price = self.get_auto_update_base_price()
         if auto_update_base_price:
-            templates = self.search([])
-            templates.recompute_base_price()
+            template_ids = self.search([]).ids
+            batch_size = 100
+            template_obj = self.env["product.template"]
+            for i in range(0, len(template_ids), batch_size):
+                batch_ids = template_ids[i : i + batch_size]
+                template_obj.with_delay().recompute_base_price_batch(batch_ids)
 
     # Compute Section
-    @api.multi
     @api.depends(
         "product_variant_ids",
         "uom_id",
@@ -316,7 +302,6 @@ class ProductTemplate(models.Model):
                         )
             template.base_price = base_price
 
-    @api.multi
     @api.depends(
         "alternative_base_price_standard",
         "alternative_base_price_sale",
@@ -346,7 +331,6 @@ class ProductTemplate(models.Model):
             else:
                 template.coeff1_inter_sp = base_price_standard
 
-    @api.multi
     @api.depends(
         "coeff1_inter",
         "coeff2_id.operation_type",
@@ -366,7 +350,6 @@ class ProductTemplate(models.Model):
             else:
                 template.coeff2_inter_sp = template.coeff1_inter_sp
 
-    @api.multi
     @api.depends(
         "coeff2_inter",
         "coeff3_id.operation_type",
@@ -386,7 +369,6 @@ class ProductTemplate(models.Model):
             else:
                 template.coeff3_inter_sp = template.coeff2_inter_sp
 
-    @api.multi
     @api.depends(
         "coeff3_inter",
         "coeff4_id.operation_type",
@@ -406,7 +388,6 @@ class ProductTemplate(models.Model):
             else:
                 template.coeff4_inter_sp = template.coeff3_inter_sp
 
-    @api.multi
     @api.depends(
         "coeff4_inter",
         "coeff5_id.operation_type",
@@ -426,7 +407,6 @@ class ProductTemplate(models.Model):
             else:
                 template.coeff5_inter_sp = template.coeff4_inter_sp
 
-    @api.multi
     @api.depends(
         "coeff5_inter",
         "coeff6_id.operation_type",
@@ -446,7 +426,6 @@ class ProductTemplate(models.Model):
             else:
                 template.coeff6_inter_sp = template.coeff5_inter_sp
 
-    @api.multi
     @api.depends(
         "coeff6_inter",
         "coeff7_id.operation_type",
@@ -466,7 +445,6 @@ class ProductTemplate(models.Model):
             else:
                 template.coeff7_inter_sp = template.coeff6_inter_sp
 
-    @api.multi
     @api.depends(
         "coeff7_inter",
         "coeff8_id.operation_type",
@@ -486,7 +464,6 @@ class ProductTemplate(models.Model):
             else:
                 template.coeff8_inter_sp = template.coeff7_inter_sp
 
-    @api.multi
     @api.depends(
         "coeff8_inter",
         "coeff9_id.operation_type",
@@ -506,11 +483,11 @@ class ProductTemplate(models.Model):
             else:
                 template.coeff9_inter_sp = template.coeff8_inter_sp
 
-    @api.multi
     @api.depends(
         "coeff9_inter",
         "taxes_id.amount",
         "taxes_id.price_include",
+        "taxes_id.price_include_override",
         "taxes_id.amount_type",
         "name",
     )
@@ -522,82 +499,75 @@ class ProductTemplate(models.Model):
                 if tax.amount_type == "percent" or tax.price_include:
                     multi *= 1 + (tax.amount / 100)
                 if tax.amount_type != "percent" or not tax.price_include:
-                    theoritical_warning_label = _(
+                    theoritical_warning_label = self.env._(
                         "Unimplemented Feature\n"
                         "The Tax %s is not correctly set for computing"
-                        " prices with coefficients for the product %s"
-                    ) % (tax.name, template.name)
+                        " prices with coefficients for the product %s",
+                        tax.name,
+                        template.name,
+                    )
             template.theoritical_price = template.coeff9_inter * multi
             template.theoritical_warning_label = theoritical_warning_label
 
-    @api.multi
-    @api.depends("theoritical_price", "list_price")
+    @api.depends(
+        "theoritical_price",
+        "list_price",
+        "base_price",
+        "alternative_base_price_sale",
+    )
     def _compute_has_theoritical_price_different(self):
         for template in self:
             if template.theoritical_price and (
                 template.base_price or template.alternative_base_price_sale
             ):
-                template.has_theoritical_price_different = round(
-                    template.list_price, 2
-                ) != round(template.theoritical_price, 2)
+                template.has_theoritical_price_different = float_round(
+                    template.list_price, precision_digits=2
+                ) != float_round(template.theoritical_price, precision_digits=2)
             else:
                 template.has_theoritical_price_different = False
 
-    @api.multi
-    @api.depends("coeff9_inter_sp", "standard_price")
+    @api.depends(
+        "coeff9_inter_sp",
+        "standard_price",
+        "base_price",
+        "alternative_base_price_standard",
+    )
     def _compute_has_theoritical_cost_different(self):
+        precision = self.env["decimal.precision"].precision_get("Product Sale Price")
+        digits = precision or 2
         for template in self:
             if template.coeff9_inter_sp and (
                 template.base_price or template.alternative_base_price_standard
             ):
-                template.has_theoritical_cost_different = (
-                    round(template.standard_price, 2) != template.coeff9_inter_sp
-                )
+                template.has_theoritical_cost_different = float_round(
+                    template.standard_price, precision_digits=digits
+                ) != float_round(template.coeff9_inter_sp, precision_digits=digits)
             else:
                 template.has_theoritical_cost_different = False
 
-    @api.multi
-    @api.depends("coeff9_inter_sp", "standard_price")
-    def _compute_has_theoritical_cost_different(self):
-        digits = self.env["decimal.precision"].precision_get("Product Price")
-        for template in self:
-            if template.coeff9_inter_sp and (
-                template.base_price or template.alternative_base_price_standard
-            ):
-                template.has_theoritical_cost_different = (
-                    round(template.standard_price, digits) != template.coeff9_inter_sp
-                )
-            else:
-                template.has_theoritical_cost_different = False
+    @api.model
+    def _get_bool_param(self, key):
+        return self.env["ir.config_parameter"].sudo().get_param(key) == "True"
 
     @api.model
     def get_auto_update_base_price(self):
         # Get Purchase Configuration: Updates Base Price automatically
-        param_env = self.env["ir.config_parameter"]
-        val = param_env.sudo().get_param(
-            "coop_product_coefficient.auto_update_base_price"
-        )
-        return val
+        return self._get_bool_param("coop_product_coefficient.auto_update_base_price")
 
     @api.model
     def get_auto_update_theorical_cost(self):
         # Get Purchase Configuration: Updates Theorical Cost automatically
-        param_env = self.env["ir.config_parameter"]
-        val = param_env.sudo().get_param(
+        return self._get_bool_param(
             "coop_product_coefficient.auto_update_theorical_cost"
         )
-        return val
 
     @api.model
     def get_auto_update_theorical_price(self):
         # Get Purchase Configuration: Updates Theorical Price automatically
-        param_env = self.env["ir.config_parameter"]
-        val = param_env.sudo().get_param(
+        return self._get_bool_param(
             "coop_product_coefficient.auto_update_theorical_price"
         )
-        return val
 
-    @api.multi
     def auto_update_theoritical_cost_price(self):
         for obj in self:
             if obj.has_theoritical_cost_different and (
@@ -610,15 +580,14 @@ class ProductTemplate(models.Model):
             ):
                 obj.use_theoritical_price()
 
-    @api.multi
     def write(self, vals):
         ret = super().write(vals)
         if self._context.get("skip_price_update", False) is False:
             self.auto_update_theoritical_cost_price()
         return ret
 
-    @api.model
-    def create(self, vals):
-        new_obj = super().create(vals)
-        new_obj.auto_update_theoritical_cost_price()
-        return new_obj
+    @api.model_create_multi
+    def create(self, vals_list):
+        new_objs = super().create(vals_list)
+        new_objs.auto_update_theoritical_cost_price()
+        return new_objs

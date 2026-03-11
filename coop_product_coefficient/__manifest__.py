@@ -6,13 +6,13 @@
 
 {
     "name": "Coop Product Coefficient",
-    "version": "12.0.2.1.0",
+    "version": "18.0.1.0.0",
     "summary": "Coop Product Coefficients",
     "author": "La Louve,Smile, Druidoo",
-    "website": "http://www.lalouve.net",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "category": "Product",
-    "depends": ["purchase_discount", "account", "coop_shift"],
+    "depends": ["account", "coop_shift", "queue_job", "sale_management"],
     "data": [
         "security/ir.model.access.csv",
         "views/view_product_template.xml",
@@ -31,5 +31,10 @@
         "demo/product.coefficient.csv",
         "demo/product_template.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "coop_product_coefficient/static/src/css/coop_product_coefficient.css",
+        ],
+    },
     "installable": True,
 }

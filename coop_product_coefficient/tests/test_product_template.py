@@ -1,4 +1,4 @@
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
 def change_list_price_and_standard_price(products):
@@ -8,13 +8,16 @@ def change_list_price_and_standard_price(products):
         product.use_theoritical_cost()
 
 
-class TestProductTemplate(SavepointCase):
-    def setUp(self):
-        super().setUp()
-
+class TestProductTemplate(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env["ir.config_parameter"].sudo().set_param(
+            "coop_product_coefficient.auto_update_theorical_price", "True"
+        )
+        cls.env["ir.config_parameter"].sudo().set_param(
+            "coop_product_coefficient.auto_update_theorical_cost", "True"
+        )
         # set up data
         product_template_env = cls.env["product.template"]
         product_category_env = cls.env["product.category"]
@@ -22,12 +25,10 @@ class TestProductTemplate(SavepointCase):
         product_coefficient_env = cls.env["product.coefficient"]
         product_uom_env = cls.env["uom.uom"]
         product_supplierinfo_env = cls.env["product.supplierinfo"]
-        unit_id = product_uom_env.search([("name", "like", "Unit(s)")], limit=1)
+        unit_id = product_uom_env.search([("name", "=", "Units")], limit=1)
         cate_id = product_category_env.create(
             {
                 "name": "Test Category",
-                "property_cost_method": "standard",
-                "property_valuation": "manual_periodic",
             }
         )
         fixed_10 = product_coefficient_env.create(
@@ -65,7 +66,6 @@ class TestProductTemplate(SavepointCase):
         vendor_a = res_partner_env.create(
             {
                 "name": "Vendor Test A",
-                "supplier": True,
                 "shift_type": "standard",
                 "working_state": "up_to_date",
             }
@@ -73,7 +73,6 @@ class TestProductTemplate(SavepointCase):
         vendor_b = res_partner_env.create(
             {
                 "name": "Vendor Test B",
-                "supplier": True,
                 "shift_type": "standard",
                 "working_state": "up_to_date",
             }
@@ -126,7 +125,7 @@ class TestProductTemplate(SavepointCase):
         )
         product_supplierinfo_env.create(
             {
-                "name": vendor_a.id,
+                "partner_id": vendor_a.id,
                 "product_tmpl_id": product_a.id,
                 "delay": 1,
                 "min_qty": 10000,
@@ -136,7 +135,7 @@ class TestProductTemplate(SavepointCase):
         )
         product_supplierinfo_env.create(
             {
-                "name": vendor_b.id,
+                "partner_id": vendor_b.id,
                 "product_tmpl_id": product_a.id,
                 "delay": 1,
                 "min_qty": 100,
@@ -146,7 +145,7 @@ class TestProductTemplate(SavepointCase):
         )
         product_supplierinfo_env.create(
             {
-                "name": vendor_b.id,
+                "partner_id": vendor_b.id,
                 "product_tmpl_id": product_b.id,
                 "delay": 1,
                 "min_qty": 100,
@@ -156,7 +155,7 @@ class TestProductTemplate(SavepointCase):
         )
         product_supplierinfo_env.create(
             {
-                "name": vendor_a.id,
+                "partner_id": vendor_a.id,
                 "product_tmpl_id": product_c.id,
                 "delay": 1,
                 "min_qty": 10000,
@@ -220,13 +219,9 @@ class TestProductTemplate(SavepointCase):
             [("name", "like", "Vendor Test B")], limit=1
         )
 
-    @classmethod
-    def tearDownClass(cls):
-        return super().tearDownClass()
-
     def evaluate_values(self, product, expected_output):
         for exp_opt in expected_output.items():
-            if type(getattr(product, exp_opt[0])) == bool:
+            if isinstance(getattr(product, exp_opt[0]), bool):
                 self.assertEqual(getattr(product, exp_opt[0]), exp_opt[1])
                 continue
             self.assertAlmostEqual(getattr(product, exp_opt[0]), exp_opt[1], places=4)
