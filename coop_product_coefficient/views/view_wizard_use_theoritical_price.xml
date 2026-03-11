@@ -10,13 +10,9 @@
         <field name="model">wizard.use.theoritical.price</field>
         <field name="arch" type="xml">
             <form string="Use Theoritical Prices">
-                <group>
-                    <group>
-                        <div class="oe_grey" colspan="4">
-                            By clicking on 'apply' Button, you will changes the prices of all the selected products, using theoritical prices computed by coefficients system.
-                         </div>
-                    </group>
-                </group>
+                <div class="text-muted">
+                    By clicking on 'apply' Button, you will changes the prices of all the selected products, using theoritical prices computed by coefficients system.
+                </div>
                 <footer>
                     <button
                         string='Apply'

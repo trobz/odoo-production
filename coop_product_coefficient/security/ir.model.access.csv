@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_product_coefficient_user,product_coefficient_user,model_product_coefficient,base.group_user,1,0,0,0
 access_product_coefficient_manager,product_coefficient_manager,model_product_coefficient,sales_team.group_sale_manager,1,1,1,1
+access_wizard_use_theoritical_price,access_wizard_use_theoritical_price,model_wizard_use_theoritical_price,sales_team.group_sale_manager,1,1,1,1

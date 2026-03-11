@@ -1,0 +1,98 @@
+/* Font size for coefficient list view */
+.o_coeff_list_view {
+    font-size: 13px !important;
+}
+
+/* Allow list view column headers to wrap text for the coefficient list view */
+.o_coeff_list_view thead th span.text-truncate {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+}
+
+/* Uniform default column width (exclude selector and action columns) */
+.o_coeff_list_view
+    thead
+    th:not(.o_list_record_selector):not(.o_list_actions_header):not(.o_list_button),
+.o_coeff_list_view tbody td:not(.o_list_record_selector):not(.o_list_button) {
+    min-width: 76px !important;
+    width: 76px !important;
+}
+
+/* Name column: wrap text and wider */
+.o_coeff_list_view tbody td.o_coeff_name_cell {
+    white-space: normal !important;
+    word-break: break-word !important;
+}
+
+/* ── Coefficient form page ─────────────────────────────────────── */
+.coeff_table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.coeff_title {
+    border: none;
+    height: 36px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #7c7bad;
+    padding: 0 0 8px 0;
+    width: 24.8%;
+}
+
+.coeff_row td,
+.coeff_row th {
+    border: none;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.coeff_cell_label {
+    width: 15%;
+    color: #555;
+}
+
+.coeff_cell_field {
+    width: 20%;
+}
+
+.coeff_cell_price {
+    width: 20%;
+    background-color: #ddffff;
+    border-right: 10px solid white !important;
+}
+
+.coeff_cell_checkbox {
+    width: 10%;
+    text-align: center;
+}
+
+.coeff_cell_cost {
+    width: 15%;
+    background-color: #ddffff;
+}
+
+/* Summary table (theorical price / flags) */
+.coeff_summary_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+}
+
+.coeff_summary_table th {
+    border-right: 8px solid white;
+    padding: 4px 8px;
+    font-weight: 500;
+    color: #555;
+    white-space: nowrap;
+}
+
+.coeff_summary_table td {
+    padding: 4px 8px;
+}
+
+.coeff_theorical_price_field {
+    background-color: #d0eed0;
+    width: 200px;
+}
