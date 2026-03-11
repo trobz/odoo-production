@@ -364,5 +364,4 @@
         <field name="target">current</field>
         <field name="domain">[]</field>
     </record>
-
 </odoo>

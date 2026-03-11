@@ -53,5 +53,4 @@
         <field name="name">Shift Mail Schedulers</field>
         <field name="res_model">shift.mail</field>
     </record>
-
 </odoo>

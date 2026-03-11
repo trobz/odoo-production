@@ -45,8 +45,8 @@ class TestCoopShift(common.TransactionCase):
             "coop_shift.product_product_shift_ftop"
         )
 
-        self.shift_template_ticket_id = self.env.ref(
-            "coop_shift.template_ticket_1_standard"
+        self.shift_template_ticket_id = self.shift_template1.shift_ticket_ids.filtered(
+            lambda t: t.name == self.env._("Standard")
         )
 
     def test_standard_member_event_registration(self):

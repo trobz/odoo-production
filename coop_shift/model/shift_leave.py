@@ -91,9 +91,7 @@ class ShiftLeave(models.Model):
     @api.depends("partner_id.leave_ids")
     def _compute_other_leave_ids(self):
         for leave in self:
-            leave.other_leave_ids = list(
-                set(leave.partner_id.leave_ids.ids) - set([leave.id])
-            )
+            leave.other_leave_ids = leave.partner_id.leave_ids - leave
 
     # constraints Section
     @api.constrains("start_date", "stop_date")
@@ -109,9 +107,10 @@ class ShiftLeave(models.Model):
         for leave in self:
             if leave.state == "cancel":
                 continue
-            for other_leave in leave.other_leave_ids.filtered(
-                lambda r: r.state != "cancel"
-            ):
+            other_leaves = leave.partner_id.leave_ids.filtered(
+                lambda r, _l=leave: r.id != _l.id and r.state != "cancel"
+            )
+            for other_leave in other_leaves:
                 if conflict_period(
                     leave.start_date,
                     leave.stop_date,

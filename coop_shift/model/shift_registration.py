@@ -168,19 +168,27 @@ class ShiftRegistration(models.Model):
 
     def button_reg_close(self):
         """Close Registration"""
+        self.ensure_one()
+        if self.state in ("cancel", "absent"):
+            return
         today = fields.Datetime.now()
-        if self.shift_id.date_begin <= today and self.shift_id.state == "confirm":
-            self.write({"state": "done", "date_closed": today})
+        if self.date_begin <= today and self.shift_id.state in ["confirm", "entry"]:
+            self.write(
+                {
+                    "state": "done",
+                    "date_closed": today,
+                }
+            )
         elif self.shift_id.state == "draft":
             raise UserError(
                 self.env._(
-                    "You must wait the event confirmation before doing this action."
+                    "You must wait the event confirmation " "before doing this action."
                 )
             )
         else:
             raise UserError(
                 self.env._(
-                    "You must wait the event starting day before doing this action."
+                    "You must wait the event starting " "day before doing this action."
                 )
             )
 

@@ -53,19 +53,6 @@
                         groups="base.group_user"
                     >
                         <button
-                            name="toggle_active"
-                            type="object"
-                            class="oe_stat_button"
-                            icon="fa-archive"
-                            invisible="state not in ['done', 'cancel']"
-                        >
-                            <field
-                                name="active"
-                                widget="boolean_button"
-                                options='{"terminology": "archive"}'
-                            />
-                        </button>
-                        <button
                             name="%(coop_shift.act_shift_registration_from_shift)d"
                             type="action"
                             class="oe_stat_button oe_event_attendee_button"
@@ -394,5 +381,4 @@
                 </p>
         </field>
     </record>
-
 </odoo>

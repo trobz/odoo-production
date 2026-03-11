@@ -38,5 +38,4 @@
         <field name="name">Shift Types</field>
         <field name="res_model">shift.type</field>
     </record>
-
 </odoo>

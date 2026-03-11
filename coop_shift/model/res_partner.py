@@ -131,14 +131,14 @@ class ResPartner(models.Model):
     )
 
     working_state = fields.Selection(
-        selection=WORKING_STATE_SELECTION,
+        selection=lambda self: self.get_working_state_selection(),
         help="This state depends on the" " shifts realized by the partner.",
         compute="_compute_working_state",
         compute_sudo=True,
         store=True,
     )
     cooperative_state = fields.Selection(
-        selection=WORKING_STATE_SELECTION,
+        selection=lambda self: self.get_cooperative_state_selection(),
         store=True,
         compute="_compute_cooperative_state",
         help="This state" " depends on the 'Working State' and extra custom settings.",
@@ -219,6 +219,12 @@ class ResPartner(models.Model):
         store=False,
     )
 
+    def get_working_state_selection(self):
+        return self.WORKING_STATE_SELECTION
+
+    def get_cooperative_state_selection(self):
+        return self.WORKING_STATE_SELECTION
+
     # Constrains section
     @api.constrains("display_std_points")
     def check_display_standard_point(self):
@@ -286,6 +292,12 @@ class ResPartner(models.Model):
                 num_abcd += 1
         return rturn_vals
 
+    @api.depends(
+        "registration_ids",
+        "registration_ids.date_begin",
+        "registration_ids.state",
+        "tmpl_reg_line_ids",
+    )
     def _compute_registration_counts(self):
         d = fields.Datetime.now()
         for partner in self:
