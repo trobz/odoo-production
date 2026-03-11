@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<!--
+    Copyright (C) 2016-Today: La Louve (<http://www.lalouve.net/>)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <record model="shift.template" id="standard_template_1">
+        <field name="user_ids" eval="[(4, ref('squadleader_1'))]" />
+        <field name="shift_type_id" eval="ref('coop_shift.shift_type')" />
+        <field
+            name="start_datetime"
+            eval="datetime.now().replace(hour=9, minute=0, second=0, microsecond=0).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+        <field
+            name="end_datetime"
+            eval="datetime.now().replace(hour=12, minute=0, second=0, microsecond=0).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+    </record>
+
+    <record model="shift.template" id="standard_template_2">
+        <field name="user_ids" eval="[(4, ref('squadleader_2'))]" />
+        <field name="shift_type_id" eval="ref('coop_shift.shift_type')" />
+        <field
+            name="start_datetime"
+            eval="datetime.now().replace(hour=12, minute=0, second=0, microsecond=0).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+        <field
+            name="end_datetime"
+            eval="datetime.now().replace(hour=15, minute=0, second=0, microsecond=0).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+    </record>
+
+    <record model="shift.template" id="ftop_template_2">
+        <field name="user_ids" eval="[(4, ref('squadleader_2'))]" />
+        <field name="shift_type_id" eval="ref('coop_shift.shift_type_ftop')" />
+        <field
+            name="start_datetime"
+            eval="datetime.now().replace(hour=12, minute=0, second=0, microsecond=0).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+        <field
+            name="end_datetime"
+            eval="datetime.now().replace(hour=15, minute=0, second=0, microsecond=0).strftime('%Y-%m-%d %H:%M:%S')"
+        />
+    </record>
+</odoo>
