@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_shift_holiday_tree" model="ir.ui.view">
+        <field name="model">shift.holiday</field>
+        <field name="arch" type="xml">
+            <list
+                decoration-info="state == 'draft'"
+                decoration-muted="state == 'cancel'"
+            >
+                <field name="name" />
+                <field name="date_begin" />
+                <field name="date_end" />
+                <field name="holiday_type" />
+                <field name="state" />
+            </list>
+        </field>
+    </record>
+
+    <record id="view_shift_holiday_form" model="ir.ui.view">
+        <field name="model">shift.holiday</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        string="Confirm"
+                        name="button_confirm"
+                        class="oe_highlight"
+                        type="object"
+                        invisible="(state != 'draft') or (state != 'draft')"
+                    />
+                    <button
+                        string="Approve"
+                        name="button_done"
+                        class="oe_highlight"
+                        type="object"
+                        invisible="(state != 'confirmed') or (state == 'done')"
+                    />
+                    <button
+                        string="Set To Draft"
+                        name="button_draft"
+                        type="object"
+                        invisible="state in ['draft', 'done']"
+                    />
+                    <button
+                        string="Cancel"
+                        name="button_cancel"
+                        type="object"
+                        invisible="state == 'cancel'"
+                    />
+                    <field name="state" widget="statusbar" nolabel="1" readonly="1" />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box" />
+                    <div class="oe_title">
+                        <h1>
+                            <label for="name" class="oe_edit_only" />
+                            <field
+                                name="name"
+                                default_focus="1"
+                                readonly="state != 'draft'"
+                            />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="holiday_type" readonly="state != 'draft'" />
+                            <field
+                                name="make_up_type"
+                                invisible="holiday_type != 'long_period'"
+                                required="holiday_type == 'long_period'"
+                                readonly="state != 'draft'"
+                            />
+                        </group>
+                        <group>
+                            <field name="date_begin" readonly="state != 'draft'" />
+                            <field name="date_end" readonly="state != 'draft'" />
+                        </group>
+                    </group>
+                    <notebook colspan="4">
+                        <page name="shifts" string="Shifts">
+                            <group>
+                                <field
+                                    name="single_day_shift_ids"
+                                    nolabel="1"
+                                    colspan="4"
+                                    readonly="state != 'draft'"
+                                    invisible="holiday_type != 'single_day'"
+                                >
+                                    <list create="false">
+                                        <field name="name" />
+                                        <field name="week_name" />
+                                        <field name="shift_type_id" />
+                                        <field name="date_begin" />
+                                        <field name="date_end" />
+                                        <field name="seats_reserved" />
+                                        <field name="seats_min" />
+                                        <field name="seats_max" invisible="1" />
+                                        <field name="user_ids" />
+                                        <field name="state" />
+                                        <field
+                                            name="message_needaction"
+                                            invisible="1"
+                                        />
+                                        <field name="state_in_holiday" />
+                                        <field
+                                            name="holiday_single_state"
+                                            invisible="1"
+                                        />
+                                        <button
+                                            name="open_in_holiday"
+                                            string="Open"
+                                            type="object"
+                                            icon="fa-check"
+                                            invisible="(state_in_holiday == 'open') or (holiday_single_state in ['done', 'cancel'])"
+                                        />
+                                        <button
+                                            name="close_in_holiday"
+                                            string="Closed"
+                                            type="object"
+                                            icon="fa-times"
+                                            invisible="(state_in_holiday == 'closed') or (holiday_single_state in ['done', 'cancel'])"
+                                        />
+                                    </list>
+                                </field>
+                                <field
+                                    name="long_period_shift_ids"
+                                    nolabel="1"
+                                    colspan="4"
+                                    readonly="state != 'draft'"
+                                    invisible="holiday_type != 'long_period'"
+                                >
+                                    <list create="false">
+                                        <field name="name" />
+                                        <field name="week_name" />
+                                        <field name="shift_type_id" />
+                                        <field name="date_begin" />
+                                        <field name="date_end" />
+                                        <field name="seats_reserved" />
+                                        <field name="seats_min" />
+                                        <field name="seats_max" invisible="1" />
+                                        <field name="user_ids" />
+                                        <field name="state" />
+                                        <field
+                                            name="message_needaction"
+                                            invisible="1"
+                                        />
+                                    </list>
+                                </field>
+                            </group>
+                        </page>
+                        <page name="misc" string="Miscellaneous">
+                            <group>
+                                <group>
+                                    <field
+                                        name="send_email_reminder"
+                                        readonly="state != 'draft'"
+                                    />
+                                    <field
+                                        name="reminder_template_id"
+                                        invisible="not send_email_reminder"
+                                        readonly="state != 'draft'"
+                                    />
+                                </group>
+                                <group />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+</odoo>
