@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- ********************************************************************** -->
+<!-- See __odoo__.py file for Copyright and Licence Informations.         -->
+<!-- ********************************************************************** -->
+<odoo>
+    <!-- SHIFT.TEMPLATE.REGISTRATION.LINE VIEWS -->
+
+    <record model="ir.ui.view" id="view_shift_template_registration_line_search">
+        <field name="name">shift.template.registration.line.search</field>
+        <field name="model">shift.template.registration.line</field>
+        <field name="arch" type="xml">
+            <search string="Template Registration Line">
+                <field name="shift_template_id" />
+                <field name="shift_ticket_id" />
+                <field name="partner_id" />
+                <field name="state" />
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Partner"
+                        name="group_by_partner"
+                        domain="[]"
+                        context="{'group_by':'partner_id'}"
+                    />
+                    <filter
+                        string="Status"
+                        name="group_by_status"
+                        domain="[]"
+                        context="{'group_by':'state'}"
+                    />
+                    <filter
+                        string="Ticket Type"
+                        name="group_by_ticket_type"
+                        domain="[]"
+                        context="{'group_by':'shift_ticket_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_shift_template_registration_line_tree">
+        <field name="name">shift.template.registration.line.tree</field>
+        <field name="model">shift.template.registration.line</field>
+        <field name="arch" type="xml">
+            <list
+                name="lines"
+                string="Registration Lines"
+                decoration-info="is_current"
+                decoration-muted="is_past"
+                editable="top"
+            >
+                <field
+                    name="shift_template_id"
+                    options="{'no_create_edit': True, 'no_create': True}"
+                />
+                <field
+                    name="shift_ticket_id"
+                    domain="[('shift_template_id', '=', shift_template_id)]"
+                    options="{'no_create_edit': True, 'no_create': True}"
+                />
+                <field
+                    name="partner_id"
+                    options="{'no_create_edit': True, 'no_create': True}"
+                />
+                <field name="date_begin" />
+                <field name="date_end" />
+                <field name="state" />
+                <field name="is_current" column_invisible="1" />
+                <field name="is_past" column_invisible="1" />
+                <field name="is_future" column_invisible="1" />
+            </list>
+        </field>
+    </record>
+    <record
+        id="act_template_registration_line_from_partner"
+        model="ir.actions.act_window"
+    >
+        <field name="res_model">shift.template.registration.line</field>
+
+        <field name="name">Attendees</field>
+        <field name="view_mode">list</field>
+        <field
+            name="context"
+        >{'search_default_partner_id': active_id, 'default_partner_id': active_id, 'search_default_upcoming': True}</field>
+    </record>
+</odoo>
