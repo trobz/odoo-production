@@ -1,19 +1,13 @@
-
-from odoo import models
+from odoo import api, models
 
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    def name_get(self):
-        """Return the product name without ref when the
-        name_get is called from order planning form
-        """
-        res = []
-        if self.env.context.get('partner_display_only_ref'):
-            for record in self:
-                res.append((record['id'], record.ref or record.name))
-        else:
-            res = super(ResPartner, self).name_get()
-
-        return res
+    @api.depends("name", "ref")
+    @api.depends_context("partner_display_only_ref")
+    def _compute_display_name(self):
+        if not self.env.context.get("partner_display_only_ref"):
+            return super()._compute_display_name()
+        for partner in self:
+            partner.display_name = partner.ref or partner.name

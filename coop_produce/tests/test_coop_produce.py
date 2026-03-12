@@ -1,84 +1,115 @@
-from .common import CoopProduceTest
-from datetime import datetime
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 import ast
+from datetime import datetime
+
+from odoo import Command
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
+
+from .common import CoopProduceTest
 
 
 class TestCoopProduce(CoopProduceTest):
-
     def test_coop_produce01(self):
         """
-            Test the Coop Produce should take the quantities based on default
-            packaging of the product and an advanced form view to plan orders
-            of the week to send the supplier per day.
+        Test the Coop Produce should take the quantities based on default
+        packaging of the product and an advanced form view to plan orders
+        of the week to send the supplier per day.
         """
-        stock_inventory1 = self.StockInventory.create({
-            'name': 'Inventory of V&F',
-            'date': datetime.today().strftime(
-                DEFAULT_SERVER_DATETIME_FORMAT),
-            'categ_ids': [(6, 0, [self.CategoryCoop.id])]
-        })
+        stock_inventory1 = self.StockInventory.create(
+            {
+                "name": "Inventory of V&F",
+                "date": datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+                "location_ids": [Command.set([self.StockLocation.id])],
+                "categ_ids": [Command.set([self.CategoryCoop.id])],
+            }
+        )
 
         # Add products using "Add" button of Product categories
         stock_inventory1.action_add_category_supplier()
 
-        # Inventory lines
-        assert stock_inventory1.line_ids
+        # Stock Quants
+        self.assertTrue(
+            stock_inventory1.stock_quant_ids,
+            "Stock Quants should be created after adding products"
+            " using the add button of product categories.",
+        )
 
         # Reset
-        stock_inventory1.action_reset()
+        stock_inventory1.action_state_to_draft()
 
-        # No Inventory lines after Reset
-        assert not stock_inventory1.line_ids
+        # No Stock Quants after Reset
+        self.assertFalse(
+            stock_inventory1.stock_quant_ids,
+            "Stock Quants should be deleted after reset the inventory.",
+        )
 
-        stock_inventory = self.StockInventory.create({
-            'name': 'Inventory of V&F',
-            'date': datetime.today().strftime(
-                DEFAULT_SERVER_DATETIME_FORMAT),
-            'categ_ids': [(6, 0, [self.CategoryCoop.id])],
-            'supplier_ids': [(6, 0, [self.SupplierCoop.id])]
-        })
+        stock_inventory = self.StockInventory.create(
+            {
+                "name": "Inventory of V&F",
+                "date": datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT),
+                "categ_ids": [Command.set([self.CategoryCoop.id])],
+                "supplier_ids": [Command.set([self.SupplierCoop.id])],
+                "location_ids": [Command.set([self.StockLocation.id])],
+            }
+        )
         # Add products using "Add" button of Supplliers
         stock_inventory.action_add_category_supplier()
 
         # Check Inventory lines adter added using suppliers' add button
-        assert stock_inventory.line_ids
+        self.assertTrue(
+            stock_inventory.stock_quant_ids,
+            "Stock Quants should be created after adding products"
+            " using the add button of suppliers.",
+        )
 
         # Validate F&V Inventory
-        stock_inventory.action_done()
+        stock_inventory.action_state_to_done()
 
         # Check Week Date should not set by default
-        self.assertFalse(stock_inventory.week_date,
-                         "F&V inventory should not have week date"
-                         " set when a new record.")
+        self.assertFalse(
+            stock_inventory.week_date,
+            "F&V inventory should not have week date" " set when a new record.",
+        )
 
-        stock_inventory_wizard = self.StockInventoryWizard.create({
-            'week_date': datetime.today().strftime(
-                DEFAULT_SERVER_DATETIME_FORMAT)
-        })
+        stock_inventory_wizard = self.StockInventoryWizard.create(
+            {"week_date": datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT)}
+        )
 
-        ctx = {'active_id': stock_inventory.id}
-        stock_inventory_wizard.with_context(ctx).action_ok()
+        ctx = {"active_id": stock_inventory.id}
+        stock_inventory_wizard.with_context(**ctx).action_ok()
 
         # I check that F&V Inventory is in the "Done" state
-        self.assertEquals(stock_inventory.state, 'done')
+        self.assertEqual(stock_inventory.state, "done")
 
         # Week Planification
         week_planification_id = stock_inventory.action_generate_planification()
 
         # Check week planification record created
-        assert week_planification_id.get('res_id', False)
+        self.assertTrue(
+            week_planification_id,
+            "Week planification should be created after generating "
+            "planification from inventory.",
+        )
 
-        orde_week_planning = self.OrderWeekPlanning.browse(
-            week_planification_id.get('res_id'))
-
+        order_week_planning = self.OrderWeekPlanning.browse(
+            week_planification_id.get("res_id")
+        )
+        order_week_planning_lines = order_week_planning.line_ids
+        order_week_planning_lines.write(
+            {
+                "monday_qty": 10.0,
+            }
+        )
         # Monday: Create Purchase Order
-        ctx = {'day_number': 1}
-        orde_week_planning.with_context(ctx).create_purchase_orders()
 
-        purchase_orders_action = orde_week_planning.action_view_orders()
-        purchase_orders_domain = purchase_orders_action.get('domain', [])
-        assert purchase_orders_domain
+        ctx = {"day_number": 1}
+        order_week_planning.with_context(**ctx).create_purchase_orders()
+
+        purchase_orders_action = order_week_planning.action_view_orders()
+        purchase_orders_domain = purchase_orders_action.get("domain", [])
+        self.assertTrue(
+            purchase_orders_domain,
+            "Purchase orders domain should be returned by action view orders.",
+        )
 
         if isinstance(purchase_orders_domain, str):
             purchase_orders = ast.literal_eval(purchase_orders_domain)[0][2]
@@ -86,4 +117,8 @@ class TestCoopProduce(CoopProduceTest):
             purchase_orders = purchase_orders_domain[0][2]
 
         # Check purchase orders
-        assert purchase_orders
+        self.assertTrue(
+            purchase_orders,
+            "Purchase orders should be created after creating "
+            "purchase order for the day.",
+        )
