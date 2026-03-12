@@ -1,4 +1,4 @@
-div.o_kanban_project_panel_section{
+div.o_kanban_project_panel_section {
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
@@ -6,7 +6,10 @@ div.o_kanban_project_panel_section{
     //font-size: 16px;
     font-weight: 500;
     border-bottom: 1px solid rgba(0, 0, 0, 0.125);
-    .o_kanban_project_panel_value{
-        display: -webkit-box; display: -webkit-flex; display: flex; align-content: stretch;
+    .o_kanban_project_panel_value {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        align-content: stretch;
     }
 }

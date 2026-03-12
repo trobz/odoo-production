@@ -1,11 +1,11 @@
-odoo.define('coop_project.CalendarRenderer', function (require) {
+odoo.define("coop_project.CalendarRenderer", function (require) {
     "use strict";
 
-    var CalendarRenderer = require('web.CalendarRenderer');
-    var core = require('web.core');
+    var CalendarRenderer = require("web.CalendarRenderer");
+    var core = require("web.core");
     var qweb = core.qweb;
-    var config = require('web.config');
-    var session = require('web.session');
+    var config = require("web.config");
+    var session = require("web.session");
 
     CalendarRenderer.include({
         _eventRender: function (event) {
@@ -21,10 +21,9 @@ odoo.define('coop_project.CalendarRenderer', function (require) {
             };
             this.qweb_context = qweb_context;
             if (_.isEmpty(qweb_context.record)) {
-                return '';
-            } else {
-                return (this.qweb || qweb).render("calendar-box", qweb_context);
+                return "";
             }
+            return (this.qweb || qweb).render("calendar-box", qweb_context);
         },
     });
 });
