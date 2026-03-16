@@ -1,14 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* coop_project
+# 	* coop_project
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-01-05 01:41+0000\n"
-"PO-Revision-Date: 2022-01-05 01:41+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2026-03-25 03:19+0000\n"
+"PO-Revision-Date: 2026-03-25 03:19+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,32 +17,36 @@ msgstr ""
 
 #. module: coop_project
 #: model:mail.template,body_html:coop_project.email_notify_assignee
-msgid "\n"
-"<p>Hello ${object.get_partner_assignee_names()}, </p>\n"
+msgid ""
+"<div>\n"
+"<p>Hello <t t-out=\"object.get_partner_assignee_names() or ''\"/>, </p>\n"
 "<p>\n"
-"    ${user.name} has assigned to you a new task:\n"
+"    <t t-out=\"user.name or ''\"/> has assigned to you a new task:\n"
 "</p>\n"
 "<ul>\n"
 "    <li>\n"
-"        ${object.name}\n"
+"        <t t-out=\"object.name or ''\"/>\n"
 "    </li>\n"
 "</ul>\n"
 "\n"
 "<p>Thank you, </p>\n"
-"            "
-msgstr "\n"
-"<p>Bonjour ${object.get_partner_assignee_names()}, </p>\n"
+"</div>\n"
+"        "
+msgstr ""
+"<div>\n"
+"<p>Bonjour <t t-out=\"object.get_partner_assignee_names() or ''\"/>, </p>\n"
 "<p>\n"
-"    ${user.name} vous a confié une nouvelle tâche:\n"
+"    <t t-out=\"user.name or ''\"/> vous a assigné une nouvelle tâche:\n"
 "</p>\n"
 "<ul>\n"
 "    <li>\n"
-"        ${object.name}\n"
+"        <t t-out=\"object.name or ''\"/>\n"
 "    </li>\n"
 "</ul>\n"
 "\n"
 "<p>Merci, </p>\n"
-"            "
+"</div>\n"
+"        "
 
 #. module: coop_project
 #: model_terms:ir.ui.view,arch_db:coop_project.view_task_form2_inherit
@@ -52,7 +56,7 @@ msgstr "<i class=\"fa fa-edit\"/> Ajouter un commentaire"
 #. module: coop_project
 #: model_terms:ir.ui.view,arch_db:coop_project.view_task_form2_inherit
 msgid "<i class=\"fa fa-minus\"/> Only comments"
-msgstr "<i class=\"fa fa-minus\"/> Commentaires uniquement"
+msgstr "<i class=\"fa fa-minus\"/> Uniquement les commentaires"
 
 #. module: coop_project
 #: model_terms:ir.ui.view,arch_db:coop_project.view_task_form2_inherit
@@ -60,9 +64,9 @@ msgid "<i class=\"fa fa-plus\"/> Full History"
 msgstr "<i class=\"fa fa-plus\"/> Historique complet"
 
 #. module: coop_project
-#: selection:project.task,show_comment_type:0
+#: model:ir.model.fields.selection,name:coop_project.selection__project_task__show_comment_type__all
 msgid "All"
-msgstr ""
+msgstr "Tout"
 
 #. module: coop_project
 #: model_terms:ir.ui.view,arch_db:coop_project.view_task_comment_form
@@ -71,27 +75,26 @@ msgid "Assigned To"
 msgstr "Assigné à"
 
 #. module: coop_project
-#: model:ir.model.fields,field_description:coop_project.field_project_task__assignee_ids
-#: model:ir.model.fields,field_description:coop_project.field_project_task__user_id
 #: model_terms:ir.ui.view,arch_db:coop_project.view_task_form2_inherit
 msgid "Assigned to"
 msgstr "Assigné à"
 
 #. module: coop_project
 #: model:mail.template,subject:coop_project.email_notify_assignee
-msgid "Assignment of task: ${object.name}"
-msgstr "Attribution de la tâche: ${object.name}"
+msgid "Assignment of task: {{ object.name }}"
+msgstr "Assignation de la tâche : {{ object.name }}"
 
 #. module: coop_project
-#: code:addons/coop_project/model/mail_message.py:22
-#, python-format
+#. odoo-python
+#: code:addons/coop_project/model/mail_message.py:0
 msgid "CHANGES: <ul>"
-msgstr "CHANGEMENTS: <ul>"
+msgstr "MODIFICATIONS : <ul>"
 
 #. module: coop_project
+#: model:ir.model,name:coop_project.model_calendar_event
 #: model:ir.model.fields,field_description:coop_project.field_project_task__calendar_event_id
 msgid "Calendar Event"
-msgstr ""
+msgstr "Événement du calendrier"
 
 #. module: coop_project
 #: model:ir.actions.act_window,name:coop_project.project_category_action
@@ -102,7 +105,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:coop_project.project_category_search_view
 #: model_terms:ir.ui.view,arch_db:coop_project.project_category_tree_view
 msgid "Categories"
-msgstr "Catégorie"
+msgstr "Catégories"
 
 #. module: coop_project
 #: model:ir.model.fields,field_description:coop_project.field_project_task__project_categ_id
@@ -110,25 +113,19 @@ msgid "Category"
 msgstr "Catégorie"
 
 #. module: coop_project
-#: model:ir.model.fields,field_description:coop_project.field_project_category__color_code
-msgid "Color Code"
-msgstr "Couleur Code"
-
-#. module: coop_project
 #: model:ir.model.fields,field_description:coop_project.field_project_category__color
-#: model:ir.model.fields,field_description:coop_project.field_project_task__color
-msgid "Color Index"
+msgid "Color"
 msgstr "Couleur"
 
 #. module: coop_project
 #: model:ir.model.fields,field_description:coop_project.field_project_task__comment_ids
 msgid "Comment"
-msgstr "Commentaires"
+msgstr "Commentaire"
 
 #. module: coop_project
-#: selection:project.task,show_comment_type:0
+#: model:ir.model.fields.selection,name:coop_project.selection__project_task__show_comment_type__comment
 msgid "Comment Only"
-msgstr ""
+msgstr "Uniquement les commentaires"
 
 #. module: coop_project
 #: model_terms:ir.ui.view,arch_db:coop_project.view_task_form2_inherit
@@ -138,7 +135,7 @@ msgstr "Commentaires"
 #. module: coop_project
 #: model_terms:ir.actions.act_window,help:coop_project.project_category_action
 msgid "Create a new category"
-msgstr ""
+msgstr "Créer une nouvelle catégorie"
 
 #. module: coop_project
 #: model:ir.model.fields,field_description:coop_project.field_project_task__create_user_id
@@ -158,14 +155,12 @@ msgid "Created on"
 msgstr "Créé le"
 
 #. module: coop_project
-#: model:ir.model.fields,field_description:coop_project.field_account_invoice_send__task_description
-#: model:ir.model.fields,field_description:coop_project.field_mail_compose_message__task_description
 #: model:ir.model.fields,field_description:coop_project.field_mail_mail__task_description
 #: model:ir.model.fields,field_description:coop_project.field_mail_message__task_description
 #: model_terms:ir.ui.view,arch_db:coop_project.view_task_comment_form
 #: model_terms:ir.ui.view,arch_db:coop_project.view_task_form2_inherit
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #. module: coop_project
 #: model_terms:ir.ui.view,arch_db:coop_project.view_task_comment_form
@@ -180,47 +175,22 @@ msgstr "Nom affiché"
 #. module: coop_project
 #: model:ir.model.fields,field_description:coop_project.field_project_task__estimated_cost
 msgid "Estimated Cost"
-msgstr "Budget Estimé"
-
-#. module: coop_project
-#: model:ir.model,name:coop_project.model_calendar_event
-msgid "Event"
-msgstr "Évènement"
+msgstr "Coût estimé"
 
 #. module: coop_project
 #: model:ir.model.fields,field_description:coop_project.field_calendar_event__from_task
 msgid "From Task"
-msgstr ""
+msgstr "Depuis la tâche"
 
 #. module: coop_project
-#: selection:project.task,priority:0
+#: model:ir.model.fields.selection,name:coop_project.selection__project_task__priority__3
 msgid "High Priority"
-msgstr ""
-
-#. module: coop_project
-#: model:ir.model.fields,help:coop_project.field_project_project__privacy_visibility
-msgid "Holds visibility of the tasks or issues that belong to the current project:\n"
-"- On invitation only: Employees may only see the followed project, tasks or issues\n"
-"- Visible by all employees: Employees may see all project, tasks or issues\n"
-"- Visible by following customers: employees see everything;\n"
-"   if website is activated, portal users may see project, tasks or issues followed by\n"
-"   them or by someone of their company\n"
-""
-msgstr "Détermine la visibilité des tâches ou anomalies qui dépendent du projet courant.\n"
-"- Sur invitation uniquement : les employés ne voient que les projets, tâches et anomalies qu'ils suivent ;\n"
-"- Visible par tous les salariés : les employés peuvent voir tous les projets, tâches et anomalies ;\n"
-"- Visible par les clients suivants : les employés voient tout ; si le site web est activé, les utilisateur du portail peuvent voir les projets, tâches et anomalies qu'eux ou un utilisateur appartenant à leur société, suivent.\n"
-""
+msgstr "Priorité haute"
 
 #. module: coop_project
 #: model:ir.model.fields,field_description:coop_project.field_project_category__id
 msgid "ID"
-msgstr ""
-
-#. module: coop_project
-#: model:ir.model.fields,field_description:coop_project.field_project_category____last_update
-msgid "Last Modified on"
-msgstr "Dernière modification le"
+msgstr "ID"
 
 #. module: coop_project
 #: model:ir.model.fields,field_description:coop_project.field_project_category__write_uid
@@ -233,14 +203,9 @@ msgid "Last Updated on"
 msgstr "Dernière mise à jour le"
 
 #. module: coop_project
-#: selection:project.task,priority:0
-msgid "Low"
-msgstr "Faible"
-
-#. module: coop_project
 #: model:ir.model,name:coop_project.model_mail_message
 msgid "Message"
-msgstr ""
+msgstr "Message"
 
 #. module: coop_project
 #: model:ir.model.fields,field_description:coop_project.field_project_category__name
@@ -249,29 +214,46 @@ msgid "Name"
 msgstr "Nom"
 
 #. module: coop_project
-#: selection:project.task,priority:0
-msgid "No Priority"
-msgstr ""
-
-#. module: coop_project
-#: selection:project.task,priority:0
+#: model:ir.model.fields.selection,name:coop_project.selection__project_task__priority__2
 msgid "Normal"
 msgstr "Normale"
 
 #. module: coop_project
-#: selection:project.project,privacy_visibility:0
-msgid "On invitation only"
-msgstr "Sur invitation uniquement"
+#: model:ir.model.fields,help:coop_project.field_project_project__privacy_visibility
+msgid ""
+"People to whom this project and its tasks will be visible.\n"
+"\n"
+"- Invited internal users: when following a project, internal users will get access to all of its tasks without distinction. Otherwise, they will only get access to the specific tasks they are following.\n"
+" A user with the project > administrator access right level can still access this project and its tasks, even if they are not explicitly part of the followers.\n"
+"\n"
+"- All internal users: all internal users can access the project and all of its tasks without distinction.\n"
+"\n"
+"- Invited portal users and all internal users: all internal users can access the project and all of its tasks without distinction.\n"
+"When following a project, portal users will only get access to the specific tasks they are following.\n"
+"\n"
+"When a project is shared in read-only, the portal user is redirected to their portal. They can view the tasks they are following, but not edit them.\n"
+"When a project is shared in edit, the portal user is redirected to the kanban and list views of the tasks. They can modify a selected number of fields on the tasks.\n"
+"\n"
+"In any case, an internal user with no project access rights can still access a task, provided that they are given the corresponding URL (and that they are part of the followers if the project is private)."
+msgstr ""
+"\n"
+"- Utilisateurs internes invités : lorsqu'ils suivent un projet, les utilisateurs internes obtiennent l'accès à toutes ses tâches sans distinction. Sinon, ils n'obtiennent l'accès qu'aux tâches spécifiques qu'ils suivent.\n"
+"Un utilisateur avec le niveau de droit d'accès project > administrateur peut toujours accéder à ce projet et à ses tâches, même s'il n'est pas explicitement fait partie des followers.\n"
+"\n"
+"- Tous les utilisateurs internes : tous les utilisateurs internes peuvent accéder au projet et à toutes ses tâches sans distinction.\n"
+"\n"
+"- Utilisateurs portail invités et tous les utilisateurs internes : tous les utilisateurs internes peuvent accéder au projet et à toutes ses tâches sans distinction.\n"
+"Quand ils suivent un projet, les utilisateurs portail n'obtiennent l'accès qu'aux tâches spécifiques qu'ils suivent.\n"
+"\n"
+"Quand un projet est partagé en lecture seule, l'utilisateur portail est redirigé vers son portail. Il peut voir les tâches qu'il suit, mais ne peut pas les modifier.\n"
+"Quand un projet est partagé en édition, l'utilisateur portail est redirigé vers les vues kanban et liste des tâches. Il peut modifier un nombre sélectionné de champs sur les tâches.\n"
+"\n"
+"Dans tous les cas, un utilisateur interne sans droits d'accès au projet peut toujours accéder à une tâche, à condition qu'il lui soit donné l'URL correspondante (et qu'il soit fait partie des followers si le projet est privé)."
 
 #. module: coop_project
 #: model:ir.model.fields,field_description:coop_project.field_project_task__priority
 msgid "Priority"
 msgstr "Priorité"
-
-#. module: coop_project
-#: model:ir.model.fields,field_description:coop_project.field_project_project__privacy_visibility
-msgid "Privacy"
-msgstr "Confidentialité"
 
 #. module: coop_project
 #: model:ir.model,name:coop_project.model_project_project
@@ -282,22 +264,22 @@ msgstr "Projet"
 #. module: coop_project
 #: model:ir.model,name:coop_project.model_project_category
 msgid "Project Category"
-msgstr ""
+msgstr "Catégorie de projet"
 
 #. module: coop_project
 #: model_terms:ir.ui.view,arch_db:coop_project.view_task_comment_form
 msgid "Save"
-msgstr "Sauvegarder"
+msgstr "Enregistrer"
 
 #. module: coop_project
 #: model:ir.model.fields,field_description:coop_project.field_project_task__show_comment_type
 msgid "Show Comment Type"
-msgstr ""
+msgstr "Afficher le type de commentaire"
 
 #. module: coop_project
 #: model:ir.model.fields,field_description:coop_project.field_project_task__show_dealine_in_calendar
 msgid "Show deadline on common calendar"
-msgstr "Afficher l’échéance dans le calendrier commun"
+msgstr "Afficher la date d'échéance sur le calendrier commun"
 
 #. module: coop_project
 #: model:ir.model,name:coop_project.model_project_task
@@ -307,17 +289,17 @@ msgstr "Tâche"
 #. module: coop_project
 #: model:mail.message.subtype,name:coop_project.mt_task_assign
 msgid "Task Assigned"
-msgstr ""
+msgstr "Tâche assignée"
 
 #. module: coop_project
 #: model:mail.message.subtype,name:coop_project.mt_task_comment
 msgid "Task Commented"
-msgstr ""
+msgstr "Tâche commentée"
 
 #. module: coop_project
-#: model_terms:ir.ui.view,arch_db:coop_project.view_task_form2_inherit
-msgid "Task Title..."
-msgstr "Titre de la tâche..."
+#: model:mail.template,name:coop_project.email_notify_assignee
+msgid "Task: Notify the Assignee"
+msgstr "Tâche : Notifier l'assigné"
 
 #. module: coop_project
 #: model_terms:ir.ui.view,arch_db:coop_project.view_task_form2_inherit
@@ -327,17 +309,17 @@ msgstr "Ticket"
 #. module: coop_project
 #: model:ir.model.fields,field_description:coop_project.field_project_task__ticket_description
 msgid "Ticket Description"
-msgstr ""
+msgstr "Description du ticket"
 
 #. module: coop_project
 #: model:ir.model.fields,field_description:coop_project.field_project_task__ticket_number
 msgid "Ticket Number"
-msgstr "Numéro de ticket"
+msgstr "Numéro du ticket"
 
 #. module: coop_project
-#: selection:project.project,privacy_visibility:0
-msgid "Visible by all employees"
-msgstr "Visible par tous les employés"
+#: model:ir.model.fields,field_description:coop_project.field_project_project__privacy_visibility
+msgid "Visibility"
+msgstr "Visibilité"
 
 #. module: coop_project
 #: model_terms:ir.ui.view,arch_db:coop_project.view_task_comment_form

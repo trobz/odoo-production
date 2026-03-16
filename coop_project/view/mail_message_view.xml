@@ -10,7 +10,7 @@
                         <field name="date" readonly="1" />
                         <field name="author_id" readonly="1" string="Created by" />
                         <field
-                            name="needaction_partner_ids"
+                            name="partner_ids"
                             required="1"
                             widget="many2many_tags"
                             string="Assigned To"
