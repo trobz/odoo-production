@@ -1,18 +1,17 @@
 from datetime import timedelta
 
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 
 
 class ProjectTask(models.Model):
     _inherit = "project.task"
 
     priority = fields.Selection(
-        [
-            ("0", "No Priority"),
-            ("1", "Low"),
+        selection_add=[
             ("2", "Normal"),
             ("3", "High Priority"),
-        ]
+        ],
+        ondelete={"2": "set default", "3": "set default"},
     )
 
     show_dealine_in_calendar = fields.Boolean(string="Show deadline on common calendar")
@@ -23,10 +22,7 @@ class ProjectTask(models.Model):
         required=True,
         default=lambda self: self.env.uid,
     )
-    user_id = fields.Many2one(default=False)
-    assignee_ids = fields.Many2many(
-        "res.users", string="Assigned to", track_visibility=True
-    )
+    user_ids = fields.Many2many(string="Assigned to", tracking=True)
     comment_ids = fields.Many2many("mail.message", compute="_compute_comment_ids")
     show_comment_type = fields.Selection(
         [
@@ -38,14 +34,7 @@ class ProjectTask(models.Model):
     estimated_cost = fields.Float()
     ticket_description = fields.Html()
     ticket_number = fields.Char()
-    project_categ_ids = fields.Many2many(
-        "project.category", string="Categories", related="project_id.project_categ_ids"
-    )
-    project_categ_id = fields.Many2one("project.category", string="Category")
-    project_category_name = fields.Char(related="project_categ_id.name", store=True)
-    color = fields.Integer(related="project_categ_id.color", store=True)
 
-    @api.multi
     def _track_subtype(self, init_values):
         self.ensure_one()
         if "kanban_state_label" in init_values and self.kanban_state == "blocked":
@@ -59,29 +48,30 @@ class ProjectTask(models.Model):
                 return "project.mt_task_stage"
         return super()._track_subtype(init_values)
 
-    @api.multi
     def get_partner_assignee_ids(self):
-        partner_ids = self.mapped("assignee_ids.partner_id.id")
+        partner_ids = self.mapped("user_ids.partner_id.id")
         if not partner_ids:
             return ""
         res = ",".join(str(i) for i in partner_ids)
         return res
 
-    @api.multi
     def get_partner_assignee_names(self):
-        partner_names = self.mapped("assignee_ids.partner_id.name")
+        partner_names = self.mapped("user_ids.partner_id.name")
         return ", ".join(partner_names)
 
-    @api.multi
     def get_lang(self):
-        lang = ""
-        if self.user_id:
-            lang = self.user_id.lang
-        elif self.assignee_ids:
-            lang = self.assignee_ids[0].lang
+        self.ensure_one()
+        lang = False
+        if self.user_ids and self.user_ids[0].lang:
+            lang = self.user_ids[0].lang
+        elif self.create_user_id and self.create_user_id.lang:
+            lang = self.create_user_id.lang
+        if not lang:
+            lang = self.env.user.lang
+        if not lang:
+            lang = "en_US"
         return lang
 
-    @api.multi
     def _compute_comment_ids(self):
         for task in self:
             args = [
@@ -89,7 +79,7 @@ class ProjectTask(models.Model):
                 ("res_id", "=", task.id),
                 ("body", "!=", False),
             ]
-            if self.show_comment_type == "comment":
+            if task.show_comment_type == "comment":
                 args += [
                     ("message_type", "=", "comment"),
                     (
@@ -101,14 +91,13 @@ class ProjectTask(models.Model):
             comment_ids = self.env["mail.message"].search(args)
             task.comment_ids = comment_ids
 
-    @api.multi
     def sync_calendar_event(self):
         for task in self:
             if not (task.show_dealine_in_calendar and task.date_deadline):
                 if task.calendar_event_id:
                     task.calendar_event_id.unlink()
                 continue
-            partner_ids = task.mapped("assignee_ids.partner_id.id")
+            partner_ids = task.mapped("user_ids.partner_id.id")
             if task.create_user_id.partner_id.id not in partner_ids:
                 partner_ids.append(task.create_user_id.partner_id.id)
             hours = int(
@@ -125,7 +114,7 @@ class ProjectTask(models.Model):
             vals = {
                 "name": task.name,
                 "description": task.description,
-                "partner_ids": [(6, 0, partner_ids)],
+                "partner_ids": [Command.set(partner_ids)],
                 "start": start_date,
                 "stop": end_date,
                 "from_task": True,
@@ -138,28 +127,22 @@ class ProjectTask(models.Model):
             else:
                 event.write(vals)
 
-    @api.multi
     def notify_assignee(self):
         for task in self:
-            if not task.assignee_ids:
+            if not task.user_ids:
                 continue
             # Add to followers
             message_partner_ids = task.message_partner_ids
-            partners = task.mapped("assignee_ids.partner_id")
+            partners = task.mapped("user_ids.partner_id")
             to_add = partners - message_partner_ids
-            vals = []
-            for p in to_add:
-                vals.append(
-                    {"res_model": task._name, "res_id": task.id, "partner_id": p.id}
-                )
-            if vals:
-                self.env["mail.followers"].create(vals)
+            if to_add:
+                task.message_subscribe(partner_ids=to_add.ids)
 
             mail_template = self.env.ref("coop_project.email_notify_assignee")
             if mail_template:
                 mail_template.send_mail(task.id)
 
-    @api.model
+    @api.model_create_multi
     def create(self, vals):
         task = super(
             ProjectTask, self.with_context(mail_auto_subscribe_no_notify=1)
@@ -168,17 +151,15 @@ class ProjectTask(models.Model):
         task.notify_assignee()
         return task
 
-    @api.multi
-    def write(self, vals):
+    def write(self, vals_list):
         res = super(
             ProjectTask, self.with_context(mail_auto_subscribe_no_notify=1)
-        ).write(vals)
+        ).write(vals_list)
         self.sync_calendar_event()
-        if vals.get("assignee_ids"):
+        if vals_list.get("user_ids"):
             self.notify_assignee()
         return res
 
-    @api.multi
     def unlink(self):
         events = self.mapped("calendar_event_id")
         res = super().unlink()
@@ -186,15 +167,13 @@ class ProjectTask(models.Model):
             events.unlink()
         return res
 
-    @api.multi
     def btn_add_comment(self):
         self.ensure_one()
         view = self.env.ref("coop_project.view_task_comment_form")
-        partner_ids = self.mapped("assignee_ids.partner_id.id")
+        partner_ids = self.mapped("user_ids.partner_id.id")
         if self.create_user_id.partner_id.id not in partner_ids:
             partner_ids.append(self.create_user_id.partner_id.id)
         act_vals = {
-            "view_type": "form",
             "view_mode": "form",
             "res_model": "mail.message",
             "type": "ir.actions.act_window",
@@ -204,7 +183,7 @@ class ProjectTask(models.Model):
             "context": {
                 "default_model": "project.task",
                 "default_res_id": self.id,
-                "default_needaction_partner_ids": [(6, 0, partner_ids)],
+                "default_partner_ids": [Command.set(partner_ids)],
                 "default_author_id": self.env.user.partner_id.id,
                 "default_message_type": "comment",
                 "default_subtype_id": self.env.ref("coop_project.mt_task_comment").id,
@@ -212,12 +191,10 @@ class ProjectTask(models.Model):
         }
         return act_vals
 
-    @api.multi
     def btn_show_comment_only(self):
         self.ensure_one()
         self.sudo().write({"show_comment_type": "comment"})
 
-    @api.multi
     def btn_show_comment_history(self):
         self.ensure_one()
         self.sudo().write({"show_comment_type": "all"})
