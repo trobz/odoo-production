@@ -11,7 +11,7 @@
                         name="qualification_ids"
                         widget="many2many_tags"
                         placeholder="Qualifications"
-                        attrs="{'invisible': [('is_member', '!=', True)]}"
+                        invisible="not is_member or not is_worker_member"
                     />
                 </div>
             </xpath>

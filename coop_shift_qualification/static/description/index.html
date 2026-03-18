@@ -1,0 +1,645 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils: https://docutils.sourceforge.io/" />
+<title>Coop Shift Qualification</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 9511 2024-01-13 09:50:07Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+Despite the name, some widely supported CSS2 features are used.
+
+See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: gray; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic, pre.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="coop-shift-qualification">
+<h1 class="title">Coop Shift Qualification</h1>
+
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! This file is generated by oca-gen-addon-readme !!
+!! changes will be overwritten.                   !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! source digest: sha256:d1989d4c55742c89c7ac3cfd36c73cdaf0f0d59ebdcb59f711788315c6cd3a2c
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/AwesomeFoodCoops/odoo-production/tree/18.0/coop_shift_qualification"><img alt="AwesomeFoodCoops/odoo-production" src="https://img.shields.io/badge/github-AwesomeFoodCoops%2Fodoo--production-lightgray.png?logo=github" /></a></p>
+<div class="section" id="coop-shift-qualification-1">
+<h1>Coop Shift Qualification</h1>
+<div class="section" id="purpose">
+<h2>Purpose</h2>
+<p>This module manages <strong>shift leader qualification</strong> for members and
+ensures that leader assignments on shift templates/shifts stay
+consistent with a partner’s qualifications.</p>
+<p>It adds:</p>
+<ul class="simple">
+<li>A new model <tt class="docutils literal">res.partner.qualification</tt>.</li>
+<li>A Many2many on <tt class="docutils literal">res.partner</tt> to assign qualifications.</li>
+<li>Synchronization logic between:<ul>
+<li>Partner qualifications (leader/non-leader)</li>
+<li>Shift template leaders (<tt class="docutils literal">shift.template.user_ids</tt>)</li>
+<li>Shift leaders (<tt class="docutils literal">shift.user_ids</tt> for shifts not in state <tt class="docutils literal">done</tt>)</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="main-business-rules">
+<h2>Main business rules</h2>
+<ul class="simple">
+<li>A partner becomes a <strong>“qualified leader”</strong>
+(<tt class="docutils literal">res.partner.is_qual_leader = True</tt>) when they have at least one
+qualification where <tt class="docutils literal">is_leader = True</tt>.</li>
+<li>When a partner is a qualified leader and is a <strong>current participant</strong>
+of a shift template registration, they can be automatically added as a
+leader on:<ul>
+<li>The related shift template (<tt class="docutils literal">shift.template.user_ids</tt>)</li>
+<li>All non-done shifts of that template (<tt class="docutils literal">shift.user_ids</tt>)</li>
+</ul>
+</li>
+<li>When a partner is removed from being leader (no leader qualification
+or removed from registration), the partner may be removed from:<ul>
+<li><tt class="docutils literal">shift.template.user_ids</tt></li>
+<li>all non-done <tt class="docutils literal">shift.user_ids</tt></li>
+</ul>
+</li>
+<li>A partner cannot be assigned as leader in some cases. The validation
+message comes from <tt class="docutils literal">res.partner._get_leader_ftop_warning()</tt>.</li>
+</ul>
+</div>
+<div class="section" id="technical-overview-for-reviewers">
+<h2>Technical overview (for reviewers)</h2>
+<div class="section" id="key-models-and-methods">
+<h3>Key models and methods</h3>
+<ul class="simple">
+<li><tt class="docutils literal">res.partner.qualification</tt><ul>
+<li>Constraint: qualification <tt class="docutils literal">name</tt> length limited to 5.</li>
+<li>Compute: <tt class="docutils literal">can_be_leader</tt> computed from config parameter
+<tt class="docutils literal">coop_shift_qualification.nb_of_leader</tt> and current number of
+leader qualifications.</li>
+</ul>
+</li>
+<li><tt class="docutils literal">res.partner</tt><ul>
+<li>Field: <tt class="docutils literal">qualification_ids</tt> (Many2many) with inverse method
+<tt class="docutils literal">_inverse_update_shift_leader()</tt>.</li>
+<li>Compute: <tt class="docutils literal">is_qual_leader</tt> + <tt class="docutils literal">qualifications</tt> (stored).</li>
+<li>Method: <tt class="docutils literal">_inverse_update_shift_leader()</tt> updates shift leaders
+based on qualification.</li>
+</ul>
+</li>
+<li><tt class="docutils literal">shift.template</tt><ul>
+<li>Method:
+<tt class="docutils literal">update_qualification(partners, <span class="pre">action=&quot;add&quot;|&quot;del&quot;,</span> raise_error=True)</tt><ul>
+<li>Adds/removes leader qualification on partners based on their
+participation and template assignment.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><tt class="docutils literal">shift.template.registration</tt><ul>
+<li>Method: <tt class="docutils literal">update_leaders(partners, <span class="pre">action=&quot;add&quot;|&quot;del&quot;)</span></tt><ul>
+<li>Adds/removes partners in leaders of the template and non-done
+shifts.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><tt class="docutils literal">shift.template.registration.line</tt><ul>
+<li>Overrides <tt class="docutils literal">create/write/unlink</tt> to call
+<tt class="docutils literal">registration.update_leaders()</tt>.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="post-init-hook">
+<h3>Post init hook</h3>
+<ul class="simple">
+<li><tt class="docutils literal">post_init_hook()</tt> calls
+<tt class="docutils literal">res.partner.qualification._update_partner_qualification()</tt> to
+synchronize qualifications to existing templates after installation.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="notes-about-performance-changes-18-0">
+<h2>Notes about performance changes (18.0)</h2>
+<p>The 18.0 implementation uses batching where possible to minimize
+repeated M2M updates:</p>
+<ul class="simple">
+<li>Batch updates for shift leader assignment/removal
+(<tt class="docutils literal">shifts.user_ids |= partner</tt> / <tt class="docutils literal">shifts.user_ids <span class="pre">-=</span> partner</tt>).</li>
+<li>Batch qualification add/remove using <tt class="docutils literal">write()</tt> with M2M commands.</li>
+</ul>
+<p>These changes are intended to keep the same behavior with fewer ORM
+operations.</p>
+<p><strong>Table of contents</strong></p>
+</div>
+</div>
+<div class="section" id="usage">
+<h1>Usage</h1>
+</div>
+<div class="section" id="usage-functional-test-guide">
+<h1>Usage (Functional test guide)</h1>
+<p>This guide is intended for functional consultants (FC) and testers.</p>
+<div class="section" id="pre-conditions">
+<h2>Pre-conditions</h2>
+<ul class="simple">
+<li>Module <tt class="docutils literal">coop_shift_qualification</tt> is installed.</li>
+<li>Module dependency <tt class="docutils literal">coop_membership</tt> is installed.</li>
+<li>You have access rights to edit:<ul>
+<li>Partners (members)</li>
+<li>Shift templates and registrations</li>
+<li>Partner qualifications</li>
+</ul>
+</li>
+<li>There is at least:<ul>
+<li>1 shift template with some non-done shifts</li>
+<li>1 member (partner)</li>
+<li>1 qualification marked as leader (<tt class="docutils literal">is_leader = True</tt>)</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="main-screens">
+<h2>Main screens</h2>
+<ul class="simple">
+<li><strong>Partner Qualifications</strong><ul>
+<li>Model: <tt class="docutils literal">res.partner.qualification</tt></li>
+<li>Menu: depends on deployment, typically under membership/coop
+configuration.</li>
+</ul>
+</li>
+<li><strong>Partner form</strong><ul>
+<li>Field: <tt class="docutils literal">Qualifications</tt> (Many2many)</li>
+</ul>
+</li>
+<li><strong>Shift template</strong><ul>
+<li>Leaders: <tt class="docutils literal">shift.template.user_ids</tt></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="test-scenarios">
+<h2>Test scenarios</h2>
+<div class="section" id="scenario-a-set-partner-as-qualified-leader-manual">
+<h3>Scenario A: Set partner as qualified leader (manual)</h3>
+<ol class="arabic simple">
+<li>Open a partner.</li>
+<li>Add at least one qualification where <tt class="docutils literal">is_leader = True</tt>.</li>
+</ol>
+<p>Expected:</p>
+<ul class="simple">
+<li>Partner field <tt class="docutils literal">is_qual_leader</tt> becomes True.</li>
+<li>If the partner is currently participating in shift templates (current
+registration lines), then the partner is added as leader on:<ul>
+<li>shift template <tt class="docutils literal">user_ids</tt></li>
+<li>all non-done shifts <tt class="docutils literal">user_ids</tt></li>
+</ul>
+</li>
+</ul>
+<p>If it fails:</p>
+<ul class="simple">
+<li>You may get an error message from
+<tt class="docutils literal">res.partner._get_leader_ftop_warning()</tt> (for example related to
+ABCD/FTOP constraints).</li>
+</ul>
+</div>
+<div class="section" id="scenario-b-remove-leader-qualification">
+<h3>Scenario B: Remove leader qualification</h3>
+<ol class="arabic simple">
+<li>Open the same partner.</li>
+<li>Remove all leader qualifications (so no qualification with
+<tt class="docutils literal">is_leader = True</tt> remains).</li>
+</ol>
+<p>Expected:</p>
+<ul class="simple">
+<li>Partner <tt class="docutils literal">is_qual_leader</tt> becomes False.</li>
+<li>Partner is removed from leaders on all non-done shifts of templates
+where they were leader.</li>
+<li>Partner <tt class="docutils literal">template_ids</tt> becomes empty (leaders removed).</li>
+</ul>
+</div>
+<div class="section" id="scenario-c-add-a-participant-to-a-shift-template-registration-line">
+<h3>Scenario C: Add a participant to a shift template registration line</h3>
+<ol class="arabic simple">
+<li>Open a shift template.</li>
+<li>Add a registration line so that the partner becomes a <strong>current
+participant</strong>.</li>
+</ol>
+<p>Expected:</p>
+<ul class="simple">
+<li>The system calls <tt class="docutils literal">registration.update_leaders(partner)</tt>.</li>
+<li>If the partner is qualified leader, they are added to:<ul>
+<li><tt class="docutils literal">shift.template.user_ids</tt></li>
+<li>all non-done <tt class="docutils literal">shift.user_ids</tt></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="scenario-d-remove-participant-or-set-non-current">
+<h3>Scenario D: Remove participant (or set non-current)</h3>
+<ol class="arabic simple">
+<li>Edit registration line so the partner is no longer a current
+participant, or delete the line.</li>
+</ol>
+<p>Expected:</p>
+<ul class="simple">
+<li>The system removes the partner from template leaders and shift leaders
+accordingly.</li>
+</ul>
+</div>
+<div class="section" id="scenario-e-qualification-leader-limit-configuration">
+<h3>Scenario E: Qualification leader limit configuration</h3>
+<ol class="arabic simple">
+<li>Go to Settings.</li>
+<li>Set <strong>Number of Leader</strong> to <tt class="docutils literal">1</tt>.</li>
+<li>Try to mark 2 different qualification records as
+<tt class="docutils literal">is_leader = True</tt>.</li>
+</ol>
+<p>Expected:</p>
+<ul class="simple">
+<li>System blocks the second one with a validation error.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="where-to-look-when-debugging">
+<h2>Where to look when debugging</h2>
+<ul class="simple">
+<li>Partner: <tt class="docutils literal">qualification_ids</tt>, <tt class="docutils literal">is_qual_leader</tt>, <tt class="docutils literal">template_ids</tt></li>
+<li>Shift template: <tt class="docutils literal">user_ids</tt></li>
+<li>Shifts: <tt class="docutils literal">user_ids</tt> (excluding state <tt class="docutils literal">done</tt>)</li>
+<li>Logs/errors: validation error messages when violating leader
+assignment constraints.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="bug-tracker">
+<h1>Bug Tracker</h1>
+<p>Bugs are tracked on <a class="reference external" href="https://github.com/AwesomeFoodCoops/odoo-production/issues">GitHub Issues</a>.
+In case of trouble, please check there if your issue has already been reported.
+If you spotted it first, help us to smash it by providing a detailed and welcomed
+<a class="reference external" href="https://github.com/AwesomeFoodCoops/odoo-production/issues/new?body=module:%20coop_shift_qualification%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<p>Do not contact contributors directly about support or help with technical issues.</p>
+</div>
+<div class="section" id="credits">
+<h1>Credits</h1>
+<div class="section" id="authors">
+<h2>Authors</h2>
+<ul class="simple">
+<li>Trobz</li>
+<li>La Louve</li>
+</ul>
+</div>
+<div class="section" id="maintainers">
+<h2>Maintainers</h2>
+<p>This module is part of the <a class="reference external" href="https://github.com/AwesomeFoodCoops/odoo-production/tree/18.0/coop_shift_qualification">AwesomeFoodCoops/odoo-production</a> project on GitHub.</p>
+<p>You are welcome to contribute.</p>
+</div>
+</div>
+</div>
+</body>
+</html>
