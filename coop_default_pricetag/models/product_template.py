@@ -63,8 +63,8 @@ class ProductTemplate(models.Model):
         string="Labels",
         comodel_name="product.label",
         relation="product_label_product_rel",
-        column1="product_id",
-        column2="label_id",
+        column1="product_template_id",
+        column2="product_label_id",
     )
     expiration_date_days = fields.Integer(
         string="Expiration Date (Days)",
