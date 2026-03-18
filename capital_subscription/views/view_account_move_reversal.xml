@@ -8,9 +8,14 @@
         <field name="inherit_id" ref="account.view_account_move_reversal" />
         <field name="arch" type="xml">
             <field name="date" position="after">
+                <field name="refund_quantity_origin" invisible="1" />
                 <field name="refund_quantity" invisible="not is_capital_fundraising" />
                 <field name="is_capital_fundraising" invisible="1" />
             </field>
+            <!-- Hide Reserve and Create Invoice -->
+            <button name="modify_moves" position="attributes">
+                <attribute name="invisible">is_capital_fundraising</attribute>
+            </button>
         </field>
     </record>
 </odoo>
