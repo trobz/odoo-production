@@ -3,14 +3,15 @@
     <template id="report_timesheet" inherit_id="coop_shift.report_timesheet">
         <xpath expr="//tr[@t-as='registration']/td[3]" position="replace">
             <td>
-                <span t-esc="registration['registration'].partner_id.qualifications or ''"/>
+                <span
+                    t-esc="registration['registration'].partner_id.qualifications or ''"
+                />
             </td>
         </xpath>
         <xpath expr="//tr[@t-as='ftop_data']/td[3]" position="replace">
             <td>
-                <span t-esc="ftop.partner_id.qualifications or ''"/>
+                <span t-esc="ftop.partner_id.qualifications or ''" />
             </td>
         </xpath>
     </template>
-
 </odoo>

@@ -17,15 +17,15 @@
 #
 ##############################################################################
 
-from odoo import api, fields, models, _
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-
 
 QUAL_CHAR_LIMIT = 5
 
+
 class PartnerQualification(models.Model):
-    _name = 'res.partner.qualification'
-    _description = 'Partner Quailification'
+    _name = "res.partner.qualification"
+    _description = "Partner Quailification"
     _order = "seq"
 
     name = fields.Char(required=True, default="/")
@@ -37,21 +37,21 @@ class PartnerQualification(models.Model):
     def constrains_name(self):
         for rec in self:
             if rec.name and len(rec.name) > QUAL_CHAR_LIMIT:
-                raise ValidationError(_(
-                    "Qualification must be limited to {limit} characters"
-                ).format(
-                    limit=QUAL_CHAR_LIMIT
-                ))
+                raise ValidationError(
+                    _("Qualification must be limited to {limit} characters").format(
+                        limit=QUAL_CHAR_LIMIT
+                    )
+                )
 
     @api.depends("name")
     def compute_can_be_leader(self):
         get_param = self.env["ir.config_parameter"].sudo().get_param
         nb_of_leader = int(get_param("coop_shift_qualification.nb_of_leader", 1))
-        reg_nb_of_leader = self.env["res.partner.qualification"].\
-            search_count([("is_leader", "=", True)])
+        reg_nb_of_leader = self.env["res.partner.qualification"].search_count(
+            [("is_leader", "=", True)]
+        )
         for rec in self:
-            rec.can_be_leader = rec.is_leader or \
-                nb_of_leader > reg_nb_of_leader
+            rec.can_be_leader = rec.is_leader or nb_of_leader > reg_nb_of_leader
 
     @api.constrains("is_leader")
     def constrains_is_leader(self):
@@ -60,24 +60,21 @@ class PartnerQualification(models.Model):
                 continue
             get_param = self.env["ir.config_parameter"].sudo().get_param
             nb_of_leader = int(get_param("coop_shift_qualification.nb_of_leader", 1))
-            reg_nb_of_leader = self.env["res.partner.qualification"].\
-                search_count([("is_leader", "=", True)])
+            reg_nb_of_leader = self.env["res.partner.qualification"].search_count(
+                [("is_leader", "=", True)]
+            )
             if nb_of_leader < reg_nb_of_leader:
-                raise ValidationError(_(
-                    "'Nb of Leader' of Qualification must be limited to {l}"
-                ).format(
-                    l=nb_of_leader
-                ))
+                raise ValidationError(
+                    _("'Nb of Leader' of Qualification must be limited to {l}").format(
+                        l=nb_of_leader
+                    )
+                )
 
     @api.model
     def _update_partner_qualification(self):
-        rec = self.search([
-            ("is_leader", "=", True)
-        ], limit=1)
+        rec = self.search([("is_leader", "=", True)], limit=1)
         if not rec:
             return
-        templates = self.env["shift.template"].search(
-            [("is_ftop", "=", False)])
+        templates = self.env["shift.template"].search([("is_ftop", "=", False)])
         for tmpl in templates:
             tmpl.update_qualification(tmpl.user_ids, raise_error=False)
-

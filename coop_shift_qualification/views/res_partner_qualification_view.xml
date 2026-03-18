@@ -4,9 +4,9 @@
         <field name="model">res.partner.qualification</field>
         <field name="arch" type="xml">
             <tree>
-                <field name="seq" widget="handle"/>
-                <field name="name"/>
-                <field name="is_leader"/>
+                <field name="seq" widget="handle" />
+                <field name="name" />
+                <field name="is_leader" />
             </tree>
         </field>
     </record>
@@ -18,10 +18,12 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="name"/>
-                            <field name="is_leader"
-                                attrs="{'readonly': [('can_be_leader', '=', False)]}"/>
-                            <field name="can_be_leader" invisible="1"/>
+                            <field name="name" />
+                            <field
+                                name="is_leader"
+                                attrs="{'readonly': [('can_be_leader', '=', False)]}"
+                            />
+                            <field name="can_be_leader" invisible="1" />
                         </group>
                     </group>
                 </sheet>
@@ -41,6 +43,6 @@
         id="menu_res_partner_qualification"
         sequence="10"
         action="action_res_partner_qualification"
-        parent="coop_shift.menu_shift_configuration"/>
-
+        parent="coop_shift.menu_shift_configuration"
+    />
 </odoo>
