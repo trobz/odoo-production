@@ -4,15 +4,14 @@ from odoo import api, models
 class ShiftTemplateRegistrationLine(models.Model):
     _inherit = "shift.template.registration.line"
 
-    @api.model
-    def create(self, vals):
-        lines = super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        lines = super().create(vals_list)
         regs = lines.mapped("registration_id")
         for reg in regs:
             reg.update_leaders(reg.partner_id)
         return lines
 
-    @api.multi
     def write(self, vals):
         res = super().write(vals)
         regs = self.mapped("registration_id")
@@ -23,7 +22,6 @@ class ShiftTemplateRegistrationLine(models.Model):
                 reg.update_leaders(reg.partner_id, action="del")
         return res
 
-    @api.multi
     def unlink(self):
         regs = self.mapped("registration_id")
         res = super().unlink()

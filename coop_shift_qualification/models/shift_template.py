@@ -1,11 +1,10 @@
-from odoo import api, models
+from odoo import Command, api, models
 from odoo.exceptions import ValidationError
 
 
 class ShiftTemplate(models.Model):
     _inherit = "shift.template"
 
-    @api.multi
     def update_qualification(self, partners, action="add", raise_error=True):
         if not partners:
             return
@@ -18,35 +17,52 @@ class ShiftTemplate(models.Model):
             if tmpl.is_ftop:
                 continue
             regs = tmpl.current_registration_ids
-            for partner in partners:
-                if action == "add":
-                    if partner.is_qual_leader:
-                        continue
-                    reg = regs.filtered(lambda r: r.partner_id == partner)
-                    if not reg:
-                        continue
-                    warn_msg = partner._get_leader_ftop_warning(tmpl)
-                    if warn_msg:
-                        if raise_error:
-                            raise ValidationError(warn_msg)
-                        else:
-                            continue
-                    partner.qualification_ids |= lead_quals[0]
+            reg_partner_ids = set(regs.mapped("partner_id").ids)
 
-                elif action == "del":
+            if action == "add":
+                candidates = partners.filtered(
+                    lambda p, reg_partner_ids=reg_partner_ids: p.id in reg_partner_ids
+                )
+                candidates = candidates.filtered(lambda p: not p.is_qual_leader)
+
+                if candidates:
+                    invalid = self.env["res.partner"]
+                    for partner in candidates:
+                        warn_msg = partner._get_leader_ftop_warning(tmpl)
+                        if warn_msg:
+                            if raise_error:
+                                raise ValidationError(warn_msg)
+                            invalid |= partner
+
+                    candidates -= invalid
+
+                if candidates:
+                    candidates.write(
+                        {"qualification_ids": [Command.link(lead_quals[0].id)]}
+                    )
+
+            elif action == "del":
+                to_del = self.env["res.partner"]
+                for partner in partners:
                     curr_tmpls = partner.template_ids - self
-                    if curr_tmpls:
-                        continue
-                    partner.qualification_ids -= lead_quals
+                    if not curr_tmpls:
+                        to_del |= partner
+                if to_del:
+                    to_del.write(
+                        {
+                            "qualification_ids": [
+                                Command.remove(qid) for qid in lead_quals.ids
+                            ]
+                        }
+                    )
 
-    @api.model
-    def create(self, vals):
-        tmpls = super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        tmpls = super().create(vals_list)
         for tmpl in tmpls:
             tmpl.update_qualification(tmpl.mapped("user_ids"))
         return tmpls
 
-    @api.multi
     def write(self, vals):
         res = True
         if vals.get("user_ids") or vals.get("shift_type_id"):
@@ -62,7 +78,6 @@ class ShiftTemplate(models.Model):
             res = super().write(vals)
         return res
 
-    @api.multi
     def unlink(self):
         res = True
         for tmpl in self:

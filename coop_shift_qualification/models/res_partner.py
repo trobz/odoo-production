@@ -17,7 +17,7 @@
 #
 ##############################################################################
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -25,11 +25,11 @@ class Partner(models.Model):
     _inherit = "res.partner"
 
     qualification_ids = fields.Many2many(
-        "res.partner.qualification", inverse="_update_shift_leader"
+        "res.partner.qualification", inverse="_inverse_update_shift_leader"
     )
-    is_qual_leader = fields.Boolean(compute="compute_qual_leader", store=True)
+    is_qual_leader = fields.Boolean(compute="_compute_qual_leader", store=True)
     qualifications = fields.Char(
-        compute="compute_qual_leader",
+        compute="_compute_qual_leader",
         store=True,
     )
 
@@ -37,10 +37,10 @@ class Partner(models.Model):
         self.ensure_one()
         msg = None
         if not shift_templates or self.in_ftop_team:
-            msg = _("A coordinator must already be assigned to an ABCD team")
+            msg = self.env._("A coordinator must already be assigned to an ABCD team")
         return msg
 
-    def _update_shift_leader(self):
+    def _inverse_update_shift_leader(self):
         for partner in self:
             if partner.is_qual_leader:
                 # Check Standard
@@ -56,19 +56,19 @@ class Partner(models.Model):
                 shifts = partner.template_ids.mapped("shift_ids").filtered(
                     lambda s: s.state != "done"
                 )
-                for shift in shifts:
-                    shift.user_ids |= partner
+                if shifts:
+                    shifts.user_ids |= partner
             elif partner.template_ids:
                 # Remove leaders
                 shifts = partner.template_ids.mapped("shift_ids").filtered(
                     lambda s: s.state != "done"
                 )
-                for shift in shifts:
-                    shift.user_ids -= partner
+                if shifts:
+                    shifts.user_ids -= partner
                 partner.template_ids = False
 
     @api.depends("qualification_ids", "qualification_ids.is_leader")
-    def compute_qual_leader(self):
+    def _compute_qual_leader(self):
         for rec in self:
             is_leader = any(q.is_leader for q in rec.qualification_ids)
             rec.is_qual_leader = is_leader

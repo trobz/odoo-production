@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <template id="report_timesheet" inherit_id="coop_shift.report_timesheet">
+    <template
+        id="report_timesheet"
+        inherit_id="coop_shift.report_timesheet"
+        priority="99"
+    >
         <xpath expr="//tr[@t-as='registration']/td[3]" position="replace">
             <td>
                 <span

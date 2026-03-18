@@ -17,7 +17,7 @@
 #
 ##############################################################################
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 QUAL_CHAR_LIMIT = 5
@@ -31,20 +31,20 @@ class PartnerQualification(models.Model):
     name = fields.Char(required=True, default="/")
     is_leader = fields.Boolean()
     seq = fields.Integer(string="Sequence")
-    can_be_leader = fields.Boolean(compute="compute_can_be_leader")
+    can_be_leader = fields.Boolean(compute="_compute_can_be_leader")
 
     @api.constrains("name")
     def constrains_name(self):
         for rec in self:
             if rec.name and len(rec.name) > QUAL_CHAR_LIMIT:
                 raise ValidationError(
-                    _("Qualification must be limited to {limit} characters").format(
-                        limit=QUAL_CHAR_LIMIT
-                    )
+                    self.env._(
+                        "Qualification must be limited to {limit} characters"
+                    ).format(limit=QUAL_CHAR_LIMIT)
                 )
 
     @api.depends("name")
-    def compute_can_be_leader(self):
+    def _compute_can_be_leader(self):
         get_param = self.env["ir.config_parameter"].sudo().get_param
         nb_of_leader = int(get_param("coop_shift_qualification.nb_of_leader", 1))
         reg_nb_of_leader = self.env["res.partner.qualification"].search_count(
@@ -65,9 +65,9 @@ class PartnerQualification(models.Model):
             )
             if nb_of_leader < reg_nb_of_leader:
                 raise ValidationError(
-                    _("'Nb of Leader' of Qualification must be limited to {l}").format(
-                        l=nb_of_leader
-                    )
+                    self.env._(
+                        "'Nb of Leader' of Qualification must be limited to {l}"
+                    ).format(l=nb_of_leader)
                 )
 
     @api.model

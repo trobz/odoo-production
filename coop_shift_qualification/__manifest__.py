@@ -20,10 +20,10 @@
 {
     "name": "Coop Shift Qualification",
     "summary": "Coop Shift Qualification",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Custom",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
-    "author": "Trobz",
+    "author": "Trobz, La Louve",
     "license": "AGPL-3",
     "depends": [
         "coop_membership",
@@ -33,7 +33,7 @@
         "data/res_partner_qualification.xml",
         "views/res_partner_qualification_view.xml",
         "views/res_partner_view.xml",
-        "views/report_timesheet_templates.xml",
+        "report/report_timesheet_templates.xml",
         "views/res_config_view.xml",
     ],
     "installable": True,
