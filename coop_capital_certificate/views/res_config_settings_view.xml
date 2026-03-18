@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record model="ir.ui.view" id="view_capital_certificate_config">
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='invoicing_settings']" position="after">
+                <block
+                    id="capital_certificate"
+                    string="Capital Certificates"
+                    groups="account.group_account_user"
+                >
+                    <setting id="capital_certificate_header">
+                        <field name="capital_certificate_header" />
+                    </setting>
+                    <setting id="signature">
+                        <field name="signature" />
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>
