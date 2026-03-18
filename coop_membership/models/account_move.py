@@ -66,3 +66,6 @@ class AccountMove(models.Model):
             invoice.partner_owned_share_id = owned_share.id
 
         return True
+
+    def action_reverse_capital_subscription(self):
+        return self.action_reverse()
