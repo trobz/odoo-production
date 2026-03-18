@@ -2,7 +2,11 @@ common:
 
   modules:
     - capital_subscription
-    - coop_shift
+    - coop_account_check_deposit
+    - coop_account_product_fiscal_classification
+    - coop_capital_certificate
+    - coop_default_pricetag
+    # - coop_shift
     # - foodcoop18_module
     # - delivery
     # - pos_automatic_validation
