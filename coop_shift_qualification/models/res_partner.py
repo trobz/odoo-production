@@ -17,21 +17,17 @@
 #
 ##############################################################################
 
-from odoo import api, fields, models, _
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
 class Partner(models.Model):
-    _inherit = 'res.partner'
+    _inherit = "res.partner"
 
     qualification_ids = fields.Many2many(
-        "res.partner.qualification",
-        inverse="_update_shift_leader"
+        "res.partner.qualification", inverse="_update_shift_leader"
     )
-    is_qual_leader = fields.Boolean(
-        compute="compute_qual_leader",
-        store=True
-    )
+    is_qual_leader = fields.Boolean(compute="compute_qual_leader", store=True)
     qualifications = fields.Char(
         compute="compute_qual_leader",
         store=True,
@@ -41,9 +37,7 @@ class Partner(models.Model):
         self.ensure_one()
         msg = None
         if not shift_templates or self.in_ftop_team:
-            msg = _(
-                "A coordinator must already be assigned to an ABCD team"
-            )
+            msg = _("A coordinator must already be assigned to an ABCD team")
         return msg
 
     def _update_shift_leader(self):
@@ -51,7 +45,8 @@ class Partner(models.Model):
             if partner.is_qual_leader:
                 # Check Standard
                 shift_templates = partner.tmpl_reg_ids.filtered(
-                    "is_current_participant").mapped("shift_template_id")
+                    "is_current_participant"
+                ).mapped("shift_template_id")
                 warn_msg = partner._get_leader_ftop_warning(shift_templates)
                 if warn_msg:
                     raise ValidationError(warn_msg)
@@ -59,13 +54,15 @@ class Partner(models.Model):
                 # Update leaders
                 partner.template_ids |= shift_templates
                 shifts = partner.template_ids.mapped("shift_ids").filtered(
-                    lambda s: s.state != "done")
+                    lambda s: s.state != "done"
+                )
                 for shift in shifts:
                     shift.user_ids |= partner
             elif partner.template_ids:
                 # Remove leaders
                 shifts = partner.template_ids.mapped("shift_ids").filtered(
-                    lambda s: s.state != "done")
+                    lambda s: s.state != "done"
+                )
                 for shift in shifts:
                     shift.user_ids -= partner
                 partner.template_ids = False
