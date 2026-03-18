@@ -5,7 +5,7 @@
 
 {
     "name": "Capital Subscription",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Accounting",
     "summary": "Provide extra accounting features for Capital Subscription",
     "author": "La Louve, Druidoo",
@@ -34,7 +34,6 @@
         "views/menu.xml",
     ],
     "demo": [
-        "demo/res_groups.xml",
         "demo/account_payment_term.xml",
         "demo/account_account.xml",
         "demo/account_journal.xml",

@@ -271,5 +271,6 @@ class AccountMove(models.Model):
                 literal_eval(action.get("context", "{}")),
                 default_reason=reason,
                 default_refund_quantity=qty,
+                default_refund_quantity_origin=qty,
             )
         return action
