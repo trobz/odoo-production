@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="check_received_journal" model="account.journal">
+        <field name="name">Check Received</field>
+        <field name="code">CHK</field>
+        <field name="type">bank</field>
+        <field name="company_id" ref="base.main_company" />
+    </record>
+</odoo>
