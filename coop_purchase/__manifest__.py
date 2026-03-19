@@ -8,7 +8,7 @@
     "category": "Purchase",
     "summary": "Coop Purchase",
     "author": "La Louve",
-    "website": "http://www.lalouve.net",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "depends": [
         "base",
         "account",

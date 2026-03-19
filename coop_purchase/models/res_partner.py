@@ -1,5 +1,4 @@
-from lxml import etree
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class ResPartner(models.Model):
@@ -8,5 +7,6 @@ class ResPartner(models.Model):
     show_discount = fields.Boolean("Show discounts on update prices")
 
     discount_computation = fields.Selection(
-        selection=[('total', 'Total'), ('unit_price', 'Unit Price')],
-        string="Discount Computation")
+        selection=[("total", "Total"), ("unit_price", "Unit Price")],
+        string="Discount Computation",
+    )

@@ -1,4 +1,5 @@
-from odoo import api, fields, models
+from odoo import fields, models
+
 from odoo.addons import decimal_precision as dp
 
 
@@ -13,9 +14,7 @@ class SupplierInfoUpdateLine(models.TransientModel):
     discount = fields.Float()
 
     # get from product.supplier.info
-    supplier_price_unit = fields.Float(
-        digits=dp.get_precision("Product Price")
-    )
+    supplier_price_unit = fields.Float(digits=dp.get_precision("Product Price"))
     supplier_discount = fields.Float()
     price_policy = fields.Selection(
         selection=[("uom", "per UOM"), ("package", "Per Package")]

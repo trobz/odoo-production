@@ -7,7 +7,5 @@ class StockInventoryLine(models.Model):
     _inherit = "stock.inventory.line"
 
     product_default_code = fields.Char(
-        string="Internal Reference",
-        related="product_id.default_code",
-        store=True
+        string="Internal Reference", related="product_id.default_code", store=True
     )

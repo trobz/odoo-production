@@ -16,9 +16,7 @@ class PurchaseOrderLine(models.Model):
         store=True,
     )
     product_default_code = fields.Char(
-        string="Internal Reference",
-        related="product_id.default_code",
-        store=True
+        string="Internal Reference", related="product_id.default_code", store=True
     )
 
     @api.multi
@@ -39,8 +37,10 @@ class PurchaseOrderLine(models.Model):
         """
         @Function for the action of updating vendor price
         """
-        update_main_vendor = self.env["ir.config_parameter"].sudo().get_param(
-            "update_main_vendor_on_update_vendor_price", "False"
+        update_main_vendor = (
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param("update_main_vendor_on_update_vendor_price", "False")
         )
         update_main_vendor = safe_eval(update_main_vendor)
 
@@ -57,13 +57,13 @@ class PurchaseOrderLine(models.Model):
             )
             if vendor_price_line:
                 if update_main_vendor:
-                    min_sequence = (
-                        min(product.seller_ids.mapped("sequence")) or 0
-                    )
+                    min_sequence = min(product.seller_ids.mapped("sequence")) or 0
                     vendor_price_line = vendor_price_line[0]
                     current_sequence = vendor_price_line.sequence
 
-                    min_sequence_not_unique = product.seller_ids.mapped("sequence").count(min_sequence) > 1
+                    min_sequence_not_unique = (
+                        product.seller_ids.mapped("sequence").count(min_sequence) > 1
+                    )
 
                     # No update if the current vendor is the main one
                     if (
@@ -73,7 +73,8 @@ class PurchaseOrderLine(models.Model):
                         for seller in product.seller_ids:
                             if (
                                 seller.id != vendor_price_line.id
-                                and seller.sequence <= current_sequence  # <= instead of < recovers from non unique seq
+                                and seller.sequence
+                                <= current_sequence  # <= instead of < recovers from non unique seq
                             ):
                                 seller.write({"sequence": seller.sequence + 1})
                         main_vendor = vendor_price_line.name
@@ -90,11 +91,10 @@ class PurchaseOrderLine(models.Model):
                 )._compute_base_price()
 
     def _get_discounted_price_unit(self):
-        price = super(PurchaseOrderLine, self)._get_discounted_price_unit()
+        price = super()._get_discounted_price_unit()
         if self.discount:
-            partner_disc_computation = \
-                    self.order_id.partner_id.discount_computation
+            partner_disc_computation = self.order_id.partner_id.discount_computation
             currency = self.order_id.currency_id
-            if partner_disc_computation == 'unit_price':
+            if partner_disc_computation == "unit_price":
                 price = currency.round(price)
         return price

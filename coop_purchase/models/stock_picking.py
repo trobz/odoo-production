@@ -23,11 +23,11 @@
 #
 ##############################################################################
 
-from odoo import api, models, _
+from odoo import _, api, models
 
 
 class StockPicking(models.Model):
-    _inherit = 'stock.picking'
+    _inherit = "stock.picking"
 
     @api.multi
     def button_validate(self):
@@ -47,44 +47,53 @@ class StockPicking(models.Model):
 
     @api.multi
     def prepare_vals_order_line(self, diff_pack_op):
-        '''
-            This method prepares vals to build order line when user add
-            more pack operation to stock picking manually.
-            To make the stock match with PO to create right invoice
-        '''
+        """
+        This method prepares vals to build order line when user add
+        more pack operation to stock picking manually.
+        To make the stock match with PO to create right invoice
+        """
         self.ensure_one()
         if self.purchase_id:
             # Create new po line
-            po_line = self.env['purchase.order.line'].with_context(
-                skip_move_create=True
-            ).create({
-                'order_id': self.purchase_id.id,
-                'product_id': diff_pack_op.product_id.id,
-                'product_uom': diff_pack_op.product_uom.id,
-                'date_planned': self.purchase_id.date_planned,
-                'price_unit': 0.00,
-                'product_qty': 0.00,
-                'name': '',
-            })
+            po_line = (
+                self.env["purchase.order.line"]
+                .with_context(skip_move_create=True)
+                .create(
+                    {
+                        "order_id": self.purchase_id.id,
+                        "product_id": diff_pack_op.product_id.id,
+                        "product_uom": diff_pack_op.product_uom.id,
+                        "date_planned": self.purchase_id.date_planned,
+                        "price_unit": 0.00,
+                        "product_qty": 0.00,
+                        "name": "",
+                    }
+                )
+            )
             # Trigger correct description and prices from supplier
             po_line.onchange_product_id()
             # Update quantities and other values
             # These fields are overwritten by onchange_product_id, so we set
             # them here
-            po_line.write({
-                'product_qty': diff_pack_op.quantity_done,
-                'product_qty_package': diff_pack_op.product_qty_package,
-                'package_qty': diff_pack_op.package_qty,
-                'date_planned': self.purchase_id.date_planned,
-            })
+            po_line.write(
+                {
+                    "product_qty": diff_pack_op.quantity_done,
+                    "product_qty_package": diff_pack_op.product_qty_package,
+                    "package_qty": diff_pack_op.package_qty,
+                    "date_planned": self.purchase_id.date_planned,
+                }
+            )
             # Update price, etc
             po_line._onchange_quantity()
             # Link to move
             diff_pack_op.purchase_line_id = po_line.id
             # Pos comment
-            self.purchase_id.message_post(body=_(
-                'Purchase items: %s with %s qty. were created from '
-                'incoming shipment (%s).') % (
+            self.purchase_id.message_post(
+                body=_(
+                    "Purchase items: %s with %s qty. were created from "
+                    "incoming shipment (%s)."
+                )
+                % (
                     diff_pack_op.product_id.display_name,
                     diff_pack_op.package_qty,
                     self.origin,

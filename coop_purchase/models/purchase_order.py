@@ -11,10 +11,9 @@ class PurchaseOrder(models.Model):
 
     @api.multi
     def action_view_invoice(self):
-        result = super(PurchaseOrder, self).action_view_invoice()
-        if result.get('context') and \
-                result['context'].get('default_reference'):
-            del result['context']['default_reference']
+        result = super().action_view_invoice()
+        if result.get("context") and result["context"].get("default_reference"):
+            del result["context"]["default_reference"]
         return result
 
     picking_count = fields.Integer(compute_sudo=True)
