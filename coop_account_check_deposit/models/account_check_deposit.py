@@ -5,6 +5,7 @@ class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
     check_holder_name = fields.Char()
+    check_deposit_id = fields.Many2one(index=True)
 
     @api.onchange("partner_id")
     def onchange_partner_id(self):

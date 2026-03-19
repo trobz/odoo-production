@@ -19,6 +19,10 @@
             <xpath expr="//list/field[@name='partner_id']" position="after">
                 <field name="check_holder_name" />
             </xpath>
+            <xpath expr="//list/field[@name='balance']" position="before">
+                <field name="credit" optional="show" />
+                <field name="debit" optional="show" />
+            </xpath>
         </field>
     </record>
 </odoo>
