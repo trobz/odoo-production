@@ -12,6 +12,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.osv import expression
 from odoo.tools.safe_eval import safe_eval
 
 NUMBER_OF_PARTNERS_PER_JOB = 100
@@ -184,11 +185,21 @@ class ResPartner(models.Model):
     @api.depends(
         "is_company", "name", "parent_id.name", "type", "company_name", "barcode_base"
     )
+    @api.depends_context("only_show_barcode_base")
     def _compute_display_name(self):
         """
         Override this function to add dependency to barcode_base
         """
-        return super()._compute_display_name()
+        res = super()._compute_display_name()
+        for partner in self:
+            display_name = partner.display_name
+            barcode_base = partner.barcode_base
+            if barcode_base:
+                display_name = f"{barcode_base} - {display_name}"
+                if self.env.context.get("only_show_barcode_base"):
+                    display_name = str(barcode_base)
+            partner.display_name = display_name
+        return res
 
     # Constraint Section
     @api.constrains("birthdate_date", "is_minor_child")
@@ -756,42 +767,13 @@ class ResPartner(models.Model):
     @api.model
     def name_search(self, name, args=None, operator="ilike", limit=100):
         is_member_unsubscribed = self.env.context.get("member_unsubscribed", False)
+        args = args or []
         if name.isdigit():
             domain = [("barcode_base", "=", name), ("is_member", "=", True)]
-
             if is_member_unsubscribed:
                 domain.append(("is_unsubscribed", "=", False))
-
-            partners = self.search(domain, limit=limit)
-            if partners:
-                return partners.name_get()
+            args = expression.AND([args, domain])
         return super().name_search(name=name, args=args, operator=operator, limit=limit)
-
-    def name_get(self):
-        res = []
-        i = 0
-        original_res = super().name_get()
-        only_show_barcode_base = self.env.context.get("only_show_barcode_base", False)
-
-        for partner in self:
-            original_value = original_res[i][1]
-            # S#24956:
-            # 2) In the list of membres in the potentially present for the
-            # shift, in the “Contact” column, some members have their numbers
-            # next to their name, others do not. We want all members to have
-            # their numbers next to their names. See attached screenshot.
-            name_get_values = (partner.id, original_value)
-            if partner.barcode_base:
-                name_get_values = (
-                    partner.id,
-                    f"{partner.barcode_base} - {original_value}",
-                )
-            if only_show_barcode_base:
-                name_get_values = (partner.id, str(partner.barcode_base))
-
-            res.append(name_get_values)
-            i += 1
-        return res
 
     def get_next_shift_date(self, start_date=None):
         """
