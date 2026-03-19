@@ -30,7 +30,7 @@ class ShiftRegistration(models.Model):
     email = fields.Char(readonly=True, related="partner_id.email")
     phone = fields.Char(readonly=True, related="partner_id.phone")
     name = fields.Char(readonly=True, related="partner_id.name", store=True)
-    partner_id = fields.Many2one(required=True)
+    partner_id = fields.Many2one(string="Contact", required=True)
     user_ids = fields.Many2many("res.partner", related="shift_id.user_ids")
     shift_ticket_id = fields.Many2one(
         "shift.ticket", "Shift Ticket", required=True, ondelete="cascade"
