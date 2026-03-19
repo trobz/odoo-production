@@ -10,9 +10,9 @@
         />
         <field name="arch" type="xml">
             <field name="is_related_shift_ftop" position="after">
-                <field name="related_extension_id" invisible="1" />
+                <field name="related_extension_id" column_invisible="1" />
                 <!-- ADD Field in View -->
-                <field name="related_shift_state" invisible="1" />
+                <field name="related_shift_state" column_invisible="1" />
             </field>
             <button name="%(coop_shift.action_replace_registration)d" position="after">
                 <button
@@ -44,17 +44,10 @@
                 <attribute name="decoration-bf">False</attribute>
             </xpath>
             <field name="message_needaction" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </field>
-
-            <field name="date_begin" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </field>
-            <field name="shift_id" position="attributes">
-                <attribute name="invisible">1</attribute>
+                <attribute name="column_invisible">1</attribute>
             </field>
             <field name="partner_id" position="attributes">
-                <attribute name="invisible">1</attribute>
+                <attribute name="column_invisible">1</attribute>
             </field>
             <field name="shift_ticket_id" position="after">
                 <field
@@ -62,14 +55,20 @@
                     options="{'no_create_edit': True, 'no_create': True}"
                 />
             </field>
+            <field name="date_begin" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </field>
+            <field name="shift_id" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </field>
             <field name="replacing_reg_id" position="attributes">
-                <attribute name="invisible">1</attribute>
+                <attribute name="column_invisible">1</attribute>
             </field>
             <xpath
                 expr="//button[@name='action_create_extension']"
                 position="attributes"
             >
-                <attribute name="invisible">1</attribute>
+                <attribute name="column_invisible">1</attribute>
             </xpath>
 
             <button name="button_reg_close" position="attributes">
@@ -137,7 +136,7 @@
         />
         <field name="arch" type="xml">
             <field name="is_related_shift_ftop" position="after">
-                <field name="related_shift_state" invisible="1" />
+                <field name="related_shift_state" column_invisible="1" />
             </field>
             <button name="button_reg_close" position="attributes">
                 <attribute
