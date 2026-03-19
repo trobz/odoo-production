@@ -1,21 +1,23 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
-
     <record model="ir.ui.view" id="product_supplierinfo_tree_view">
         <field name="model">product.supplierinfo</field>
-        <field name="inherit_id" ref="purchase_package_qty.product_supplierinfo_tree_view_package"/>
+        <field
+            name="inherit_id"
+            ref="purchase_package_qty.product_supplierinfo_tree_view_package"
+        />
         <field name="priority">99</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='product_tmpl_id']" position="before">
-                <field name="categ_id"/>
+                <field name="categ_id" />
             </xpath>
             <xpath expr="//field[@name='product_tmpl_id']" position="after">
-                <field name="product_code"/>
-                <field name="product_name"/>
-                <field name="default_code"/>
+                <field name="product_code" />
+                <field name="product_name" />
+                <field name="default_code" />
             </xpath>
-            <xpath expr="//field[@name='date_start']" position="replace"/>
-            <xpath expr="//field[@name='date_end']" position="replace"/>
+            <xpath expr="//field[@name='date_start']" position="replace" />
+            <xpath expr="//field[@name='date_end']" position="replace" />
             <xpath expr="//field[@name='price']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
@@ -23,12 +25,12 @@
                 <attribute name="invisible">1</attribute>
             </xpath>
             <xpath expr="//field[@name='price']" position="before">
-                <field name="price_taxes_excluded"/>
-                <field name="price_taxes_included"/>
+                <field name="price_taxes_excluded" />
+                <field name="price_taxes_included" />
             </xpath>
             <xpath expr="//field[@name='price_policy']" position="after">
-                <field name="taxes_id" widget="many2many_tags"/>
-                <field name="supplier_taxes_id" widget="many2many_tags"/>
+                <field name="taxes_id" widget="many2many_tags" />
+                <field name="supplier_taxes_id" widget="many2many_tags" />
             </xpath>
             <xpath expr="//tree" position="attributes">
                 <attribute name="editable">top</attribute>
@@ -41,18 +43,50 @@
         <field name="model">product.supplierinfo</field>
         <field name="arch" type="xml">
             <search string="Supplierinfo">
-                <field name="name" string="Supplier"/>
-                <field name="categ_id" string="Category"/>
-                <field name="product_tmpl_id" string="Product" filter_domain="['|', '|', '|', ('product_tmpl_id.name', 'ilike', self), ('default_code', 'ilike', self), ('product_name', 'ilike', self), ('product_code', 'ilike', self)]"/>
-                <filter string="Product Active" name="is_product_active" domain="[('is_product_active','=',1)]"/>
-                <separator orientation="vertical"/>
-                <filter string="Product can be purchase" name="product_purchase_ok" domain="[('product_purchase_ok','=',1)]"/>
-                <filter string="Indicative Package" name="indicative_package" domain="[('indicative_package','=', True)]"/>
-                <filter string="not Indicative Package" name="not_indicative_package" domain="[('indicative_package','=', False)]"/>
+                <field name="name" string="Supplier" />
+                <field name="categ_id" string="Category" />
+                <field
+                    name="product_tmpl_id"
+                    string="Product"
+                    filter_domain="['|', '|', '|', ('product_tmpl_id.name', 'ilike', self), ('default_code', 'ilike', self), ('product_name', 'ilike', self), ('product_code', 'ilike', self)]"
+                />
+                <filter
+                    string="Product Active"
+                    name="is_product_active"
+                    domain="[('is_product_active','=',1)]"
+                />
+                <separator orientation="vertical" />
+                <filter
+                    string="Product can be purchase"
+                    name="product_purchase_ok"
+                    domain="[('product_purchase_ok','=',1)]"
+                />
+                <filter
+                    string="Indicative Package"
+                    name="indicative_package"
+                    domain="[('indicative_package','=', True)]"
+                />
+                <filter
+                    string="not Indicative Package"
+                    name="not_indicative_package"
+                    domain="[('indicative_package','=', False)]"
+                />
                 <group expand="0" string="Group By">
-                    <filter string="Product" name="grp_product" context="{'group_by':'product_tmpl_id'}"/>
-                    <filter string="Supplier" name="grp_supplier" context="{'group_by': 'name'}"/>
-                    <filter string="Category" name="grp_category" context="{'group_by':'categ_id'}"/>
+                    <filter
+                        string="Product"
+                        name="grp_product"
+                        context="{'group_by':'product_tmpl_id'}"
+                    />
+                    <filter
+                        string="Supplier"
+                        name="grp_supplier"
+                        context="{'group_by': 'name'}"
+                    />
+                    <filter
+                        string="Category"
+                        name="grp_category"
+                        context="{'group_by':'categ_id'}"
+                    />
                 </group>
             </search>
         </field>
@@ -73,10 +107,10 @@
 
     <record model="ir.ui.view" id="product_template_form_view_inherit">
         <field name="model">product.template</field>
-        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="inherit_id" ref="product.product_template_form_view" />
         <field name="arch" type="xml">
             <xpath expr="//page[@name='purchase']" position="attributes">
-                <attribute name="attrs"/>
+                <attribute name="attrs" />
             </xpath>
         </field>
     </record>

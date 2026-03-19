@@ -18,16 +18,12 @@ class SupplierInfoUpdate(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
-        res = super().default_get(
-            fields_list=fields_list
-        )
+        res = super().default_get(fields_list=fields_list)
         active_model = self._context.get("active_model", "")
         active_id = self._context.get("active_id", False)
         if active_model in supported_models and active_id:
             active_obj = self.env[active_model].browse(active_id)
-            processed_lines = self.compute_process_lines(
-                active_model, active_obj
-            )
+            processed_lines = self.compute_process_lines(active_model, active_obj)
             show_discount = active_obj.partner_id.show_discount
             res.update(
                 {
@@ -59,9 +55,7 @@ class SupplierInfoUpdate(models.TransientModel):
                 lambda seller: seller.name == partner_id
                 and seller.price_policy == line.price_policy
             )
-            selected_seller_id = (
-                selected_seller_id and selected_seller_id[0] or False
-            )
+            selected_seller_id = selected_seller_id and selected_seller_id[0] or False
             if selected_seller_id:
                 seller_price_unit = selected_seller_id.base_price
                 seller_discount = selected_seller_id.discount
@@ -105,10 +99,7 @@ class SupplierInfoUpdate(models.TransientModel):
             update_values = {}
             supplier_price_unit = line.supplier_price_unit
             updated_price_unit = line.price_unit
-            if (
-                updated_price_unit > 0
-                and updated_price_unit != supplier_price_unit
-            ):
+            if updated_price_unit > 0 and updated_price_unit != supplier_price_unit:
                 update_values["base_price"] = updated_price_unit
 
             supplier_discount = line.supplier_discount

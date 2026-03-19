@@ -1,6 +1,7 @@
-from odoo import api, models, _
-from odoo.exceptions import UserError
 from lxml import etree
+
+from odoo import _, api, models
+from odoo.exceptions import UserError
 from odoo.osv.orm import setup_modifiers
 
 
@@ -24,11 +25,11 @@ class AccountInvoice(models.Model):
         return res
 
     @api.model
-    def fields_view_get(self, view_id=None, view_type='form',
-                        toolbar=False, submenu=False):
+    def fields_view_get(
+        self, view_id=None, view_type="form", toolbar=False, submenu=False
+    ):
         res = super().fields_view_get(
-            view_id=view_id, view_type=view_type, toolbar=toolbar,
-            submenu=submenu
+            view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu
         )
 
         # Read only field contact base specific groups
@@ -83,14 +84,11 @@ class AccountInvoice(models.Model):
         )
         if have_not_receive_picking:
             raise UserError(
-                _("Please confirm reception before creating "
-                  "an invoice for this PO")
+                _("Please confirm reception before creating " "an invoice for this PO")
             )
 
     def _prepare_invoice_line_from_po_line(self, line):
-        data = super()._prepare_invoice_line_from_po_line(
-            line
-        )
+        data = super()._prepare_invoice_line_from_po_line(line)
         if self.type == "in_refund":
             qty_invoiced = 0.0
             for inv_line in line.invoice_lines:
@@ -131,28 +129,28 @@ class AccountInvoice(models.Model):
             # discount computation
             # Rounding the price based on the partner discount computation
             # for supplier invoice or supplier refund
-            if self.type in ['in_invoice', 'in_refund'] and \
-                line.discount and \
-                    self.partner_id.discount_computation == \
-                    'unit_price':
+            if (
+                self.type in ["in_invoice", "in_refund"]
+                and line.discount
+                and self.partner_id.discount_computation == "unit_price"
+            ):
                 price_unit = round_curr(price_unit)
 
-            if line.price_policy == 'package':
+            if line.price_policy == "package":
                 quantity = line.product_qty_package
             else:
                 quantity = line.quantity
             taxes = line.invoice_line_tax_ids.compute_all(
-                price_unit, self.currency_id, quantity, line.product_id,
-                self.partner_id)['taxes']
+                price_unit, self.currency_id, quantity, line.product_id, self.partner_id
+            )["taxes"]
             for tax in taxes:
                 val = self._prepare_tax_line_vals(line, tax)
-                key = self.env['account.tax'].browse(
-                    tax['id']).get_grouping_key(val)
+                key = self.env["account.tax"].browse(tax["id"]).get_grouping_key(val)
 
                 if key not in tax_grouped:
                     tax_grouped[key] = val
-                    tax_grouped[key]['base'] = round_curr(val['base'])
+                    tax_grouped[key]["base"] = round_curr(val["base"])
                 else:
-                    tax_grouped[key]['amount'] += val['amount']
-                    tax_grouped[key]['base'] += round_curr(val['base'])
+                    tax_grouped[key]["amount"] += val["amount"]
+                    tax_grouped[key]["base"] += round_curr(val["base"])
         return tax_grouped
