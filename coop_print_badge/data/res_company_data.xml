@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<odoo noupdate="1">
+    <record id="base.main_company" model="res.company">
+        <field
+            name="reprint_change_field_ids"
+            eval="[
+            Command.set([
+                ref('base.field_res_partner__image_1920'),
+                ref('base.field_res_partner__name'),
+            ])
+        ]"
+        />
+    </record>
+</odoo>

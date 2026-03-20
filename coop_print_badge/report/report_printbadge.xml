@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <template id="report_printbadge">
         <t t-call="web.html_container">
@@ -7,10 +7,14 @@
                     <div class="page">
                         <div class="badge" t-if="partner.is_member">
                             <div class="member_photo_div">
-                                <img t-attf-src="data:image/png;base64,{{partner.image_badge}}" class="member_photo"/>
+                                <img
+                                    t-attf-src="data:image/png;base64,{{partner.image_badge}}"
+                                    class="member_photo"
+                                />
                             </div>
                             <div class="member_number">
-                                <!--N°--> <span t-field="partner.barcode_base"/>
+                                <!--N°-->
+                                <span t-field="partner.barcode_base" />
                             </div>
                             <div class="coop_text">
                                 <t t-if="partner.gender=='male'">Coopérateur</t>
@@ -18,12 +22,28 @@
                                 <t t-if="partner.gender=='other'">Coop</t>
                             </div>
                             <div class="member_name">
-                                <t t-if="partner.name.find(',')&gt;0"><span t-esc="partner.name.split(',')[1]" class="break_2_lines"/></t><br/>
-                                <t t-if="partner.name.find(',')&gt;0"><span t-esc="partner.name.split(',')[0]" class="break_1_line"/></t>
-                                <t t-if="partner.name.find(',')&lt;0"><span t-esc="partner.name" class="break_3_lines"/></t>
+                                <t t-if="partner.name.find(',')&gt;0">
+                                    <span
+                                        t-out="partner.name.split(',')[1]"
+                                        class="break_2_lines"
+                                    />
+                                </t>
+                                <br />
+                                <t t-if="partner.name.find(',')&gt;0">
+                                    <span
+                                        t-out="partner.name.split(',')[0]"
+                                        class="break_1_line"
+                                    />
+                                </t>
+                                <t t-if="partner.name.find(',')&lt;0">
+                                    <span t-out="partner.name" class="break_3_lines" />
+                                </t>
                             </div>
                             <div class="barcode_div">
-                                <img class="barcode_image" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('EAN13', partner.barcode, 900, 400)"/>
+                                <img
+                                    class="barcode_image"
+                                    t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('EAN13', partner.barcode, 900, 400)"
+                                />
                             </div>
                             <!--<div class="company_address">
                                 <span t-field="partner_id.company_id.partner_id.name"/><br/>
@@ -31,24 +51,46 @@
                                 <span t-field="partner_id.company_id.partner_id.zip"/> <span t-field="partner_id.company_id.partner_id.city"/>
                             </div>-->
                         </div>
-                        <div class="badge" t-if="not partner.is_member and partner.is_associated_people">
+                        <div
+                            class="badge"
+                            t-if="not partner.is_member and partner.is_associated_people"
+                        >
                             <div class="member_photo_div">
-                                <img t-attf-src="data:image/png;base64,{{partner.image_badge}}" class="member_photo"/>
+                                <img
+                                    t-attf-src="data:image/png;base64,{{partner.image_badge}}"
+                                    class="member_photo"
+                                />
                             </div>
 
                             <div class="coop_text coop_text_associated">
                                 <t t-if="partner.gender=='male'">Rattaché n°</t>
                                 <t t-if="partner.gender=='female'">Rattachée n°</t>
                                 <t t-if="partner.gender=='other'">Rattaché(e) n°</t>
-                                <span t-field="partner.barcode_base"/>
+                                <span t-field="partner.barcode_base" />
                             </div>
                             <div class="member_name">
-                                <t t-if="partner.name.find(',')&gt;0"><span t-esc="partner.name.split(',')[1]" class="break_2_lines"/></t><br/>
-                                <t t-if="partner.name.find(',')&gt;0"><span t-esc="partner.name.split(',')[0]" class="break_1_line"/></t>
-                                <t t-if="partner.name.find(',')&lt;0"><span t-esc="partner.name" class="break_3_lines"/></t>
+                                <t t-if="partner.name.find(',')&gt;0">
+                                    <span
+                                        t-out="partner.name.split(',')[1]"
+                                        class="break_2_lines"
+                                    />
+                                </t>
+                                <br />
+                                <t t-if="partner.name.find(',')&gt;0">
+                                    <span
+                                        t-out="partner.name.split(',')[0]"
+                                        class="break_1_line"
+                                    />
+                                </t>
+                                <t t-if="partner.name.find(',')&lt;0">
+                                    <span t-out="partner.name" class="break_3_lines" />
+                                </t>
                             </div>
                             <div class="barcode_div">
-                                <img class="barcode_image" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('EAN13', partner.barcode, 900, 400)"/>
+                                <img
+                                    class="barcode_image"
+                                    t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('EAN13', partner.barcode, 900, 400)"
+                                />
                             </div>
                             <!--<div class="company_address">
                                 <span t-field="partner_id.company_id.partner_id.name"/><br/>

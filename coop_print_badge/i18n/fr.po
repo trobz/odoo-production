@@ -1,78 +1,121 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#   * coop_print_badge
+# 	* coop_print_badge
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-26 16:16+0000\n"
-"PO-Revision-Date: 2017-03-26 16:16+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2026-03-19 08:47+0000\n"
+"PO-Revision-Date: 2026-03-19 08:47+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: coop_print_badge
-#: model:ir.model.fields,field_description:coop_print_badge.field_report_coop_print_badge_report_printbadge___last_update
-msgid "Last Modified on"
-msgstr "Dernière modification le"
-
-#. module: coop_print_badge
-#: model:ir.actions.report.xml,name:coop_print_badge.action_report_printbadge
-msgid "Print Badge"
-msgstr "Imprimer badge"
-
-#. module: coop_print_badge
-#: model:ir.model,name:coop_print_badge.model_report_coop_print_badge_report_printbadge
-msgid "report.coop_print_badge.report_printbadge"
-msgstr "report.coop_print_badge.report_printbadge"
-
-#. module: coop_print_badge
-#: model:ir.ui.view,arch_db:coop_print_badge.report_printbadge
-msgid "MEMBER"
-msgstr "COOPÉRATEUR/TRICE"
-
-#. module: coop_print_badge
-#: model:ir.ui.view,arch_db:coop_print_badge.report_printbadge
-msgid "ASSOCIATED"
-msgstr "RATTACHÉ(E)"
-
-#. module: coop_print_badge
-#: model:ir.model,name:coop_print_badge.model_res_partner
-msgid "Badges To Print"
-msgstr "Badges à imprimer"
-
-#. module: coop_print_badge
-#: model:ir.ui.menu,name:coop_print_badge.menu_badge_to_print
-#: model:ir.actions.act_window,name:coop_print_badge.action_badge_to_print
-#: model:ir.ui.view,arch_db:coop_print_badge.view_res_partner_badge_to_print_tree
-msgid "Badges"
-msgstr "Badges à imprimer"
-
-#. module: coop_print_badge
-#: model:ir.ui.menu,name:coop_print_badge.menu_badge_to_distribute
-msgid "Badges"
-msgstr "Badges à distribuer"
-
-#. module: coop_print_badge
-#: model:ir.model.fields,field_description:coop_print_badge.field_members_config_settings_reprint_change_field_ids
-msgid "Fields trigger badge reprinting"
-msgstr "Champs dont la modification provoque la ré-impression du badge"
-
-#. module: coop_print_badge
-#: model:ir.ui.view,arch_db:coop_print_badge.view_members_config_settings_form
+#: model_terms:ir.ui.view,arch_db:coop_print_badge.view_res_config_settings_form
 msgid "Badge Printing"
-msgstr "Impression du badge"
+msgstr "Impression de badge"
 
 #. module: coop_print_badge
-#: model:ir.model.fields,field_description:coop_print_badge.field_res_partner_badge_to_print
+#: model:ir.model.fields,field_description:coop_print_badge.field_res_partner__badge_to_print
+#: model:ir.model.fields,field_description:coop_print_badge.field_res_users__badge_to_print
 msgid "Badge To Print"
 msgstr "Badge à imprimer"
 
 #. module: coop_print_badge
-#: model_terms:ir.ui.view,arch_db:coop_print_badge.view_res_config_settings_form
-msgid "<span class=\"o_form_label\">Badge Printing</span>"
-msgstr "<span class=\"o_form_label\">Impression des Badges</span>"
+#: model:ir.model.fields,field_description:coop_print_badge.field_res_partner__image_badge
+#: model:ir.model.fields,field_description:coop_print_badge.field_res_users__image_badge
+msgid "Badge-sized image"
+msgstr "Image taille badge"
+
+#. module: coop_print_badge
+#: model:ir.model.fields,help:coop_print_badge.field_res_partner__image_badge
+#: model:ir.model.fields,help:coop_print_badge.field_res_users__image_badge
+msgid ""
+"Badge-sized image of this contact. It is automatically resized as a "
+"315x417px image, with aspect ratio preserved. Use this field in badge "
+"printing."
+msgstr ""
+"Image taille badge de ce contact. Elle est automatiquement redimensionnée en "
+"une image de 315x417px, avec conservation du ratio. Utilisez ce champ pour "
+"l'impression de badge."
+
+#. module: coop_print_badge
+#: model:ir.actions.act_window,name:coop_print_badge.action_badge_to_distribute
+#: model:ir.actions.act_window,name:coop_print_badge.action_badge_to_print
+#: model:ir.ui.menu,name:coop_print_badge.menu_badge_to_distribute
+#: model:ir.ui.menu,name:coop_print_badge.menu_badge_to_print
+#: model_terms:ir.ui.view,arch_db:coop_print_badge.view_res_partner_badge_to_print_tree
+msgid "Badges"
+msgstr "Badges"
+
+#. module: coop_print_badge
+#: model:ir.model,name:coop_print_badge.model_res_config_settings
+msgid "Config Settings"
+msgstr "Configuration"
+
+#. module: coop_print_badge
+#: model:ir.model,name:coop_print_badge.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: coop_print_badge
+#: model_terms:ir.ui.view,arch_db:coop_print_badge.report_printbadge
+msgid "Coop"
+msgstr "Coop"
+
+#. module: coop_print_badge
+#: model_terms:ir.ui.view,arch_db:coop_print_badge.report_printbadge
+msgid "Coopérateur"
+msgstr "Coopérateur"
+
+#. module: coop_print_badge
+#: model_terms:ir.ui.view,arch_db:coop_print_badge.report_printbadge
+msgid "Coopératrice"
+msgstr "Coopératrice"
+
+#. module: coop_print_badge
+#: model:ir.model.fields,field_description:coop_print_badge.field_res_config_settings__reprint_change_field_ids
+msgid "Fields trigger badge reprinting"
+msgstr "Champs déclenchant la réimpression du badge"
+
+#. module: coop_print_badge
+#: model:res.groups,name:coop_print_badge.group_hide
+msgid "Group Hide"
+msgstr "Groupe Masquer"
+
+#. module: coop_print_badge
+#: model:ir.actions.report,name:coop_print_badge.action_report_printbadge
+msgid "Print Badge"
+msgstr "Imprimer le badge"
+
+#. module: coop_print_badge
+#: model_terms:ir.ui.view,arch_db:coop_print_badge.report_printbadge
+msgid "Rattaché n°"
+msgstr "Rattaché n°"
+
+#. module: coop_print_badge
+#: model_terms:ir.ui.view,arch_db:coop_print_badge.report_printbadge
+msgid "Rattaché(e) n°"
+msgstr "Rattaché(e) n°"
+
+#. module: coop_print_badge
+#: model_terms:ir.ui.view,arch_db:coop_print_badge.report_printbadge
+msgid "Rattachée n°"
+msgstr "Rattachée n°"
+
+#. module: coop_print_badge
+#: model:ir.model,name:coop_print_badge.model_report_coop_print_badge_report_printbadge
+msgid "Report Coop Print Badge"
+msgstr "Rapport Impression Badge Coop"
+
+#. module: coop_print_badge
+#: model:ir.model.fields,field_description:coop_print_badge.field_res_partner__updated_badges_info
+#: model:ir.model.fields,field_description:coop_print_badge.field_res_users__updated_badges_info
+msgid "Updated Badges Information"
+msgstr "Informations badges mises à jour"
