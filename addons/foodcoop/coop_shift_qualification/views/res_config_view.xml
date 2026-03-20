@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit" model="ir.ui.view">
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="coop_membership.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='shift_settings']" position="inside">
+                <setting id="nb_of_leader" string="Number of Leader">
+                    <div class="content-group">
+                        <div class="mt16">
+                            <field name="nb_of_leader" class="oe_inline" />
+                        </div>
+                    </div>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

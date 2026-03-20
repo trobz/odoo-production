@@ -240,14 +240,11 @@ class ShiftShift(models.Model):
         return shifts.name_get()
 
     @api.depends("name", "date_begin")
-    def name_get(self):
-        result = []
+    def _compute_display_name(self):
         for shift in self:
-            name = shift.name + (
+            shift.display_name = shift.name + (
                 shift.begin_date_string and (" " + shift.begin_date_string) or ""
             )
-            result.append((shift.id, name))
-        return result
 
     @api.model
     def _default_tickets(self):
