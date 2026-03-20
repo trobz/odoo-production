@@ -2,31 +2,24 @@
 # @author: Julien Weste (julien.weste@akretion.com)
 # Copyright (C) 2019-Today: Druidoo (<https://www.druidoo.io>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo import api, models
-import logging
+from odoo import models
 
-
-_logger = logging.getLogger(__name__)
 
 class ReportPrintbadge(models.AbstractModel):
-    _name = 'report.coop_print_badge.report_printbadge'
-    _description = 'Report Coop Print Badge'
+    _name = "report.coop_print_badge.report_printbadge"
+    _description = "Report Coop Print Badge"
 
-    @api.multi
     def _get_report_values(self, docids, data=None):
-        res_partner_env = self.env['res.partner']
-        partners = res_partner_env.browse(docids)
-        if not self.env['res.users'].check_access_rights('write', False):
-            partners = partners.sudo()
+        res_partner_env = self.env["res.partner"]
+        partners = res_partner_env.browse(docids).sudo()
         for partner in partners:
             partner.untick_badges_to_print()
             partner.update_badge_print_date()
-            # partner.image = partner.image_medium 
-            if not partner.image_badge and partner.image:
-                partner.image_badge = partner.image
+            if not partner.image_badge and partner.image_1920:
+                partner.image_badge = partner.get_badge_image(partner.image_1920)
         return {
-            'doc_ids': docids,
-            'doc_model': 'res.partner',
-            'docs': partners,
-            'data': data,
+            "doc_ids": docids,
+            "doc_model": "res.partner",
+            "docs": partners,
+            "data": data,
         }

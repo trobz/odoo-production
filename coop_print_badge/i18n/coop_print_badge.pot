@@ -1,12 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* coop_print_badge
+# 	* coop_print_badge
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2026-03-19 08:47+0000\n"
+"PO-Revision-Date: 2026-03-19 08:47+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,18 +17,28 @@ msgstr ""
 
 #. module: coop_print_badge
 #: model_terms:ir.ui.view,arch_db:coop_print_badge.view_res_config_settings_form
-msgid "<span class=\"o_form_label\">Badge Printing</span>"
-msgstr ""
-
-#. module: coop_print_badge
-#: model_terms:ir.ui.view,arch_db:coop_print_badge.report_printbadge
-msgid "<span>Rattaché à</span>"
+msgid "Badge Printing"
 msgstr ""
 
 #. module: coop_print_badge
 #: model:ir.model.fields,field_description:coop_print_badge.field_res_partner__badge_to_print
 #: model:ir.model.fields,field_description:coop_print_badge.field_res_users__badge_to_print
 msgid "Badge To Print"
+msgstr ""
+
+#. module: coop_print_badge
+#: model:ir.model.fields,field_description:coop_print_badge.field_res_partner__image_badge
+#: model:ir.model.fields,field_description:coop_print_badge.field_res_users__image_badge
+msgid "Badge-sized image"
+msgstr ""
+
+#. module: coop_print_badge
+#: model:ir.model.fields,help:coop_print_badge.field_res_partner__image_badge
+#: model:ir.model.fields,help:coop_print_badge.field_res_users__image_badge
+msgid ""
+"Badge-sized image of this contact. It is automatically resized as a "
+"315x417px image, with aspect ratio preserved. Use this field in badge "
+"printing."
 msgstr ""
 
 #. module: coop_print_badge
@@ -50,22 +62,17 @@ msgstr ""
 
 #. module: coop_print_badge
 #: model_terms:ir.ui.view,arch_db:coop_print_badge.report_printbadge
+msgid "Coop"
+msgstr ""
+
+#. module: coop_print_badge
+#: model_terms:ir.ui.view,arch_db:coop_print_badge.report_printbadge
 msgid "Coopérateur"
 msgstr ""
 
 #. module: coop_print_badge
 #: model_terms:ir.ui.view,arch_db:coop_print_badge.report_printbadge
-msgid "Coopérateur/trice"
-msgstr ""
-
-#. module: coop_print_badge
-#: model_terms:ir.ui.view,arch_db:coop_print_badge.report_printbadge
 msgid "Coopératrice"
-msgstr ""
-
-#. module: coop_print_badge
-#: model:ir.model.fields,field_description:coop_print_badge.field_report_coop_print_badge_report_printbadge__display_name
-msgid "Display Name"
 msgstr ""
 
 #. module: coop_print_badge
@@ -76,16 +83,6 @@ msgstr ""
 #. module: coop_print_badge
 #: model:res.groups,name:coop_print_badge.group_hide
 msgid "Group Hide"
-msgstr ""
-
-#. module: coop_print_badge
-#: model:ir.model.fields,field_description:coop_print_badge.field_report_coop_print_badge_report_printbadge__id
-msgid "ID"
-msgstr ""
-
-#. module: coop_print_badge
-#: model:ir.model.fields,field_description:coop_print_badge.field_report_coop_print_badge_report_printbadge____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: coop_print_badge
@@ -118,4 +115,3 @@ msgstr ""
 #: model:ir.model.fields,field_description:coop_print_badge.field_res_users__updated_badges_info
 msgid "Updated Badges Information"
 msgstr ""
-

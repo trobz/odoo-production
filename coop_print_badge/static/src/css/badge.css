@@ -1,11 +1,11 @@
 @font-face {
     font-family: "Intro Pro";
     src: url("../fonts/Intro-Black.ttf");
-    font-weight: bold
+    font-weight: bold;
 }
 
 .badge {
-	height: 106mm;
+    height: 106mm;
     width: 68mm;
     margin-left: -0.4cm;
     /*background-color: #b5bdc6;*/
@@ -13,17 +13,17 @@
 }
 
 .member_photo_div {
-	width: 47mm;
+    width: 47mm;
     height: 61mm;
     float: left;
     padding: 0cm;
     -ms-transform: translate(-2mm, -1mm);
-    -webkit-transform: translate(-2mm, -3px)
+    -webkit-transform: translate(-2mm, -3px);
 }
 
 .member_photo {
     width: 100%;
-    height: 100%
+    height: 100%;
 }
 
 .member_number {
@@ -52,7 +52,7 @@
     transform-origin: 255 85;
     -webkit-transform: rotate(-90deg);
     -ms-transform: rotate(-90deg);
-    transform: rotate(-90deg)
+    transform: rotate(-90deg);
 }
 .coop_text_associated {
     margin-top: 40mm !important;
@@ -71,7 +71,7 @@
     word-wrap: break-all;
     overflow-wrap: break-all;
     text-align: left;
-    max-width: 65mm !important
+    max-width: 65mm !important;
 }
 
 .member_name .break_2_lines {
@@ -87,7 +87,7 @@
     -webkit-line-clamp: 2;
     line-height: 1.4em;
     max-height: 2.8em;
-    max-width: 65mm !important
+    max-width: 65mm !important;
 }
 
 .member_name .break_1_line {
@@ -103,7 +103,7 @@
     -webkit-line-clamp: 1; /* number of lines to show */
     line-height: 1.7em;
     max-height: 1.7em;
-    max-width: 65mm !important
+    max-width: 65mm !important;
 }
 
 .member_name .break_3_lines {
@@ -121,7 +121,7 @@
     max-height: 3em;
     max-width: 65mm !important;
     -ms-transform: translate(0mm, -4mm);
-    -webkit-transform: translate(0mm, -4mm)
+    -webkit-transform: translate(0mm, -4mm);
 }
 
 .barcode_div {
@@ -131,7 +131,7 @@
     padding-bottom: 5px;
     background-color: white;
     -ms-transform: translate(0mm, -2mm);
-    -webkit-transform: translate(0mm, -4px)
+    -webkit-transform: translate(0mm, -4px);
 }
 
 .barcode_image {
@@ -150,5 +150,5 @@
     word-wrap: break-word;
     white-space: normal;
     width: 26mm;
-    text-align: left
+    text-align: left;
 }

@@ -1,0 +1,102 @@
+<?xml version="1.0" ?>
+<!--
+    Copyright (C) 2016-Today: La Louve (http://www.lalouve.net/)
+    @author: La Louve
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <!-- Male Member -->
+    <record model="res.partner" id="demo_partner_male">
+        <field name="name">Jean Dupont</field>
+        <field name="email">jean.dupont@example.com</field>
+        <field name="customer_rank">1</field>
+        <field name="barcode_base">100001</field>
+        <field name="type">contact</field>
+        <field
+            name="image_1920"
+            type="base64"
+            file="base/static/img/res_partner_1-image.png"
+        />
+    </record>
+
+    <!-- Female Member -->
+    <record model="res.partner" id="demo_partner_female">
+        <field name="name">Marie Martin</field>
+        <field name="email">marie.martin@example.com</field>
+        <field name="customer_rank">1</field>
+        <field name="barcode_base">100002</field>
+        <field name="type">contact</field>
+        <field
+            name="image_1920"
+            type="base64"
+            file="base/static/img/res_partner_2-image.png"
+        />
+    </record>
+
+    <!-- Neutral Member -->
+    <record model="res.partner" id="demo_partner_neutral">
+        <field name="name">Alex Thomas</field>
+        <field name="email">alex.thomas@example.com</field>
+        <field name="customer_rank">1</field>
+        <field name="barcode_base">100003</field>
+        <field name="type">contact</field>
+        <field
+            name="image_1920"
+            type="base64"
+            file="base/static/img/res_partner_3-image.png"
+        />
+    </record>
+
+    <!-- Member to be updated (badge needs reprinting) -->
+    <record model="res.partner" id="demo_partner_to_update">
+        <field name="name">Pierre Bernard</field>
+        <field name="email">pierre.bernard@example.com</field>
+        <field name="customer_rank">1</field>
+        <field name="barcode_base">100004</field>
+        <field name="badge_to_print">True</field>
+        <field name="type">contact</field>
+        <field
+            name="image_1920"
+            type="base64"
+            file="base/static/img/res_partner_4-image.png"
+        />
+    </record>
+
+    <!-- Associated People - Male -->
+    <record model="res.partner" id="demo_associated_male">
+        <field name="name">Thomas Dupont</field>
+        <field name="email">thomas.dupont@example.com</field>
+        <field name="customer_rank">1</field>
+        <field name="parent_id" ref="demo_partner_male" />
+        <field name="type">contact</field>
+        <field
+            name="image_1920"
+            type="base64"
+            file="base/static/img/res_partner_12-image.png"
+        />
+    </record>
+
+    <!-- Associated People - Female -->
+    <record model="res.partner" id="demo_associated_female">
+        <field name="name">Sophie Martin</field>
+        <field name="email">sophie.martin@example.com</field>
+        <field name="customer_rank">1</field>
+        <field name="parent_id" ref="demo_partner_female" />
+        <field name="type">contact</field>
+        <field
+            name="image_1920"
+            type="base64"
+            file="base/static/img/res_partner_18-image.png"
+        />
+    </record>
+
+    <!-- Associated People - Neutral -->
+    <record model="res.partner" id="demo_associated_neutral">
+        <field name="name">Chris Thomas</field>
+        <field name="email">chris.thomas@example.com</field>
+        <field name="customer_rank">1</field>
+        <field name="parent_id" ref="demo_partner_neutral" />
+        <field name="type">contact</field>
+        <field name="image_1920" type="base64" file="base/static/img/avatar.png" />
+    </record>
+</odoo>
