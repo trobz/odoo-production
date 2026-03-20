@@ -104,6 +104,11 @@ class ShiftTicket(models.Model):
     def _compute_seats(self):
         """Determine reserved, available, reserved but unconfirmed and used
         seats."""
+        res = super()._compute_seats()
+        # Break if called from shift template ticket compute seats
+        if self._name == "shift.template.ticket":
+            return res
+
         # initialize fields to 0 + compute seats availability
         for ticket in self:
             ticket.seats_unconfirmed = ticket.seats_reserved = ticket.seats_used = (
@@ -131,6 +136,7 @@ class ShiftTicket(models.Model):
             ticket.seats_available = ticket.seats_max - (
                 ticket.seats_reserved + ticket.seats_used
             )
+        return res
 
     @api.onchange("product_id")
     def onchange_product_id(self):

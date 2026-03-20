@@ -593,15 +593,12 @@ class ShiftRegistration(models.Model):
             )
 
     @api.depends("shift_id", "date_begin")
-    def name_get(self):
-        result = []
+    def _compute_display_name(self):
         for registration in self:
             date_begin = ""
             if registration.date_begin:
                 date_begin = fields.Date.to_string(registration.date_begin)
-            name = registration.shift_id.name + (" " + date_begin)
-            result.append((registration.id, name))
-        return result
+            registration.display_name = registration.shift_id.name + (" " + date_begin)
 
     def checking_shift_attendance(self):
         """
