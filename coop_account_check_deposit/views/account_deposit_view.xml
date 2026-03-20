@@ -7,6 +7,9 @@
             ref="account_check_deposit.account_check_deposit_view_form"
         />
         <field name="arch" type="xml">
+            <field name="move_id" position="after">
+                <field name="is_reconcile" />
+            </field>
             <field name="check_payment_ids" position="attributes">
                 <attribute
                     name="context"
