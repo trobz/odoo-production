@@ -25,12 +25,13 @@ Coop Account Check Deposit
 This module extends the OCA module ``account_check_deposit`` to add the
 following features:
 
-- **Check Holder Name**: Automatically populates the check holder name
-  on journal entries created from check deposits based on the associated
-  partner.
-- **Destination Journal**: Allows setting a destination journal when
-  creating check deposit entries.
-- **Delete Check Deposit**: Enables deletion of existing check deposits.
+-  **Check Holder Name**: Automatically populates the check holder name
+   on journal entries created from check deposits based on the
+   associated partner.
+-  **Destination Journal**: Allows setting a destination journal when
+   creating check deposit entries.
+-  **Delete Check Deposit**: Enables deletion of existing check
+   deposits.
 
 This module is designed for cooperatives that need to manage check
 deposits to the bank with enhanced partner information tracking.
@@ -58,10 +59,10 @@ Creating a Check Deposit
 3. Click **Create Deposit**
 4. Fill in the required details:
 
-   - **Deposit Date**: Date of deposit
-   - **Journal**: Select the destination journal for the deposit
-   - **Destination Journal**: Optionally specify a destination journal
-     for the move lines
+   -  **Deposit Date**: Date of deposit
+   -  **Journal**: Select the destination journal for the deposit
+   -  **Destination Journal**: Optionally specify a destination journal
+      for the move lines
 
 5. Click **Validate** to confirm the deposit
 
@@ -106,10 +107,10 @@ Authors
 Contributors
 ------------
 
-- Druidoo <`https://www.druidoo.io\\> <https://www.druidoo.io\>>`__
-- Trobz <`https://www.trobz.com\\> <https://www.trobz.com\>>`__
+-  Druidoo <https://www.druidoo.io>
+-  Trobz <https://www.trobz.com>
 
-  - Phan Hong Phuc <<phucph@trobz.com>>
+   -  Phan Hong Phuc <<phucph@trobz.com>>
 
 Maintainers
 -----------
