@@ -55,19 +55,19 @@ Authors
 Contributors
 ------------
 
-- Sylvain LE GAL (https://twitter.com/legalsylvain)
-- Dave Lasley <dave@laslabs.com>
-- Druidoo (<`https://www.druidoo.io\\> <https://www.druidoo.io\>>`__)
+-  Sylvain LE GAL (https://twitter.com/legalsylvain)
+-  Dave Lasley <dave@laslabs.com>
+-  Druidoo (<https://www.druidoo.io>)
 
 Other credits
 -------------
 
-- Icon of the module is based on the Oxygen Team work and is under LGPL
-  licence:
-  http://www.iconarchive.com/show/oxygen-icons-by-oxygen-icons.org.html
-- Product tag by `Zlatko
-  Najdenovski <https://www.iconfinder.com/zlaten>`__ and is licensed
-  under `CC BY 3.0 <https://creativecommons.org/licenses/by/3.0/>`__.
+-  Icon of the module is based on the Oxygen Team work and is under LGPL
+   licence:
+   http://www.iconarchive.com/show/oxygen-icons-by-oxygen-icons.org.html
+-  Product tag by `Zlatko
+   Najdenovski <https://www.iconfinder.com/zlaten>`__ and is licensed
+   under `CC BY 3.0 <https://creativecommons.org/licenses/by/3.0/>`__.
 
 Maintainers
 -----------
