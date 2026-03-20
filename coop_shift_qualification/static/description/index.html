@@ -384,7 +384,8 @@ consistent with a partner’s qualifications.</p>
 <li>Synchronization logic between:<ul>
 <li>Partner qualifications (leader/non-leader)</li>
 <li>Shift template leaders (<tt class="docutils literal">shift.template.user_ids</tt>)</li>
-<li>Shift leaders (<tt class="docutils literal">shift.user_ids</tt> for shifts not in state <tt class="docutils literal">done</tt>)</li>
+<li>Shift leaders (<tt class="docutils literal">shift.user_ids</tt> for shifts not in state
+<tt class="docutils literal">done</tt>)</li>
 </ul>
 </li>
 </ul>
@@ -396,8 +397,8 @@ consistent with a partner’s qualifications.</p>
 (<tt class="docutils literal">res.partner.is_qual_leader = True</tt>) when they have at least one
 qualification where <tt class="docutils literal">is_leader = True</tt>.</li>
 <li>When a partner is a qualified leader and is a <strong>current participant</strong>
-of a shift template registration, they can be automatically added as a
-leader on:<ul>
+of a shift template registration, they can be automatically added as
+a leader on:<ul>
 <li>The related shift template (<tt class="docutils literal">shift.template.user_ids</tt>)</li>
 <li>All non-done shifts of that template (<tt class="docutils literal">shift.user_ids</tt>)</li>
 </ul>
@@ -588,8 +589,8 @@ participant, or delete the line.</li>
 </ol>
 <p>Expected:</p>
 <ul class="simple">
-<li>The system removes the partner from template leaders and shift leaders
-accordingly.</li>
+<li>The system removes the partner from template leaders and shift
+leaders accordingly.</li>
 </ul>
 </div>
 <div class="section" id="scenario-e-qualification-leader-limit-configuration">

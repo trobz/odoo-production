@@ -34,38 +34,39 @@ consistent with a partner's qualifications.
 
 It adds:
 
-- A new model ``res.partner.qualification``.
+-  A new model ``res.partner.qualification``.
 
-- A Many2many on ``res.partner`` to assign qualifications.
+-  A Many2many on ``res.partner`` to assign qualifications.
 
-- Synchronization logic between:
+-  Synchronization logic between:
 
-  - Partner qualifications (leader/non-leader)
-  - Shift template leaders (``shift.template.user_ids``)
-  - Shift leaders (``shift.user_ids`` for shifts not in state ``done``)
+   -  Partner qualifications (leader/non-leader)
+   -  Shift template leaders (``shift.template.user_ids``)
+   -  Shift leaders (``shift.user_ids`` for shifts not in state
+      ``done``)
 
 Main business rules
 -------------------
 
-- A partner becomes a **"qualified leader"**
-  (``res.partner.is_qual_leader = True``) when they have at least one
-  qualification where ``is_leader = True``.
+-  A partner becomes a **"qualified leader"**
+   (``res.partner.is_qual_leader = True``) when they have at least one
+   qualification where ``is_leader = True``.
 
-- When a partner is a qualified leader and is a **current participant**
-  of a shift template registration, they can be automatically added as a
-  leader on:
+-  When a partner is a qualified leader and is a **current participant**
+   of a shift template registration, they can be automatically added as
+   a leader on:
 
-  - The related shift template (``shift.template.user_ids``)
-  - All non-done shifts of that template (``shift.user_ids``)
+   -  The related shift template (``shift.template.user_ids``)
+   -  All non-done shifts of that template (``shift.user_ids``)
 
-- When a partner is removed from being leader (no leader qualification
-  or removed from registration), the partner may be removed from:
+-  When a partner is removed from being leader (no leader qualification
+   or removed from registration), the partner may be removed from:
 
-  - ``shift.template.user_ids``
-  - all non-done ``shift.user_ids``
+   -  ``shift.template.user_ids``
+   -  all non-done ``shift.user_ids``
 
-- A partner cannot be assigned as leader in some cases. The validation
-  message comes from ``res.partner._get_leader_ftop_warning()``.
+-  A partner cannot be assigned as leader in some cases. The validation
+   message comes from ``res.partner._get_leader_ftop_warning()``.
 
 Technical overview (for reviewers)
 ----------------------------------
@@ -73,47 +74,47 @@ Technical overview (for reviewers)
 Key models and methods
 ~~~~~~~~~~~~~~~~~~~~~~
 
-- ``res.partner.qualification``
+-  ``res.partner.qualification``
 
-  - Constraint: qualification ``name`` length limited to 5.
-  - Compute: ``can_be_leader`` computed from config parameter
-    ``coop_shift_qualification.nb_of_leader`` and current number of
-    leader qualifications.
+   -  Constraint: qualification ``name`` length limited to 5.
+   -  Compute: ``can_be_leader`` computed from config parameter
+      ``coop_shift_qualification.nb_of_leader`` and current number of
+      leader qualifications.
 
-- ``res.partner``
+-  ``res.partner``
 
-  - Field: ``qualification_ids`` (Many2many) with inverse method
-    ``_inverse_update_shift_leader()``.
-  - Compute: ``is_qual_leader`` + ``qualifications`` (stored).
-  - Method: ``_inverse_update_shift_leader()`` updates shift leaders
-    based on qualification.
+   -  Field: ``qualification_ids`` (Many2many) with inverse method
+      ``_inverse_update_shift_leader()``.
+   -  Compute: ``is_qual_leader`` + ``qualifications`` (stored).
+   -  Method: ``_inverse_update_shift_leader()`` updates shift leaders
+      based on qualification.
 
-- ``shift.template``
+-  ``shift.template``
 
-  - Method:
-    ``update_qualification(partners, action="add"|"del", raise_error=True)``
+   -  Method:
+      ``update_qualification(partners, action="add"|"del", raise_error=True)``
 
-    - Adds/removes leader qualification on partners based on their
-      participation and template assignment.
+      -  Adds/removes leader qualification on partners based on their
+         participation and template assignment.
 
-- ``shift.template.registration``
+-  ``shift.template.registration``
 
-  - Method: ``update_leaders(partners, action="add"|"del")``
+   -  Method: ``update_leaders(partners, action="add"|"del")``
 
-    - Adds/removes partners in leaders of the template and non-done
-      shifts.
+      -  Adds/removes partners in leaders of the template and non-done
+         shifts.
 
-- ``shift.template.registration.line``
+-  ``shift.template.registration.line``
 
-  - Overrides ``create/write/unlink`` to call
-    ``registration.update_leaders()``.
+   -  Overrides ``create/write/unlink`` to call
+      ``registration.update_leaders()``.
 
 Post init hook
 ~~~~~~~~~~~~~~
 
-- ``post_init_hook()`` calls
-  ``res.partner.qualification._update_partner_qualification()`` to
-  synchronize qualifications to existing templates after installation.
+-  ``post_init_hook()`` calls
+   ``res.partner.qualification._update_partner_qualification()`` to
+   synchronize qualifications to existing templates after installation.
 
 Notes about performance changes (18.0)
 --------------------------------------
@@ -121,9 +122,9 @@ Notes about performance changes (18.0)
 The 18.0 implementation uses batching where possible to minimize
 repeated M2M updates:
 
-- Batch updates for shift leader assignment/removal
-  (``shifts.user_ids |= partner`` / ``shifts.user_ids -= partner``).
-- Batch qualification add/remove using ``write()`` with M2M commands.
+-  Batch updates for shift leader assignment/removal
+   (``shifts.user_ids |= partner`` / ``shifts.user_ids -= partner``).
+-  Batch qualification add/remove using ``write()`` with M2M commands.
 
 These changes are intended to keep the same behavior with fewer ORM
 operations.
@@ -144,38 +145,38 @@ This guide is intended for functional consultants (FC) and testers.
 Pre-conditions
 --------------
 
-- Module ``coop_shift_qualification`` is installed.
+-  Module ``coop_shift_qualification`` is installed.
 
-- Module dependency ``coop_membership`` is installed.
+-  Module dependency ``coop_membership`` is installed.
 
-- You have access rights to edit:
+-  You have access rights to edit:
 
-  - Partners (members)
-  - Shift templates and registrations
-  - Partner qualifications
+   -  Partners (members)
+   -  Shift templates and registrations
+   -  Partner qualifications
 
-- There is at least:
+-  There is at least:
 
-  - 1 shift template with some non-done shifts
-  - 1 member (partner)
-  - 1 qualification marked as leader (``is_leader = True``)
+   -  1 shift template with some non-done shifts
+   -  1 member (partner)
+   -  1 qualification marked as leader (``is_leader = True``)
 
 Main screens
 ------------
 
-- **Partner Qualifications**
+-  **Partner Qualifications**
 
-  - Model: ``res.partner.qualification``
-  - Menu: depends on deployment, typically under membership/coop
-    configuration.
+   -  Model: ``res.partner.qualification``
+   -  Menu: depends on deployment, typically under membership/coop
+      configuration.
 
-- **Partner form**
+-  **Partner form**
 
-  - Field: ``Qualifications`` (Many2many)
+   -  Field: ``Qualifications`` (Many2many)
 
-- **Shift template**
+-  **Shift template**
 
-  - Leaders: ``shift.template.user_ids``
+   -  Leaders: ``shift.template.user_ids``
 
 Test scenarios
 --------------
@@ -188,19 +189,19 @@ Scenario A: Set partner as qualified leader (manual)
 
 Expected:
 
-- Partner field ``is_qual_leader`` becomes True.
+-  Partner field ``is_qual_leader`` becomes True.
 
-- If the partner is currently participating in shift templates (current
-  registration lines), then the partner is added as leader on:
+-  If the partner is currently participating in shift templates (current
+   registration lines), then the partner is added as leader on:
 
-  - shift template ``user_ids``
-  - all non-done shifts ``user_ids``
+   -  shift template ``user_ids``
+   -  all non-done shifts ``user_ids``
 
 If it fails:
 
-- You may get an error message from
-  ``res.partner._get_leader_ftop_warning()`` (for example related to
-  ABCD/FTOP constraints).
+-  You may get an error message from
+   ``res.partner._get_leader_ftop_warning()`` (for example related to
+   ABCD/FTOP constraints).
 
 Scenario B: Remove leader qualification
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -211,10 +212,10 @@ Scenario B: Remove leader qualification
 
 Expected:
 
-- Partner ``is_qual_leader`` becomes False.
-- Partner is removed from leaders on all non-done shifts of templates
-  where they were leader.
-- Partner ``template_ids`` becomes empty (leaders removed).
+-  Partner ``is_qual_leader`` becomes False.
+-  Partner is removed from leaders on all non-done shifts of templates
+   where they were leader.
+-  Partner ``template_ids`` becomes empty (leaders removed).
 
 Scenario C: Add a participant to a shift template registration line
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -225,12 +226,12 @@ Scenario C: Add a participant to a shift template registration line
 
 Expected:
 
-- The system calls ``registration.update_leaders(partner)``.
+-  The system calls ``registration.update_leaders(partner)``.
 
-- If the partner is qualified leader, they are added to:
+-  If the partner is qualified leader, they are added to:
 
-  - ``shift.template.user_ids``
-  - all non-done ``shift.user_ids``
+   -  ``shift.template.user_ids``
+   -  all non-done ``shift.user_ids``
 
 Scenario D: Remove participant (or set non-current)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -240,8 +241,8 @@ Scenario D: Remove participant (or set non-current)
 
 Expected:
 
-- The system removes the partner from template leaders and shift leaders
-  accordingly.
+-  The system removes the partner from template leaders and shift
+   leaders accordingly.
 
 Scenario E: Qualification leader limit configuration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -253,16 +254,16 @@ Scenario E: Qualification leader limit configuration
 
 Expected:
 
-- System blocks the second one with a validation error.
+-  System blocks the second one with a validation error.
 
 Where to look when debugging
 ----------------------------
 
-- Partner: ``qualification_ids``, ``is_qual_leader``, ``template_ids``
-- Shift template: ``user_ids``
-- Shifts: ``user_ids`` (excluding state ``done``)
-- Logs/errors: validation error messages when violating leader
-  assignment constraints.
+-  Partner: ``qualification_ids``, ``is_qual_leader``, ``template_ids``
+-  Shift template: ``user_ids``
+-  Shifts: ``user_ids`` (excluding state ``done``)
+-  Logs/errors: validation error messages when violating leader
+   assignment constraints.
 
 Bug Tracker
 ===========
