@@ -8,14 +8,12 @@ class PurchaseBillUnion(models.Model):
     _inherit = "purchase.bill.union"
 
     @api.model
-    def name_search(self, name, args=None, operator="ilike", limit=100):
-        if name:
-            args = args or []
+    def _search_display_name(self, operator, value):
+        if value:
             domain = [
                 "|",
-                ("name", operator, name),
-                ("reference", operator, name),
+                ("name", operator, value),
+                ("reference", operator, value),
             ]
-            args = expression.AND([args, domain])
-            name = ""
-        return super().name_search(name=name, args=args, operator=operator, limit=limit)
+            return expression.AND([super()._search_display_name(operator, ""), domain])
+        return super()._search_display_name(operator, value)

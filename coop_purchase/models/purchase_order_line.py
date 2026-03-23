@@ -19,20 +19,27 @@ class PurchaseOrderLine(models.Model):
         string="Internal Reference", related="product_id.default_code", store=True
     )
 
-    @api.multi
     @api.depends("price_total", "product_qty")
     def _compute_price_unit_tax(self):
         for pol in self:
             if pol.product_qty:
                 pol.price_unit_tax = pol.price_total / pol.product_qty
 
-    @api.multi
-    @api.depends("price_unit", "discount")
+    @api.depends(
+        "price_unit",
+        "discount",
+        "order_id.currency_id",
+        "order_id.partner_id.discount_computation",
+    )
     def _compute_price_discounted(self):
         for pol in self:
             pol.price_discounted = pol._get_discounted_price_unit()
 
-    @api.multi
+    def _create_or_update_picking(self):
+        if self.env.context.get("skip_move_create"):
+            return
+        return super()._create_or_update_picking()
+
     def update_po_price_to_vendor_price(self):
         """
         @Function for the action of updating vendor price
@@ -53,7 +60,8 @@ class PurchaseOrderLine(models.Model):
 
             # Find the appropriate vendor price
             vendor_price_line = product.seller_ids.filtered(
-                lambda vp_line: vp_line.name.id == po_vendor_id
+                lambda vp_line, po_vendor_id=po_vendor_id: vp_line.partner_id.id
+                == po_vendor_id
             )
             if vendor_price_line:
                 if update_main_vendor:
@@ -68,16 +76,18 @@ class PurchaseOrderLine(models.Model):
                     # No update if the current vendor is the main one
                     if (
                         vendor_price_line.sequence != min_sequence
-                        or min_sequence_not_unique  # Allows to recover from non unique sequence (messed up data)
+                        # Allows to recover from non unique sequence (messed up data)
+                        or min_sequence_not_unique
                     ):
                         for seller in product.seller_ids:
                             if (
                                 seller.id != vendor_price_line.id
                                 and seller.sequence
-                                <= current_sequence  # <= instead of < recovers from non unique seq
+                                # <= instead of < recovers from non unique seq
+                                <= current_sequence
                             ):
                                 seller.write({"sequence": seller.sequence + 1})
-                        main_vendor = vendor_price_line.name
+                        main_vendor = vendor_price_line.partner_id
                         vendor_price_line.write({"sequence": min_sequence})
 
                 # Update unit price
@@ -91,10 +101,17 @@ class PurchaseOrderLine(models.Model):
                 )._compute_base_price()
 
     def _get_discounted_price_unit(self):
-        price = super()._get_discounted_price_unit()
+        self.ensure_one()
+        price = self.price_unit
         if self.discount:
-            partner_disc_computation = self.order_id.partner_id.discount_computation
-            currency = self.order_id.currency_id
-            if partner_disc_computation == "unit_price":
-                price = currency.round(price)
+            price *= 1 - (self.discount / 100.0)
+
+        partner = self.order_id.partner_id
+        if partner and "discount_computation" in partner._fields:
+            if (
+                partner.discount_computation == "unit_price"
+                and self.order_id.currency_id
+            ):
+                price = self.order_id.currency_id.round(price)
+
         return price

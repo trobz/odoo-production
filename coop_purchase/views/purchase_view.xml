@@ -3,9 +3,10 @@
     <record model="ir.ui.view" id="purchase_order_form">
         <field name="model">purchase.order</field>
         <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="priority" eval="99" />
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='order_line']/tree/field[@name='date_planned']"
+                expr="//field[@name='order_line']/list/field[@name='date_planned']"
                 position="attributes"
             >
                 <attribute name="invisible">1</attribute>
@@ -19,8 +20,8 @@
             <field name="taxes_id" position="attributes">
                 <attribute name="invisible">1</attribute>
             </field>
-            <field name="account_analytic_id" position="replace" />
-            <xpath expr="//field[@name='order_line']/tree" position="attributes">
+            <field name="analytic_distribution" position="replace" />
+            <xpath expr="//field[@name='order_line']/list" position="attributes">
                 <attribute
                     name="decoration-success"
                 >product_qty==qty_invoiced</attribute>
@@ -34,7 +35,7 @@
                 />
             </xpath>
             <xpath
-                expr="//field[@name='order_line']/tree/field[@name='product_id']"
+                expr="//field[@name='order_line']/list/field[@name='product_id']"
                 position="before"
             >
                 <field name="product_default_code" />
@@ -48,7 +49,7 @@
     <record id="view_purchase_order_line_tree" model="ir.ui.view">
         <field name="model">purchase.order.line</field>
         <field name="arch" type="xml">
-            <tree create="false">
+            <list create="false">
                 <field name="id" invisible="1" />
                 <field name="order_id" invisible="1" />
                 <field name="partner_id" invisible="1" />
@@ -57,11 +58,11 @@
                 <field name="date_planned" invisible="1" />
                 <field name="company_id" groups="base.group_multi_company" />
                 <field
-                    name="account_analytic_id"
+                    name="analytic_distribution"
                     groups="analytic.group_analytic_accounting"
                     invisible="1"
                 />
-                <field name="product_qty_package" />
+                <field name="product_packaging_qty" />
                 <field name="package_qty" />
                 <field name="indicative_package" invisible="1" />
                 <field name="product_qty" />
@@ -75,7 +76,7 @@
                 <field name="taxes_id" widget="many2many_tags" invisible="1" />
                 <field name="price_subtotal" widget="monetary" />
                 <field name="price_total" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -93,7 +94,7 @@
         />
         <field name="model">computed.purchase.order</field>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='line_ids']/tree" position="attributes">
+            <xpath expr="//field[@name='line_ids']/list" position="attributes">
                 <attribute name="limit">500</attribute>
             </xpath>
         </field>

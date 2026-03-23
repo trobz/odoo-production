@@ -2,7 +2,7 @@ from odoo import api, fields, models
 
 supported_models = [
     "purchase.order",
-    "account.invoice",
+    "account.move",
 ]
 
 
@@ -52,7 +52,7 @@ class SupplierInfoUpdate(models.TransientModel):
         for line in obj_lines:
             product_id = line.product_id
             selected_seller_id = product_id.seller_ids.filtered(
-                lambda seller: seller.name == partner_id
+                lambda seller, line=line: seller.partner_id == partner_id
                 and seller.price_policy == line.price_policy
             )
             selected_seller_id = selected_seller_id and selected_seller_id[0] or False
@@ -79,7 +79,7 @@ class SupplierInfoUpdate(models.TransientModel):
                 if "discount" in line:
                     line_discount = line.discount
                 else:
-                    seller_discount
+                    line_discount = seller_discount
 
                 # Prepare values in current document line
                 seller_values.update(
@@ -91,7 +91,6 @@ class SupplierInfoUpdate(models.TransientModel):
                 lines.append((0, 0, seller_values))
         return lines
 
-    @api.multi
     def update_prices(self):
         self.ensure_one()
         lines = self.line_ids.sorted()

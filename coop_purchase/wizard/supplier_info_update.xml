@@ -3,7 +3,6 @@
     <record id="supplier_info_update_act" model="ir.actions.act_window">
         <field name="name">Update Prices</field>
         <field name="res_model">supplier.info.update</field>
-        <field name="view_type">form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
@@ -13,21 +12,17 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
-                    <group>
-                        <field name="partner_id" readonly="1" />
-                        <field name="show_discount" />
-                    </group>
                     <notebook>
                         <page string="Lines">
                             <group>
                                 <field
                                     name="line_ids"
                                     colspan="4"
-                                    view_mode="tree"
+                                    view_mode="list"
                                     nolabel="1"
                                     context="{'form_view_ref': False}"
                                 >
-                                    <tree
+                                    <list
                                         create="false"
                                         delete="false"
                                         editable="bottom"
@@ -48,11 +43,10 @@
                                         <field
                                             name="discount"
                                             default_focus="1"
-                                            attrs="{'column_invisible': [('parent.show_discount', '=', False)]}"
+                                            optional="hide"
+                                            column_invisible="not parent.show_discount"
                                         />
-                                        <field name="show_discount" invisible="1" />
-                                        <field name="seller_id" invisible="1" />
-                                    </tree>
+                                    </list>
                                 </field>
                             </group>
                         </page>

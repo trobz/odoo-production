@@ -1,10 +1,17 @@
 from odoo import api, fields, models
 
-from odoo.addons import decimal_precision as dp
-
 
 class ProductSupplierinfo(models.Model):
     _inherit = "product.supplierinfo"
+
+    product_packaging_id = fields.Many2one(
+        "product.packaging",
+        string="Packaging",
+        domain=(
+            "['|', ('product_id', '=', product_id), "
+            "('product_id.product_tmpl_id', '=', product_tmpl_id)]"
+        ),
+    )
 
     is_product_active = fields.Boolean(
         "Active",
@@ -38,31 +45,39 @@ class ProductSupplierinfo(models.Model):
     price_taxes_excluded = fields.Float(
         "Sale Price Taxes Excluded",
         compute="_compute_get_prices",
-        multi="taxes",
-        digits=dp.get_precision("Product Price"),
+        digits="Product Price",
     )
     price_taxes_included = fields.Float(
         "Sale Price Taxes Included",
         compute="_compute_get_prices",
-        multi="taxes",
-        digits=dp.get_precision("Product Price"),
+        digits="Product Price",
     )
 
     base_price = fields.Float(
-        "Price",
         required=True,
-        digits=dp.get_precision("Product Price"),
+        default=0.0,
+        digits="Product Price",
         help="The price to purchase a product",
     )
 
-    @api.multi
-    @api.depends("price_total", "product_qty")
-    def _compute_price_unit_tax(self):
-        for pol in self:
-            if pol.product_qty:
-                pol.price_unit_tax = pol.price_total / pol.product_qty
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if not vals.get("base_price"):
+                if vals.get("price"):
+                    vals["base_price"] = vals["price"]
+                    del vals["price"]
+                else:
+                    vals["base_price"] = 0.0
+        return super().create(vals_list)
 
-    @api.multi
+    def write(self, vals):
+        if not vals.get("base_price") and vals.get("price"):
+            vals = dict(vals)
+            vals["base_price"] = vals["price"]
+            del vals["price"]
+        return super().write(vals)
+
     def _compute_get_prices(self):
         for psi in self:
             price_te = price_ti = psi.product_tmpl_id.list_price
