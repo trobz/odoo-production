@@ -5,36 +5,8 @@
         <field name="model">stock.picking</field>
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
-            <xpath
-                expr="//form/sheet/notebook/page/button[@name='put_in_pack']"
-                position="attributes"
-            >
+            <xpath expr="//button[@name='action_put_in_pack']" position="attributes">
                 <attribute name="groups">coop_purchase.group_put_in_pack</attribute>
-            </xpath>
-            <xpath
-                expr="//field[@name='move_line_ids_without_package']/tree"
-                position="attributes"
-            >
-                <attribute name="limit">500</attribute>
-            </xpath>
-            <xpath
-                expr="//field[@name='move_ids_without_package']/tree"
-                position="attributes"
-            >
-                <attribute name="limit">500</attribute>
-            </xpath>
-        </field>
-    </record>
-    <record id="view_inventory_form_inherit" model="ir.ui.view">
-        <field name="name">stock.inventory.form.inherit</field>
-        <field name="model">stock.inventory</field>
-        <field name="inherit_id" ref="stock.view_inventory_form" />
-        <field name="arch" type="xml">
-            <xpath
-                expr="//field[@name='line_ids']/tree/field[@name='product_id']"
-                position="before"
-            >
-                <field name="product_default_code" />
             </xpath>
         </field>
     </record>

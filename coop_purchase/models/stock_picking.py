@@ -23,29 +23,53 @@
 #
 ##############################################################################
 
-from odoo import _, api, models
+from odoo import models
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    @api.multi
     def button_validate(self):
         self.ensure_one()
         if self.purchase_id:
-            # S#T35388 - Server Error when receiving Order PO18251
-            # Stock move is deleted by merging
             todo_moves = self.env["stock.move"]
-            for move_line in self.move_lines:
-                if not move_line.purchase_line_id:
-                    self.prepare_vals_order_line(move_line)
-                    todo_moves |= move_line
+            created_po_lines = {}
+            for move in self.move_ids_without_package:
+                if not move.purchase_line_id:
+                    key = (move.product_id.id, move.product_uom.id)
+                    if key in created_po_lines:
+                        po_line = created_po_lines[key]
+                        move.purchase_line_id = po_line.id
+                        po_line.with_context(skip_move_create=True).write(
+                            {"product_qty": po_line.product_qty + move.product_uom_qty}
+                        )
+                    else:
+                        # Reuse existing PO line if its original move was
+                        # deleted (no active moves left linked to it)
+                        orphan_pol = self.purchase_id.order_line.filtered(
+                            lambda pol, p=move.product_id, u=move.product_uom: (
+                                pol.product_id == p
+                                and pol.product_uom == u
+                                and not pol.move_ids.filtered(
+                                    lambda m: m.state not in ("cancel",)
+                                )
+                            )
+                        )[:1]
+                        if orphan_pol:
+                            move.purchase_line_id = orphan_pol.id
+                            orphan_pol.with_context(skip_move_create=True).write(
+                                {"product_qty": move.product_uom_qty}
+                            )
+                            created_po_lines[key] = orphan_pol
+                        else:
+                            po_line = self.prepare_vals_order_line(move)
+                            if po_line:
+                                created_po_lines[key] = po_line
+                    todo_moves |= move
             if todo_moves:
-                todo_moves._action_confirm()
-                todo_moves._action_assign()
+                todo_moves.filtered(lambda m: m.state == "draft")._action_confirm()
         return super().button_validate()
 
-    @api.multi
     def prepare_vals_order_line(self, diff_pack_op):
         """
         This method prepares vals to build order line when user add
@@ -75,25 +99,20 @@ class StockPicking(models.Model):
             # Update quantities and other values
             # These fields are overwritten by onchange_product_id, so we set
             # them here
-            po_line.write(
+            po_line.with_context(skip_move_create=True).write(
                 {
-                    "product_qty": diff_pack_op.quantity_done,
-                    "product_qty_package": diff_pack_op.product_qty_package,
+                    "product_qty": diff_pack_op.product_uom_qty,
                     "package_qty": diff_pack_op.package_qty,
                     "date_planned": self.purchase_id.date_planned,
                 }
             )
-            # Update price, etc
-            po_line._onchange_quantity()
             # Link to move
             diff_pack_op.purchase_line_id = po_line.id
             # Pos comment
             self.purchase_id.message_post(
-                body=_(
+                body=self.env._(
                     "Purchase items: %s with %s qty. were created from "
-                    "incoming shipment (%s)."
-                )
-                % (
+                    "incoming shipment (%s).",
                     diff_pack_op.product_id.display_name,
                     diff_pack_op.package_qty,
                     self.origin,

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_supplier_info_update_user,supplier.info.update user,coop_purchase.model_supplier_info_update,base.group_user,1,1,1,0
+access_supplier_info_update_admin,supplier.info.update admin,coop_purchase.model_supplier_info_update,base.group_system,1,1,1,1
+access_supplier_info_update_line_user,supplier.info.update.line user,coop_purchase.model_supplier_info_update_line,base.group_user,1,1,1,0
+access_supplier_info_update_line_admin,supplier.info.update.line admin,coop_purchase.model_supplier_info_update_line,base.group_system,1,1,1,1
