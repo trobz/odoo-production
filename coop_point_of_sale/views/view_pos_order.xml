@@ -1,13 +1,14 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
     <record id="view_pos_pos_form_inherit" model="ir.ui.view">
         <field name="model">pos.order</field>
-        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='lines']/tree/field[@name='product_id']"
-                position="before">
-                <field name="product_default_code"/>
+                expr="//field[@name='lines']/list/field[@name='product_id']"
+                position="before"
+            >
+                <field name="product_default_code" />
             </xpath>
             <xpath expr="//field[@name='lines']" position="attributes">
                 <attribute name="context">{'display_default_code': False}</attribute>
@@ -16,58 +17,65 @@
     </record>
     <record id="view_pos_order_search" model="ir.ui.view">
         <field name="model">pos.order</field>
-        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter" />
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <field name="partner_id"/>
-                <field name="pos_reference"/>
-                <field name="week_day"/>
-                <field name="week_number" invisible="1"/>
-                <field name="week_name"/>
-                <field name="cycle"/>
+                <field name="partner_id" />
+                <field name="pos_reference" />
+                <field name="week_day" />
+                <field name="week_name" />
+                <field name="cycle" />
             </field>
             <field name="date_order" position="after">
-                <field name="search_year"/>
-                <field name="search_month"/>
-                <field name="search_day"/>
+                <field name="search_year" />
+                <field name="search_month" />
+                <field name="search_day" />
             </field>
             <xpath expr="//group" position="inside">
-                <filter string="Year (Search)" name="year" context="{'group_by':'search_year'}"/>
-                <filter string="Month (Search)" name="month" context="{'group_by':'search_month'}"/>
-                <filter string="Day (Search)" name="day" context="{'group_by':'search_day'}"/>
+                <filter
+                    string="Year (Search)"
+                    name="year"
+                    context="{'group_by':'search_year'}"
+                />
+                <filter
+                    string="Month (Search)"
+                    name="month"
+                    context="{'group_by':'search_month'}"
+                />
+                <filter
+                    string="Day (Search)"
+                    name="day"
+                    context="{'group_by':'search_day'}"
+                />
             </xpath>
         </field>
     </record>
 
     <record id="view_pos_order_tree_inherit" model="ir.ui.view">
         <field name="model">pos.order</field>
-        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree" />
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <field name="partner_id"/>
-                <field name="pos_reference"/>
+                <field name="partner_id" />
+                <field name="pos_reference" />
             </field>
             <field name="date_order" position="before">
-                <field name="week_day" invisible="1"/>
-                <field name="week_number" invisible="1"/>
-                <field name="week_name" invisible="1"/>
-                <field name="cycle"/>
+                <field name="cycle" />
             </field>
-
         </field>
     </record>
-    <record id="point_of_sale.action_report_pos_order_all" model="ir.actions.act_window">
+    <record
+        id="point_of_sale.action_report_pos_order_all"
+        model="ir.actions.act_window"
+    >
         <field name="view_mode">pivot,graph</field>
     </record>
     <record id="view_report_pos_order_pivot_inherit" model="ir.ui.view">
         <field name="model">report.pos.order</field>
-        <field name="inherit_id" ref="point_of_sale.view_report_pos_order_pivot"/>
+        <field name="inherit_id" ref="point_of_sale.view_report_pos_order_pivot" />
         <field name="arch" type="xml">
             <field name="price_total" position="after">
-                <field name="price_wo_tax" type="measure"/>
-            </field>
-            <field name="price_total" position="attributes">
-                <attribute name="invisible">1</attribute>
+                <field name="price_wo_tax" type="measure" />
             </field>
         </field>
     </record>

@@ -3,7 +3,7 @@
 # @author: La Louve
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html
 
-from odoo import models, fields
+from odoo import fields, models
 
 
 class res_company(models.Model):
@@ -13,7 +13,7 @@ class res_company(models.Model):
         "account.journal",
         "rel_company_config_journal",
         "rel_account_journal_config",
-        string="Cheques Journals",
+        string="Check Journals",
     )
 
-    payable_to = fields.Char(string="Payable to")
+    payable_to = fields.Char()

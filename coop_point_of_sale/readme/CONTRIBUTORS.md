@@ -1,0 +1,6 @@
+- Sylvain LE GAL \<https://twitter.com/legalsylvain\>
+- Julien Weste
+- Iván Todorovich
+- Druidoo \<https://www.druidoo.io\>
+- Trobz \<https://www.trobz.com\>
+  - Phan Hong Phuc \<\<phucph@trobz.com\>\>
