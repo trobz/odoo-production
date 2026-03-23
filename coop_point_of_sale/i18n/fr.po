@@ -1,279 +1,176 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* coop_point_of_sale
+# 	* coop_point_of_sale
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-21 11:10+0000\n"
-"PO-Revision-Date: 2020-07-01 10:27+0000\n"
-"Last-Translator: Simon Mas <simon.mas@druidoo.io>\n"
-"Language-Team: French <https://translate.druidoo.io/projects/foodcoops-12-0/"
-"foodcoops-12-0-coop_point_of_sale/fr/>\n"
+"POT-Creation-Date: 2026-03-25 08:07+0000\n"
+"PO-Revision-Date: 2026-03-25 08:07+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.8\n"
 
 #. module: coop_point_of_sale
-#. openerp-web
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:21
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:44
-#, python-format
-msgid "A jour"
-msgstr "A jour"
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/payment_screen/payment_screen.esm.js:0
+msgid "A payment line with the same Account Journal already exists."
+msgstr "Une ligne de paiement avec le même journal comptable existe déjà."
 
 #. module: coop_point_of_sale
-#. openerp-web
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:25
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:48
-#, python-format
-msgid "Bloqué"
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_category__active
+msgid "Active"
+msgstr "Actif"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
+msgid "Alert"
+msgstr "Alerte"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_config__enable_popup_verify_payment
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_res_config_settings__enable_popup_verify_payment
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.pos_config_view_form_pos_inherit
+msgid "Allow execution of script popup_verify_payment"
+msgstr "Autoriser l'exécution du script popup_verify_payment"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order__amount_total
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_session__amount_total
+msgid "Amount Total"
+msgstr "Montant total"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_session__amount_untaxed
+msgid "Amount Untaxed"
+msgstr "Montant hors taxes"
+
+#. module: coop_point_of_sale
+#: model:ir.model,name:coop_point_of_sale.model_account_bank_statement
+msgid "Bank Statement"
+msgstr "Relevé bancaire"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
+msgid "Blocked"
 msgstr "Bloqué"
 
 #. module: coop_point_of_sale
-#. openerp-web
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:8
-#, python-format
-msgid "Cooperative Number"
-msgstr "Numéro de coopérateur"
-
-#. module: coop_point_of_sale
-#. openerp-web
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:9
-#, python-format
-msgid "Cooperative State"
-msgstr "Etat coopératif"
-
-#. module: coop_point_of_sale
-#. openerp-web
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:24
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:47
-#, python-format
-msgid "Délai"
-msgstr "Délai"
-
-#. module: coop_point_of_sale
-#. openerp-web
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:20
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:43
-#, python-format
-msgid "Désinscrit"
-msgstr "Désinscrit"
-
-#. module: coop_point_of_sale
-#. openerp-web
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:22
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:45
-#, python-format
-msgid "En alerte"
-msgstr "En alerte"
-
-#. module: coop_point_of_sale
-#. openerp-web
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:26
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:49
-#, python-format
-msgid "Impayé"
-msgstr "Impayé"
-
-#. module: coop_point_of_sale
-#. openerp-web
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:7
-#, python-format
-msgid "Name"
-msgstr "Nom"
-
-#. module: coop_point_of_sale
-#. openerp-web
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:19
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:42
-#, python-format
-msgid "Non concerné"
-msgstr "Non concerné"
-
-#. module: coop_point_of_sale
-#. openerp-web
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:34
-#, python-format
-msgid "Number"
-msgstr "Numéro"
-
-#. module: coop_point_of_sale
-#. openerp-web
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:40
-#, python-format
-msgid "State"
-msgstr "Etat"
-
-#. module: coop_point_of_sale
-#. openerp-web
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:23
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:46
-#, python-format
-msgid "Suspendu"
-msgstr "Suspendu"
-
-#. module: coop_point_of_sale
-#. openerp-web
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:55
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:59
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:63
-#: code:addons/coop_point_of_sale/static/src/xml/point_of_sale.xml:67
-#, python-format
-msgid "display: none;"
-msgstr "display: none;"
-
-#. module: coop_point_of_sale
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_config_settings_diacritics_insensitive_search
-msgid "Make products searchs insensitive to diacritics (ignore accents)"
-msgstr "Rendre la recherche de produits insensible aux diacritiques (ignorer les accents)"
-
-#. module: coop_point_of_sale
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_config_diacritics_insensitive_search
-#: model:ir.ui.view,arch_db:coop_point_of_sale.view_sale_config_settings_form_pos_inherit
-msgid "Diacritics insensitive search"
-msgstr "Recherche insensible aux diacritiques"
-
-#. module: coop_point_of_sale
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_config_settings_account_journal_ids
-msgid "Cheques Journals"
-msgstr "Journaux chèques"
-
-#. module: coop_point_of_sale
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_config_settings_payable_to
-msgid "Payable to"
-msgstr "Ordre du chèque"
-
-#. module: coop_point_of_sale
-#: model:ir.model.fields,help:coop_point_of_sale.field_pos_config_settings_account_journal_ids
-msgid "Please indicate here the cheques journals for which you would like to display a message when used in POS"
-msgstr "Veuillez renseigner ici les journaux pour lesquels vous souhaitez afficher un message d'alerte sur le POS."
-
-#. module: coop_point_of_sale
-#: code:addons/coop_point_of_sale/models/product_product.py:13
-#: code:addons/coop_point_of_sale/models/product_template.py:13
-#, python-format
-msgid "You should not delete product, please archive it by clicking button on the right"
-msgstr "Vous ne pouvez pas supprimer un produit. Archivez-le en cliquant sur le bouton à droite."
-
-#. module: coop_point_of_sale
-#: code:addons/coop_point_of_sale/models/product_product.py:29
-#: code:addons/coop_point_of_sale/models/product_template.py:29
-#, python-format
-msgid "You cannot unticking Available in the Point of Sale When POS Session are running with ids %s"
-msgstr "Vous ne pouvez pas décocher 'Disponible dans le point de vente' car les sessions de caisse suivantes sont toujours ouvertes %s"
-
-#. module: coop_point_of_sale
-#: code:addons/coop_point_of_sale/models/pos_order.py:49
-#: code:addons/coop_point_of_sale/models/pos_session.py:49
-#, python-format
-msgid "Mon"
-msgstr "Lun"
-
-#. module: coop_point_of_sale
-#: code:addons/coop_point_of_sale/models/pos_order.py:51
-#: code:addons/coop_point_of_sale/models/pos_session.py:51
-#, python-format
-msgid "Tue"
-msgstr "Mar"
-
-#. module: coop_point_of_sale
-#: code:addons/coop_point_of_sale/models/pos_order.py:53
-#: code:addons/coop_point_of_sale/models/pos_session.py:53
-#, python-format
-msgid "Wes"
-msgstr "Mer"
-
-#. module: coop_point_of_sale
-#: code:addons/coop_point_of_sale/models/pos_order.py:55
-#: code:addons/coop_point_of_sale/models/pos_session.py:55
-#, python-format
-msgid "Thu"
-msgstr "Jeu"
-
-#. module: coop_point_of_sale
-#: code:addons/coop_point_of_sale/models/pos_order.py:57
-#: code:addons/coop_point_of_sale/models/pos_session.py:57
-#, python-format
-msgid "Fri"
-msgstr "Ven"
-
-#. module: coop_point_of_sale
-#: code:addons/coop_point_of_sale/models/pos_order.py:59
-#: code:addons/coop_point_of_sale/models/pos_session.py:59
-#, python-format
-msgid "Sat"
-msgstr "Sam"
-
-#. module: coop_point_of_sale
-#: code:addons/coop_point_of_sale/models/pos_order.py:61
-#: code:addons/coop_point_of_sale/models/pos_session.py:61
-#, python-format
-msgid "Sun"
-msgstr "Dim"
-
-#. module: coop_point_of_sale
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order_week_day
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_session_week_day
-msgid "Day"
-msgstr "Jour"
-
-#. module: coop_point_of_sale
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order_week_number
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_session_week_number
-msgid "Week"
-msgstr "Semaine"
-
-#. module: coop_point_of_sale
-#. openerp-web
-#: code:addons/coop_point_of_sale/static/src/xml/popups.xml:16
-#, python-format
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/components/dialogs/verify_payment.xml:0
 msgid "Cancel"
 msgstr "Annuler"
 
 #. module: coop_point_of_sale
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order_search_day
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_session_search_day
-#: model:ir.ui.view,arch_db:coop_point_of_sale.view_pos_order_search
-#: model:ir.ui.view,arch_db:coop_point_of_sale.view_pos_session_search_inherit
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_account_bank_statement__total_entry_encoding_cash
+msgid "Cash Moves"
+msgstr "Mouvements de trésorerie"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_config__account_journal_ids
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_res_company__journal_config_ids
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_res_config_settings__account_journal_ids
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.pos_config_view_form_pos_inherit
+msgid "Check Journals"
+msgstr "Journaux de vérification"
+
+#. module: coop_point_of_sale
+#: model:ir.model,name:coop_point_of_sale.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: coop_point_of_sale
+#: model:ir.model,name:coop_point_of_sale.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres de configuration"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/components/dialogs/verify_payment.xml:0
+msgid "Confirm"
+msgstr "Confirmer"
+
+#. module: coop_point_of_sale
+#: model:ir.model,name:coop_point_of_sale.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
+msgid "Cooperative Number"
+msgstr "Numéro de coopérateur"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
+msgid "Cooperative State"
+msgstr "État coopératif"
+
+#. module: coop_point_of_sale
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.view_pos_session_tree_inherit
+msgid "Count"
+msgstr "Nombre"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order__cycle
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order_line__cycle
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_session__cycle
+msgid "Cycle"
+msgstr "Cycle"
+
+#. module: coop_point_of_sale
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.view_pos_session_search_inherit
+msgid "Date"
+msgstr "Date"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order__week_day
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order_line__week_day
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_session__week_day
+msgid "Day"
+msgstr "Jour"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order__search_day
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_session__search_day
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.view_pos_order_search
 msgid "Day (Search)"
-msgstr "Jour (recherche)"
+msgstr "Jour (Recherche)"
 
 #. module: coop_point_of_sale
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order_search_month
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_session_search_month
-#: model:ir.ui.view,arch_db:coop_point_of_sale.view_pos_order_search
-#: model:ir.ui.view,arch_db:coop_point_of_sale.view_pos_session_search_inherit
-msgid "Month (Search)"
-msgstr "Mois (recherche)"
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
+msgid "Delayed"
+msgstr "En retard"
 
 #. module: coop_point_of_sale
-#: model:ir.model,name:coop_point_of_sale.model_pos_order
-msgid "Point of Sale"
-msgstr "Point de vente"
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.pos_config_view_form_pos_inherit
+msgid ""
+"Enable additional checks on payment screen (block new line if a payment line"
+" of that type already exists, etc.)"
+msgstr ""
+"Activer des vérifications supplémentaires sur l'écran de paiement (bloquer "
+"une nouvelle ligne si une ligne de paiement de ce type existe déjà, etc.)"
 
 #. module: coop_point_of_sale
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order_search_year
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_session_search_year
-#: model:ir.ui.view,arch_db:coop_point_of_sale.view_pos_order_search
-#: model:ir.ui.view,arch_db:coop_point_of_sale.view_pos_session_search_inherit
-msgid "Year (Search)"
-msgstr "Année (recherche)"
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/payment_screen/payment_screen.esm.js:0
+msgid "Error"
+msgstr "Erreur"
 
 #. module: coop_point_of_sale
-#: code:addons/coop_point_of_sale/models/stock_picking.py:16
-#, python-format
-msgid "The product {} received should have \"available in pos\""
-msgstr "The product {} received should have \"available in pos\""
-
-#. module: coop_point_of_sale
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_report_pos_order__price_wo_tax
-msgid "Subtotal w/o tax"
-msgstr "Sous-total hors taxes"
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_product_product__force_unavailable_in_pos
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_product_template__force_unavailable_in_pos
+msgid "Force Unavailable In Pos"
+msgstr "Forcer l'indisponibilité dans le POS"
 
 #. module: coop_point_of_sale
 #: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order_line__product_default_code
@@ -281,6 +178,257 @@ msgid "Internal Reference"
 msgstr "Référence interne"
 
 #. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order__search_month
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_session__search_month
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.view_pos_order_search
+msgid "Month (Search)"
+msgstr "Mois (Recherche)"
+
+#. module: coop_point_of_sale
 #: model_terms:ir.ui.view,arch_db:coop_point_of_sale.product_template_form_view_inherit
-msgid "You cannot untick Available in the Point of Sale When POS Session are running. Do you want to force this action?"
-msgstr "Vous ne pouvez pas décocher Disponible dans le point de vente lorsque la session POS est en cours d'exécution. Voulez-vous forcer cette action?"
+msgid "No"
+msgstr "Non"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
+msgid "Not concerned"
+msgstr "Non concerné"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
+msgid "On leave"
+msgstr "En congé"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order_line__order_id
+msgid "Order Ref"
+msgstr "Réf. Commande"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_session__order_count
+msgid "Orders Count"
+msgstr "Nombre de commandes"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_config__payable_to
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_res_company__payable_to
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_res_config_settings__payable_to
+msgid "Payable To"
+msgstr "Payable à"
+
+#. module: coop_point_of_sale
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.pos_config_view_form_pos_inherit
+msgid "Payable to"
+msgstr "Payable à"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/payment_screen/payment_screen.esm.js:0
+msgid "Please check the cheque: "
+msgstr "Veuillez vérifier le chèque : "
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,help:coop_point_of_sale.field_pos_config__account_journal_ids
+#: model:ir.model.fields,help:coop_point_of_sale.field_res_config_settings__account_journal_ids
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.pos_config_view_form_pos_inherit
+msgid ""
+"Please indicate here the cheques journals for which you would like to "
+"display a message when used in POS"
+msgstr ""
+"Veuillez indiquer ici les journaux de chèques pour lesquels vous souhaitez "
+"afficher un message lors de l'utilisation dans le POS"
+
+#. module: coop_point_of_sale
+#: model:ir.model,name:coop_point_of_sale.model_pos_category
+msgid "Point of Sale Category"
+msgstr "Catégorie de point de vente"
+
+#. module: coop_point_of_sale
+#: model:ir.model,name:coop_point_of_sale.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Configuration du point de vente"
+
+#. module: coop_point_of_sale
+#: model:ir.model,name:coop_point_of_sale.model_pos_order_line
+msgid "Point of Sale Order Lines"
+msgstr "Lignes de commande du point de vente"
+
+#. module: coop_point_of_sale
+#: model:ir.model,name:coop_point_of_sale.model_pos_order
+msgid "Point of Sale Orders"
+msgstr "Commandes du point de vente"
+
+#. module: coop_point_of_sale
+#: model:ir.model,name:coop_point_of_sale.model_report_pos_order
+msgid "Point of Sale Orders Report"
+msgstr "Rapport des commandes du point de vente"
+
+#. module: coop_point_of_sale
+#: model:ir.model,name:coop_point_of_sale.model_pos_payment_method
+msgid "Point of Sale Payment Methods"
+msgstr "Modes de paiement du point de vente"
+
+#. module: coop_point_of_sale
+#: model:ir.model,name:coop_point_of_sale.model_pos_session
+msgid "Point of Sale Session"
+msgstr "Session du point de vente"
+
+#. module: coop_point_of_sale
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.view_pos_order_line_search
+msgid "Pos order line"
+msgstr "Ligne de commande POS"
+
+#. module: coop_point_of_sale
+#: model:ir.model,name:coop_point_of_sale.model_product_template
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order_line__product_id
+msgid "Product"
+msgstr "Produit"
+
+#. module: coop_point_of_sale
+#: model:ir.model,name:coop_point_of_sale.model_product_product
+msgid "Product Variant"
+msgstr "Variante de produit"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_config__qty_zero_remove_line
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_res_config_settings__qty_zero_remove_line
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.pos_config_view_form_pos_inherit
+msgid "Remove Zero Qty Line"
+msgstr "Supprimer la ligne quantité zéro"
+
+#. module: coop_point_of_sale
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.pos_config_view_form_pos_inherit
+msgid "Remove the order line if its quantity is 0."
+msgstr "Supprimer la ligne de commande si sa quantité est nulle."
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_account_bank_statement__total_entry_encoding_sales
+msgid "Sale Transactions Subtotal"
+msgstr "Sous-total des transactions de vente"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_report_pos_order__price_wo_tax
+msgid "Subtotal w/o tax"
+msgstr "Sous-total hors taxes"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
+msgid "Suspended"
+msgstr "Suspendu"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/payment_screen/payment_screen.esm.js:0
+msgid "The amount"
+msgstr "Le montant"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/payment_screen/payment_screen.esm.js:0
+msgid "The date"
+msgstr "La date"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/payment_screen/payment_screen.esm.js:0
+msgid "The order: "
+msgstr "La commande : "
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/payment_screen/payment_screen.esm.js:0
+msgid "The presence of a signature"
+msgstr "La présence d'une signature"
+
+#. module: coop_point_of_sale
+#. odoo-python
+#: code:addons/coop_point_of_sale/models/stock_picking.py:0
+msgid "The product %s received should have available in pos"
+msgstr "Le produit %s reçu devrait être disponible dans le POS"
+
+#. module: coop_point_of_sale
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.view_pos_session_tree_inherit
+msgid "Total"
+msgstr "Total"
+
+#. module: coop_point_of_sale
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.view_pos_session_tree_inherit
+msgid "Total Untaxed"
+msgstr "Total hors taxes"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,help:coop_point_of_sale.field_account_bank_statement__total_entry_encoding_cash
+msgid "Total of cash inputs or outputs."
+msgstr "Total des entrées ou sorties de trésorerie."
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,help:coop_point_of_sale.field_account_bank_statement__total_entry_encoding_sales
+msgid "Total of sale transaction lines."
+msgstr "Total des lignes de transaction de vente."
+
+#. module: coop_point_of_sale
+#: model:ir.model,name:coop_point_of_sale.model_stock_picking
+msgid "Transfer"
+msgstr "Transfert"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
+msgid "Unpaid"
+msgstr "Impayé"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
+msgid "Unsubscribed"
+msgstr "Désabonné"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
+msgid "Up to date"
+msgstr "À jour"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/components/dialogs/verify_payment.xml:0
+msgid "Verify Payment"
+msgstr "Vérifier le paiement"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order__week_name
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order_line__week_name
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_session__week_name
+msgid "Week"
+msgstr "Semaine"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order__week_number
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order_line__week_number
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_session__week_number
+msgid "Week Number"
+msgstr "Numéro de semaine"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order__search_year
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_session__search_year
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.view_pos_order_search
+msgid "Year (Search)"
+msgstr "Année (Recherche)"
+
+#. module: coop_point_of_sale
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.product_template_form_view_inherit
+msgid "Yes"
+msgstr "Oui"
+
+#. module: coop_point_of_sale
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.product_template_form_view_inherit
+msgid ""
+"You cannot untick Available in the Point of Sale When POS Session are "
+"running. Do you want to force this action?"
+msgstr ""
+"Vous ne pouvez pas décocher \"Disponible dans le point de vente\" lorsque "
+"des sessions POS sont en cours. Voulez-vous forcer cette action ?"

@@ -2,20 +2,18 @@
 # Copyright (C) 2019-Today: Druidoo (<https://www.druidoo.io>)
 # @author: La Louve
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo import models, api, fields
+from odoo import fields, models
 
 
 class PosOrderLine(models.Model):
     _inherit = "pos.order.line"
 
     week_number = fields.Integer(
-        string='Week Number',
-        related="order_id.week_number",
-        store=True
+        string="Week Number", related="order_id.week_number", store=True
     )
     week_name = fields.Char(
-        string='Week',
-        related='order_id.week_name',
+        string="Week",
+        related="order_id.week_name",
         store=True,
     )
     week_day = fields.Char(
@@ -32,12 +30,9 @@ class PosOrderLine(models.Model):
     product_id = fields.Many2one(index=True)
 
     product_default_code = fields.Char(
-        string="Internal Reference",
-        related="product_id.default_code",
-        store=True
+        string="Internal Reference", related="product_id.default_code", store=True
     )
 
-    @api.multi
     def compute_amount_line_all(self):
         """
         Util function that easily call _compute_amount_line_all from JSONRPC

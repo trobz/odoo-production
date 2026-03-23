@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!--
 Copyright (C) 2016-Today: GRAP (http://www.grap.coop)
 Copyright (C) 2016-Today: La Louve (<http://www.cooplalouve.fr/>)
@@ -11,10 +11,13 @@ Remove  pos_product_barcodes from v12 and Merge :
 pos_product_barcodes module was in v9 add barcode rule data
 -->
 <odoo noupdate='1'>
-	<!-- Default Barcode Rules inserted into Default Nomenclature -->
+    <!-- Default Barcode Rules inserted into Default Nomenclature -->
     <record id="barcode_price_look_up_code" model="barcode.rule">
         <field name="name">Price Look Up Codes (PLU Codes)</field>
-        <field name="barcode_nomenclature_id" ref="barcodes.default_barcode_nomenclature"/>
+        <field
+            name="barcode_nomenclature_id"
+            ref="barcodes.default_barcode_nomenclature"
+        />
         <field name="type">product</field>
         <field name="encoding">ean13</field>
         <field name="pattern">20.....{NNNDD}</field>
@@ -25,7 +28,10 @@ pos_product_barcodes module was in v9 add barcode rule data
     </record>
     <record id="barcode_rule_weight_three_dec_29" model="barcode.rule">
         <field name="name">Weight Barcodes 3 Decimals (29)</field>
-        <field name="barcode_nomenclature_id" ref="barcodes.default_barcode_nomenclature"/>
+        <field
+            name="barcode_nomenclature_id"
+            ref="barcodes.default_barcode_nomenclature"
+        />
         <field name="type">weight</field>
         <field name="encoding">ean13</field>
         <field name="pattern">29.....{NNDDD}</field>
@@ -36,7 +42,10 @@ pos_product_barcodes module was in v9 add barcode rule data
     </record>
     <record id="barcode_rule_weight_three_dec_24" model="barcode.rule">
         <field name="name">Weight Barcodes 3 Decimals (24)</field>
-        <field name="barcode_nomenclature_id" ref="barcodes.default_barcode_nomenclature"/>
+        <field
+            name="barcode_nomenclature_id"
+            ref="barcodes.default_barcode_nomenclature"
+        />
         <field name="type">weight</field>
         <field name="encoding">ean13</field>
         <field name="pattern">24.....{NNDDD}</field>
@@ -47,7 +56,10 @@ pos_product_barcodes module was in v9 add barcode rule data
     </record>
     <record id="barcode_rule_weight_three_dec_22" model="barcode.rule">
         <field name="name">Weight Barcodes 3 Decimals (22)</field>
-        <field name="barcode_nomenclature_id" ref="barcodes.default_barcode_nomenclature"/>
+        <field
+            name="barcode_nomenclature_id"
+            ref="barcodes.default_barcode_nomenclature"
+        />
         <field name="type">weight</field>
         <field name="encoding">ean13</field>
         <field name="pattern">22.....{NNDDD}</field>
@@ -58,7 +70,10 @@ pos_product_barcodes module was in v9 add barcode rule data
     </record>
     <record id="barcode_rule_weight_three_dec_23" model="barcode.rule">
         <field name="name">Weight Barcodes 3 Decimals (23)</field>
-        <field name="barcode_nomenclature_id" ref="barcodes.default_barcode_nomenclature"/>
+        <field
+            name="barcode_nomenclature_id"
+            ref="barcodes.default_barcode_nomenclature"
+        />
         <field name="type">weight</field>
         <field name="encoding">ean13</field>
         <field name="pattern">23.....{NNDDD}</field>
@@ -69,7 +84,10 @@ pos_product_barcodes module was in v9 add barcode rule data
     </record>
     <record id="barcode_rule_weight_three_dec_25" model="barcode.rule">
         <field name="name">Weight Barcodes 3 Decimals (25)</field>
-        <field name="barcode_nomenclature_id" ref="barcodes.default_barcode_nomenclature"/>
+        <field
+            name="barcode_nomenclature_id"
+            ref="barcodes.default_barcode_nomenclature"
+        />
         <field name="type">weight</field>
         <field name="encoding">ean13</field>
         <field name="pattern">25.....{NNDDD}</field>
@@ -103,4 +121,3 @@ pos_product_barcodes module was in v9 add barcode rule data
         <field name="sequence">0</field>
     </record>
 </odoo>
-
