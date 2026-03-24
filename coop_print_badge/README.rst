@@ -33,16 +33,16 @@ optimized for use with Evolis Zenius card printers.
 Features
 --------
 
-- **Badge Printing**: Generate printable badges with member photos,
-  names, and barcode information
-- **Automatic Reprint Triggers**: Automatically flag badges for
-  reprinting when key partner information changes
-- **Dual Badge Types**: Supports badges for both full members and
-  associated people
-- **Barcode Generation**: Includes EAN13 barcodes for each
-  member/associated person
-- **Distribution Tracking**: Track when badges are printed and
-  physically distributed
+-  **Badge Printing**: Generate printable badges with member photos,
+   names, and barcode information
+-  **Automatic Reprint Triggers**: Automatically flag badges for
+   reprinting when key partner information changes
+-  **Dual Badge Types**: Supports badges for both full members and
+   associated people
+-  **Barcode Generation**: Includes EAN13 barcodes for each
+   member/associated person
+-  **Distribution Tracking**: Track when badges are printed and
+   physically distributed
 
 Badge Types
 -----------
@@ -53,46 +53,46 @@ Member Badges
 Displays the member's photo, member number, and cooperative designation
 based on gender:
 
-- "Coopérateur" (Male)
-- "Coopératrice" (Female)
-- "Coop" (Neutral)
+-  "Coopérateur" (Male)
+-  "Coopératrice" (Female)
+-  "Coop" (Neutral)
 
 Associated People Badges
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Displays the photo of associated people with their relationship number:
 
-- "Rattaché n°" (Male)
-- "Rattachée n°" (Female)
-- "Rattaché(e) n°" (Neutral)
+-  "Rattaché n°" (Male)
+-  "Rattachée n°" (Female)
+-  "Rattaché(e) n°" (Neutral)
 
 Technical Specifications
 ------------------------
 
-- **Badge Dimensions**: 106mm x 68mm
-- **Photo Size**: 47mm x 61mm
-- **Barcode Format**: EAN13
-- **Image Resolution**: 315x417px for badge-sized images
-- **Printer Compatibility**: Optimized for Evolis Zenius card printers
+-  **Badge Dimensions**: 106mm x 68mm
+-  **Photo Size**: 47mm x 61mm
+-  **Barcode Format**: EAN13
+-  **Image Resolution**: 315x417px for badge-sized images
+-  **Printer Compatibility**: Optimized for Evolis Zenius card printers
 
 Dependencies
 ------------
 
 This module depends on:
 
-- ``coop_membership``: Core membership management
-- ``coop_shift``: Shift management and menu structure
-- ``base``: Base Odoo functionality
-- ``web``: Web reporting framework
+-  ``coop_membership``: Core membership management
+-  ``coop_shift``: Shift management and menu structure
+-  ``base``: Base Odoo functionality
+-  ``web``: Web reporting framework
 
 Access Rights
 -------------
 
-- **Print Badges**: Users with ``group_membership_access_user`` or
-  ``group_membership_see_associated_people``
-- **View Badges to Print**: Users with ``group_shift_manager``
-- **View Badges to Distribute**: Users with
-  ``group_membership_bdm_lecture`` or ``group_membership_bdm_saisie``
+-  **Print Badges**: Users with ``group_membership_access_user`` or
+   ``group_membership_see_associated_people``
+-  **View Badges to Print**: Users with ``group_shift_manager``
+-  **View Badges to Distribute**: Users with
+   ``group_membership_bdm_lecture`` or ``group_membership_bdm_saisie``
 
 **Table of contents**
 
@@ -132,25 +132,25 @@ Badge To Print
 
 Automatically set to ``True`` when:
 
-- A trigger field (configured in settings) is modified
-- All trigger fields have valid values
+-  A trigger field (configured in settings) is modified
+-  All trigger fields have valid values
 
 Updated Badges Info
 ~~~~~~~~~~~~~~~~~~~
 
 Computed field that shows ``True`` when:
 
-- ``badge_to_print`` is checked AND
-- Partner is a member OR associated person
+-  ``badge_to_print`` is checked AND
+-  Partner is a member OR associated person
 
 Badge To Distribute
 ~~~~~~~~~~~~~~~~~~~
 
 Computed field that shows ``True`` when:
 
-- ``badge_print_date`` exists AND
-- It's more recent than ``badge_distribution_date`` (or no distribution
-  date set)
+-  ``badge_print_date`` exists AND
+-  It's more recent than ``badge_distribution_date`` (or no distribution
+   date set)
 
 Badge Print Workflow
 --------------------
@@ -194,21 +194,21 @@ Troubleshooting
 Badge Image Not Showing
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-- Ensure the partner has a photo uploaded (``Image`` field in Contact
-  form)
-- The module automatically resizes photos to badge format (315x417px)
+-  Ensure the partner has a photo uploaded (``Image`` field in Contact
+   form)
+-  The module automatically resizes photos to badge format (315x417px)
 
 Barcode Not Scanning
 ~~~~~~~~~~~~~~~~~~~~
 
-- Verify ``barcode_base`` field contains a valid number
-- EAN13 barcodes require 12 digits
+-  Verify ``barcode_base`` field contains a valid number
+-  EAN13 barcodes require 12 digits
 
 Badge Not Triggering Reprint
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Check that the modified field is in the trigger list in Settings
-- Ensure all trigger fields have values for the partner
+-  Check that the modified field is in the trigger list in Settings
+-  Ensure all trigger fields have values for the partner
 
 Bug Tracker
 ===========
@@ -231,11 +231,11 @@ Authors
 Contributors
 ------------
 
-- Julien Weste <julien.weste@akretion.com>
-- Druidoo
-- Trobz <`https://www.trobz.com\\> <https://www.trobz.com\>>`__
+-  Julien Weste <julien.weste@akretion.com>
+-  Druidoo
+-  Trobz <https://www.trobz.com>
 
-  - Phan Hong Phuc <<phucph@trobz.com>>
+   -  Phan Hong Phuc <<phucph@trobz.com>>
 
 Maintainers
 -----------
