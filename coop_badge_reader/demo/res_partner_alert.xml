@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+<!--
+    Copyright (C) 2016-Today: La Louve (<http://www.lalouve.net/>)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    Copyright (C) 2020-Today: Druidoo (<https://www.druidoo.io>)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <!-- Demo Partner Alerts - Open Alert -->
+    <record model="res.partner.alert" id="res_partner_alert_1">
+        <field name="expected_member_id" ref="coop_shift.standard_member_2" />
+        <field
+            name="partner_ids"
+            eval="[(6, 0, [ref('coop_shift.squadleader_1'), ref('coop_shift.squadleader_2')])]"
+        />
+        <field name="state">open</field>
+    </record>
+
+    <!-- Demo Partner Alerts - Closed Alert -->
+    <record model="res.partner.alert" id="res_partner_alert_2">
+        <field name="expected_member_id" ref="coop_shift.standard_member_3" />
+        <field name="partner_ids" eval="[(6, 0, [ref('coop_shift.squadleader_1')])]" />
+        <field name="state">close</field>
+    </record>
+
+    <!-- Demo Partner Alerts - Open Alert for Alert Member -->
+    <record model="res.partner.alert" id="res_partner_alert_3">
+        <field name="expected_member_id" ref="demo_partner_alert_1" />
+        <field name="partner_ids" eval="[(6, 0, [ref('coop_shift.squadleader_2')])]" />
+        <field name="state">open</field>
+    </record>
+
+    <!-- Demo Partner Alerts - Open Alert for FTOP Member -->
+    <record model="res.partner.alert" id="res_partner_alert_4">
+        <field name="expected_member_id" ref="coop_shift.ftop_member" />
+        <field
+            name="partner_ids"
+            eval="[(6, 0, [ref('coop_shift.squadleader_1'), ref('coop_shift.squadleader_2')])]"
+        />
+        <field name="state">open</field>
+    </record>
+
+    <!-- Demo Partner Alerts - Another Open Alert -->
+    <record model="res.partner.alert" id="res_partner_alert_5">
+        <field name="expected_member_id" ref="demo_partner_delay_1" />
+        <field name="partner_ids" eval="[(6, 0, [ref('coop_shift.squadleader_1')])]" />
+        <field name="state">open</field>
+    </record>
+</odoo>

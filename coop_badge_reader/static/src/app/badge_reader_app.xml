@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+<t t-name="coop_badge_reader.companyHeader">
+        <div
+            class="company_header d-flex justify-content-center align-items-center flex-column py-4 mx-3"
+        >
+            <img
+                t-att-src="companyImageUrl"
+                alt="Company Logo"
+                class="coop_badge_reader_company_image align-self-center"
+            />
+            <p
+                class="coop_badge_reader_company_name align-self-center my-3"
+                t-out="this.props.companyName"
+            />
+        </div>
+    </t>
+
+<t t-name="coop_badge_reader.badge_reader_app">
+        <MainComponentsContainer />
+        <div class="coop_badge_reader_app container">
+            <t t-call="coop_badge_reader.companyHeader" />
+            <t t-if="state.active_display === 'main'">
+                <div
+                    class="partner-search-container d-flex justify-content-center align-items-center"
+                >
+                    <div class="search-card jumbotron text-center">
+                        <t
+                            t-foreach="attributesFieldsSearch"
+                            t-as="field"
+                            t-key="field"
+                        >
+                            <t
+                                t-set="attributes"
+                                t-value="attributesFieldsSearch[field]"
+                            />
+                            <div class="row mb-3">
+                                <div class="col-4 text-start">
+                                    <span class="input-label">
+                                        <t t-out="attributes.label" />
+                                    </span>
+                                </div>
+                                <div class="col-8">
+                                    <input
+                                        class="form-control"
+                                        type="text"
+                                        t-att-placeholder="attributes.placeholder"
+                                        t-on-input="ev => this.onInputSearch(field, ev)"
+                                    />
+                                </div>
+                            </div>
+                        </t>
+                        <button
+                            class="btn btn-primary mt-3 px-4 w-100"
+                            aria-label="Search..."
+                            title="Search..."
+                            t-on-click="onSearch"
+                        >
+                        <i class="oi oi-search me-2" role="img" />
+                        Search
+                    </button>
+                        <div
+                            class="alert alert-danger mt-3"
+                            t-if="errorMessage.message"
+                        >
+                            <t t-out="errorMessage.message" />
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <t t-elif="state.active_display === 'partner_form'">
+                <PartnerFormComponent
+                    displayBackButton="displayBackButton"
+                    selectedPartnerId="selectedPartnerId"
+                    onClickBack="() => this.onClickBack()"
+                />
+            </t>
+            <t t-elif="state.active_display === 'partner_list'">
+                <PartnerListComponent
+                    displayBackButton="displayBackButton"
+                    partnerIds="partnerIds"
+                    onSelectPartner="(e) => this.onSelectPartner(e)"
+                    onClickBack="() => this.onClickBack()"
+                />
+            </t>
+        </div>
+    </t>
+</templates>

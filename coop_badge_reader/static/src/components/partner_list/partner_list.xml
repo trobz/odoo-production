@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="coop_badge_reader.PartnerList">
+        <div class="partner-list-container position-relative">
+            <div class="jumbotron">
+                <t t-call="coop_badge_reader.BackButton" />
+                <div class="list-group">
+                    <t t-foreach="partners" t-as="partner" t-key="partner.id">
+                        <a
+                            href="#"
+                            class="list-group-item d-flex align-items-center"
+                            t-on-click="() => this.props.onSelectPartner(partner.id)"
+                        >
+                            <!-- IMAGE -->
+                            <div class="me-3">
+                                <img
+                                    t-att-src="partner.image_url"
+                                    width="128"
+                                    heigh="128"
+                                    class="img-thumbnail img-partner-list"
+                                />
+                            </div>
+                            <!-- NAME -->
+                            <div class="flex-grow-1">
+                                <div class="fw-bold">
+                                    <t t-out="partner.display_name" />
+                                </div>
+                                <!-- STATUS -->
+                                <div>
+                                    Status:
+                                    <span
+                                    t-att-class="'label ' + getCooperativeStateClass(partner.cooperative_state)"
+                                >
+                                    <t
+                                        t-out="getCooperativeStateLabel(partner.cooperative_state)"
+                                    />
+                                </span>
+                                </div>
+                            </div>
+                        </a>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>

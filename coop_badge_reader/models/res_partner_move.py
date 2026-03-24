@@ -3,11 +3,15 @@
 # Copyright (C) 2020-Today: Druidoo (<https://www.druidoo.io>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models, api
+from odoo import fields, models
+
 from odoo.addons.coop_membership.models.res_partner import (
     EXTRA_COOPERATIVE_STATE_SELECTION,
 )
-from .res_partner import BADGE_PARTNER_BOOTSTRAP_COOPERATIVE_STATE
+
+from .res_partner import (
+    BADGE_PARTNER_BOOTSTRAP_COOPERATIVE_STATE,
+)
 
 ACTION_SELECTION = [
     ("in", "In"),
@@ -19,11 +23,10 @@ ACTION_SELECTION = [
 class ResPartnerMove(models.Model):
     _name = "res.partner.move"
     _order = "create_date desc, partner_id"
-    _description = 'Partner Move'
+    _description = "Partner Move"
 
     partner_id = fields.Many2one(
         comodel_name="res.partner",
-        string="Partner",
         required=True,
         index=True,
     )
@@ -35,22 +38,22 @@ class ResPartnerMove(models.Model):
     )
     cooperative_state = fields.Selection(
         selection=EXTRA_COOPERATIVE_STATE_SELECTION,
-        state="state",
         required=True,
     )
     bootstrap_cooperative_state = fields.Selection(
         selection=BADGE_PARTNER_BOOTSTRAP_COOPERATIVE_STATE,
-        state="Boostrap Cooperative State",
         required=True,
     )
     is_danger = fields.Boolean(
-        string="Danger", related="partner_id.badge_to_distribute",
+        string="Danger",
+        related="partner_id.badge_to_distribute",
     )
 
-    @api.multi
     def set_badge_distributed(self):
         for record in self:
             if record.partner_id:
-                record.partner_id.write({
-                    "badge_distribution_date": fields.Date.context_today(self)
-                })
+                record.partner_id.write(
+                    {
+                        "badge_distribution_date": fields.Date.context_today(self),
+                    }
+                )

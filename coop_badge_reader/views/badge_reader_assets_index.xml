@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="coop_badge_reader.index" name="Badge Reader">
+        <t t-call="web.layout">
+            <t t-set="html_data" t-value="{'lang': badge_reader_info['lang']}" />
+            <t t-set="head">
+                <title>Badge Reader</title>
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                <meta http-equiv="content-type" content="text/html, charset=utf-8" />
+                <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1, user-scalable=no"
+                />
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    t-att-value="request.csrf_token()"
+                />
+                <t t-call-assets="coop_badge_reader.assets_prod" t-js="false" />
+                <t t-call-assets="coop_badge_reader.assets_prod" t-css="false" />
+                <script type="text/javascript">
+                    odoo.define("coop_badge_reader.badge_reader_app", ["@coop_badge_reader/app/badge_reader_app.esm"], function (require) {
+                    const { createBadgeReaderApp } = require("@coop_badge_reader/app/badge_reader_app.esm");
+                    createBadgeReaderApp(document, <t
+                    t-out="json.dumps(badge_reader_info)"
+                />);
+                    });
+                </script>
+            </t>
+            <t t-set="body" />
+            <body class="o_web_client coop_badge_reader position-relative">
+                <audio
+                    id="sound_res_partner_not_found"
+                    src="/coop_badge_reader/static/src/sounds/res_partner_not_found.mp3"
+                />
+                <audio
+                    id="sound_res_partner_success"
+                    src="/coop_badge_reader/static/src/sounds/res_partner_success.mp3"
+                />
+                <audio
+                    id="sound_res_partner_warning"
+                    src="/coop_badge_reader/static/src/sounds/res_partner_warning.mp3"
+                />
+                <audio
+                    id="sound_res_partner_danger"
+                    src="/coop_badge_reader/static/src/sounds/res_partner_danger.mp3"
+                />
+            </body>
+        </t>
+    </template>
+</odoo>
