@@ -24,10 +24,10 @@ Coop Produce
 
 The module belongs the following features :
 
-- Offer a simple form view to do stock inventory for vegetable and
-  fruits. Quantities are based on default packaging of the product.
-- An advanced form view to plan orders of the week to send the supplier
-  per day.
+-  Offer a simple form view to do stock inventory for vegetable and
+   fruits. Quantities are based on default packaging of the product.
+-  An advanced form view to plan orders of the week to send the supplier
+   per day.
 
 **Table of contents**
 
@@ -56,9 +56,9 @@ Authors
 Contributors
 ------------
 
-- La Louve
-- Druidoo <https://www.druidoo.io>
-- Phan Hong Phuc <phucph@trobz.com>
+-  La Louve
+-  Druidoo <https://www.druidoo.io>
+-  Phan Hong Phuc <phucph@trobz.com>
 
 Maintainers
 -----------
