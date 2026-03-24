@@ -4,7 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from datetime import timedelta
-from odoo import fields, models, api
+
+from odoo import api, fields, models
 
 BADGE_PARTNER_BOOTSTRAP_COOPERATIVE_STATE = [
     ("success", "OK"),
@@ -28,7 +29,7 @@ class ResPartner(models.Model):
         "exempted": "success",
     }
     next_shift_time = fields.Datetime(
-        compute="_compute_next_shift_time"
+        compute="_compute_next_shift_time",
     )
     bootstrap_cooperative_state = fields.Selection(
         compute="_compute_bootstrap_cooperative_state",
@@ -40,35 +41,29 @@ class ResPartner(models.Model):
         compute="_compute_error_message",
     )
 
-    @api.multi
     def _compute_error_message(self):
         for record in self:
             record.error_message = ""
 
     # Compute Section
     @api.depends("cooperative_state")
-    @api.multi
     def _compute_bootstrap_cooperative_state(self):
         for partner in self:
-            partner.bootstrap_cooperative_state = \
-                self.MAPPING_COOPERATIVE_STATE.get(
-                    partner.cooperative_state, "danger"
-                )
+            partner.bootstrap_cooperative_state = self.MAPPING_COOPERATIVE_STATE.get(
+                partner.cooperative_state, "danger"
+            )
 
-    @api.multi
     def update_boostrap_partner_state(self):
         for record in self:
             record._compute_bootstrap_cooperative_state()
         return True
 
-    @api.multi
     def _compute_next_shift_time(self):
         for partner in self:
             next_shift_time, _next_shift_date = partner.get_next_shift_date()
             partner.next_shift_time = next_shift_time
 
     # Custom Section
-    @api.multi
     def log_move(self, action):
         self.ensure_one()
         partner_move_obj = self.env["res.partner.move"]
@@ -77,13 +72,14 @@ class ResPartner(models.Model):
             "coop_badge_reader.email_template_partner_alert"
         )
         for partner in self:
-            partner_move_obj.create({
-                "partner_id": partner.id,
-                "cooperative_state": partner.cooperative_state,
-                "action": action,
-                "bootstrap_cooperative_state":
-                    partner.bootstrap_cooperative_state,
-            })
+            partner_move_obj.create(
+                {
+                    "partner_id": partner.id,
+                    "cooperative_state": partner.cooperative_state,
+                    "action": action,
+                    "bootstrap_cooperative_state": partner.bootstrap_cooperative_state,
+                }
+            )
             if partner_alert_mail_template and action == "in":
                 partner_alerts = partner_alert_obj.search(
                     [
@@ -91,13 +87,11 @@ class ResPartner(models.Model):
                         ("state", "=", "open"),
                     ]
                 )
-
                 for partner_alert in partner_alerts:
                     partner_alert_mail_template.send_mail(
                         res_id=partner_alert.id, force_send=True
                     )
 
-    @api.multi
     def action_grace_partner(self):
         """
         @Function call when gracing a partner:
@@ -119,10 +113,13 @@ class ResPartner(models.Model):
         ext_type_env = self.env["shift.extension.type"]
         date_start_str = fields.Date.context_today(self)
         grace_ext_type = ext_type_env.sudo().search(
-            [("is_grace_period", "=", True),
-             "|",
-             ('extension_method', '=', 'to_next_regular_shift'),
-             ('duration', '>', 0)], limit=1
+            [
+                ("is_grace_period", "=", True),
+                "|",
+                ("extension_method", "=", "to_next_regular_shift"),
+                ("duration", ">", 0),
+            ],
+            limit=1,
         )
         if not grace_ext_type:
             return False
@@ -137,17 +134,17 @@ class ResPartner(models.Model):
                 if last_extension_date > self.date_alert_stop:
                     return False
 
-        date_stop_str = date_start_str + timedelta(
-            days=grace_ext_type.duration
-        )
+        date_stop_str = date_start_str + timedelta(days=grace_ext_type.duration)
         _next_shift_time, next_shift_date = self.get_next_shift_date()
         if next_shift_date:
             # Set the next shift date as the end date if the end date exceed
             # the next shift date
             next_shift_date = fields.Date.from_string(next_shift_date)
             next_shift_date += timedelta(days=1)
-            if date_stop_str > next_shift_date or \
-                    grace_ext_type.extension_method == "to_next_regular_shift":
+            if (
+                date_stop_str > next_shift_date
+                or grace_ext_type.extension_method == "to_next_regular_shift"
+            ):
                 date_stop_str = next_shift_date
         if date_stop_str <= date_start_str:
             # No create extension when duration<=0 and extension_method is Fixed
@@ -164,7 +161,6 @@ class ResPartner(models.Model):
         )
         return res.date_stop
 
-    @api.multi
     def set_badge_distributed(self):
         for partner in self:
             partner.badge_distribution_date = fields.Date.context_today(self)

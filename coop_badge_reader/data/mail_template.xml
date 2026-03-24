@@ -1,18 +1,27 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="1">
-
     <record id="email_template_partner_alert" model="mail.template">
         <field name="name">Partner Alert Email</field>
-        <field name="email_from">${(object.expected_member_id.company_id.email or '')|safe}</field>
-        <field name="email_to">${','.join(object.partner_ids.mapped('email'))|safe}</field>
+        <field
+            name="email_from"
+        >{{ (object.expected_member_id.company_id.email or '') }}</field>
+        <field
+            name="email_to"
+        >{{ ','.join(filter(None, object.partner_ids.mapped('email'))) }}</field>
         <field name="subject">An expected member entered</field>
-        <field name="model_id" ref="coop_badge_reader.model_res_partner_alert"/>
-        <field name="auto_delete" eval="True"/>
-        <field name="body_html"><![CDATA[
-<p>Hello, </p>
-${object.expected_member_id.name.split(',')[0]} ${object.expected_member_id.barcode_base} just entered the store.
-<br/>
-]]></field>
+        <field name="model_id" ref="coop_badge_reader.model_res_partner_alert" />
+        <field name="auto_delete" eval="True" />
+        <field name="lang">{{ (object.expected_member_id.lang or False) }}</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Hello,</p>
+                <p>
+                    <t t-out="object.expected_member_id.name.split(',')[0]" />
+                    <t t-out="object.expected_member_id.barcode_base" />
+                    just entered the store.
+                </p>
+                <br />
+            </div>
+        </field>
     </record>
-
 </odoo>

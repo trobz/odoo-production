@@ -1,20 +1,110 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <!--
     Copyright (C) 2016-Today: La Louve (<http://www.lalouve.net/>)
     @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
     Copyright (C) 2020-Today: Druidoo (<https://www.druidoo.io>)
     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 -->
-
 <odoo>
-
+    <!-- Root Partner - Up to Date -->
     <record model="res.partner" id="base.partner_root">
         <field name="customer" eval="True" />
         <field name="cooperative_state">up_to_date</field>
     </record>
+
+    <!-- Demo Partner - Vacation -->
     <record model="res.partner" id="base.partner_demo">
         <field name="customer" eval="True" />
         <field name="cooperative_state">vacation</field>
     </record>
 
+    <!-- Demo Partner - Alert State -->
+    <record model="res.partner" id="demo_partner_alert_1">
+        <field name="name">Alert Member Demo</field>
+        <field name="customer" eval="True" />
+        <field name="cooperative_state">alert</field>
+        <field name="shift_type">standard</field>
+        <field name="barcode_base">1111</field>
+    </record>
+
+    <!-- Demo Partner - Delay State -->
+    <record model="res.partner" id="demo_partner_delay_1">
+        <field name="name">Delay Member Demo</field>
+        <field name="customer" eval="True" />
+        <field name="cooperative_state">delay</field>
+        <field name="shift_type">standard</field>
+        <field name="barcode_base">2222</field>
+    </record>
+
+    <!-- Demo Partner - Suspended State -->
+    <record model="res.partner" id="demo_partner_suspended_1">
+        <field name="name">Suspended Member Demo</field>
+        <field name="customer" eval="True" />
+        <field name="cooperative_state">suspended</field>
+        <field name="shift_type">standard</field>
+        <field name="barcode_base">3333</field>
+    </record>
+
+    <!-- Demo Partner - Blocked State -->
+    <record model="res.partner" id="demo_partner_blocked_1">
+        <field name="name">Blocked Member Demo</field>
+        <field name="customer" eval="True" />
+        <field name="cooperative_state">blocked</field>
+        <field name="shift_type">standard</field>
+        <field name="barcode_base">4444</field>
+    </record>
+
+    <!-- Demo Partner - Unpayed State -->
+    <record model="res.partner" id="demo_partner_unpayed_1">
+        <field name="name">Unpayed Member Demo</field>
+        <field name="customer" eval="True" />
+        <field name="cooperative_state">unpayed</field>
+        <field name="shift_type">standard</field>
+        <field name="barcode_base">5555</field>
+    </record>
+
+    <!-- Demo Partner - Unsubscribed State -->
+    <record model="res.partner" id="demo_partner_unsubscribed_1">
+        <field name="name">Unsubscribed Member Demo</field>
+        <field name="customer" eval="True" />
+        <field name="cooperative_state">unsubscribed</field>
+        <field name="shift_type">standard</field>
+        <field name="barcode_base">6666</field>
+    </record>
+
+    <!-- Demo Partner - Not Concerned State -->
+    <record model="res.partner" id="demo_partner_not_concerned_1">
+        <field name="name">Not Concerned Member Demo</field>
+        <field name="customer" eval="True" />
+        <field name="cooperative_state">not_concerned</field>
+        <field name="shift_type">standard</field>
+        <field name="barcode_base">7777</field>
+    </record>
+
+    <!-- Demo Partner - Exempted State -->
+    <record model="res.partner" id="demo_partner_exempted_1">
+        <field name="name">Exempted Member Demo</field>
+        <field name="customer" eval="True" />
+        <field name="cooperative_state">exempted</field>
+        <field name="shift_type">standard</field>
+        <field name="barcode_base">8888</field>
+    </record>
+
+    <!-- Demo Partner - Time Clock Operator -->
+    <record model="res.partner" id="demo_partner_time_clock">
+        <field name="name">Time Clock Operator</field>
+        <field name="customer" eval="False" />
+        <field name="cooperative_state">up_to_date</field>
+        <field name="barcode_base">7899</field>
+    </record>
+
+    <!-- Demo Partner - Alert Manager -->
+    <record model="res.partner" id="demo_partner_alert_manager">
+        <field name="name">Alert Manager</field>
+        <field name="customer" eval="False" />
+        <field name="cooperative_state">up_to_date</field>
+        <field name="barcode_base">10111</field>
+        <field name="is_associated_people" eval="True" />
+        <field name="is_member" eval="True" />
+    </record>
 </odoo>

@@ -1,0 +1,36 @@
+.partner-success {
+    background-color: #5cb85c;
+}
+
+.partner-warning {
+    background-color: #f0ad4e;
+}
+
+.partner-danger {
+    background-color: #d9534f;
+}
+
+.partner-error {
+    background-color: #000000;
+}
+.label {
+    padding: 5px 10px;
+    margin: 0px 5px;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.label-success {
+    background-color: #149014;
+    color: white;
+}
+
+.label-warning {
+    background-color: #b9791e;
+    color: white;
+}
+
+.label-danger {
+    background-color: #b32d28;
+    color: white;
+}

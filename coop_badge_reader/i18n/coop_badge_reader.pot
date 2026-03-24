@@ -1,12 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* coop_badge_reader
+# 	* coop_badge_reader
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2026-03-24 03:05+0000\n"
+"PO-Revision-Date: 2026-03-24 03:05+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,11 +17,24 @@ msgstr ""
 
 #. module: coop_badge_reader
 #: model:mail.template,body_html:coop_badge_reader.email_template_partner_alert
-msgid "\n"
-"<p>Bonjour, </p>\n"
-"${object.expected_member_id.name.split(',')[0]} ${object.expected_member_id.barcode_base} vient d’entrer le magasin.\n"
-"<br/>\n"
-""
+msgid ""
+"<div>\n"
+"                <p>\n"
+"                    Hello\n"
+"                    <t t-out=\"object.expected_member_id.name.split(',')[0]\"/>,\n"
+"                </p>\n"
+"                <t t-out=\"object.expected_member_id.barcode_base\"/> just entered the store.\n"
+"                <br/>\n"
+"            </div>\n"
+"        "
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+msgid ""
+"A grace period until %s or until your next service has been assigned to "
+"you.You may proceed with your shopping!"
 msgstr ""
 
 #. module: coop_badge_reader
@@ -34,7 +49,10 @@ msgid "Action"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner.move,cooperative_state:0
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__alert
 msgid "Alert"
 msgstr ""
 
@@ -45,12 +63,50 @@ msgid "Alert entries"
 msgstr ""
 
 #. module: coop_badge_reader
+#: model:mail.template,subject:coop_badge_reader.email_template_partner_alert
+msgid "An expected member entered"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/back_button/back_button.xml:0
+msgid "Back"
+msgstr ""
+
+#. module: coop_badge_reader
 #: model_terms:ir.ui.view,arch_db:coop_badge_reader.view_res_partner_move_form
 msgid "Badge Distributed"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner.move,cooperative_state:0
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.xml:0
+msgid "Badge distributed"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+msgid "Badge distribution logged"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+msgid "Barcode"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+msgid "Barcode incorrect"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__blocked
 msgid "Blocked"
 msgstr ""
 
@@ -66,13 +122,25 @@ msgid "Bootstrap State"
 msgstr ""
 
 #. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.xml:0
+msgid "Can purchase:"
+msgstr ""
+
+#. module: coop_badge_reader
 #: model_terms:ir.ui.view,arch_db:coop_badge_reader.view_res_partner_alert_form
 msgid "Close"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner.alert,state:0
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_alert__state__close
 msgid "Closed"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.xml:0
+msgid "Company Logo"
 msgstr ""
 
 #. module: coop_badge_reader
@@ -105,18 +173,19 @@ msgstr ""
 
 #. module: coop_badge_reader
 #: model:ir.model.fields,field_description:coop_badge_reader.field_res_partner_move__is_danger
-#: selection:res.partner,bootstrap_cooperative_state:0
-#: selection:res.partner.move,bootstrap_cooperative_state:0
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner__bootstrap_cooperative_state__danger
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__bootstrap_cooperative_state__danger
 msgid "Danger"
 msgstr ""
 
 #. module: coop_badge_reader
 #: model_terms:ir.ui.view,arch_db:coop_badge_reader.view_res_partner_move_search
+#: model_terms:ir.ui.view,arch_db:coop_badge_reader.view_res_partner_search
 msgid "Danger Status"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner.move,cooperative_state:0
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__delay
 msgid "Delay"
 msgstr ""
 
@@ -127,8 +196,83 @@ msgid "Display Name"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner.move,cooperative_state:0
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.xml:0
+msgid "Do not enter"
+msgstr ""
+
+#. module: coop_badge_reader
+#: model:ir.model.fields,field_description:coop_badge_reader.field_res_partner_alert__partner_ids
+#: model_terms:ir.ui.view,arch_db:coop_badge_reader.view_res_partner_alert_form
+msgid "Employee To Alert"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.xml:0
+msgid "Enter"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+msgid "Enter name"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+msgid "Entry logged"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.xml:0
+msgid "Error"
+msgstr ""
+
+#. module: coop_badge_reader
+#: model:ir.model.fields,field_description:coop_badge_reader.field_res_partner__error_message
+#: model:ir.model.fields,field_description:coop_badge_reader.field_res_users__error_message
+msgid "Error Message"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+msgid "Error logged"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__exempted
 msgid "Exempted"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+msgid "Exit logged"
+msgstr ""
+
+#. module: coop_badge_reader
+#: model:ir.model.fields,field_description:coop_badge_reader.field_res_partner_alert__expected_member_id
+msgid "Expected Member"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/back_button/back_button.xml:0
+msgid "Go back"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+msgid "Grace period granted"
 msgstr ""
 
 #. module: coop_badge_reader
@@ -138,19 +282,13 @@ msgid "ID"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner.move,action:0
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__action__in
 msgid "In"
 msgstr ""
 
 #. module: coop_badge_reader
 #: model:ir.model.fields,field_description:coop_badge_reader.field_shift_extension_type__is_grace_period
 msgid "Is Grace Period"
-msgstr ""
-
-#. module: coop_badge_reader
-#: model:ir.model.fields,field_description:coop_badge_reader.field_res_partner_alert____last_update
-#: model:ir.model.fields,field_description:coop_badge_reader.field_res_partner_move____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: coop_badge_reader
@@ -171,8 +309,27 @@ msgid "Manager"
 msgstr ""
 
 #. module: coop_badge_reader
-#: model:ir.model.fields,field_description:coop_badge_reader.field_res_partner_alert__expected_member_id
-msgid "Membre attendu"
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+msgid "Member number"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+msgid "Member number incorrect"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.xml:0
+msgid "NO"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+msgid "Name"
 msgstr ""
 
 #. module: coop_badge_reader
@@ -182,34 +339,65 @@ msgid "Next Shift Time"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner.move,cooperative_state:0
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.xml:0
+msgid "No partner found"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+msgid "No partner found with this name"
+msgstr ""
+
+#. module: coop_badge_reader
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__not_concerned
 msgid "Not Concerned"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner,bootstrap_cooperative_state:0
-#: selection:res.partner.move,bootstrap_cooperative_state:0
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+msgid "Not concerned"
+msgstr ""
+
+#. module: coop_badge_reader
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner__bootstrap_cooperative_state__success
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__bootstrap_cooperative_state__success
 msgid "OK"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner.move,cooperative_state:0
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__vacation
 msgid "On Vacation"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner.alert,state:0
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+msgid "On leave"
+msgstr ""
+
+#. module: coop_badge_reader
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_alert__state__open
 msgid "Open"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner.move,action:0
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__action__out
 msgid "Out"
 msgstr ""
 
 #. module: coop_badge_reader
 #: model:ir.model.fields,field_description:coop_badge_reader.field_res_partner_move__partner_id
 msgid "Partner"
+msgstr ""
+
+#. module: coop_badge_reader
+#: model:mail.template,name:coop_badge_reader.email_template_partner_alert
+msgid "Partner Alert Email"
 msgstr ""
 
 #. module: coop_badge_reader
@@ -224,14 +412,38 @@ msgid "Partner Moves"
 msgstr ""
 
 #. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+msgid "Please enter a search value"
+msgstr ""
+
+#. module: coop_badge_reader
 #: model:ir.model,name:coop_badge_reader.model_res_partner_alert
 msgid "Res Partner Alert"
 msgstr ""
 
 #. module: coop_badge_reader
-#: model:ir.model.fields,field_description:coop_badge_reader.field_res_partner_alert__partner_ids
-#: model_terms:ir.ui.view,arch_db:coop_badge_reader.view_res_partner_alert_form
-msgid "Salarié à alerter"
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+msgid "Scan or enter barcode"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+msgid "Scan or enter member number"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.xml:0
+msgid "Search"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.xml:0
+msgid "Search..."
 msgstr ""
 
 #. module: coop_badge_reader
@@ -245,13 +457,23 @@ msgid "State"
 msgstr ""
 
 #. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.xml:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.xml:0
+msgid "Status:"
+msgstr ""
+
+#. module: coop_badge_reader
 #: model_terms:ir.ui.view,arch_db:coop_badge_reader.view_res_partner_move_search
 #: model_terms:ir.ui.view,arch_db:coop_badge_reader.view_res_partner_search
 msgid "Success Status"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner.move,cooperative_state:0
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__suspended
 msgid "Suspended"
 msgstr ""
 
@@ -261,22 +483,30 @@ msgid "Time Clock"
 msgstr ""
 
 #. module: coop_badge_reader
-#: model:mail.template,subject:coop_badge_reader.email_template_partner_alert
-msgid "Un membre attendu est entré"
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+msgid "Unpaid"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner.move,cooperative_state:0
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__unpayed
 msgid "Unpayed"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner.move,cooperative_state:0
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__unsubscribed
 msgid "Unsubscribed"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner.move,cooperative_state:0
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__up_to_date
 msgid "Up to date"
 msgstr ""
 
@@ -286,8 +516,8 @@ msgid "User"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner,bootstrap_cooperative_state:0
-#: selection:res.partner.move,bootstrap_cooperative_state:0
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner__bootstrap_cooperative_state__warning
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__bootstrap_cooperative_state__warning
 msgid "Warning"
 msgstr ""
 
@@ -298,7 +528,26 @@ msgid "Warning Status"
 msgstr ""
 
 #. module: coop_badge_reader
-#: selection:res.partner.move,action:0
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+msgid ""
+"We were unable to grant you a grace period; you must make up your services "
+"before doing your shopping."
+msgstr ""
+
+#. module: coop_badge_reader
+#: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__action__wrong
 msgid "Wrong Partner"
 msgstr ""
 
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.xml:0
+msgid "YES"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-python
+#: code:addons/coop_badge_reader/controllers/main.py:0
+msgid "You do not have the required permissions to access the badge reader."
+msgstr ""

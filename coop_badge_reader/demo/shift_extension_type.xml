@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<!--
+    Copyright (C) 2016-Today: La Louve (<http://www.lalouve.net/>)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    Copyright (C) 2020-Today: Druidoo (<https://www.druidoo.io>)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <!-- Demo Shift Extension Type - Grace Period -->
+    <record model="shift.extension.type" id="shift_extension_type_grace_period">
+        <field name="name">Grace Period</field>
+        <field name="extension_method">to_next_regular_shift</field>
+        <field name="duration">7</field>
+        <field name="is_grace_period" eval="True" />
+    </record>
+
+    <!-- Demo Shift Extension Type - Fixed Extension -->
+    <record model="shift.extension.type" id="shift_extension_type_fixed">
+        <field name="name">Fixed Extension</field>
+        <field name="extension_method">fixed_duration</field>
+        <field name="duration">14</field>
+        <field name="is_grace_period" eval="False" />
+    </record>
+
+    <!-- Demo Shift Extension Type - Temporary Leave -->
+    <record model="shift.extension.type" id="shift_extension_type_temporary_leave">
+        <field name="name">Temporary Leave</field>
+        <field name="extension_method">fixed_duration</field>
+        <field name="duration">30</field>
+        <field name="is_grace_period" eval="False" />
+    </record>
+</odoo>

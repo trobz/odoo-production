@@ -1,25 +1,23 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <!--
     Copyright (C) 2016-Today: La Louve (<http://www.lalouve.net/>)
     @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
     Copyright (C) 2020-Today: Druidoo (<https://www.druidoo.io>)
     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 -->
-
 <odoo>
-
     <record model="ir.ui.menu" id="menu_res_partner_move">
         <field name="name">Partner Moves</field>
-        <field name="action" ref="action_res_partner_move"/>
-        <field name="parent_id" ref="coop_shift.menu_shift_configuration"/>
+        <field name="action" ref="action_res_partner_move" />
+        <field name="parent_id" ref="coop_shift.menu_shift_configuration" />
         <field name="sequence">2</field>
     </record>
 
     <menuitem
-            name="Alert entries"
-            id="menu_alert_entry"
-            action="action_alert_entry"
-            groups="coop_badge_reader.group_alert_entry_manager"
-            parent="coop_shift.menu_shift_configuration"/>
-
+        name="Alert entries"
+        id="menu_alert_entry"
+        action="action_alert_entry"
+        groups="coop_badge_reader.group_alert_entry_manager"
+        parent="coop_shift.menu_shift_configuration"
+    />
 </odoo>
