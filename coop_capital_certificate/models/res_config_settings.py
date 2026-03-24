@@ -15,5 +15,8 @@ class ResConfigSettings(models.TransientModel):
         help="example: 'La S.A.S. Coopérative à Capital Variable LA LOUVE'",
     )
     signature = fields.Binary(
-        "Signature", attachment=True, related="company_id.signature", readonly=False
+        "Capital Certificate Signature",
+        attachment=True,
+        related="company_id.signature",
+        readonly=False,
     )
