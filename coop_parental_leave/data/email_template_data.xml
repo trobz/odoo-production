@@ -1,36 +1,54 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo noupdate="1">
-
     <!--CPmessage1 -->
     <record id="validate_parental_leave_email" model="mail.template">
         <field name="name">Validate Leave Email</field>
         <field name="model_id" ref="coop_parental_leave.model_shift_leave" />
         <field name="email_from">bureau.membres@cooplalouve.fr</field>
-        <field name="email_to">${object.partner_id.email|safe}
-        </field>
-        <field name="lang">${(object.partner_id.lang)|safe}</field>
+        <field name="email_to">{{ object.partner_id.email or '' }}</field>
+        <field name="lang">{{ object.partner_id.lang or False }}</field>
         <field name="reply_to">no-reply@cooplalouve.fr</field>
         <field name="subject">Parental leave</field>
-        <field name="body_html"><![CDATA[
-<p>Hello ${object.partner_id.name.split(',')[0]}, </p>
-<br/>
-<p>Your parental leave from ${object.start_date} at ${object.stop_date} has been registered.</p>
-<p>As a reminder, during this period, you can do your shopping, and you are exempt from services.</p>
-<p>You will have 4 weeks from ${object.expected_birthdate}, your child's expected date of birth, to show us the birth certificate.
-Without this document, your leave will be canceled.</p>
-<p>If you wish, during the leave, you can accumulate advance services.
-These services must be programmed online in your member's area, or on site or by phone at the Members' office.</p>
-<p>For any information, contact the members' office during its opening hours:</p>
-<br/>
-<pre>${object.partner_id.company_id.members_office_open_hours}</pre>
-<br/>
-<p>${object.partner_id.company_id.phone}</p>
-<span>Have a good day,</span>
-<br/>
-<span>Members' office</span>
-<br/>
-<span>${object.partner_id.company_id.name}</span>
-]]>
+        <field name="body_html" type="html">
+            <div>
+                <p>Hello <t t-out="object.partner_id.name.split(',')[0]" />,</p>
+                <br />
+                <p>
+                    Your parental leave from <t t-out="object.start_date" /> at <t
+                    t-out="object.stop_date"
+                /> has been registered.
+                </p>
+                <p>
+                    As a reminder, during this period, you can do your shopping, and you are exempt from services.
+                </p>
+                <p>
+                    You will have 4 weeks from <t t-out="object.expected_birthdate" />,
+                    your child's expected date of birth, to show us the birth certificate.
+                    Without this document, your leave will be canceled.
+                </p>
+                <p>
+                    If you wish, during the leave, you can accumulate advance services.
+                    These services must be programmed online in your member's area, or on site or by phone at the Members' office.
+                </p>
+                <p>
+                    For any information, contact the members' office during its opening hours:
+                </p>
+                <br />
+                <pre>
+                    <t t-out="object.partner_id.company_id.members_office_open_hours" />
+                </pre>
+                <br />
+                <p>
+                    <t t-out="object.partner_id.company_id.phone" />
+                </p>
+                <span>Have a good day,</span>
+                <br />
+                <span>Members' office</span>
+                <br />
+                <span>
+                    <t t-out="object.partner_id.company_id.name" />
+                </span>
+            </div>
         </field>
     </record>
 
@@ -39,110 +57,121 @@ These services must be programmed online in your member's area, or on site or by
         <field name="name">Notify Abandoned Leave Email</field>
         <field name="model_id" ref="coop_parental_leave.model_shift_leave" />
         <field name="email_from">bureau.membres@cooplalouve.fr</field>
-        <field name="email_to">${object.partner_id.email|safe}
-        </field>
-        <field name="lang">${(object.partner_id.lang)|safe}</field>
+        <field name="email_to">{{ object.partner_id.email or '' }}</field>
+        <field name="lang">{{ object.partner_id.lang or False }}</field>
         <field name="reply_to">no-reply@cooplalouve.fr</field>
         <field name="subject">Unsuccessful parental leave</field>
-        <field name="body_html"><![CDATA[
-<p>Hello ${object.partner_id.name.split(',')[0]}, </p>
-<br>
-<div>
-You had requested parental leave from the Membership Office.
-In order for this leave to be validated, you had 4 weeks to present your child's birth certificate to us.
-Unless we are mistaken, we have not seen this document.
-Your leave was therefore unsuccessful.
-</div>
-<br>
-<div>
-If you chose to keep your place on your team when you requested leave,
-your status now reflects your situation when you applied for the leave.
-We are waiting for you at your next service.
-</div>
-<br>
-<div>
-If you were not part of a team or you decided to leave your team when you requested leave,
-your status is now “unsubscribed”.
-You are not on a team, so you cannot shop at the store.
-To join a team again, you must contact the Membership Office.
-</div>
-<br>
-<div>
-
-Please consult your member area to find out your status.
-For any information, contact the members' office during its opening hours:
-</div>
-<br/>
-    <pre>${object.partner_id.company_id.members_office_open_hours}</pre>
-<br/>
-<p>${object.partner_id.company_id.phone}
-</p>
-<br>
-<span>Members' office</span>
-<br>
-<span>${object.partner_id.company_id.name}</span>
-]]>
+        <field name="body_html" type="html">
+            <div>
+                <p>Hello <t t-out="object.partner_id.name.split(',')[0]" />, </p>
+                <br />
+                <div>
+                    You had requested parental leave from the Membership Office.
+                    In order for this leave to be validated, you had 4 weeks to present your child's birth certificate to us.
+                    Unless we are mistaken, we have not seen this document.
+                    Your leave was therefore unsuccessful.
+                </div>
+                <br />
+                <div>
+                    If you chose to keep your place on your team when you requested leave,
+                    your status now reflects your situation when you applied for the leave.
+                    We are waiting for you at your next service.
+                </div>
+                <br />
+                <div>
+                    If you were not part of a team or you decided to leave your team when you requested leave,
+                    your status is now “unsubscribed”.
+                    You are not on a team, so you cannot shop at the store.
+                    To join a team again, you must contact the Membership Office.
+                </div>
+                <br />
+                <div>
+                    Please consult your member area to find out your status.
+                    For any information, contact the members' office during its opening hours:
+                </div>
+                <br />
+                <pre>
+                    <t t-out="object.partner_id.company_id.members_office_open_hours" />
+                </pre>
+                <br />
+                <p>
+                    <t t-out="object.partner_id.company_id.phone" />
+                </p>
+                <br />
+                <span>Members' office</span>
+                <br />
+                <span>
+                    <t t-out="object.partner_id.company_id.name" />
+                </span>
+            </div>
         </field>
     </record>
 
     <!--CPmessage3 -->
     <record id="reminder_birth_certificate_leave_email" model="mail.template">
-        <field name="name">Reminder To Provide Birth Certificate Leave
-            Email</field>
+        <field name="name">Reminder To Provide Birth Certificate Leave Email</field>
         <field name="model_id" ref="coop_parental_leave.model_shift_leave" />
         <field name="email_from">bureau.membres@cooplalouve.fr</field>
-        <field name="email_to">${object.partner_id.email|safe}
-        </field>
-        <field name="lang">${(object.partner_id.lang)|safe}</field>
+        <field name="email_to">{{ object.partner_id.email or '' }}</field>
+        <field name="lang">{{ object.partner_id.lang or False }}</field>
         <field name="reply_to">no-reply@cooplalouve.fr</field>
         <field name="subject">Parental leave, birth certificate</field>
-        <field name="body_html"><![CDATA[
-<p>Hello ${object.partner_id.name.split(',')[0]}, </p>
-<br/>
-<div>
-The 4 weeks after your baby's expected date of birth are about to go by and,
-Unless we are mistaken, we have not yet seen your child's birth certificate.
-Please present it to the Members' office during its opening hours, or send us a scan to
-the address bureau.membres@cooplalouve.fr.
-La Louve does not keep any copies, we just need to see the certificate.
-</div>
-<br/>
-<div>
-Deadline for showing the birth certificate:
-% if object.expected_birthdate:
-<span>${( object.expected_birthdate + datetime.timedelta(days=28) ).strftime('%Y-%m-%d')}</span>
-% endif
-</div>
-<br/>
-<div>
-Without presentation of the birth certificate within the time limit, your parental leave will be canceled:
-</div>
-<div style="margin-left: 20px;">
-    <p>
-    - If you chose to keep your place on your team when you requested leave,
-    your status will reflect your situation when you applied for the leave.
-    We will wait for you at your next service.
-    </p>
-    <p>
-    - if you were not part of a team or you decided to leave your team when you requested leave,
-    your status will change to “unsubscribed” and you will not be able to do your shopping at the store.
-    To join a team again, you must contact the Membership Office.
-    </p>
-</div>
-<br/>
-<div>
-For any information, contact the members' office during its opening hours:
-</div>
-<br/>
-<pre>${object.partner_id.company_id.members_office_open_hours}</pre>
-<br/>
-<p>${object.partner_id.company_id.phone}</p>
-<span>Have a good day,</span>
-<br/>
-<span>Members' office</span>
-<br/>
-<span>${object.partner_id.company_id.name}</span>
-]]>
+        <field name="body_html" type="html">
+            <div>
+                <p>Hello <t t-out="object.partner_id.name.split(',')[0]" />,</p>
+                <br />
+                <div>
+                    The 4 weeks after your baby's expected date of birth are about to go by and,
+                    Unless we are mistaken, we have not yet seen your child's birth certificate.
+                    Please present it to the Members' office during its opening hours, or send us a scan to
+                    the address bureau.membres@cooplalouve.fr.
+                    La Louve does not keep any copies, we just need to see the certificate.
+                </div>
+                <br />
+                <div>
+                    Deadline for showing the birth certificate:
+                    <span t-if="object.expected_birthdate">
+                    <t
+                        t-out="(object.expected_birthdate + datetime.timedelta(days=28)).strftime('%Y-%m-%d')"
+                    />
+                </span>
+                </div>
+                <br />
+                <div>
+                    Without presentation of the birth certificate within the time limit, your parental leave will be canceled:
+                </div>
+                <div style="margin-left: 20px;">
+                    <p>
+                        - If you chose to keep your place on your team when you requested leave,
+                        your status will reflect your situation when you applied for the leave.
+                        We will wait for you at your next service.
+                    </p>
+                    <p>
+                        - If you were not part of a team or you decided to leave your team when you requested leave,
+                        your status will change to “unsubscribed” and you will not be able to do your shopping at the store.
+                        To join a team again, you must contact the Membership Office.
+                    </p>
+                </div>
+                <br />
+                <div>
+                    For any information, contact the members' office during its opening hours:
+                </div>
+                <br />
+                <pre>
+                    <t t-out="object.partner_id.company_id.members_office_open_hours" />
+                </pre>
+                <br />
+                <p>
+                    <t t-out="object.partner_id.company_id.phone" />
+                </p>
+                <span>Have a good day,</span>
+                <br />
+                <span>Members' office</span>
+                <br />
+                <span>
+                    <t t-out="object.partner_id.company_id.name" />
+                </span>
+            </div>
         </field>
     </record>
 
@@ -151,69 +180,87 @@ For any information, contact the members' office during its opening hours:
         <field name="name">Validate Non-Defined Leave Email</field>
         <field name="model_id" ref="coop_parental_leave.model_shift_leave" />
         <field name="email_from">bureau.membres@cooplalouve.fr</field>
-        <field name="email_to">${object.partner_id.email|safe}
-        </field>
-        <field name="lang">${(object.partner_id.lang)|safe}</field>
+        <field name="email_to">{{ object.partner_id.email or '' }}</field>
+        <field name="lang">{{ object.partner_id.lang or False }}</field>
         <field name="reply_to">no-reply@cooplalouve.fr</field>
         <field name="subject">Parental leave</field>
-        <field name="body_html"><![CDATA[
-<p>Hello ${object.partner_id.name.split(',')[0]}, </p>
-<br/>
-<p>Your parental leave from $ {object.start_date} to $ {object.stop_date} has been recorded.</p>
-<p>As a reminder, during this period, you can do your shopping, and you are exempt from services.</p>
-<p>You will have 4 weeks from $ {object.expected_birthdate}, your child's expected date of birth, to present the birth certificate to us.
-Without this document, your leave will be canceled.</p>
-<p>
-At the end of your leave, you will need to contact the Membership Office to join a new team,
-and thus be able to do your shopping.
-<br/>
-For any information, contact the members' office during its opening hours:</p>
-<br/>
-<pre>${object.partner_id.company_id.members_office_open_hours}</pre>
-<br/>
-<p>${object.partner_id.company_id.phone}</p>
-<span>Have a good day,</span>
-<br/>
-<span>Member's Office</span>
-<br/>
-<span>${object.partner_id.company_id.name}</span>
-]]>
+        <field name="body_html" type="html">
+            <div>
+                <p>Hello <t t-out="object.partner_id.name.split(',')[0]" />,</p>
+                <br />
+                <p>Your parental leave from <t t-out="object.start_date" /> to <t
+                    t-out="object.stop_date"
+                /> has been recorded.</p>
+                <p
+                >As a reminder, during this period, you can do your shopping, and you are exempt from services.</p>
+                <p>
+                    You will have 4 weeks from <t t-out="object.expected_birthdate" />,
+                    your child's expected date of birth, to present the birth certificate to us.
+                    Without this document, your leave will be canceled.
+                </p>
+                <p>
+                    At the end of your leave, you will need to contact the Membership Office to join a new team,
+                    and thus be able to do your shopping.
+                    <br />
+                    For any information, contact the members' office during its opening hours:
+                </p>
+                <br />
+                <pre>
+                    <t t-out="object.partner_id.company_id.members_office_open_hours" />
+                </pre>
+                <br />
+                <p>
+                    <t t-out="object.partner_id.company_id.phone" />
+                </p>
+                <span>Have a good day,</span>
+                <br />
+                <span>Member's Office</span>
+                <br />
+                <span>
+                    <t t-out="object.partner_id.company_id.name" />
+                </span>
+            </div>
         </field>
     </record>
 
     <!--CPmessage5 -->
-    <record id="validate_parental_leave_email_after_birthdate"
-        model="mail.template">
+    <record id="validate_parental_leave_email_after_birthdate" model="mail.template">
         <field name="name">Validate Leave Email After Birthdate</field>
         <field name="model_id" ref="coop_parental_leave.model_shift_leave" />
         <field name="email_from">bureau.membres@cooplalouve.fr</field>
-        <field name="email_to">${object.partner_id.email|safe}
-        </field>
-        <field name="lang">${(object.partner_id.lang)|safe}</field>
+        <field name="email_to">{{ object.partner_id.email or '' }}</field>
+        <field name="lang">{{ object.partner_id.lang or False }}</field>
         <field name="reply_to">no-reply@cooplalouve.fr</field>
         <field name="subject">Congé parental</field>
-        <field name="body_html"><![CDATA[
-<p>Hello ${object.partner_id.name.split(',')[0]}, </p>
-<br/>
-<p>Your parental leave from $ {object.start_date} to $ {object.stop_date} has been recorded.</p>
-<p>As a reminder, during this period, you can do your shopping, and you are exempt from services.</p>
-<p>
-At the end of your leave, you will need to contact the Membership Office to join a team,
-and thus be able to do your shopping.
-<br/>
-For any information, contact the members' office during its opening hours:
-</p>
-<br/>
-<pre>${object.partner_id.company_id.members_office_open_hours}</pre>
-<br/>
-<p>${object.partner_id.company_id.phone}</p>
-<span>Have a good day,</span>
-<br/>
-<span>Members' office</span>
-<br/>
-<span>${object.partner_id.company_id.name}</span>
-]]>
+        <field name="body_html" type="html">
+            <div>
+                <p>Hello <t t-out="object.partner_id.name.split(',')[0]" />, </p>
+                <br />
+                <p>Your parental leave from <t t-out="object.start_date" /> to <t
+                    t-out="object.stop_date"
+                /> has been recorded.</p>
+                <p
+                >As a reminder, during this period, you can do your shopping, and you are exempt from services.</p>
+                <p
+                >At the end of your leave, you will need to contact the Membership Office to join a team, and thus be able to do your shopping.</p>
+                <p
+                >For any information, contact the members' office during its opening hours:</p>
+                <br />
+                <pre>
+                    <t t-out="object.partner_id.company_id.members_office_open_hours" />
+                </pre>
+                <br />
+                <p>
+                    <t t-out="object.partner_id.company_id.phone" />
+                </p>
+                <span>Have a good day,</span>
+                <br />
+                <span>Members' office</span>
+                <br />
+                <span>
+                    <t t-out="object.partner_id.company_id.name" />
+                </span>
+            </div>
         </field>
     </record>
-
 </odoo>

@@ -15,16 +15,16 @@ class ResPartner(models.Model):
         "leave_ids.state",
         "leave_ids.forced_member_status",
     )
-    @api.multi
     def _compute_working_state(self):
         """Override method from coop_shift for parental leave improvement"""
         today = fields.Date.today()
+        res = super()._compute_working_state()
         for partner in self:
             # Check member force status in shift.leave
             parental_leaves = partner.leave_ids.filtered(
-                lambda l: l.is_parental_leave and
-                l.start_date <= today <= l.stop_date and
-                l.forced_member_status
+                lambda leave: leave.is_parental_leave
+                and leave.start_date <= today <= leave.stop_date
+                and leave.forced_member_status
             )
             # If member has one parental_leave and does not provide birthday
             #  certificate set member status to exempted
@@ -33,5 +33,4 @@ class ResPartner(models.Model):
                 if partner.working_state != state:
                     partner.working_state = state
             # If there isn't any parental leave, fallback to super()
-            else:
-                super(ResPartner, partner)._compute_working_state()
+        return res
