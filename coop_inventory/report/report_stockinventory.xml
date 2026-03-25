@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_inventory" inherit_id="stock.report_inventory" priority="99">
+        <xpath expr="//t[@t-call='web.external_layout']" position="attributes">
+            <attribute
+                name="t-call"
+            >coop_inventory.external_layout_standard_inventory</attribute>
+        </xpath>
+
+        <xpath expr="//div[hasclass('page')]/table[1]" position="attributes">
+            <attribute name="class">table table-bordered</attribute>
+            <attribute name="style">font-size: 15px</attribute>
+        </xpath>
+
+        <!-- Add G.F. Qty and UG. Qty fields -->
+        <xpath expr="//div[hasclass('page')]/table[1]/thead/tr" position="replace">
+            <tr>
+                <th class="text-right">
+                    <strong>Package Qty</strong>
+                </th>
+                <th>
+                    <strong>Internal Reference</strong>
+                </th>
+                <th>
+                    <strong>Product</strong>
+                </th>
+                <th class="text-right">
+                    <strong>G.F. Qty</strong>
+                </th>
+                <th class="text-right">
+                    <strong>UG. Qty</strong>
+                </th>
+                <th class="text-center">
+                    <strong>Total</strong>
+                </th>
+                <th class="text-right">
+                    <strong>Theoretical Qty</strong>
+                </th>
+            </tr>
+        </xpath>
+
+        <xpath expr="//div[hasclass('page')]/table[1]/tbody" position="replace">
+            <tbody>
+                <tr t-foreach="docs.sorted(key=lambda l: l.product_name)" t-as="line">
+                    <td class="text-right">
+                        <span t-field="line.package_qty" />
+                    </td>
+                    <td>
+                        <span t-field="line.product_id.default_code" />
+                    </td>
+                    <td>
+                        <span t-field="line.product_id.name" />
+                    </td>
+                    <td class="text-right" />
+                    <td class="text-right" />
+                    <td class="text-right" />
+                    <td class="text-right">
+                        <span class="text-right" t-field="line.quantity" />
+                        <span
+                            class="text-right"
+                            t-field="line.product_uom_id"
+                            groups="product.group_uom"
+                        />
+                    </td>
+                </tr>
+            </tbody>
+        </xpath>
+    </template>
+
+    <template id="external_layout_standard_inventory">
+        <t t-if="not o" t-set="o" t-value="doc" />
+        <t t-if="not company">
+            <!-- Multicompany -->
+            <t t-if="company_id">
+                <t t-set="company" t-value="company_id" />
+            </t>
+            <t t-elif="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id.sudo()" />
+            </t>
+            <t t-else="">
+                <t t-set="company" t-value="res_company" />
+            </t>
+        </t>
+        <div class="header">
+            <div class="row">
+                <div class="col-3 mb4">
+                    <img
+                        t-if="company.logo"
+                        t-att-src="image_data_uri(company.logo)"
+                        style="max-height: 45px;"
+                        alt="Logo"
+                    />
+                </div>
+                <div
+                    class="col-9 text-right"
+                    style="margin-top:22px;"
+                    t-field="company.report_header"
+                    name="moto"
+                />
+            </div>
+        </div>
+        <div
+            class="article o_report_layout_standard"
+            t-att-data-oe-model="o and o._name"
+            t-att-data-oe-id="o and o.id"
+            t-att-data-oe-lang="o and o.env.context.get('lang')"
+        >
+            <t t-call="web.address_layout" />
+            <t t-out="0" />
+        </div>
+
+        <div class="footer o_standard_footer">
+            <div class="text-center" style="border-top: 1px solid black;">
+                <!-- S#26460:  Minor Changes to Inventory Adjustment PDF
+                    <ul class="list-inline mb4">
+                        <li t-if="company.phone" class="list-inline-item">Phone: <span t-field="company.phone"/></li>
+                        <li t-if="company.email" class="list-inline-item">Email: <span t-field="company.email"/></li>
+                        <li t-if="company.website" class="list-inline-item">Web: <span t-field="company.website"/></li>
+                        <li t-if="company.vat" class="list-inline-item"><t t-esc="(company.country_id.vat_label or 'Tax ID').replace(' ','\N{NO-BREAK SPACE}')"/>: <span t-esc="company.vat.replace(' ','\N{NO-BREAK SPACE}')"/></li>
+                    </ul>
+
+                    <div name="financial_infos">
+                        <span t-field="company.report_footer"/>
+                    </div>
+                    -->
+                <div t-if="report_type == 'pdf'" class="text-muted">
+                        Page: <span class="page" /> / <span class="topage" />
+                    </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_stock_inventory_group">
+        <t t-call="stock.report_inventory" />
+    </template>
+
+    <record id="action_report_stock_inventory_group" model="ir.actions.report">
+        <field name="name">Inventory</field>
+        <field name="model">stock.inventory</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">coop_inventory.report_stock_inventory_group</field>
+        <field name="print_report_name">'Inventory - %s' % object.name</field>
+        <field name="paperformat_id" ref="paperformat_inventory_adjust" />
+        <field name="binding_model_id" ref="stock_inventory.model_stock_inventory" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
