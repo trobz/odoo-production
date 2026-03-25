@@ -1,0 +1,103 @@
+<?xml version="1.0" ?>
+<!--
+    Copyright (C) 2016-Today: La Louve (<http://www.lalouve.net/>)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    Copyright (C) 2020-Today: Druidoo (<https://www.druidoo.io>)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <!-- Demo Partner Moves - Up to Date Member -->
+    <record model="res.partner.move" id="res_partner_move_1">
+        <field name="partner_id" ref="coop_shift.standard_member_1" />
+        <field name="action">in</field>
+        <field name="cooperative_state">up_to_date</field>
+        <field name="bootstrap_cooperative_state">success</field>
+    </record>
+
+    <record model="res.partner.move" id="res_partner_move_2">
+        <field name="partner_id" ref="coop_shift.standard_member_1" />
+        <field name="action">out</field>
+        <field name="cooperative_state">up_to_date</field>
+        <field name="bootstrap_cooperative_state">success</field>
+    </record>
+
+    <!-- Demo Partner Moves - Alert Member -->
+    <record model="res.partner.move" id="res_partner_move_3">
+        <field name="partner_id" ref="demo_partner_alert_1" />
+        <field name="action">in</field>
+        <field name="cooperative_state">alert</field>
+        <field name="bootstrap_cooperative_state">warning</field>
+    </record>
+
+    <!-- Demo Partner Moves - Delay Member -->
+    <record model="res.partner.move" id="res_partner_move_4">
+        <field name="partner_id" ref="demo_partner_delay_1" />
+        <field name="action">in</field>
+        <field name="cooperative_state">delay</field>
+        <field name="bootstrap_cooperative_state">warning</field>
+    </record>
+
+    <!-- Demo Partner Moves - Suspended Member -->
+    <record model="res.partner.move" id="res_partner_move_5">
+        <field name="partner_id" ref="demo_partner_suspended_1" />
+        <field name="action">wrong</field>
+        <field name="cooperative_state">suspended</field>
+        <field name="bootstrap_cooperative_state">danger</field>
+    </record>
+
+    <!-- Demo Partner Moves - Blocked Member -->
+    <record model="res.partner.move" id="res_partner_move_6">
+        <field name="partner_id" ref="demo_partner_blocked_1" />
+        <field name="action">wrong</field>
+        <field name="cooperative_state">blocked</field>
+        <field name="bootstrap_cooperative_state">danger</field>
+    </record>
+
+    <!-- Demo Partner Moves - FTOP Member (Exempted) -->
+    <record model="res.partner.move" id="res_partner_move_7">
+        <field name="partner_id" ref="coop_shift.ftop_member" />
+        <field name="action">in</field>
+        <field name="cooperative_state">exempted</field>
+        <field name="bootstrap_cooperative_state">success</field>
+    </record>
+
+    <!-- Demo Partner Moves - Standard Member 2 -->
+    <record model="res.partner.move" id="res_partner_move_8">
+        <field name="partner_id" ref="coop_shift.standard_member_2" />
+        <field name="action">in</field>
+        <field name="cooperative_state">up_to_date</field>
+        <field name="bootstrap_cooperative_state">success</field>
+    </record>
+
+    <!-- Demo Partner Moves - Standard Member 3 -->
+    <record model="res.partner.move" id="res_partner_move_9">
+        <field name="partner_id" ref="coop_shift.standard_member_3" />
+        <field name="action">in</field>
+        <field name="cooperative_state">up_to_date</field>
+        <field name="bootstrap_cooperative_state">success</field>
+    </record>
+
+    <!-- Demo Partner Moves - Squadleader 1 -->
+    <record model="res.partner.move" id="res_partner_move_10">
+        <field name="partner_id" ref="coop_shift.squadleader_1" />
+        <field name="action">in</field>
+        <field name="cooperative_state">up_to_date</field>
+        <field name="bootstrap_cooperative_state">success</field>
+    </record>
+
+    <!-- Demo Partner Moves - Unpayed Member -->
+    <record model="res.partner.move" id="res_partner_move_11">
+        <field name="partner_id" ref="demo_partner_unpayed_1" />
+        <field name="action">wrong</field>
+        <field name="cooperative_state">unpayed</field>
+        <field name="bootstrap_cooperative_state">danger</field>
+    </record>
+
+    <!-- Demo Partner Moves - Unsubscribed Member -->
+    <record model="res.partner.move" id="res_partner_move_12">
+        <field name="partner_id" ref="demo_partner_unsubscribed_1" />
+        <field name="action">wrong</field>
+        <field name="cooperative_state">unsubscribed</field>
+        <field name="bootstrap_cooperative_state">danger</field>
+    </record>
+</odoo>

@@ -1,0 +1,25 @@
+# Copyright (C) 2017-Today: La Louve (<http://www.lalouve.net/>)
+# @author: Julien Weste (julien.weste@akretion.com)
+# Copyright (C) 2019-Today: Druidoo (<https://www.druidoo.io>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+from odoo import models
+
+
+class ReportPrintbadge(models.AbstractModel):
+    _name = "report.coop_print_badge.report_printbadge"
+    _description = "Report Coop Print Badge"
+
+    def _get_report_values(self, docids, data=None):
+        res_partner_env = self.env["res.partner"]
+        partners = res_partner_env.browse(docids).sudo()
+        for partner in partners:
+            partner.untick_badges_to_print()
+            partner.update_badge_print_date()
+            if not partner.image_badge and partner.image_1920:
+                partner.image_badge = partner.get_badge_image(partner.image_1920)
+        return {
+            "doc_ids": docids,
+            "doc_model": "res.partner",
+            "docs": partners,
+            "data": data,
+        }

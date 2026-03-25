@@ -1,0 +1,598 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils: https://docutils.sourceforge.io/" />
+<title>Coop - Print Badge</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 9511 2024-01-13 09:50:07Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+Despite the name, some widely supported CSS2 features are used.
+
+See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: gray; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic, pre.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="coop-print-badge">
+<h1 class="title">Coop - Print Badge</h1>
+
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! This file is generated by oca-gen-addon-readme !!
+!! changes will be overwritten.                   !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! source digest: sha256:c258163e09fcae59120dfa2f3501a3a5267d3ca154070f5e1371e4eb8ba9981c
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/AwesomeFoodCoops/odoo-production/tree/18.0/coop_print_badge"><img alt="AwesomeFoodCoops/odoo-production" src="https://img.shields.io/badge/github-AwesomeFoodCoops%2Fodoo--production-lightgray.png?logo=github" /></a></p>
+<div class="section" id="badge-printing-module">
+<h1>Badge Printing Module</h1>
+<p>The <tt class="docutils literal">coop_print_badge</tt> module enables printing of badges for
+cooperative members and their associated people. Badges are generated in
+a standard credit card format (ISO/IEC 7810 - 85.60 x 53.98 mm),
+optimized for use with Evolis Zenius card printers.</p>
+<div class="section" id="features">
+<h2>Features</h2>
+<ul class="simple">
+<li><strong>Badge Printing</strong>: Generate printable badges with member photos,
+names, and barcode information</li>
+<li><strong>Automatic Reprint Triggers</strong>: Automatically flag badges for
+reprinting when key partner information changes</li>
+<li><strong>Dual Badge Types</strong>: Supports badges for both full members and
+associated people</li>
+<li><strong>Barcode Generation</strong>: Includes EAN13 barcodes for each
+member/associated person</li>
+<li><strong>Distribution Tracking</strong>: Track when badges are printed and
+physically distributed</li>
+</ul>
+</div>
+<div class="section" id="badge-types">
+<h2>Badge Types</h2>
+<div class="section" id="member-badges">
+<h3>Member Badges</h3>
+<p>Displays the member’s photo, member number, and cooperative designation
+based on gender:</p>
+<ul class="simple">
+<li>“Coopérateur” (Male)</li>
+<li>“Coopératrice” (Female)</li>
+<li>“Coop” (Neutral)</li>
+</ul>
+</div>
+<div class="section" id="associated-people-badges">
+<h3>Associated People Badges</h3>
+<p>Displays the photo of associated people with their relationship number:</p>
+<ul class="simple">
+<li>“Rattaché n°” (Male)</li>
+<li>“Rattachée n°” (Female)</li>
+<li>“Rattaché(e) n°” (Neutral)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="technical-specifications">
+<h2>Technical Specifications</h2>
+<ul class="simple">
+<li><strong>Badge Dimensions</strong>: 106mm x 68mm</li>
+<li><strong>Photo Size</strong>: 47mm x 61mm</li>
+<li><strong>Barcode Format</strong>: EAN13</li>
+<li><strong>Image Resolution</strong>: 315x417px for badge-sized images</li>
+<li><strong>Printer Compatibility</strong>: Optimized for Evolis Zenius card printers</li>
+</ul>
+</div>
+<div class="section" id="dependencies">
+<h2>Dependencies</h2>
+<p>This module depends on:</p>
+<ul class="simple">
+<li><tt class="docutils literal">coop_membership</tt>: Core membership management</li>
+<li><tt class="docutils literal">coop_shift</tt>: Shift management and menu structure</li>
+<li><tt class="docutils literal">base</tt>: Base Odoo functionality</li>
+<li><tt class="docutils literal">web</tt>: Web reporting framework</li>
+</ul>
+</div>
+<div class="section" id="access-rights">
+<h2>Access Rights</h2>
+<ul class="simple">
+<li><strong>Print Badges</strong>: Users with <tt class="docutils literal">group_membership_access_user</tt> or
+<tt class="docutils literal">group_membership_see_associated_people</tt></li>
+<li><strong>View Badges to Print</strong>: Users with <tt class="docutils literal">group_shift_manager</tt></li>
+<li><strong>View Badges to Distribute</strong>: Users with
+<tt class="docutils literal">group_membership_bdm_lecture</tt> or <tt class="docutils literal">group_membership_bdm_saisie</tt></li>
+</ul>
+<p><strong>Table of contents</strong></p>
+</div>
+</div>
+<div class="section" id="usage">
+<h1>Usage</h1>
+<div class="section" id="printing-badges">
+<h2>Printing Badges</h2>
+<div class="section" id="for-shift-managers">
+<h3>For Shift Managers</h3>
+<ol class="arabic simple">
+<li>Go to <strong>Members &gt; Reports &gt; Badges</strong></li>
+<li>A list of partners with pending badge updates will be displayed</li>
+<li>Select the partners you want to print badges for</li>
+<li>Click <strong>Print Badge</strong> from the action dropdown</li>
+<li>A PDF document will be generated with badges in credit card format</li>
+<li>Print the badges on your card printer</li>
+</ol>
+</div>
+<div class="section" id="for-badge-distribution-staff">
+<h3>For Badge Distribution Staff</h3>
+<ol class="arabic simple">
+<li>Go to <strong>Members &gt; Members &gt; Badges</strong></li>
+<li>View partners marked for badge distribution</li>
+<li>When physically handing out badges, update the <strong>Badge Distribution
+Date</strong> field</li>
+<li>This marks the badge as distributed</li>
+</ol>
+</div>
+</div>
+<div class="section" id="understanding-badge-status">
+<h2>Understanding Badge Status</h2>
+<div class="section" id="badge-to-print">
+<h3>Badge To Print</h3>
+<p>Automatically set to <tt class="docutils literal">True</tt> when:</p>
+<ul class="simple">
+<li>A trigger field (configured in settings) is modified</li>
+<li>All trigger fields have valid values</li>
+</ul>
+</div>
+<div class="section" id="updated-badges-info">
+<h3>Updated Badges Info</h3>
+<p>Computed field that shows <tt class="docutils literal">True</tt> when:</p>
+<ul class="simple">
+<li><tt class="docutils literal">badge_to_print</tt> is checked AND</li>
+<li>Partner is a member OR associated person</li>
+</ul>
+</div>
+<div class="section" id="badge-to-distribute">
+<h3>Badge To Distribute</h3>
+<p>Computed field that shows <tt class="docutils literal">True</tt> when:</p>
+<ul class="simple">
+<li><tt class="docutils literal">badge_print_date</tt> exists AND</li>
+<li>It’s more recent than <tt class="docutils literal">badge_distribution_date</tt> (or no distribution
+date set)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="badge-print-workflow">
+<h2>Badge Print Workflow</h2>
+<pre class="literal-block">
+1. Partner Information Updated
+         ↓
+2. Trigger Field Detected
+         ↓
+3. Badge To Print = True
+         ↓
+4. Updated Badges Info = True
+         ↓
+5. Manager Reviews &amp; Prints Badge
+         ↓
+6. Badge To Print = False
+         ↓
+7. Badge Print Date Updated
+         ↓
+8. Badge To Distribute = True
+         ↓
+9. Staff Distributes Badge
+         ↓
+10. Badge Distribution Date Set
+</pre>
+</div>
+<div class="section" id="bulk-badge-printing">
+<h2>Bulk Badge Printing</h2>
+<p>To print multiple badges at once:</p>
+<ol class="arabic simple">
+<li>Navigate to the Badges list view</li>
+<li>Use filters to find partners needing badge updates</li>
+<li>Select multiple records using the checkboxes</li>
+<li>Click <strong>Action &gt; Print Badge</strong></li>
+<li>All selected badges will be included in a single PDF</li>
+</ol>
+</div>
+<div class="section" id="troubleshooting">
+<h2>Troubleshooting</h2>
+<div class="section" id="badge-image-not-showing">
+<h3>Badge Image Not Showing</h3>
+<ul class="simple">
+<li>Ensure the partner has a photo uploaded (<tt class="docutils literal">Image</tt> field in Contact
+form)</li>
+<li>The module automatically resizes photos to badge format (315x417px)</li>
+</ul>
+</div>
+<div class="section" id="barcode-not-scanning">
+<h3>Barcode Not Scanning</h3>
+<ul class="simple">
+<li>Verify <tt class="docutils literal">barcode_base</tt> field contains a valid number</li>
+<li>EAN13 barcodes require 12 digits</li>
+</ul>
+</div>
+<div class="section" id="badge-not-triggering-reprint">
+<h3>Badge Not Triggering Reprint</h3>
+<ul class="simple">
+<li>Check that the modified field is in the trigger list in Settings</li>
+<li>Ensure all trigger fields have values for the partner</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="bug-tracker">
+<h1>Bug Tracker</h1>
+<p>Bugs are tracked on <a class="reference external" href="https://github.com/AwesomeFoodCoops/odoo-production/issues">GitHub Issues</a>.
+In case of trouble, please check there if your issue has already been reported.
+If you spotted it first, help us to smash it by providing a detailed and welcomed
+<a class="reference external" href="https://github.com/AwesomeFoodCoops/odoo-production/issues/new?body=module:%20coop_print_badge%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<p>Do not contact contributors directly about support or help with technical issues.</p>
+</div>
+<div class="section" id="credits">
+<h1>Credits</h1>
+<div class="section" id="authors">
+<h2>Authors</h2>
+<ul class="simple">
+<li>La Louve</li>
+</ul>
+</div>
+<div class="section" id="contributors">
+<h2>Contributors</h2>
+<ul class="simple">
+<li>Julien Weste &lt;<a class="reference external" href="mailto:julien.weste&#64;akretion.com">julien.weste&#64;akretion.com</a>&gt;</li>
+<li>Druidoo</li>
+<li>Trobz &lt;<a class="reference external" href="https://www.trobz.com">https://www.trobz.com</a>&gt;<ul>
+<li>Phan Hong Phuc &lt;&lt;<a class="reference external" href="mailto:phucph&#64;trobz.com">phucph&#64;trobz.com</a>&gt;&gt;</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="maintainers">
+<h2>Maintainers</h2>
+<p>This module is part of the <a class="reference external" href="https://github.com/AwesomeFoodCoops/odoo-production/tree/18.0/coop_print_badge">AwesomeFoodCoops/odoo-production</a> project on GitHub.</p>
+<p>You are welcome to contribute.</p>
+</div>
+</div>
+</div>
+</body>
+</html>

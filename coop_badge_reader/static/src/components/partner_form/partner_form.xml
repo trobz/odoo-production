@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="coop_badge_reader.PartnerForm">
+        <div class="partner-container" t-if="!partner">
+            <div class="jumbotron text-center">
+                <t t-call="coop_badge_reader.BackButton" />
+                <h3 class="text-warning">
+                    No partner found
+                </h3>
+            </div>
+        </div>
+        <div class="partner-container" t-else="">
+            <!-- ERROR -->
+            <div
+                t-att-class="'jumbotron text-center ' + (partner.css_class or '')"
+                t-if="partner.error_message"
+            >
+                <t t-call="coop_badge_reader.BackButton" />
+                <h3 class="text-white">
+                    <t t-out="partner.error_message" />
+                </h3>
+                <button class="btn btn-primary mt-4" t-on-click="onPartnerWrong">
+                    Error
+                </button>
+            </div>
+            <!-- NORMAL -->
+            <div t-att-class="'jumbotron ' + (partner.css_class or '')" t-else="">
+                <t t-call="coop_badge_reader.BackButton" />
+                <div class="row">
+                    <div class="col-4">
+                        <img
+                            t-att-src="partner.image_url"
+                            class="img-thumbnail img-badge-partner-form"
+                        />
+                    </div>
+                    <div class="col-8 text-white">
+                        <h1 class="mb-3">
+                            <t t-out="partner.name" />
+                        </h1>
+                        <!-- STATUS -->
+                        <h4 class="mb-3">
+                            Status:
+                            <span
+                            t-att-class="'label ' + getCooperativeStateClass(partner.cooperative_state)"
+                        >
+                            <t
+                                t-out="getCooperativeStateLabel(partner.cooperative_state)"
+                            />
+                        </span>
+                        </h4>
+                        <!-- CAN BUY -->
+                        <h4 class="mb-3">
+                            Can purchase:
+                            <span
+                            class="label label-success"
+                            t-if="partner.customer"
+                        >YES</span>
+                            <span class="label label-danger" t-else="">NO</span>
+                        </h4>
+                        <!-- MESSAGES -->
+                        <h3 class="text-warning" t-if="message.warning">
+                            <t t-out="message.warning" />
+                        </h3>
+                        <h3 class="text-danger" t-if="message.fail">
+                            <t t-out="message.fail" />
+                        </h3>
+                        <h3 t-if="message.contact_us">
+                            <t t-out="message.contact_us" />
+                        </h3>
+                    </div>
+                </div>
+                <!-- ACTIONS -->
+                <div class="row mt-4 text-center">
+                    <div class="col">
+                        <button
+                            class="btn btn-secondary w-100"
+                            t-on-click="onPartnerIn"
+                        >Enter</button>
+                    </div>
+                    <div class="col">
+                        <button
+                            class="btn btn-secondary w-100"
+                            t-on-click="onPartnerOut"
+                        >Do not enter</button>
+                    </div>
+                    <div class="col">
+                        <button
+                            class="btn btn-secondary w-100"
+                            t-on-click="onPartnerWrong"
+                        >Error</button>
+                    </div>
+                    <div class="col" t-if="partner.badge_to_distribute">
+                        <button
+                            class="btn btn-secondary w-100"
+                            t-on-click="onSetBadgeDistributed"
+                        >
+                            Badge distributed
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+</templates>
