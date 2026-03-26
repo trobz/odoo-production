@@ -21,12 +21,10 @@
 #
 ##############################################################################
 
-from odoo import fields, models, api
+from odoo import fields, models
 
 
 class StockQuant(models.Model):
     _inherit = "stock.quant"
 
-    categ_id = fields.Many2one(
-        "product.category",
-        related="product_id.categ_id")
+    categ_id = fields.Many2one("product.category", related="product_id.categ_id")

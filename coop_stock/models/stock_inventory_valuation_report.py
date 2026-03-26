@@ -2,14 +2,15 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
-from odoo import api, fields, models, _
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
 
+from odoo import _, api, fields, models
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
 
 _logger = logging.getLogger(__name__)
 
+
 class StockInventoryValuationReport(models.TransientModel):
-    _inherit = 'report.stock.inventory.valuation.report'
+    _inherit = "report.stock.inventory.valuation.report"
 
     @api.multi
     def get_date_context(self):
@@ -19,85 +20,86 @@ class StockInventoryValuationReport(models.TransientModel):
             res = fields.Datetime.context_timestamp(self, res).strftime(DTF)
         return res
 
+
 class ReportStockInventoryValuationReportXlsx(models.TransientModel):
-    _inherit = 'report.s_i_v_r.report_stock_inventory_valuation_report_xlsx'
+    _inherit = "report.s_i_v_r.report_stock_inventory_valuation_report_xlsx"
 
     def _get_wanted_list(self):
         return {
-            '1_number': {
-                'header': {
-                    'value': '#',
+            "1_number": {
+                "header": {
+                    "value": "#",
                 },
-                'data': {
-                    'value': self._render('n'),
+                "data": {
+                    "value": self._render("n"),
                 },
-                'width': 20,
+                "width": 20,
             },
-            '2_reference': {
-                'header': {
-                    'value': _('Reference'),
+            "2_reference": {
+                "header": {
+                    "value": _("Reference"),
                 },
-                'data': {
-                    'value': self._render('reference'),
+                "data": {
+                    "value": self._render("reference"),
                 },
-                'width': 15,
+                "width": 15,
             },
-            '3_name': {
-                'header': {
-                    'value': _('Name'),
+            "3_name": {
+                "header": {
+                    "value": _("Name"),
                 },
-                'data': {
-                    'value': self._render('name'),
+                "data": {
+                    "value": self._render("name"),
                 },
-                'width': 36,
+                "width": 36,
             },
-            '4_categ_name': {
-                'header': {
-                    'value': _('Internal Category'),
+            "4_categ_name": {
+                "header": {
+                    "value": _("Internal Category"),
                 },
-                'data': {
-                    'value': self._render('categ_name'),
+                "data": {
+                    "value": self._render("categ_name"),
                 },
-                'width': 36,
+                "width": 36,
             },
-            '5_barcode': {
-                'header': {
-                    'value': _('Barcode'),
+            "5_barcode": {
+                "header": {
+                    "value": _("Barcode"),
                 },
-                'data': {
-                    'value': self._render('barcode'),
+                "data": {
+                    "value": self._render("barcode"),
                 },
-                'width': 15,
+                "width": 15,
             },
-            '6_qty_at_date': {
-                'header': {
-                    'value': _('Quantity'),
+            "6_qty_at_date": {
+                "header": {
+                    "value": _("Quantity"),
                 },
-                'data': {
-                    'value': self._render('qty_at_date'),
-                    'format': self.format_tcell_amount_conditional_right,
+                "data": {
+                    "value": self._render("qty_at_date"),
+                    "format": self.format_tcell_amount_conditional_right,
                 },
-                'width': 18,
+                "width": 18,
             },
-            '7_standard_price': {
-                'header': {
-                    'value': _('Cost'),
+            "7_standard_price": {
+                "header": {
+                    "value": _("Cost"),
                 },
-                'data': {
-                    'value': self._render('standard_price'),
-                    'format': self.format_tcell_amount_conditional_right,
+                "data": {
+                    "value": self._render("standard_price"),
+                    "format": self.format_tcell_amount_conditional_right,
                 },
-                'width': 18,
+                "width": 18,
             },
-            '8_stock_value': {
-                'header': {
-                    'value': _('Value'),
+            "8_stock_value": {
+                "header": {
+                    "value": _("Value"),
                 },
-                'data': {
-                    'value': self._render('stock_value'),
-                    'format': self.format_tcell_amount_conditional_right,
+                "data": {
+                    "value": self._render("stock_value"),
+                    "format": self.format_tcell_amount_conditional_right,
                 },
-                'width': 18,
+                "width": 18,
             },
         }
 
@@ -105,41 +107,44 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
         return 7
 
     def _get_ws_params(self, wb, data, objects):
-
         stock_inventory_valuation_template = self._get_wanted_list()
 
         ws_params = {
-            'ws_name': _('Inventory Valuation Report'),
-            'generate_ws_method': '_inventory_valuation_report',
-            'title': 'Inventory Valuation Report',
-            'wanted_list': [k for k in sorted(
-                stock_inventory_valuation_template.keys())],
-            'col_specs': stock_inventory_valuation_template,
+            "ws_name": _("Inventory Valuation Report"),
+            "generate_ws_method": "_inventory_valuation_report",
+            "title": "Inventory Valuation Report",
+            "wanted_list": [
+                k for k in sorted(stock_inventory_valuation_template.keys())
+            ],
+            "col_specs": stock_inventory_valuation_template,
         }
         return [ws_params]
 
     def _get_render_space(self, row_pos, line):
         render_space = {
-            'n': row_pos-5,
-            'name': line.name or '',
-            'reference': line.reference or '',
-            'barcode': line.barcode or '',
-            'qty_at_date': line.qty_at_date or 0.000,
-            'standard_price': line.standard_price or 0.00,
-            'stock_value': line.stock_value or 0.00,
-            'categ_name': line.categ_name
+            "n": row_pos - 5,
+            "name": line.name or "",
+            "reference": line.reference or "",
+            "barcode": line.barcode or "",
+            "qty_at_date": line.qty_at_date or 0.000,
+            "standard_price": line.standard_price or 0.00,
+            "stock_value": line.stock_value or 0.00,
+            "categ_name": line.categ_name,
         }
         return render_space
 
     def _inventory_valuation_report(self, wb, ws, ws_params, data, objects):
-
         ws.set_portrait()
         ws.fit_to_pages(1, 0)
-        ws.set_header(self.xls_headers['standard'])
-        ws.set_footer(self.xls_footers['standard'])
+        ws.set_header(self.xls_headers["standard"])
+        ws.set_footer(self.xls_footers["standard"])
         format_tcell_datetime_center = wb.add_format(
-            dict({'border': True, 'border_color': '#D3D3D3'},
-            num_format='YYYY-MM-DD HH:mm:SS', align='center'))
+            dict(
+                {"border": True, "border_color": "#D3D3D3"},
+                num_format="YYYY-MM-DD HH:mm:SS",
+                align="center",
+            )
+        )
 
         self._set_column_width(ws, ws_params)
 
@@ -148,28 +153,45 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
 
         for o in objects:
             ws.write_row(
-                row_pos, 0, [_('Date'), _('Partner'), _('Tax ID')],
-                self.format_theader_blue_center)
+                row_pos,
+                0,
+                [_("Date"), _("Partner"), _("Tax ID")],
+                self.format_theader_blue_center,
+            )
             report_date = o.get_date_context()
+            ws.write_row(row_pos + 1, 0, [report_date or ""])
             ws.write_row(
-                row_pos+1, 0, [report_date or ''])
-            ws.write_row(
-                row_pos+1, 1,
-                [o.company_id.name or '', o.company_id.vat or ''],
-                self.format_tcell_center)
+                row_pos + 1,
+                1,
+                [o.company_id.name or "", o.company_id.vat or ""],
+                self.format_tcell_center,
+            )
 
             row_pos += 3
             row_pos = self._write_line(
-                ws, row_pos, ws_params, col_specs_section='header',
-                default_format=self.format_theader_blue_center)
+                ws,
+                row_pos,
+                ws_params,
+                col_specs_section="header",
+                default_format=self.format_theader_blue_center,
+            )
             ws.freeze_panes(row_pos, 0)
 
             total = 0.00
             for line in o.results:
                 row_pos = self._write_line(
-                    ws, row_pos, ws_params, col_specs_section='data',
+                    ws,
+                    row_pos,
+                    ws_params,
+                    col_specs_section="data",
                     render_space=self._get_render_space(row_pos, line),
-                    default_format=self.format_tcell_left)
+                    default_format=self.format_tcell_left,
+                )
                 total += line.stock_value
 
-            ws.write(row_pos, self._get_column_total_index(), total, self.format_theader_blue_amount_right)
+            ws.write(
+                row_pos,
+                self._get_column_total_index(),
+                total,
+                self.format_theader_blue_amount_right,
+            )
