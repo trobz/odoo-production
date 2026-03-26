@@ -91,7 +91,9 @@ class badgeReaderApp extends Component {
                 this.searchValue.barcode_base
             );
             this._renderSearchResults("barcode_base", partnerIds);
-        } else if (this.searchValue.partner_name !== "") {
+        }
+        // eslint-disable-next-line no-negated-condition
+        else if (this.searchValue.partner_name !== "") {
             const partnerIds = await this._searchByName(this.searchValue.partner_name);
             this._renderSearchResults("partner_name", partnerIds);
         } else {
