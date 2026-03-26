@@ -30,6 +30,8 @@ class CoopBadgeReader(http.Controller):
             {
                 "badge_reader_info": {
                     "uid": user.id,
+                    "user_name": user.name,
+                    "partner_id": user.partner_id.id,
                     "company_id": company.id,
                     "company_name": company.name,
                     "lang": py_to_js_locale(user.partner_id.lang),

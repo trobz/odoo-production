@@ -7,7 +7,7 @@
 }
 
 .partner-danger {
-    background-color: #d9534f;
+    background-color: #780300;
 }
 
 .partner-error {
@@ -33,4 +33,19 @@
 .label-danger {
     background-color: #b32d28;
     color: white;
+}
+.text-message-warning {
+    padding: 8px 15px;
+    background-color: #ecd3af;
+    border-radius: 4px;
+}
+.text-message-danger {
+    padding: 8px 15px;
+    background-color: #f5b7b1;
+    border-radius: 4px;
+}
+.text-message-contact {
+    padding: 8px 15px;
+    background-color: #aed6f1;
+    border-radius: 4px;
 }

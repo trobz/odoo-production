@@ -13,30 +13,28 @@
                             t-on-click="() => this.props.onSelectPartner(partner.id)"
                         >
                             <!-- IMAGE -->
-                            <div class="me-3">
+                            <div class="col">
                                 <img
                                     t-att-src="partner.image_url"
-                                    width="128"
-                                    heigh="128"
+                                    width="64"
+                                    heigh="64"
                                     class="img-thumbnail img-partner-list"
                                 />
                             </div>
                             <!-- NAME -->
-                            <div class="flex-grow-1">
-                                <div class="fw-bold">
-                                    <t t-out="partner.display_name" />
-                                </div>
-                                <!-- STATUS -->
-                                <div>
-                                    Status:
-                                    <span
-                                    t-att-class="'label ' + getCooperativeStateClass(partner.cooperative_state)"
+                            <div class="fw-bold col-6">
+                                <t t-out="partner.display_name" />
+                            </div>
+                            <!-- STATUS -->
+                            <div class="col-4 d-flex align-items-center">
+                                <span class="w-25">Status:</span>
+                                <span
+                                    t-att-class="'d-flex justify-content-center w-50 label ' + getCooperativeStateClass(partner.cooperative_state)"
                                 >
                                     <t
                                         t-out="getCooperativeStateLabel(partner.cooperative_state)"
                                     />
                                 </span>
-                                </div>
                             </div>
                         </a>
                     </t>
