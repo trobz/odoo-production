@@ -3,18 +3,15 @@
 # Copyright (C) 2020-Today: Druidoo (<https://www.druidoo.io>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html
 
-from odoo import fields, models, api
+from odoo import api, fields, models
 
 
 class StockMoveLine(models.Model):
     _inherit = "stock.move.line"
 
-    vendor_product_code = fields.Char(
-        compute="_compute_product_code"
-    )
+    vendor_product_code = fields.Char(compute="_compute_product_code")
     product_default_code = fields.Char(
-        string="Internal Reference",
-        related="product_id.default_code"
+        string="Internal Reference", related="product_id.default_code"
     )
     picking_id = fields.Many2one(index=True)
     result_package_id = fields.Many2one(index=True)

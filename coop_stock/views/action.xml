@@ -1,6 +1,5 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
-
     <record model="ir.actions.act_window" id="stock.action_stock_quantity_history">
         <field name="context">{'show_export_button': True}</field>
     </record>

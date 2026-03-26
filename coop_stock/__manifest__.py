@@ -4,7 +4,7 @@
     "category": "Custom",
     "summary": "Custom settings for stock",
     "author": "La Louve, Druidoo",
-    "website": "http://www.lalouve.net",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": [
         "stock",

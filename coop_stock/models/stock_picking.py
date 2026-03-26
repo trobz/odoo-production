@@ -21,7 +21,7 @@
 #
 ##############################################################################
 
-from odoo import models, api
+from odoo import api, models
 
 
 class StockPicking(models.Model):

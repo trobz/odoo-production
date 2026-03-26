@@ -1,7 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-
-    <template id="stock_inventory_valuation_report.report_stock_inventory_valuation_lines_header">
+    <template
+        id="stock_inventory_valuation_report.report_stock_inventory_valuation_lines_header"
+    >
         <div class="act_as_thead">
             <div class="act_as_row labels">
                 <div class="act_as_cell">#</div>
@@ -16,38 +17,49 @@
         </div>
     </template>
 
-    <template id="stock_inventory_valuation_report.report_stock_inventory_valuation_lines">
+    <template
+        id="stock_inventory_valuation_report.report_stock_inventory_valuation_lines"
+    >
         <div class="act_as_row lines">
             <div class="act_as_cell left">
-                <t t-esc="n"/>
+                <t t-esc="n" />
             </div>
             <div class="act_as_cell left">
-                <t t-esc="line.reference"/>
+                <t t-esc="line.reference" />
             </div>
             <div class="act_as_cell left">
-                <t t-esc="line.name"/>
+                <t t-esc="line.name" />
             </div>
             <div class="act_as_cell left">
-                <t t-esc="line.categ_name"/>
+                <t t-esc="line.categ_name" />
             </div>
             <div class="act_as_cell left">
-                <t t-esc="line.barcode"/>
+                <t t-esc="line.barcode" />
             </div>
             <div class="act_as_cell right">
-                <t t-esc="'{0:,.3f}'.format(line.qty_at_date)"/>
+                <t t-esc="'{0:,.3f}'.format(line.qty_at_date)" />
             </div>
             <div class="act_as_cell amount">
-                <t t-esc="line.standard_price" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                <t
+                    t-esc="line.standard_price"
+                    t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                />
             </div>
             <div class="act_as_cell amount">
-                <t t-esc="line.stock_value" t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"/>
+                <t
+                    t-esc="line.stock_value"
+                    t-options="{'widget': 'monetary', 'display_currency': res_company.currency_id}"
+                />
             </div>
         </div>
     </template>
 
-    <template id="report_stock_inventory_valuation_report_filters" inherit_id="stock_inventory_valuation_report.report_stock_inventory_valuation_report_filters">
+    <template
+        id="report_stock_inventory_valuation_report_filters"
+        inherit_id="stock_inventory_valuation_report.report_stock_inventory_valuation_report_filters"
+    >
         <xpath expr="//div/div[2]/div[1]/span" position="replace">
-            <span t-esc="o.get_date_context()"/>
+            <span t-esc="o.get_date_context()" />
         </xpath>
     </template>
 </odoo>

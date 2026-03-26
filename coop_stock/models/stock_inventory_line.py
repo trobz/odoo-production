@@ -7,6 +7,4 @@ from odoo import models
 
 class StockInventoryLine(models.Model):
     _inherit = "stock.inventory.line"
-    _order = (
-        "inventory_id, location_id, product_id, prod_lot_id"
-    )
+    _order = "inventory_id, location_id, product_id, prod_lot_id"

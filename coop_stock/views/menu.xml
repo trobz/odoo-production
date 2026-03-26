@@ -1,9 +1,12 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
-
-    <menuitem id="stock.menu_valuation"
-        action="stock.action_stock_quantity_history" parent="stock.menu_warehouse_report"
-        sequence="1" groups="base.group_no_one,stock.group_stock_manager" />
+    <menuitem
+        id="stock.menu_valuation"
+        action="stock.action_stock_quantity_history"
+        parent="stock.menu_warehouse_report"
+        sequence="1"
+        groups="base.group_no_one,stock.group_stock_manager"
+    />
 
     <record id="stock.stock_picking_type_action" model="ir.actions.act_window">
         <field name="name">Inventory</field>
@@ -13,12 +16,19 @@
         <field name="view_mode">kanban,form</field>
     </record>
 
-    <menuitem action="coop_stock.stock_picking_type_action_inherit"
-        id="stock.stock_picking_type_menu" parent="stock.menu_stock_root"
-        sequence="1" name="Dashboard" />
+    <menuitem
+        action="coop_stock.stock_picking_type_action_inherit"
+        id="stock.stock_picking_type_menu"
+        parent="stock.menu_stock_root"
+        sequence="1"
+        name="Dashboard"
+    />
 
-    <menuitem action="stock.product_template_action_product"
-        id="stock.menu_product_variant_config_stock" name="Products"
-        parent="stock.menu_stock_root" sequence="0" />
-
+    <menuitem
+        action="stock.product_template_action_product"
+        id="stock.menu_product_variant_config_stock"
+        name="Products"
+        parent="stock.menu_stock_root"
+        sequence="0"
+    />
 </odoo>

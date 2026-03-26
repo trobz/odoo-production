@@ -6,8 +6,8 @@ class StockInventory(models.Model):
 
     @api.multi
     def post_inventory(self):
-        res = super(StockInventory, self).post_inventory()
+        res = super().post_inventory()
         for inv in self:
             if inv.move_ids:
-                inv.move_ids.write({'date': inv.date})
+                inv.move_ids.write({"date": inv.date})
         return res
