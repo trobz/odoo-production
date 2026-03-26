@@ -1,12 +1,13 @@
 import {App, Component, useState, whenReady} from "@odoo/owl";
+import {imageUrl, url} from "@web/core/utils/urls";
 import {makeEnv, startServices} from "@web/env";
 import {MainComponentsContainer} from "@web/core/main_components_container";
 import {PartnerFormComponent} from "@coop_badge_reader/components/partner_form/partner_form.esm";
 import {PartnerListComponent} from "@coop_badge_reader/components/partner_list/partner_list.esm";
 import {_t} from "@web/core/l10n/translation";
+import {getActiveHotkey} from "@web/core/hotkeys/hotkey_service";
 import {getTemplate} from "@web/core/templates";
 import {session} from "@web/session";
-import {url} from "@web/core/utils/urls";
 import {useService} from "@web/core/utils/hooks";
 
 class badgeReaderApp extends Component {
@@ -14,6 +15,8 @@ class badgeReaderApp extends Component {
     static props = {
         companyId: {type: Number},
         companyName: {type: String},
+        userName: {type: String},
+        partnerId: {type: Number},
     };
     static components = {
         MainComponentsContainer,
@@ -28,6 +31,8 @@ class badgeReaderApp extends Component {
         this.companyImageUrl = url("/web/binary/company_logo", {
             company: this.props.companyId,
         });
+        const {partnerId} = this.props;
+        this.userImage = imageUrl("res.partner", partnerId, "avatar_128");
         this.state = useState({
             active_display: "main",
             previous_display: "main",
@@ -82,23 +87,37 @@ class badgeReaderApp extends Component {
         this.searchValue[fieldName] = ev.target.value;
     }
 
+    async onInputKeydown(ev) {
+        const hotkey = getActiveHotkey(ev);
+        switch (hotkey) {
+            case "enter":
+                await this.onSearch();
+                break;
+            default:
+                return;
+        }
+        ev.stopPropagation();
+        ev.preventDefault();
+    }
+
     async onSearch() {
-        if (this.searchValue.barcode !== "") {
-            const partnerIds = await this._searchByBarcode(this.searchValue.barcode);
-            this._renderSearchResults("barcode", partnerIds);
-        } else if (this.searchValue.barcode_base !== "") {
-            const partnerIds = await this._searchByBarcodeBase(
-                this.searchValue.barcode_base
-            );
-            this._renderSearchResults("barcode_base", partnerIds);
+        const fields = [
+            {key: "barcode", method: this._searchByBarcode},
+            {key: "barcode_base", method: this._searchByBarcodeBase},
+            {key: "partner_name", method: this._searchByName},
+        ];
+        for (const {key, method} of fields) {
+            const value = this.searchValue[key];
+            if (!this._validateSearchValue(key, value)) {
+                return;
+            }
+            if (value) {
+                const partnerIds = await method.call(this, value);
+                this._renderSearchResults(key, partnerIds);
+                return;
+            }
         }
-        // eslint-disable-next-line no-negated-condition
-        else if (this.searchValue.partner_name !== "") {
-            const partnerIds = await this._searchByName(this.searchValue.partner_name);
-            this._renderSearchResults("partner_name", partnerIds);
-        } else {
-            this.errorMessage.message = _t("Please enter a search value");
-        }
+        this.errorMessage.message = _t("Please enter a search value");
     }
 
     onSelectPartner(partnerId) {
@@ -147,6 +166,16 @@ class badgeReaderApp extends Component {
             this.errorMessage.message = _t("No partner found with this name");
         }
         this._playSound("sound_res_partner_not_found");
+    }
+
+    _validateSearchValue(searchType, value) {
+        if (searchType === "barcode_base") {
+            if (!Number.isInteger(Number(value))) {
+                this.errorMessage.message = _t("Member number must be a whole number");
+                return false;
+            }
+        }
+        return true;
     }
 
     async _searchByBarcode(barcode) {
@@ -245,6 +274,8 @@ export async function createBadgeReaderApp(document, badge_reader_info) {
         props: {
             companyId: badge_reader_info.company_id,
             companyName: badge_reader_info.company_name,
+            userName: badge_reader_info.user_name,
+            partnerId: badge_reader_info.partner_id,
         },
         translateFn: _t,
         translatableAttributes: ["data-tooltip"],
