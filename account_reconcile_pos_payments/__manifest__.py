@@ -5,16 +5,16 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
-    'name': 'Bank Auto Reconcille POS Payments',
-    'version': '12.0.1.0.0',
-    'category': 'Custom',
-    'author': 'La Louve, Druidoo',
-    'license': 'AGPL-3',
-    'depends': [
-        'account',
+    "name": "Bank Auto Reconcille POS Payments",
+    "version": "12.0.1.0.0",
+    "category": "Custom",
+    "author": "La Louve, Druidoo",
+    "license": "AGPL-3",
+    "depends": [
+        "account",
     ],
-    'data': [
-        'views/account_journal.xml',
-        'views/account_bank_statement.xml',
+    "data": [
+        "views/account_journal.xml",
+        "views/account_bank_statement.xml",
     ],
 }
