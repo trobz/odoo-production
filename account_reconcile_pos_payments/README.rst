@@ -22,12 +22,78 @@ Bank Auto Reconcille POS Payments
 
 |badge1| |badge2| |badge3|
 
-Bank Auto Reconcille POS Payments
+This module adds assisted reconciliation flows for bank statements:
+
+-  Automatic matching of bank expense lines based on regex patterns
+   configured on the journal.
+-  Automatic matching of POS payment lines against child POS statements,
+   including optional contactless 2-lines combination matching.
+
+When a match is found, the module updates statement line counterpart
+accounts and reconciles the related journal items.
 
 **Table of contents**
 
 .. contents::
    :local:
+
+Configuration
+=============
+
+To configure the module:
+
+1. Go to Accounting > Configuration > Journals.
+2. Open the bank journal that receives card settlements.
+3. In the Journal Entries tab, configure Automatic POS Reconciliation:
+
+   -  CB Childs: select the POS/credit journals that create settlement
+      entries.
+   -  CB Lines Domain: domain used to detect candidate bank statement
+      lines.
+   -  CB Delta Days and CB Rounding: matching tolerance by date and
+      amount.
+
+4. If needed, enable CB Contactless Matching and configure:
+
+   -  Contactless Lines Domain
+   -  Contactless Delta Days
+
+5. In Automatic Charges Reconciliation, configure:
+
+   -  Bank Expense Name/Ref/Note Pattern (regex)
+   -  Bank Expense Account
+
+Recommendations:
+
+-  Keep parent bank journal and child POS journals on different
+   liquidity accounts.
+-  Start with strict domains and small rounding values, then relax only
+   if needed.
+
+Usage
+=====
+
+To reconcile bank expenses automatically:
+
+1. Open a bank statement containing expense lines.
+2. Click Auto Reconcile Expenses.
+3. The module matches unreconciled lines using the configured regex
+   patterns and posts counterparts on the Bank Expense Account.
+
+To reconcile POS payments automatically:
+
+1. Open a bank statement containing card settlement lines.
+2. Click Auto Reconcile POS Payments.
+3. The module tries:
+
+   -  single-line matching against child POS statements;
+   -  optional contactless combined matching (line + line).
+
+4. For each successful match, counterpart items are adjusted and
+   reconciled.
+
+If no line is matched, review domains, rounding, and date delta
+parameters on the journal.
 
 Bug Tracker
 ===========

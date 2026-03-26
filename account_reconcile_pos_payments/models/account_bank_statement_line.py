@@ -7,7 +7,7 @@
 import logging
 import re
 
-from odoo import _, api, models
+from odoo import Command, _, models
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -19,22 +19,25 @@ class AccountBankStatementLine(models.Model):
     def _match_bank_expense(self):
         self.ensure_one()
         matches = False
+        # In Odoo 18, 'name' on statement line (via _inherits) is the move
+        # sequence number; use 'payment_ref' for the user-visible label.
+        # 'note' is replaced by 'narration' on account.move.
+        field_map = {"name": "payment_ref", "ref": "ref", "note": "narration"}
         for field in ["name", "ref", "note"]:
-            pattern = getattr(self.journal_id, "bank_expense_%s_pattern" % field, False)
+            pattern = getattr(self.journal_id, f"bank_expense_{field}_pattern", False)
             if pattern:
-                val = getattr(self, field)
+                val = getattr(self, field_map[field])
                 if val:
                     val = val.strip()
-                if re.compile(pattern).search(val):
+                if re.compile(pattern).search(val or ""):
                     matches = True
                 else:
                     return False
         return matches
 
-    @api.multi
     def _reconcile_bank_expense(self):
         count = 0
-        lines = self.filtered(lambda l: not l.journal_entry_ids)
+        lines = self.filtered(lambda line: not line.is_reconciled)
         _logger.info(
             "====================== Start Reconcile %s line(s) of bank expense",
             len(lines),
@@ -49,15 +52,27 @@ class AccountBankStatementLine(models.Model):
                             "journal if you want to use this feature."
                         )
                     )
-                move_line_data_credit = {
-                    "name": line.name,
-                    "debit": line.amount * -1 if line.amount < 0.00 else 0.00,
-                    "credit": line.amount if line.amount > 0.00 else 0.00,
-                    "journal_id": line.journal_id.id,
-                    "date": line.date,
-                    "account_id": line.journal_id.bank_expense_account_id.id,
-                }
-                line.process_reconciliation([], [], [move_line_data_credit])
+                # In Odoo 18, replaces the suspense line with the expense account
+                # instead of calling the deprecated process_reconciliation().
+                _liq_line, suspense_line, _other_lines = line._seek_for_lines()
+                if not suspense_line:
+                    _logger.info("No suspense line found for %s, skipping.", line)
+                    continue
+                account_id = line.journal_id.bank_expense_account_id.id
+                line.write(
+                    {
+                        "checked": True,
+                        "line_ids": [
+                            Command.update(
+                                suspense_line.id,
+                                {
+                                    "account_id": account_id,
+                                    "name": line.payment_ref or line.name,
+                                },
+                            )
+                        ],
+                    }
+                )
             else:
                 _logger.info("====================== No match for line %s", line)
         _logger.info("====================== End: %s line(s) matched", count)

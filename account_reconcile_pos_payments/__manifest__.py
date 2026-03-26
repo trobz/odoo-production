@@ -6,15 +6,20 @@
 
 {
     "name": "Bank Auto Reconcille POS Payments",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Custom",
     "author": "La Louve, Druidoo",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": [
-        "account",
+        "account_statement_base",
     ],
     "data": [
         "views/account_journal.xml",
         "views/account_bank_statement.xml",
+    ],
+    "demo": [
+        "demo/account_journal_demo.xml",
+        "demo/account_bank_statement_demo.xml",
     ],
 }

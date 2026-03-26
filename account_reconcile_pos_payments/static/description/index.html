@@ -370,20 +370,88 @@ ul.auto-toc {
 !! source digest: sha256:baa1e936aa7c4926ce0f965ec2dc0d3ffadcc5df944c9b2ede777129589918c8
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/AwesomeFoodCoops/odoo-production/tree/18.0/account_reconcile_pos_payments"><img alt="AwesomeFoodCoops/odoo-production" src="https://img.shields.io/badge/github-AwesomeFoodCoops%2Fodoo--production-lightgray.png?logo=github" /></a></p>
-<p>Bank Auto Reconcille POS Payments</p>
+<p>This module adds assisted reconciliation flows for bank statements:</p>
+<ul class="simple">
+<li>Automatic matching of bank expense lines based on regex patterns
+configured on the journal.</li>
+<li>Automatic matching of POS payment lines against child POS statements,
+including optional contactless 2-lines combination matching.</li>
+</ul>
+<p>When a match is found, the module updates statement line counterpart
+accounts and reconciles the related journal items.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-1">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-2">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-3">Authors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-4">Maintainers</a></li>
+<li><a class="reference internal" href="#configuration" id="toc-entry-1">Configuration</a></li>
+<li><a class="reference internal" href="#usage" id="toc-entry-2">Usage</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-3">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-4">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-5">Authors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-6">Maintainers</a></li>
 </ul>
 </li>
 </ul>
 </div>
+<div class="section" id="configuration">
+<h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
+<p>To configure the module:</p>
+<ol class="arabic simple">
+<li>Go to Accounting &gt; Configuration &gt; Journals.</li>
+<li>Open the bank journal that receives card settlements.</li>
+<li>In the Journal Entries tab, configure Automatic POS Reconciliation:<ul>
+<li>CB Childs: select the POS/credit journals that create settlement
+entries.</li>
+<li>CB Lines Domain: domain used to detect candidate bank statement
+lines.</li>
+<li>CB Delta Days and CB Rounding: matching tolerance by date and
+amount.</li>
+</ul>
+</li>
+<li>If needed, enable CB Contactless Matching and configure:<ul>
+<li>Contactless Lines Domain</li>
+<li>Contactless Delta Days</li>
+</ul>
+</li>
+<li>In Automatic Charges Reconciliation, configure:<ul>
+<li>Bank Expense Name/Ref/Note Pattern (regex)</li>
+<li>Bank Expense Account</li>
+</ul>
+</li>
+</ol>
+<p>Recommendations:</p>
+<ul class="simple">
+<li>Keep parent bank journal and child POS journals on different
+liquidity accounts.</li>
+<li>Start with strict domains and small rounding values, then relax only
+if needed.</li>
+</ul>
+</div>
+<div class="section" id="usage">
+<h1><a class="toc-backref" href="#toc-entry-2">Usage</a></h1>
+<p>To reconcile bank expenses automatically:</p>
+<ol class="arabic simple">
+<li>Open a bank statement containing expense lines.</li>
+<li>Click Auto Reconcile Expenses.</li>
+<li>The module matches unreconciled lines using the configured regex
+patterns and posts counterparts on the Bank Expense Account.</li>
+</ol>
+<p>To reconcile POS payments automatically:</p>
+<ol class="arabic simple">
+<li>Open a bank statement containing card settlement lines.</li>
+<li>Click Auto Reconcile POS Payments.</li>
+<li>The module tries:<ul>
+<li>single-line matching against child POS statements;</li>
+<li>optional contactless combined matching (line + line).</li>
+</ul>
+</li>
+<li>For each successful match, counterpart items are adjusted and
+reconciled.</li>
+</ol>
+<p>If no line is matched, review domains, rounding, and date delta
+parameters on the journal.</p>
+</div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#toc-entry-1">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/AwesomeFoodCoops/odoo-production/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -391,16 +459,16 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#toc-entry-2">Credits</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-4">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#toc-entry-3">Authors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-5">Authors</a></h2>
 <ul class="simple">
 <li>La Louve</li>
 <li>Druidoo</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#toc-entry-4">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-6">Maintainers</a></h2>
 <p>This module is part of the <a class="reference external" href="https://github.com/AwesomeFoodCoops/odoo-production/tree/18.0/account_reconcile_pos_payments">AwesomeFoodCoops/odoo-production</a> project on GitHub.</p>
 <p>You are welcome to contribute.</p>
 </div>

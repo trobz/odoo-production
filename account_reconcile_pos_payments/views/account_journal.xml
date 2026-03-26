@@ -23,11 +23,13 @@
                             name="cb_contactless_lines_domain"
                             widget="domain"
                             options="{'model': 'account.bank.statement.line', 'in_dialog': True}"
-                            attrs="{'invisible': [('cb_contactless_matching','=',False)],'required': [('cb_contactless_matching','=',True)]}"
+                            invisible="not cb_contactless_matching"
+                            required="cb_contactless_matching"
                         />
                         <field
                             name="cb_contactless_delta_days"
-                            attrs="{'invisible': [('cb_contactless_matching','=',False)],'required': [('cb_contactless_matching','=',True)]}"
+                            invisible="not cb_contactless_matching"
+                            required="cb_contactless_matching"
                         />
                     </group>
                     <group>
