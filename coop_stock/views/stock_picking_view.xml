@@ -6,33 +6,28 @@
         <field name="inherit_id" ref="stock.view_picking_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='move_line_ids_without_package']/tree/field[@name='owner_id']"
-                position="attributes"
-            >
-                <attribute name="invisible">1</attribute>
-            </xpath>
-            <xpath
-                expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']"
+                expr="//field[@name='move_ids_without_package']/list/field[@name='product_id']"
                 position="before"
             >
                 <field
                     name="vendor_product_code"
-                    attrs="{'column_invisible': [('parent.state', 'not in', ('assigned', 'done'))]}"
+                    column_invisible="parent.state not in ('assigned', 'done')"
                 />
                 <field name="product_default_code" />
             </xpath>
             <xpath
-                expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom_qty']"
+                expr="//field[@name='move_ids_without_package']/list/field[@name='product_uom_qty']"
                 position="attributes"
             >
                 <attribute name="string">Quantity</attribute>
             </xpath>
             <xpath
-                expr="//field[@name='move_ids_without_package']/tree"
+                expr="//field[@name='move_ids_without_package']/list"
                 position="attributes"
             >
-                <attribute name="decoration-danger">quantity_done!=product_uom_qty
-                </attribute>
+                <attribute
+                    name="decoration-danger"
+                >quantity!=product_uom_qty</attribute>
             </xpath>
             <xpath expr="//field[@name='origin']" position="after">
                 <button
@@ -41,49 +36,24 @@
                     type="object"
                 />
             </xpath>
-            <xpath
-                expr="//field[@name='move_line_ids_without_package']/tree/field[@name='product_id']"
-                position="before"
-            >
-                <field name="product_default_code" />
-            </xpath>
-            <xpath
-                expr="//field[@name='move_line_ids_without_package']"
-                position="attributes"
-            >
-                <attribute
-                    name="context"
-                >{'default_picking_id': id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id, 'display_default_code': False}</attribute>
-            </xpath>
-            <xpath
-                expr="//field[@name='move_ids_without_package']"
-                position="attributes"
-            >
-                <attribute
-                    name="context"
-                >{'picking_type_code': picking_type_code, 'default_picking_id': id, 'form_view_ref':'stock.view_move_picking_form', 'address_in_id': partner_id, 'default_picking_type_id': picking_type_id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id, 'display_default_code': False}</attribute>
-            </xpath>
         </field>
     </record>
-    <record id="view_stock_product_tree2_inherit" model="ir.ui.view">
-        <field name="name">product.stock.tree.2.inherit</field>
-        <field name="model">product.product</field>
-        <field name="inherit_id" ref="stock_account.view_stock_product_tree2" />
-        <field name="arch" type="xml">
-            <field name="display_name" position="after">
-                <field name="categ_id" />
-            </field>
-        </field>
-    </record>
+
     <record id="product_template_kanban_stock_view_inherit" model="ir.ui.view">
         <field name="model">product.template</field>
         <field name="inherit_id" ref="stock.product_template_kanban_stock_view" />
         <field name="arch" type="xml">
-            <ul position="inside">
-                <li t-if="record.type.raw_value == 'product'">Forecasted: <field
-                    name="virtual_available"
-                /> <field name="uom_id" /></li>
-            </ul>
+            <xpath expr="//kanban" position="inside">
+                <field name="type" />
+            </xpath>
+            <xpath expr="//field[@name='product_properties']" position="before">
+                <div t-if="record.type.raw_value == 'consu'">
+                    Forecasted: <field name="virtual_available" /> <field
+                    name="uom_id"
+                    groups="uom.group_uom"
+                />
+                </div>
+            </xpath>
         </field>
     </record>
 
@@ -93,10 +63,11 @@
         <field name="inherit_id" ref="stock.view_stock_quant_tree" />
         <field name="arch" type="xml">
             <field name="product_id" position="after">
-                <field name="categ_id" />
+                <field name="product_categ_id" />
             </field>
         </field>
     </record>
+
     <record id="product_category_form_view_inherit" model="ir.ui.view">
         <field name="name">product.category.form.inherit</field>
         <field name="model">product.category</field>
@@ -107,6 +78,7 @@
             </field>
         </field>
     </record>
+
     <record id="product_category_list_view_inherit" model="ir.ui.view">
         <field name="name">product.category.list.inherit</field>
         <field name="model">product.category</field>
@@ -117,6 +89,7 @@
             </field>
         </field>
     </record>
+
     <record id="product_category_search_view_inherit" model="ir.ui.view">
         <field name="name">product.category.search.inherit</field>
         <field name="model">product.category</field>

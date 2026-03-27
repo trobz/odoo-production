@@ -1,17 +1,35 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* coop_stock
+# 	* coop_stock
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2026-03-31 04:05+0000\n"
+"PO-Revision-Date: 2026-03-31 04:05+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: coop_stock
+#. odoo-python
+#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:0
+msgid "Barcode"
+msgstr ""
+
+#. module: coop_stock
+#: model:ir.model.fields,field_description:coop_stock.field_stock_inventory_valuation_view__categ_name
+msgid "Categ Name"
+msgstr ""
+
+#. module: coop_stock
+#: model:ir.model.fields,field_description:coop_stock.field_product_category__type
+msgid "Category Type"
+msgstr ""
 
 #. module: coop_stock
 #: model_terms:ir.actions.act_window,help:coop_stock.stock_picking_type_action_inherit
@@ -24,24 +42,65 @@ msgid "Copy expected qtys"
 msgstr ""
 
 #. module: coop_stock
-#: model:ir.model.fields,field_description:coop_stock.field_stock_move_line__result_package_id
-msgid "Destination Package"
+#. odoo-python
+#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:0
+msgid "Cost"
 msgstr ""
 
 #. module: coop_stock
-#: model:ir.model.fields,help:coop_stock.field_stock_move_line__result_package_id
-msgid "If set, the operations are packed into this package"
+#. odoo-python
+#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:0
+msgid "Date"
+msgstr ""
+
+#. module: coop_stock
+#: model_terms:ir.ui.view,arch_db:coop_stock.product_template_kanban_stock_view_inherit
+msgid "Forecasted:"
+msgstr ""
+
+#. module: coop_stock
+#: model_terms:ir.ui.view,arch_db:coop_stock.product_category_search_view_inherit
+msgid "Group By"
+msgstr ""
+
+#. module: coop_stock
+#. odoo-python
+#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:0
+msgid "Internal Category"
+msgstr ""
+
+#. module: coop_stock
+#: model:ir.model.fields,field_description:coop_stock.field_stock_move__product_default_code
+#: model:ir.model.fields,field_description:coop_stock.field_stock_move_line__product_default_code
+msgid "Internal Reference"
 msgstr ""
 
 #. module: coop_stock
 #: model:ir.actions.act_window,name:coop_stock.stock_picking_type_action_inherit
-#: model:ir.model,name:coop_stock.model_stock_inventory
 msgid "Inventory"
 msgstr ""
 
 #. module: coop_stock
-#: model:ir.model,name:coop_stock.model_stock_inventory_line
-msgid "Inventory Line"
+#. odoo-python
+#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:0
+msgid "Inventory Valuation Report"
+msgstr ""
+
+#. module: coop_stock
+#. odoo-python
+#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:0
+msgid "Name"
+msgstr ""
+
+#. module: coop_stock
+#: model:ir.model.fields.selection,name:coop_stock.selection__product_category__type__normal
+msgid "Normal"
+msgstr ""
+
+#. module: coop_stock
+#. odoo-python
+#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:0
+msgid "Partner"
 msgstr ""
 
 #. module: coop_stock
@@ -50,8 +109,13 @@ msgid "Point of Sale Orders"
 msgstr ""
 
 #. module: coop_stock
-#: model:ir.model,name:coop_stock.model_product_product
+#: model:ir.model,name:coop_stock.model_product_template
 msgid "Product"
+msgstr ""
+
+#. module: coop_stock
+#: model:ir.model,name:coop_stock.model_product_category
+msgid "Product Category"
 msgstr ""
 
 #. module: coop_stock
@@ -60,8 +124,41 @@ msgid "Product Moves (Stock Move Line)"
 msgstr ""
 
 #. module: coop_stock
-#: model:ir.model,name:coop_stock.model_product_template
-msgid "Product Template"
+#: model:ir.model,name:coop_stock.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: coop_stock
+#. odoo-python
+#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:0
+#: model_terms:ir.ui.view,arch_db:coop_stock.stock_picking_form_view_inherit
+msgid "Quantity"
+msgstr ""
+
+#. module: coop_stock
+#: model:ir.model,name:coop_stock.model_stock_quant
+msgid "Quants"
+msgstr ""
+
+#. module: coop_stock
+#. odoo-python
+#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:0
+msgid "Reference"
+msgstr ""
+
+#. module: coop_stock
+#: model:ir.model,name:coop_stock.model_report_s_i_v_r_report_stock_inventory_valuation_report_xlsx
+msgid "Report Stock Inventory Valuation xlsx"
+msgstr ""
+
+#. module: coop_stock
+#: model:ir.model,name:coop_stock.model_report_stock_inventory_valuation_report
+msgid "Stock Inventory Valuation Report"
+msgstr ""
+
+#. module: coop_stock
+#: model:ir.model,name:coop_stock.model_stock_inventory_valuation_view
+msgid "Stock Inventory Valuation View"
 msgstr ""
 
 #. module: coop_stock
@@ -70,13 +167,15 @@ msgid "Stock Move"
 msgstr ""
 
 #. module: coop_stock
-#: model:ir.model.fields,field_description:coop_stock.field_stock_move_line__picking_id
-msgid "Stock Picking"
+#. odoo-python
+#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:0
+msgid "Tax ID"
 msgstr ""
 
 #. module: coop_stock
 #: model_terms:ir.actions.act_window,help:coop_stock.stock_picking_type_action_inherit
-msgid "The picking type system allows you to assign each stock\n"
+msgid ""
+"The picking type system allows you to assign each stock\n"
 "                operation a specific type which will alter its views\n"
 "                accordingly.\n"
 "                On the picking type you could e.g. specify\n"
@@ -87,13 +186,19 @@ msgid "The picking type system allows you to assign each stock\n"
 msgstr ""
 
 #. module: coop_stock
-#: model:ir.model.fields,help:coop_stock.field_stock_move_line__picking_id
-msgid "The stock operation where the packing has been made"
+#: model:ir.model,name:coop_stock.model_stock_picking
+msgid "Transfer"
 msgstr ""
 
 #. module: coop_stock
-#: model:ir.model,name:coop_stock.model_stock_picking
-msgid "Transfer"
+#: model_terms:ir.ui.view,arch_db:coop_stock.product_category_search_view_inherit
+msgid "Type"
+msgstr ""
+
+#. module: coop_stock
+#. odoo-python
+#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:0
+msgid "Value"
 msgstr ""
 
 #. module: coop_stock
@@ -103,83 +208,6 @@ msgid "Vendor Product Code"
 msgstr ""
 
 #. module: coop_stock
-#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:63
-#: model_terms:ir.ui.view,arch_db:coop_stock.stock_picking_form_view_inherit
-msgid "Quantity"
-msgstr ""
-
-#. module: coop_stock
-#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:54
-#, python-format
-msgid "Barcode"
-msgstr ""
-
-#. module: coop_stock
-#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:73
-#, python-format
-msgid "Cost"
-msgstr ""
-
-#. module: coop_stock
-#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:117
-#, python-format
-msgid "Date"
-msgstr ""
-
-#. module: coop_stock
-#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:45
-#, python-format
-msgid "Internal Category"
-msgstr ""
-
-#. module: coop_stock
-#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:94
-#, python-format
-msgid "Inventory Valuation Report"
-msgstr ""
-
-#. module: coop_stock
-#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:36
-#, python-format
-msgid "Name"
-msgstr ""
-
-#. module: coop_stock
-#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:117
-#, python-format
-msgid "Partner"
-msgstr ""
-
-#. module: coop_stock
-#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:27
-#, python-format
-msgid "Reference"
-msgstr ""
-
-#. module: coop_stock
-#: model:ir.model,name:coop_stock.model_report_stock_inventory_valuation_report
-msgid "Stock Inventory Valuation Report"
-msgstr ""
-
-#. module: coop_stock
-#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:117
-#, python-format
-msgid "Tax ID"
-msgstr ""
-
-#. module: coop_stock
-#: code:addons/coop_stock/models/stock_inventory_valuation_report.py:83
-#, python-format
-msgid "Value"
-msgstr ""
-
-#. module: coop_stock
-#: model_terms:ir.ui.view,arch_db:coop_stock.product_template_kanban_stock_view_inherit
-msgid "Forecasted:"
-msgstr ""
-
-#. module: coop_stock
-#: model:ir.model.fields,field_description:coop_stock.field_stock_move__product_default_code
-#: model:ir.model.fields,field_description:coop_stock.field_stock_move_line__product_default_code
-msgid "Internal Reference"
+#: model:ir.model.fields.selection,name:coop_stock.selection__product_category__type__view
+msgid "View"
 msgstr ""

@@ -1,6 +1,6 @@
 {
     "name": "Coop - Stock",
-    "version": "12.0.1.1.0",
+    "version": "18.0.1.0.0",
     "category": "Custom",
     "summary": "Custom settings for stock",
     "author": "La Louve, Druidoo",
@@ -13,6 +13,7 @@
         "stock_scrap_product_report",
         "point_of_sale",
         "purchase_package_qty",
+        "purchase_stock",
         "queue_job",
         "sale_stock",
     ],
@@ -21,7 +22,6 @@
         "views/menu.xml",
         "views/stock_picking_view.xml",
         "views/stock_inventory_valuation_report.xml",
-        "views/product_views.xml",
     ],
     "installable": True,
 }

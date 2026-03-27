@@ -21,15 +21,14 @@
 #
 ##############################################################################
 
-from odoo import api, models
+from odoo import models
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    @api.multi
     def copy_expected_qtys(self):
         for picking in self:
             for pack in picking.move_ids_without_package:
-                pack.qty_done_package = pack.product_qty_package
-                pack.quantity_done = pack.product_uom_qty
+                pack.product_packaging_quantity = pack.product_packaging_qty
+                pack.quantity = pack.product_uom_qty
