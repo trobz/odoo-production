@@ -3,7 +3,8 @@
 
 import logging
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
+from odoo.osv import expression
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
 
 _logger = logging.getLogger(__name__)
@@ -12,10 +13,51 @@ _logger = logging.getLogger(__name__)
 class StockInventoryValuationReport(models.TransientModel):
     _inherit = "report.stock.inventory.valuation.report"
 
-    @api.multi
+    @api.depends("inventory_datetime")
+    def _compute_results(self):
+        self.ensure_one()
+        domain = [("type", "=", "consu")]
+        product_id = self.env.context.get("product_id")
+        product_tmpl_id = self.env.context.get("product_tmpl_id")
+        if product_id:
+            domain = expression.AND([domain, [("id", "=", product_id)]])
+        elif product_tmpl_id:
+            domain = expression.AND(
+                [domain, [("product_tmpl_id", "=", product_tmpl_id)]]
+            )
+
+        products = (
+            self.env["product.product"]
+            .with_context(
+                to_date=self.inventory_datetime,
+                company_owned=True,
+                create=False,
+                edit=False,
+            )
+            .search(domain)
+        ).filtered(lambda pp: pp.quantity_svl != 0)
+
+        results = self.env["stock.inventory.valuation.view"]
+        for product in products:
+            vals = {
+                "name": product.with_context(display_default_code=False).display_name,
+                "reference": product.default_code,
+                "barcode": product.barcode,
+                "qty_at_date": product.quantity_svl,
+                "uom_id": product.uom_id,
+                "currency_id": product.currency_id,
+                "cost_currency_id": product.cost_currency_id,
+                "standard_price": product.standard_price,
+                "stock_value": product.value_svl,
+                "cost_method": product.cost_method,
+                "categ_name": product.categ_id.name,
+            }
+            results |= results.new(vals)
+        self.results = results
+
     def get_date_context(self):
         self.ensure_one()
-        res = self.date
+        res = self.inventory_datetime
         if res:
             res = fields.Datetime.context_timestamp(self, res).strftime(DTF)
         return res
@@ -37,7 +79,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
             },
             "2_reference": {
                 "header": {
-                    "value": _("Reference"),
+                    "value": self.env._("Reference"),
                 },
                 "data": {
                     "value": self._render("reference"),
@@ -46,7 +88,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
             },
             "3_name": {
                 "header": {
-                    "value": _("Name"),
+                    "value": self.env._("Name"),
                 },
                 "data": {
                     "value": self._render("name"),
@@ -55,7 +97,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
             },
             "4_categ_name": {
                 "header": {
-                    "value": _("Internal Category"),
+                    "value": self.env._("Internal Category"),
                 },
                 "data": {
                     "value": self._render("categ_name"),
@@ -64,7 +106,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
             },
             "5_barcode": {
                 "header": {
-                    "value": _("Barcode"),
+                    "value": self.env._("Barcode"),
                 },
                 "data": {
                     "value": self._render("barcode"),
@@ -73,7 +115,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
             },
             "6_qty_at_date": {
                 "header": {
-                    "value": _("Quantity"),
+                    "value": self.env._("Quantity"),
                 },
                 "data": {
                     "value": self._render("qty_at_date"),
@@ -83,7 +125,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
             },
             "7_standard_price": {
                 "header": {
-                    "value": _("Cost"),
+                    "value": self.env._("Cost"),
                 },
                 "data": {
                     "value": self._render("standard_price"),
@@ -93,7 +135,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
             },
             "8_stock_value": {
                 "header": {
-                    "value": _("Value"),
+                    "value": self.env._("Value"),
                 },
                 "data": {
                     "value": self._render("stock_value"),
@@ -110,9 +152,9 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
         stock_inventory_valuation_template = self._get_wanted_list()
 
         ws_params = {
-            "ws_name": _("Inventory Valuation Report"),
+            "ws_name": self.env._("Inventory Valuation Report"),
             "generate_ws_method": "_inventory_valuation_report",
-            "title": "Inventory Valuation Report",
+            "title": self.env._("Inventory Valuation Report"),
             "wanted_list": [
                 k for k in sorted(stock_inventory_valuation_template.keys())
             ],
@@ -138,14 +180,6 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
         ws.fit_to_pages(1, 0)
         ws.set_header(self.xls_headers["standard"])
         ws.set_footer(self.xls_footers["standard"])
-        format_tcell_datetime_center = wb.add_format(
-            dict(
-                {"border": True, "border_color": "#D3D3D3"},
-                num_format="YYYY-MM-DD HH:mm:SS",
-                align="center",
-            )
-        )
-
         self._set_column_width(ws, ws_params)
 
         row_pos = 0
@@ -155,7 +189,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
             ws.write_row(
                 row_pos,
                 0,
-                [_("Date"), _("Partner"), _("Tax ID")],
+                [self.env._("Date"), self.env._("Partner"), self.env._("Tax ID")],
                 self.format_theader_blue_center,
             )
             report_date = o.get_date_context()

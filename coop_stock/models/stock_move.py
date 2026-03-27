@@ -27,36 +27,10 @@ from odoo import api, fields, models
 class StockMove(models.Model):
     _inherit = "stock.move"
 
-    created_purchase_line_id = fields.Many2one(index=True)
-
-    is_quantity_done_editable = fields.Boolean(
-        compute="_compute_is_quantity_done_editable"
-    )
     product_default_code = fields.Char(
         string="Internal Reference", related="product_id.default_code", store=True
     )
 
-    @api.multi
-    @api.depends("state", "picking_id", "product_id")
-    def _compute_is_quantity_done_editable(self):
-        for move in self:
-            if not move.product_id:
-                move.is_quantity_done_editable = False
-            elif (
-                not move.picking_id.immediate_transfer
-                and move.picking_id.state == "draft"
-            ):
-                move.is_quantity_done_editable = False
-            elif move.picking_id.is_locked and move.state in ("done", "cancel"):
-                move.is_quantity_done_editable = False
-            # elif move.show_details_visible:
-            #    move.is_quantity_done_editable = False
-            elif move.show_operations:
-                move.is_quantity_done_editable = False
-            else:
-                move.is_quantity_done_editable = True
-
-    @api.multi
     def unlink(self):
         for move in self:
             if move.state not in ("draft", "cancel"):
@@ -66,12 +40,12 @@ class StockMove(models.Model):
 
     vendor_product_code = fields.Char(compute="_compute_move_product_code")
 
-    @api.multi
+    @api.depends("product_id", "picking_id.partner_id")
     def _compute_move_product_code(self):
         for pack in self:
             vendor_product_code = ""
             sellers = pack.product_id.seller_ids
             for seller in sellers:
-                if seller.name == pack.picking_id.partner_id:
+                if seller.partner_id == pack.picking_id.partner_id:
                     vendor_product_code = seller.product_code
             pack.vendor_product_code = vendor_product_code

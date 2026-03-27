@@ -13,13 +13,13 @@ class StockMoveLine(models.Model):
     product_default_code = fields.Char(
         string="Internal Reference", related="product_id.default_code"
     )
-    picking_id = fields.Many2one(index=True)
-    result_package_id = fields.Many2one(index=True)
 
-    @api.multi
+    @api.depends("product_id")
     def _compute_product_code(self):
         for move_line in self:
             sellers = move_line.product_id.seller_ids
+            move_line.vendor_product_code = False
             for seller in sellers:
                 if seller.name == move_line.picking_id.partner_id:
                     move_line.vendor_product_code = seller.product_code
+                    break

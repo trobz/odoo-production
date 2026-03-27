@@ -1,14 +1,9 @@
 <?xml version="1.0" ?>
 <odoo>
-    <record model="ir.actions.act_window" id="stock.action_stock_quantity_history">
-        <field name="context">{'show_export_button': True}</field>
-    </record>
-
     <record id="stock_picking_type_action_inherit" model="ir.actions.act_window">
         <field name="name">Inventory</field>
         <field name="res_model">stock.picking.type</field>
         <field name="type">ir.actions.act_window</field>
-        <field name="view_type">form</field>
         <field name="view_mode">kanban,form</field>
         <field name="help" type="html">
             <p class="oe_view_nocontent_create">
@@ -25,8 +20,5 @@
                 customer.
             </p>
         </field>
-    </record>
-    <record id="stock_account.product_valuation_action" model="ir.actions.act_window">
-        <field name="domain">[('type', '=', 'product')]</field>
     </record>
 </odoo>
