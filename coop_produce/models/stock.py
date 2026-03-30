@@ -163,9 +163,7 @@ class StockInventory(models.Model):
             quants |= self.env["stock.quant"].create(
                 {
                     "product_id": product.id,
-                    "default_packaging": product.default_packaging,
                     "product_uom_id": product.uom_id.id,
-                    "packaging_qty": 0.0,
                     "inventory_quantity": 0.0,
                     "location_id": location_ids[0],
                 }
@@ -202,14 +200,14 @@ class StockInventory(models.Model):
 class StockQuant(models.Model):
     _inherit = "stock.quant"
 
-    def _compute_qty_loss(self):
-        for line in self:
-            line.qty_loss = (line.qty_stock - line.packaging_qty) or 0.00
-
-    default_packaging = fields.Float(readonly=True)
+    default_packaging = fields.Float(
+        compute="_compute_quanties",
+        store=True,
+    )
     packaging_qty = fields.Float(
         string="Theorical Packaging Qty",
-        readonly=True,
+        compute="_compute_quanties",
+        store=True,
         digits="Product Unit of Measure",
     )
     qty_loss = fields.Float(
@@ -224,46 +222,45 @@ class StockQuant(models.Model):
         help="Stock Quantity",
     )
 
+    @api.depends("product_id", "qty_stock")
+    def _compute_quanties(self):
+        for quant in self:
+            product = quant.product_id
+            default_packaging = product.default_packaging
+
+            if not default_packaging:
+                quant.default_packaging = 0.0
+                quant.packaging_qty = 0.0
+            else:
+                quant.default_packaging = default_packaging
+                quant.packaging_qty = product.qty_available / default_packaging
+
+    @api.depends("packaging_qty", "qty_stock")
+    def _compute_qty_loss(self):
+        for quant in self:
+            quant.qty_loss = (quant.qty_stock - quant.packaging_qty) or 0.00
+
     @api.onchange("qty_stock")
     def onchange_qty_stock(self):
-        if not self.product_id:
-            return self.onchange_product_id()
         if not self.default_packaging:
-            return {
-                "warning": {
-                    "title": self.env._("Warning: wrong default packaging"),
-                    "message": self.env._(
-                        "The default packaging is not defined on the product"
-                    ),
-                }
-            }
-        self.qty_loss = self.qty_stock - self.packaging_qty
+            return self._show_warning_no_default_packaging()
+
         self.inventory_quantity = self.qty_stock * self.default_packaging
+
+    def _show_warning_no_default_packaging(self):
+        self.ensure_one()
+        return {
+            "warning": {
+                "title": self.env._("Warning: wrong default packaging"),
+                "message": self.env._(
+                    "The default packaging is not defined on the product"
+                ),
+            }
+        }
 
     @api.onchange("product_id")
     def onchange_product_id(self):
-        if not self.product_id or not self.product_id.default_packaging:
-            self.default_packaging = 0.0
-            self.packaging_qty = 0.0
-            self.qty_loss = 0.0
-            self.qty_stock = 0.0
-            self.inventory_quantity = 0.0
-
-        elif self.product_id and self.product_id.default_packaging:
-            self.default_packaging = self.product_id.default_packaging
-            self.packaging_qty = (
-                self.product_id.qty_available / self.product_id.default_packaging
-            )
-            self.qty_loss = -self.packaging_qty
-            self.qty_stock = 0.0
-            self.inventory_quantity = 0.0
-
-        if not self.product_id.default_packaging:
-            return {
-                "warning": {
-                    "title": self.env._("Warning: wrong default packaging"),
-                    "message": self.env._(
-                        "The default packaging is not defined on the product"
-                    ),
-                }
-            }
+        self.qty_loss = -self.packaging_qty
+        self.inventory_quantity = 0.0
+        if self.product_id and not self.product_id.default_packaging:
+            return self._show_warning_no_default_packaging()
