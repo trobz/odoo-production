@@ -43,5 +43,13 @@ class CoopProduceTest(common.TransactionCase):
                 "product_id": cls.ProductCoop.product_variant_id.id,
             }
         )
-        cls.ProductCoop.product_variant_id.default_packaging = 2
+        cls.VariantCoop = cls.ProductCoop.product_variant_id
+        cls.VariantCoop.default_packaging = 2
         cls.StockLocation = cls.env.ref("stock.stock_location_stock")
+        cls.Quant = cls.env["stock.quant"].create(
+            {
+                "product_id": cls.VariantCoop.id,
+                "location_id": cls.StockLocation.id,
+                "quantity": 6.0,
+            }
+        )

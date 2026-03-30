@@ -60,6 +60,36 @@ class TestCoopProduce(CoopProduceTest):
             "Stock Quants should be created after adding products"
             " using the add button of suppliers.",
         )
+        self.assertEqual(
+            len(stock_inventory.stock_quant_ids),
+            1,
+        )
+        # Check quantity
+        quant = stock_inventory.stock_quant_ids[0]
+        self.assertEqual(
+            quant.product_id,
+            self.VariantCoop,
+            "The product of the stock quant should be the product variant of "
+            "the Coop Product.",
+        )
+        self.assertEqual(
+            quant.default_packaging,
+            self.VariantCoop.default_packaging,
+            "The location of the stock quant should be the stock location.",
+        )
+        quant.qty_stock = 8.0
+        self.assertEqual(
+            quant.packaging_qty,
+            3.0,
+            "The packaging quantity should be the stock quantity divided by "
+            "the default packaging.",
+        )
+        self.assertEqual(
+            quant.qty_loss,
+            5.0,
+            "The quantity loss should be the difference between the packaging "
+            "quantity and the stock quantity.",
+        )
 
         # Validate F&V Inventory
         stock_inventory.action_state_to_done()
