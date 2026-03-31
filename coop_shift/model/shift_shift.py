@@ -236,8 +236,10 @@ class ShiftShift(models.Model):
             ]
             if operator in expression.NEGATIVE_TERM_OPERATORS:
                 domain = ["&", "!"] + domain[1:]
-        shifts = self.search(domain + args, limit=limit)
-        return shifts.name_get()
+        args = expression.AND([args, domain])
+        empty_name = False
+        return super().name_search(
+            name=empty_name, args=args, operator=operator, limit=limit)
 
     @api.depends("name", "date_begin")
     def _compute_display_name(self):
