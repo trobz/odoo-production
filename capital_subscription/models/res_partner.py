@@ -3,7 +3,7 @@
 # @author: Julien Weste
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class ResPartner(models.Model):
@@ -19,6 +19,7 @@ class ResPartner(models.Model):
     )
 
     # Compute section
+    @api.depends("invoice_ids", "invoice_ids.is_capital_fundraising", "invoice_ids.state")
     def _compute_amount_subscription(self):
         inv_obj = self.env["account.move"].sudo()
         for partner in self:
