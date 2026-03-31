@@ -131,7 +131,7 @@ msgstr "État Bootstrap"
 #. module: coop_badge_reader
 #. odoo-javascript
 #: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.xml:0
-msgid "Can purchase:"
+msgid "Can Purchase:"
 msgstr "Peut acheter :"
 
 #. module: coop_badge_reader
@@ -503,7 +503,7 @@ msgstr "Désinscrit"
 #: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 #: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__up_to_date
 msgid "Up to date"
-msgstr "À jour"
+msgstr "A jour"
 
 #. module: coop_badge_reader
 #: model:res.groups,name:coop_badge_reader.group_user
