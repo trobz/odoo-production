@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="demo_pos_child_statement" model="account.bank.statement">
+        <field name="name">Demo POS Child Statement</field>
+        <field
+            name="journal_id"
+            ref="account_reconcile_pos_payments.demo_credit_journal_pos_child"
+        />
+        <field name="date">2026-01-01</field>
+        <field name="balance_end_real">100.00</field>
+    </record>
+
+    <record id="demo_pos_child_statement_line" model="account.bank.statement.line">
+        <field name="payment_ref">POS/CHILD/01</field>
+        <field
+            name="statement_id"
+            ref="account_reconcile_pos_payments.demo_pos_child_statement"
+        />
+        <field
+            name="journal_id"
+            ref="account_reconcile_pos_payments.demo_credit_journal_pos_child"
+        />
+        <field name="partner_id" ref="base.res_partner_12" />
+        <field name="date">2026-01-01</field>
+        <field name="amount">100.00</field>
+    </record>
+
+    <record id="demo_pos_parent_statement" model="account.bank.statement">
+        <field name="name">Demo POS Parent Statement</field>
+        <field
+            name="journal_id"
+            ref="account_reconcile_pos_payments.demo_bank_journal_pos_parent"
+        />
+        <field name="date">2026-01-02</field>
+        <field name="balance_end_real">100.00</field>
+    </record>
+
+    <record id="demo_pos_parent_statement_line" model="account.bank.statement.line">
+        <field name="payment_ref">CB/CONT/01</field>
+        <field
+            name="statement_id"
+            ref="account_reconcile_pos_payments.demo_pos_parent_statement"
+        />
+        <field
+            name="journal_id"
+            ref="account_reconcile_pos_payments.demo_bank_journal_pos_parent"
+        />
+        <field name="partner_id" ref="base.res_partner_12" />
+        <field name="date">2026-01-02</field>
+        <field name="amount">100.00</field>
+    </record>
+
+    <record id="demo_bank_expense_statement" model="account.bank.statement">
+        <field name="name">Demo Bank Expense Statement</field>
+        <field
+            name="journal_id"
+            ref="account_reconcile_pos_payments.demo_bank_journal_pos_parent"
+        />
+        <field name="date">2026-01-03</field>
+        <field name="balance_end_real">95.00</field>
+    </record>
+
+    <record id="demo_bank_expense_statement_line" model="account.bank.statement.line">
+        <field name="payment_ref">BANK FEE</field>
+        <field name="ref">FEE-01</field>
+        <field name="narration">BANK CHARGE</field>
+        <field
+            name="statement_id"
+            ref="account_reconcile_pos_payments.demo_bank_expense_statement"
+        />
+        <field
+            name="journal_id"
+            ref="account_reconcile_pos_payments.demo_bank_journal_pos_parent"
+        />
+        <field name="partner_id" ref="base.res_partner_12" />
+        <field name="date">2026-01-03</field>
+        <field name="amount">-5.00</field>
+    </record>
+</odoo>

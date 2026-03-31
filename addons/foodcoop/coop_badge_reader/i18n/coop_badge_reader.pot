@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-24 03:05+0000\n"
-"PO-Revision-Date: 2026-03-24 03:05+0000\n"
+"POT-Creation-Date: 2026-03-26 04:37+0000\n"
+"PO-Revision-Date: 2026-03-26 04:37+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,11 +19,12 @@ msgstr ""
 #: model:mail.template,body_html:coop_badge_reader.email_template_partner_alert
 msgid ""
 "<div>\n"
+"                <p>Hello,</p>\n"
 "                <p>\n"
-"                    Hello\n"
-"                    <t t-out=\"object.expected_member_id.name.split(',')[0]\"/>,\n"
+"                    <t t-out=\"object.expected_member_id.name.split(',')[0]\"/>\n"
+"                    <t t-out=\"object.expected_member_id.barcode_base\"/>\n"
+"                    just entered the store.\n"
 "                </p>\n"
-"                <t t-out=\"object.expected_member_id.barcode_base\"/> just entered the store.\n"
 "                <br/>\n"
 "            </div>\n"
 "        "
@@ -31,10 +32,10 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.esm.js:0
 msgid ""
-"A grace period until %s or until your next service has been assigned to "
-"you.You may proceed with your shopping!"
+"A grace period until %s or until your next service has been assigned to you."
+" You may proceed with your shopping!"
 msgstr ""
 
 #. module: coop_badge_reader
@@ -50,8 +51,8 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
-#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.esm.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 #: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__alert
 msgid "Alert"
 msgstr ""
@@ -86,26 +87,20 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
-msgid "Badge distribution logged"
-msgstr ""
-
-#. module: coop_badge_reader
-#. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.esm.js:0
 msgid "Barcode"
 msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.esm.js:0
 msgid "Barcode incorrect"
 msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
-#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.esm.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 #: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__blocked
 msgid "Blocked"
 msgstr ""
@@ -215,14 +210,8 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.esm.js:0
 msgid "Enter name"
-msgstr ""
-
-#. module: coop_badge_reader
-#. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
-msgid "Entry logged"
 msgstr ""
 
 #. module: coop_badge_reader
@@ -239,22 +228,10 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
-msgid "Error logged"
-msgstr ""
-
-#. module: coop_badge_reader
-#. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
-#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.esm.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 #: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__exempted
 msgid "Exempted"
-msgstr ""
-
-#. module: coop_badge_reader
-#. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
-msgid "Exit logged"
 msgstr ""
 
 #. module: coop_badge_reader
@@ -270,8 +247,8 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
-#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.esm.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 msgid "Grace period granted"
 msgstr ""
 
@@ -310,14 +287,20 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.esm.js:0
 msgid "Member number"
 msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.esm.js:0
 msgid "Member number incorrect"
+msgstr ""
+
+#. module: coop_badge_reader
+#. odoo-javascript
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.esm.js:0
+msgid "Member number must be a whole number"
 msgstr ""
 
 #. module: coop_badge_reader
@@ -328,7 +311,7 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.esm.js:0
 msgid "Name"
 msgstr ""
 
@@ -346,7 +329,7 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.esm.js:0
 msgid "No partner found with this name"
 msgstr ""
 
@@ -357,8 +340,8 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
-#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.esm.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 msgid "Not concerned"
 msgstr ""
 
@@ -375,8 +358,8 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
-#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.esm.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 msgid "On leave"
 msgstr ""
 
@@ -413,7 +396,7 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.esm.js:0
 msgid "Please enter a search value"
 msgstr ""
 
@@ -424,13 +407,13 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.esm.js:0
 msgid "Scan or enter barcode"
 msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.js:0
+#: code:addons/coop_badge_reader/static/src/app/badge_reader_app.esm.js:0
 msgid "Scan or enter member number"
 msgstr ""
 
@@ -471,8 +454,8 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
-#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.esm.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 #: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__suspended
 msgid "Suspended"
 msgstr ""
@@ -484,8 +467,8 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
-#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.esm.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 msgid "Unpaid"
 msgstr ""
 
@@ -496,16 +479,16 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
-#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.esm.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 #: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__unsubscribed
 msgid "Unsubscribed"
 msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
-#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.esm.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 #: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__up_to_date
 msgid "Up to date"
 msgstr ""
@@ -529,7 +512,7 @@ msgstr ""
 
 #. module: coop_badge_reader
 #. odoo-javascript
-#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.js:0
+#: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.esm.js:0
 msgid ""
 "We were unable to grant you a grace period; you must make up your services "
 "before doing your shopping."

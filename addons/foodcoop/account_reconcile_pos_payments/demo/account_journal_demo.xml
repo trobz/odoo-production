@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="demo_bank_journal_pos_parent" model="account.journal">
+        <field name="name">Demo POS Parent Bank</field>
+        <field name="code">DBP1</field>
+        <field name="type">bank</field>
+        <field name="company_id" ref="base.main_company" />
+        <field
+            name="default_account_id"
+            search="[('account_type', '=', 'asset_cash'), ('company_ids', 'in', ref('base.main_company'))]"
+        />
+        <field name="cb_lines_domain">[("payment_ref", "ilike", "%CB/CONT/%")]</field>
+        <field name="cb_delta_days">3</field>
+        <field name="cb_rounding">0.01</field>
+        <field name="cb_contactless_matching">True</field>
+        <field
+            name="cb_contactless_lines_domain"
+        >[("payment_ref", "ilike", "%CTLS/%")]</field>
+        <field name="cb_contactless_delta_days">0</field>
+        <field name="bank_expense_name_pattern">FEE|BANK CHARGE</field>
+        <field name="bank_expense_ref_pattern">FEE|CHARGE</field>
+        <field name="bank_expense_note_pattern">.*</field>
+        <field
+            name="bank_expense_account_id"
+            search="[('account_type', '=', 'expense'), ('company_ids', 'in', ref('base.main_company'))]"
+        />
+    </record>
+
+    <record id="demo_credit_journal_pos_child" model="account.journal">
+        <field name="name">Demo POS Child Credit</field>
+        <field name="code">DPC1</field>
+        <field name="type">credit</field>
+        <field name="company_id" ref="base.main_company" />
+        <field
+            name="default_account_id"
+            search="[('account_type', '=', 'liability_credit_card'), ('company_ids', 'in', ref('base.main_company'))]"
+        />
+        <field name="cb_parent_id" ref="demo_bank_journal_pos_parent" />
+    </record>
+</odoo>

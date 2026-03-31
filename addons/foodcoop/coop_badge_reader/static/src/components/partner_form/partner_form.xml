@@ -40,34 +40,42 @@
                         </h1>
                         <!-- STATUS -->
                         <h4 class="mb-3">
-                            Status:
+                            <span class="">Status:</span>
                             <span
-                            t-att-class="'label ' + getCooperativeStateClass(partner.cooperative_state)"
-                        >
-                            <t
-                                t-out="getCooperativeStateLabel(partner.cooperative_state)"
-                            />
-                        </span>
+                                t-att-class="'label ' + getCooperativeStateClass(partner.cooperative_state)"
+                            >
+                                <t
+                                    t-out="getCooperativeStateLabel(partner.cooperative_state)"
+                                />
+                            </span>
                         </h4>
                         <!-- CAN BUY -->
                         <h4 class="mb-3">
-                            Can purchase:
+                            <span class="">Can Purchase:</span>
                             <span
-                            class="label label-success"
-                            t-if="partner.customer"
-                        >YES</span>
+                                class="label label-success"
+                                t-if="partner.customer"
+                            >YES</span>
                             <span class="label label-danger" t-else="">NO</span>
                         </h4>
                         <!-- MESSAGES -->
-                        <h3 class="text-warning" t-if="message.warning">
+                        <h5
+                            class="text-warning text-message-warning"
+                            t-if="message.warning"
+                        >
+                            <i class="fa fa-warning me-2" role="img" />
                             <t t-out="message.warning" />
-                        </h3>
-                        <h3 class="text-danger" t-if="message.fail">
+                        </h5>
+                        <h5 class="text-danger text-message-danger" t-if="message.fail">
+                            <i class="fa fa-close me-2" role="img" />
                             <t t-out="message.fail" />
-                        </h3>
-                        <h3 t-if="message.contact_us">
+                        </h5>
+                        <h5
+                            t-if="message.contact_us"
+                            class="text-info text-message-contact"
+                        >
                             <t t-out="message.contact_us" />
-                        </h3>
+                        </h5>
                     </div>
                 </div>
                 <!-- ACTIONS -->
