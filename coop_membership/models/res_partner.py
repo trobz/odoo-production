@@ -390,8 +390,10 @@ class ResPartner(models.Model):
             partner.is_member = partner.total_partner_owned_share > 0
 
     @api.depends(
-        "total_partner_owned_share", "invoice_ids",
-        "invoice_ids.fundraising_category_id", "invoice_ids.state"
+        "total_partner_owned_share",
+        "invoice_ids",
+        "invoice_ids.fundraising_category_id",
+        "invoice_ids.state",
     )
     def _compute_is_former_member(self):
         """

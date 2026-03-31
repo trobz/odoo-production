@@ -57,7 +57,7 @@
             <search string="Ticket">
                 <field
                     name="name"
-                        filter_domain="['|', ('name','ilike',self), ('begin_date_string','ilike',self)]"
+                    filter_domain="['|', ('name','ilike',self), ('begin_date_string','ilike',self)]"
                     string="Ticket"
                 />
                 <separator />

@@ -19,7 +19,9 @@ class ResPartner(models.Model):
     )
 
     # Compute section
-    @api.depends("invoice_ids", "invoice_ids.is_capital_fundraising", "invoice_ids.state")
+    @api.depends(
+        "invoice_ids", "invoice_ids.is_capital_fundraising", "invoice_ids.state"
+    )
     def _compute_amount_subscription(self):
         inv_obj = self.env["account.move"].sudo()
         for partner in self:

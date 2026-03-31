@@ -239,7 +239,8 @@ class ShiftShift(models.Model):
         args = expression.AND([args, domain])
         empty_name = False
         return super().name_search(
-            name=empty_name, args=args, operator=operator, limit=limit)
+            name=empty_name, args=args, operator=operator, limit=limit
+        )
 
     @api.depends("name", "date_begin")
     def _compute_display_name(self):

@@ -31,26 +31,26 @@ Point of Sale data.
 Features
 --------
 
-- Generate gross margin report in Excel format (XLSX)
-- Calculate gross margin based on:
+-  Generate gross margin report in Excel format (XLSX)
+-  Calculate gross margin based on:
 
-  - Pre-tax Net Sales during period
-  - Inventory Value at beginning date
-  - Net Purchases
-  - Total available for Sale
-  - Inventory Value at end date
-  - Cost of Goods Sold (COGS)
-  - Gross Margin
+   -  Pre-tax Net Sales during period
+   -  Inventory Value at beginning date
+   -  Net Purchases
+   -  Total available for Sale
+   -  Inventory Value at end date
+   -  Cost of Goods Sold (COGS)
+   -  Gross Margin
 
-- Filter by product categories
-- Date range selection
+-  Filter by product categories
+-  Date range selection
 
 Technical Details
 -----------------
 
-- Depends on ``coop_point_of_sale`` and ``report_xlsx`` modules
-- Uses ``report.report_xlsx.abstract`` for XLSX report generation
-- Wizard-based interface for report generation
+-  Depends on ``coop_point_of_sale`` and ``report_xlsx`` modules
+-  Uses ``report.report_xlsx.abstract`` for XLSX report generation
+-  Wizard-based interface for report generation
 
 **Table of contents**
 
@@ -70,13 +70,13 @@ Generate Gross Margin Report
 
 The report will include:
 
-- Sales amount
-- Beginning inventory value
-- Purchases
-- Goods available for sale
-- Ending inventory value
-- Cost of Goods Sold (COGS)
-- Gross Margin
+-  Sales amount
+-  Beginning inventory value
+-  Purchases
+-  Goods available for sale
+-  Ending inventory value
+-  Cost of Goods Sold (COGS)
+-  Gross Margin
 
 Each category will be listed with its corresponding values.
 
@@ -102,9 +102,9 @@ Authors
 Contributors
 ------------
 
-- Trobz <`https://www.trobz.com\\> <https://www.trobz.com\>>`__
+-  Trobz <https://www.trobz.com>
 
-  - Phan Hong Phuc <<phucph@trobz.com>>
+   -  Phan Hong Phuc <<phucph@trobz.com>>
 
 Maintainers
 -----------
