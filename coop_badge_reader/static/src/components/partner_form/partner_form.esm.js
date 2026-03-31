@@ -2,6 +2,12 @@ import {Component, markup, onWillStart, useState} from "@odoo/owl";
 import {_t} from "@web/core/l10n/translation";
 import {useService} from "@web/core/utils/hooks";
 
+function hasContent(html) {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent.replace(/\u00A0/g, " ").trim().length > 0;
+}
+
 export class PartnerFormComponent extends Component {
     static template = "coop_badge_reader.PartnerForm";
     static props = {
@@ -65,7 +71,7 @@ export class PartnerFormComponent extends Component {
             partner.css_class = "partner-error";
         }
         this._playSound(partner);
-        if (partner.contact_us_message) {
+        if (hasContent(partner.contact_us_message)) {
             this.message.contact_us = markup(partner.contact_us_message);
         }
         if (partner.cooperative_state === "delay" && graceResult) {
