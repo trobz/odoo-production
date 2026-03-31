@@ -99,7 +99,7 @@ class ResPartner(models.Model):
         """
         company = self.env.company
         fields_recs = company.reprint_change_field_ids
-        return [field_item.name for field_item in fields_recs]
+        return [field_item.name for field_item in fields_recs if field_item.name in self._fields]
 
     @api.model_create_multi
     def create(self, vals_list):
