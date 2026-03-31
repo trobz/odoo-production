@@ -5,15 +5,16 @@
         <field name="inherit_id" ref="coop_shift.view_shift_leave_form" />
         <field name="priority">10</field>
         <field name="arch" type="xml">
-            <field name="type_id" position="after">
+            <field name="partner_id" position="after">
                 <field
                     name="expected_birthdate"
                     invisible="not is_parental_leave"
                     required="is_parental_leave"
                     string="Expected or actual birthdate : (to be entered first)"
                 />
+                <field name="is_parental_leave" invisible="1" />
             </field>
-            <field name="partner_state" position="before">
+            <field name="type_id" position="after">
                 <field
                     name="provided_birth_certificate"
                     invisible="not is_parental_leave"

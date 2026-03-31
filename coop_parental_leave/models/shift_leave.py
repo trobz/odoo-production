@@ -7,7 +7,9 @@ from odoo.exceptions import UserError, ValidationError
 class ShiftLeave(models.Model):
     _inherit = "shift.leave"
 
-    is_parental_leave = fields.Boolean()
+    is_parental_leave = fields.Boolean(
+        compute="compute_is_parental_leave", store=True
+    )
     is_exceeded_stop_date = fields.Boolean()
     is_warning_start_date = fields.Boolean()
     exempted_until_end = fields.Boolean()
@@ -55,8 +57,8 @@ class ShiftLeave(models.Model):
                         )
                     )
 
-    @api.onchange("type_id")
-    def _onchange_type_id(self):
+    @api.depends("type_id")
+    def compute_is_parental_leave(self):
         leave_type_name = (
             self.env["ir.config_parameter"]
             .sudo()
@@ -65,10 +67,10 @@ class ShiftLeave(models.Model):
         parental_shift_type = self.env["shift.leave.type"].search(
             [("name", "=", leave_type_name)]
         )
-        if self.type_id and self.type_id == parental_shift_type:
-            self.is_parental_leave = True
-        else:
-            self.is_parental_leave = False
+        for leave in self:
+            leave.is_parental_leave = (
+                leave.type_id and leave.type_id == parental_shift_type
+            )
 
     @api.onchange("start_date", "expected_birthdate")
     def _onchange_start_date(self):
