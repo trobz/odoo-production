@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="popups_template" xml:space="preserve">
+
+    <t t-name="coop_point_of_sale.VerifyPaymentDialog">
+        <Dialog size="'md'" title.translate="Verify Payment">
+            <div>
+                <div style="margin-top:10px;">
+                    <t t-out="props.thanks_message || '' " />
+                </div>
+                <ul style="padding-left: 30%;">
+                    <li style="list-style-type: disc;text-align: left;">
+                        <t t-out="props.amount || '' " />
+                    </li>
+                    <li style="list-style-type: disc;text-align: left;">
+                        <t t-out="props.date || '' " />
+                    </li>
+                    <li style="list-style-type: disc;text-align: left;">
+                        <t t-out="props.order_messages || '' " />
+                    </li>
+                    <li style="list-style-type: disc;text-align: left;">
+                        <t t-out="props.signature || '' " />
+                    </li>
+                </ul>
+                <t t-set-slot="footer">
+                    <button
+                        class="btn btn-primary o-default-button"
+                        t-on-click="onConfirm"
+                    >
+                        Confirm
+                    </button>
+                    <button
+                        class="btn btn-secondary o-default-button"
+                        t-on-click="onCancel"
+                    >
+                        Cancel
+                    </button>
+                </t>
+            </div>
+        </Dialog>
+    </t>
+
+</templates>

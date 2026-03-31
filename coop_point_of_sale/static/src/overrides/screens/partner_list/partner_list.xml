@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t t-inherit="point_of_sale.PartnerList" t-inherit-mode="extension">
+        <xpath expr="//thead/tr/th[1]" position="before">
+            <th class="py-2" />
+        </xpath>
+        <xpath expr="//th[hasclass('partner-line-email')]" position="after">
+            <th class="py-2">Cooperative Number</th>
+            <th class="py-2">Cooperative State</th>
+        </xpath>
+    </t>
+
+    <t t-inherit="point_of_sale.PartnerLine" t-inherit-mode="extension">
+        <xpath expr="//tr[hasclass('partner-line')]/td[1]" position="before">
+            <td class="partner-line-avatar p-1" valign="middle">
+                <img
+                    t-att-src="getPartnerImageUrl(props.partner.id)"
+                    width="60"
+                    height="60"
+                    class="partner-avatar"
+                />
+            </td>
+        </xpath>
+        <xpath expr="//td[hasclass('partner-line-email')]" position="after">
+            <td class="partner-line-barcode-base p-1">
+                <t t-out="props.partner.barcode_base" />
+            </td>
+            <td class="partner-line-cooperative-state p-1">
+                <t
+                    t-if="props.partner.cooperative_state == 'not_concerned'"
+                >Not concerned</t>
+                <t
+                    t-if="props.partner.cooperative_state == 'unsubscribed'"
+                >Unsubscribed</t>
+                <t t-if="props.partner.cooperative_state == 'exempted'">Up to date</t>
+                <t t-if="props.partner.cooperative_state == 'vacation'">On leave</t>
+                <t t-if="props.partner.cooperative_state == 'up_to_date'">Up to date</t>
+                <t t-if="props.partner.cooperative_state == 'alert'">Alert</t>
+                <t t-if="props.partner.cooperative_state == 'suspended'">Suspended</t>
+                <t t-if="props.partner.cooperative_state == 'delay'">Delayed</t>
+                <t t-if="props.partner.cooperative_state == 'blocked'">Blocked</t>
+                <t t-if="props.partner.cooperative_state == 'unpayed'">Unpaid</t>
+            </td>
+        </xpath>
+    </t>
+
+</templates>
