@@ -39,6 +39,7 @@ class ResPartner(models.Model):
     # New Column Section
 
     # Add field in res partner
+    barcode_base = fields.Integer(aggregator=None)
     payment_method_count = fields.Integer()
     opt_out = fields.Boolean(default=False)
 
@@ -388,13 +389,16 @@ class ResPartner(models.Model):
         for partner in self:
             partner.is_member = partner.total_partner_owned_share > 0
 
-    @api.depends("total_partner_owned_share")
+    @api.depends(
+        "total_partner_owned_share", "invoice_ids",
+        "invoice_ids.fundraising_category_id", "invoice_ids.state"
+    )
     def _compute_is_former_member(self):
         """
         @Function to compute the value of is former member
         """
         for partner in self:
-            if partner.total_partner_owned_share == 0:
+            if partner.ids and partner.total_partner_owned_share == 0:
                 fundraising_count = (
                     self.env["account.move"]
                     .sudo()
