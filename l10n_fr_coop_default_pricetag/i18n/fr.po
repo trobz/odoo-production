@@ -14,26 +14,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+"Language: fr\n"
 
 #. module: l10n_fr_coop_default_pricetag
 #. odoo-python
 #: code:addons/l10n_fr_coop_default_pricetag/model/product_template.py:0
 msgid "Department %s doesn't belong to %s."
-msgstr ""
+msgstr "Le département %s n'appartient pas à %s."
 
 #. module: l10n_fr_coop_default_pricetag
 #: model:ir.model.fields,help:l10n_fr_coop_default_pricetag.field_product_product__department_id
 #: model:ir.model.fields,help:l10n_fr_coop_default_pricetag.field_product_template__department_id
 msgid "Department of production"
-msgstr ""
+msgstr "Département de production"
 
 #. module: l10n_fr_coop_default_pricetag
 #: model:ir.model.fields,field_description:l10n_fr_coop_default_pricetag.field_product_product__department_id
 #: model:ir.model.fields,field_description:l10n_fr_coop_default_pricetag.field_product_template__department_id
 msgid "Origin Department"
-msgstr ""
+msgstr "Département d'origine"
 
 #. module: l10n_fr_coop_default_pricetag
 #: model:ir.model,name:l10n_fr_coop_default_pricetag.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Produit"
