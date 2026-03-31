@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="pos_config_view_form_pos_inherit" model="ir.ui.view">
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='payment_methods_new']" position="after">
+                <setting
+                    string="Check Journals"
+                    help="Please indicate here the cheques journals for which you would like to display a message when used in POS"
+                >
+                    <field name="account_journal_ids" widget="many2many_tags" />
+                </setting>
+                <setting string="Payable to">
+                    <field name="payable_to" />
+                </setting>
+                <setting
+                    string="Allow execution of script popup_verify_payment"
+                    help="Enable additional checks on payment screen (block new line if a payment line of that type already exists, etc.)"
+                >
+                    <field name="enable_popup_verify_payment" />
+                </setting>
+            </xpath>
+            <xpath expr="//block[@id='product_and_category_block']" position="inside">
+                <setting
+                    string="Remove Zero Qty Line"
+                    help="Remove the order line if its quantity is 0."
+                >
+                    <field name="qty_zero_remove_line" />
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

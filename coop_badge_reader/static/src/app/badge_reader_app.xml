@@ -17,9 +17,25 @@
         </div>
     </t>
 
+    <t t-name="coop_badge_reader.UserInfo">
+        <div class="user_info d-flex align-items-center">
+            <img
+                class="o_avatar o_user_avatar rounded"
+                t-att-src="userImage"
+                alt="User"
+            />
+            <span class="ms-2">
+                <t t-out="props.userName" />
+            </span>
+        </div>
+    </t>
+
 <t t-name="coop_badge_reader.badge_reader_app">
         <MainComponentsContainer />
         <div class="coop_badge_reader_app container">
+            <div class="d-flex justify-content-end py-2">
+                <t t-call="coop_badge_reader.UserInfo" />
+            </div>
             <t t-call="coop_badge_reader.companyHeader" />
             <t t-if="state.active_display === 'main'">
                 <div
@@ -47,6 +63,7 @@
                                         type="text"
                                         t-att-placeholder="attributes.placeholder"
                                         t-on-input="ev => this.onInputSearch(field, ev)"
+                                        t-on-keydown="onInputKeydown"
                                     />
                                 </div>
                             </div>

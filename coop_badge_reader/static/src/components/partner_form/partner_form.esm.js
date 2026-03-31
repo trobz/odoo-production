@@ -1,4 +1,4 @@
-import {Component, onWillStart, useState} from "@odoo/owl";
+import {Component, markup, onWillStart, useState} from "@odoo/owl";
 import {_t} from "@web/core/l10n/translation";
 import {useService} from "@web/core/utils/hooks";
 
@@ -66,7 +66,7 @@ export class PartnerFormComponent extends Component {
         }
         this._playSound(partner);
         if (partner.contact_us_message) {
-            this.message.contact_us = partner.contact_us_message;
+            this.message.contact_us = markup(partner.contact_us_message);
         }
         if (partner.cooperative_state === "delay" && graceResult) {
             const dateStopStr =
@@ -76,7 +76,7 @@ export class PartnerFormComponent extends Component {
                 "/" +
                 graceResult.slice(0, 4);
             this.message.warning = _t(
-                "A grace period until %s or until your next service has been assigned to you." +
+                "A grace period until %s or until your next service has been assigned to you. " +
                     "You may proceed with your shopping!",
                 dateStopStr
             );
