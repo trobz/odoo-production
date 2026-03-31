@@ -1,6 +1,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-def pre_init(cr):
-    cr.execute("""ALTER TABLE shift_extension
-            ADD COLUMN IF NOT EXISTS is_new BOOLEAN""")
-    return True
+from odoo.tools.sql import column_exists, create_column
+
+
+def pre_init_hook(env):
+    """Do not compute the sale_order_template_id field on existing SOs."""
+    if not column_exists(env.cr, "shift_extension", "is_new"):
+        create_column(env.cr, "shift_extension", "is_new", "BOOLEAN")

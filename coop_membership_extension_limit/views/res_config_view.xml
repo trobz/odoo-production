@@ -1,33 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="res_config_settings_view_form_inherit" model="ir.ui.view">
         <field name="model">res.config.settings</field>
-        <field name="inherit_id" ref="coop_membership.res_config_settings_view_form"/>
+        <field name="inherit_id" ref="coop_membership.res_config_settings_view_form" />
         <field name="arch" type="xml">
-            <xpath expr="//div[@data-key='coop_membership']/div[1]" position="inside">
-                <div class="col-12 col-lg-6 o_setting_box">
-                    <div class="o_setting_left_pane">
-                        <field name="member_extension_limit"/>
-                    </div>
-                    <div class="o_setting_right_pane">
-                        <label for="member_extension_limit"/>
-                        <div class="text-muted">
-                            Limit the number of extension for each member when suspended, alerted or delayed.
-                        </div>
-                        <div class="content-group" attrs="{'invisible': [('member_extension_limit', '=', False)]}">
-                            <div class="row mt16">
-                                <label for="member_extension_limit_count" class="col-lg-4 o_light_label"/>
-                                <field name="member_extension_limit_count"/>
-                            </div>
-                            <div class="row mt16">
-                                <label for="member_extension_limit_type_ids" class="col-lg-4 o_light_label"/>
-                                <field name="member_extension_limit_type_ids" widget="many2many_tags"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <xpath expr="//block[@name='membership_settings']" position="inside">
+                <setting
+                    id="member_extension_limit"
+                    help="Limit the extension for specific types"
+                >
+                    <field name="member_extension_limit" />
+                    <field
+                        name="member_extension_limit_type_ids"
+                        invisible="not member_extension_limit"
+                        required="member_extension_limit"
+                        widget="many2many_tags"
+                        placeholder="Extension Limit Types"
+                    />
+                </setting>
+                <setting
+                    id="member_extension_limit_count"
+                    string="Extension Limit Count"
+                    invisible="not member_extension_limit"
+                    help="Limit the number of extension for each member when suspended, alerted or delayed."
+                >
+                    <field name="member_extension_limit_count" />
+                </setting>
             </xpath>
         </field>
     </record>
-
 </odoo>
