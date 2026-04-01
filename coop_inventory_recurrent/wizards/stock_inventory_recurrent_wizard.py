@@ -13,14 +13,8 @@ class StockInventoryRecurrentWizard(models.TransientModel):
         string="Category Groups",
     )
 
-    def _get_internal_locations(self):
-        return self.env["stock.location"].search(
-            [("usage", "=", "internal"), ("company_id", "=", self.env.company.id)]
-        )
-
     def action_execute(self):
         self.ensure_one()
-        locations = self._get_internal_locations()
         inventories = self.env["stock.inventory"]
         new_inventories = self.env["stock.inventory"]
         for categ_group in self.category_group_ids:
@@ -43,7 +37,7 @@ class StockInventoryRecurrentWizard(models.TransientModel):
                             "product_selection": "category",
                             "category_id": line.category_id.id,
                             "category_group_line_id": line.id,
-                            "location_ids": [Command.set(locations.ids)],
+                            "location_ids": [Command.set(categ_group.location_id.ids)],
                         }
                     )
                     new_inventories |= inventory
