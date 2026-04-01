@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 03:45+0000\n"
-"PO-Revision-Date: 2026-04-01 03:45+0000\n"
+"POT-Creation-Date: 2026-04-01 03:44+0000\n"
+"PO-Revision-Date: 2026-04-01 03:44+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,27 +18,27 @@ msgstr ""
 #. module: coop_membership_forbidden
 #: model:ir.model,name:coop_membership_forbidden.model_res_partner
 msgid "Contact"
-msgstr "Contact"
+msgstr ""
 
 #. module: coop_membership_forbidden
 #. odoo-python
 #: code:addons/coop_membership_forbidden/models/res_partner.py:0
 msgid "Forbidden from entering the store. Please contact an employee"
-msgstr "Interdit d'entrer dans le magasin. Veuillez contacter un salarié"
+msgstr ""
 
 #. module: coop_membership_forbidden
 #: model:ir.model.fields,field_description:coop_membership_forbidden.field_res_partner__is_forbidden
 #: model:ir.model.fields,field_description:coop_membership_forbidden.field_res_users__is_forbidden
 msgid "Forbidden member"
-msgstr "Membre interdit"
+msgstr ""
 
 #. module: coop_membership_forbidden
 #: model:ir.model.fields,field_description:coop_membership_forbidden.field_res_partner__is_readonly_forbidden
 #: model:ir.model.fields,field_description:coop_membership_forbidden.field_res_users__is_readonly_forbidden
 msgid "Is Readonly Forbidden"
-msgstr "Lecture seule interdit"
+msgstr ""
 
 #. module: coop_membership_forbidden
 #: model:res.groups,name:coop_membership_forbidden.group_member_forbidden_manager
 msgid "Manage forbidden member"
-msgstr "Gérer les membres interdits"
+msgstr ""
