@@ -18,22 +18,22 @@ msgstr ""
 #. module: coop_delivery_category
 #: model:ir.model,name:coop_delivery_category.model_computed_purchase_order
 msgid "Computed Purchase Order"
-msgstr "Calcul de commande d'achat"
+msgstr ""
 
 #. module: coop_delivery_category
 #: model_terms:ir.actions.act_window,help:coop_delivery_category.product_template_action_product_delivery_category
 msgid "Create a new product"
-msgstr "Créer un nouvel article"
+msgstr ""
 
 #. module: coop_delivery_category
 #: model:ir.model.fields,field_description:coop_delivery_category.field_delivery_category__create_uid
 msgid "Created by"
-msgstr "Créé par"
+msgstr ""
 
 #. module: coop_delivery_category
 #: model:ir.model.fields,field_description:coop_delivery_category.field_delivery_category__create_date
 msgid "Created on"
-msgstr "Créé le"
+msgstr ""
 
 #. module: coop_delivery_category
 #: model:ir.actions.act_window,name:coop_delivery_category.action_delivery_category
@@ -42,57 +42,57 @@ msgstr "Créé le"
 #: model:ir.model.fields,field_description:coop_delivery_category.field_product_template__delivery_categ_ids
 #: model:ir.ui.menu,name:coop_delivery_category.menu_delivery_category
 msgid "Delivery Categories"
-msgstr "Catégories de livraison"
+msgstr ""
 
 #. module: coop_delivery_category
 #: model:ir.model,name:coop_delivery_category.model_delivery_category
 msgid "Delivery Category"
-msgstr "Catégorie de livraison"
+msgstr ""
 
 #. module: coop_delivery_category
 #: model:ir.model.fields,field_description:coop_delivery_category.field_delivery_category__display_name
 msgid "Display Name"
-msgstr "Nom affiché"
+msgstr ""
 
 #. module: coop_delivery_category
 #: model:ir.model.fields,field_description:coop_delivery_category.field_delivery_category__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: coop_delivery_category
 #: model:ir.model.fields,field_description:coop_delivery_category.field_delivery_category__write_uid
 msgid "Last Updated by"
-msgstr "Dernière mise à jour par"
+msgstr ""
 
 #. module: coop_delivery_category
 #: model:ir.model.fields,field_description:coop_delivery_category.field_delivery_category__write_date
 msgid "Last Updated on"
-msgstr "Dernière mise à jour le"
+msgstr ""
 
 #. module: coop_delivery_category
 #: model:ir.model.fields,field_description:coop_delivery_category.field_delivery_category__name
 msgid "Name"
-msgstr "Nom"
+msgstr ""
 
 #. module: coop_delivery_category
 #: model:ir.model,name:coop_delivery_category.model_product_template
 #: model_terms:ir.ui.view,arch_db:coop_delivery_category.product_template_delivery_category_tree_view
 msgid "Product"
-msgstr "Article"
+msgstr ""
 
 #. module: coop_delivery_category
 #: model:ir.model.fields,field_description:coop_delivery_category.field_delivery_category__product_ids
 #: model:ir.ui.menu,name:coop_delivery_category.menu_product_config_stock
 msgid "Products"
-msgstr "Articles"
+msgstr ""
 
 #. module: coop_delivery_category
 #: model:ir.actions.act_window,name:coop_delivery_category.product_template_action_product_delivery_category
 #: model:ir.ui.menu,name:coop_delivery_category.menu_product_delivery_category
 msgid "Products (Delivery Categories)"
-msgstr "Articles (Catégories de livraison)"
+msgstr ""
 
 #. module: coop_delivery_category
 #: model_terms:ir.ui.view,arch_db:coop_delivery_category.product_template_delivery_category_tree_view
 msgid "Sales Price"
-msgstr "Prix de vente"
+msgstr ""

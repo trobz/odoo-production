@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="view_delivery_category_form" model="ir.ui.view">
         <field name="name">delivery.category.form</field>
         <field name="model">delivery.category</field>
@@ -8,22 +7,21 @@
             <form>
                 <sheet>
                     <group>
-                        <field name="name"/>
-                        <field name="product_ids"/>
+                        <field name="name" />
+                        <field name="product_ids" />
                     </group>
                 </sheet>
             </form>
         </field>
     </record>
 
-    
     <record id="view_delivery_category_tree" model="ir.ui.view">
         <field name="name">delivery.category.tree</field>
         <field name="model">delivery.category</field>
         <field name="arch" type="xml">
-            <tree>
-                <field name="name"/>
-            </tree>
+            <list>
+                <field name="name" />
+            </list>
         </field>
     </record>
 
@@ -31,8 +29,7 @@
         <field name="name">Delivery Categories</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">delivery.category</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
     <menuitem
@@ -40,6 +37,6 @@
         id="menu_delivery_category"
         sequence="10"
         action="action_delivery_category"
-        parent="stock.menu_stock_config_settings"/>
-
+        parent="stock.menu_stock_config_settings"
+    />
 </odoo>
