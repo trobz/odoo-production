@@ -2,14 +2,15 @@
 
 {
     "name": "Coop - Delivery Category",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "purchase",
-    "author": "Trobz",
-    "website": "https://trobz.com",
+    "summary": "Delivery category for purchase orders",
+    "author": "La Louve, Trobz",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": [
         "purchase",
-        "purchase_compute_order"
+        "purchase_compute_order",
     ],
     "data": [
         "security/ir.model.access.csv",
