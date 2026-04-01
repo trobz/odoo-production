@@ -13,10 +13,15 @@ class StockInventoryCategoryGroup(models.Model):
 
     @api.onchange("category_ids")
     def onchange_category_ids(self):
-        categs = self.mapped("line_ids.category_id")
+        lines_by_categ = {line.category_id.id: line for line in self._origin.line_ids}
+        lines_by_categ.update({line.category_id.id: line for line in self.line_ids})
         GroupLine = self.env["stock.inventory.category.group.line"]
+        new_lines = self.env["stock.inventory.category.group.line"].browse()
         for categ in self.category_ids:
-            if categ not in categs:
-                line = GroupLine.new({"category_id": categ.id, "copies": "2"})
-                line.default_get(GroupLine.fields_get().keys())
-                self.line_ids |= line
+            existing = lines_by_categ.get(categ.id)
+            new_lines |= (
+                existing
+                if existing
+                else GroupLine.new({"category_id": categ.id, "copies": "2"})
+            )
+        self.line_ids = new_lines

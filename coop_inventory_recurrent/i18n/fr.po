@@ -1,14 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* coop_inventory_recurrent
+# 	* coop_inventory_recurrent
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-23 07:50+0000\n"
-"PO-Revision-Date: 2021-12-23 07:50+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2026-04-01 04:29+0000\n"
+"PO-Revision-Date: 2026-04-01 04:29+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,9 +16,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: coop_inventory_recurrent
+#: model:ir.actions.report,print_report_name:coop_inventory_recurrent.action_report_inventory_recurrent
+msgid "'Inventory - %s' % object.name"
+msgstr "Inventaire - %s' % object.name"
+
+#. module: coop_inventory_recurrent
 #: model_terms:ir.ui.view,arch_db:coop_inventory_recurrent.report_inventory_new_layout
 msgid "<strong>Date</strong>"
-msgstr ""
+msgstr "<strong>Date</strong>"
 
 #. module: coop_inventory_recurrent
 #: model_terms:ir.ui.view,arch_db:coop_inventory_recurrent.report_inventory_new_layout
@@ -43,50 +48,46 @@ msgstr "<strong>Colisage</strong>"
 #. module: coop_inventory_recurrent
 #: model_terms:ir.ui.view,arch_db:coop_inventory_recurrent.report_inventory_new_layout
 msgid "<strong>Product</strong>"
-msgstr "<strong>Article</strong>"
+msgstr "<strong>Produit</strong>"
 
 #. module: coop_inventory_recurrent
 #: model_terms:ir.ui.view,arch_db:coop_inventory_recurrent.report_inventory_new_layout
 msgid "<strong>Theoretical Qty</strong>"
-msgstr "<strong>Unités théoriques</strong>"
-
-#. module: coop_inventory_recurrent
-#: model_terms:ir.ui.view,arch_db:coop_inventory_recurrent.report_inventory_new_layout
-msgid "<strong>Total Quantity</strong>"
-msgstr "<strong>Quantité totale</strong>"
+msgstr "<strong>Qté Théorique</strong>"
 
 #. module: coop_inventory_recurrent
 #: model_terms:ir.ui.view,arch_db:coop_inventory_recurrent.report_inventory_new_layout
 msgid "<strong>Total</strong>"
-msgstr ""
+msgstr "<strong>Total</strong>"
 
 #. module: coop_inventory_recurrent
 #: model_terms:ir.ui.view,arch_db:coop_inventory_recurrent.report_inventory_new_layout
 msgid "<strong>UG. Qty</strong>"
-msgstr "<strong>Qté Stock</strong>"
+msgstr "<strong>Qté Unité</strong>"
 
 #. module: coop_inventory_recurrent
 #: model:ir.model,name:coop_inventory_recurrent.model_stock_inventory_category_group
 #: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory__category_group_line_id
+#: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_quant__category_group_line_id
 msgid "Category Group"
-msgstr "Groupement de catégories"
+msgstr "Groupe de catégorie"
 
 #. module: coop_inventory_recurrent
 #: model:ir.model,name:coop_inventory_recurrent.model_stock_inventory_category_group_line
 msgid "Category Group Line"
-msgstr ""
+msgstr "Ligne de groupe de catégorie"
 
 #. module: coop_inventory_recurrent
 #: model:ir.actions.act_window,name:coop_inventory_recurrent.action_stock_category_group
 #: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_recurrent_wizard__category_group_ids
 #: model:ir.ui.menu,name:coop_inventory_recurrent.menu_stock_category_group
 msgid "Category Groups"
-msgstr "Groupement de catégories"
+msgstr "Groupes de catégorie"
 
 #. module: coop_inventory_recurrent
 #: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_category_group_line__copies
 msgid "Copies"
-msgstr ""
+msgstr "Copies"
 
 #. module: coop_inventory_recurrent
 #: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_category_group__create_uid
@@ -129,8 +130,9 @@ msgid "Execute"
 msgstr "Exécuter"
 
 #. module: coop_inventory_recurrent
-#: code:addons/coop_inventory_recurrent/models/stock_inventory.py:21
-#, python-format
+#. odoo-python
+#: code:addons/coop_inventory_recurrent/models/stock_inventory.py:0
+#: code:addons/coop_inventory_recurrent/models/stock_quant.py:0
 msgid "First List"
 msgstr "Première Liste"
 
@@ -145,25 +147,22 @@ msgstr "Groupe"
 #: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_recurrent_report_wizard__id
 #: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_recurrent_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: coop_inventory_recurrent
-#: model:ir.model,name:coop_inventory_recurrent.model_stock_inventory
+#: model:ir.actions.report,name:coop_inventory_recurrent.action_report_inventory_recurrent
 msgid "Inventory"
 msgstr "Inventaire"
 
 #. module: coop_inventory_recurrent
-#: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_recurrent_report_wizard__inventory_ids
-msgid "Inventory Adjustments"
-msgstr "Ajustements de stock"
+#: model:ir.model,name:coop_inventory_recurrent.model_stock_inventory
+msgid "Inventory Adjustment Group"
+msgstr "Groupe d'ajustement d'inventaire"
 
 #. module: coop_inventory_recurrent
-#: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_category_group____last_update
-#: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_category_group_line____last_update
-#: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_recurrent_report_wizard____last_update
-#: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_recurrent_wizard____last_update
-msgid "Last Modified on"
-msgstr "Dernière Modification le"
+#: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_recurrent_report_wizard__inventory_ids
+msgid "Inventory Adjustments"
+msgstr "Ajustements d'inventaire"
 
 #. module: coop_inventory_recurrent
 #: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_category_group__write_uid
@@ -192,6 +191,12 @@ msgid "Name"
 msgstr "Nom"
 
 #. module: coop_inventory_recurrent
+#. odoo-python
+#: code:addons/coop_inventory_recurrent/wizards/stock_inventory_recurrent_wizard.py:0
+msgid "Physical Inventory"
+msgstr "Inventaire physique"
+
+#. module: coop_inventory_recurrent
 #: model_terms:ir.ui.view,arch_db:coop_inventory_recurrent.view_stock_inventory_report_wizard_form
 msgid "Print"
 msgstr "Imprimer"
@@ -199,36 +204,53 @@ msgstr "Imprimer"
 #. module: coop_inventory_recurrent
 #: model:ir.actions.act_window,name:coop_inventory_recurrent.action_stock_inventory_report_wizard
 msgid "Print Recurring Inventories"
-msgstr "Imprimer Inventaires Récurrents"
+msgstr "Imprimer les inventaires récurrents"
 
 #. module: coop_inventory_recurrent
 #: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_category_group__category_ids
 msgid "Product categories"
-msgstr "Catégorie d'inventaire"
+msgstr "Catégories de produits"
 
 #. module: coop_inventory_recurrent
 #: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_category_group_line__category_id
 msgid "Product category"
-msgstr "Catégorie d'inventaire"
+msgstr "Catégorie de produit"
+
+#. module: coop_inventory_recurrent
+#: model:ir.model,name:coop_inventory_recurrent.model_stock_quant
+msgid "Quants"
+msgstr "Quantités"
 
 #. module: coop_inventory_recurrent
 #: model:ir.actions.act_window,name:coop_inventory_recurrent.action_stock_inventory_wizard
 #: model:ir.ui.menu,name:coop_inventory_recurrent.menu_stock_inventory_wizard
 msgid "Recurrent Inventories"
-msgstr "Inventaires Récurrents"
+msgstr "Inventaires récurrents"
 
 #. module: coop_inventory_recurrent
 #: model:ir.model,name:coop_inventory_recurrent.model_stock_inventory_recurrent_wizard
 msgid "Recurrent Inventory"
-msgstr "Inventaires Récurrents"
+msgstr "Inventaire récurrent"
 
 #. module: coop_inventory_recurrent
+#: model:ir.model,name:coop_inventory_recurrent.model_report_coop_inventory_recurrent_report_inventory_new_layout
 #: model:ir.model,name:coop_inventory_recurrent.model_stock_inventory_recurrent_report_wizard
 msgid "Recurrent Inventory Report"
-msgstr ""
+msgstr "Rapport d'inventaire récurrent"
 
 #. module: coop_inventory_recurrent
-#: code:addons/coop_inventory_recurrent/models/stock_inventory.py:27
-#, python-format
+#. odoo-python
+#: code:addons/coop_inventory_recurrent/models/stock_inventory.py:0
+#: code:addons/coop_inventory_recurrent/models/stock_quant.py:0
 msgid "Second List"
 msgstr "Deuxième Liste"
+
+#. module: coop_inventory_recurrent
+#. odoo-python
+#: code:addons/coop_inventory_recurrent/models/stock_inventory.py:0
+msgid ""
+"There's already an Adjustment in Process using one requested Location: "
+"%(names)s. Blocking adjustments: %(blocking_names)s"
+msgstr ""
+"Il y a déjà un ajustement en cours utilisant l'un des emplacements demandés : "
+"%(names)s. Ajustements bloquants : %(blocking_names)s"
