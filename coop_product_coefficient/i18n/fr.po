@@ -201,7 +201,7 @@ msgstr "Montant fixe"
 #: model:ir.model.fields,field_description:coop_product_coefficient.field_product_template__has_theoritical_cost_different
 #: model_terms:ir.ui.view,arch_db:coop_product_coefficient.view_product_template_form
 msgid "Has Theoritical Cost Different"
-msgstr "Coût théorique différent"
+msgstr "A un coût théorique différent"
 
 #. module: coop_product_coefficient
 #: model:ir.model.fields,field_description:coop_product_coefficient.field_product_product__has_theoritical_price_different
@@ -209,7 +209,7 @@ msgstr "Coût théorique différent"
 #: model_terms:ir.ui.view,arch_db:coop_product_coefficient.view_product_template_form
 #: model_terms:ir.ui.view,arch_db:coop_product_coefficient.view_product_template_search
 msgid "Has Theoritical Price Different"
-msgstr "Prix théorique différent"
+msgstr "A un prix théorique différent"
 
 #. module: coop_product_coefficient
 #: model:ir.model.fields,field_description:coop_product_coefficient.field_product_coefficient__id
@@ -254,7 +254,7 @@ msgstr ""
 #. module: coop_product_coefficient
 #: model_terms:ir.ui.view,arch_db:coop_product_coefficient.view_product_template_form
 msgid "Include in Cost"
-msgstr "Inclure dans le coût"
+msgstr "Incl. dans Coût"
 
 #. module: coop_product_coefficient
 #: model:ir.model.fields,field_description:coop_product_coefficient.field_product_product__incl_in_standard_price_1
