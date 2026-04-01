@@ -1,12 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="view_partner_property_form_inherit" model="ir.ui.view">
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="pos_payment_credit.view_partner_property_form_inherit"/>
+        <field
+            name="inherit_id"
+            ref="pos_payment_credit.view_partner_property_form_inherit"
+        />
         <field name="arch" type="xml">
             <xpath expr="//page[@name='page_credit']" position="attributes">
-                <attribute name="attrs">{'invisible': [('is_member','=',False),('is_former_member','=',False), ('is_former_associated_people','=',False), ('is_associated_people','=',False),('is_interested_people','=',False)]}</attribute>
+                <attribute
+                    name="invisible"
+                >not (is_member or is_former_member or is_former_associated_people or is_associated_people or is_interested_people)</attribute>
             </xpath>
         </field>
     </record>
