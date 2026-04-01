@@ -1,6 +1,7 @@
 import datetime
 
 from odoo import Command, api, fields, models
+from odoo.osv import expression
 
 
 class StockInventory(models.Model):
@@ -106,82 +107,93 @@ class StockInventory(models.Model):
                     "view_mode": "form",
                     "target": "new",
                 }
+        # Apply inventory for quants with inventory quantity set
+        quants = self.stock_quant_ids.filtered("inventory_quantity_set")
+        if quants:
+            apply_result = quants.action_apply_inventory()
+            if (
+                isinstance(apply_result, dict)
+                and apply_result.get("type") == "ir.actions.act_window"
+            ):
+                return apply_result
         return super().action_state_to_done()
 
     def _get_product_ids(self):
-        product_obj = self.env["product.product"]
-        supplierinfo_obj = self.env["product.supplierinfo"]
+        self.ensure_one()
 
-        product_ids = []
-        # Look for already existing product
-        already_added_product_ids = self.stock_quant_ids.mapped("product_id")
+        product_domain = []
         if self.categ_ids:
-            # Look for products belong to selectec categories
-            product_ids = product_obj.search(
-                [
-                    ("categ_id", "in", self.categ_ids.ids),
-                    ("product_tmpl_id.is_storable", "=", True),
-                ]
-            ).ids
+            product_domain.append([("categ_id", "in", self.categ_ids.ids)])
 
         if self.supplier_ids:
-            # Look for products belong to selectecd categories
-            supplierinfo_ids = supplierinfo_obj.search(
+            supplierinfo_ids = self.env["product.supplierinfo"].search(
                 [("partner_id", "in", self.supplier_ids.ids)]
             )
-            product_tmpl_ids = supplierinfo_ids.mapped("product_tmpl_id")
-            product_ids += product_obj.search(
+            product_tmpl_ids = supplierinfo_ids.mapped("product_tmpl_id").ids
+            if product_tmpl_ids:
+                product_domain.append([("product_tmpl_id", "in", product_tmpl_ids)])
+
+        if not product_domain:
+            return self.env["product.product"]
+
+        return self.env["product.product"].search(
+            expression.AND(
                 [
-                    ("product_tmpl_id", "in", product_tmpl_ids.ids),
-                    ("product_tmpl_id.is_storable", "=", True),
+                    [("product_tmpl_id.is_storable", "=", True)],
+                    expression.OR(product_domain),
                 ]
-            ).ids
+            )
+        )
 
-        # treate only new poducts to add and no modification to existing
-        # products
-        product_ids = list(set(product_ids) ^ set(already_added_product_ids.ids))
-        return product_ids
-
-    def action_add_category_supplier(self):
+    def _ensure_stock_quants(self, products):
         self.ensure_one()
-        location_ids = self.location_ids.ids
-        search_filter = [
-            (
-                "location_id",
-                "child_of" if not self.exclude_sublocation else "in",
-                location_ids,
-            ),
-            ("to_do", "=", True),
-        ]
-        product_ids = self._get_product_ids()
-        if product_ids:
-            search_filter.append(("product_id", "in", product_ids))
-        quants = self.env["stock.quant"].search(search_filter)
-        found_product_ids = quants.mapped("product_id").ids
-        unfound_product_ids = list(set(product_ids) - set(found_product_ids))
-        for product in self.env["product.product"].browse(unfound_product_ids):
+        if not products:
+            return self.env["stock.quant"]
+
+        quants = self.env["stock.quant"].search(
+            expression.AND(
+                [
+                    self._get_base_domain(self.location_ids),
+                    [("product_id", "in", products.ids)],
+                ]
+            )
+        )
+        missing_products = products - quants.mapped("product_id")
+        for product in missing_products:
             quants |= self.env["stock.quant"].create(
                 {
                     "product_id": product.id,
                     "product_uom_id": product.uom_id.id,
                     "inventory_quantity": 0.0,
-                    "location_id": location_ids[0],
+                    "location_id": self.location_ids[:1].id,
                 }
             )
+        return quants
+
+    def _get_domain_category_quants(self, base_domain):
+        self.ensure_one()
+        if not self.categ_ids and not self.supplier_ids:
+            return super()._get_domain_category_quants(base_domain)
+
+        products = self._get_product_ids()
+        if not products:
+            return expression.AND([base_domain, [("id", "=", False)]])
+        return expression.AND([base_domain, [("product_id", "in", products.ids)]])
+
+    def action_add_category_supplier(self):
+        self.ensure_one()
+        products = self._get_product_ids()
+        if not products:
+            return True
+
+        self._ensure_stock_quants(products)
         self.write(
             {
-                "state": "in_progress",
-                "stock_quant_ids": [Command.set(quants.ids)],
+                "product_ids": [Command.set(products.ids)],
+                "product_selection": "category" if self.categ_ids else "manual",
             }
         )
-        quants.write(
-            {
-                "to_do": True,
-                "user_id": self.responsible_id,
-                "inventory_date": self.date,
-                "current_inventory_id": self.id,
-            }
-        )
+        self.action_state_to_in_progress()
         return True
 
     def init_with_theorical_qty(self):
@@ -222,7 +234,7 @@ class StockQuant(models.Model):
         help="Stock Quantity",
     )
 
-    @api.depends("product_id", "qty_stock")
+    @api.depends("product_id", "quantity")
     def _compute_quanties(self):
         for quant in self:
             product = quant.product_id
@@ -233,7 +245,7 @@ class StockQuant(models.Model):
                 quant.packaging_qty = 0.0
             else:
                 quant.default_packaging = default_packaging
-                quant.packaging_qty = product.qty_available / default_packaging
+                quant.packaging_qty = quant.quantity / default_packaging
 
     @api.depends("packaging_qty", "qty_stock")
     def _compute_qty_loss(self):
@@ -260,7 +272,6 @@ class StockQuant(models.Model):
 
     @api.onchange("product_id")
     def onchange_product_id(self):
-        self.qty_loss = -self.packaging_qty
         self.inventory_quantity = 0.0
         if self.product_id and not self.product_id.default_packaging:
             return self._show_warning_no_default_packaging()
