@@ -20,18 +20,21 @@ class StockInventoryRecurrentWizard(models.TransientModel):
 
     def action_execute(self):
         self.ensure_one()
-        inventories = self.env["stock.inventory"]
         locations = self._get_internal_locations()
+        inventories = self.env["stock.inventory"]
+        new_inventories = self.env["stock.inventory"]
         for categ_group in self.category_group_ids:
             for line in categ_group.line_ids:
                 existing = self.env["stock.inventory"].search(
                     [
-                        ("category_group_line_id", "=", line.id),
+                        ("category_id", "=", line.category_id.id),
                         ("state", "=", "in_progress"),
                     ],
                     limit=1,
                 )
                 if existing:
+                    if existing.category_group_line_id != line:
+                        existing.category_group_line_id = line
                     inventories |= existing
                 else:
                     inventory = self.env["stock.inventory"].create(
@@ -43,17 +46,10 @@ class StockInventoryRecurrentWizard(models.TransientModel):
                             "location_ids": [Command.set(locations.ids)],
                         }
                     )
-                    quants = inventory._get_quants(locations)
-                    inventory.write({"stock_quant_ids": [Command.set(quants.ids)]})
-                    inventory.action_state_to_in_progress()
-                    quants.write(
-                        {
-                            "to_do": True,
-                            "inventory_date": inventory.date,
-                            "current_inventory_id": inventory.id,
-                        }
-                    )
+                    new_inventories |= inventory
                     inventories |= inventory
+        for inventory in new_inventories:
+            inventory.action_state_to_in_progress()
         tree_view_id = self.env.ref("stock_inventory.view_inventory_group_tree").id
         form_view_id = self.env.ref("stock_inventory.view_inventory_group_form").id
         return {
