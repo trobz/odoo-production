@@ -127,14 +127,18 @@
                                             view-type="form"
                                         >
                                             <t
-                                                t-out="o._get_atr_from_dict(int(analytic_account_id), analytic_data, 'name')"
+                                                t-set="analytic_name"
+                                                t-value="o._get_atr_from_dict(int(analytic_account_id), analytic_data, 'name')"
                                             />
-                                            <t
-                                                t-if="int(line['analytic_distribution'][analytic_id]) &lt; 100"
-                                            >
+                                            <t t-if="analytic_name">
+                                                <t t-out="analytic_name" />
                                                 <t
-                                                    t-out="int(line['analytic_distribution'][analytic_id])"
-                                                />%
+                                                    t-if="int(line['analytic_distribution'][analytic_id]) &lt; 100"
+                                                >
+                                                    <t
+                                                        t-out="int(line['analytic_distribution'][analytic_id])"
+                                                    />%
+                                                </t>
                                             </t>
                                         </span>
                                     </t>
