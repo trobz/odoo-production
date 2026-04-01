@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
     <record id="group_member_forbidden_manager" model="res.groups">
         <field name="name">Manage forbidden member</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="category_id" ref="base.module_category_hidden" />
     </record>
 </odoo>
