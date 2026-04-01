@@ -1,82 +1,114 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* email_validation_check
+# 	* email_validation_check
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0c\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-10 14:40+0000\n"
-"PO-Revision-Date: 2020-03-10 14:40+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2026-04-01 04:37+0000\n"
+"PO-Revision-Date: 2026-04-01 04:37+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
 "Plural-Forms: \n"
 
 #. module: email_validation_check
 #: model:mail.template,body_html:email_validation_check.email_confirm_validate
-msgid "\n"
-"            <p>Dear ${object.name},</p>\n"
-"            <p>Here is link to confirm your email <a href=\"${object.validation_url}\">here</a></p>\n"
-"            <p>Best regards,</p>\n"
-"            "
-msgstr "\n"
-"            <p>Cher ${object.name},</p>\n"
-"            <p>Pour confirmer votre adresse email à ${object.company_id.name}, <a href=\"${object.validation_url}\">veuillez cliquer sur ce lien.</a></p>\n"
-"            <p>Amicalement,</p>\n"
-"			 <p>L'équipe de la coopérative</p>\n"
-"            "
+msgid ""
+"<div>\n"
+"                <p>Dear <t t-out=\"object.name\"/>,</p>\n"
+"                <p>Here is link to confirm your email <a t-att-href=\"object.validation_url\">here</a></p>\n"
+"                <p>Best regards,</p>\n"
+"            </div>\n"
+"        "
+msgstr ""
+"<div>\n"
+"                <p>Cher/Cherche <t t-out=\"object.name\"/>,</p>\n"
+"                <p>Voici le lien pour confirmer votre email <a t-att-href=\"object.validation_url\">ici</a></p>\n"
+"                <p>Cordialement,</p>\n"
+"            </div>\n"
+"        "
+
+#. module: email_validation_check
+#: model_terms:ir.ui.view,arch_db:email_validation_check.confirm_success
+msgid ""
+"<span class=\"contact100-form-title\">\n"
+"                            Your email has been confirmed\n"
+"                        </span>"
+msgstr ""
+"<span class=\"contact100-form-title\">\n"
+"                            Votre email a été confirmé\n"
+"                        </span>"
+
+#. module: email_validation_check
+#: model_terms:ir.ui.view,arch_db:email_validation_check.confirm_failed
+msgid ""
+"<span class=\"contact100-form-title\">\n"
+"                            Your email has not been confirmed\n"
+"                        </span>"
+msgstr ""
+"<span class=\"contact100-form-title\">\n"
+"                            Votre email n'a pas été confirmé\n"
+"                        </span>"
+
+#. module: email_validation_check
+#. odoo-python
+#: code:addons/email_validation_check/models/res_partner.py:0
+msgid "Another user is already registered using this email address: %s"
+msgstr "Un autre utilisateur est déjà enregistré avec cette adresse email: %s"
 
 #. module: email_validation_check
 #: model:mail.template,subject:email_validation_check.email_confirm_validate
 msgid "Confirm validated email"
-msgstr "Confirmation de votre adresse email"
-
-#. module: email_validation_check
-#: model:ir.ui.view,arch_db:email_validation_check.confirm_failed
-#: model:ir.ui.view,arch_db:email_validation_check.confirm_success
-msgid "Confirmation Email Validation"
-msgstr "Confirmation Email Validation"
-
-#. module: email_validation_check
-#: model:ir.model.fields,field_description:email_validation_check.field_res_partner_is_checked_email
-msgid "Is Checked Email"
-msgstr "Is Checked Email"
-
-#. module: email_validation_check
-#: model:ir.model.fields,field_description:email_validation_check.field_res_partner_validation_url
-msgid "Link to validate"
-msgstr "Link to validate"
+msgstr "Confirmer l'email validé"
 
 #. module: email_validation_check
 #: model:ir.model,name:email_validation_check.model_res_partner
-msgid "Partner"
-msgstr "Partenaire"
+msgid "Contact"
+msgstr "Contact"
 
 #. module: email_validation_check
-#: model:ir.ui.view,arch_db:email_validation_check.view_res_partner_form
+#: model:mail.template,name:email_validation_check.email_confirm_validate
+msgid "Email Confirm Validate"
+msgstr "Email de confirmation de validation"
+
+#. module: email_validation_check
+#: model:ir.model.fields,field_description:email_validation_check.field_res_partner__is_checked_email
+#: model:ir.model.fields,field_description:email_validation_check.field_res_users__is_checked_email
+msgid "Is Checked Email"
+msgstr "Email vérifié"
+
+#. module: email_validation_check
+#: model:ir.model.fields,field_description:email_validation_check.field_res_partner__validation_url
+#: model:ir.model.fields,field_description:email_validation_check.field_res_users__validation_url
+msgid "Link to validate"
+msgstr "Lien de validation"
+
+#. module: email_validation_check
+#: model_terms:ir.ui.view,arch_db:email_validation_check.view_res_partner_form
 msgid "Send New"
-msgstr "Envoyer un nouveau"
+msgstr "Envoyer nouveau"
 
 #. module: email_validation_check
-#: model:ir.model.fields,field_description:email_validation_check.field_res_partner_email_validation_string
+#: model:ir.model.fields,field_description:email_validation_check.field_res_partner__show_send_email
+#: model:ir.model.fields,field_description:email_validation_check.field_res_users__show_send_email
+msgid "Show button send email confirm"
+msgstr "Afficher le bouton d'envoi d'email de confirmation"
+
+#. module: email_validation_check
+#: model:ir.model.fields,field_description:email_validation_check.field_res_partner__email_validation_string
+#: model:ir.model.fields,field_description:email_validation_check.field_res_users__email_validation_string
 msgid "String Validation Email"
-msgstr "String Validation Email"
+msgstr "Chaîne de validation d'email"
 
 #. module: email_validation_check
-#: model:ir.ui.view,arch_db:email_validation_check.view_res_partner_form
-msgid "The current email address has not be validated. Click here to send a new validation link."
-msgstr "L'adresse email n'a pas été validée. Cliquez ici pour renvoyer un email avec le lien de validation."
-
-#. module: email_validation_check
-#: model:ir.ui.view,arch_db:email_validation_check.confirm_failed
-msgid "Your email has not been confirmed"
-msgstr "Votre email n'a pas été confirmé"
-
-#. module: email_validation_check
-#: model:ir.ui.view,arch_db:email_validation_check.confirm_success
-msgid "Your email has been confirmed"
-msgstr "Votre email a été confirmé"
+#: model_terms:ir.ui.view,arch_db:email_validation_check.view_res_partner_form
+msgid ""
+"The current email address has not be validated. Click here to send a new "
+"validation link."
+msgstr ""
+"L'adresse email actuelle n'a pas été validée. Cliquez ici pour envoyer un "
+"nouveau lien de validation."
