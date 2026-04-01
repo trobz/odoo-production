@@ -8,6 +8,7 @@
                 <sheet>
                     <group>
                         <field name="name" />
+                        <field name="location_id" />
                         <field name="category_ids" />
                         <field name="line_ids">
                             <list editable="top">
@@ -27,6 +28,7 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name" />
+                <field name="location_id" />
             </list>
         </field>
     </record>
