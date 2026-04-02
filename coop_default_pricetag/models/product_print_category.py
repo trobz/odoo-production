@@ -19,3 +19,13 @@ class ProductPrintCategory(models.Model):
         string="Pricetag Model",
         default=lambda s: s._get_default_model(),
     )
+
+    @api.model
+    def _get_default_qweb_view(self):
+        return self.env.ref(
+            "coop_default_pricetag.report_pricetag", raise_if_not_found=False
+        )
+
+    qweb_view_id = fields.Many2one(
+        default=lambda s: s._get_default_qweb_view(),
+    )
