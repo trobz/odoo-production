@@ -5,7 +5,12 @@ import {useService} from "@web/core/utils/hooks";
 function hasContent(html) {
     const div = document.createElement("div");
     div.innerHTML = html;
-    return div.textContent.replace(/\u00A0/g, " ").trim().length > 0;
+
+    const text = div.textContent
+        .replace(/\u00A0/g, " ")
+        .replace(/false/gi, "")
+        .trim();
+    return text.length > 0;
 }
 
 export class PartnerFormComponent extends Component {
