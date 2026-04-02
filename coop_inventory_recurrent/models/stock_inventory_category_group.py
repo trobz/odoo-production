@@ -7,16 +7,31 @@ class StockInventoryCategoryGroup(models.Model):
     _name = "stock.inventory.category.group"
     _description = "Category Group"
 
+    @api.model
+    def _default_location_id(self):
+        return self.env.ref("stock.stock_location_stock", raise_if_not_found=False)
+
     name = fields.Char(required=True)
+    location_id = fields.Many2one(
+        "stock.location",
+        required=True,
+        domain=[("usage", "=", "internal")],
+        default=_default_location_id,
+    )
     category_ids = fields.Many2many("product.category", string="Product categories")
     line_ids = fields.One2many("stock.inventory.category.group.line", "group_id")
 
     @api.onchange("category_ids")
     def onchange_category_ids(self):
-        categs = self.mapped("line_ids.category_id")
+        lines_by_categ = {line.category_id.id: line for line in self._origin.line_ids}
+        lines_by_categ.update({line.category_id.id: line for line in self.line_ids})
         GroupLine = self.env["stock.inventory.category.group.line"]
+        new_lines = self.env["stock.inventory.category.group.line"]
         for categ in self.category_ids:
-            if categ not in categs:
-                line = GroupLine.new({"category_id": categ.id, "copies": "2"})
-                line.default_get(GroupLine.fields_get().keys())
-                self.line_ids |= line
+            existing = lines_by_categ.get(categ.id)
+            new_lines |= (
+                existing
+                if existing
+                else GroupLine.new({"category_id": categ.id, "copies": "2"})
+            )
+        self.line_ids = new_lines

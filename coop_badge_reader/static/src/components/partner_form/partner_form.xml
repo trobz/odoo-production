@@ -98,14 +98,14 @@
                             t-on-click="onPartnerWrong"
                         >Error</button>
                     </div>
-                    <div class="col" t-if="partner.badge_to_distribute">
+                    <!-- <div class="col" t-if="partner.badge_to_distribute">
                         <button
                             class="btn btn-secondary w-100"
                             t-on-click="onSetBadgeDistributed"
                         >
                             Badge distributed
                         </button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

@@ -1,0 +1,35 @@
+<?xml version="1.1" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="report_purchasequotation_document"
+        inherit_id="purchase.report_purchasequotation_document"
+        priority="99"
+    >
+        <xpath expr="//table/thead/tr/th[@name='th_quantity']" position="replace">
+            <th class="text-end">
+                <strong>Nb of Packages</strong>
+            </th>
+            <th class="text-end">
+                <strong>Package qty</strong>
+            </th>
+            <th class="text-end">
+                <strong>Qty</strong>
+            </th>
+        </xpath>
+
+        <xpath
+            expr="//t[@t-if='not order_line.display_type']/td[span[@t-field='order_line.product_qty']]"
+            position="replace"
+        >
+            <td class="text-end">
+                <span t-field="order_line.product_packaging_qty" />
+            </td>
+            <td class="text-end">
+                <span t-field="order_line.package_qty" />
+            </td>
+            <td class="text-end">
+                <span t-field="order_line.product_qty" />
+            </td>
+        </xpath>
+    </template>
+</odoo>

@@ -283,7 +283,7 @@
             <search string="Shifts">
                 <field
                     name="name"
-                    filter_domain="['|', ('name','ilike',self), ('begin_date_string','ilike',self')]"
+                    filter_domain="['|', ('name','ilike',self), ('begin_date_string','ilike',self)]"
                     string="Shifts"
                 />
                 <filter

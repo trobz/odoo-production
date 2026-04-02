@@ -86,35 +86,39 @@
                             <field name="name" default_focus="1" />
                         </h1>
                     </div>
-                    <group col="4">
-                        <field
-                            name="partner_id"
-                            options="{'no_create_edit': True, 'no_create': True, 'no_open': True }"
-                            tabindex="1"
-                            readonly="state != 'draft'"
-                        />
-                        <field
-                            name="type_id"
-                            options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"
-                            tabindex="2"
-                            readonly="state != 'draft'"
-                        />
-                        <field
-                            name="start_date"
-                            tabindex="3"
-                            readonly="state != 'draft'"
-                        />
-                        <field
-                            name="stop_date"
-                            required="require_stop_date"
-                            tabindex="4"
-                            readonly="state != 'draft'"
-                        />
-                        <field name="duration" />
-                        <field name="partner_state" />
-                        <field name="require_stop_date" invisible="1" />
+                    <group>
+                        <group>
+                            <field
+                                name="partner_id"
+                                options="{'no_create_edit': True, 'no_create': True, 'no_open': True }"
+                                tabindex="1"
+                                readonly="state != 'draft'"
+                            />
+                            <field
+                                name="start_date"
+                                tabindex="3"
+                                readonly="state != 'draft'"
+                            />
+                            <field
+                                name="stop_date"
+                                required="require_stop_date"
+                                tabindex="4"
+                                readonly="state != 'draft'"
+                            />
+                            <field name="duration" />
+                            <field name="partner_state" />
+                        </group>
+                        <group>
+                            <field
+                                name="type_id"
+                                options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"
+                                tabindex="2"
+                                readonly="state != 'draft'"
+                            />
+                            <field name="require_stop_date" invisible="1" />
+                        </group>
                     </group>
-                    <notebook colspan="4">
+                    <notebook>
                         <page name="general" string="Other Leaves">
                             <group>
                                 <field name="other_leave_ids" nolabel="1">
