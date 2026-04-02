@@ -393,7 +393,8 @@ membership status</li>
 <li><strong>Alert System</strong>: Notify employees when expected members check in</li>
 <li><strong>Grace Period Handling</strong>: Automatically manage grace periods for
 suspended members</li>
-<li><strong>Badge Distribution Tracking</strong>: Mark badges as distributed to members</li>
+<li><strong>Badge Distribution Tracking</strong>: Mark badges as distributed to
+members</li>
 </ul>
 </div>
 <div class="section" id="cooperative-states">
@@ -654,8 +655,8 @@ commented out in the implementation).</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="33%" />
-<col width="31%" />
-<col width="36%" />
+<col width="33%" />
+<col width="33%" />
 </colgroup>
 <thead valign="bottom">
 <tr><th class="head">Button</th>
@@ -682,11 +683,13 @@ reader</td>
 redirects to badge
 reader</td>
 </tr>
-<tr><td><strong>Badge distributed</strong></td>
+<tr><td><strong>Badge
+distributed</strong></td>
 <td>Mark badge as
 distributed</td>
 <td>Available only if
-<tt class="docutils literal">badge_to_distribute</tt>
+<tt class="docutils literal">b
+adge_to_distribute</tt>
 is True</td>
 </tr>
 </tbody>
@@ -695,15 +698,16 @@ is True</td>
 <div class="section" id="grace-period-behavior">
 <h3>Grace Period Behavior</h3>
 <ul class="simple">
-<li>When a partner with <strong>delay</strong> status loads the form, a grace period is
-automatically applied</li>
-<li>A warning message displays: “A grace period until [date] or until your
-next service has been assigned to you. You may proceed with your
+<li>When a partner with <strong>delay</strong> status loads the form, a grace period
+is automatically applied</li>
+<li>A warning message displays: “A grace period until [date] or until
+your next service has been assigned to you. You may proceed with your
 shopping!”</li>
 <li>When a partner with <strong>suspended</strong> status loads the form with no
 available grace period:<ul>
 <li>A danger message displays: “We were unable to grant you a grace
-period; you must make up your services before doing your shopping.”</li>
+period; you must make up your services before doing your
+shopping.”</li>
 </ul>
 </li>
 </ul>
@@ -842,8 +846,8 @@ employees</li>
 <p>The module provides different sounds for various scenarios:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="33%" />
-<col width="67%" />
+<col width="34%" />
+<col width="66%" />
 </colgroup>
 <thead valign="bottom">
 <tr><th class="head">Sound File</th>
@@ -900,8 +904,8 @@ blocked, etc.)</td>
 <h3>RPC Methods Used</h3>
 <table border="1" class="docutils">
 <colgroup>
-<col width="55%" />
-<col width="45%" />
+<col width="50%" />
+<col width="50%" />
 </colgroup>
 <thead valign="bottom">
 <tr><th class="head">Method</th>
@@ -921,11 +925,13 @@ filters</td>
 <td>Log member check-in/out/error
 action</td>
 </tr>
-<tr><td><tt class="docutils literal">res.partner.action_grace_partner()</tt></td>
+<tr><td><tt class="docutils literal">res.
+partner.action_grace_partner()</tt></td>
 <td>Apply grace period for delayed
 members</td>
 </tr>
-<tr><td><tt class="docutils literal">res.partner.set_badge_distributed()</tt></td>
+<tr><td><tt class="docutils literal">res.p
+artner.set_badge_distributed()</tt></td>
 <td>Mark badge as distributed</td>
 </tr>
 </tbody>
@@ -1007,9 +1013,8 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 </li>
 </ul>
 <p>Icon module comes from
-&lt;<a class="reference external" href="https://www.iconfinder.com/icons/52644/card_reader_security_icon&gt;">https://www.iconfinder.com/icons/52644/card_reader_security_icon\&gt;</a>
-and is copyright by
-&lt;<a class="reference external" href="http://www.tpdkdesign.net&gt;">www.tpdkdesign.net\&gt;</a></p>
+&lt;<a class="reference external" href="https://www.iconfinder.com/icons/52644/card_reader_security_icon">https://www.iconfinder.com/icons/52644/card_reader_security_icon</a>&gt; and
+is copyright by &lt;<a class="reference external" href="http://www.tpdkdesign.net">www.tpdkdesign.net</a>&gt;</p>
 </div>
 <div class="section" id="maintainers">
 <h2>Maintainers</h2>
