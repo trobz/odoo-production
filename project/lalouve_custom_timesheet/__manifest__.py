@@ -1,18 +1,16 @@
 {
     'name': 'Lalouve Custom: Member Timesheet',
-    'version': '12.0.1.0.0',
+    'version': '18.0.1.0.0',
     'category': 'Custom',
-    'description': """
-Lalouve Custom    """,
+    'summary': 'Lalouve Custom Timesheet Report',
     'author': 'Trobz',
     'website': 'http://www.trobz.com',
+    'license': 'LGPL-3',
     'depends': [
         'coop_shift'
     ],
     'data': [
         'report/report_timesheet.xml',
     ],
-    'qweb': [],
-    'test': [],
     'installable': True,
 }
