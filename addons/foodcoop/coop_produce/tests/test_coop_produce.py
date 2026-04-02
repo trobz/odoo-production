@@ -8,6 +8,40 @@ from .common import CoopProduceTest
 
 
 class TestCoopProduce(CoopProduceTest):
+    def test_default_packaging_syncs_with_product_packaging(self):
+        product = self.env["product.template"].create(
+            {
+                "name": "Packaging Sync Product",
+                "list_price": 10.0,
+                "standard_price": 5.0,
+                "type": "consu",
+                "default_code": "PACK_SYNC",
+                "categ_id": self.CategoryCoop.id,
+                "is_storable": True,
+            }
+        )
+
+        self.assertEqual(product.default_packaging, 0.0)
+        self.assertFalse(product.packaging_ids)
+
+        product.product_variant_id.packaging_ids = [
+            Command.create(
+                {
+                    "name": product.name,
+                    "qty": 3.0,
+                }
+            )
+        ]
+
+        self.assertEqual(product.default_packaging, 3.0)
+        self.assertEqual(product.product_variant_id.default_packaging, 3.0)
+        self.assertEqual(len(product.packaging_ids), 1)
+        self.assertEqual(product.packaging_ids.qty, 3.0)
+
+        product.packaging_ids.qty = 4.0
+        self.assertEqual(product.default_packaging, 4.0)
+        self.assertEqual(product.product_variant_id.default_packaging, 4.0)
+
     def test_coop_produce01(self):
         """
         Test the Coop Produce should take the quantities based on default
@@ -32,6 +66,7 @@ class TestCoopProduce(CoopProduceTest):
             "Stock Quants should be created after adding products"
             " using the add button of product categories.",
         )
+        self.assertEqual(stock_inventory1.product_selection, "category")
 
         # Reset
         stock_inventory1.action_state_to_draft()
@@ -59,6 +94,37 @@ class TestCoopProduce(CoopProduceTest):
             stock_inventory.stock_quant_ids,
             "Stock Quants should be created after adding products"
             " using the add button of suppliers.",
+        )
+        self.assertEqual(stock_inventory.product_selection, "category")
+        self.assertEqual(
+            len(stock_inventory.stock_quant_ids),
+            1,
+        )
+        # Check quantity
+        quant = stock_inventory.stock_quant_ids[0]
+        self.assertEqual(
+            quant.product_id,
+            self.VariantCoop,
+            "The product of the stock quant should be the product variant of "
+            "the Coop Product.",
+        )
+        self.assertEqual(
+            quant.default_packaging,
+            self.VariantCoop.default_packaging,
+            "The location of the stock quant should be the stock location.",
+        )
+        quant.qty_stock = 8.0
+        self.assertEqual(
+            quant.packaging_qty,
+            3.0,
+            "The packaging quantity should be the stock quantity divided by "
+            "the default packaging.",
+        )
+        self.assertEqual(
+            quant.qty_loss,
+            5.0,
+            "The quantity loss should be the difference between the packaging "
+            "quantity and the stock quantity.",
         )
 
         # Validate F&V Inventory

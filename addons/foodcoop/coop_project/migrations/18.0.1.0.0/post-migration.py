@@ -30,7 +30,7 @@ def migrate(cr, version):
     env.cr.execute(
         """
         INSERT INTO project_tags (name, color)
-        SELECT pc.name, pc.color
+        SELECT jsonb_build_object('en_US', pc.name), pc.color
         FROM project_category pc
         ON CONFLICT (name) DO NOTHING
         """
@@ -46,7 +46,7 @@ def migrate(cr, version):
             SELECT DISTINCT rel.project_id, pt.id
             FROM project_project_category_rel rel
             JOIN project_category pc ON pc.id = rel.category_id
-            JOIN project_tags pt ON pt.name = pc.name
+            JOIN project_tags pt ON pt.name->>'en_US' = pc.name
             ON CONFLICT DO NOTHING
             """
         )

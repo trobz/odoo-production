@@ -1,0 +1,117 @@
+from odoo import api, fields, models
+from odoo.tools.safe_eval import safe_eval
+
+
+class PurchaseOrderLine(models.Model):
+    _inherit = "purchase.order.line"
+
+    price_unit_tax = fields.Monetary(
+        compute="_compute_price_unit_tax",
+        string="Price Unit Tax Included",
+        store=True,
+    )
+    price_discounted = fields.Monetary(
+        compute="_compute_price_discounted",
+        string="Discounted Price",
+        store=True,
+    )
+    product_default_code = fields.Char(
+        string="Internal Reference", related="product_id.default_code", store=True
+    )
+
+    @api.depends("price_total", "product_qty")
+    def _compute_price_unit_tax(self):
+        for pol in self:
+            if pol.product_qty:
+                pol.price_unit_tax = pol.price_total / pol.product_qty
+
+    @api.depends(
+        "price_unit",
+        "discount",
+        "order_id.currency_id",
+        "order_id.partner_id.discount_computation",
+    )
+    def _compute_price_discounted(self):
+        for pol in self:
+            pol.price_discounted = pol._get_discounted_price_unit()
+
+    def _create_or_update_picking(self):
+        if self.env.context.get("skip_move_create"):
+            return
+        return super()._create_or_update_picking()
+
+    def update_po_price_to_vendor_price(self):
+        """
+        @Function for the action of updating vendor price
+        """
+        update_main_vendor = (
+            self.env["ir.config_parameter"]
+            .sudo()
+            .get_param("update_main_vendor_on_update_vendor_price", "False")
+        )
+        update_main_vendor = safe_eval(update_main_vendor)
+
+        for po_line in self:
+            product = po_line.product_id
+            po_vendor = po_line.partner_id
+            po_vendor_id = po_vendor.id
+            po_product_unit_price = po_line.price_unit
+            main_vendor = False
+
+            # Find the appropriate vendor price
+            vendor_price_line = product.seller_ids.filtered(
+                lambda vp_line, po_vendor_id=po_vendor_id: vp_line.partner_id.id
+                == po_vendor_id
+            )
+            if vendor_price_line:
+                if update_main_vendor:
+                    min_sequence = min(product.seller_ids.mapped("sequence")) or 0
+                    vendor_price_line = vendor_price_line[0]
+                    current_sequence = vendor_price_line.sequence
+
+                    min_sequence_not_unique = (
+                        product.seller_ids.mapped("sequence").count(min_sequence) > 1
+                    )
+
+                    # No update if the current vendor is the main one
+                    if (
+                        vendor_price_line.sequence != min_sequence
+                        # Allows to recover from non unique sequence (messed up data)
+                        or min_sequence_not_unique
+                    ):
+                        for seller in product.seller_ids:
+                            if (
+                                seller.id != vendor_price_line.id
+                                and seller.sequence
+                                # <= instead of < recovers from non unique seq
+                                <= current_sequence
+                            ):
+                                seller.write({"sequence": seller.sequence + 1})
+                        main_vendor = vendor_price_line.partner_id
+                        vendor_price_line.write({"sequence": min_sequence})
+
+                # Update unit price
+                vendor_price_line.write({"base_price": po_product_unit_price})
+
+                # Reupdate the theoretical cost / base price
+                product_template = product.product_tmpl_id
+                product_template.auto_update_theoritical_cost_price()
+                product_template.with_context(
+                    selected_vendor=main_vendor
+                )._compute_base_price()
+
+    def _get_discounted_price_unit(self):
+        self.ensure_one()
+        price = self.price_unit
+        if self.discount:
+            price *= 1 - (self.discount / 100.0)
+
+        partner = self.order_id.partner_id
+        if partner and "discount_computation" in partner._fields:
+            if (
+                partner.discount_computation == "unit_price"
+                and self.order_id.currency_id
+            ):
+                price = self.order_id.currency_id.round(price)
+
+        return price
