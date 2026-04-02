@@ -24,7 +24,7 @@ Coop Purchase
 
 Manage custom behaviour for purchase
 
-- Create a new menu for vendor refunds: Invoicing > Vendor > Refund
+-  Create a new menu for vendor refunds: Invoicing > Vendor > Refund
 
 **Table of contents**
 
@@ -40,55 +40,57 @@ Purpose
 The ``coop_purchase`` module adds a few utilities to the purchasing
 flow, focusing on:
 
-- Showing additional information on Purchase Orders and Vendor Bills to
-  ease reconciliation.
-- Updating vendor prices (``product.supplierinfo``) from a PO/Bill.
-- Business safeguard: preventing Vendor Bill creation when the related
-  PO still has pickings not fully received.
-- Receiving stability: automatically creating PO lines when the user
-  manually adds receipt lines.
+-  Showing additional information on Purchase Orders and Vendor Bills to
+   ease reconciliation.
+-  Updating vendor prices (``product.supplierinfo``) from a PO/Bill.
+-  Business safeguard: preventing Vendor Bill creation when the related
+   PO still has pickings not fully received.
+-  Receiving stability: automatically creating PO lines when the user
+   manually adds receipt lines.
 
 Scope / Impacted areas (for code review)
 ----------------------------------------
 
 Key areas to review:
 
-- ``purchase.order`` / ``purchase.order.line``
+-  ``purchase.order`` / ``purchase.order.line``
 
-  - Adds display fields: ``product_default_code``, ``price_discounted``,
-    ``price_unit_tax``, and shows ``price_total``.
-  - The ``Upd. Prices`` button opens the vendor price update wizard.
+   -  Adds display fields: ``product_default_code``,
+      ``price_discounted``, ``price_unit_tax``, and shows
+      ``price_total``.
+   -  The ``Upd. Prices`` button opens the vendor price update wizard.
 
-- ``account.move`` / ``account.move.line`` (Vendor Bill / Vendor Refund)
+-  ``account.move`` / ``account.move.line`` (Vendor Bill / Vendor
+   Refund)
 
-  - Blocks bill creation from a PO if at least one related picking is
-    not ``Done``/``Cancelled``.
-  - Product onchange on bill lines: auto-fills ``discount``,
-    ``base_price``, ``price_unit`` from supplierinfo (when available).
-  - The ``Upd. Prices`` button opens the vendor price update wizard.
-  - Some header fields are forced read-only if the user is not in the
-    accounting manager group.
+   -  Blocks bill creation from a PO if at least one related picking is
+      not ``Done``/``Cancelled``.
+   -  Product onchange on bill lines: auto-fills ``discount``,
+      ``base_price``, ``price_unit`` from supplierinfo (when available).
+   -  The ``Upd. Prices`` button opens the vendor price update wizard.
+   -  Some header fields are forced read-only if the user is not in the
+      accounting manager group.
 
-- ``stock.picking``
+-  ``stock.picking``
 
-  - When validating a picking linked to a PO: if a stock move is not
-    linked to any ``purchase_line_id`` (typically due to merge/manual
-    moves), the module creates a corresponding PO line and links it
-    back.
+   -  When validating a picking linked to a PO: if a stock move is not
+      linked to any ``purchase_line_id`` (typically due to merge/manual
+      moves), the module creates a corresponding PO line and links it
+      back.
 
-- Wizard ``supplier.info.update``
+-  Wizard ``supplier.info.update``
 
-  - Collects lines from the PO or Vendor Bill and allows writing updates
-    back to ``product.supplierinfo``.
+   -  Collects lines from the PO or Vendor Bill and allows writing
+      updates back to ``product.supplierinfo``.
 
 Test data setup (FC)
 --------------------
 
-- At least 1 Vendor.
-- At least 1 Product with Vendor Price (``product.supplierinfo``)
-  configured for that Vendor.
-- If packages are used: ensure ``package_qty`` / ``price_policy`` is
-  configured accordingly.
+-  At least 1 Vendor.
+-  At least 1 Product with Vendor Price (``product.supplierinfo``)
+   configured for that Vendor.
+-  If packages are used: ensure ``package_qty`` / ``price_policy`` is
+   configured accordingly.
 
 UI test checklist (FC)
 ----------------------
@@ -96,80 +98,80 @@ UI test checklist (FC)
 1) PO/RFQ: display fields and price update button
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Go to Purchase and create an RFQ/PO.
-- Add products to order lines.
-- Expected:
+-  Go to Purchase and create an RFQ/PO.
+-  Add products to order lines.
+-  Expected:
 
-  - The ``Internal Reference`` column is displayed.
-  - The ``Discounted Price`` column is displayed and ``price_total`` is
-    shown on lines.
+   -  The ``Internal Reference`` column is displayed.
+   -  The ``Discounted Price`` column is displayed and ``price_total``
+      is shown on lines.
 
-- Click ``Upd. Prices``.
-- Expected: the wizard lists matching lines (supplierinfo found) and
-  updates ``base_price`` / ``discount`` on confirmation.
+-  Click ``Upd. Prices``.
+-  Expected: the wizard lists matching lines (supplierinfo found) and
+   updates ``base_price`` / ``discount`` on confirmation.
 
 2) Receipt: validate picking and manual receipt line case
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Confirm the PO to generate the picking.
-- Open the picking and Validate normally.
-- Manual receipt line case:
+-  Confirm the PO to generate the picking.
+-  Open the picking and Validate normally.
+-  Manual receipt line case:
 
-  - On the picking, add a stock move/operation manually (additional
-    receipt line).
-  - Validate.
-  - Expected:
+   -  On the picking, add a stock move/operation manually (additional
+      receipt line).
+   -  Validate.
+   -  Expected:
 
-    - No crash.
-    - A new PO line is created for the added product and the move is
-      linked back to the PO line.
-    - The PO has a message log about lines created from the incoming
-      shipment.
+      -  No crash.
+      -  A new PO line is created for the added product and the move is
+         linked back to the PO line.
+      -  The PO has a message log about lines created from the incoming
+         shipment.
 
 3) Block Vendor Bill creation when reception is not confirmed
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Create and confirm a PO, but do not validate the picking yet.
-- Try to create a Vendor Bill from the PO (Create Bill, or set
-  ``purchase_id`` on the bill).
-- Expected: blocked with a message asking to confirm reception.
-- After validating (or cancelling) the picking, create the Vendor Bill
-  again.
-- Expected: bill creation succeeds.
+-  Create and confirm a PO, but do not validate the picking yet.
+-  Try to create a Vendor Bill from the PO (Create Bill, or set
+   ``purchase_id`` on the bill).
+-  Expected: blocked with a message asking to confirm reception.
+-  After validating (or cancelling) the picking, create the Vendor Bill
+   again.
+-  Expected: bill creation succeeds.
 
 4) Vendor Bill: line onchange and price update button
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- Create a Vendor Bill (``in_invoice``) for the Vendor.
-- Add a line and select the product.
-- Expected (when supplierinfo exists for that vendor):
+-  Create a Vendor Bill (``in_invoice``) for the Vendor.
+-  Add a line and select the product.
+-  Expected (when supplierinfo exists for that vendor):
 
-  - ``discount``, ``base_price``, ``price_unit`` are auto-filled.
+   -  ``discount``, ``base_price``, ``price_unit`` are auto-filled.
 
-- Click ``Upd. Prices`` on the Vendor Bill.
-- Expected: the wizard allows updating supplierinfo.
+-  Click ``Upd. Prices`` on the Vendor Bill.
+-  Expected: the wizard allows updating supplierinfo.
 
 5) Access rights (read-only fields on Vendor Bill)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- With a user not in the accounting manager group:
+-  With a user not in the accounting manager group:
 
-  - Open a Vendor Bill and check some header fields are forced read-only
-    as designed.
+   -  Open a Vendor Bill and check some header fields are forced
+      read-only as designed.
 
-- With a user in the accounting manager group:
+-  With a user in the accounting manager group:
 
-  - Those fields are not forced read-only.
+   -  Those fields are not forced read-only.
 
 Notes for testing
 -----------------
 
-- The ``Upd. Prices`` wizard is relevant for vendors (supplierinfo). If
-  there is no matching supplierinfo for the vendor/price policy, the
-  wizard may show no lines.
-- When testing the bill creation block, ensure the PO actually has
-  ``picking_ids`` and at least one picking is in a state other than
-  ``Done``/``Cancelled``.
+-  The ``Upd. Prices`` wizard is relevant for vendors (supplierinfo). If
+   there is no matching supplierinfo for the vendor/price policy, the
+   wizard may show no lines.
+-  When testing the bill creation block, ensure the PO actually has
+   ``picking_ids`` and at least one picking is in a state other than
+   ``Done``/``Cancelled``.
 
 Bug Tracker
 ===========
@@ -192,8 +194,8 @@ Authors
 Contributors
 ------------
 
-- La Louve (<`http://www.lalouve.net/\\> <http://www.lalouve.net/\>>`__)
-- Druidoo (https://www.druidoo.io)
+-  La Louve (<http://www.lalouve.net/>)
+-  Druidoo (https://www.druidoo.io)
 
 Maintainers
 -----------
