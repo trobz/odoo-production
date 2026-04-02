@@ -8,7 +8,7 @@ class AccountInvoiceLine(models.Model):
         currency_field="currency_id",
     )
     product_default_code = fields.Char(
-        string="Internal Reference", related="product_id.default_code", store=True
+        string="Internal Reference", related="product_id.default_code"
     )
 
     @api.onchange("product_id")
