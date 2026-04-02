@@ -87,3 +87,5 @@ coverage.xml
 
 # env file
 /config/server.env
+
+.vscode/
