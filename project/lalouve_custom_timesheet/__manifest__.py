@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     'name': 'Lalouve Custom: Member Timesheet',
     'version': '12.0.1.0.0',
