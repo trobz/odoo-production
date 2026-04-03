@@ -2,19 +2,18 @@
 # @author Pierrick Brun <pierrick.brun@akretion.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import api, models
 
 
-class AccountInvoice(models.Model):
-    _inherit = "account.invoice"
+class AccountMove(models.Model):
+    _inherit = "account.move"
 
     @api.model
-    def fields_view_get(self, view_id=None, view_type='form',
-            toolbar=False, submenu=False):
-        res = super(AccountInvoice, self).fields_view_get(
-            view_id, view_type, toolbar, submenu)
-        if self.user_has_groups(
-                "foodcoop_data_role.group_member_accountant_restrict") and \
-            res.get("toolbar", {}).get("action"):
-            del res["toolbar"]["action"]
+    def get_views(self, views, options=None):
+        res = super().get_views(views, options)
+        user = self.env.user
+        if user.has_group("foodcoop_data_role.group_member_accountant_restrict"):
+            for _view_type, view_data in res.get("views", {}).items():
+                if view_data.get("toolbar", {}).get("action"):
+                    del view_data["toolbar"]["action"]
         return res

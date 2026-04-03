@@ -1,13 +1,18 @@
-<?xml version="1.0"?>
-
+<?xml version="1.0" ?>
 <odoo>
-
     <record model="ir.ui.menu" id="coop_membership.menu_shift_seats_available">
-        <field name="groups_id" eval="[(3, ref('coop_membership.group_membership_bdm_presence')), (3, ref('coop_membership.group_membership_bdm_lecture'))]"/>
+        <field
+            name="groups_id"
+            eval="[
+            Command.unlink(ref('coop_membership.group_membership_bdm_presence')),
+            Command.unlink(ref('coop_membership.group_membership_bdm_lecture')),
+        ]"
+        />
     </record>
     <record model="ir.ui.menu" id="coop_shift.menu_shift_registration_exchanges">
-        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
-        <field name="groups_id" eval="[(6, 0, [
+        <field
+            name="groups_id"
+            eval="[Command.set([
             ref('foodcoop_data_role.group_Teamleader'),
             ref('foodcoop_data_role.group_Foodcoop_Admin'),
             ref('foodcoop_data_role.group_Member_Manager'),
@@ -17,77 +22,121 @@
             ref('foodcoop_data_role.group_BDMSaisie'),
             ref('foodcoop_data_role.group_Subscription'),
             ref('foodcoop_data_role.group_BadgeReader'),
-        ])]"/>
+        ])]"
+        />
     </record>
     <record model="ir.ui.menu" id="coop_shift.template_menu">
-        <field name="groups_id" eval="[(3, ref('coop_membership.group_membership_bdm_presence'))]"/>
+        <field
+            name="groups_id"
+            eval="[Command.unlink(ref('coop_membership.group_membership_bdm_presence'))]"
+        />
     </record>
     <record model="ir.ui.menu" id="coop_membership.menu_res_partner_former_member">
-        <field name="groups_id" eval="[(4, ref('foodcoop_data_role.group_BDMSaisie'))]"/>
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('foodcoop_data_role.group_BDMSaisie'))]"
+        />
     </record>
-    <record model="ir.ui.menu" id="coop_membership.menu_res_partner_former_associated_people">
-        <field name="groups_id" eval="[(4, ref('foodcoop_data_role.group_BDMSaisie'))]"/>
+    <record
+        model="ir.ui.menu"
+        id="coop_membership.menu_res_partner_former_associated_people"
+    >
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('foodcoop_data_role.group_BDMSaisie'))]"
+        />
     </record>
     <record model="ir.ui.menu" id="coop_membership.menu_res_partner_all_partners">
-        <field name="groups_id" eval="[(4, ref('foodcoop_data_role.group_BDMSaisie'))]"/>
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('foodcoop_data_role.group_BDMSaisie'))]"
+        />
     </record>
     <record model="ir.ui.menu" id="coop_shift.menu_shift_shift">
-        <field name="groups_id" eval="[(4, ref('foodcoop_data_role.group_BDMSaisie'))]"/>
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('foodcoop_data_role.group_BDMSaisie'))]"
+        />
     </record>
     <record model="ir.ui.menu" id="coop_shift.menu_shift_extension">
-        <field name="groups_id" eval="[(4, ref('foodcoop_data_role.group_BDMSaisie'))]"/>
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('foodcoop_data_role.group_BDMSaisie'))]"
+        />
     </record>
     <record model="ir.ui.menu" id="coop_shift.menu_shift_leave">
-        <field name="groups_id" eval="[(4, ref('foodcoop_data_role.group_BDMSaisie'))]"/>
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('foodcoop_data_role.group_BDMSaisie'))]"
+        />
     </record>
     <record model="ir.ui.menu" id="coop_shift.menu_timesheet">
-        <field name="groups_id" eval="[(4, ref('foodcoop_data_role.group_BDMSaisie'))]"/>
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('foodcoop_data_role.group_BDMSaisie'))]"
+        />
     </record>
 
-    <menuitem id="menu_stock_config_settings_2"
-              parent="stock.menu_stock_root" sequence="120"
-              name="Configuration"
-              groups="group_Purchaser_restrict"/>
-    <menuitem id="menu_product_print_category"
-              parent="menu_stock_config_settings_2" sequence="10"
-              action="product_print_category.action_product_print_category"
-              groups="product_print_category.user"/>
-    <menuitem id="menu_product_scale_log"
-              parent="menu_stock_config_settings_2" sequence="20"
-              action="product_to_scale_bizerba.action_product_scale_log"
-              name="Scale Logs"
-              />
-    <record model="ir.ui.menu" id="stock.all_picking">
-        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
-        <field name="groups_id" eval="[(6, 0, [
+    <menuitem
+        id="menu_stock_config_settings_2"
+        parent="stock.menu_stock_root"
+        sequence="120"
+        name="Configuration"
+        groups="group_Purchaser_restrict"
+    />
+    <menuitem
+        id="menu_product_print_category"
+        parent="menu_stock_config_settings_2"
+        sequence="10"
+        action="product_print_category.action_product_print_category"
+        groups="base.group_user"
+    />
+    <menuitem
+        id="menu_product_scale_log"
+        parent="menu_stock_config_settings_2"
+        sequence="20"
+        action="product_to_scale_bizerba.action_product_scale_log"
+        name="Scale Logs"
+    />
+    <!-- <record model="ir.ui.menu" id="stock.all_picking">
+        <field name="invisible_groups_ids" eval="[Command.set([])]"/>
+        <field
+            name="groups_id"
+            eval="[Command.set([
             ref('foodcoop_data_role.group_Inventory_Manager'),
             ref('foodcoop_data_role.group_Foodcoop_Admin'),
             ref('foodcoop_data_role.group_Purchase_Manager'),
             ref('foodcoop_data_role.group_Accountant'),
-        ])]"/>
-    </record>
+        ])]"
+        />
+    </record> -->
     <record model="ir.ui.menu" id="stock.menu_procurement_compute">
-        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
-        <field name="groups_id" eval="[(6, 0, [
+        <field
+            name="groups_id"
+            eval="[Command.set([
             ref('foodcoop_data_role.group_Inventory_Manager'),
             ref('foodcoop_data_role.group_Foodcoop_Admin'),
             ref('foodcoop_data_role.group_Purchase_Manager'),
             ref('foodcoop_data_role.group_Accountant'),
-        ])]"/>
+        ])]"
+        />
     </record>
     <record model="ir.ui.menu" id="stock.menu_stock_inventory_control">
-        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
-        <field name="groups_id" eval="[(6, 0, [
+        <field
+            name="groups_id"
+            eval="[Command.set([
             ref('foodcoop_data_role.group_Inventory_Manager'),
             ref('foodcoop_data_role.group_Foodcoop_Admin'),
             ref('foodcoop_data_role.group_Purchase_Manager'),
             ref('foodcoop_data_role.group_Accountant'),
-        ])]"/>
+        ])]"
+        />
     </record>
 
     <record model="ir.ui.menu" id="coop_default_pricetag.menu_product_label">
-        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
-        <field name="groups_id" eval="[(6, 0, [
+        <field
+            name="groups_id"
+            eval="[Command.set([
             ref('foodcoop_data_role.group_Inventory_Manager'),
             ref('foodcoop_data_role.group_Foodcoop_Admin'),
             ref('foodcoop_data_role.group_Purchase_Manager'),
@@ -95,11 +144,13 @@
             ref('foodcoop_data_role.group_POS_Manager'),
             ref('foodcoop_data_role.group_Cashier'),
             ref('foodcoop_data_role.group_Member_Accountant'),
-        ])]"/>
+        ])]"
+        />
     </record>
     <record model="ir.ui.menu" id="coop_default_pricetag.menu_product_product_food">
-        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
-        <field name="groups_id" eval="[(6, 0, [
+        <field
+            name="groups_id"
+            eval="[Command.set([
             ref('foodcoop_data_role.group_Inventory_Manager'),
             ref('foodcoop_data_role.group_Foodcoop_Admin'),
             ref('foodcoop_data_role.group_Purchase_Manager'),
@@ -107,11 +158,13 @@
             ref('foodcoop_data_role.group_POS_Manager'),
             ref('foodcoop_data_role.group_Cashier'),
             ref('foodcoop_data_role.group_Member_Accountant'),
-        ])]"/>
+        ])]"
+        />
     </record>
     <record model="ir.ui.menu" id="coop_default_pricetag.menu_product_product_origin_3">
-        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
-        <field name="groups_id" eval="[(6, 0, [
+        <field
+            name="groups_id"
+            eval="[Command.set([
             ref('foodcoop_data_role.group_Inventory_Manager'),
             ref('foodcoop_data_role.group_Foodcoop_Admin'),
             ref('foodcoop_data_role.group_Purchase_Manager'),
@@ -119,11 +172,16 @@
             ref('foodcoop_data_role.group_POS_Manager'),
             ref('foodcoop_data_role.group_Cashier'),
             ref('foodcoop_data_role.group_Member_Accountant'),
-        ])]"/>
+        ])]"
+        />
     </record>
-    <record model="ir.ui.menu" id="coop_default_pricetag.menu_product_product_pricetag_3">
-        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
-        <field name="groups_id" eval="[(6, 0, [
+    <record
+        model="ir.ui.menu"
+        id="coop_default_pricetag.menu_product_product_pricetag_3"
+    >
+        <field
+            name="groups_id"
+            eval="[Command.set([
             ref('foodcoop_data_role.group_Inventory_Manager'),
             ref('foodcoop_data_role.group_Foodcoop_Admin'),
             ref('foodcoop_data_role.group_Purchase_Manager'),
@@ -131,29 +189,41 @@
             ref('foodcoop_data_role.group_POS_Manager'),
             ref('foodcoop_data_role.group_Cashier'),
             ref('foodcoop_data_role.group_Member_Accountant'),
-        ])]"/>
+        ])]"
+        />
     </record>
-    <menuitem id="menu_product_coefficient"
+    <menuitem
+        id="menu_product_coefficient"
         name="Products Coefficients"
         parent="stock.menu_product_in_config_stock"
         sequence="20"
-        action="coop_product_coefficient.action_product_coefficient" />
-    <record model="ir.ui.menu" id="base.menu_board_root">
-        <field name="groups_id" eval="[(4, ref('foodcoop_data_role.group_Staff'))]"/>
-    </record>
+        action="coop_product_coefficient.action_product_coefficient"
+    />
+    <!-- <record model="ir.ui.menu" id="base.menu_board_root">
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('foodcoop_data_role.group_Staff'))]"
+        />
+    </record> -->
     <record model="ir.ui.menu" id="mass_mailing.menu_email_mass_mailing_contacts">
-        <field name="groups_id" eval="[(4, ref('foodcoop_data_role.group_Communications_Manager'))]"/>
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('foodcoop_data_role.group_Communications_Manager'))]"
+        />
     </record>
-    <menuitem
+    <!-- <menuitem
         name="Delivery Categories"
         id="menu_delivery_category"
         sequence="50"
         action="coop_delivery_category.action_delivery_category"
-        parent="menu_stock_config_settings_2"/>
-    <record model="ir.actions.act_window" id="sms.send_sms_action">
-        <field name="groups_id" eval="[(4, ref('base.group_erp_manager'))]"/>
-    </record>
-    <menuitem action="mail.action_email_template_tree_all" id="menu_email_template_tree_all"
+        parent="menu_stock_config_settings_2"/> -->
+    <!-- <record model="ir.actions.act_window" id="sms.send_sms_action">
+        <field name="groups_id" eval="[Command.link(ref('base.group_erp_manager'))]" />
+    </record> -->
+    <menuitem
+        action="mail.action_email_template_tree_all"
+        id="menu_email_template_tree_all"
         name="Mail Templates"
-        parent="coop_shift.menu_shift_configuration"/>
+        parent="coop_shift.menu_shift_configuration"
+    />
 </odoo>

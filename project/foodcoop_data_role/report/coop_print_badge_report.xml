@@ -1,6 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="coop_print_badge.action_report_printbadge" model="ir.actions.report">
-        <field name="groups_id" eval="[(4, ref('coop_membership.group_membership_bdm_saisie'))]"/>
+        <field
+            name="groups_id"
+            eval="[(4, ref('coop_membership.group_membership_bdm_saisie'))]"
+        />
     </record>
 </odoo>
