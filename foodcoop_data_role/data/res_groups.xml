@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
     <record id="group_Cashier" model="res.groups">
         <field name="name">Cashier</field>
@@ -17,9 +17,7 @@
     </record>
     <record id="group_Purchaser" model="res.groups">
         <field name="name">Purchaser</field>
-        <field name="menu_access" eval="[
-            (4, ref('sale.menu_sale_report')),
-        ]" />
+        <field name="menu_access" eval="[Command.link(ref('sale.menu_sale_report'))]" />
     </record>
     <record id="group_Purchase_Manager" model="res.groups">
         <field name="name">Purchase Manager</field>
@@ -64,105 +62,112 @@
 
     <record id="group_member_accountant_restrict" model="res.groups">
         <field name="name">Restrict rights for Member Accountant</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="category_id" ref="base.module_category_hidden" />
     </record>
     <record id="group_member_Subscription_restrict" model="res.groups">
         <field name="name">Restrict rights for Subscription</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="category_id" ref="base.module_category_hidden" />
     </record>
     <record id="group_member_WelMTeam_restrict" model="res.groups">
         <field name="name">Restrict rights for Welcome Meeting Team</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="category_id" ref="base.module_category_hidden" />
     </record>
     <record id="group_member_Communications_Officer_restrict" model="res.groups">
         <field name="name">Restrict rights for Communications Officer</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="category_id" ref="base.module_category_hidden" />
     </record>
     <record id="group_member_Communications_Manager_restrict" model="res.groups">
         <field name="name">Restrict rights for Communications Manager</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="category_id" ref="base.module_category_hidden" />
     </record>
     <record id="group_member_Member_Manager_restrict" model="res.groups">
         <field name="name">Restrict rights for Member Manager</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="category_id" ref="base.module_category_hidden" />
     </record>
     <record id="group_Purchaser_restrict" model="res.groups">
         <field name="name">Restrict rights for Purchaser</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="category_id" ref="base.module_category_hidden" />
     </record>
     <record id="group_POS_Manager_restrict" model="res.groups">
         <field name="name">Restrict rights for POS Manager</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="category_id" ref="base.module_category_hidden" />
     </record>
     <record model="ir.ui.menu" id="mail.menu_root_discuss">
-        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
-        <field name="groups_id" eval="[(6, 0, [
-            ref('foodcoop_data_role.group_Foodcoop_Admin'),
+        <!-- <field name="invisible_groups_ids" eval="[(6, 0, [])]"/> -->
+        <field
+            name="groups_id"
+            eval="[(6, 0, [
+            ref('group_Foodcoop_Admin'),
             ref('base.group_system'),
-        ])]"/>
+        ])]"
+        />
     </record>
     <record model="ir.ui.menu" id="mass_mailing.mass_mailing_mailing_list_menu">
-        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
-        <field name="groups_id" eval="[(6, 0, [
-            ref('foodcoop_data_role.group_Communications_Manager'),
-            ref('foodcoop_data_role.group_Foodcoop_Admin'),
+        <!-- <field name="invisible_groups_ids" eval="[(6, 0, [])]"/> -->
+        <field
+            name="groups_id"
+            eval="[(6, 0, [
+            ref('group_Communications_Manager'),
+            ref('group_Foodcoop_Admin'),
             ref('base.group_system'),
-        ])]"/>
+        ])]"
+        />
     </record>
-    <record model="ir.ui.menu" id="mass_mailing.menu_mass_mailing_configuration">
-        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
-        <field name="groups_id" eval="[(6, 0, [
-            ref('foodcoop_data_role.group_Communications_Manager'),
-            ref('foodcoop_data_role.group_Foodcoop_Admin'),
+    <record model="ir.ui.menu" id="mass_mailing.mass_mailing_configuration">
+        <!-- <field name="invisible_groups_ids" eval="[(6, 0, [])]"/> -->
+        <field
+            name="groups_id"
+            eval="[(6, 0, [
+            ref('group_Communications_Manager'),
+            ref('group_Foodcoop_Admin'),
             ref('base.group_system'),
-        ])]"/>
+        ])]"
+        />
     </record>
     <record model="ir.ui.menu" id="coop_shift.menu_shift_configuration">
-        <field name="groups_id" eval="[
-        (4, ref('foodcoop_data_role.group_Member_Manager')),
-        ]"/>
+        <field name="groups_id" eval="[Command.link(ref('group_Member_Manager'))]" />
     </record>
-    <record model="ir.ui.menu" id="coop_membership.menu_shift_type_seting">
-        <field name="groups_id" eval="[
-        (4, ref('base.group_system')),
-        ]"/>
-    </record>
+    <!-- <record model="ir.ui.menu" id="coop_membership.menu_shift_type_seting">
+        <field name="groups_id" eval="[Command.link(ref('base.group_system'))]" />
+    </record> -->
     <record model="ir.ui.menu" id="coop_print_badge.menu_badge_to_distribute">
-        <field name="groups_id" eval="[
-        (4, ref('foodcoop_data_role.group_Member_Manager')),
-        ]"/>
+        <field name="groups_id" eval="[Command.link(ref('group_Member_Manager'))]" />
     </record>
     <record model="ir.ui.menu" id="point_of_sale.menu_point_root">
-        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
-        <field name="groups_id" eval="[(6, 0, [
-            ref('foodcoop_data_role.group_Cashier'),
-            ref('foodcoop_data_role.group_Foodcoop_Admin'),
-            ref('foodcoop_data_role.group_POS_Manager'),
-            ref('foodcoop_data_role.group_Member_Accountant'),
-            ref('foodcoop_data_role.group_Accountant'),
+        <!-- <field name="invisible_groups_ids" eval="[(6, 0, [])]"/> -->
+        <field
+            name="groups_id"
+            eval="[(6, 0, [
+            ref('group_Cashier'),
+            ref('group_Foodcoop_Admin'),
+            ref('group_POS_Manager'),
+            ref('group_Member_Accountant'),
+            ref('group_Accountant'),
             ref('base.group_system'),
-        ])]"/>
+        ])]"
+        />
     </record>
     <record model="ir.ui.menu" id="coop_membership.menu_shift_counter_event_reason">
-        <field name="groups_id" eval="[
-        (4, ref('foodcoop_data_role.group_Member_Manager')),
-        ]"/>
+        <field name="groups_id" eval="[Command.link(ref('group_Member_Manager'))]" />
     </record>
     <record model="ir.ui.menu" id="stock.menu_stock_root">
-        <field name="invisible_groups_ids" eval="[(6, 0, [])]"/>
-        <field name="groups_id" eval="[(6, 0, [
-            ref('foodcoop_data_role.group_Inventory_Manager'),
-            ref('foodcoop_data_role.group_Foodcoop_Admin'),
-            ref('foodcoop_data_role.group_Purchaser'),
-            ref('foodcoop_data_role.group_Purchase_Manager'),
-            ref('foodcoop_data_role.group_Accountant'),
+        <!-- <field name="invisible_groups_ids" eval="[(6, 0, [])]"/> -->
+        <field
+            name="groups_id"
+            eval="[(6, 0, [
+            ref('group_Inventory_Manager'),
+            ref('group_Foodcoop_Admin'),
+            ref('group_Purchaser'),
+            ref('group_Purchase_Manager'),
+            ref('group_Accountant'),
             ref('base.group_system'),
-        ])]"/>
+        ])]"
+        />
     </record>
     <record model="res.groups" id="product_to_scale_bizerba.group_manager">
-        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="users" eval="[Command.link(ref('base.user_admin'))]" />
     </record>
     <record model="res.groups" id="account.group_account_user">
-        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="users" eval="[Command.link(ref('base.user_admin'))]" />
     </record>
 </odoo>
