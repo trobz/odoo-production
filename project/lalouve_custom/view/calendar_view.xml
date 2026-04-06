@@ -6,13 +6,13 @@
         <field name="inherit_id" ref="calendar.view_calendar_event_calendar"/>
         <field name="arch" type="xml">
             <xpath expr="//calendar" position="attributes">
-                <attribute name="mode">month</attribute>
-                <attribute name="quick_add">false</attribute>
+                <attribute name="quick_create">false</attribute>
+                <attribute name="event_open_popup">true</attribute>
             </xpath>
         </field>
     </record>
     <record id="calendar.mail_menu_calendar" model="ir.ui.menu">
-        <field name="groups_id" eval="[(6, 0, [ref('lalouve_custom.calendar_group'), ref('base.group_erp_manager')])]"/>
+        <field name="groups_id" eval="[Command.set([ref('lalouve_custom.calendar_group'), ref('base.group_erp_manager')])]"/>
     </record>
     <record id="view_calendar_event_form_inherit" model="ir.ui.view">
         <field name="name">calendar.event.calendar.form.inherit</field>
@@ -20,26 +20,10 @@
         <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
         <field name="priority">1000</field>
         <field name="arch" type="xml">
-            <field name="privacy" position="replace"/>
-            <field name="categ_ids" position="before">
-                <field name="privacy"/>
-            </field>
-            <field name="allday" position="after">
+            <field name="recurrence_id" position="before">
                 <field name="send_invitation"/>
                 <field name="prevent_change"/>
             </field>
-        </field>
-    </record>
-    <record id="view_calendar_event_form_popup_inherit" model="ir.ui.view">
-        <field name="name">calendar.event.form.inherit</field>
-        <field name="model">calendar.event</field>
-        <field name="inherit_id" ref="calendar.view_calendar_event_form_popup"/>
-        <field name="arch" type="xml">
-            <xpath expr="//form/group" position="after">
-                <group string="Description">
-                    <field name="description" nolabel="1"/>
-                </group>
-            </xpath>
         </field>
     </record>
 </odoo>

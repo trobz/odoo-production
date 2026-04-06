@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class CalendarEvent(models.Model):
@@ -9,7 +9,7 @@ class CalendarEvent(models.Model):
     privacy = fields.Selection(default='confidential')
     send_invitation = fields.Boolean(string="Invite by email")
     prevent_change = fields.Boolean(string="Prevent change", default=True)
-    description = fields.Html('Description', states={'done': [('readonly', True)]})
+    description = fields.Html('Description')
 
     @api.model
     def default_get(self, fields_list):
@@ -37,20 +37,6 @@ class CalendarEvent(models.Model):
                 }
             )
         return vals
-
-    @api.multi
-    def create_attendees(self):
-        res = {}
-        for rec in self:
-            if rec.send_invitation:
-                res2 = super(CalendarEvent, rec).create_attendees()
-                res.update(res2)
-            else:
-                res2 = super(
-                    CalendarEvent, rec.with_context(detaching=True)
-                ).create_attendees()
-                res.update(res2)
-        return res
 
     @api.model
     def _number_to_letters(self, num):
@@ -101,17 +87,24 @@ class CalendarEvent(models.Model):
         return week_names
 
     @api.model
-    def search_read(self, domain=None, fields=None, offset=0, limit=None, order=None):
+    def search_read(
+        self, domain=None, fields=None, offset=0, limit=None, order=None, **kwargs
+    ):
         """
         Hide the privacy calendar
 
         """
         records = super().search_read(
-            domain=domain, fields=fields, offset=offset, limit=limit, order=order
+            domain=domain,
+            fields=fields,
+            offset=offset,
+            limit=limit,
+            order=order,
+            **kwargs
         )
         res = []
         for rec in records:
-            if not rec.get('display_name') and rec.get('name') == _('Busy'):
+            if not rec.get('display_name') and rec.get('name') == self.env._('Busy'):
                 continue
             res.append(rec)
         return res
