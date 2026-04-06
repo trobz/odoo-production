@@ -266,6 +266,8 @@ class TestPurchasePackageQty(AccountTestInvoicingCommon):
             # Change the policy
             line.price_policy = "package"
             self.assertEqual(line.quantity, 3)
+            line.price_policy = "uom"
+            self.assertEqual(line.quantity, 3 * 12)
 
     def test_004_check_indicative_package(self):
         line_1 = self.purchase_order.order_line[0]

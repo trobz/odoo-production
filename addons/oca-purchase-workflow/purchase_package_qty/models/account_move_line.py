@@ -70,9 +70,24 @@ class AccountMoveLine(models.Model):
         """Inverse method to set quantity from product_packaging_quantity."""
         self._set_product_packaging_quantity()
 
-    @api.onchange("product_packaging_quantity", "price_policy")
+    @api.onchange("product_packaging_quantity")
     def onchange_product_packaging_quantity(self):
         """Onchange method to set quantity from product_packaging_quantity from UI."""
+        self._set_product_packaging_quantity()
+
+    @api.onchange("price_policy")
+    def _onchange_price_policy(self):
+        for line in self:
+            if not line.product_packaging_id or line.parent_state != "draft":
+                continue
+            if line.price_policy == "package":
+                line.product_packaging_quantity = (
+                    line.product_packaging_id._compute_qty(
+                        line.quantity, line.product_uom_id
+                    )
+                )
+            else:
+                line.product_packaging_quantity = line.quantity
         self._set_product_packaging_quantity()
 
     def _set_product_packaging_quantity(self):
