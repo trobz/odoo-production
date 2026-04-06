@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from odoo import api, models
 
 
@@ -26,7 +24,6 @@ class StockMove(models.Model):
             FROM raw_rows
             WHERE d.id = raw_rows.id
         """.format(
-            table_name=table_name,
-            limit=limit
+            table_name=table_name, limit=limit
         )
         self._cr.execute(sql)
