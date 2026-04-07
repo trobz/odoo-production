@@ -217,7 +217,7 @@ msgstr "Employé à Alerter"
 #. module: coop_badge_reader
 #. odoo-javascript
 #: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.xml:0
-msgid "Enter"
+msgid "Enter Store"
 msgstr "Entre"
 
 #. module: coop_badge_reader
