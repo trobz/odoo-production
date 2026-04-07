@@ -16,9 +16,9 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-web
-        branch: '18.0'
+        branch: 'merge-branch-foodcoop-18.0'
         prefix: addons/oca-web
-        repository: git@github.com:OCA/web.git
+        repository: git@github.com:trobz/web.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
