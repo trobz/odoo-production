@@ -333,6 +333,7 @@ class ProductTemplate(models.Model):
 
     @api.depends(
         "coeff1_inter",
+        "coeff1_inter_sp",
         "coeff2_id.operation_type",
         "coeff2_id.value",
         "incl_in_standard_price_2",
@@ -352,6 +353,7 @@ class ProductTemplate(models.Model):
 
     @api.depends(
         "coeff2_inter",
+        "coeff2_inter_sp",
         "coeff3_id.operation_type",
         "coeff3_id.value",
         "incl_in_standard_price_3",
@@ -371,6 +373,7 @@ class ProductTemplate(models.Model):
 
     @api.depends(
         "coeff3_inter",
+        "coeff3_inter_sp",
         "coeff4_id.operation_type",
         "coeff4_id.value",
         "incl_in_standard_price_4",
@@ -390,6 +393,7 @@ class ProductTemplate(models.Model):
 
     @api.depends(
         "coeff4_inter",
+        "coeff4_inter_sp",
         "coeff5_id.operation_type",
         "coeff5_id.value",
         "incl_in_standard_price_5",
@@ -409,6 +413,7 @@ class ProductTemplate(models.Model):
 
     @api.depends(
         "coeff5_inter",
+        "coeff5_inter_sp",
         "coeff6_id.operation_type",
         "coeff6_id.value",
         "incl_in_standard_price_6",
@@ -428,6 +433,7 @@ class ProductTemplate(models.Model):
 
     @api.depends(
         "coeff6_inter",
+        "coeff6_inter_sp",
         "coeff7_id.operation_type",
         "coeff7_id.value",
         "incl_in_standard_price_7",
@@ -447,6 +453,7 @@ class ProductTemplate(models.Model):
 
     @api.depends(
         "coeff7_inter",
+        "coeff7_inter_sp",
         "coeff8_id.operation_type",
         "coeff8_id.value",
         "incl_in_standard_price_8",
@@ -466,6 +473,7 @@ class ProductTemplate(models.Model):
 
     @api.depends(
         "coeff8_inter",
+        "coeff8_inter_sp",
         "coeff9_id.operation_type",
         "coeff9_id.value",
         "incl_in_standard_price_9",
@@ -516,13 +524,15 @@ class ProductTemplate(models.Model):
         "alternative_base_price_sale",
     )
     def _compute_has_theoritical_price_different(self):
+        precision = self.env["decimal.precision"].precision_get("Product Sale Price")
+        digits = precision or 2
         for template in self:
             if template.theoritical_price and (
                 template.base_price or template.alternative_base_price_sale
             ):
                 template.has_theoritical_price_different = float_round(
-                    template.list_price, precision_digits=2
-                ) != float_round(template.theoritical_price, precision_digits=2)
+                    template.list_price, precision_digits=digits
+                ) != float_round(template.theoritical_price, precision_digits=digits)
             else:
                 template.has_theoritical_price_different = False
 
@@ -533,7 +543,7 @@ class ProductTemplate(models.Model):
         "alternative_base_price_standard",
     )
     def _compute_has_theoritical_cost_different(self):
-        precision = self.env["decimal.precision"].precision_get("Product Sale Price")
+        precision = self.env["decimal.precision"].precision_get("Product Price")
         digits = precision or 2
         for template in self:
             if template.coeff9_inter_sp and (

@@ -67,7 +67,7 @@ msgstr "Action"
 #: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 #: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__alert
 msgid "Alert"
-msgstr "Alerte"
+msgstr "En alerte"
 
 #. module: coop_badge_reader
 #: model:ir.actions.act_window,name:coop_badge_reader.action_alert_entry
@@ -115,7 +115,7 @@ msgstr "Code-barres incorrect"
 #: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 #: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__blocked
 msgid "Blocked"
-msgstr "Bloqué"
+msgstr "Bloqué(e)"
 
 #. module: coop_badge_reader
 #: model:ir.model.fields,field_description:coop_badge_reader.field_res_partner_move__bootstrap_cooperative_state
@@ -262,7 +262,7 @@ msgstr "Retourner"
 #: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.esm.js:0
 #: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 msgid "Grace period granted"
-msgstr "Période de grâce accordée"
+msgstr "Délai accordé"
 
 #. module: coop_badge_reader
 #: model:ir.model.fields,field_description:coop_badge_reader.field_res_partner_alert__id
@@ -355,7 +355,7 @@ msgstr "Non Concerné"
 #: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.esm.js:0
 #: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 msgid "Not concerned"
-msgstr "Non concerné"
+msgstr "Non concerné(e)"
 
 #. module: coop_badge_reader
 #: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner__bootstrap_cooperative_state__success
@@ -373,7 +373,7 @@ msgstr "En Vacances"
 #: code:addons/coop_badge_reader/static/src/components/partner_form/partner_form.esm.js:0
 #: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 msgid "On leave"
-msgstr "En congé"
+msgstr "En congés"
 
 #. module: coop_badge_reader
 #: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_alert__state__open
@@ -470,7 +470,7 @@ msgstr "Statut Succès"
 #: code:addons/coop_badge_reader/static/src/components/partner_list/partner_list.esm.js:0
 #: model:ir.model.fields.selection,name:coop_badge_reader.selection__res_partner_move__cooperative_state__suspended
 msgid "Suspended"
-msgstr "Suspendu"
+msgstr "Suspendu(e)"
 
 #. module: coop_badge_reader
 #: model:res.groups,name:coop_badge_reader.group_time_clock

@@ -1,5 +1,3 @@
-# Usage
-
 ## Coefficient setup
 
 - Go to `Sales` / `Configuration` / `Product Coefficients`.
