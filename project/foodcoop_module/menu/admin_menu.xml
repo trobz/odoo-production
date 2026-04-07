@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <!-- Menu to manage Users -->
     <menuitem
@@ -6,11 +6,13 @@
         id="admin_menu"
         web_icon="base,static/description/settings.png"
         groups="foodcoop_module.functional_admin"
-        sequence="600"/>
+        sequence="600"
+    />
 
     <menuitem
         name="Users"
         id="admin_user_menu"
         parent="foodcoop_module.admin_menu"
-        action="base.action_res_users"/>
+        action="base.action_res_users"
+    />
 </odoo>
