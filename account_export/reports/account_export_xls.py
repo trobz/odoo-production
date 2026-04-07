@@ -1,99 +1,127 @@
-from odoo import models, fields
-
-import logging
-_logger = logging.getLogger(__name__)
+from odoo import fields, models
 
 
 class AccountExportReportXLS(models.AbstractModel):
-    _name = 'report.account_export.report_xls'
-    _inherit = 'report.report_xlsx.abstract'
+    _name = "report.account_export.report_xls"
+    _inherit = "report.report_xlsx.abstract"
+    _description = "Account Export XLS Report"
 
-    def _get_template(self, export):
-        template = {}
-        columns = export.config_id._get_columns_dict()
-        for field in export.config_id.field_ids:
-            col = columns.get(field.field_type)
-            template[field.id] = {
-                'header': {
-                    'type': 'string',
-                    'value': field.name,
-                },
-                'line': {
-                    'value': self._render('line.get(%s)' % field.id),
-                    'format': col.get('format', (
-                        self.format_tcell_date_center
-                        if col.get('type') == 'datetime'
-                        else self.format_tcell_right
-                        if col.get('type') == 'number'
-                        else None
-                    )),
-                },
-                'width': col.get('width', 18),
-            }
-
-            if field.field_type == 'amount'and \
-                    export.config_id.credit_debit_format in ('01', 'DC'):
-                template['%g_sense' % field.id] = {
-                    'header': {'type': 'string', 'value': ''},
-                    'line': {
-                        'value': self._render(
-                            'line.get("%g_sense")' % field.id)
-                    },
-                    'width': 5,
-                }
-        return template
-
-    def _get_ws_params(self, wb, data, export):
-        template = self._get_template(export)
-
-        # Generate wanted list
-        wl = []
-        for field in export.config_id.field_ids:
-            if field.field_type == 'amount'and \
-                    export.config_id.credit_debit_format in ('01', 'DC'):
-                wl.append('%g_sense' % field.id)
-            wl.append(field.id)
-
-        title = self._get_title(export)
-        title_short = self._get_title(export)
-        sheet_name = title_short[:31].replace('/', '-')
-        params = {
-            'ws_name': sheet_name,
-            'generate_ws_method': '_account_export_report',
-            'title': title,
-            'wanted_list': wl,
-            'col_specs': template,
+    def generate_xlsx_report(self, workbook, data, export):
+        report_data = {
+            "workbook": workbook,
+            "sheet": workbook.add_worksheet(),
+            "row_pos": 0,
+            "formats": {},
         }
-        return [params]
+        self._define_formats(report_data, export)
+        self._write_report_header(report_data, export)
+        self._write_report_content(report_data, export)
 
-    def _get_title(self, export):
-        title = '%s-%s' % (export.name, fields.Datetime.now())
-        return title
+    def _define_formats(self, report_data, export):
+        workbook = report_data["workbook"]
+        currency = self.env.company.currency_id
+        currency_format = f"#,##0.00 {currency.symbol}"
+        date_format = "dd/mm/yyyy"
 
-    def _account_export_report(self, workbook, ws, ws_params, data, export):
-        ws.set_landscape()
-        ws.fit_to_pages(1, 0)
-        ws.set_header(self.xls_headers['standard'])
-        ws.set_footer(self.xls_footers['standard'])
-        self._set_column_width(ws, ws_params)
-
-        lines = export.get_account_move_line_data()
-
-        row_pos = self._write_line(
-            ws, 0, ws_params,
-            col_specs_section='header',
-            default_format=self.format_theader_yellow_left,
+        report_data["formats"]["default"] = workbook.add_format(
+            {"font_size": 11, "valign": "vcenter", "text_wrap": True}
+        )
+        report_data["formats"]["bold"] = workbook.add_format(
+            {"font_size": 11, "bold": True, "valign": "vcenter"}
+        )
+        report_data["formats"]["title"] = workbook.add_format(
+            {"font_size": 14, "bold": True, "bg_color": "#5b9bd5", "valign": "vcenter"}
+        )
+        report_data["formats"]["header"] = workbook.add_format(
+            {"font_size": 12, "bold": True, "bg_color": "#ffd966", "valign": "vcenter"}
+        )
+        report_data["formats"]["number"] = workbook.add_format(
+            {"font_size": 11, "valign": "vcenter"}
+        )
+        report_data["formats"]["number"].set_num_format(currency_format)
+        report_data["formats"]["date"] = workbook.add_format(
+            {"font_size": 11, "valign": "vcenter"}
+        )
+        report_data["formats"]["date"].set_num_format(date_format)
+        report_data["formats"]["right"] = workbook.add_format(
+            {"font_size": 11, "valign": "vcenter", "align": "right"}
         )
 
-        ws.freeze_panes(row_pos, 0)
+        sheet = report_data["sheet"]
+        sheet.set_landscape()
+        sheet.fit_to_pages(1, 0)
+        sheet.set_default_row(20)
+        sheet.set_row(0, 30)
+        sheet.set_column("A:A", 15)
+        sheet.set_column("B:B", 18)
+        sheet.set_column("C:C", 18)
+        sheet.set_column("D:D", 12)
+        sheet.set_column("E:E", 12)
+        sheet.set_column("F:F", 25)
+        sheet.set_column("G:G", 15)
+        sheet.set_column("H:H", 15)
+        sheet.set_column("I:I", 15)
+        sheet.set_column("J:J", 15)
+        sheet.set_column("K:K", 25)
+        sheet.set_column("L:L", 15)
 
-        i = 0
+    def _write_report_header(self, report_data, export):
+        sheet = report_data["sheet"]
+        formats = report_data["formats"]
+
+        sheet.merge_range(
+            0, 0, 0, 11, self.env._("ACCOUNT EXPORT REPORT"), formats["title"]
+        )
+
+        sheet.write(1, 0, self.env._("Export Name:"), formats["bold"])
+        sheet.write(1, 1, export.name, formats["default"])
+        sheet.write(2, 0, self.env._("Company:"), formats["bold"])
+        sheet.write(2, 1, export.company_id.name, formats["default"])
+        sheet.write(3, 0, self.env._("Date:"), formats["bold"])
+        sheet.write(3, 1, fields.Date.today(), formats["date"])
+
+        report_data["row_pos"] = 5
+        self._write_column_headers(report_data, export)
+
+    def _write_column_headers(self, report_data, export):
+        sheet = report_data["sheet"]
+        formats = report_data["formats"]
+        r = report_data["row_pos"]
+        col_idx = 0
+        for field in export.config_id.field_ids:
+            sheet.write(r, col_idx, field.name, formats["header"])
+            col_idx += 1
+        report_data["row_pos"] = r + 1
+
+    def _write_report_content(self, report_data, export):
+        lines = export.get_account_move_line_data()
+        r = report_data["row_pos"]
+
         for line in lines:
-            i += 1
-            _logger.warning('Writing line: %g/%g\n%s' % (i, len(lines), line))
-            row_pos = self._write_line(
-                ws, row_pos, ws_params,
-                col_specs_section='line',
-                render_space={'line': line},
-                default_format=self.format_tcell_left,
-            )
+            self._write_line_data(report_data, export, line, r)
+            r += 1
+        report_data["row_pos"] = r
+
+    def _write_line_data(self, report_data, export, line, row):
+        sheet = report_data["sheet"]
+        formats = report_data["formats"]
+        columns = export.config_id._get_columns_dict()
+        col_idx = 0
+
+        for field in export.config_id.field_ids:
+            col = columns.get(field.field_type)
+            value = line.get(field.id, "")
+
+            if field.field_type == "amount":
+                sense_key = f"{field.id}_sense"
+                sense = line.get(sense_key, "")
+                if sense:
+                    value = f"{sense}{value}"
+                sheet.write(row, col_idx, value, formats["number"])
+            elif col.get("type") == "datetime":
+                sheet.write(row, col_idx, value, formats["date"])
+            elif col.get("type") == "number":
+                sheet.write(row, col_idx, value, formats["number"])
+            else:
+                sheet.write(row, col_idx, value, formats["default"])
+            col_idx += 1
