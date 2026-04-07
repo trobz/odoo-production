@@ -7,23 +7,23 @@
             <!-- To reverse the position of 2 rows of header -->
             <thead>
                 <tr>
-                    <th class="text-center" colspan="5">MEMBRE PROGRAMMÉ</th>
-                    <th class="text-center" style="border-left: 4px solid #ddd;" colspan="4">MEMBRE PRÉSENT</th>
+                    <th class="text-center th-header" colspan="5">MEMBRE PROGRAMMÉ</th>
+                    <th class="text-center th-header" style="border-left: 4px solid #ddd;" colspan="4">MEMBRE PRÉSENT</th>
                 </tr>
                 <!-- Add text-transform: uppercase;-->
                 <tr style="font-size:11px;background:#DDDDDD;text-transform: uppercase;">
-                    <th class="text-center" width="6%">Statut</th>
-                    <th class="text-center" width="6%">RAT</th>
+                    <th class="text-center th-header" width="6%">Statut</th>
+                    <th class="text-center th-header" width="6%">RAT</th>
                     <th class="text-center" width="8%">QLÉ</th>
                     <!-- Replace "Numéro" by "N°" -->
-                    <th class="text-center" width="8%">N°</th>
-                    <th class="text-center" width="22%">Nom</th>
+                    <th class="text-center th-header" width="8%">N°</th>
+                    <th class="text-center th-header" width="22%">Nom</th>
                     <!-- Replace "Echange" by "COCHER SI ECH." -->
                     <th class="text-center">Cocher si ech.</th>
                     <!-- Replace "Numéro" by "N°" -->
-                    <th class="text-center" width="8%">N°</th>
-                    <th class="text-center" width="28%">NOM (DÉBUT)</th>
-                    <th class="text-center" width="8%">SIGNATURE (FIN)</th>
+                    <th class="text-center th-header" width="8%">N°</th>
+                    <th class="text-center th-header" width="28%">NOM (DÉBUT)</th>
+                    <th class="text-center th-header" width="8%">SIGNATURE (FIN)</th>
                 </tr>
             </thead>
         </xpath>
@@ -31,20 +31,20 @@
             <!-- To reverse the position of 2 rows of header -->
             <thead>
                 <tr>
-                    <th class="text-center" colspan="2">MEMBRE CRÉDITÉ</th>
-                    <th class="text-center" style="border-left: 4px solid #ddd;" colspan="4">MEMBRE PRÉSENT</th>
+                    <th class="text-center th-header" colspan="2">MEMBRE CRÉDITÉ</th>
+                    <th class="text-center th-header" style="border-left: 4px solid #ddd;" colspan="4">MEMBRE PRÉSENT</th>
                 </tr>
                 <!-- Add text-transform: uppercase;-->
                 <tr style="font-size:11px;background:#DDDDDD;text-transform: uppercase;">
                     <!-- Replace "Numéro" by "NUM" -->
-                    <th class="text-center" width="15%">Num</th>
-                    <th class="text-center" width="35%">Nom</th>
+                    <th class="text-center th-header" width="15%">Num</th>
+                    <th class="text-center th-header" width="35%">Nom</th>
                     <!-- Replace "Echange" by "COCHER SI ECH." -->
-                    <th class="text-center">Cocher si ech.</th>
+                    <th class="text-center th-header">Cocher si ech.</th>
                     <!-- Replace "Numéro" by "NUM" -->
-                    <th class="text-center" width="8%">Num</th>
-                    <th class="text-center" width="28%">NOM (DÉBUT)</th>
-                    <th class="text-center" width="8%">SIGNATURE (FIN)</th>
+                    <th class="text-center th-header" width="8%">Num</th>
+                    <th class="text-center th-header" width="28%">NOM (DÉBUT)</th>
+                    <th class="text-center th-header" width="8%">SIGNATURE (FIN)</th>
                 </tr>
             </thead>
         </xpath>
