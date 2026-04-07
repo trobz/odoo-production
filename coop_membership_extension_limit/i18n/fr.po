@@ -1,0 +1,141 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* coop_membership_extension_limit
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-31 09:00+0000\n"
+"PO-Revision-Date: 2026-03-31 09:00+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: coop_membership_extension_limit
+#: model:mail.template,subject:coop_membership_extension_limit.email_extension_limited
+msgid ""
+"\n"
+"            [Warning] You will soon reach the maximal number of extensions! Limit is {{ user.company_id.member_extension_limit_count }}\n"
+"        "
+msgstr ""
+"\n"
+"            [Attention] Vous allez bientôt atteindre le nombre maximum d'extensions ! La limite est {{ user.company_id.member_extension_limit_count }}\n"
+"        "
+
+#. module: coop_membership_extension_limit
+#: model:mail.template,body_html:coop_membership_extension_limit.email_extension_limited
+msgid ""
+"<div>\n"
+"                <p>Hello <t t-out=\"object.name and object.name.split(',')[-1]\"/>,</p>\n"
+"                <p>\n"
+"                    You have received <t t-out=\"user.company_id.member_extension_limit_count - 1\"/>\n"
+"                    consecutive extensions that extend the period during which you can complete your make-up sessions.\n"
+"                </p>\n"
+"                <p>\n"
+"                    The limit is set to <t t-out=\"user.company_id.member_extension_limit_count\"/>.\n"
+"                    After the <t t-out=\"user.company_id.member_extension_limit_count\"/>th extension,\n"
+"                    you will no longer be able to make purchases in the store until all your make-up sessions have been completed.\n"
+"                </p>\n"
+"                <p>Regards,</p>\n"
+"                <br/>\n"
+"                <br/>\n"
+"            </div>\n"
+"        "
+msgstr ""
+"<div>\n"
+"                <p>Bonjour <t t-out=\"object.name and object.name.split(',')[-1]\"/>,</p>\n"
+"                <p>\n"
+"                    Vous avez reçu <t t-out=\"user.company_id.member_extension_limit_count - 1\"/>\n"
+"                    extensions consécutives qui prolongent la période pendant laquelle vous pouvez effectuer vos rattrapages.\n"
+"                </p>\n"
+"                <p>\n"
+"                    La limite est fixée à <t t-out=\"user.company_id.member_extension_limit_count\"/>.\n"
+"                    Après la <t t-out=\"user.company_id.member_extension_limit_count\"/>e extension,\n"
+"                    vous ne pourrez plus faire d'achats dans le magasin tant que tous vos rattrapages n'auront pas été effectués.\n"
+"                </p>\n"
+"                <p>Cordialement,</p>\n"
+"                <br/>\n"
+"                <br/>\n"
+"            </div>\n"
+"        "
+
+#. module: coop_membership_extension_limit
+#: model:ir.model,name:coop_membership_extension_limit.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: coop_membership_extension_limit
+#: model:ir.model,name:coop_membership_extension_limit.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres de configuration"
+
+#. module: coop_membership_extension_limit
+#: model:ir.model,name:coop_membership_extension_limit.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: coop_membership_extension_limit
+#: model_terms:ir.ui.view,arch_db:coop_membership_extension_limit.res_config_settings_view_form_inherit
+msgid "Extension Limit Count"
+msgstr "Nombre maximum d'extensions"
+
+#. module: coop_membership_extension_limit
+#: model_terms:ir.ui.view,arch_db:coop_membership_extension_limit.res_config_settings_view_form_inherit
+msgid "Extension Limit Types"
+msgstr "Types d'extensions limitées"
+
+#. module: coop_membership_extension_limit
+#: model:ir.model.fields,field_description:coop_membership_extension_limit.field_res_company__member_extension_limit_type_ids
+#: model:ir.model.fields,field_description:coop_membership_extension_limit.field_res_config_settings__member_extension_limit_type_ids
+msgid "Extension Types"
+msgstr "Types d'extensions"
+
+#. module: coop_membership_extension_limit
+#: model:ir.model.fields,field_description:coop_membership_extension_limit.field_shift_extension__is_new
+msgid "Is New"
+msgstr "Nouveau"
+
+#. module: coop_membership_extension_limit
+#: model:mail.template,name:coop_membership_extension_limit.email_extension_limited
+msgid "Limit the number of Extension"
+msgstr "Limiter le nombre d'extensions"
+
+#. module: coop_membership_extension_limit
+#: model_terms:ir.ui.view,arch_db:coop_membership_extension_limit.res_config_settings_view_form_inherit
+msgid ""
+"Limit the number of extension for each member when suspended, alerted or "
+"delayed."
+msgstr ""
+"Limite le nombre d'extensions pour chaque membre en cas de suspension, alerte ou délai."
+
+#. module: coop_membership_extension_limit
+#: model:ir.model.fields,field_description:coop_membership_extension_limit.field_res_company__member_extension_limit
+#: model:ir.model.fields,field_description:coop_membership_extension_limit.field_res_config_settings__member_extension_limit
+msgid "Member Extension Limit"
+msgstr "Limitation du nombre d'extensions"
+
+#. module: coop_membership_extension_limit
+#: model:ir.model.fields,field_description:coop_membership_extension_limit.field_res_company__member_extension_limit_count
+#: model:ir.model.fields,field_description:coop_membership_extension_limit.field_res_config_settings__member_extension_limit_count
+msgid "Member Extension Limit Count"
+msgstr "Nombre maximum d'extensions membre"
+
+#. module: coop_membership_extension_limit
+#: model:ir.model,name:coop_membership_extension_limit.model_shift_extension
+msgid "Shift Extension"
+msgstr "Extension de créneau"
+
+#. module: coop_membership_extension_limit
+#. odoo-python
+#: code:addons/coop_membership_extension_limit/models/shift_extension.py:0
+msgid ""
+"This member has received %s consecutive extensions, which is the maximum. "
+"They cannot benefit from any additional ones until their make-up sessions "
+"have been completed."
+msgstr ""
+"Ce membre a reçu %s extensions consécutives, le maximum. "
+"Il ne peut en bénéficier d'aucune autre avant que ses rattrapages n'aient été effectués."

@@ -34,21 +34,20 @@ real-time.
 Key Features
 ------------
 
--  **Badge Reader Interface**: Web-based interface accessible at
-   ``/badge_reader`` route
--  **Member Authentication**: Authenticate users via barcode/card
-   scanning
--  **Movement Logging**: Track and store member check-ins and check-outs
-   ("in", "out", "wrong")
--  **Cooperative State Display**: Color-coded visual feedback based on
-   membership status
--  **Audio Feedback**: Different sounds for different member states
-   (success, warning, danger)
--  **Alert System**: Notify employees when expected members check in
--  **Grace Period Handling**: Automatically manage grace periods for
-   suspended members
--  **Badge Distribution Tracking**: Mark badges as distributed to
-   members
+- **Badge Reader Interface**: Web-based interface accessible at
+  ``/badge_reader`` route
+- **Member Authentication**: Authenticate users via barcode/card
+  scanning
+- **Movement Logging**: Track and store member check-ins and check-outs
+  ("in", "out", "wrong")
+- **Cooperative State Display**: Color-coded visual feedback based on
+  membership status
+- **Audio Feedback**: Different sounds for different member states
+  (success, warning, danger)
+- **Alert System**: Notify employees when expected members check in
+- **Grace Period Handling**: Automatically manage grace periods for
+  suspended members
+- **Badge Distribution Tracking**: Mark badges as distributed to members
 
 Cooperative States
 ------------------
@@ -73,10 +72,10 @@ unsubscribed      Danger (Red)     Member is unsubscribed
 Technical Stack
 ---------------
 
--  **Backend**: Python/Odoo 18.0
--  **Frontend**: OWL (Odoo Web Library) components
--  **UI Framework**: Bootstrap 5 via Odoo's asset system
--  **Dependencies**: ``coop_shift``, ``coop_membership``
+- **Backend**: Python/Odoo 18.0
+- **Frontend**: OWL (Odoo Web Library) components
+- **UI Framework**: Bootstrap 5 via Odoo's asset system
+- **Dependencies**: ``coop_shift``, ``coop_membership``
 
 Module Structure
 ----------------
@@ -151,9 +150,9 @@ Search Filters
 
 The search automatically filters to:
 
--  Non-deceased partners (``is_deceased = false``)
--  Members or associated people (``is_member = True`` OR
-   ``is_associated_people = True``)
+- Non-deceased partners (``is_deceased = false``)
+- Members or associated people (``is_member = True`` OR
+  ``is_associated_people = True``)
 
 **Note:** The name search does not apply these filters (filters are
 commented out in the implementation).
@@ -196,51 +195,49 @@ vacation      On leave             Red
 Action Buttons
 ~~~~~~~~~~~~~~
 
-+----------------------+----------------------+----------------------+
-| Button               | Action               | Result               |
-+======================+======================+======================+
-| **Enter**            | Check member in      | Logs "in" action,    |
-|                      |                      | redirects to badge   |
-|                      |                      | reader               |
-+----------------------+----------------------+----------------------+
-| **Do not enter**     | Check member out     | Logs "out" action,   |
-|                      |                      | redirects to badge   |
-|                      |                      | reader               |
-+----------------------+----------------------+----------------------+
-| **Error**            | Report error         | Logs "wrong" action, |
-|                      |                      | redirects to badge   |
-|                      |                      | reader               |
-+----------------------+----------------------+----------------------+
-| **Badge              | Mark badge as        | Available only if    |
-| distributed**        | distributed          | ``b                  |
-|                      |                      | adge_to_distribute`` |
-|                      |                      | is True              |
-+----------------------+----------------------+----------------------+
++-----------------------+----------------------+-------------------------+
+| Button                | Action               | Result                  |
++=======================+======================+=========================+
+| **Enter**             | Check member in      | Logs "in" action,       |
+|                       |                      | redirects to badge      |
+|                       |                      | reader                  |
++-----------------------+----------------------+-------------------------+
+| **Do not enter**      | Check member out     | Logs "out" action,      |
+|                       |                      | redirects to badge      |
+|                       |                      | reader                  |
++-----------------------+----------------------+-------------------------+
+| **Error**             | Report error         | Logs "wrong" action,    |
+|                       |                      | redirects to badge      |
+|                       |                      | reader                  |
++-----------------------+----------------------+-------------------------+
+| **Badge distributed** | Mark badge as        | Available only if       |
+|                       | distributed          | ``badge_to_distribute`` |
+|                       |                      | is True                 |
++-----------------------+----------------------+-------------------------+
 
 Grace Period Behavior
 ~~~~~~~~~~~~~~~~~~~~~
 
--  When a partner with **delay** status loads the form, a grace period
-   is automatically applied
--  A warning message displays: "A grace period until [date] or until
-   your next service has been assigned to you. You may proceed with your
-   shopping!"
--  When a partner with **suspended** status loads the form with no
-   available grace period:
+- When a partner with **delay** status loads the form, a grace period is
+  automatically applied
+- A warning message displays: "A grace period until [date] or until your
+  next service has been assigned to you. You may proceed with your
+  shopping!"
+- When a partner with **suspended** status loads the form with no
+  available grace period:
 
-   -  A danger message displays: "We were unable to grant you a grace
-      period; you must make up your services before doing your
-      shopping."
+  - A danger message displays: "We were unable to grant you a grace
+    period; you must make up your services before doing your shopping."
 
 Partner List
 ------------
 
 When multiple partners match a search, a list view is displayed showing:
 
--  Partner image
--  Partner name
--  Cooperative state (color-coded)
--  Address information (street, city)
+- Partner image
+- Partner name
+- Cooperative state (color-coded)
+- Address information (street, city)
 
 Click on any partner to view their details and take action.
 
@@ -301,9 +298,9 @@ Alert Notifications
 
 When an expected member with an open alert checks in (action: "in"):
 
--  An email notification is automatically sent to the designated
-   employees
--  The alert remains open until manually closed
+- An email notification is automatically sent to the designated
+  employees
+- The alert remains open until manually closed
 
 Alert Permissions
 ~~~~~~~~~~~~~~~~~
@@ -321,19 +318,19 @@ Audio Feedback
 
 The module provides different sounds for various scenarios:
 
-+-----------------------+---------------------------------------------+
-| Sound File            | Trigger                                     |
-+=======================+=============================================+
-| res_partner_success   | Partner with "success" state (up_to_date,   |
-|                       | exempted)                                   |
-+-----------------------+---------------------------------------------+
-| res_partner_warning   | Partner with "warning" state (alert, delay) |
-+-----------------------+---------------------------------------------+
-| res_partner_danger    | Partner with "danger" state (suspended,     |
-|                       | blocked, etc.)                              |
-+-----------------------+---------------------------------------------+
-| res_partner_not_found | No partner found matching search criteria   |
-+-----------------------+---------------------------------------------+
++-----------------------+----------------------------------------------+
+| Sound File            | Trigger                                      |
++=======================+==============================================+
+| res_partner_success   | Partner with "success" state (up_to_date,    |
+|                       | exempted)                                    |
++-----------------------+----------------------------------------------+
+| res_partner_warning   | Partner with "warning" state (alert, delay)  |
++-----------------------+----------------------------------------------+
+| res_partner_danger    | Partner with "danger" state (suspended,      |
+|                       | blocked, etc.)                               |
++-----------------------+----------------------------------------------+
+| res_partner_not_found | No partner found matching search criteria    |
++-----------------------+----------------------------------------------+
 
 Technical Information
 ---------------------
@@ -354,24 +351,23 @@ Component                Purpose
 RPC Methods Used
 ~~~~~~~~~~~~~~~~
 
-+----------------------------------+----------------------------------+
-| Method                           | Description                      |
-+==================================+==================================+
-| ``res.partner.searchRead()``     | Search partners by               |
-|                                  | barcode/barcode_base with        |
-|                                  | filters                          |
-+----------------------------------+----------------------------------+
-| ``res.partner.name_search()``    | Search partners by name          |
-+----------------------------------+----------------------------------+
-| ``res.partner.log_move()``       | Log member check-in/out/error    |
-|                                  | action                           |
-+----------------------------------+----------------------------------+
-| ``res.                           | Apply grace period for delayed   |
-| partner.action_grace_partner()`` | members                          |
-+----------------------------------+----------------------------------+
-| ``res.p                          | Mark badge as distributed        |
-| artner.set_badge_distributed()`` |                                  |
-+----------------------------------+----------------------------------+
++-----------------------------------------+----------------------------------+
+| Method                                  | Description                      |
++=========================================+==================================+
+| ``res.partner.searchRead()``            | Search partners by               |
+|                                         | barcode/barcode_base with        |
+|                                         | filters                          |
++-----------------------------------------+----------------------------------+
+| ``res.partner.name_search()``           | Search partners by name          |
++-----------------------------------------+----------------------------------+
+| ``res.partner.log_move()``              | Log member check-in/out/error    |
+|                                         | action                           |
++-----------------------------------------+----------------------------------+
+| ``res.partner.action_grace_partner()``  | Apply grace period for delayed   |
+|                                         | members                          |
++-----------------------------------------+----------------------------------+
+| ``res.partner.set_badge_distributed()`` | Mark badge as distributed        |
++-----------------------------------------+----------------------------------+
 
 Display States
 ~~~~~~~~~~~~~~
@@ -402,9 +398,9 @@ Navigation Flow
 Known issues / Roadmap
 ======================
 
--  display partner with bootstrap colors in kanban and tree view
--  The JS apps is not translatable for the time being and is available
-   only in french
+- display partner with bootstrap colors in kanban and tree view
+- The JS apps is not translatable for the time being and is available
+  only in french
 
 Bug Tracker
 ===========
@@ -428,15 +424,16 @@ Authors
 Contributors
 ------------
 
--  Sylvain LE GAL <https://twitter.com/legalsylvain/>
--  Druidoo <https://www.druidoo.io/>
--  Trobz <https://www.trobz.com/>
+- Sylvain LE GAL <https://twitter.com/legalsylvain/>
+- Druidoo <https://www.druidoo.io/>
+- Trobz <https://www.trobz.com/>
 
-   -  Phan Hong Phuc <<phucph@trobz.com>>
+  - Phan Hong Phuc <<phucph@trobz.com>>
 
 Icon module comes from
-<https://www.iconfinder.com/icons/52644/card_reader_security_icon> and
-is copyright by <`www.tpdkdesign.net <http://www.tpdkdesign.net>`__>
+<`https://www.iconfinder.com/icons/52644/card_reader_security_icon\\> <https://www.iconfinder.com/icons/52644/card_reader_security_icon\>>`__
+and is copyright by
+<`www.tpdkdesign.net\\> <http://www.tpdkdesign.net\>>`__
 
 Maintainers
 -----------
