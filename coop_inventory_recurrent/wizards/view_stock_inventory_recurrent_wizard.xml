@@ -7,6 +7,7 @@
             <form>
                 <group>
                     <field name="category_group_ids" />
+                    <field name="exhausted" />
                 </group>
                 <footer>
                     <button
