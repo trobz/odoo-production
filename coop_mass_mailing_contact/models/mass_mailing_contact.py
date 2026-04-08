@@ -1,10 +1,7 @@
-# -*- coding: utf-8 -*-
-
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class MassMailingContact(models.Model):
-    _inherit = 'mail.mass_mailing.contact'
+    _inherit = "mail.mass_mailing.contact"
 
-    is_member_contact = fields.Boolean(
-        default=False)
+    is_member_contact = fields.Boolean(default=False)

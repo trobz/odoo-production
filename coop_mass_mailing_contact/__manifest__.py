@@ -5,19 +5,19 @@
 
 
 {
-    'name': 'Mass Mailing - Contact',
-    'version': '12.0.1.0.0',
-    'category': 'Tools',
-    'summary': "Create the contact for each member",
-    'author': 'Trobz',
-    'website': 'https://www.trobz.com',
-    'depends': [
-        'coop_membership',
+    "name": "Mass Mailing - Contact",
+    "version": "12.0.1.0.0",
+    "category": "Tools",
+    "summary": "Create the contact for each member",
+    "author": "Trobz",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
+    "depends": [
+        "coop_membership",
     ],
-    'data': [
+    "data": [
         "data/ir_cron.xml",
         "views/view_mail_mass_mailing.xml",
     ],
-    'license': 'AGPL-3',
-    'installable': True,
+    "license": "AGPL-3",
+    "installable": True,
 }
