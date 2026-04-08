@@ -4,7 +4,6 @@ from odoo import models
 
 
 class GeneralLedgerReportCustom(models.AbstractModel):
-
     _inherit = "report.account_financial_report.general_ledger"
 
     def _group_move_lines_custom(self, move_lines):
