@@ -4,7 +4,6 @@ from odoo import models
 
 
 class GeneralLedgerReportWizardCustom(models.TransientModel):
-
     _inherit = "general.ledger.report.wizard"
 
     def _get_atr_from_dict(self, obj_id, data, key):
