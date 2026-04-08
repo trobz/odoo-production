@@ -8,7 +8,7 @@
         />
         <field name="arch" type="xml">
             <field name="current_extension" position="after">
-                <field name="is_new" invisible="1" />
+                <field name="is_new" column_invisible="1" />
             </field>
             <xpath expr="//list[@name='shift_extensions']" position="attributes">
                 <attribute name="decoration-muted">not is_new</attribute>

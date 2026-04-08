@@ -15,6 +15,11 @@ class ShiftExtension(models.Model):
         extensions._check_create_permission()
         return extensions
 
+    def write(self, vals):
+        res = super().write(vals)
+        self._check_create_permission()
+        return res
+
     def _check_create_permission(self):
         company = self.env.user.company_id
         if (
