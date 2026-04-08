@@ -100,6 +100,11 @@ msgid "Is New"
 msgstr "Nouveau"
 
 #. module: coop_membership_extension_limit
+#: model_terms:ir.ui.view,arch_db:coop_membership_extension_limit.res_config_settings_view_form_inherit
+msgid "Limit the extension for specific types"
+msgstr "Limiter l’extension pour des types spécifiques."
+
+#. module: coop_membership_extension_limit
 #: model:mail.template,name:coop_membership_extension_limit.email_extension_limited
 msgid "Limit the number of Extension"
 msgstr "Limiter le nombre d'extensions"
