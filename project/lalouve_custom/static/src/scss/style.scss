@@ -1,0 +1,67 @@
+// Hide native Odoo/FullCalendar week numbers (shown in W column instead)
+.fc-daygrid-week-number {
+    display: none !important;
+}
+.o-fc-week,
+.o-fc-week-header {
+    display: none !important;
+}
+
+// W column: week number (left) + cycle week name badge (right)
+.llc-w-col-header {
+    width: 52px;
+    text-align: center;
+
+    .fc-col-header-cell-cushion {
+        font-weight: bold;
+        padding: 4px 2px;
+        cursor: default;
+    }
+}
+
+.llc-w-col-cell {
+    width: 52px;
+    vertical-align: top;
+    padding: 4px 4px !important;
+
+    .llc-w-inner {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        padding-top: 2px;
+
+        .llc-w-num {
+            font-size: 0.85em;
+            color: #555;
+            line-height: 1;
+            min-width: 16px;
+            text-align: right;
+        }
+
+        .llc-w-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            width: 26px;
+            height: 26px;
+            font-weight: bold;
+            font-size: 1em;
+            color: #fff;
+            flex-shrink: 0;
+
+            &.week-name-A { background-color: #cccc0e; }
+            &.week-name-B { background-color: #0000cc; }
+            &.week-name-C { background-color: #e67e00; }
+            &.week-name-D { background-color: #2d8a00; }
+        }
+    }
+}
+
+// Hide the "New" button in the calendar control panel
+// (matching Odoo 12 behavior where quick_add=false hid this button)
+.o-calendar-button-new {
+    display: none !important;
+}
