@@ -1,8 +1,8 @@
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 
 
-class MassMailingList(models.Model):
-    _inherit = "mail.mass_mailing.list"
+class MailingList(models.Model):
+    _inherit = "mailing.list"
 
     is_member_contact = fields.Boolean(
         default=False, help="Populate the contact from the members"
@@ -15,13 +15,13 @@ class MassMailingList(models.Model):
     def remove_contacts(self):
         if not self:
             return
-        sql = f"""
-        DELETE FROM mail_mass_mailing_contact_list_rel
+        sql = """
+        DELETE FROM mailing_subscription
         WHERE id IN (
-            SELECT ctr.id
-            FROM mail_mass_mailing_contact ct
-            JOIN mail_mass_mailing_contact_list_rel ctr
-                ON ctr.contact_id = ct.id
+            SELECT ms.id
+            FROM mailing_contact ct
+            JOIN mailing_subscription ms
+                ON ms.contact_id = ct.id
             JOIN (
                 SELECT DISTINCT ON (email) id, email, is_member
                 FROM res_partner
@@ -29,38 +29,38 @@ class MassMailingList(models.Model):
             ) rp
                 ON rp.email = ct.email
             WHERE rp.is_member IS FALSE
-                AND ctr.list_id in {str(tuple(self.ids + [-1]))}
+                AND ms.list_id IN %s
         )
         """
-        self._cr.execute(sql)
+        self._cr.execute(sql, [tuple(self.ids + [-1])])
 
     def add_contacts(self, limit=1000):
         if not self:
             return
-        sql = f"""
-            SELECT rp.id, rp.name, rp.email, rp.opt_out
+        sql = """
+            SELECT rp.id, rp.name, rp.email
             FROM res_partner rp
-            LEFT JOIN mail_mass_mailing_contact ct
+            LEFT JOIN mailing_contact ct
                 ON rp.email = ct.email
-            WHERE ct.id ISNULL
-                AND rp.email NOTNULL
+            WHERE ct.id IS NULL
+                AND rp.email IS NOT NULL
                 AND rp.is_member IS TRUE
-            LIMIT {limit}
+            LIMIT %s
         """
-        self._cr.execute(sql)
+        self._cr.execute(sql, [limit])
         datas = self._cr.fetchall()
         for data in datas:
             vals = {
                 "name": data[1],
                 "email": data[2],
                 "is_member_contact": True,
-                "subscription_list_ids": [],
+                "subscription_ids": [],
             }
-            for list in self:
-                vals["subscription_list_ids"].append(
-                    (0, 0, {"list_id": list.id, "opt_out": data[3]})
+            for mailing_list in self:
+                vals["subscription_ids"].append(
+                    Command.create({"list_id": mailing_list.id, "opt_out": False})
                 )
-            contact = self.env["mail.mass_mailing.contact"].create(vals)
+            self.env["mailing.contact"].create(vals)
 
     @api.model
     def cron_compute_contact(self, limit=1000):
@@ -69,5 +69,5 @@ class MassMailingList(models.Model):
         - Remove the contact which not the member anymore
         - Create new contact for a new member
         """
-        list = self.search([("is_member_contact", "=", True)])
-        list.compute_contacts(limit)
+        mailing_lists = self.search([("is_member_contact", "=", True)])
+        mailing_lists.compute_contacts(limit)
