@@ -3,7 +3,7 @@
 
 {
     "name": "Auth Sigup Email",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Custom",
     "summary": "Configure to prevent sending signup email",
     "author": "Trobz",
