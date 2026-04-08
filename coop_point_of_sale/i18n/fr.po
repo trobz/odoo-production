@@ -31,7 +31,7 @@ msgstr "Actif"
 #. odoo-javascript
 #: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
 msgid "Alert"
-msgstr "Alerte"
+msgstr "En alerte"
 
 #. module: coop_point_of_sale
 #: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_config__enable_popup_verify_payment
@@ -60,7 +60,7 @@ msgstr "Relevé bancaire"
 #. odoo-javascript
 #: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
 msgid "Blocked"
-msgstr "Bloqué"
+msgstr "Bloqué(e)"
 
 #. module: coop_point_of_sale
 #. odoo-javascript
@@ -193,13 +193,13 @@ msgstr "Non"
 #. odoo-javascript
 #: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
 msgid "Not concerned"
-msgstr "Non concerné"
+msgstr "Non concerné(e)"
 
 #. module: coop_point_of_sale
 #. odoo-javascript
 #: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
 msgid "On leave"
-msgstr "En congé"
+msgstr "En congés"
 
 #. module: coop_point_of_sale
 #: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order_line__order_id
@@ -317,7 +317,7 @@ msgstr "Sous-total hors taxes"
 #. odoo-javascript
 #: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
 msgid "Suspended"
-msgstr "Suspendu"
+msgstr "Suspendu(e)"
 
 #. module: coop_point_of_sale
 #. odoo-javascript
