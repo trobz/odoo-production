@@ -6,10 +6,10 @@
 
 {
     "name": "Mass Mailing - Contact",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Tools",
     "summary": "Create the contact for each member",
-    "author": "Trobz",
+    "author": "La Louve, Trobz",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "depends": [
         "coop_membership",

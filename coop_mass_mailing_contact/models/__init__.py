@@ -1,2 +1,2 @@
-from . import mass_mailing_contact
-from . import mass_mailing
+from . import mailing_contact
+from . import mailing_list
