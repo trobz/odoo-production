@@ -2,10 +2,10 @@
 
 {
     "name": "Coop - Asset",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Custom",
     "summary": "Custom Asset for Foodcoop",
-    "author": "Trobz",
+    "author": "La Louve, Trobz",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": [
