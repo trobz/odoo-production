@@ -12,7 +12,7 @@ class Partner(models.Model):
     def _compute_working_state(self):
         forbidden_partners = self.filtered("is_forbidden")
         for partner in forbidden_partners:
-            partner.update({"working_state": "forbidden"})
+            partner.update({"working_state": "blocked"})
         return super(Partner, self - forbidden_partners)._compute_working_state()
 
     @api.depends("is_forbidden")
