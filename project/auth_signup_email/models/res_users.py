@@ -2,6 +2,7 @@
 
 from odoo import api, models
 
+
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
@@ -10,4 +11,4 @@ class ResUsers(models.Model):
         # overridden to prevent sending invited email to user for sign up
         if self.env.user.company_id.prevent_signup_email:
             self = self.with_context(no_reset_password=True)
-        return super(ResUsers, self).create(values)
+        return super().create(values)
