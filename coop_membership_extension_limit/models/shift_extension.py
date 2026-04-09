@@ -22,44 +22,36 @@ class ShiftExtension(models.Model):
 
     def _check_create_permission(self):
         company = self.env.user.company_id
-        if (
-            not company.member_extension_limit
-            or not company.member_extension_limit_type_ids
-        ):
+        config_extensions = company.member_extension_limit_type_ids
+        config_limit = company.member_extension_limit_count
+        if not company.member_extension_limit or not config_extensions:
             return
         if self.env.user.has_group("coop_shift.group_shift_manager"):
             return
-        partners = (
-            self.filtered("is_new")
-            .mapped("partner_id")
-            .filtered(
-                lambda partner: partner.cooperative_state
-                in ("alert", "suspended", "delay")
-            )
+        checked_extensions = self.filtered(
+            lambda ext: ext.is_new and ext.type_id in config_extensions
+        )
+        if not checked_extensions:
+            return
+        partners = checked_extensions.mapped("partner_id").filtered(
+            lambda partner: partner.cooperative_state in ("alert", "suspended", "delay")
         )
         if not partners:
             return
-        args = [
-            ("partner_id", "in", partners.ids),
-            ("is_new", "=", True),
-            ("type_id", "in", company.member_extension_limit_type_ids.ids),
-        ]
-        raw_data = self.read_group(args, ["partner_id"], ["partner_id"])
-        result = {
-            data["partner_id"][0]: (data["partner_id_count"]) for data in raw_data
-        }
-        for partner in partners:
+        result = self._read_group_extension_type(config_extensions, partners)
+        for extension in checked_extensions:
+            partner = extension.partner_id
             extension_count = result.get(partner.id, 0)
-            if extension_count > company.member_extension_limit_count:
+            if extension_count > config_limit:
                 raise UserError(
                     self.env._(
                         "This member has received %s consecutive extensions, "
                         "which is the maximum. They cannot benefit from any additional "
                         "ones until their make-up sessions have been completed.",
-                        company.member_extension_limit_count,
+                        config_limit,
                     )
                 )
-            elif extension_count == company.member_extension_limit_count - 1:
+            elif extension_count == config_limit - 1:
                 self._send_warn_limit_email(partner)
 
     def _send_warn_limit_email(self, partner):
@@ -70,3 +62,12 @@ class ShiftExtension(models.Model):
         if not mail_template:
             return
         mail_template.send_mail(partner.id, force_send=False)
+
+    def _read_group_extension_type(self, extension_types, partners):
+        args = [
+            ("partner_id", "in", partners.ids),
+            ("is_new", "=", True),
+            ("type_id", "in", extension_types.ids),
+        ]
+        raw_data = self.read_group(args, ["partner_id"], ["partner_id"])
+        return {data["partner_id"][0]: (data["partner_id_count"]) for data in raw_data}
