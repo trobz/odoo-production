@@ -20,6 +20,6 @@ class Partner(models.Model):
         forbidden_partners = self.filtered("is_forbidden")
         for partner in forbidden_partners:
             partner.error_message = self.env._(
-                "Forbidden from entering the store. Please contact an employee"
+                "Interdit d'entrer dans le magasin. Veuillez contacter un salarié"
             )
         return super(Partner, self - forbidden_partners)._compute_error_message()

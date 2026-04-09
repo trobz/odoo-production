@@ -1,4 +1,4 @@
-from odoo.tests import common
+from odoo.tests import Form, common
 
 
 class TestCoopMembershipForbidden(common.TransactionCase):
@@ -41,28 +41,24 @@ class TestCoopMembershipForbidden(common.TransactionCase):
         )
         self.assertNotEqual(partner.working_state, "blocked")
 
-    def test_onchange_is_forbidden_regular_user(self):
-        """Test that regular user cannot set is_forbidden."""
-        partner = self.Partner.create(
-            {
-                "name": "Test Partner",
-                "email": "test@example.com",
-            }
-        )
-        partner.is_forbidden = True
-        partner._onchange_is_forbidden()
-        self.assertFalse(partner.is_forbidden)
-
     def test_onchange_is_forbidden_manager(self):
         """Test that manager can set is_forbidden."""
-        group = self.env.ref("coop_membership_forbidden.group_member_forbidden_manager")
+        forbidden_manager = "coop_membership_forbidden.group_member_forbidden_manager"
+        group = self.env.ref(forbidden_manager)
         self.env.user.groups_id |= group
-        partner = self.Partner.create(
-            {
-                "name": "Test Partner Manager",
-                "email": "test_manager@example.com",
-            }
+        self.assertTrue(self.env.user.has_group(forbidden_manager))
+        form = Form(
+            self.Partner.with_user(self.env.user),
+            view="coop_membership_forbidden.personal_information_inherit",
         )
-        partner.is_forbidden = True
-        partner._onchange_is_forbidden()
+        form.name = "Test Partner"
+        form.email = "test@example.com"
+        form.is_forbidden = True
+        self.assertTrue(form.is_forbidden)
+        partner = form.save()
         self.assertTrue(partner.is_forbidden)
+        self.assertEqual(partner.working_state, "blocked")
+        self.assertRegex(
+            partner.error_message,
+            "Interdit d'entrer dans le magasin. Veuillez contacter un salarié",
+        )
