@@ -1342,7 +1342,7 @@ msgstr "Âge"
 #. odoo-python
 #: code:addons/coop_membership/models/shift_change_team.py:0
 msgid "Alert"
-msgstr "Alerte"
+msgstr "En alerte"
 
 #. module: coop_membership
 #: model:ir.model.fields,field_description:coop_membership.field_shift_leave__alert_message
