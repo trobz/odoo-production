@@ -21,7 +21,7 @@ class WebsiteValidationEmail(http.Controller):
         partner = (
             request.env["res.partner"].with_user(REGISTER_USER_ID).browse(partner_id)
         )
-
+        request.update_context(lang=partner.lang)
         if partner:
             partner.check_email_validation_string(email_validation_string)
             if partner.is_checked_email:
