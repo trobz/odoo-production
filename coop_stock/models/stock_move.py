@@ -31,6 +31,28 @@ class StockMove(models.Model):
         string="Internal Reference", related="product_id.default_code", store=True
     )
 
+    def _get_vendor_packaging(self):
+        """Return vendor packaging from seller_ids matching the picking partner."""
+        partner = self.picking_id.partner_id
+        if not self.product_id or not partner:
+            return False
+        seller = self.product_id.seller_ids.filtered(lambda s: s.partner_id == partner)
+        return seller[0].product_packaging_id if seller else False
+
+    @api.onchange("picking_id")
+    def _onchange_suggest_packaging_from_vendor(self):
+        vendor_packaging = self._get_vendor_packaging()
+        if vendor_packaging:
+            self.product_packaging_id = vendor_packaging
+
+    @api.onchange("product_id", "product_qty", "product_uom")
+    def _onchange_suggest_packaging(self):
+        vendor_packaging = self._get_vendor_packaging()
+        if vendor_packaging:
+            self.product_packaging_id = vendor_packaging
+            return
+        return super()._onchange_suggest_packaging()
+
     def unlink(self):
         for move in self:
             if move.state not in ("draft", "cancel"):
