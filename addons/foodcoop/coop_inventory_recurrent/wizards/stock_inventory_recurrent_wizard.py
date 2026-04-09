@@ -13,6 +13,10 @@ class StockInventoryRecurrentWizard(models.TransientModel):
         "stock_inventory_recurrent_category_group_rel",
         string="Category Groups",
     )
+    exhausted = fields.Boolean(
+        string="Include Exhausted Products",
+        default=True,
+    )
 
     def action_execute(self):
         self.ensure_one()
@@ -40,6 +44,7 @@ class StockInventoryRecurrentWizard(models.TransientModel):
                         "category_id": line.category_id.id,
                         "category_group_line_id": line.id,
                         "location_ids": [Command.set(categ_group.location_id.ids)],
+                        "exhausted": self.exhausted,
                     }
                 )
                 new_inventories |= inventory

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<template>
+    <t
+        t-name="web_widget_image_webcam_portrait.WebCamDialog"
+        t-inherit="web_widget_image_webcam.WebCamDialog"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//img[@t-else='']" position="replace">
+            <img
+                t-else=""
+                src="/web_widget_image_webcam_portrait/static/src/img/webcam_placeholder.png"
+            />
+        </xpath>
+    </t>
+</template>
