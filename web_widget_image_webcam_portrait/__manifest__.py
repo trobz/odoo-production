@@ -20,21 +20,24 @@
 {
     "name": "Web Widget - Image WebCam - Portrait",
     "summary": "Allows to take image with WebCam in Portrait",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "web",
     "author": "Tech Receptives, "
-              "Kaushal Prajapati, "
-              "Odoo Community Association (OCA), "
-              "Trobz",
+    "Kaushal Prajapati, "
+    "La Louve, "
+    "Odoo Community Association (OCA), "
+    "Trobz",
     "license": "LGPL-3",
-    "data": [
-        "views/assets.xml",
-    ],
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "depends": [
         "web_widget_image_webcam",
     ],
-    "qweb": [
-        "static/src/xml/web_widget_image_webcam.xml",
-    ],
+    "assets": {
+        "web.assets_backend": [
+            "web_widget_image_webcam_portrait/static/src/js/webcam_widget.esm.js",
+            "web_widget_image_webcam_portrait/static/src/css/web_widget_image_webcam_portrait.css",
+            "web_widget_image_webcam_portrait/static/src/xml/webcam_widget.xml",
+        ]
+    },
     "installable": True,
 }
