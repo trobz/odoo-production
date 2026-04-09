@@ -14,6 +14,9 @@
                 >inventory_quantity_set and inventory_quantity != quantity</attribute>
                 <attribute name="default_order">product_name</attribute>
             </xpath>
+            <field name="package_id" position="after">
+                <field name="package_qty" />
+            </field>
         </field>
     </record>
 </odoo>

@@ -84,7 +84,7 @@
                         <button
                             class="btn btn-secondary w-100"
                             t-on-click="onPartnerIn"
-                        >Enter</button>
+                        >Enter Store</button>
                     </div>
                     <div class="col">
                         <button
