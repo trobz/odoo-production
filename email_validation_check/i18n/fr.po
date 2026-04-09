@@ -26,9 +26,10 @@ msgid ""
 "        "
 msgstr ""
 "<div>\n"
-"                <p>Cher/Cherche <t t-out=\"object.name\"/>,</p>\n"
-"                <p>Voici le lien pour confirmer votre email <a t-att-href=\"object.validation_url\">ici</a></p>\n"
-"                <p>Cordialement,</p>\n"
+"                <p>Cher <t t-out=\"object.name\"/>,</p>\n"
+"                <p>Pour confirmer votre adresse email à <t t-out=\"object.company_id.name\"/>, <a t-att-href=\"object.validation_url\">veuillez cliquer sur ce lien.</a></p>\n"
+"                <p>Amicalement,</p>\n"
+"                <p>L'équipe de la coopérative</p>\n"
 "            </div>\n"
 "        "
 
@@ -63,7 +64,7 @@ msgstr "Un autre utilisateur est déjà enregistré avec cette adresse email: %s
 #. module: email_validation_check
 #: model:mail.template,subject:email_validation_check.email_confirm_validate
 msgid "Confirm validated email"
-msgstr "Confirmer l'email validé"
+msgstr "Confirmation de votre adresse email"
 
 #. module: email_validation_check
 #: model:ir.model,name:email_validation_check.model_res_partner
@@ -79,18 +80,18 @@ msgstr "Email de confirmation de validation"
 #: model:ir.model.fields,field_description:email_validation_check.field_res_partner__is_checked_email
 #: model:ir.model.fields,field_description:email_validation_check.field_res_users__is_checked_email
 msgid "Is Checked Email"
-msgstr "Email vérifié"
+msgstr "Is Checked Email"
 
 #. module: email_validation_check
 #: model:ir.model.fields,field_description:email_validation_check.field_res_partner__validation_url
 #: model:ir.model.fields,field_description:email_validation_check.field_res_users__validation_url
 msgid "Link to validate"
-msgstr "Lien de validation"
+msgstr "Link to validate"
 
 #. module: email_validation_check
 #: model_terms:ir.ui.view,arch_db:email_validation_check.view_res_partner_form
 msgid "Send New"
-msgstr "Envoyer nouveau"
+msgstr "Envoyer un nouveau"
 
 #. module: email_validation_check
 #: model:ir.model.fields,field_description:email_validation_check.field_res_partner__show_send_email
@@ -110,5 +111,5 @@ msgid ""
 "The current email address has not be validated. Click here to send a new "
 "validation link."
 msgstr ""
-"L'adresse email actuelle n'a pas été validée. Cliquez ici pour envoyer un "
-"nouveau lien de validation."
+"L'adresse email n'a pas été validée. Cliquez ici pour renvoyer un "
+"email avec le lien de validation.."

@@ -10,7 +10,7 @@
                             <div class="col-1" style="font-size:60px">
                                 <bold>1</bold>
                             </div>
-                            <div class="col-11 text-right" style="font-size:20px">
+                            <div class="col-11 text-end" style="font-size:20px">
                                 <div class="col-12">Date: <span
                                     t-esc="shift['shift'].begin_date_without_time_string"
                                 /></div>
@@ -230,7 +230,7 @@
                             <div class="col-1" style="font-size:60px">
                                 <bold>2</bold>
                             </div>
-                            <div class="col-11 text-right" style="font-size:20px">
+                            <div class="col-11 text-end" style="font-size:20px">
                                 <div class="col-12">Date: <span
                                     t-esc="shift['shift'].begin_date_without_time_string"
                                 /></div>
@@ -241,7 +241,6 @@
                         </div>
                         <div class="row mt0 mb0">
                             <h2
-                                class="text-center"
                                 style="background:#DDDDDD;margin-left:15px;margin-right:15px;padding:20px"
                             >
                                 <strong>RATTRAPAGES</strong>
@@ -287,9 +286,11 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th
-                                        width="100%"
-                                    >Coordinateurs, notez ci-dessous : Toute demande d’extension, tout cas d’attribution d’un seul rattrapage, toute autre info utile pour le Bureau des membres.</th>
+                                    <th width="100%">
+                                        <strong>
+                                        Coordinateurs, notez ci-dessous : Toute demande d’extension, tout cas d’attribution d’un seul rattrapage, toute autre info utile pour le Bureau des membres.
+                                        </strong>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>

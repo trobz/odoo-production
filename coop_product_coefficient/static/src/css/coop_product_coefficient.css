@@ -75,7 +75,7 @@
 
 /* Summary table (theorical price / flags) */
 .coeff_summary_table {
-    width: 100%;
+    width: auto;
     border-collapse: collapse;
     margin-top: 16px;
 }

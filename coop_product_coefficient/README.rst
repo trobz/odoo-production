@@ -86,11 +86,11 @@ after a certain date. For that purpose, an extra button is available on
 the product form, and cron task is available to recompute base prices
 each night.
 
-.. |image| image:: static/description/product_coefficient.png
-.. |image1| image:: static/description/product_template.png
-.. |image2| image:: static/description/use_theoritical_price_one.png
-.. |image3| image:: static/description/use_theoritical_price_multi.png
-.. |image4| image:: static/description/product_template_tree.png
+.. |image| image:: https://raw.githubusercontent.com/AwesomeFoodCoops/odoo-production/18.0/coop_product_coefficient/static/description/product_coefficient.png
+.. |image1| image:: https://raw.githubusercontent.com/AwesomeFoodCoops/odoo-production/18.0/coop_product_coefficient/static/description/product_template.png
+.. |image2| image:: https://raw.githubusercontent.com/AwesomeFoodCoops/odoo-production/18.0/coop_product_coefficient/static/description/use_theoritical_price_one.png
+.. |image3| image:: https://raw.githubusercontent.com/AwesomeFoodCoops/odoo-production/18.0/coop_product_coefficient/static/description/use_theoritical_price_multi.png
+.. |image4| image:: https://raw.githubusercontent.com/AwesomeFoodCoops/odoo-production/18.0/coop_product_coefficient/static/description/product_template_tree.png
 
 **Table of contents**
 
