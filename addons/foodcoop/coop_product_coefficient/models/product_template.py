@@ -176,46 +176,55 @@ class ProductTemplate(models.Model):
         string="With Supplier Discount Coefficient",
         compute="_compute_coeff1_inter",
         store=True,
+        digits="Product Sale Price",
     )
     coeff2_inter_sp = fields.Float(
         string="With Shipping Coefficient",
         compute="_compute_coeff2_inter",
         store=True,
+        digits="Product Sale Price",
     )
     coeff3_inter_sp = fields.Float(
         string="With Loss Coefficient",
         compute="_compute_coeff3_inter",
         store=True,
+        digits="Product Sale Price",
     )
     coeff4_inter_sp = fields.Float(
         string="With Coefficient 4 (Cost)",
         compute="_compute_coeff4_inter",
         store=True,
+        digits="Product Sale Price",
     )
     coeff5_inter_sp = fields.Float(
         string="With Coefficient 5 (Cost)",
         compute="_compute_coeff5_inter",
         store=True,
+        digits="Product Sale Price",
     )
     coeff6_inter_sp = fields.Float(
         string="With Coefficient 6 (Cost)",
         compute="_compute_coeff6_inter",
         store=True,
+        digits="Product Sale Price",
     )
     coeff7_inter_sp = fields.Float(
         string="With Coefficient 7 (Cost)",
         compute="_compute_coeff7_inter",
         store=True,
+        digits="Product Sale Price",
     )
     coeff8_inter_sp = fields.Float(
         string="With Coefficient 8 (Cost)",
         compute="_compute_coeff8_inter",
         store=True,
+        digits="Product Sale Price",
     )
     coeff9_inter_sp = fields.Float(
         string="With Margin Coefficient",
         compute="_compute_coeff9_inter",
         store=True,
+        digits="Product Sale Price",
     )
     theoritical_price = fields.Float(
         string="Theoritical Price VAT Incl.",
@@ -543,7 +552,7 @@ class ProductTemplate(models.Model):
         "alternative_base_price_standard",
     )
     def _compute_has_theoritical_cost_different(self):
-        precision = self.env["decimal.precision"].precision_get("Product Price")
+        precision = self.env["decimal.precision"].precision_get("Product Sale Price")
         digits = precision or 2
         for template in self:
             if template.coeff9_inter_sp and (

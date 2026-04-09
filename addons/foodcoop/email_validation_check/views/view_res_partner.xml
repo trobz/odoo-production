@@ -4,9 +4,9 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form" />
         <field name="arch" type="xml">
-            <xpath expr="//div[hasclass('oe_title')]" position="after">
-                <p
-                    class="alert alert-warning oe_read_only"
+            <xpath expr="//div[@name='warning_company']" position="after">
+                <div
+                    class="alert alert-warning"
                     role="alert"
                     invisible="not show_send_email"
                     groups="base.group_partner_manager"
@@ -18,7 +18,7 @@
                     type="object"
                     string="Send New"
                 />
-                </p>
+                </div>
             </xpath>
         </field>
     </record>
