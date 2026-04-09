@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-01 04:29+0000\n"
-"PO-Revision-Date: 2026-04-01 04:29+0000\n"
+"POT-Creation-Date: 2026-04-07 07:35+0000\n"
+"PO-Revision-Date: 2026-04-07 07:35+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 #. module: coop_inventory_recurrent
 #: model:ir.actions.report,print_report_name:coop_inventory_recurrent.action_report_inventory_recurrent
 msgid "'Inventory - %s' % object.name"
-msgstr "Inventaire - %s' % object.name"
+msgstr "'Inventaire - %s' % object.name"
 
 #. module: coop_inventory_recurrent
 #: model_terms:ir.ui.view,arch_db:coop_inventory_recurrent.report_inventory_new_layout
@@ -186,6 +186,11 @@ msgid "Line"
 msgstr "Ligne"
 
 #. module: coop_inventory_recurrent
+#: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_category_group__location_id
+msgid "Location"
+msgstr "Emplacement"
+
+#. module: coop_inventory_recurrent
 #: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_category_group__name
 msgid "Name"
 msgstr "Nom"
@@ -247,10 +252,20 @@ msgstr "Deuxième Liste"
 
 #. module: coop_inventory_recurrent
 #. odoo-python
+#: code:addons/coop_inventory_recurrent/wizards/stock_inventory_recurrent_wizard.py:0
+msgid ""
+"The following inventories are already in progress: %(names)s. Please "
+"validate or cancel them before generating new ones."
+msgstr ""
+"Les inventaires suivants sont déjà en cours : %(names)s. Veuillez les "
+"valider ou les annuler avant d'en générer de nouveaux."
+
+#. module: coop_inventory_recurrent
+#. odoo-python
 #: code:addons/coop_inventory_recurrent/models/stock_inventory.py:0
 msgid ""
 "There's already an Adjustment in Process using one requested Location: "
 "%(names)s. Blocking adjustments: %(blocking_names)s"
 msgstr ""
-"Il y a déjà un ajustement en cours utilisant l'un des emplacements demandés : "
-"%(names)s. Ajustements bloquants : %(blocking_names)s"
+"Il y a déjà un ajustement en cours utilisant l'un des emplacements demandés "
+": %(names)s. Ajustements bloquants : %(blocking_names)s"
