@@ -8,14 +8,14 @@
         <field name="lang">{{ object.lang }}</field>
         <field
             name="reply_to"
-        >{{ object.company_id.email and '@' in object.company_id.email and 'no-reply@%s' % object.company_id.email.split('@')[-1] or '' }}</field>
+        >{{ user.company_id.email and '@' in user.company_id.email and 'no-reply@%s' % user.company_id.email.split('@')[-1] or '' }}</field>
         <field name="subject">Confirm validated email</field>
         <field name="body_html" type="html">
             <div>
                 <p>Dear <t t-out="object.name" />,</p>
-                <p>Here is link to confirm your email <a
-                    t-att-href="object.validation_url"
-                >here</a></p>
+                <p>Here is link to confirm your email to <t
+                    t-out="user.company_id.name"
+                /> <a t-att-href="object.validation_url">here</a></p>
                 <p>Best regards,</p>
             </div>
         </field>
