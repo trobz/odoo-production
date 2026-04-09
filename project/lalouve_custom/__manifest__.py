@@ -4,6 +4,7 @@
     'category': 'Custom',
     'author': 'Trobz',
     'website': 'http://www.trobz.com',
+    'license': 'LGPL-3',
     'depends': [
         'coop_project',
         'coop_point_of_sale',
