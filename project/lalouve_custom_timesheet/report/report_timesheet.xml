@@ -14,12 +14,12 @@
                 <tr style="font-size:11px;background:#DDDDDD;text-transform: uppercase;">
                     <th class="text-center th-header" width="6%">Statut</th>
                     <th class="text-center th-header" width="6%">RAT</th>
-                    <th class="text-center" width="8%">QLÉ</th>
+                    <th class="text-center th-header" width="8%">QLÉ</th>
                     <!-- Replace "Numéro" by "N°" -->
                     <th class="text-center th-header" width="8%">N°</th>
                     <th class="text-center th-header" width="22%">Nom</th>
                     <!-- Replace "Echange" by "COCHER SI ECH." -->
-                    <th class="text-center">Cocher si ech.</th>
+                    <th class="text-center th-header">Cocher si ech.</th>
                     <!-- Replace "Numéro" by "N°" -->
                     <th class="text-center th-header" width="8%">N°</th>
                     <th class="text-center th-header" width="28%">NOM (DÉBUT)</th>
