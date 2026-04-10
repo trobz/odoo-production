@@ -10,6 +10,9 @@
         # oca/account-invoicing
         "partner_account_move_line",
 
+        # oca/bank-statement-import
+        "account_statement_import_caisse_epargne",
+
         # oca/pos
         "pos_payment_change_account",
         "pos_payment_credit_amount",
