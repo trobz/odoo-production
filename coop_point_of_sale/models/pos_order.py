@@ -56,8 +56,6 @@ class PosOrder(models.Model):
         index=True,
     )
 
-    amount_total = fields.Float(store=True)
-
     @api.depends("date_order")
     def _compute_week_number(self):
         number_to_letters = self.env["shift.template"]._number_to_letters
