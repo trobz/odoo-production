@@ -97,6 +97,7 @@ class ResPartner(models.Model):
         @Function to get a list of fields in Partner object which triggers
         badge to print
         """
+        self = self.sudo()
         company = self.env.company
         fields_recs = company.reprint_change_field_ids
         return [
