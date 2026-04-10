@@ -16,7 +16,7 @@ class StockInventoryValuationReport(models.TransientModel):
         """Override to add the analytic account from product or product category."""
         line = super()._get_result_line(product, standard_price)
         line['income_analytic_account'] = (
-            product.income_analytic_account_id.name or
-            product.categ_id.income_analytic_account_id.name
+            product.income_analytic_account_id.name
+            or product.categ_id.income_analytic_account_id.name
         )
         return line

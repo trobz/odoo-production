@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     'name': 'Lalouve Custom: Stock Inventory Valuation',
     'version': '12.0.1.0.0',

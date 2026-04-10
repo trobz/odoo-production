@@ -1,7 +1,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
-from odoo import api, fields, models, _
+
+from odoo import _, api, fields, models
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
 
 
@@ -101,7 +102,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
 
     def _get_render_space(self, row_pos, line):
         render_space = {
-            'n': row_pos-5,
+            'n': row_pos - 5,
             'name': line.name or '',
             'reference': line.reference or '',
             'barcode': line.barcode or '',
@@ -109,6 +110,6 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
             'qty_at_date': line.qty_at_date or 0.000,
             'standard_price': line.standard_price or 0.00,
             'stock_value': line.stock_value or 0.00,
-            'categ_name': line.categ_name
+            'categ_name': line.categ_name,
         }
         return render_space
