@@ -57,13 +57,18 @@ class TestBankStatementReconciliation(TransactionCase):
         return bank_stmt_line
 
     def test_reconciliation_reconcile_pos(self):
-        st_line = self.create_pos_statement_line(100)
-        if not st_line:
+        st_line, payment = self.create_pos_statement_line(100)
+        if not st_line or not payment:
             return
         st_line.statement_id.button_reconcile_pos()
+        payment.invalidate_recordset(["is_matched", "reconciled_statement_line_ids"])
         self.assertTrue(
             st_line.is_reconciled,
             "The statement line should be reconciled after POS auto-reconciliation.",
+        )
+        self.assertTrue(
+            payment.is_matched,
+            "The POS payment should be matched after auto-reconciliation.",
         )
 
     def create_pos_statement_line(self, st_line_amount):
@@ -71,35 +76,52 @@ class TestBankStatementReconciliation(TransactionCase):
         parent_journal = self.env["account.journal"].search(
             [("type", "=", "bank"), ("company_id", "=", company.id)], limit=1
         )
+        outstanding_account = self.acc_model.search(
+            [
+                ("account_type", "=", "asset_current"),
+                ("reconcile", "=", True),
+                ("deprecated", "=", False),
+                ("company_ids", "in", company.id),
+            ],
+            limit=1,
+        )
+        if not outstanding_account:
+            outstanding_account = self.partner.property_account_receivable_id
+
         child_journal = self.env["account.journal"].search(
-            [("type", "=", "credit"), ("company_id", "=", company.id)], limit=1
+            [
+                ("type", "=", "bank"),
+                ("company_id", "=", company.id),
+                ("id", "!=", parent_journal.id),
+            ],
+            limit=1,
         ) or self.env["account.journal"].create(
             {
                 "name": "POS Child Journal",
                 "code": "POSC",
-                "type": "credit",
+                "type": "bank",
                 "company_id": company.id,
+                "default_account_id": outstanding_account.id,
             }
         )
         parent_journal.cb_child_ids = [(6, 0, [child_journal.id])]
         parent_journal.cb_lines_domain = "[('payment_ref', 'ilike', '%CB/CONT/01%')]"
 
-        pos_stmt = self.bs_model.create(
+        payment = self.env["account.payment"].create(
             {
                 "journal_id": child_journal.id,
-                "balance_end_real": st_line_amount,
-            }
-        )
-        self.bsl_model.create(
-            {
-                "payment_ref": "POS/CHILD/01",
-                "statement_id": pos_stmt.id,
-                "partner_id": self.partner.id,
                 "amount": st_line_amount,
-                "journal_id": child_journal.id,
+                "payment_type": "inbound",
+                "partner_type": "customer",
+                "partner_id": self.partner.id,
+                "destination_account_id": (
+                    self.partner.property_account_receivable_id.id
+                ),
+                "force_outstanding_account_id": outstanding_account.id,
                 "date": "2024-01-01",
             }
         )
+        payment.action_post()
 
         bank_stmt = self.bs_model.create(
             {
@@ -117,4 +139,4 @@ class TestBankStatementReconciliation(TransactionCase):
                 "date": "2024-01-01",
             }
         )
-        return bank_stmt_line
+        return bank_stmt_line, payment

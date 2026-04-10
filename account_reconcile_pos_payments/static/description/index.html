@@ -374,8 +374,9 @@ ul.auto-toc {
 <ul class="simple">
 <li>Automatic matching of bank expense lines based on regex patterns
 configured on the journal.</li>
-<li>Automatic matching of POS payment lines against child POS statements,
-including optional contactless 2-lines combination matching.</li>
+<li>Automatic matching of POS payment lines against POS bank payments
+(<tt class="docutils literal">account.payment</tt>) created on child journals, including optional
+contactless 2-lines combination matching.</li>
 </ul>
 <p>When a match is found, the module updates statement line counterpart
 accounts and reconciles the related journal items.</p>
@@ -399,8 +400,8 @@ accounts and reconciles the related journal items.</p>
 <li>Go to Accounting &gt; Configuration &gt; Journals.</li>
 <li>Open the bank journal that receives card settlements.</li>
 <li>In the Journal Entries tab, configure Automatic POS Reconciliation:<ul>
-<li>CB Childs: select the POS/credit journals that create settlement
-entries.</li>
+<li>CB Childs: select the POS journals whose sessions create bank
+payments on those journals.</li>
 <li>CB Lines Domain: domain used to detect candidate bank statement
 lines.</li>
 <li>CB Delta Days and CB Rounding: matching tolerance by date and
@@ -420,8 +421,8 @@ amount.</li>
 </ol>
 <p>Recommendations:</p>
 <ul class="simple">
-<li>Keep parent bank journal and child POS journals on different
-liquidity accounts.</li>
+<li>Keep parent bank journal liquidity accounts different from the
+outstanding account used by the matched POS bank payments.</li>
 <li>Start with strict domains and small rounding values, then relax only
 if needed.</li>
 </ul>
@@ -440,12 +441,14 @@ patterns and posts counterparts on the Bank Expense Account.</li>
 <li>Open a bank statement containing card settlement lines.</li>
 <li>Click Auto Reconcile POS Payments.</li>
 <li>The module tries:<ul>
-<li>single-line matching against child POS statements;</li>
+<li>single-line matching against POS bank payments created on child
+journals;</li>
 <li>optional contactless combined matching (line + line).</li>
 </ul>
 </li>
-<li>For each successful match, counterpart items are adjusted and
-reconciled.</li>
+<li>For each successful match, the bank statement suspense line is
+switched to the payment outstanding account and reconciled with the
+payment move line.</li>
 </ol>
 <p>If no line is matched, review domains, rounding, and date delta
 parameters on the journal.</p>

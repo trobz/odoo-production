@@ -26,8 +26,9 @@ This module adds assisted reconciliation flows for bank statements:
 
 -  Automatic matching of bank expense lines based on regex patterns
    configured on the journal.
--  Automatic matching of POS payment lines against child POS statements,
-   including optional contactless 2-lines combination matching.
+-  Automatic matching of POS payment lines against POS bank payments
+   (``account.payment``) created on child journals, including optional
+   contactless 2-lines combination matching.
 
 When a match is found, the module updates statement line counterpart
 accounts and reconciles the related journal items.
@@ -46,8 +47,8 @@ To configure the module:
 2. Open the bank journal that receives card settlements.
 3. In the Journal Entries tab, configure Automatic POS Reconciliation:
 
-   -  CB Childs: select the POS/credit journals that create settlement
-      entries.
+   -  CB Childs: select the POS journals whose sessions create bank
+      payments on those journals.
    -  CB Lines Domain: domain used to detect candidate bank statement
       lines.
    -  CB Delta Days and CB Rounding: matching tolerance by date and
@@ -65,8 +66,8 @@ To configure the module:
 
 Recommendations:
 
--  Keep parent bank journal and child POS journals on different
-   liquidity accounts.
+-  Keep parent bank journal liquidity accounts different from the
+   outstanding account used by the matched POS bank payments.
 -  Start with strict domains and small rounding values, then relax only
    if needed.
 
@@ -86,11 +87,13 @@ To reconcile POS payments automatically:
 2. Click Auto Reconcile POS Payments.
 3. The module tries:
 
-   -  single-line matching against child POS statements;
+   -  single-line matching against POS bank payments created on child
+      journals;
    -  optional contactless combined matching (line + line).
 
-4. For each successful match, counterpart items are adjusted and
-   reconciled.
+4. For each successful match, the bank statement suspense line is
+   switched to the payment outstanding account and reconciled with the
+   payment move line.
 
 If no line is matched, review domains, rounding, and date delta
 parameters on the journal.
