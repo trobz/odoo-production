@@ -1,5 +1,6 @@
 import {Component, markup, onWillStart, useState} from "@odoo/owl";
 import {_t} from "@web/core/l10n/translation";
+import {session} from "@web/session";
 import {useService} from "@web/core/utils/hooks";
 
 function hasContent(html) {
@@ -34,6 +35,7 @@ export class PartnerFormComponent extends Component {
     }
 
     async _loadPartnerInfos(selectedPartnerId) {
+        const lang = document.documentElement.lang?.replace(/-/g, "_");
         return await this.orm.searchRead(
             "res.partner",
             [["id", "=", selectedPartnerId]],
@@ -54,7 +56,13 @@ export class PartnerFormComponent extends Component {
                 "badge_to_distribute",
                 "contact_us_message",
                 "error_message",
-            ]
+            ],
+            {
+                context: {
+                    ...session.user_context,
+                    ...(lang ? {lang} : {}),
+                },
+            }
         );
     }
 
