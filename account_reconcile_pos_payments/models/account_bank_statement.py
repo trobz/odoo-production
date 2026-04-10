@@ -7,7 +7,7 @@
 import logging
 from datetime import timedelta
 
-from odoo import Command, _, api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval
 
@@ -106,7 +106,7 @@ class AccountBankStatement(models.Model):
 
     def _pos_reconcile_lines(self, lines):
         """
-        This will try to find the statement for each line,
+        This will try to find the payment for each line,
         and reconcile it with it.
 
         Returns not_reconciled_lines
@@ -114,18 +114,18 @@ class AccountBankStatement(models.Model):
         self.ensure_one()
         reconciled_lines = self.env["account.bank.statement.line"]
         for line in lines:
-            statement = self._find_pos_statement(date=line.date, amount=line.amount)
+            payment = self._find_pos_payment(date=line.date, amount=line.amount)
             # Ignore not matching
-            if not statement:
+            if not payment:
                 continue
-            elif len(statement) > 1:
+            elif len(payment) > 1:
                 _logger.debug(
-                    'Multiple possible statements for "%s" line. Ignoring..',
+                    'Multiple possible payments for "%s" line. Ignoring..',
                     line.payment_ref,
                 )
                 continue
             # Reconcile lines
-            self._pos_reconcile_statement_with_lines(lines=line, statement=statement)
+            self._pos_reconcile_payment_with_lines(lines=line, payment=payment)
             reconciled_lines |= line
         return lines - reconciled_lines
 
@@ -151,24 +151,24 @@ class AccountBankStatement(models.Model):
                 date_limit_max = line.date + timedelta(days=delta_days)
                 if alt_line.date > date_limit_max or alt_line.date < date_limit_min:
                     continue
-                # Try to find statement
-                statement = self._find_pos_statement(
+                # Try to find payment
+                payment = self._find_pos_payment(
                     date=line.date, amount=(line.amount + alt_line.amount)
                 )
                 # Ignore not matching
-                if not statement:
+                if not payment:
                     continue
-                elif len(statement) > 1:
+                elif len(payment) > 1:
                     _logger.debug(
-                        'Multiple possible statements for "%s" and "%s" line. '
+                        'Multiple possible payments for "%s" and "%s" line. '
                         "Ignoring...",
                         line.payment_ref,
                         alt_line.payment_ref,
                     )
                     continue
                 # Reconcile lines
-                self._pos_reconcile_statement_with_lines(
-                    lines=(line | alt_line), statement=statement
+                self._pos_reconcile_payment_with_lines(
+                    lines=(line | alt_line), payment=payment
                 )
                 reconciled_lines |= line
                 reconciled_alt_lines |= alt_line
@@ -179,77 +179,94 @@ class AccountBankStatement(models.Model):
             alt_lines - reconciled_alt_lines,
         )
 
-    def _find_pos_statement(self, date, amount):
+    def _find_pos_payment(self, date, amount):
         """
-        Finds a pos statement by amount, using
+        Finds a POS payment by amount, using
         the setup on the journal
         """
         self.ensure_one()
         rounding = self.journal_id.cb_rounding
+        target_amount = abs(amount)
         # Delta days is used only to get past statement, but not future ones
         max_date = date
         min_date = date - timedelta(days=self.journal_id.cb_delta_days)
-        # Find matching statements
-        pos_statement_ids = self.env["account.bank.statement"].search(
+        # Find matching payments
+        pos_payment_ids = self.env["account.payment"].search(
             [
                 ("journal_id", "in", self.journal_id.cb_child_ids.ids),
                 ("date", "<=", max_date),
                 ("date", ">=", min_date),
-                ("balance_end_real", ">=", round(amount - rounding, 2)),
-                ("balance_end_real", "<=", round(amount + rounding, 2)),
-                ("line_ids", "!=", False),
+                ("amount", ">=", round(target_amount - rounding, 2)),
+                ("amount", "<=", round(target_amount + rounding, 2)),
+                ("state", "in", ["in_process", "paid"]),
+                ("move_id", "!=", False),
             ]
         )
-        _logger.debug(
-            "Searching POS Statements ("
+        _logger.info(
+            "Searching POS Payments ("
             "min_date=%s, max_date=%s, amount=%s, rounding=%s, child_ids=%s"
             "): %s",
             min_date,
             max_date,
-            amount,
+            target_amount,
             rounding,
             self.journal_id.cb_child_ids,
-            pos_statement_ids,
+            pos_payment_ids,
         )
-        # Filter statements that are already reconciled
-        # In Odoo 18, account.bank.statement no longer has move_line_ids;
-        # we collect the move lines from each statement line's move.
-        ignored_pos_statement_ids = self.env["account.bank.statement"]
-        account_id = self.journal_id.default_account_id.id
-        for st in pos_statement_ids:
-            pos_move_lines = st.line_ids.move_id.line_ids
-            reconciled_move_lines = pos_move_lines.filtered(
-                lambda ml: ml.reconciled and ml.account_id.id == account_id
+        ignored_pos_payment_ids = self.env["account.payment"]
+        for payment in pos_payment_ids:
+            if not payment.outstanding_account_id:
+                ignored_pos_payment_ids |= payment
+                continue
+            liquidity_lines, _counterpart_lines, _writeoff_lines = (
+                payment._seek_for_lines()
             )
-            if reconciled_move_lines:
-                _logger.debug(
-                    "There are debits on the journal and they are reconciled."
+            outstanding_move_lines = liquidity_lines.filtered(
+                lambda move_line, p=payment: (
+                    move_line.account_id == p.outstanding_account_id
+                    and not move_line.reconciled
                 )
-                ignored_pos_statement_ids |= st
-        pos_statement_ids -= ignored_pos_statement_ids
-        # Return found statements
-        return pos_statement_ids
+            )
+            if not outstanding_move_lines:
+                _logger.debug(
+                    "POS payment %s has no open outstanding lines.",
+                    payment.display_name,
+                )
+                ignored_pos_payment_ids |= payment
+        pos_payment_ids -= ignored_pos_payment_ids
+        return pos_payment_ids
 
     @api.model
-    def _pos_reconcile_statement_with_lines(self, lines, statement):
+    def _pos_reconcile_payment_with_lines(self, lines, payment):
         self.ensure_one()
-        # In Odoo 18, both debit and credit use the same default_account_id.
-        st_account_id = statement.journal_id.default_account_id.id
-        lines_to_reconcile_ids = []
+        payment_account_id = payment.outstanding_account_id.id
+        if not payment_account_id:
+            _logger.warning(
+                "Skipping POS reconciliation for payment %s: no outstanding account.",
+                payment,
+            )
+            return
+        payment_liquidity_lines, _counterpart_lines, _writeoff_lines = (
+            payment._seek_for_lines()
+        )
+        lines_to_reconcile = payment_liquidity_lines.filtered(
+            lambda move_line: (
+                move_line.account_id.id == payment_account_id
+                and not move_line.reconciled
+            )
+        )
         for line in lines:
             line_liquidity_account_id = line.journal_id.default_account_id.id
-            if st_account_id == line_liquidity_account_id:
+            if payment_account_id == line_liquidity_account_id:
                 _logger.warning(
                     "Skipping POS reconciliation for statement line %s: "
                     "target account %s equals liquidity account.",
                     line,
-                    st_account_id,
+                    payment_account_id,
                 )
                 continue
-            reconcile_label = (
-                f"{statement.journal_id.name} {statement.date} {statement.name}"
-            )
-            # Find the suspense line and replace it with the POS journal account
+            reconcile_label = f"{payment.journal_id.name} {payment.date} {payment.name}"
+            # Find the suspense line and replace it with the POS payment account.
             _liquidity_line, suspense_line, _other_lines = line._seek_for_lines()
             if not suspense_line:
                 _logger.warning(
@@ -259,39 +276,21 @@ class AccountBankStatement(models.Model):
             _logger.info(
                 "Creating reconciliation for statement line %s with POS account %s",
                 line,
-                st_account_id,
+                payment_account_id,
             )
             line.write(
                 {
                     "checked": True,
-                    "line_ids": [
-                        Command.update(
-                            suspense_line.id,
-                            {
-                                "account_id": st_account_id,
-                                "name": reconcile_label,
-                            },
-                        )
-                    ],
                 }
             )
-            # Collect the newly created counterpart line for reconciliation
-            _liq, _susp, new_other_lines = line._seek_for_lines()
-            for move_line in new_other_lines:
-                if (
-                    move_line.account_id.id == st_account_id
-                    and move_line.id not in lines_to_reconcile_ids
-                ):
-                    lines_to_reconcile_ids.append(move_line.id)
-        # Collect the POS statement move lines on the same account
-        for pos_st_line in statement.line_ids:
-            for move_line in pos_st_line.move_id.line_ids:
-                if (
-                    move_line.account_id.id == st_account_id
-                    and move_line.id not in lines_to_reconcile_ids
-                    and not move_line.reconciled
-                ):
-                    lines_to_reconcile_ids.append(move_line.id)
-        # Process reconciliation
-        move_lines = self.env["account.move.line"].browse(lines_to_reconcile_ids)
-        move_lines.reconcile()
+            suspense_line.with_context(skip_account_move_synchronization=True).write(
+                {
+                    "account_id": payment_account_id,
+                    "name": reconcile_label,
+                }
+            )
+            lines_to_reconcile |= suspense_line.filtered(
+                lambda move_line: not move_line.reconciled
+            )
+        if lines_to_reconcile:
+            lines_to_reconcile.reconcile()
