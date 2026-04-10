@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-07 07:35+0000\n"
-"PO-Revision-Date: 2026-04-07 07:35+0000\n"
+"POT-Creation-Date: 2026-04-10 03:25+0000\n"
+"PO-Revision-Date: 2026-04-10 03:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -148,6 +148,21 @@ msgstr "Groupe"
 #: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_recurrent_wizard__id
 msgid "ID"
 msgstr "ID"
+
+#. module: coop_inventory_recurrent
+#: model:ir.model.fields,help:coop_inventory_recurrent.field_stock_inventory__exhausted
+msgid ""
+"If enabled, products in the category with no stock will also be included in "
+"the inventory adjustment."
+msgstr ""
+"Si activé, les produits de la catégorie sans stock seront également inclus "
+"dans l'ajustement d'inventaire."
+
+#. module: coop_inventory_recurrent
+#: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory__exhausted
+#: model:ir.model.fields,field_description:coop_inventory_recurrent.field_stock_inventory_recurrent_wizard__exhausted
+msgid "Include Exhausted Products"
+msgstr "Inclure les produits épuisés"
 
 #. module: coop_inventory_recurrent
 #: model:ir.actions.report,name:coop_inventory_recurrent.action_report_inventory_recurrent

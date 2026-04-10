@@ -13,6 +13,7 @@
     "license": "AGPL-3",
     "depends": [
         "account_statement_base",
+        "point_of_sale",
     ],
     "data": [
         "views/account_journal.xml",
