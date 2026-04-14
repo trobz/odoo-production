@@ -1,6 +1,6 @@
 import logging
 
-from odoo import models, api, fields, _
+from odoo import _, api, fields, models
 from odoo.tools.safe_eval import safe_eval
 
 _logger = logging.getLogger(__name__)
@@ -10,21 +10,17 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     related_user_id = fields.Many2one(
-        comodel_name='res.users',
-        compute="_compute_related_user",
-        string="Related User")
+        comodel_name="res.users", compute="_compute_related_user", string="Related User"
+    )
 
-    @api.multi
     def _compute_related_user(self):
         """
         Function to compute the related user of the partner
         """
         ResUsers = self.env["res.users"]
         for partner in self:
-            related_users = ResUsers.search(
-                [('partner_id', '=', partner.id)], limit=1)
-            partner.related_user_id = \
-                related_users and related_users[0] or False
+            related_users = ResUsers.search([("partner_id", "=", partner.id)], limit=1)
+            partner.related_user_id = related_users and related_users[0] or False
 
     @api.model
     def get_warning_member_state(self):
@@ -34,8 +30,7 @@ class ResPartner(models.Model):
         )
         member_state = {}
         if not (
-            self.cooperative_state
-            and self.cooperative_state in warning_member_state
+            self.cooperative_state and self.cooperative_state in warning_member_state
         ):
             member_state = warning_member_state.get("none", {})
         else:
@@ -46,40 +41,14 @@ class ResPartner(models.Model):
             member_state.get("css-class", ""),
         )
 
-    public_avatar = fields.Boolean(
-        "Public Avatar", help="Public your avatar in website", default=True
-    )
-    public_mobile = fields.Boolean(
-        "Public Mobile", help="Public your mobile in website", default=False
-    )
+    public_avatar = fields.Boolean(help="Public your avatar in website", default=True)
+    public_mobile = fields.Boolean(help="Public your mobile in website", default=False)
     public_email = fields.Boolean(
         "Public Email Address",
         help="Public your email address on website",
         default=False,
     )
 
-    @api.multi
-    def action_create_new_user(self):
-        """
-        Function to activate the User Creation Form
-        """
-        self.ensure_one()
-
-        res = super(ResPartner, self).action_create_new_user()
-        context = res.get("context", {})
-        portal_group = self.env.ref("base.group_portal")
-        # memberspace group
-        memberspace_group = self.env.ref("coop_memberspace.group_memberspace")
-        context.update(
-            {
-                "default_groups_id": [
-                    (6, 0, [portal_group.id, memberspace_group.id])
-                ]
-            }
-        )
-        return res
-
-    @api.multi
     def create_memberspace_user(self):
         """
         This function is used to create user for existing partner when installing
@@ -89,19 +58,11 @@ class ResPartner(models.Model):
         portal_group = self.env.ref("base.group_portal")
         # memberspace group
         memberspace_group = self.env.ref("coop_memberspace.group_memberspace")
-        Users = self.env["res.users"].with_context(
-            no_check_validate_email=True
-        )
+        Users = self.env["res.users"].with_context(no_check_validate_email=True)
         new_users = self.env["res.users"]
-        context = self.env.context.copy()
-        context.update(
-            {
-                "default_groups_id": [
-                    (6, 0, [portal_group.id, memberspace_group.id])
-                ]
-            }
-        )
-        vals = Users.with_context(context).default_get(list(Users._fields.keys()))
+        vals = Users.with_context(
+            default_groups_id=[(6, 0, [portal_group.id, memberspace_group.id])]
+        ).default_get(list(Users._fields.keys()))
         for member in self:
             sql = """
                 SELECT id
@@ -122,7 +83,7 @@ class ResPartner(models.Model):
                                 "name": member.name,
                                 "login": member.email,
                                 "email": member.email,
-                                "image": member.image,
+                                "image_1920": member.image_1920,
                             }
                         )
                         # Users.with_context(no_reset_password=True).create(vals)
@@ -131,20 +92,21 @@ class ResPartner(models.Model):
                         user.partner_id = member.id
             except Exception as e:
                 _logger.exception(e)
-                self.invalidate_cache()
-            else:
-                self.env.cr.commit()
+                self.env.invalidate_all()
         return new_users
 
     @api.model
-    def cron_create_user_for_members(self, limit=100,
-            check_welcome_email=False,
-            welcome_email=False):
-        welcome_email_domain = check_welcome_email and \
-                'AND welcome_email is {welcome_email}'.format(
-                welcome_email=welcome_email and 'True' or 'False'
-        ) or ''
-        sql = '''
+    def cron_create_user_for_members(
+        self, limit=100, check_welcome_email=False, welcome_email=False
+    ):
+        welcome_email_domain = (
+            check_welcome_email
+            and "AND welcome_email is {welcome_email}".format(
+                welcome_email=welcome_email and "True" or "False"
+            )
+            or ""
+        )
+        sql = f"""
             SELECT rp.id
             FROM res_partner rp
             LEFT JOIN res_users ru ON
@@ -155,9 +117,7 @@ class ResPartner(models.Model):
                 AND rp.email NOTNULL
                 {welcome_email_domain}
             LIMIT %s
-        '''.format(
-            welcome_email_domain=welcome_email_domain
-        )
+        """
         self.env.cr.execute(sql, (limit,))
         partner_ids = [p[0] for p in self.env.cr.fetchall()]
         if not partner_ids:

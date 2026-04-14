@@ -1,34 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    External CDN resources.
+    Google Fonts are injected directly via a <link> tag in the layout head
+    (see website_template.xml) because ir.asset cannot reliably distinguish
+    external CSS URLs that have no .css extension.
+    Chart.js is loaded here as a plain <script> src — Odoo detects .js correctly.
+-->
 <odoo>
-    <template id="coop_memberspace.assets_frontend" inherit_id="website.assets_frontend" name="Metasource">
-        <xpath expr="." position="inside">
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:700"/>
-            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
-
-            <!-- libs css -->
-
-            <!-- less -->
-            <link rel="stylesheet" href="/coop_memberspace/static/src/less/style.less" type="text/less"
-                  t-ignore="true"/>
-            <link rel="stylesheet" href="/coop_memberspace/static/src/less/iconmoon.less" type="text/less"
-                  t-ignore="true"/>
-            <link rel="stylesheet" href="/coop_memberspace/static/src/less/togglebutton.less" type="text/less"
-                  t-ignore="true"/>
-
-            <!-- lib js -->
-
-            <!-- Odoo framework libs -->
-            <script type="text/javascript" src="/web/static/lib/moment/moment.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-
-            <!-- custom js -->
-            <script src="/coop_memberspace/static/src/js/style.js" type="text/javascript"/>
-            <script src="/coop_memberspace/static/src/js/programmer_un_extra.js" type="text/javascript"/>
-            <script src="/coop_memberspace/static/src/js/programmer_une_vacation.js" type="text/javascript"/>
-            <script src="/coop_memberspace/static/src/js/my_profile.js" type="text/javascript"/>
-            <script src="/coop_memberspace/static/src/js/statistics.js" type="text/javascript"/>
-            <script src="/coop_memberspace/static/src/js/exchange_shift.js" type="text/javascript"/>
-            <script src="/coop_memberspace/static/src/js/mywork_ftop.js" type="text/javascript"/>
-        </xpath>
-    </template>
+    <record id="asset_chartjs" model="ir.asset">
+        <field name="name">Coop Memberspace - Chart.js</field>
+        <field name="bundle">web.assets_frontend</field>
+        <field
+            name="path"
+        >https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js</field>
+    </record>
 </odoo>

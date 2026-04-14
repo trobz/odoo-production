@@ -4,6 +4,7 @@ import logging
 from datetime import datetime, timedelta
 
 import pytz
+
 from odoo import api, fields, models
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
 
@@ -14,7 +15,6 @@ class ResUsers(models.Model):
     _inherit = "res.users"
 
     public_active = fields.Boolean(
-        "Public Active",
         help="Public your active status on website",
         default=False,
     )
@@ -35,10 +35,7 @@ class ResUsers(models.Model):
             user_tz = self.tz or self.env.user.tz or "Europe/Paris"
             local = pytz.timezone(user_tz)
             date = pytz.utc.localize(date).astimezone(local)
-            rs = [
-                datetime.strftime(date, item).capitalize()
-                for item in formats
-            ]
+            rs = [datetime.strftime(date, item).capitalize() for item in formats]
             if obj and obj.get("id", False):
                 rs.append(obj["id"])
             return rs
@@ -50,23 +47,18 @@ class ResUsers(models.Model):
         """
         Return the datetime which shift must be after
         """
-        icp_sudo = self.env['ir.config_parameter'].sudo()
-        duration = int(icp_sudo.get_param(
-            'coop_memberspace.ftop_get_shift_duration', -1))
-        if duration > -1:
-            return (datetime.now() + timedelta(hours=duration)).strftime(
-                DTF
-            )
-        return (datetime.now() + timedelta(days=1)).strftime(
-            "%Y-%m-%d 00:00:00"
+        icp_sudo = self.env["ir.config_parameter"].sudo()
+        duration = int(
+            icp_sudo.get_param("coop_memberspace.ftop_get_shift_duration", -1)
         )
+        if duration > -1:
+            return (datetime.now() + timedelta(hours=duration)).strftime(DTF)
+        return (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d 00:00:00")
 
     @api.model
     def ftop_get_shift(self):
         user = self.env.user
-        tmpl = user.partner_id.tmpl_reg_line_ids.filtered(
-            lambda r: r.is_current
-        )
+        tmpl = user.partner_id.tmpl_reg_line_ids.filtered(lambda r: r.is_current)
         shift_env = self.env["shift.shift"]
         shifts_available = shift_env
         shifts = []
@@ -76,7 +68,7 @@ class ResUsers(models.Model):
                 shift_env.sudo()
                 .search(
                     [
-                        ('state', '!=', 'cancel'),
+                        ("state", "!=", "cancel"),
                         (
                             "shift_template_id",
                             "not in",
@@ -103,21 +95,23 @@ class ResUsers(models.Model):
                 seats_avail = sum(tickets.mapped("seats_available"))
                 if seats_avail < 1:
                     continue
-                if shift.seats_availability == 'limited' and \
-                    shift.seats_reserved >= shift.seats_max:
+                if (
+                    shift.seats_availability == "limited"
+                    and shift.seats_reserved >= shift.seats_max
+                ):
                     continue
                 shifts.append(
                     {
                         "id": shift.id,
                         "week_number": shift.week_number,
-                        'week_name': shift.week_name,
+                        "week_name": shift.week_name,
                         "seats_avail": seats_avail,
                         "date_begin": user.get_time_by_user_lang(
                             shift.date_begin,
                             ["%A, %d %B", "%HH%M"],
                             lang=user.lang + ".utf8",
                         ),
-                        "css_style": shift.css_color_style
+                        "css_style": shift.css_color_style,
                     }
                 )
         return shifts
@@ -139,15 +133,19 @@ class ResUsers(models.Model):
                 month=x, day=month_range[1]
             ).strftime("%Y-%m-%d 23:59:59")
             value = 0
-            pos_session = self.env['pos.session'].sudo().search(
-                [
-                    ('stop_at', '>=', first_day_of_month),
-                    ('stop_at', '<=', last_day_of_month),
-                    ('state', '=', 'closed')
-                ]
+            pos_session = (
+                self.env["pos.session"]
+                .sudo()
+                .search(
+                    [
+                        ("stop_at", ">=", first_day_of_month),
+                        ("stop_at", "<=", last_day_of_month),
+                        ("state", "=", "closed"),
+                    ]
+                )
             )
             if pos_session:
-                value = sum(pos_session.mapped('order_ids.amount_total'))
+                value = sum(pos_session.mapped("order_ids.amount_total"))
             if x == current_month:
                 datas.append({"value": value, "color": "#b2b7bb"})
                 continue

@@ -1,71 +1,85 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="res_config_settings_view_form_inherit" model="ir.ui.view">
         <field name="model">res.config.settings</field>
-        <field name="inherit_id" ref="coop_membership.res_config_settings_view_form"/>
+        <field name="inherit_id" ref="coop_membership.res_config_settings_view_form" />
         <field name="arch" type="xml">
-            <xpath expr="//div[@data-key='coop_membership']/div[1]" position="after">
-                <h2>Memberspace</h2>
-                <div class="row mt16 o_settings_container" groups="base.group_system" name="setting_memberspace">
-                    <div class="col-12 col-lg-6 o_setting_box">
-                        <div class="o_setting_left_pane">
-                        </div>
-                        <div class="o_setting_right_pane">
-                            <label for="shift_exchange_duration" string="Shift Exchange"/>
-                            <div class="content-group">
-                                <div class="mt16">
-                                    <label for="shift_exchange_duration" class="o_light_label"/>
-                                    <field name="shift_exchange_duration" class="oe_inline"/>
-                                </div>
-                                <div class="mt8">
-                                    <label for="shift_replacement_duration" class="o_light_label"/>
-                                    <field name="shift_replacement_duration" class="oe_inline"/>
-                                </div>
-                                <div class="mt8">
-                                    <label for="shift_exchange_policy" class="o_light_label"/>
-                                    <field name="shift_exchange_policy" class="oe_inline"/>
-                                </div>
+            <xpath expr="//block[@name='shift_settings']" position="after">
+                <block
+                    title="Memberspace"
+                    name="memberspace_shift_exchange_settings"
+                    groups="base.group_system"
+                >
+                    <setting
+                        id="shift_exchange_duration_setting"
+                        string="Shift Exchange"
+                    >
+                        <div class="content-group">
+                            <div class="mt8">
+                                <label
+                                    for="shift_exchange_duration"
+                                    class="o_light_label"
+                                />
+                                <field
+                                    name="shift_exchange_duration"
+                                    class="oe_inline"
+                                />
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-lg-6 o_setting_box">
-                        <div class="o_setting_left_pane">
-                        </div>
-                        <div class="o_setting_right_pane">
-                            <label for="shift_exchange_duration" string="Shift Cancellation"/>
-                            <div class="content-group">
-                                <div class="mt16">
-                                    <label for="ftop_shift_cancellation_duration" class="o_light_label"/>
-                                    <field name="ftop_shift_cancellation_duration" class="oe_inline"/>
-                                </div>
+                        <div class="content-group">
+                            <div class="mt8">
+                                <label
+                                    for="shift_replacement_duration"
+                                    class="o_light_label"
+                                />
+                                <field
+                                    name="shift_replacement_duration"
+                                    class="oe_inline"
+                                />
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 col-lg-6 o_setting_box">
-                        <div class="o_setting_left_pane">
-                            <field name="show_advance_service"/>
-                        </div>
-                        <div class="o_setting_right_pane" >
-                            <label for="show_advance_service"/>
-                            <div class="text-muted">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </xpath>
-            <xpath expr="//div[@data-key='coop_membership']/div[last()]" position="inside">
-                <div class="col-12 col-lg-6 o_setting_box">
-                    <div class="o_setting_right_pane">
-                        <label for="force_message_route"/>
                         <div class="content-group">
                             <div class="mt16">
-                                <field name="force_message_route" class="oe_inline"/>
+                                <label
+                                    for="shift_exchange_policy"
+                                    class="o_light_label"
+                                />
+                                <field
+                                    name="shift_exchange_policy"
+                                    style="min-width: 560px;"
+                                />
                             </div>
                         </div>
+                    </setting>
+                    <setting
+                        id="ftop_shift_cancellation_duration_setting"
+                        string="Shift Cancellation"
+                    >
+                        <label for="ftop_shift_cancellation_duration" />
+                        <div class="content-group">
+                            <div class="mt16">
+                                <field
+                                name="ftop_shift_cancellation_duration"
+                                class="oe_inline"
+                            /> hours
+                            </div>
+                        </div>
+                    </setting>
+                    <setting id="show_advance_service_setting">
+                        <field name="show_advance_service" />
+                    </setting>
+                </block>
+            </xpath>
+            <xpath expr="//block[@name='message_settings']" position="inside">
+                <setting id="force_message_route_setting">
+                    <div class="content-group">
+                        <label for="force_message_route" />
+                        <div class="mt16">
+                            <field name="force_message_route" />
+                        </div>
                     </div>
-                </div>
+                </setting>
             </xpath>
         </field>
     </record>
-
 </odoo>

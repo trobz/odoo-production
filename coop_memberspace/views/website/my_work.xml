@@ -1,98 +1,147 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <template id="coop_memberspace.my_next_shift">
+        <t
+            t-set="next_shift_headers"
+            t-value="shift_upcomming[0].get_my_next_shift_headers() if shift_upcomming else []"
+        />
         <div class="table-responsive">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Hour</th>
-                        <th style="text-align:center">Exchange</th>
+                        <t t-foreach="next_shift_headers" t-as="header">
+                            <th
+                                t-att-name="header['key']"
+                                t-att-class="header.get('css_class', '')"
+                            >
+                                <t t-esc="header['label']" />
+                            </th>
+                        </t>
                     </tr>
                 </thead>
                 <tbody>
-                    <t t-if="shift_upcomming" t-foreach="shift_upcomming" t-as="shift">
-                        <tr t-att-style="'-webkit-text-decoration-line: line-through;text-decoration-line: line-through;' if shift.state in ('waiting', 'cancel') else ''">
-                            <t t-set="date_begin"
-                                t-value="user.get_time_by_user_lang(shift.date_begin, ['%A, %d %B', '%HH%M'], lang=user.lang + '.utf8')"/>
-                            <td scope="row">
-                                <t t-if="date_begin" t-esc="date_begin and date_begin[0] or ''"/>
-                            </td>
-                            <td>
-                                <t t-if="date_begin" t-esc="date_begin and date_begin[1] or ''"/>
-                            </td>
-                            <t t-set="shift_ticket_type" t-value="shift.shift_ticket_id.shift_type"/>
-                            <t t-if="shift_ticket_type == 'ftop'">
-                                <td style="text-align: center;background: greenyellow">
-                                    Extra
-                                </td>
+                    <t t-foreach="shift_upcomming" t-as="shift">
+                        <t
+                            t-set="row"
+                            t-value="shift.get_my_next_shift_row_data(user)"
+                        />
+                        <tr t-att-style="row.get('css_style', '')">
+                            <t t-foreach="next_shift_headers" t-as="header">
+                                <t t-if="header['key'] == 'exchange'">
+                                    <t
+                                        t-call="coop_memberspace.my_next_shift_exchange_cell"
+                                    >
+                                        <t t-set="shift" t-value="shift" />
+                                    </t>
+                                </t>
+                                <t t-else="">
+                                    <td
+                                        t-att-name="header['key']"
+                                        t-att-data-col="header['key']"
+                                        t-att-class="header.get('css_class', '')"
+                                    >
+                                        <t t-esc="row.get(header['key'], '')" />
+                                    </td>
+                                </t>
                             </t>
-                            <t t-elif="shift.state in ('waiting', 'cancel')">
-                                <td style="text-align: center;">
-                                    Canceled
-                                </td>
-                            </t>
-                            <t t-elif="shift.exchange_state == 'draft'">
-                                <td style="text-align: center;">
-                                    <button class="material-icons button-icon go-to-market"
-                                            style="margin-right: 10px;"
-                                            t-att-registration-id="shift.id">swap_horiz
-                                    </button>
-                                </td>
-                            </t>
-                            <t t-elif="shift.exchange_state == 'in_progress'">
-                                <td style="text-align: center;">
-                                    <span>In progress</span>
-                                    <button t-if="not shift.exchange_replacing_reg_id" class="material-icons button-icon remove-proposal"
-                                            t-att-registration-id="shift.id"
-                                            data-toggle="modal" data-target="#modal_confirm_cancel_proposal">
-                                        remove_circle_outline
-                                    </button>
-                                </td>
-                            </t>
-                            <t t-elif="shift.exchange_state == 'replaced'">
-                                <td style="text-align: center;background: lightgray">
-                                    Replaced
-                                </td>
-                            </t>
-                            <t t-elif="shift.exchange_state == 'replacing'">
-                                <td style="text-align: center;">
-                                    Remplaçant
-                                    <button class="material-icons button-icon go-to-market"
-                                            style="margin-right: 10px;"
-                                            t-att-registration-id="shift.id">swap_horiz
-                                    </button>
-                                </td>
-                            </t>
-                            
                         </tr>
                     </t>
                 </tbody>
             </table>
         </div>
     </template>
+
+    <!-- Exchange cell sub-template — override to customise the exchange column. -->
+    <template id="my_next_shift_exchange_cell">
+        <t t-set="shift_ticket_type" t-value="shift.shift_ticket_id.shift_type" />
+        <t t-if="shift_ticket_type == 'ftop'">
+            <td
+                name="exchange"
+                data-col="exchange"
+                class="text-center"
+                style="background: greenyellow"
+            >
+                Extra
+            </td>
+        </t>
+        <t t-elif="shift.state in ('waiting', 'cancel')">
+            <td name="exchange" data-col="exchange" class="text-center">
+                Canceled
+            </td>
+        </t>
+        <t t-elif="shift.exchange_state == 'draft'">
+            <td name="exchange" data-col="exchange" class="text-center">
+                <button
+                    class="material-icons button-icon go-to-market"
+                    style="margin-right: 10px;"
+                    t-att-registration-id="shift.id"
+                >swap_horiz
+                </button>
+            </td>
+        </t>
+        <t t-elif="shift.exchange_state == 'in_progress'">
+            <td name="exchange" data-col="exchange" class="text-center">
+                <span>In progress</span>
+                <button
+                    t-if="not shift.exchange_replacing_reg_id"
+                    class="material-icons button-icon remove-proposal"
+                    t-att-registration-id="shift.id"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modal_confirm_cancel_proposal"
+                >
+                    remove_circle_outline
+                </button>
+            </td>
+        </t>
+        <t t-elif="shift.exchange_state == 'replaced'">
+            <td
+                name="exchange"
+                data-col="exchange"
+                class="text-center"
+                style="background: lightgray"
+            >
+                Replaced
+            </td>
+        </t>
+        <t t-elif="shift.exchange_state == 'replacing'">
+            <td name="exchange" data-col="exchange" class="text-center">
+                Remplaçant
+                <button
+                class="material-icons button-icon go-to-market"
+                style="margin-right: 10px;"
+                t-att-registration-id="shift.id"
+            >swap_horiz
+                </button>
+            </td>
+        </t>
+        <t t-else="">
+            <td name="exchange" data-col="exchange" />
+        </t>
+    </template>
     <template id="coop_memberspace.mywork">
         <t t-call="website.layout">
             <t t-set="title">Member area | My participation</t>
             <div class="container-fluid" t-if="website.user_id != user_id">
                 <!-- Status -->
-                <div contenteditable="false"
-                     style="text-align: center;margin-top: 10px;margin-left: -15px;margin-right: -15px;"
-                     t-att-class="member_status[2]">
+                <div
+                    contenteditable="false"
+                    style="text-align: center;margin-top: 10px;margin-left: -15px;margin-right: -15px;"
+                    t-att-class="member_status[2]"
+                >
                     <h3 style="margin-bottom: 0px;margin-top: 0px;">
                         <strong>
-                            <span t-esc="member_status[0] + ' '"/>
+                            <span t-esc="member_status[0] + ' '" />
                         </strong>
-                        <span t-esc="member_status[1]"/>
+                        <span t-esc="member_status[1]" />
                     </h3>
                 </div>
             </div>
             <div class="container">
                 <t t-if="is_standard_member">
-                    <t t-call="coop_memberspace.mywork_standard"/>
+                    <t t-call="coop_memberspace.mywork_standard" />
                 </t>
                 <t t-if="is_ftop_member">
-                    <t t-call="coop_memberspace.mywork_ftop"/>
+                    <t t-call="coop_memberspace.mywork_ftop" />
                 </t>
             </div>
         </t>
@@ -103,54 +152,88 @@
     <template id="coop_memberspace.mywork_standard">
         <div class="row" style="margin-top: 20px">
             <div class="col-md-6">
-                <div style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;min-height: 242px;">
+                <div
+                    style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;min-height: 242px;"
+                >
                     <div class="row">
                         <div class="col-md-10">
                             <div>
-                                <span class="glyphicon glyphicon-piggy-bank" style="font-size: 4.5em;"/>
-                                <span style="font-size: 35px;border: 1px solid green;padding: 0px 31px;margin-left: 15px;"
-                                      t-esc="standard_point"/>
+                                <span
+                                    class="glyphicon glyphicon-piggy-bank"
+                                    style="font-size: 4.5em;"
+                                />
+                                <span
+                                    style="font-size: 35px;border: 1px solid green;padding: 0px 31px;margin-left: 15px;"
+                                    t-esc="standard_point"
+                                />
                             </div>
                             <div>
-                                <span style="font-size: 25px;font-weight: 600">ABCD counter</span>
+                                <span
+                                    style="font-size: 25px;font-weight: 600"
+                                >ABCD counter</span>
                             </div>
                             <div>
-                                <span style="font-size: 15px;font-weight: 600">Represent your situation with your
+                                <span
+                                    style="font-size: 15px;font-weight: 600"
+                                >Represent your situation with your
                                     permanent team. This counter is at "0" when you are up to date, it is negative when
                                     you need to catch up.
                                 </span>
                             </div>
                         </div>
-                        <div class="col-md-2" style="text-align: right;margin-top:30px;">
+                        <div
+                            class="col-md-2"
+                            style="text-align: right;margin-top:30px;"
+                        >
                             <a href="/standard/counter_classic">
-                                <span class="fa fa-caret-right" style="font-size: 4em"/>
+                                <span
+                                    class="fa fa-caret-right"
+                                    style="font-size: 4em"
+                                />
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;min-height: 242px;">
+                <div
+                    style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;min-height: 242px;"
+                >
                     <div class="row">
                         <div class="col-md-10">
                             <div>
-                                <span class="glyphicon glyphicon-piggy-bank" style="font-size: 4.5em;"/>
-                                <span style="font-size: 35px;border: 1px solid green;padding: 0px 31px;margin-left: 15px;"
-                                      t-esc="ftop_point"/>
+                                <span
+                                    class="glyphicon glyphicon-piggy-bank"
+                                    style="font-size: 4.5em;"
+                                />
+                                <span
+                                    style="font-size: 35px;border: 1px solid green;padding: 0px 31px;margin-left: 15px;"
+                                    t-esc="ftop_point"
+                                />
                             </div>
                             <div>
-                                <span style="font-size: 25px;font-weight: 600">Advance service counter</span>
+                                <span
+                                    style="font-size: 25px;font-weight: 600"
+                                >Advance service counter</span>
                             </div>
                             <div>
-                                <span style="font-size: 15px;font-weight: 600">Represents the points accumulated by
+                                <span
+                                    style="font-size: 15px;font-weight: 600"
+                                >Represents the points accumulated by
                                     doing services in addition to your usual services. From a total of 2 points, you can
                                     request early leave.
                                 </span>
                             </div>
                         </div>
-                        <div class="col-md-2" style="text-align: right;margin-top:30px;">
+                        <div
+                            class="col-md-2"
+                            style="text-align: right;margin-top:30px;"
+                        >
                             <a href="/standard/counter_extra">
-                                <span class="fa fa-caret-right" style="font-size: 4em"/>
+                                <span
+                                    class="fa fa-caret-right"
+                                    style="font-size: 4em"
+                                />
                             </a>
                         </div>
                     </div>
@@ -158,18 +241,27 @@
             </div>
         </div>
 
-        <div class="row exchange-shift" style="padding-left: 15px;padding-right:15px;margin-top: 30px">
+        <div
+            class="row exchange-shift"
+            style="padding-left: 15px;padding-right:15px;margin-top: 30px"
+        >
             <p style="font-size: 25px;font-weight: 600">My next services</p>
-            <t t-call="coop_memberspace.my_next_shift"/>
+            <t t-call="coop_memberspace.my_next_shift" />
             <div id="modal_confirm_cancel_proposal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-body">
                             <p class="text-center">Do you want cancel a proposal ?</p>
                             <div class="text-center">
-                                <span class="fa fa-times" data-dismiss="modal"
-                                      style="margin-right: 40px;font-size: 3em;"/>
-                                <span class="fa fa-check cancel-proposal" style="font-size: 3em;"/>
+                                <span
+                                    class="fa fa-times"
+                                    data-bs-dismiss="modal"
+                                    style="margin-right: 40px;font-size: 3em;"
+                                />
+                                <span
+                                    class="fa fa-check cancel-proposal"
+                                    style="font-size: 3em;"
+                                />
                             </div>
                         </div>
                     </div>
@@ -179,25 +271,41 @@
 
         <div class="row" style="margin-top: 20px">
             <div class="col-md-6">
-                <div style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;min-height: 205px;">
+                <div
+                    style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;min-height: 205px;"
+                >
                     <p style="font-size: 25px;font-weight: 600">Exchange of services</p>
-                    <p class="text-center">Will you be available to perform your next service? You can try to exchange
+                    <p
+                        class="text-center"
+                    >Will you be available to perform your next service? You can try to exchange
                         it here with another member of the cooperative.
                     </p>
                     <div class="text-center">
-                        <a href="/standard/echange_de_services" class="btn btn-default btn-warning">Echange</a>
+                        <a
+                            href="/standard/echange_de_services"
+                            class="btn btn-default btn-warning"
+                        >Echange</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-6" t-if="user.company_id.show_advance_service">
-                <div style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;">
-                    <p style="font-size: 25px;font-weight: 600">Schedule an advance service</p>
-                    <p class="text-center">You can do services in addition to your usual services. From 2 accumulated
+                <div
+                    style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;"
+                >
+                    <p
+                        style="font-size: 25px;font-weight: 600"
+                    >Schedule an advance service</p>
+                    <p
+                        class="text-center"
+                    >You can do services in addition to your usual services. From 2 accumulated
                         services, if you do not have to catch up, you can “spend” them by taking an “early leave”…
                         period during which you do not have to come to work, but while continuing to do your shopping .
                     </p>
                     <div class="text-center">
-                        <a href="/standard/programmer_un_extra" class="btn btn-default btn-warning">Programmer</a>
+                        <a
+                            href="/standard/programmer_un_extra"
+                            class="btn btn-default btn-warning"
+                        >Programmer</a>
                     </div>
                 </div>
             </div>
@@ -205,7 +313,10 @@
     </template>
 
     <!-- To update the view updated by user from UI manually -->
-    <template id="mywork_standard_update_for_custom" inherit_id="coop_memberspace.mywork_standard">
+    <template
+        id="mywork_standard_update_for_custom"
+        inherit_id="coop_memberspace.mywork_standard"
+    >
         <xpath expr="div[3]/div[2]" position="attributes">
             <attribute name="t-if">user.company_id.show_advance_service</attribute>
         </xpath>
@@ -215,19 +326,19 @@
         <t t-call="website.layout">
             <t t-if="classic">
                 <t t-set="title">Member area | Classic counter</t>
-                <t t-call="coop_memberspace.classic_counter"/>
+                <t t-call="coop_memberspace.classic_counter" />
             </t>
             <t t-if="extra">
                 <t t-set="title">Member area | Extra counter</t>
-                <t t-call="coop_memberspace.extra_counter"/>
+                <t t-call="coop_memberspace.extra_counter" />
             </t>
             <t t-if="programmer_un_extra">
                 <t t-set="title">Member area | Schedule an extra</t>
-                <t t-call="coop_memberspace.programmer_un_extra"/>
+                <t t-call="coop_memberspace.programmer_un_extra" />
             </t>
             <t t-if="echange_de_services">
                 <t t-set="title">Member area | My next services</t>
-                <t t-call="coop_memberspace.echange_de_services"/>
+                <t t-call="coop_memberspace.echange_de_services" />
             </t>
         </t>
     </template>
@@ -235,31 +346,39 @@
     <template id="coop_memberspace.classic_counter">
         <div class="container">
             <div class="row" style="padding: 10px;">
-                <h3 style="font-weight: 600;margin-top: 30px;margin-bottom: 10px;">Classic counter</h3>
+                <h3
+                    style="font-weight: 600;margin-top: 30px;margin-bottom: 10px;"
+                >Classic counter</h3>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Service</th>
-                                <th>Description</th>
-                                <th>Points</th>
-                                <th>Balance</th>
+                                <th name="service">Service</th>
+                                <th name="description">Description</th>
+                                <th name="points">Points</th>
+                                <th name="balance">Balance</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <t t-if="shift_counter_events" t-foreach="shift_counter_events" t-as="item">
+                            <t
+                                t-if="shift_counter_events"
+                                t-foreach="shift_counter_events"
+                                t-as="item"
+                            >
                                 <tr>
-                                    <td>
-                                        <span t-esc="item.shift_id and item.shift_id.name_get()[0][1] or ''"/>
+                                    <td name="service">
+                                        <span
+                                            t-esc="item.shift_id.display_name if item.shift_id else ''"
+                                        />
                                     </td>
-                                    <td>
-                                        <t t-esc="item.name"/>
+                                    <td name="description">
+                                        <t t-esc="item.name" />
                                     </td>
-                                    <td>
-                                        <t t-esc="item.point_qty"/>
+                                    <td name="points">
+                                        <t t-esc="item.point_qty" />
                                     </td>
-                                    <td>
-                                        <t t-esc="item.sum_current_qty"/>
+                                    <td name="balance">
+                                        <t t-esc="item.sum_current_qty" />
                                     </td>
                                 </tr>
                             </t>
@@ -273,31 +392,39 @@
     <template id="coop_memberspace.extra_counter">
         <div class="container">
             <div class="row" style="padding: 10px;">
-                <h3 style="font-weight: 600;margin-top: 30px;margin-bottom: 10px;">Compteur extra</h3>
+                <h3
+                    style="font-weight: 600;margin-top: 30px;margin-bottom: 10px;"
+                >Compteur extra</h3>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Service</th>
-                                <th>Description</th>
-                                <th>Points</th>
-                                <th>Balance</th>
+                                <th name="service">Service</th>
+                                <th name="description">Description</th>
+                                <th name="points">Points</th>
+                                <th name="balance">Balance</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <t t-if="shift_counter_events_extra" t-foreach="shift_counter_events_extra" t-as="item">
+                            <t
+                                t-if="shift_counter_events_extra"
+                                t-foreach="shift_counter_events_extra"
+                                t-as="item"
+                            >
                                 <tr>
-                                    <td>
-                                        <span t-esc="item.shift_id and item.shift_id.name_get()[0][1] or ''"/>
+                                    <td name="service">
+                                        <span
+                                            t-esc="item.shift_id.display_name if item.shift_id else ''"
+                                        />
                                     </td>
-                                    <td>
-                                        <t t-esc="item.name"/>
+                                    <td name="description">
+                                        <t t-esc="item.name" />
                                     </td>
-                                    <td>
-                                        <t t-esc="item.point_qty"/>
+                                    <td name="points">
+                                        <t t-esc="item.point_qty" />
                                     </td>
-                                    <td>
-                                        <t t-esc="item.sum_current_qty"/>
+                                    <td name="balance">
+                                        <t t-esc="item.sum_current_qty" />
                                     </td>
                                 </tr>
                             </t>
@@ -311,31 +438,38 @@
     <template id="coop_memberspace.programmer_modal">
         <div id="programmer_modal" class="modal fade" role="dialog">
             <div class="modal-dialog">
-
                 <!-- Modal content-->
                 <div class="modal-content">
                     <!-- <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">x</button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         <h4 class="modal-title">Modal Header</h4>
                     </div> -->
                     <div class="modal-body">
-                        <p class="text-center">Please confirm your registration for the following service:</p>
+                        <p
+                            class="text-center"
+                        >Please confirm your registration for the following service:</p>
                         <div class="text-center">
-                            <span style="margin-right: 10px" id="modal_time"></span>
-                            <span id="modal_hour"></span>
+                            <span style="margin-right: 10px" id="modal_time" />
+                            <span id="modal_hour" />
                         </div>
                         <div class="text-center">
-                            <button type="object" class="fa fa-times" data-dismiss="modal"
-                                    style="margin-right: 40px;font-size: 3em;background-color: transparent;border: 0px;"/>
-                            <button type="object" class="fa fa-check"
-                                    style="font-size: 3em;background-color: transparent;border: 0px;"/>
+                            <button
+                                type="object"
+                                class="fa fa-times"
+                                data-bs-dismiss="modal"
+                                style="margin-right: 40px;font-size: 3em;background-color: transparent;border: 0px;"
+                            />
+                            <button
+                                type="object"
+                                class="fa fa-check"
+                                style="font-size: 3em;background-color: transparent;border: 0px;"
+                            />
                         </div>
                     </div>
                     <!-- <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Close</button>
                     </div> -->
                 </div>
-
             </div>
         </div>
     </template>
@@ -343,17 +477,19 @@
     <template id="coop_memberspace.modal_error">
         <div id="error_modal" class="modal fade" role="dialog">
             <div class="modal-dialog">
-
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">x</button>
-                        <h4 class="modal-title" id="error_header"></h4>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                        />
+                        <h4 class="modal-title" id="error_header" />
                     </div>
                     <div class="modal-body">
-                        <p class="text-center" id="error_body"></p>
+                        <p class="text-center" id="error_body" />
                     </div>
                 </div>
-
             </div>
         </div>
     </template>
@@ -361,44 +497,65 @@
     <template id="coop_memberspace.programmer_un_extra">
         <div class="container">
             <div class="row programmer_un_extra" style="padding: 10px;">
-                <h3 style="font-weight: 600;margin-top: 30px;margin-bottom: 10px;">Programmer un extra</h3>
+                <h3
+                    style="font-weight: 600;margin-top: 30px;margin-bottom: 10px;"
+                >Programmer un extra</h3>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Week</th>
-                                <th>Date</th>
-                                <th>Hour</th>
-                                <th>Available seats</th>
-                                <th>Inscription</th>
+                                <th name="week">Week</th>
+                                <th name="date">Date</th>
+                                <th name="hour">Hour</th>
+                                <th name="available_seats">Available seats</th>
+                                <th name="inscription">Inscription</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <t t-if="shifts_available" t-foreach="shifts_available" t-as="shift">
-                                <t t-set="seats_avail"
-                                   t-value="sum(shift.shift_ticket_ids.filtered(lambda r: r.shift_type == 'ftop').mapped('seats_available'))"/>
+                            <t
+                                t-if="shifts_available"
+                                t-foreach="shifts_available"
+                                t-as="shift"
+                            >
+                                <t
+                                    t-set="seats_avail"
+                                    t-value="sum(shift.shift_ticket_ids.filtered(lambda r: r.shift_type == 'ftop').mapped('seats_available'))"
+                                />
                                 <t t-if="seats_avail > 0">
                                     <tr t-attf-style="{{ shift.css_color_style }}">
-                                        <t t-set="date_begin"
-                                           t-value="user.get_time_by_user_lang(shift.date_begin, ['%A, %d %B', '%HH%M'], lang=user.lang + '.utf8')"/>
-                                        <td t-attf-id="week-{{shift.id}}">
-                                            <t t-esc="shift.week_name or ''"/>
+                                        <t
+                                            t-set="date_begin"
+                                            t-value="user.get_time_by_user_lang(shift.date_begin, ['%A, %d %B', '%HH%M'], lang=user.lang + '.utf8')"
+                                        />
+                                        <td name="week" t-attf-id="week-{{shift.id}}">
+                                            <t t-esc="shift.week_name or ''" />
                                         </td>
-                                        <td scope="row">
-                                            <span t-attf-id="time-{{shift.id}}"
-                                                  t-esc="(date_begin and date_begin[0] or '') + ' '"/>
+                                        <td name="date" scope="row">
+                                            <span
+                                                t-attf-id="time-{{shift.id}}"
+                                                t-esc="(date_begin and date_begin[0] or '') + ' '"
+                                            />
                                         </td>
-                                        <td t-attf-id="hour-{{shift.id}}">
-                                            <t t-esc="date_begin and date_begin[1] or ''"/>
+                                        <td name="hour" t-attf-id="hour-{{shift.id}}">
+                                            <t
+                                                t-esc="date_begin and date_begin[1] or ''"
+                                            />
                                         </td>
-                                        <td>
-                                            <span t-attf-id="avalable-seats-{{shift.id}}" t-esc="seats_avail"/>
+                                        <td name="available_seats">
+                                            <span
+                                                t-attf-id="avalable-seats-{{shift.id}}"
+                                                t-esc="seats_avail"
+                                            />
                                         </td>
-                                        <td>
+                                        <td name="inscription">
                                             <a>
-                                                <span class="fa fa-user-plus" data-toggle="modal"
-                                                      data-target="#programmer_modal" t-attf-id="btn-add-{{shift.id}}"
-                                                      t-att-data-shift-id="shift.id"/>
+                                                <span
+                                                    class="fa fa-user-plus"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#programmer_modal"
+                                                    t-attf-id="btn-add-{{shift.id}}"
+                                                    t-att-data-shift-id="shift.id"
+                                                />
                                             </a>
                                         </td>
                                     </tr>
@@ -407,63 +564,87 @@
                         </tbody>
                     </table>
                 </div>
-                <t t-call="coop_memberspace.programmer_modal"/>
-                <t t-call="coop_memberspace.modal_error"/>
+                <t t-call="coop_memberspace.programmer_modal" />
+                <t t-call="coop_memberspace.modal_error" />
             </div>
         </div>
     </template>
 
     <template id="coop_memberspace.echange_de_services">
         <div class="container exchange-shift">
-            <div class="row" style="padding-left: 15px;padding-right:15px;margin-top: 30px">
+            <div
+                class="row"
+                style="padding-left: 15px;padding-right:15px;margin-top: 30px"
+            >
                 <h3 style="font-weight: 600">My next services</h3>
-                <t t-call="coop_memberspace.my_next_shift"/>
+                <t t-call="coop_memberspace.my_next_shift" />
             </div>
-            <div class="row" style="padding-left: 15px;padding-right:15px;margin-top: 30px">
+            <div
+                class="row"
+                style="padding-left: 15px;padding-right:15px;margin-top: 30px"
+            >
                 <h3 style="font-weight: 600">Exchange services</h3>
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Date</th>
-                                <th>Hour</th>
-                                <th>Expected attendees</th>
-                                <th>Available seats</th>
-                                <th>Participation in exchange</th>
-                                <th>Exchange</th>
+                                <th name="date">Date</th>
+                                <th name="hour">Hour</th>
+                                <th name="expected_attendees">Expected attendees</th>
+                                <th name="available_seats">Available seats</th>
+                                <th name="participation">Participation in exchange</th>
+                                <th name="exchange">Exchange</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <t t-if="avaible_shifts" t-foreach="avaible_shifts" t-as="shift">
-                                <t t-set="shift_reg" t-value="shifts_on_market_dict.get(shift)"/>
+                            <t
+                                t-if="avaible_shifts"
+                                t-foreach="avaible_shifts"
+                                t-as="shift"
+                            >
+                                <t
+                                    t-set="shift_reg"
+                                    t-value="shifts_on_market_dict.get(shift)"
+                                />
                                 <tr t-attf-style="{{ shift.css_color_style }}">
-                                    <t t-set="date_begin"
-                                       t-value="user.get_time_by_user_lang(shift.date_begin, ['%A, %d %B', '%HH%M'], lang=user.lang + '.utf8')"/>
-                                    <td scope="row">
-                                        <t t-if="date_begin" t-esc="date_begin and date_begin[0] or ''"/>
+                                    <t
+                                        t-set="date_begin"
+                                        t-value="user.get_time_by_user_lang(shift.date_begin, ['%A, %d %B', '%HH%M'], lang=user.lang + '.utf8')"
+                                    />
+                                    <td name="date" scope="row">
+                                        <t
+                                            t-if="date_begin"
+                                            t-esc="date_begin and date_begin[0] or ''"
+                                        />
                                     </td>
-                                    <td>
-                                        <t t-if="date_begin" t-esc="date_begin and date_begin[1] or ''"/>
+                                    <td name="hour">
+                                        <t
+                                            t-if="date_begin"
+                                            t-esc="date_begin and date_begin[1] or ''"
+                                        />
                                     </td>
-                                    <!-- new column -->
-                                    <td>
-                                        <t t-esc="shift.seats_reserved"/>
-                                        <span t-if="shift.seats_reserved > 0"
-                                            data-toggle="modal" data-target="#modal_list_expected_attendee"
+                                    <td name="expected_attendees">
+                                        <t t-esc="shift.seats_reserved" />
+                                        <span
+                                            t-if="shift.seats_reserved > 0"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#modal_list_expected_attendee"
                                             t-att-shift-id="shift.id"
-                                            class="fa fa-external-link browse-expected-attendee"/>
+                                            class="fa fa-external-link browse-expected-attendee"
+                                        />
                                     </td>
-                                    <td>
-                                        <t t-esc="shift.ticket_seats_available"/>
+                                    <td name="available_seats">
+                                        <t t-esc="shift.ticket_seats_available" />
                                     </td>
-                                    <td>
-                                        <t t-esc="shift_reg and shift_reg.name or ''"/>
+                                    <td name="participation">
+                                        <t t-esc="shift_reg and shift_reg.name or ''" />
                                     </td>
-                                    <!-- end -->
-                                    <td>
-                                        <span t-att-registration-id="shift_reg and shift_reg.id or 0"
-                                              t-att-shift-id="shift.id"
-                                              class="fa fa-plus-square select-shift-proposal"/>
+                                    <td name="exchange">
+                                        <span
+                                            t-att-registration-id="shift_reg and shift_reg.id or 0"
+                                            t-att-shift-id="shift.id"
+                                            class="fa fa-plus-square select-shift-proposal"
+                                        />
                                     </td>
                                 </tr>
                             </t>
@@ -477,13 +658,17 @@
                                 <p class="text-center">Expected attendees</p>
                                 <div class="table-responsive">
                                     <table class="table">
-                                        <tbody class="modal_list_expected_attendee_body">
-                                        </tbody>
+                                        <tbody
+                                            class="modal_list_expected_attendee_body"
+                                        />
                                     </table>
                                 </div>
                                 <div class="text-center">
-                                    <span class="fa fa-times" data-dismiss="modal"
-                                          style="margin-right: 40px;font-size: 3em;"/>                                    
+                                    <span
+                                        class="fa fa-times"
+                                        data-bs-dismiss="modal"
+                                        style="margin-right: 40px;font-size: 3em;"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -493,23 +678,29 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <p class="text-center">Please select the service to replace:</p>
+                                <p
+                                    class="text-center"
+                                >Please select the service to replace:</p>
                                 <div class="table-responsive">
                                     <table class="table">
-                                        <tbody class="modal_exchange_shift_body">
-                                        </tbody>
+                                        <tbody class="modal_exchange_shift_body" />
                                     </table>
                                 </div>
                                 <div class="text-center">
-                                    <span class="fa fa-times" data-dismiss="modal"
-                                          style="margin-right: 40px;font-size: 3em;"/>
-                                    <span data-toggle="modal" data-target="#modal_confirm_exchange_shift"
-                                              class="fa fa-check confirm-shift-proposal" style="font-size: 3em;"/>
-                                    
+                                    <span
+                                        class="fa fa-times"
+                                        data-bs-dismiss="modal"
+                                        style="margin-right: 40px;font-size: 3em;"
+                                    />
+                                    <span
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#modal_confirm_exchange_shift"
+                                        class="fa fa-check confirm-shift-proposal"
+                                        style="font-size: 3em;"
+                                    />
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
@@ -517,26 +708,44 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <p class="text-center modal_confirm_shift_body"></p>
+                                <p class="text-center modal_confirm_shift_body" />
                                 <div class="text-center">
-                                    <span class="fa fa-times" data-dismiss="modal"
-                                          style="margin-right: 40px;font-size: 3em;"/>
-                                    <span class="fa fa-check create-proposal" style="font-size: 3em;"/>
+                                    <span
+                                        class="fa fa-times"
+                                        data-bs-dismiss="modal"
+                                        style="margin-right: 40px;font-size: 3em;"
+                                    />
+                                    <span
+                                        class="fa fa-check create-proposal"
+                                        style="font-size: 3em;"
+                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div id="modal_confirm_cancel_proposal" class="modal fade" role="dialog">
+                <div
+                    id="modal_confirm_cancel_proposal"
+                    class="modal fade"
+                    role="dialog"
+                >
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-body">
-                                <p class="text-center">Do you want cancel a proposal ?</p>
+                                <p
+                                    class="text-center"
+                                >Do you want cancel a proposal ?</p>
                                 <div class="text-center">
-                                    <span class="fa fa-times" data-dismiss="modal"
-                                          style="margin-right: 40px;font-size: 3em;"/>
-                                    <span class="fa fa-check cancel-proposal" style="font-size: 3em;"/>
+                                    <span
+                                        class="fa fa-times"
+                                        data-bs-dismiss="modal"
+                                        style="margin-right: 40px;font-size: 3em;"
+                                    />
+                                    <span
+                                        class="fa fa-check cancel-proposal"
+                                        style="font-size: 3em;"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -551,92 +760,144 @@
     <template id="coop_memberspace.mywork_ftop">
         <div class="row" style="margin-top: 20px">
             <div class="col-md-6">
-                <div style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;min-height: 205px;">
+                <div
+                    style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;min-height: 205px;"
+                >
                     <div class="row">
                         <div class="col-md-10">
                             <div>
-                                <span class="glyphicon glyphicon-piggy-bank" style="font-size: 4.5em;"/>
-                                <span style="font-size: 35px;border: 1px solid green;padding: 0px 31px;margin-left: 15px;"
-                                      t-esc="ftop_point"/>
+                                <span
+                                    class="glyphicon glyphicon-piggy-bank"
+                                    style="font-size: 4.5em;"
+                                />
+                                <span
+                                    style="font-size: 35px;border: 1px solid green;padding: 0px 31px;margin-left: 15px;"
+                                    t-esc="ftop_point"
+                                />
                             </div>
                             <div>
-                                <span style="font-size: 25px;font-weight: 600">My flying counter</span>
+                                <span
+                                    style="font-size: 25px;font-weight: 600"
+                                >My flying counter</span>
                             </div>
                             <div>
-                                <span style="font-size: 15px;font-weight: 600">Your status is “up to date” at zero
+                                <span
+                                    style="font-size: 15px;font-weight: 600"
+                                >Your status is “up to date” at zero
                                     points or more. On the other hand, to be in order for the next steering wheel count
                                     you must be at +1 or more.
                                 </span>
                             </div>
                         </div>
-                        <div class="col-md-2" style="text-align: right;margin-top:30px;">
+                        <div
+                            class="col-md-2"
+                            style="text-align: right;margin-top:30px;"
+                        >
                             <a href="/ftop/my_counter">
-                                <span class="fa fa-caret-right" style="font-size: 4em"/>
+                                <span
+                                    class="fa fa-caret-right"
+                                    style="font-size: 4em"
+                                />
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;min-height: 205px;">
-                    <p style="font-size: 25px;font-weight: 600">Programmer un service volant</p>
+                <div
+                    style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;min-height: 205px;"
+                >
+                    <p
+                        style="font-size: 25px;font-weight: 600"
+                    >Programmer un service volant</p>
                     <p class="text-center">
                         If you are a member of the flying team, go here to see the
                         services available and schedule your vacation.
                     </p>
                     <div class="text-center">
-                        <button class="btn btn-default btn-warning toggle-ftop-programmer">
+                        <button
+                            class="btn btn-default btn-warning toggle-ftop-programmer"
+                        >
                             <span class="ftop-programmer-text">Programmer</span>
-                            <i class="toggle-ftop-spinner-icon fa fa-spinner fa-spin hide"></i>
-                            <span class="toggle-ftop-spinner-text hide">Chargement</span>
+                            <i
+                                class="toggle-ftop-spinner-icon fa fa-spinner fa-spin hide"
+                            />
+                            <span
+                                class="toggle-ftop-spinner-text hide"
+                            >Chargement</span>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row mywork_ftop" style="padding: 10px;">
-            <p style="font-size: 25px;font-weight: 600;margin-top: 30px;margin-bottom: 10px;">My next services</p>
+            <p
+                style="font-size: 25px;font-weight: 600;margin-top: 30px;margin-bottom: 10px;"
+            >My next services</p>
             <div class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Hour</th>
-                            <th>Coordinators</th>
-                            <th>Cancellation</th>
+                            <th name="date">Date</th>
+                            <th name="hour">Hour</th>
+                            <th name="coordinators">Coordinators</th>
+                            <th name="cancellation">Cancellation</th>
                         </tr>
                     </thead>
                     <tbody class="ftop-programmer-une-vacation-body">
-                        <t t-if="shift_upcomming" t-foreach="shift_upcomming" t-as="shift">
+                        <t
+                            t-if="shift_upcomming"
+                            t-foreach="shift_upcomming"
+                            t-as="shift"
+                        >
                             <tr>
-                                <t t-set="date_begin"
-                                   t-value="user.get_time_by_user_lang(shift.date_begin, ['%A, %d %B', '%HH%M'], lang=user.lang + '.utf8')"/>
-                                <td scope="row">
-                                    <t t-if="date_begin" t-esc="date_begin and date_begin[0] or ''"/>
+                                <t
+                                    t-set="date_begin"
+                                    t-value="user.get_time_by_user_lang(shift.date_begin, [‘%A, %d %B’, ‘%HH%M’], lang=user.lang + ‘.utf8’)"
+                                />
+                                <td name="date" scope="row">
+                                    <t
+                                        t-if="date_begin"
+                                        t-esc="date_begin and date_begin[0] or ‘’"
+                                    />
                                 </td>
-                                <td>
-                                    <t t-if="date_begin" t-esc="date_begin and date_begin[1] or ''"/>
+                                <td name="hour">
+                                    <t
+                                        t-if="date_begin"
+                                        t-esc="date_begin and date_begin[1] or ‘’"
+                                    />
                                 </td>
-                                <t t-set="coordinators" t-value="shift.get_coordinators(get_alias_coordinator=True)"/>
-                                <td>
+                                <t
+                                    t-set="coordinators"
+                                    t-value="shift.get_coordinators(get_alias_coordinator=True)"
+                                />
+                                <td name="coordinators">
                                     <span>
-                                        <t t-esc="coordinators[0]"/>
-                                        <i data-toggle="tooltip" data-container="body" t-attf-title="You can contact your coordinators by writing to
+                                        <t t-esc="coordinators[0]" />
+                                        <i
+                                            data-bs-toggle="tooltip"
+                                            data-container="body"
+                                            t-attf-title="You can contact your coordinators by writing to
                                     #{coordinators[1]} (cliquez pour copier l’adresse)"
-                                           class="fa fa-question-circle js-copy" t-att-data-copy="coordinators[1]"></i>
+                                            class="fa fa-question-circle js-copy"
+                                            t-att-data-copy="coordinators[1]"
+                                        />
                                     </span>
                                 </td>
-                                <td>
-                                    <t t-if="shift.state == 'cancel'">
+                                <td name="cancellation">
+                                    <t t-if="shift.state == ‘cancel’">
                                         Canceled
                                     </t>
                                     <t t-else="">
                                         <a>
-                                            <button type="button" style="border: 0px; background-color: transparent"
-                                                class="fa fa-times cancel-ftop-shift" data-toggle="modal"
+                                            <button
+                                                type="button"
+                                                style="border: 0px; background-color: transparent"
+                                                class="fa fa-times cancel-ftop-shift"
+                                                data-bs-toggle="modal"
                                                 t-att-registration-id="shift.id"
-                                                t-att-registration-name="date_begin and date_begin[0] + ' ' + date_begin[1] or ''"
-                                                />
+                                                t-att-registration-name="date_begin and date_begin[0] + ‘ ‘ + date_begin[1] or ‘’"
+                                            />
                                         </a>
                                     </t>
                                 </td>
@@ -648,25 +909,35 @@
 
             <div id="not_cancel_registration_modal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
-
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">x</button>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                            />
                         </div>
                         <div class="modal-body">
                             Please contact the members' office if you are forced to cancel your participation.
                         </div>
                     </div>
-
                 </div>
             </div>
 
-            <div id="ftop_programmer_modal" class="modal fade programmer_une_vacation" role="dialog" style="overflow-x: hidden;overflow-y: auto;">
+            <div
+                id="ftop_programmer_modal"
+                class="modal fade programmer_une_vacation"
+                role="dialog"
+                style="overflow-x: hidden;overflow-y: auto;"
+            >
                 <div class="modal-dialog">
-
                     <div class="modal-content">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">x</button>
+                            <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                            />
                         </div>
                         <div class="modal-body">
                             <div class="row" style="padding: 10px;">
@@ -674,27 +945,26 @@
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Week</th>
-                                                <th>Date</th>
-                                                <th>Hour</th>
-                                                <th>Available seats</th>
-                                                <th>Inscription</th>
+                                                <th name="week">Week</th>
+                                                <th name="date">Date</th>
+                                                <th name="hour">Hour</th>
+                                                <th
+                                                    name="available_seats"
+                                                >Available seats</th>
+                                                <th name="inscription">Inscription</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="body_ftop_programmer">
-
-                                        </tbody>
+                                        <tbody class="body_ftop_programmer" />
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
 
-            <t t-call="coop_memberspace.programmer_modal"/>
-            <t t-call="coop_memberspace.modal_error"/>
+            <t t-call="coop_memberspace.programmer_modal" />
+            <t t-call="coop_memberspace.modal_error" />
         </div>
     </template>
 
@@ -703,31 +973,39 @@
             <t t-set="title">Member area | My counter</t>
             <div class="container">
                 <div class="row" style="padding: 10px;">
-                    <p style="font-size: 25px;font-weight: 600;margin-top: 30px;margin-bottom: 10px;">My counter</p>
+                    <p
+                        style="font-size: 25px;font-weight: 600;margin-top: 30px;margin-bottom: 10px;"
+                    >My counter</p>
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>Service</th>
-                                    <th>Description</th>
-                                    <th>Points</th>
-                                    <th>Balance</th>
+                                    <th name="service">Service</th>
+                                    <th name="description">Description</th>
+                                    <th name="points">Points</th>
+                                    <th name="balance">Balance</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <t t-if="shift_counter_events" t-foreach="shift_counter_events" t-as="item">
+                                <t
+                                    t-if="shift_counter_events"
+                                    t-foreach="shift_counter_events"
+                                    t-as="item"
+                                >
                                     <tr>
-                                        <td>
-                                            <span t-esc="item.shift_id and item.shift_id.name_get()[0][1] or ''"/>
+                                        <td name="service">
+                                            <span
+                                                t-esc="item.shift_id.display_name if item.shift_id else ''"
+                                            />
                                         </td>
-                                        <td>
-                                            <t t-esc="item.name"/>
+                                        <td name="description">
+                                            <t t-esc="item.name" />
                                         </td>
-                                        <td>
-                                            <t t-esc="item.point_qty"/>
+                                        <td name="points">
+                                            <t t-esc="item.point_qty" />
                                         </td>
-                                        <td>
-                                            <t t-esc="item.sum_current_qty"/>
+                                        <td name="balance">
+                                            <t t-esc="item.sum_current_qty" />
                                         </td>
                                     </tr>
                                 </t>

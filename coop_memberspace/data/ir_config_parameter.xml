@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="parameter_warning_member_state" model="ir.config_parameter">
         <field name="key">warning_member_state</field>
@@ -61,12 +61,4 @@
         <field name="key">member_space_user</field>
         <field name="value">1</field>
     </record>
-
-    <!-- 1. Unit is hour
-         2. Default : 0 (It mean we dont use token expiration) -->
-    <record id="parameter_proposal_token_expiration" model="ir.config_parameter">
-        <field name="key">proposal_token_expiration</field>
-        <field name="value">0</field>
-    </record>
-
 </odoo>

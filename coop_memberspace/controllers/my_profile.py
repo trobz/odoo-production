@@ -8,9 +8,7 @@ UPDATE_ADDRESS = ["street", "city", "zip"]
 
 
 class Website(odoo.addons.website.controllers.main.Website):
-    @http.route(
-        "/edit-phone", type="http", auth="user", website=True, methods=["POST"]
-    )
+    @http.route("/edit-phone", type="http", auth="user", website=True, methods=["POST"])
     def edit_phone(self, **kw):
         new_value = {}
         for field in list(x for x in UPDATE_PHONE if x in kw):
@@ -41,7 +39,6 @@ class Website(odoo.addons.website.controllers.main.Website):
     )
     def edit_email_pos_receipt(self, **kw):
         request.env.user.partner_id.write(
-            {"email_pos_receipt": kw.get("email_pos_receipt", False),
-            "no_email_pos_receipt": not kw.get("email_pos_receipt", False)}
+            {"pos_email_receipt": kw.get("pos_email_receipt", False)}
         )
         return http.local_redirect("/profile")
