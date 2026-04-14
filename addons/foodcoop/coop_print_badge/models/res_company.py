@@ -20,16 +20,13 @@ class ResCompany(models.Model):
             .get_param("reprint_change_field_ids", "[]")
         )
         field_ids = safe_eval(field_str)
-        if not field_ids:
+
+        domain = [
+            ("model_id.model", "=", "res.partner"),
+        ]
+        if field_ids:
+            domain.append(("id", "in", field_ids))
+        else:
             # Default fields to trigger badge reprinting
-            field_ids = (
-                self.env["ir.model.fields"]
-                .search(
-                    [
-                        ("model_id.model", "=", "res.partner"),
-                        ("name", "in", ["image_1920", "name"]),
-                    ]
-                )
-                .ids
-            )
-        return field_ids
+            domain.append(("name", "in", ["image_1920", "name"]))
+        return self.env["ir.model.fields"].search(domain).ids
