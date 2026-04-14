@@ -4,275 +4,85 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-30 15:52+0000\n"
-"PO-Revision-Date: 2020-07-01 10:27+0000\n"
-"Last-Translator: Simon Mas <simon.mas@druidoo.io>\n"
-"Language-Team: French <https://translate.druidoo.io/projects/foodcoops-12-0/"
-"foodcoops-12-0-coop_memberspace/fr/>\n"
-"Language: fr\n"
+"POT-Creation-Date: 2026-04-13 10:48+0000\n"
+"PO-Revision-Date: 2026-04-13 10:48+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.8\n"
-
-#. module: coop_memberspace
-#: model:mail.template,body_html:coop_memberspace.proposal_accepted
-msgid ""
-"\n"
-"<p>Cher ${object.des_registration_id.partner_id.name}</p>\n"
-"<p>Nous avons le plaisir de vous confirmer que votre service du ${user."
-"get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])"
-"[0].lower()} à ${user.get_time_by_user_lang(object.des_registration_id."
-"date_begin, ['%Hh%M'])[0].lower()} a été acceptée. Votre service est "
-"remplacé par :</p>\n"
-"<p style=\"margin-left: 50px;\">\n"
-"    <span >${user.get_time_by_user_lang(object.src_registration_id."
-"date_begin, ['%A %d %B %Y'])[0]}</span>\n"
-"     à \n"
-"    <span>${user.get_time_by_user_lang(object.src_registration_id."
-"date_begin, ['%Hh%M'])[0].lower()}</span>\n"
-"</p>\n"
-"<p>Amicalement,</p>\n"
-"<p>L’équipe [La Louve]</p>\n"
-"\n"
-"        "
-msgstr ""
-"\n"
-"<p>Cher ${object.des_registration_id.partner_id.name}</p>\n"
-"<p>Nous avons le plaisir de vous confirmer que votre service du ${user."
-"get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])"
-"[0].lower()} à ${user.get_time_by_user_lang(object.des_registration_id."
-"date_begin, ['%Hh%M'])[0].lower()} a été acceptée. Votre service est "
-"remplacé par :</p>\n"
-"<p style=\"margin-left: 50px;\">\n"
-"    <span >${user.get_time_by_user_lang(object.src_registration_id."
-"date_begin, ['%A %d %B %Y'])[0]}</span>\n"
-"     à \n"
-"    <span>${user.get_time_by_user_lang(object.src_registration_id."
-"date_begin, ['%Hh%M'])[0].lower()}</span>\n"
-"</p>\n"
-"<p>Amicalement,</p>\n"
-"<p>L’équipe [La Louve]</p>\n"
-"\n"
-"        "
-
-#. module: coop_memberspace
-#: model:mail.template,body_html:coop_memberspace.proposal_cancelled
-msgid ""
-"\n"
-"<p>Cher ${object.des_registration_id.partner_id.name}</p>\n"
-"<p>Nous avons le regret de vous informer que votre proposition d’échange de "
-"votre service n’a pas été acceptée :</p>\n"
-"<p style=\"margin-left: 50px;\">\n"
-"    <span style=\"margin-right: 20px;\">${user.get_time_by_user_lang(object."
-"src_registration_id.date_begin, ['%A %d %B %Y'])[0]}</span>\n"
-"    <span>${user.get_time_by_user_lang(object.src_registration_id."
-"date_begin, ['%Hh%M'])[0].lower()}</span>\n"
-"</p>\n"
-"<p>Vous pouvez vous rendre sur l'espace membres pour trouver une autre "
-"service de remplacement.</p>\n"
-"<a href=\"/standard/echange_de_services\">Échange de services</a>\n"
-"<p>Amicalement,</p>\n"
-"<p>L’équipe [La Louve]</p>\n"
-"\n"
-"        "
-msgstr ""
-"\n"
-"<p>Cher ${object.des_registration_id.partner_id.name}</p>\n"
-"<p>Nous avons le regret de vous informer que votre proposition d’échange de "
-"votre service n’a pas été acceptée :</p>\n"
-"<p style=\"margin-left: 50px;\">\n"
-"    <span style=\"margin-right: 20px;\">${user.get_time_by_user_lang(object."
-"src_registration_id.date_begin, ['%A %d %B %Y'])[0]}</span>\n"
-"    <span>${user.get_time_by_user_lang(object.src_registration_id."
-"date_begin, ['%Hh%M'])[0].lower()}</span>\n"
-"</p>\n"
-"<p>Vous pouvez vous rendre sur l'espace membres pour trouver une autre "
-"service de remplacement.</p>\n"
-"<a href=\"/standard/echange_de_services\">Échange de services</a>\n"
-"<p>Amicalement,</p>\n"
-"<p>L’équipe [La Louve]</p>\n"
-"\n"
-"        "
-
-#. module: coop_memberspace
-#: model:mail.template,body_html:coop_memberspace.request_confirm_proposal
-msgid ""
-"\n"
-"<p>Cher ${object.src_registration_id.partner_id.name}</p>\n"
-"<p>${object.des_registration_id.partner_id.name} vous propose de remplacer "
-"votre service du ${user.get_time_by_user_lang(object.src_registration_id."
-"date_begin, ['%A %d %B %Y'])[0].lower()} à ${user."
-"get_time_by_user_lang(object.src_registration_id.date_begin, ['%Hh%M'])[0]."
-"lower()} par :</p>\n"
-"<p style=\"margin-left: 50px;\">\n"
-"    <span style=\"margin-right: 20px;\">${user.get_time_by_user_lang(object."
-"des_registration_id.date_begin, ['%A %d %B %Y'])[0]}</span>\n"
-"    <span>${user.get_time_by_user_lang(object.des_registration_id."
-"date_begin, ['%Hh%M'])[0].lower()}</span>\n"
-"</p>\n"
-"<p>Veuillez pouvez accepter ou refuser cette proposition en cliquant sur "
-"l’un des boutons ci-dessous.</p>\n"
-"<div style=\"height: auto;width:450px; margin:0 auto;padding-top:20px;"
-"padding-bottom:40px;\">\n"
-"    <a style=\"margin-right: 40px;text-decoration:none;\" href=\"/proposal/"
-"confirm?token=${object.token}&action=refuse\">\n"
-"        <img style=\"width: 50px;\" src=\"/coop_memberspace/static/src/img/"
-"cancel.svg\" alt=\"Refuse\" />\n"
-"    </a>\n"
-"    <a style=\"text-decoration:none;\" href=\"/proposal/confirm?token="
-"${object.token}&action=accept\">\n"
-"        <img style=\"width: 50px;\" src=\"/coop_memberspace/static/src/img/"
-"check.svg\" alt=\"Accept\" />\n"
-"    </a>\n"
-"</div>\n"
-"<p>Amicalement,</p>\n"
-"<p>L’équipe [La Louve]</p>\n"
-"\n"
-"        "
-msgstr ""
-"\n"
-"<p>Cher ${object.src_registration_id.partner_id.name}</p>\n"
-"<p>${object.des_registration_id.partner_id.name} vous propose de remplacer "
-"votre service du ${user.get_time_by_user_lang(object.src_registration_id."
-"date_begin, ['%A %d %B %Y'])[0].lower()} à ${user."
-"get_time_by_user_lang(object.src_registration_id.date_begin, ['%Hh%M'])[0]."
-"lower()} par :</p>\n"
-"<p style=\"margin-left: 50px;\">\n"
-"    <span style=\"margin-right: 20px;\">${user.get_time_by_user_lang(object."
-"des_registration_id.date_begin, ['%A %d %B %Y'])[0]}</span>\n"
-"    <span>${user.get_time_by_user_lang(object.des_registration_id."
-"date_begin, ['%Hh%M'])[0].lower()}</span>\n"
-"</p>\n"
-"<p>Veuillez pouvez accepter ou refuser cette proposition en cliquant sur "
-"l’un des boutons ci-dessous.</p>\n"
-"<div style=\"height: auto;width:450px; margin:0 auto;padding-top:20px;"
-"padding-bottom:40px;\">\n"
-"    <a style=\"margin-right: 40px;text-decoration:none;\" href=\"/proposal/"
-"confirm?token=${object.token}&action=refuse\">\n"
-"        <img style=\"width: 50px;\" src=\"/coop_memberspace/static/src/img/"
-"cancel.svg\" alt=\"Refuse\" />\n"
-"    </a>\n"
-"    <a style=\"text-decoration:none;\" href=\"/proposal/confirm?token="
-"${object.token}&action=accept\">\n"
-"        <img style=\"width: 50px;\" src=\"/coop_memberspace/static/src/img/"
-"check.svg\" alt=\"Accept\" />\n"
-"    </a>\n"
-"</div>\n"
-"<p>Amicalement,</p>\n"
-"<p>L’équipe [La Louve]</p>\n"
-"\n"
-"        "
-
-#. module: coop_memberspace
-#: model:mail.template,body_html:coop_memberspace.confirm_exchange_done
-msgid ""
-"\n"
-"<p>Cher ${object.src_registration_id.partner_id.name}</p>\n"
-"<p>Nous avons le plaisir de vous confirmer que votre service du ${user."
-"get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])"
-"[0].lower()} à ${user.get_time_by_user_lang(object.src_registration_id."
-"date_begin, ['%Hh%M'])[0].lower()} remplacé par :</p>\n"
-"<p style=\"margin-left: 50px;\">\n"
-"    <span style=\"margin-right: 20px;\">${user.get_time_by_user_lang(object."
-"des_registration_id.date_begin, ['%A %d %B %Y'])[0]}</span>\n"
-"    <span>${user.get_time_by_user_lang(object.des_registration_id."
-"date_begin, ['%Hh%M'])[0].lower()}</span>\n"
-"</p>\n"
-"<p>Amicalement,</p>\n"
-"<p>L’équipe [La Louve]</p>\n"
-"\n"
-"        "
-msgstr ""
-"\n"
-"<p>Cher ${object.src_registration_id.partner_id.name}</p>\n"
-"<p>Nous avons le plaisir de vous confirmer que votre service du ${user."
-"get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])"
-"[0].lower()} à ${user.get_time_by_user_lang(object.src_registration_id."
-"date_begin, ['%Hh%M'])[0].lower()} remplacé par :</p>\n"
-"<p style=\"margin-left: 50px;\">\n"
-"    <span style=\"margin-right: 20px;\">${user.get_time_by_user_lang(object."
-"des_registration_id.date_begin, ['%A %d %B %Y'])[0]}</span>\n"
-"    <span>${user.get_time_by_user_lang(object.des_registration_id."
-"date_begin, ['%Hh%M'])[0].lower()}</span>\n"
-"</p>\n"
-"<p>Amicalement,</p>\n"
-"<p>L’équipe [La Louve]</p>\n"
-"\n"
-"        "
-
-#. module: coop_memberspace
-#: model:mail.template,body_html:coop_memberspace.email_inform_cannot_send_to_memberspace_alias
-msgid ""
-"\n"
-"<p>You cannot post to this alias: ${ctx.get('email_add')}</p>\n"
-"\n"
-"        "
-msgstr ""
-"\n"
-"<p>Vous n'êtes pas autorisé à envoyer des messages à cet alias: ${ctx."
-"get('email_add')}</p>\n"
-"\n"
-"        "
+"Plural-Forms: \n"
 
 #. module: coop_memberspace
 #: model:mail.template,subject:coop_memberspace.proposal_accepted
 msgid ""
-"${'Acceptance of your offer to exchange your service from ' + user."
-"get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])"
-"[0].lower()}"
+"${'Acceptance of your offer to exchange your service from ' + "
+"user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B"
+" %Y'])[0].lower()}"
 msgstr ""
-"${'Acceptation de votre offre d’échange de votre service ' + user."
-"get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])"
-"[0].lower()}"
-
-#. module: coop_memberspace
-#: model:mail.template,subject:coop_memberspace.confirm_exchange_done
-msgid ""
-"${'Confirmation of exchange of your service from ' + user."
-"get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])"
-"[0].lower()}"
-msgstr ""
-"${'Confirmation de l'échange de votre service auprès de ' + user."
-"get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])"
-"[0].lower()}"
+"${'Acceptation de votre proposition d\'échange de votre service du ' + "
+"user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B"
+" %Y'])[0].lower()}"
 
 #. module: coop_memberspace
 #: model:mail.template,subject:coop_memberspace.inform_exchange_done
 msgid ""
-"${'Confirmation of exchange of your service from ' + user."
-"get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])"
-"[0].lower()}"
+"${'Confirmation of exchange of your service from ' + "
+"user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B"
+" %Y'])[0].lower()}"
 msgstr ""
-"${'Confirmation de l’échange de votre service auprès de ' + user."
-"get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])"
-"[0].lower()}"
+"${'Confirmation de l\'échange de votre service du ' + "
+"user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B"
+" %Y'])[0].lower()}"
+
+#. module: coop_memberspace
+#: model:mail.template,subject:coop_memberspace.confirm_exchange_done
+msgid ""
+"${'Confirmation of exchange of your service from ' + "
+"user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B"
+" %Y'])[0].lower()}"
+msgstr ""
+"${'Confirmation de l\'échange de votre service du ' + "
+"user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B"
+" %Y'])[0].lower()}"
 
 #. module: coop_memberspace
 #: model:mail.template,subject:coop_memberspace.request_confirm_proposal
 msgid ""
-"${'Proposition d’échange de votre service du ' + user."
-"get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])"
-"[0].lower()}"
+"${'Proposition d’échange de votre service du ' + "
+"user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B"
+" %Y'])[0].lower()}"
 msgstr ""
-"${'Proposition d’échange de votre service du ' + user."
-"get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])"
-"[0].lower()}"
+"${'Proposition d\'échange de votre service du ' + "
+"user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B"
+" %Y'])[0].lower()}"
 
 #. module: coop_memberspace
 #: model:mail.template,subject:coop_memberspace.proposal_cancelled
-msgid "${'Refusal of your offer to exchange your service from ' + user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])[0].lower()}"
-msgstr "${'Refus de votre offre d’échange de votre service ' + user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])[0].lower()}"
+msgid ""
+"${'Refusal of your offer to exchange your service from ' + "
+"user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B"
+" %Y'])[0].lower()}"
+msgstr ""
+"${'Refus de votre proposition d\'échange de votre service du ' + "
+"user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B"
+" %Y'])[0].lower()}"
+
+#. module: coop_memberspace
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.layout_portal
+msgid ""
+"<i class=\"fa fa-fw fa-user me-1 small text-primary text-primary-emphasis\"/>\n"
+"                Profile"
+msgstr ""
+"<i class=\"fa fa-fw fa-user me-1 small text-primary text-primary-emphasis\"/>\n"
+"                Profil"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.homepage
-msgid ""
-"<i class=\"material-icons\" style=\"font-size: 3.5em\">accessibility_new</i>"
-msgstr ""
-"<i class=\"material-icons\" style=\"font-size: 3.5em\">accessibility_new</i>"
+msgid "<i class=\"material-icons\" style=\"font-size: 3.5em\">accessibility_new</i>"
+msgstr "<i class=\"material-icons\" style=\"font-size: 3.5em\">accessibility_new</i>"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.statistics
@@ -281,23 +91,16 @@ msgstr "<i class=\"material-icons\" style=\"font-size: 3.5em\">credit_card</i>"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.statistics
-msgid ""
-"<i class=\"material-icons\" style=\"font-size: 3.5em\">shopping_cart</i>"
-msgstr ""
-"<i class=\"material-icons\" style=\"font-size: 3.5em\">shopping_cart</i>"
+msgid "<i class=\"material-icons\" style=\"font-size: 3.5em\">shopping_cart</i>"
+msgstr "<i class=\"material-icons\" style=\"font-size: 3.5em\">shopping_cart</i>"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.statistics
-#, fuzzy
 msgid ""
-"<i class=\"material-icons\" style=\"font-size: 3.5em; margin-right: "
-"10px;                                         margin-top: 6px;"
-"\">euro_symbol\n"
+"<i class=\"material-icons\" style=\"font-size: 3.5em; margin-right: 10px;                                         margin-top: 6px;\">euro_symbol\n"
 "                                    </i>"
-msgstr ""
-"<i class=\"material-icons\" style=\"font-size: 3.5em; margin-right: "
-"10px;                                         margin-top: 6px;"
-"\">euro_symbol</i>"
+msgstr "<i class=\"material-icons\" style=\"font-size: 3.5em; margin-right: 10px;                                         margin-top: 6px;\">euro_symbol\n"
+"                                    </i>"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.homepage
@@ -325,62 +128,247 @@ msgid "<i class=\"material-icons\">perm_contact_calendar</i>"
 msgstr "<i class=\"material-icons\">perm_contact_calendar</i>"
 
 #. module: coop_memberspace
+#: model:mail.template,body_html:coop_memberspace.proposal_accepted
+msgid ""
+"<p>Cher ${object.des_registration_id.partner_id.name}</p>\n"
+"<p>Nous avons le plaisir de vous confirmer que votre service du ${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])[0].lower()} à ${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%Hh%M'])[0].lower()} a été acceptée. Votre service est remplacé par :</p>\n"
+"<p style=\"margin-left: 50px;\">\n"
+"    <span>${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])[0]}</span>\n"
+"     à\n"
+"    <span>${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%Hh%M'])[0].lower()}</span>\n"
+"</p>\n"
+"<p>Amicalement,</p>\n"
+"<p>L’équipe [La Louve]</p>\n"
+"\n"
+"        "
+msgstr ""
+
+#. module: coop_memberspace
+#: model:mail.template,body_html:coop_memberspace.inform_exchange_done
+msgid ""
+"<p>Cher ${object.des_registration_id.partner_id.name}</p>\n"
+"<p>Nous avons le plaisir de vous confirmer que votre service du ${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])[0].lower()} à ${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%Hh%M'])[0].lower()} remplacé par :</p>\n"
+"<p style=\"margin-left: 50px;\">\n"
+"    <span style=\"margin-right: 20px;\">${user.get_time_by_user_lang(object.src_registration_id.date_begin or object.src_shift_id.date_begin, ['%A %d %B %Y'])[0]}</span>\n"
+"    <span>${user.get_time_by_user_lang(object.src_registration_id.date_begin or object.src_shift_id.date_begin, ['%Hh%M'])[0].lower()}</span>\n"
+"</p>\n"
+"<p>Amicalement,</p>\n"
+"<p>L’équipe [La Louve]</p>\n"
+"\n"
+"        "
+msgstr ""
+"<p>Cher ${object.des_registration_id.partner_id.name}</p>\n"
+"<p>Nous avons le plaisir de vous confirmer que votre service du ${user."
+"get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])"
+"[0].lower()} à ${user.get_time_by_user_lang(object.des_registration_id."
+"date_begin, ['%Hh%M'])[0].lower()} a été acceptée. Votre service est "
+"remplacé par :</p>\n"
+"<p style=\"margin-left: 50px;\">\n"
+"    <span >${user.get_time_by_user_lang(object.src_registration_id."
+"date_begin, ['%A %d %B %Y'])[0]}</span>\n"
+"     à \n"
+"    <span>${user.get_time_by_user_lang(object.src_registration_id."
+"date_begin, ['%Hh%M'])[0].lower()}</span>\n"
+"</p>\n"
+"<p>Amicalement,</p>\n"
+"<p>L’équipe [La Louve]</p>\n"
+"\n"
+"        "
+
+#. module: coop_memberspace
+#: model:mail.template,body_html:coop_memberspace.proposal_cancelled
+msgid ""
+"<p>Cher ${object.des_registration_id.partner_id.name}</p>\n"
+"<p>Nous avons le regret de vous informer que votre proposition d’échange de votre service n’a pas été acceptée :</p>\n"
+"<p style=\"margin-left: 50px;\">\n"
+"    <span style=\"margin-right: 20px;\">${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])[0]}</span>\n"
+"    <span>${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%Hh%M'])[0].lower()}</span>\n"
+"</p>\n"
+"<p>Vous pouvez vous rendre sur l'espace membres pour trouver une autre service de remplacement.</p>\n"
+"<a href=\"/standard/echange_de_services\">Échange de services</a>\n"
+"<p>Amicalement,</p>\n"
+"<p>L’équipe [La Louve]</p>\n"
+"\n"
+"        "
+msgstr ""
+"<p>Cher ${object.des_registration_id.partner_id.name}</p>\n"
+"<p>Nous avons le plaisir de vous confirmer que votre service du ${user."
+"get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])"
+"[0].lower()} à ${user.get_time_by_user_lang(object.des_registration_id."
+"date_begin, ['%Hh%M'])[0].lower()} a été acceptée. Votre service est "
+"remplacé par :</p>\n"
+"<p style=\"margin-left: 50px;\">\n"
+"    <span >${user.get_time_by_user_lang(object.src_registration_id."
+"date_begin, ['%A %d %B %Y'])[0]}</span>\n"
+"     à \n"
+"    <span>${user.get_time_by_user_lang(object.src_registration_id."
+"date_begin, ['%Hh%M'])[0].lower()}</span>\n"
+"</p>\n"
+"<p>Amicalement,</p>\n"
+"<p>L’équipe [La Louve]</p>\n"
+"\n"
+"        "
+
+#. module: coop_memberspace
+#: model:mail.template,body_html:coop_memberspace.request_confirm_proposal
+msgid ""
+"<p>Cher ${object.src_registration_id.partner_id.name}</p>\n"
+"<p>${object.des_registration_id.partner_id.name} vous propose de remplacer votre service du ${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])[0].lower()} à ${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%Hh%M'])[0].lower()} par :</p>\n"
+"<p style=\"margin-left: 50px;\">\n"
+"    <span style=\"margin-right: 20px;\">${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])[0]}</span>\n"
+"    <span>${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%Hh%M'])[0].lower()}</span>\n"
+"</p>\n"
+"<p>Veuillez pouvez accepter ou refuser cette proposition en cliquant sur l’un des boutons ci-dessous.</p>\n"
+"<div style=\"height: auto;width:450px; margin:0 auto;padding-top:20px;padding-bottom:40px;\">\n"
+"    <a style=\"margin-right: 40px;text-decoration:none;\" href=\"/proposal/confirm?token=${object.token}&amp;action=refuse\">\n"
+"        <img style=\"width: 50px;\" src=\"/coop_memberspace/static/src/img/cancel.svg\" alt=\"Refuse\"/>\n"
+"    </a>\n"
+"    <a style=\"text-decoration:none;\" href=\"/proposal/confirm?token=${object.token}&amp;action=accept\">\n"
+"        <img style=\"width: 50px;\" src=\"/coop_memberspace/static/src/img/check.svg\" alt=\"Accept\"/>\n"
+"    </a>\n"
+"</div>\n"
+"<p>Amicalement,</p>\n"
+"<p>L’équipe [La Louve]</p>\n"
+"\n"
+"        "
+msgstr ""
+"<p>Cher ${object.des_registration_id.partner_id.name}</p>\n"
+"<p>Nous avons le plaisir de vous confirmer que votre service du ${user."
+"get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])"
+"[0].lower()} à ${user.get_time_by_user_lang(object.des_registration_id."
+"date_begin, ['%Hh%M'])[0].lower()} a été acceptée. Votre service est "
+"remplacé par :</p>\n"
+"<p style=\"margin-left: 50px;\">\n"
+"    <span >${user.get_time_by_user_lang(object.src_registration_id."
+"date_begin, ['%A %d %B %Y'])[0]}</span>\n"
+"     à \n"
+"    <span>${user.get_time_by_user_lang(object.src_registration_id."
+"date_begin, ['%Hh%M'])[0].lower()}</span>\n"
+"</p>\n"
+"<p>Amicalement,</p>\n"
+"<p>L’équipe [La Louve]</p>\n"
+"\n"
+"        "
+
+#. module: coop_memberspace
+#: model:mail.template,body_html:coop_memberspace.confirm_exchange_done
+msgid ""
+"<p>Cher ${object.src_registration_id.partner_id.name}</p>\n"
+"<p>Nous avons le plaisir de vous confirmer que votre service du ${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%A %d %B %Y'])[0].lower()} à ${user.get_time_by_user_lang(object.src_registration_id.date_begin, ['%Hh%M'])[0].lower()} remplacé par :</p>\n"
+"<p style=\"margin-left: 50px;\">\n"
+"    <span style=\"margin-right: 20px;\">${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])[0]}</span>\n"
+"    <span>${user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%Hh%M'])[0].lower()}</span>\n"
+"</p>\n"
+"<p>Amicalement,</p>\n"
+"<p>L’équipe [La Louve]</p>\n"
+"\n"
+"        "
+msgstr ""
+"<p>Cher ${object.des_registration_id.partner_id.name}</p>\n"
+"<p>Nous avons le plaisir de vous confirmer que votre service du ${user."
+"get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B %Y'])"
+"[0].lower()} à ${user.get_time_by_user_lang(object.des_registration_id."
+"date_begin, ['%Hh%M'])[0].lower()} a été acceptée. Votre service est "
+"remplacé par :</p>\n"
+"<p style=\"margin-left: 50px;\">\n"
+"    <span >${user.get_time_by_user_lang(object.src_registration_id."
+"date_begin, ['%A %d %B %Y'])[0]}</span>\n"
+"     à \n"
+"    <span>${user.get_time_by_user_lang(object.src_registration_id."
+"date_begin, ['%Hh%M'])[0].lower()}</span>\n"
+"</p>\n"
+"<p>Amicalement,</p>\n"
+"<p>L’équipe [La Louve]</p>\n"
+"\n"
+"        "
+
+#. module: coop_memberspace
+#: model:mail.template,body_html:coop_memberspace.shift_registration_cancel_email
+msgid ""
+"<p>Dear ${object.name},</p>\n"
+"\n"
+"<p>You were registered has a participant to the shift ${object.shift_id.display_name} and you asked to cancel this participation.</p>\n"
+"<p>This is a confirmation that the cancellation was taken into account and you are no longer registered to that shift.</p>\n"
+"\n"
+"<p>Kind regards,\n"
+"<br/>\n"
+"The member management team\n"
+"</p>\n"
+"<br/>\n"
+"<br/>\n"
+msgstr ""
+"<p>Cher ${object.name},</p>\n"
+"\n"
+"<p>Vous étiez inscrit comme participant au créneau ${object.shift_id.display_name} et vous avez demandé à annuler cette participation.</p>\n"
+"<p>Ceci est une confirmation que l'annulation a été prise en compte et que vous n'êtes plus inscrit à ce créneau.</p>\n"
+"\n"
+"<p>Cordialement,\n"
+"<br/>\n"
+"L'équipe de gestion des membres\n"
+"</p>\n"
+"<br/>\n"
+"<br/>\n"
+
+#. module: coop_memberspace
+#: model:mail.template,body_html:coop_memberspace.email_inform_cannot_send_to_memberspace_alias
+msgid ""
+"<p>You cannot post to this alias: ${ctx.get('email_add')}</p>\n"
+"\n"
+"        "
+msgstr ""
+"<p>Vous ne pouvez pas poster à cet alias: ${ctx.get('email_add')}</p>\n"
+"\n"
+"        "
+
+#. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_ftop
 msgid ""
 "<span class=\"ftop-programmer-text\">Programmer</span>\n"
-"                            <i class=\"toggle-ftop-spinner-icon fa fa-"
-"spinner fa-spin hide\"/>\n"
-"                            <span class=\"toggle-ftop-spinner-text hide"
-"\">Chargement</span>"
+"                            <i class=\"toggle-ftop-spinner-icon fa fa-spinner fa-spin hide\"/>\n"
+"                            <span class=\"toggle-ftop-spinner-text hide\">Chargement</span>"
 msgstr ""
+"<span class=\"ftop-programmer-text\">Programmer</span>\n"
+"                            <i class=\"toggle-ftop-spinner-icon fa fa-spinner fa-spin hide\"/>\n"
+"                            <span class=\"toggle-ftop-spinner-text hide\">Chargement</span>"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
-msgid "<span style=\"font-size: 15px;font-weight: 600\">Represent your situation with your\n"
+msgid ""
+"<span style=\"font-size: 15px;font-weight: 600\">Represent your situation with your\n"
 "                                    permanent team. This counter is at \"0\" when you are up to date, it is negative when\n"
 "                                    you need to catch up.\n"
 "                                </span>"
-msgstr "<span style=\"font-size: 15px;font-weight: 600\">Représente votre situation auprès de\n"
-"                                    votre équipe permanente. Ce compteur est à \"0\" lorsque vous êtes à jour, il est négatif quand\n"
-"                                    vous devez des rattrapages.\n"
+msgstr ""
+"<span style=\"font-size: 15px;font-weight: 600\">Représente votre situation avec votre\n"
+"                                    équipe permanente. Ce compteur est à \"0\" quand vous êtes à jour, il est négatif quand\n"
+"                                    vous devez rattraper.\n"
 "                                </span>"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
-msgid "<span style=\"font-size: 15px;font-weight: 600\">Represents the points accumulated by\n"
+msgid ""
+"<span style=\"font-size: 15px;font-weight: 600\">Represents the points accumulated by\n"
 "                                    doing services in addition to your usual services. From a total of 2 points, you can\n"
 "                                    request early leave.\n"
 "                                </span>"
-msgstr "<span style=\"font-size: 15px;font-weight: 600\">Représente les points accumulés en\n"
-"                                    faisant des services en plus de vos services habituels. A partir d’un cumul de 2 points, vous pouvez\n"
-"                                     demander un congé anticipé.\n"
+msgstr ""
+"<span style=\"font-size: 15px;font-weight: 600\">Représente les points accumulés par\n"
+"                                    la réalisation de services en plus de vos services habituels. À un total de 2 points, vous pouvez\n"
+"                                    demander un départ anticipé.\n"
 "                                </span>"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_ftop
-msgid "<span style=\"font-size: 15px;font-weight: 600\">Your status is “up to date” at zero\n"
+msgid ""
+"<span style=\"font-size: 15px;font-weight: 600\">Your status is “up to date” at zero\n"
 "                                    points or more. On the other hand, to be in order for the next steering wheel count\n"
 "                                    you must be at +1 or more.\n"
 "                                </span>"
-msgstr "<span style=\"font-size: 15px;font-weight: 600\">Votre statut est “à jour” à zéro\n"
-"                                    point ou plus. Par contre, pour être en règle pour le prochain décompte volants\n"
+msgstr ""
+"<span style=\"font-size: 15px;font-weight: 600\">Votre statut est \"à jour\" à zéro\n"
+"                                    points ou plus. D'autre part, pour être en règle pour le prochain compte de volant\n"
 "                                    vous devez être à +1 ou plus.\n"
 "                                </span>"
-
-#. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_ftop
-#, fuzzy
-msgid ""
-"<span style=\"font-size: 15px;font-weight: 600\">Your status is “up to date” "
-"at zero\n"
-"                                    points or more. On the other hand, to be "
-"in order for the next steering wheel count\n"
-"                                    you must be at +1 or more.\n"
-"                                </span>"
-msgstr ""
-"<span style=\"font-size: 15px;font-weight: 600\">Votre statut est «à jour» à "
-"zéro point ou plus. D'un autre côté, pour être en ordre pour le prochain "
-"décompte de volant, vous devez être à +1 ou plus.</span>"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
@@ -390,23 +378,18 @@ msgstr "<span style=\"font-size: 25px;font-weight: 600\">Compteur ABCD</span>"
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
 msgid ""
-"<span style=\"font-size: 25px;font-weight: 600\">Advance service counter</"
-"span>"
-msgstr ""
-"<span style=\"font-size: 25px;font-weight: 600\">Compteur des services anticipés</"
-"span>"
+"<span style=\"font-size: 25px;font-weight: 600\">Advance service "
+"counter</span>"
+msgstr "<span style=\"font-size: 25px;font-weight: 600\">Compteur de service "
+"avancé</span>"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_ftop
-msgid ""
-"<span style=\"font-size: 25px;font-weight: 600\">My flying counter</span>"
-msgstr ""
-"<span style=\"font-size: 25px;font-weight: 600\">Mon compteur volant</span>"
+msgid "<span style=\"font-size: 25px;font-weight: 600\">My flying counter</span>"
+msgstr "<span style=\"font-size: 25px;font-weight: 600\">Mon compteur volant</span>"
 
 #. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.my_next_shift
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.my_next_shift_exchange_cell
 msgid "<span>In progress</span>"
 msgstr "<span>En cours</span>"
 
@@ -416,11 +399,11 @@ msgid ""
 "A Python dictionary that will be evaluated to provide default values when "
 "creating new records for this alias."
 msgstr ""
-"Un dictionnaire Python qui sera interprété pour fournir les valeurs par "
-"défaut lors de la création des nouveaux enregistrements pour cet alias."
+"Un dictionnaire Python qui sera évalué pour fournir des valeurs par défaut "
+"lors de la création de nouveaux enregistrements pour cet alias."
 
 #. module: coop_memberspace
-#: selection:proposal,state:0
+#: model:ir.model.fields.selection,name:coop_memberspace.selection__proposal__state__accept
 msgid "Accepted"
 msgstr "Accepté"
 
@@ -428,12 +411,12 @@ msgstr "Accepté"
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__message_needaction
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_conversation__message_needaction
 msgid "Action Needed"
-msgstr "Nécessite une action"
+msgstr "Action nécessaire"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.myprofile
 msgid "Activate :"
-msgstr "Activer"
+msgstr "Activer :"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.homepage
@@ -453,17 +436,37 @@ msgstr "Alias"
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__alias_contact
 msgid "Alias Contact Security"
-msgstr "Sécurité d'alias de contact"
+msgstr "Sécurité du contact d'alias"
+
+#. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__alias_domain_id
+msgid "Alias Domain"
+msgstr "Domaine d'alias"
+
+#. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__alias_full_name
+msgid "Alias Email"
+msgstr "Email d'alias"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__alias_name
 msgid "Alias Name"
+msgstr "Nom d'alias"
+
+#. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__alias_status
+msgid "Alias Status"
 msgstr "Nom de l'alias"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__alias_domain
-msgid "Alias domain"
-msgstr "Domaine d'alias"
+msgid "Alias domain name"
+msgstr "Nom de domaine de l'alias"
+
+#. module: coop_memberspace
+#: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__alias_status
+msgid "Alias status assessed on the last message received."
+msgstr "Statut de l'alias évalué sur le dernier message reçu."
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__alias_model_id
@@ -471,11 +474,10 @@ msgid "Aliased Model"
 msgstr "Modèle concerné"
 
 #. module: coop_memberspace
-#: code:addons/coop_memberspace/models/res_partner.py:94
-#, python-format
-msgid "Another user is already registered using this email address."
-msgstr ""
-"Un autre utilisateur est déjà enregistré à l'aide de cette adresse e-mail."
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid "Are you sure that you want to do it?"
+msgstr "Êtes-vous sûr de vouloir faire cela ?"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__message_attachment_count
@@ -513,9 +515,8 @@ msgid "Calendar"
 msgstr "Calendrier"
 
 #. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.my_next_shift_exchange_cell
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_ftop
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.my_next_shift
 msgid "Canceled"
 msgstr "Annulé"
 
@@ -525,14 +526,14 @@ msgid "Cancellation"
 msgstr "Annulation"
 
 #. module: coop_memberspace
-#: selection:proposal,state:0
+#: model:ir.model.fields.selection,name:coop_memberspace.selection__proposal__state__cancel
 msgid "Cancelled"
 msgstr "Annulé"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.myprofile
 msgid "City :"
-msgstr "Ville"
+msgstr "Ville :"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.myprofile
@@ -550,9 +551,25 @@ msgid "Code postal :"
 msgstr "Code postal :"
 
 #. module: coop_memberspace
+#: model:ir.model,name:coop_memberspace.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.extra_counter
 msgid "Compteur extra"
 msgstr "Compteur extra"
+
+#. module: coop_memberspace
+#: model:ir.model,name:coop_memberspace.model_res_config_settings
+msgid "Config Settings"
+msgstr "Paramètres de configuration"
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid "Confirm"
+msgstr "Confirmer"
 
 #. module: coop_memberspace
 #: model:ir.model,name:coop_memberspace.model_res_partner
@@ -560,10 +577,8 @@ msgid "Contact"
 msgstr "Contact"
 
 #. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
+#: model:ir.model.fields.selection,name:coop_memberspace.selection__memberspace_alias__type__coordinator
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_ftop
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
-#: selection:memberspace.alias,type:0
 msgid "Coordinators"
 msgstr "Coordinateurs"
 
@@ -582,17 +597,28 @@ msgid "Created on"
 msgstr "Créé le"
 
 #. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_shift_shift__css_color_style
+msgid "Css Color Style"
+msgstr "Style de couleur CSS"
+
+#. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.homepage
 msgid "Current week"
 msgstr "Semaine actuelle"
 
 #. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__alias_bounced_content
+msgid "Custom Bounced Message"
+msgstr "Message de rebond personnalisé"
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_ftop
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.programmer_un_extra
 msgid "Date"
-msgstr "Date "
+msgstr "Date"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__alias_defaults
@@ -642,7 +668,12 @@ msgstr "Alias d'email"
 #. module: coop_memberspace
 #: model:ir.model,name:coop_memberspace.model_mail_thread
 msgid "Email Thread"
-msgstr "Discussion par courriel"
+msgstr "Fil de discussion email"
+
+#. module: coop_memberspace
+#: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__alias_domain
+msgid "Email domain e.g. 'example.com' in 'odoo@example.com'"
+msgstr ""
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_proposal__send_email_confirm_accept_done
@@ -657,24 +688,29 @@ msgstr "Courriel envoyé pour informer accepté"
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_proposal__send_email_refuse
 msgid "Email sent to inform refused"
-msgstr "E-mail envoyé pour informer refusé"
+msgstr "Courriel envoyé pour informer refusé"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_proposal__send_email_request_confirm
 msgid "Email sent to request confirm."
-msgstr "E-mail envoyé pour demander une confirmation."
+msgstr "Courriel envoyé pour demander confirmation"
 
 #. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.my_next_shift
 msgid "Exchange"
 msgstr "Échange"
 
 #. module: coop_memberspace
+#: model:mail.template,name:coop_memberspace.confirm_exchange_done
+msgid "Exchange Done"
+msgstr "Échange terminé"
+
+#. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_shift_registration__exchange_replaced_reg_id
 msgid "Exchange Registration Replaced"
-msgstr "Inscription Exchange remplacée"
+msgstr ""
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_shift_registration__exchange_replacing_reg_id
@@ -693,14 +729,22 @@ msgstr "Services d’échange"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.my_next_shift
-msgid "Extra"
-msgstr "Supplémentaire"
+msgid "Expected attendees"
+msgstr "Participants attendus"
 
 #. module: coop_memberspace
-#: code:addons/coop_memberspace/models/res_partner.py:138
-#, python-format
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.my_next_shift_exchange_cell
+msgid "Extra"
+msgstr "Extra"
+
+#. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_res_config_settings__ftop_shift_cancellation_duration
+msgid "FTOP shift cancellation duration (hour)"
+msgstr "Durée d'annulation du shift FTOP (heure)"
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/res_partner.py:0
 msgid "Female"
 msgstr "Femme"
 
@@ -711,16 +755,15 @@ msgid "Followers"
 msgstr "Abonnés"
 
 #. module: coop_memberspace
-#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__message_channel_ids
-#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_conversation__message_channel_ids
-msgid "Followers (Channels)"
-msgstr "Abonnés (Canaux)"
-
-#. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__message_partner_ids
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_conversation__message_partner_ids
 msgid "Followers (Partners)"
 msgstr "Abonnés (Partenaires)"
+
+#. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_res_config_settings__force_message_route
+msgid "Force Message Route"
+msgstr "Forcer la route des messages"
 
 #. module: coop_memberspace
 #: model:website.menu,name:coop_memberspace.menu_foodcoop_forum
@@ -739,11 +782,22 @@ msgid "HT"
 msgstr "HT"
 
 #. module: coop_memberspace
+#: model:ir.model,name:coop_memberspace.model_ir_http
+msgid "HTTP Routing"
+msgstr "Routage HTTP"
+
+#. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__has_message
+#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_conversation__has_message
+msgid "Has Message"
+msgstr "A un message"
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_ftop
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.programmer_un_extra
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.my_next_shift
 msgid "Hour"
 msgstr "Heure"
 
@@ -757,41 +811,60 @@ msgstr "ID"
 #. module: coop_memberspace
 #: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__alias_parent_thread_id
 msgid ""
-"ID of the parent record holding the alias (example: project holding the task "
-"creation alias)"
+"ID of the parent record holding the alias (example: project holding the task"
+" creation alias)"
 msgstr ""
-"Identifiant de l'enregistrement parent qui définit l'alias (exemple : le "
-"projet qui contient l'alias lié à la tâche)"
-
-#. module: coop_memberspace
-#: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__message_unread
-#: model:ir.model.fields,help:coop_memberspace.field_memberspace_conversation__message_unread
-msgid "If checked new messages require your attention."
-msgstr "Si coché, de nouveaux messages demandent votre attention."
+"ID de l'enregistrement parent qui détient l'alias (exemple: projet qui "
+"détient l'alias de création de tâche)"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__message_needaction
 #: model:ir.model.fields,help:coop_memberspace.field_memberspace_conversation__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Si coché, de nouveaux messages demandent votre attention."
+msgstr "Si coché, de nouveaux messages demandent votre attention"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__message_has_error
+#: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__message_has_sms_error
 #: model:ir.model.fields,help:coop_memberspace.field_memberspace_conversation__message_has_error
+#: model:ir.model.fields,help:coop_memberspace.field_memberspace_conversation__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si actif, certains messages ont une erreur de livraison."
 
 #. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_ftop
-msgid "If you are a member of the flying team, go here to see the\n"
-"                        services available and schedule your vacation."
-msgstr "Si vous êtes membre de l’équipe volante, passez par ici pour voir les\n"
-"                        services disponibles et programmer votre participation."
+#: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__alias_bounced_content
+msgid ""
+"If set, this content will automatically be sent out to unauthorized users "
+"instead of the default message."
+msgstr ""
+"Si défini, ce contenu sera automatiquement envoyé aux utilisateurs non "
+"autorisés au lieu du message par défaut."
+
 
 #. module: coop_memberspace
-#: selection:proposal,state:0
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_ftop
+msgid ""
+"If you are a member of the flying team, go here to see the\n"
+"                        services available and schedule your vacation."
+msgstr ""
+"Si vous êtes membre de l'équipe volante, allez ici pour voir les\n"
+"                        services disponibles et planifier votre vacation."
+
+
+#. module: coop_memberspace
+#: model:ir.model.fields.selection,name:coop_memberspace.selection__proposal__state__in_progress
 msgid "In Progress"
 msgstr "En cours"
+
+#. module: coop_memberspace
+#: model:mail.template,name:coop_memberspace.inform_exchange_done
+msgid "Inform Exchange Done"
+msgstr "Informations sur l'échange terminé"
+
+#. module: coop_memberspace
+#: model:mail.template,name:coop_memberspace.email_inform_cannot_send_to_memberspace_alias
+msgid "Inform User Can Not Send Email To Memberspace Alias"
+msgstr "Informations sur l'utilisateur qui ne peut pas envoyer d'e-mail à l'alias du espace membre"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_ftop
@@ -803,7 +876,7 @@ msgstr "Inscription"
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__message_is_follower
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_conversation__message_is_follower
 msgid "Is Follower"
-msgstr "Est un abonné"
+msgstr "Est abonné"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.myprofile
@@ -811,62 +884,49 @@ msgid "Landline number:"
 msgstr "Numéro de téléphone fixe:"
 
 #. module: coop_memberspace
-#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias____last_update
-#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_conversation____last_update
-#: model:ir.model.fields,field_description:coop_memberspace.field_proposal____last_update
-msgid "Last Modified on"
-msgstr "Dernière modification le"
-
-#. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__write_uid
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_conversation__write_uid
 #: model:ir.model.fields,field_description:coop_memberspace.field_proposal__write_uid
 msgid "Last Updated by"
-msgstr "Mis à jour par"
+msgstr "Dernière mise à jour par"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__write_date
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_conversation__write_date
 #: model:ir.model.fields,field_description:coop_memberspace.field_proposal__write_date
 msgid "Last Updated on"
-msgstr "Mis à jour le"
+msgstr "Dernière mise à jour le"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.myprofile
 msgid "Last name :"
-msgstr "Nom :"
+msgstr "Nom de famille :"
 
 #. module: coop_memberspace
-#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__message_main_attachment_id
-#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_conversation__message_main_attachment_id
-msgid "Main Attachment"
-msgstr "Pièce jointe principale"
+#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__alias_incoming_local
+msgid "Local-part based incoming detection"
+msgstr "Détection entrante basée sur la partie locale"
 
 #. module: coop_memberspace
-#: code:addons/coop_memberspace/models/res_partner.py:136
-#, python-format
+#. odoo-python
+#: code:addons/coop_memberspace/models/res_partner.py:0
 msgid "Man"
 msgstr "Homme"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.counter
 msgid "Member area | Classic counter"
-msgstr "Espace membre | Compteur classique"
-
-#. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.res_config_settings_view_form_inherit
-msgid "Memberspace"
-msgstr "Espace membre"
+msgstr "Espace membre | Comptoir classique"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.documents
 msgid "Member area | Documents"
-msgstr "Espace membre | Les documents"
+msgstr "Espace membre | Documents"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.counter
 msgid "Member area | Extra counter"
-msgstr "Espace membre | Compteur supplémentaire"
+msgstr "Espace membre | Comptoir extra"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.homepage
@@ -876,7 +936,7 @@ msgstr "Espace membre | Accueil"
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.ftop_my_counter
 msgid "Member area | My counter"
-msgstr "Espace membre | Mon compteur"
+msgstr "Espace membre | Mon comptoir"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.counter
@@ -901,12 +961,12 @@ msgstr "Espace membre | Profil"
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.proposal_confirm
 msgid "Member area | Proposal Confirm"
-msgstr "Espace membre | Confirmation de la proposition"
+msgstr "Espace membre | Confirmation de proposition"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.counter
 msgid "Member area | Schedule an extra"
-msgstr "Espace membre | Planifiez un supplément"
+msgstr "Espace membre | Planifier un extra"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.statistics
@@ -914,7 +974,13 @@ msgid "Member area | Statistics"
 msgstr "Espace membre | Statistiques"
 
 #. module: coop_memberspace
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.res_config_settings_view_form_inherit
+msgid "Memberspace"
+msgstr "Espace membre"
+
+#. module: coop_memberspace
 #: model:ir.actions.act_window,name:coop_memberspace.action_memberspace_alias
+#: model:ir.model,name:coop_memberspace.model_memberspace_alias
 #: model:ir.model.fields,field_description:coop_memberspace.field_shift_template__memberspace_alias_ids
 #: model:ir.ui.menu,name:coop_memberspace.menu_memberspace_alias
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.view_memberspace_alias_form
@@ -926,6 +992,7 @@ msgstr "Alias de l'espace membre"
 
 #. module: coop_memberspace
 #: model:ir.actions.act_window,name:coop_memberspace.action_memberspace_conversation
+#: model:ir.model,name:coop_memberspace.model_memberspace_conversation
 #: model:ir.ui.menu,name:coop_memberspace.menu_memberspace_conversation
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.view_memberspace_conversation_form
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.view_memberspace_conversation_search
@@ -1009,11 +1076,16 @@ msgid "Name"
 msgstr "Nom"
 
 #. module: coop_memberspace
-#: code:addons/coop_memberspace/controllers/main.py:432
-#, python-format
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid "No shift is selected"
+msgstr "Aucun créneau sélectionné"
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/controllers/main.py:0
 msgid "Noted ! We hope you find an option that works for you."
-msgstr ""
-"C'est noté ! Nous espérons que vous trouverez une option qui vous convient."
+msgstr "C'est noté ! Nous espérons que vous trouverez une option qui vous convient."
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__message_needaction_counter
@@ -1024,13 +1096,13 @@ msgstr "Nombre d'actions"
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__message_has_error_counter
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_conversation__message_has_error_counter
-msgid "Number of error"
+msgid "Number of errors"
 msgstr "Nombre d'erreurs"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__message_needaction_counter
 #: model:ir.model.fields,help:coop_memberspace.field_memberspace_conversation__message_needaction_counter
-msgid "Number of messages which requires an action"
+msgid "Number of messages requiring action"
 msgstr "Nombre de messages exigeant une action"
 
 #. module: coop_memberspace
@@ -1040,32 +1112,21 @@ msgid "Number of messages with delivery error"
 msgstr "Nombre de messages avec des erreurs d'envoi"
 
 #. module: coop_memberspace
-#: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__message_unread_counter
-#: model:ir.model.fields,help:coop_memberspace.field_memberspace_conversation__message_unread_counter
-msgid "Number of unread messages"
-msgstr "Nombre de messages non lus"
-
-#. module: coop_memberspace
 #: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__alias_force_thread_id
 msgid ""
 "Optional ID of a thread (record) to which all incoming messages will be "
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
 msgstr ""
-"ID optionnel d'un fil (enregistrement) auquel tout message entrant sera "
-"rattaché, même si il ne s'agissait pas d'une réponse à ce fil. Si renseigné, "
-"la création de nouveaux enregistrements sera complètement désactivée."
+"ID optionnel d'un fil (enregistrement) auquel tous les messages entrants "
+"seront attachés, même s'ils n'y ont pas répondu. Si défini, cela désactivera "
+"complètement la création de nouveaux enregistrements."
 
 #. module: coop_memberspace
-#: code:addons/coop_memberspace/models/res_partner.py:139
-#, python-format
+#. odoo-python
+#: code:addons/coop_memberspace/models/res_partner.py:0
 msgid "Other"
 msgstr "Autre"
-
-#. module: coop_memberspace
-#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__alias_user_id
-msgid "Owner"
-msgstr "Propriétaire"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.statistics
@@ -1085,8 +1146,8 @@ msgstr "Identifiant de la discussion de l'enregistrement parent"
 #. module: coop_memberspace
 #: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__alias_parent_model_id
 msgid ""
-"Parent model holding the alias. The model holding the alias reference is not "
-"necessarily the model given by alias_model_id (example: project "
+"Parent model holding the alias. The model holding the alias reference is not"
+" necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
 "Modèle parent de l'alias. Le modèle possédant la référence de l'alias n'est "
@@ -1094,9 +1155,33 @@ msgstr ""
 "(parent_model) et task (modèle))"
 
 #. module: coop_memberspace
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
+msgid "Participation in exchange"
+msgstr "Participation à l'échange"
+
+#. module: coop_memberspace
+#: model:ir.model.fields.selection,name:coop_memberspace.selection__res_config_settings__shift_exchange_policy__registraion
+msgid "Participations put into exchange"
+msgstr "Participations mises en échange"
+
+#. module: coop_memberspace
+#: model:ir.model.fields.selection,name:coop_memberspace.selection__res_config_settings__shift_exchange_policy__registraion_standard
+msgid "Participations put into exchange plus available standard seats"
+msgstr "Participations mises en échange plus places standard disponibles"
+
+#. module: coop_memberspace
+#: model:ir.model.fields.selection,name:coop_memberspace.selection__res_config_settings__shift_exchange_policy__registraion_standard_ftop
+msgid ""
+"Participations put into exchange plus available standard seats plus "
+"available ftop seats"
+msgstr ""
+"Participations mises en échange plus places standard disponibles plus places "
+"FTOP disponibles"
+
+#. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.myprofile
 msgid "Phone number:"
-msgstr "Numéro de téléphone:"
+msgstr "Numéro de téléphone :"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.myprofile
@@ -1135,19 +1220,13 @@ msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
 "- partners: only authenticated partners\n"
-"- followers: only followers of the related document or members of following "
-"channels\n"
+"- followers: only followers of the related document or members of following channels\n"
 msgstr ""
 "Politique de publication d'un message sur le document via la passerelle de "
 "courriel.\n"
 "- tout le monde : tout le monde peut publier\n"
 "- partenaires : seulement les partenaires authentifiés\n"
 "- abonnés : seulement les abonnés au canaux de suivi\n"
-
-#. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.layout
-msgid "Profile"
-msgstr "Profil"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
@@ -1165,9 +1244,19 @@ msgid "Programmer un service volant"
 msgstr "Programmer un service volant"
 
 #. module: coop_memberspace
+#: model:mail.template,name:coop_memberspace.proposal_accepted
+msgid "Proposal Accepted"
+msgstr "Proposition acceptée"
+
+#. module: coop_memberspace
+#: model:mail.template,name:coop_memberspace.proposal_cancelled
+msgid "Proposal Cancelled"
+msgstr "Proposition annulée"
+
+#. module: coop_memberspace
 #: model:ir.model,name:coop_memberspace.model_proposal
 msgid "Proposal exchange the shift"
-msgstr "Échange de propositions le changement"
+msgstr "Proposition d'échange de shift"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_res_users__public_active
@@ -1216,21 +1305,41 @@ msgid "Public your mobile in website"
 msgstr "Publiez votre mobile sur le site Web"
 
 #. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__rating_ids
+#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_conversation__rating_ids
+msgid "Ratings"
+msgstr "Évaluations"
+
+#. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__alias_force_thread_id
 msgid "Record Thread ID"
 msgstr "ID de l'enregistrement du fil"
 
 #. module: coop_memberspace
-#: selection:proposal,state:0
+#: model:ir.model.fields.selection,name:coop_memberspace.selection__proposal__state__refuse
 msgid "Refused"
 msgstr "Refusé"
 
 #. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.my_next_shift
+#: model:ir.model.fields,field_description:coop_memberspace.field_res_partner__related_user_id
+#: model:ir.model.fields,field_description:coop_memberspace.field_res_users__related_user_id
+msgid "Related User"
+msgstr "Utilisateur associé"
+
+#. module: coop_memberspace
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.my_next_shift_exchange_cell
+msgid "Remplaçant"
+msgstr "Remplaçant"
+
+#. module: coop_memberspace
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.my_next_shift_exchange_cell
 msgid "Replaced"
 msgstr "Remplacé"
+
+#. module: coop_memberspace
+#: model:mail.template,name:coop_memberspace.request_confirm_proposal
+msgid "Request Confirm Proposal"
+msgstr "Demande de confirmation de proposition"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.myprofile
@@ -1238,32 +1347,43 @@ msgid "Rue :"
 msgstr "Rue :"
 
 #. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
-msgid "Schedule an advance service"
-msgstr "Programmer un service anticipé"
+#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__message_has_sms_error
+#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_conversation__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Erreur d'envoi de SMS"
 
 #. module: coop_memberspace
-#: model:ir.model.fields,field_description:coop_memberspace.field_res_company__show_advance_service
-#: model:ir.model.fields,field_description:coop_memberspace.field_res_config_settings__show_advance_service
-msgid "Show schedule an advance service"
-msgstr "Afficher programmer un service anticipé"
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
+msgid "Schedule an advance service"
+msgstr "Planifier un service d'avance"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.classic_counter
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.extra_counter
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.ftop_my_counter
 msgid "Service"
-msgstr "Un service"
+msgstr "Service"
 
 #. module: coop_memberspace
+#: model:ir.model,name:coop_memberspace.model_shift_shift
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.view_memberspace_alias_search
 msgid "Shift"
-msgstr "Service"
+msgstr "Un service"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_conversation__memberspace_alias_id
 msgid "Shift Alias"
 msgstr "Shift Alias"
+
+#. module: coop_memberspace
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.res_config_settings_view_form_inherit
+msgid "Shift Cancellation"
+msgstr "Annulation du service"
+
+#. module: coop_memberspace
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.res_config_settings_view_form_inherit
+msgid "Shift Exchange"
+msgstr "Échange de service"
 
 #. module: coop_memberspace
 #: model:ir.model,name:coop_memberspace.model_shift_template
@@ -1272,43 +1392,87 @@ msgid "Shift Template"
 msgstr "Créneau"
 
 #. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.myprofile
-msgid "Show to your team"
-msgstr "Montrez à votre équipe"
+#: model:ir.model.fields,field_description:coop_memberspace.field_res_config_settings__shift_exchange_duration
+msgid "Shift exchange duration (hour)"
+msgstr "Durée d'échange de service (heure)"
 
 #. module: coop_memberspace
-#: code:addons/coop_memberspace/controllers/main.py:417
-#, python-format
+#. odoo-python
+#: code:addons/coop_memberspace/models/res_config_settings.py:0
+msgid "Shift exchange duration has to be bigger than 0."
+msgstr "La durée d'échange de service doit être supérieure à 0."
+
+#. module: coop_memberspace
+#: model:mail.template,name:coop_memberspace.shift_registration_cancel_email
+#: model:mail.template,subject:coop_memberspace.shift_registration_cancel_email
+msgid "Shift registration cancellation"
+msgstr "Annulation d'inscription au service"
+
+#. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_res_config_settings__shift_replacement_duration
+msgid "Shift replacement duration (day)"
+msgstr "Durée de remplacement du service (jour)"
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/res_config_settings.py:0
+msgid "Shift replacement duration has to be bigger than 0."
+msgstr "La durée de remplacement du service doit être supérieure à 0."
+
+#. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_res_config_settings__shift_exchange_policy
+msgid "Shift replacement list contains"
+msgstr "La liste de remplacement du service contient"
+
+#. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_res_company__show_advance_service
+#: model:ir.model.fields,field_description:coop_memberspace.field_res_config_settings__show_advance_service
+msgid "Show schedule an advance service"
+msgstr "Afficher la planification d'un service d'avance"
+
+#. module: coop_memberspace
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.myprofile
+msgid "Show to your team"
+msgstr "Afficher à votre équipe"
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/controllers/main.py:0
 msgid ""
 "Sorry ... this proposal is no longer valid, it has been withdrawn or the "
 "member has exchanged this service with another person."
 msgstr ""
-"Montrez à votre équipe 'Désolé ... cette proposition n'est plus valide, elle "
-"a été retirée ou le membre a échangé ce service avec une autre personne."
+"Désolé... cette proposition n'est plus valide, elle a été retirée ou le membre "
+"a échangé ce service avec une autre personne."
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_proposal__src_registration_id
 msgid "Source Registration"
-msgstr "Inscription à la source"
+msgstr "Inscription source"
 
 #. module: coop_memberspace
-#: code:addons/coop_memberspace/models/shift_registration.py:68
-#, python-format
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
 msgid ""
 "Source Shift Registration and Destination Shift Registration are require."
 msgstr ""
-"L'enregistrement de décalage source et l'enregistrement de décalage de "
-"destination sont requis."
+"L'inscription source et l'inscription de destination sont requises."
+
 
 #. module: coop_memberspace
-#: code:addons/coop_memberspace/models/shift_registration.py:75
-#, python-format
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
 msgid ""
 "Source Shift Registration and Destination Shift Registration must be "
 "different."
 msgstr ""
 "L'enregistrement de décalage source et l'enregistrement de décalage de "
 "destination doivent être différents."
+
+#. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_proposal__src_shift_id
+msgid "Src Shift"
+msgstr ""
 
 #. module: coop_memberspace
 #: model:website.menu,name:coop_memberspace.menu_Statistics
@@ -1321,26 +1485,21 @@ msgid "Status"
 msgstr "Statut"
 
 #. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
-msgid "Substitute"
-msgstr "Remplacer"
-
-#. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.statistics
 msgid "TTC"
 msgstr "TTC"
 
 #. module: coop_memberspace
-#: selection:memberspace.alias,type:0
+#: model:ir.model.fields.selection,name:coop_memberspace.selection__memberspace_alias__type__team
 msgid "Team"
-msgstr "Team"
+msgstr "Équipe"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__alias_id
 msgid ""
-"The email address associated with this alias.            New emails received "
-"will automatically             create new conversation assigned to the alias."
+"The email address associated with this alias.            New emails received"
+" will automatically             create new conversation assigned to the "
+"alias."
 msgstr ""
 "il adresse e-mail associée à cet alias. Les nouveaux e-mails reçus créeront "
 "automatiquement une nouvelle conversation affectée à l'alias."
@@ -1348,9 +1507,9 @@ msgstr ""
 #. module: coop_memberspace
 #: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__alias_model_id
 msgid ""
-"The model (Odoo Document Kind) to which this alias corresponds. Any incoming "
-"email that does not reply to an existing record will cause the creation of a "
-"new record of this model (e.g. a Project Task)"
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
+" email that does not reply to an existing record will cause the creation of "
+"a new record of this model (e.g. a Project Task)"
 msgstr ""
 "Le modèle (sorte de document Odoo) auquel correspond cet alias. Tout les e-"
 "mail entrant ne correspondant pas à un enregistrement existant entraînera la "
@@ -1363,13 +1522,13 @@ msgid ""
 "The name of the email alias, e.g. 'jobs' if you want to catch emails for "
 "<jobs@example.odoo.com>"
 msgstr ""
-"Le nom de l'alias de messagerie, par exemple 'carrieres' pour relever les e-"
-"mails de <carrieres@example.odoo.com>"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,help:coop_memberspace.field_shift_registration__exchange_replacing_reg_id
 msgid "The new shift registration of the member after exchange"
-msgstr "Le nouvel enregistrement de quart du membre après échange"
+msgstr ""
+"Le nom de l'alias de messagerie, par exemple 'carrieres' pour relever les e-"
+"mails de <carrieres@example.odoo.com>"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,help:coop_memberspace.field_shift_registration__exchange_replaced_reg_id
@@ -1377,24 +1536,26 @@ msgid "The old shift registration of the member before exchange"
 msgstr "L'ancien enregistrement de quart du membre avant l'échange"
 
 #. module: coop_memberspace
-#: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__alias_user_id
-msgid ""
-"The owner of records created upon receiving emails on this alias. If this "
-"field is not set the system will attempt to find the right owner based on "
-"the sender (From) address, or will use the Administrator account if no "
-"system user is found for that address."
-msgstr ""
-"Le propriétaire d'enregistrements créés lors de la réception de courriel sur "
-"cet alias. Si ce champ n'est pas renseigné, le système essaiera de trouver "
-"le propriétaire approprié à partir de l'adresse de l'expéditeur (De) ou "
-"utilisera le compte Administrateur si aucun utilisateur du système n'est "
-"trouvé pour cette adresse."
+#. odoo-python
+#: code:addons/coop_memberspace/models/proposal.py:0
+msgid "The shift is not available in the market. Please reload the page."
+msgstr "Le créneau n'est plus disponible sur le marché. Veuillez recharger la page."
 
 #. module: coop_memberspace
-#: code:addons/coop_memberspace/models/proposal.py:84
-#, python-format
+#. odoo-python
+#: code:addons/coop_memberspace/models/proposal.py:0
 msgid "The source shift registration not ready on the market."
 msgstr "L'enregistrement de l'équipe source n'est pas prêt sur le marché."
+
+#. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_shift_shift__ticket_seats_available
+msgid "Ticket Seats Available"
+msgstr "Places de billet disponibles"
+
+#. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_shift_shift__ticket_seats_max
+msgid "Ticket Seats Max"
+msgstr "Places de billet max"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.myprofile
@@ -1427,28 +1588,14 @@ msgid "Type"
 msgstr "Type"
 
 #. module: coop_memberspace
-#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__message_unread
-#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_conversation__message_unread
-msgid "Unread Messages"
-msgstr "Messages non lus"
-
-#. module: coop_memberspace
-#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__message_unread_counter
-#: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_conversation__message_unread_counter
-msgid "Unread Messages Counter"
-msgstr "Compteur de messages non lus"
+#: model:ir.model,name:coop_memberspace.model_res_users
+msgid "User"
+msgstr "Utilisateur"
 
 #. module: coop_memberspace
 #: model:ir.actions.server,name:coop_memberspace.cron_create_user_for_members_ir_actions_server
-#: model:ir.cron,cron_name:coop_memberspace.cron_create_user_for_members
-#: model:ir.cron,name:coop_memberspace.cron_create_user_for_members
 msgid "User creation for members"
 msgstr "Création d'utilisateurs pour les membres"
-
-#. module: coop_memberspace
-#: model:ir.model,name:coop_memberspace.model_res_users
-msgid "Users"
-msgstr "Utilisateurs"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.statistics
@@ -1461,8 +1608,8 @@ msgid ""
 "Vous pouvez contacter L’ENSEMBLE de vos coordinateurs en écrivant à "
 "#{alias_leader} (cliquez pour copier l’adresse)."
 msgstr ""
-"Vous pouvez contacter L’ENSEMBLE de vos coordinateurs en écrivant à "
-"#{alias_leader} (cliquez pour copier l’adresse)."
+"Vous pouvez contacter L'ENSEMBLE de vos coordinateurs en écrivant à "
+"#{alias_leader} (cliquez pour copier l'adresse)."
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.myteam
@@ -1470,19 +1617,14 @@ msgid ""
 "Vous pouvez contacter L’ENSEMBLE de vos coordinateurs en écrivant à "
 "#{alias_team} (cliquez pour copier l’adresse)."
 msgstr ""
-"Vous pouvez contacter L’ENSEMBLE de vos coordinateurs en écrivant à "
-"#{alias_team} (cliquez pour copier l’adresse)."
+"Vous pouvez contacter L'ENSEMBLE de vos coordinateurs en écrivant à "
+"#{alias_team} (cliquez pour copier l'adresse)."
 
 #. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
-msgid "Waiting"
-msgstr "En attente"
-
-#. module: coop_memberspace
+#: model:ir.model,name:coop_memberspace.model_website
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.view_res_partner_public_field_form
 msgid "Website"
-msgstr "Site Web"
+msgstr "Site web"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__website_message_ids
@@ -1504,20 +1646,30 @@ msgstr "Semaine"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
-msgid "Will you be available to perform your next service? You can try to exchange\n"
+msgid ""
+"Will you be available to perform your next service? You can try to exchange\n"
 "                        it here with another member of the cooperative."
-msgstr "Vous serez indisponible pour effectuer votre prochain service ? Vous pouvez tenter de l'échanger\n"
-"                        ici avec un autre membre de la coopérative."
+msgstr ""
+"Êtes-vous disponible pour effectuer votre prochain service ? Vous pouvez\n"
+"                        l'échanger ici avec un autre membre de la coopérative."
 
 #. module: coop_memberspace
-#: code:addons/coop_memberspace/models/proposal.py:72
-#, python-format
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
 msgid ""
-"You already have a proposal from this shift.\n"
-"                    Please check and accept it."
+"You are about to cancel your participation to shift {des_date} and replace "
+"it with a participation to shift {src_date}. Are you sure that you want to "
+"do them?"
 msgstr ""
-"Vous avez déjà une proposition de ce changement. \n"
-"Veuillez le vérifier et l'accepter."
+"Vous allez annuler votre participation au créneau {des_date} et la remplacer "
+"par une participation au créneau {src_date}. Êtes-vous sûr de vouloir les "
+"faire ?"
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid "You are about to cancel your participation to the shift"
+msgstr "Vous allez annuler votre participation au créneau"
 
 #. module: coop_memberspace
 #: model:mail.template,subject:coop_memberspace.email_inform_cannot_send_to_memberspace_alias
@@ -1525,52 +1677,47 @@ msgid "You are not authorized to send messages to this alias"
 msgstr "Vous n'êtes pas autorisé à envoyer des messages à cet alias"
 
 #. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
-msgid ""
-"You can contact your coordinators by writing "
-"to                                             #{coordinators[1]} (cliquez "
-"pour copier l’adresse)"
-msgstr ""
-"Vous pouvez contacter vos coordinateurs en écrivant "
-"à                                             #{coordinators[1]} (cliquez "
-"pour copier l’adresse)"
-
-#. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
-msgid ""
-"You can contact your coordinators by writing "
-"to                                         #{coordinators[1]} (cliquez pour "
-"copier l’adresse)"
-msgstr ""
-"Vous pouvez contacter vos coordinateurs en écrivant "
-"à                                         #{coordinators[1]} (cliquez pour "
-"copier l’adresse)"
-
-#. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_ftop
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
 msgid ""
-"You can contact your coordinators by writing "
-"to                                     #{coordinators[1]} (cliquez pour "
-"copier l’adresse)"
+"You can contact your coordinators by writing to"
+"                                     #{coordinators[1]} (cliquez pour copier"
+" l’adresse)"
 msgstr ""
-"Vous pouvez contacter vos coordinateurs en écrivant "
-"à                                     #{coordinators[1]} (cliquez pour "
-"copier l’adresse)"
+"Vous pouvez contacter vos coordinateurs en écrivant à"
+"                                     #{coordinators[1]} (cliquez pour copier"
+" l’adresse)"
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
-msgid "You can do services in addition to your usual services. From 2 accumulated\n"
+msgid ""
+"You can do services in addition to your usual services. From 2 accumulated\n"
 "                        services, if you do not have to catch up, you can “spend” them by taking an “early leave”…\n"
 "                        period during which you do not have to come to work, but while continuing to do your shopping ."
-msgstr "Vous pouvez faire des services en plus de vos services habituels. A partir de 2 services\n"
+msgstr ""
+"Vous pouvez faire des services en plus de vos services habituels. A partir de 2 services\n"
 "                        accumulés, si vous ne devez pas des rattrapages, vous pouvez les “dépenser” en prenant un “congé anticipé”…\n"
 "                        période pendant laquelle, vous n’avez pas à venir travailler, mais tout en continuant à faire vos courses."
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid ""
+"You cannot cancel the shift within {} hours before the beginning of the "
+"shift"
+msgstr ""
+"Vous pouvez contacter vos coordinateurs en écrivant"
 
 #. module: coop_memberspace
-#: code:addons/coop_memberspace/controllers/main.py:425
-#, python-format
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid ""
+"You cannot propose to change the shift within {} hours before the beginning "
+"of the shift."
+msgstr ""
+"Vous ne pouvez pas proposer de changer le créneau dans les {} heures précédant le début du créneau."
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/controllers/main.py:0
 msgid ""
 "Your exchange is saved, your changes have been updated in the 'My "
 "participation' section of your member area."
@@ -1579,16 +1726,10 @@ msgstr ""
 "section 'Ma participation' de votre espace membre."
 
 #. module: coop_memberspace
-#: code:addons/coop_memberspace/models/shift_registration.py:100
-#, python-format
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
 msgid "Your exchange was done, you cannot remove it."
-msgstr "Votre échange a été fait, vous ne pouvez pas le supprimer."
-
-#. module: coop_memberspace
-#: code:addons/coop_memberspace/models/shift_registration.py:117
-#, python-format
-msgid "You cannot propose to change the shift within {} hours before the beginning of the shift."
-msgstr "Vous ne pouvez pas proposer de changer de service moins de {}h avant le début du service."
+msgstr "Votre échange a été effectué, vous ne pouvez pas le supprimer."
 
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.myprofile
@@ -1616,185 +1757,16 @@ msgid "email"
 msgstr "email"
 
 #. module: coop_memberspace
-#: model:ir.model,name:coop_memberspace.model_memberspace_alias
-msgid "memberspace.alias"
-msgstr "memberspace.alias"
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.res_config_settings_view_form_inherit
+msgid "hours"
+msgstr "heures"
 
 #. module: coop_memberspace
-#: model:ir.model,name:coop_memberspace.model_memberspace_conversation
-msgid "memberspace.conversation"
-msgstr "memberspace.conversation"
-
-#. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.my_next_shift_exchange_cell
 msgid "remove_circle_outline"
 msgstr "remove_circle_outline"
 
 #. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_standard
+#: model_terms:ir.ui.view,arch_db:coop_memberspace.my_next_shift_exchange_cell
 msgid "swap_horiz"
 msgstr "swap_horiz"
-
-#. module: coop_memberspace
-#: code:addons/coop_memberspace/models/res_partner.py:45
-#, python-format
-msgid "You are up to date."
-msgstr "Vous êtes à jour."
-
-#. module: coop_memberspace
-#: code:addons/coop_memberspace/models/res_partner.py:45
-#, python-format
-msgid "You have one or more remedies to do."
-msgstr "Vous avez un ou plusieurs rattrapages à faire."
-
-#. module: coop_memberspace
-#: code:addons/coop_memberspace/models/res_partner.py:45
-#, python-format
-msgid "You have been unsubscribed from your team, please contact the members office."
-msgstr "Vous avez été désinscrit de votre équipe, merci de contacter le bureau des membres."
-
-#. module: coop_memberspace
-#: code:addons/coop_memberspace/models/res_partner.py:45
-#, python-format
-msgid "You have been suspended, please contact the members office."
-msgstr "Vous avez été suspendu, merci de contacter le bureau des membres."
-
-#. module: coop_memberspace
-#: code:addons/coop_memberspace/models/res_partner.py:45
-#, python-format
-msgid "An incident has occurred on your account. Please contact the member office."
-msgstr "Un incident s'est présenté sur votre compte. Veuillez contacter le bureau des membres."
-
-#. module: coop_memberspace
-#: code:addons/coop_memberspace/models/res_partner.py:45
-#, python-format
-msgid "In vacations."
-msgstr "En congé."
-
-#. module: coop_memberspace
-#: code:addons/coop_memberspace/models/res_partner.py:45
-#, python-format
-msgid "A technical problem currently prevents us from knowing your status. Try again later or contact the members office."
-msgstr "Un problème technique nous empêche actuellement de connaître votre statut. Réessayez plus tard ou contactez le bureau des membres."
-
-#. module: coop_shift
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
-msgid "Expected attendees"
-msgstr "Participant(s) attendu(s)"
-
-#. module: coop_shift
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.echange_de_services
-msgid "Participation in exchange"
-msgstr "Participation en échange"
-
-#. module: coop_memberspace
-#: code:addons/coop_memberspace/models/shift_registration.py:210
-#, python-format
-msgid "You are about to cancel your participation to shift {des_date} and replace it with a participation to shift {src_date}. Are you sure that you want to do them?"
-msgstr "Vous êtes sur le point d'annuler votre participation au service {des_date} et de la remplacer par une participation au service {src_date}. Êtes-vous certain de vouloir faire cela ?"
-
-#. module: coop_memberspace
-#: selection:res.config.settings,shift_exchange_policy:0
-msgid "Participations put into exchange"
-msgstr "Les participations mises à l'échange"
-
-#. module: coop_memberspace
-#: selection:res.config.settings,shift_exchange_policy:0
-msgid "Participations put into exchange plus available standard seats"
-msgstr "Les participations mises à l'échange plus les places ABCD disponibles"
-
-#. module: coop_memberspace
-#: selection:res.config.settings,shift_exchange_policy:0
-msgid "Participations put into exchange plus available standard seats plus available ftop seats"
-msgstr "Les participations mises à l'échange plus les places ABCD disponibles plus les places volant disponibles"
-
-#. module: coop_memberspace
-#: model:ir.model.fields,field_description:coop_memberspace.field_res_config_settings__shift_exchange_policy
-msgid "Shift replacement list contains"
-msgstr "La liste des services en remplacement contient"
-
-#. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.res_config_settings_view_form_inherit
-msgid "Shift Exchange"
-msgstr "Échange de service"
-
-#. module: coop_memberspace
-#: model:ir.model.fields,field_description:coop_memberspace.field_res_config_settings__shift_exchange_duration
-msgid "Shift exchange duration (hour)"
-msgstr "Un service ne peut plus être échangé s'il débute dans moins de (heures)"
-
-#. module: coop_memberspace
-#: model:ir.model.fields,field_description:coop_memberspace.field_res_config_settings__shift_replacement_duration
-msgid "Shift replacement duration (day)"
-msgstr "Un service est affiché sur la place d'échange lorsqu'il débute dans moins de (jours)"
-
-#. module: coop_memberspace
-#: model_terms:ir.ui.view,arch_db:coop_memberspace.res_config_settings_view_form_inherit
-msgid "Shift Cancellation"
-msgstr "Annulation de service"
-
-#. module: coop_memberspace
-#: model:ir.model.fields,field_description:coop_memberspace.field_res_config_settings__ftop_shift_cancellation_duration
-msgid "FTOP shift cancellation duration (hour)"
-msgstr "Un service FTOP ne peut plus être annuler s'il débute dans moins de (heures)"
-
-#. module: coop_memberspace
-#: code:addons/coop_memberspace/models/shift_registration.py:251
-#, python-format
-msgid "You cannot cancel the shift within {} hours before the beginning of the shift"
-msgstr "Vous ne pouvez plus annuler votre participation dans les {} heures précédant le début du service."
-
-#. module: coop_memberspace
-#. openerp-web
-#: code:addons/coop_memberspace/static/src/js/mywork_ftop.js:32
-#, python-format
-msgid "Confirmation"
-msgstr "Confirmer"
-
-#. module: coop_memberspace
-#: code:addons/coop_memberspace/models/shift_registration.py:257
-#, python-format
-msgid "You are about to cancel your participation to the shift"
-msgstr "Vous êtes sur le point d'annuler votre participation au service du"
-
-#. module: coop_memberspace
-#: code:addons/coop_memberspace/models/shift_registration.py:258
-#, python-format
-msgid "Are you sure that you want to do it?"
-msgstr "Êtes-vous sûr de vouloir le faire ?"
-
-#. module: coop_memberspace
-#: model:mail.template,subject:coop_memberspace.shift_registration_cancel_email
-msgid "Shift registration cancellation"
-msgstr "Annulation de votre participation à un service"
-
-#. module: coop_memberspace
-#: model:mail.template,body_html:coop_memberspace.shift_registration_cancel_email
-msgid "\n"
-"<p>Dear ${object.name},</p>\n"
-"\n"
-"<p>You were registered has a participant to the shift ${object.shift_id.display_name} and you asked to cancel this participation.</p>\n"
-"<p>This is a confirmation that the cancellation was taken into account and you are no longer registered to that shift.</p>\n"
-"\n"
-"<p>Kind regards,\n"
-"<br/>\n"
-"The member management team\n"
-"</p>\n"
-"<br/>\n"
-"<br/>\n"
-""
-msgstr "\n"
-"<p>Bonjour ${object.name},</p>\n"
-"\n"
-"<p>Vous étiez enregistré comme participant au service ${object.shift_id.display_name} et vous avez demandé à annuler cette participation.</p>\n"
-"<p>Nous vous confirmons que cette annulation a bien été prise en compte et que vous n'êtes plus attendu à ce service.</p>\n"
-"\n"
-"<p>Cordialement,\n"
-"<br/>\n"
-"Le bureau des membres\n"
-"</p>\n"
-"<br/>\n"
-"<br/>\n"
-""

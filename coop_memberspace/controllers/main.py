@@ -1,12 +1,14 @@
 import locale
-import pytz
-import werkzeug
+import logging
 from datetime import date, datetime, timedelta
-from odoo import http, _
+
+import pytz
+
+from odoo import http
 from odoo.http import request
+
 from odoo.addons.website.controllers.main import Website as WebsiteController
 
-import logging
 _logger = logging.getLogger(__name__)
 
 
@@ -54,7 +56,7 @@ class Website(WebsiteController):
         )
         default_lang = user.lang or user.company_id.partner_id.lang
         # Get Turnover of the day
-        lang = "%s.%s" % (default_lang, "utf8")
+        lang = f"{default_lang}.utf8"
         try:
             locale.setlocale(locale.LC_TIME, lang)
         except Exception as e:
@@ -69,23 +71,22 @@ class Website(WebsiteController):
             )
             or False
         )
-        week_number = request.env['shift.template']._get_week_number(date.today())
-        week_name = request.env['shift.template']._number_to_letters(week_number)
+        week_number = request.env["shift.template"]._get_week_number(date.today())
+        week_name = request.env["shift.template"]._number_to_letters(week_number)
         values = {
             "date_begin": date_begin and date_begin.capitalize() or False,
-            'week_number': week_number,
-            'week_name': week_name,
+            "week_number": week_number,
+            "week_name": week_name,
             "num_of_members": len(members),
             "member_status": member_status,
         }
         return http.request.render("coop_memberspace.homepage", values)
 
     @http.route(website=True, auth="public")
-    def web_login(self, redirect=None, *args, **kw):
-        r = super().web_login(redirect=redirect, *args, **kw)
-        if not redirect and request.params["login_success"]:
-            redirect = "/"
-            return http.redirect_with_hash(redirect)
+    def web_login(self, redirect=None, **kw):
+        r = super().web_login(redirect=redirect, **kw)
+        if not redirect and request.params.get("login_success"):
+            return request.redirect("/")
         return r
 
     @http.route("/mywork", type="http", auth="user", website=True)
@@ -96,9 +97,10 @@ class Website(WebsiteController):
         shift_registration_env = request.env["shift.registration"]
         member_status = partner.get_warning_member_state()
         shift_upcomming = shift_registration_env.sudo().get_upcoming(
-            user.partner_id, [
+            user.partner_id,
+            [
                 ("shift_id.shift_template_id.is_technical", "=", False),
-            ]
+            ],
         )
         # check standard member or ftop member
         datas = {
@@ -116,9 +118,7 @@ class Website(WebsiteController):
                 .sorted(lambda r: r.date_begin)
             )
             partner.upcoming_registration_count = len(next_registrations)
-            next_registrations = next_registrations.sorted(
-                lambda r: r.date_begin
-            )
+            next_registrations = next_registrations.sorted(lambda r: r.date_begin)
             datas.update(
                 {
                     "standard_point": user.partner_id.display_std_points,
@@ -130,9 +130,7 @@ class Website(WebsiteController):
             datas.update({"ftop_point": user.partner_id.display_ftop_points})
         return request.render("coop_memberspace.mywork", datas)
 
-    @http.route(
-        "/standard/counter_classic", type="http", auth="user", website=True
-    )
+    @http.route("/standard/counter_classic", type="http", auth="user", website=True)
     def page_counter_classic(self, **kwargs):
         user = request.env.user
         shift_counter_event_env = request.env["shift.counter.event"]
@@ -151,9 +149,7 @@ class Website(WebsiteController):
             },
         )
 
-    @http.route(
-        "/standard/counter_extra", type="http", auth="user", website=True
-    )
+    @http.route("/standard/counter_extra", type="http", auth="user", website=True)
     def page_counter_extra(self, **kwargs):
         user = request.env.user
         shift_counter_event_env = request.env["shift.counter.event"]
@@ -169,19 +165,18 @@ class Website(WebsiteController):
             },
         )
 
-    @http.route(
-        "/standard/programmer_un_extra", type="http", auth="user", website=True
-    )
+    @http.route("/standard/programmer_un_extra", type="http", auth="user", website=True)
     def page_programmer_un_extra(self, **kwargs):
         user = request.env.user
         shift_env = request.env["shift.shift"]
         shifts_available = shift_env
         domain = shift_env.get_domain_programmer_un_extra()
         if domain:
-            shifts_available = shift_env.sudo().search(domain, order='date_begin')
+            shifts_available = shift_env.sudo().search(domain, order="date_begin")
             shifts_available = shifts_available.filtered(
-                lambda t: t.seats_availability == 'unlimited' or \
-                    t.seats_reserved < t.seats_max)
+                lambda t: t.seats_availability == "unlimited"
+                or t.seats_reserved < t.seats_max
+            )
         return request.render(
             "coop_memberspace.counter",
             {
@@ -191,23 +186,23 @@ class Website(WebsiteController):
             },
         )
 
-    @http.route(
-        "/standard/echange_de_services", type="http", auth="user", website=True
-    )
+    @http.route("/standard/echange_de_services", type="http", auth="user", website=True)
     def page_echange_de_services(self, **kwargs):
         user = request.env.user
-        icp_sudo = request.env['ir.config_parameter'].sudo()
-        shift_replacement_duration = int(icp_sudo.get_param(
-            'coop.shift.shift_replacement_duration', 90))
+        icp_sudo = request.env["ir.config_parameter"].sudo()
+        shift_replacement_duration = int(
+            icp_sudo.get_param("coop.shift.shift_replacement_duration", 90)
+        )
         today = datetime.now()
         tomorrow = today + timedelta(days=shift_replacement_duration)
 
         # Get next shift
         shift_registration_env = request.env["shift.registration"]
         shift_upcomming = shift_registration_env.sudo().get_upcoming(
-            user.partner_id, [
+            user.partner_id,
+            [
                 ("shift_id.shift_type_id.is_ftop", "=", False),
-            ]
+            ],
         )
         args = [
             ("partner_id", "!=", user.partner_id.id),
@@ -228,7 +223,7 @@ class Website(WebsiteController):
                 ("partner_id", "=", user.partner_id.id),
                 ("state", "=", "waiting"),
                 ("exchange_state", "=", "in_progress"),
-                ("exchange_replacing_reg_id", '!=', False),
+                ("exchange_replacing_reg_id", "!=", False),
                 ("date_begin", ">=", today),
                 ("date_begin", "<=", tomorrow),
             ],
@@ -236,34 +231,38 @@ class Website(WebsiteController):
         )
         shifts_on_market |= shifts_on_market2
         counted_shift_ids = (
-            shift_upcomming.filtered(lambda s: s.state != "cancel"
-        ) | shifts_on_market).mapped('shift_id.id')
+            shift_upcomming.filtered(lambda s: s.state != "cancel") | shifts_on_market
+        ).mapped("shift_id.id")
         shift_exchange_policy = icp_sudo.get_param(
-            'coop.shift.shift_exchange_policy', 'registraion')
+            "coop.shift.shift_exchange_policy", "registraion"
+        )
         args = [
             ("id", "not in", counted_shift_ids),
             ("date_begin", ">=", today),
             ("date_begin", "<=", tomorrow),
-            ("state", "not in", ("cancel", "done"))
+            ("state", "not in", ("cancel", "done")),
         ]
-        if shift_exchange_policy != 'registraion_standard_ftop':
+        if shift_exchange_policy != "registraion_standard_ftop":
             args.append(("shift_type_id.is_ftop", "=", False))
 
-        avaible_shifts = request.env["shift.shift"].with_context(
-            shift_exchange_policy=shift_exchange_policy
-        ).search(args, order="date_begin",)
+        avaible_shifts = (
+            request.env["shift.shift"]
+            .with_context(shift_exchange_policy=shift_exchange_policy)
+            .search(
+                args,
+                order="date_begin",
+            )
+        )
+        avaible_shifts = avaible_shifts.filtered(lambda t: t.ticket_seats_available > 0)
+        avaible_shifts |= shifts_on_market.mapped("shift_id")
         avaible_shifts = avaible_shifts.filtered(
-            lambda t: t.ticket_seats_available > 0)
-        avaible_shifts |= shifts_on_market.mapped('shift_id')
-        avaible_shifts = avaible_shifts.filtered(
-            lambda t: t.seats_availability == 'unlimited' or \
-                    t.seats_reserved < t.seats_max)
+            lambda t: t.seats_availability == "unlimited"
+            or t.seats_reserved < t.seats_max
+        )
         avaible_shifts = avaible_shifts.sorted(lambda s: s.date_begin)
         shifts_on_market_dict = {}  # {shift_id: shift_registration_object}
         for registration in shifts_on_market:
-            shifts_on_market_dict.update({
-                registration.shift_id: registration
-            })
+            shifts_on_market_dict.update({registration.shift_id: registration})
         return request.render(
             "coop_memberspace.counter",
             {
@@ -295,20 +294,14 @@ class Website(WebsiteController):
     @http.route("/myteam", type="http", auth="user", website=True)
     def page_myteam(self, **kwargs):
         user = request.env.user
-        tmpl_lines = user.partner_id.tmpl_reg_line_ids.filtered(
-            lambda r: r.is_current
-        )
+        tmpl_lines = user.partner_id.tmpl_reg_line_ids.filtered(lambda r: r.is_current)
         shift_tmpl = tmpl_lines and tmpl_lines[0].shift_template_id or False
         coordinators = (
-            shift_tmpl
-            and shift_tmpl.user_ids.sorted(key=lambda r: r.name)
-            or []
+            shift_tmpl and shift_tmpl.user_ids.sorted(key=lambda r: r.name) or []
         )
         members = (
             shift_tmpl
-            and shift_tmpl.registration_ids.filtered(
-                lambda r: r.is_current_participant
-            )
+            and shift_tmpl.registration_ids.filtered(lambda r: r.is_current_participant)
             .mapped("partner_id")
             .filtered(lambda r: r.shift_type == "standard")
             .sorted(key=lambda r: r.name)
@@ -326,9 +319,7 @@ class Website(WebsiteController):
             )
             or False
         )
-        alias_leader = (
-            alias_leader and alias_leader[0].alias_id.name_get()[0][1] or ""
-        )
+        alias_leader = alias_leader and alias_leader[0].alias_id.display_name or ""
 
         alias_team = (
             shift_tmpl
@@ -338,9 +329,7 @@ class Website(WebsiteController):
             )
             or False
         )
-        alias_team = (
-            alias_team and alias_team[0].alias_id.name_get()[0][1] or ""
-        )
+        alias_team = alias_team and alias_team[0].alias_id.display_name or ""
 
         is_leader = user.partner_id in coordinators
 
@@ -358,30 +347,37 @@ class Website(WebsiteController):
 
     @http.route("/profile", type="http", auth="user", website=True)
     def page_myprofile(self, **kwargs):
-
-        return request.render(
-            "coop_memberspace.myprofile", {"user": request.env.user}
-        )
+        return request.render("coop_memberspace.myprofile", {"user": request.env.user})
 
     @http.route("/statistics", type="http", auth="user", website=True)
     def page_statistics(self, **kwargs):
         first_day_of_year = datetime.now().strftime("%Y-01-01 00:00:00")
         end_day_of_year = datetime.now().strftime("%Y-12-31 23:59:59")
-        sales_count = request.env["pos.order"].sudo().search_count([
-            ("state", "in", ["paid", "done", "invoiced"]),
-            ("date_order", ">=", first_day_of_year),
-            ("date_order", "<=", end_day_of_year),
-        ])
-        pos_session = request.env['pos.session'].sudo().search(
-            [
-                ('stop_at', '>=', first_day_of_year),
-                ('stop_at', '<=', end_day_of_year),
-                ('state', '=', 'closed')
-            ]
+        sales_count = (
+            request.env["pos.order"]
+            .sudo()
+            .search_count(
+                [
+                    ("state", "in", ["paid", "done", "invoiced"]),
+                    ("date_order", ">=", first_day_of_year),
+                    ("date_order", "<=", end_day_of_year),
+                ]
+            )
+        )
+        pos_session = (
+            request.env["pos.session"]
+            .sudo()
+            .search(
+                [
+                    ("stop_at", ">=", first_day_of_year),
+                    ("stop_at", "<=", end_day_of_year),
+                    ("state", "=", "closed"),
+                ]
+            )
         )
         if pos_session:
-            total_with_tax = sum(pos_session.mapped('order_ids.amount_total'))
-            total_tax = sum(pos_session.mapped('order_ids.amount_tax'))
+            total_with_tax = sum(pos_session.mapped("order_ids.amount_total"))
+            total_tax = sum(pos_session.mapped("order_ids.amount_tax"))
             datas = [(total_with_tax - total_tax), total_with_tax]
         else:
             datas = [0, 0]
@@ -393,46 +389,12 @@ class Website(WebsiteController):
                 "num_of_sales": sales_count,
                 "turnover_year_wo_tax": int(datas[0]),
                 "turnover_year_tax": int(datas[1]),
-                "average_basket": (int(datas[1]) / sales_count) \
-                    if sales_count > 0 else 0,
+                "average_basket": (int(datas[1]) / sales_count)
+                if sales_count > 0
+                else 0,
             },
         )
 
     @http.route("/documents", type="http", auth="user", website=True)
     def page_documents(self, **kwargs):
         return request.render("coop_memberspace.documents", {})
-
-    @http.route("/proposal/confirm", type="http", auth="public", website=True)
-    def proposal_confirm(self, *args, **kw):
-        token = kw.get("token", False)
-        action = kw.get("action", False)
-        if not (token and action) or (action not in ["accept", "refuse"]):
-            raise werkzeug.exceptions.NotFound()
-        proposal_model = request.env["proposal"]
-        proposal = proposal_model.sudo().search(
-            [("token", "=", token), ("state", "=", "in_progress")], limit=1
-        )
-        values = {}
-        request.context = dict(request.context,
-                                       lang=request.env.user.lang)
-        if not (proposal and proposal.token_valid):
-            values["bootstrap_class"] = "alert alert-danger"
-            values["message"] = _(
-                "Sorry ... this proposal is no longer valid, it has been withdrawn"
-                " or the member has exchanged this service with another person."
-            )
-        else:
-            if action == "accept":
-                proposal.accept_proposal()
-                values["bootstrap_class"] = "alert alert-success"
-                values["message"] = _(
-                    "Your exchange is saved, your changes have been updated in the"
-                    " 'My participation' section of your member area."
-                )
-            else:
-                proposal.refuse_proposal()
-                values["bootstrap_class"] = "alert alert-warning"
-                values["message"] = _(
-                    "Noted ! We hope you find an option that works for you."
-                )
-        return request.render("coop_memberspace.proposal_confirm", values)

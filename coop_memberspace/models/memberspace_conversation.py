@@ -1,18 +1,19 @@
-from odoo import models, fields, api
+from odoo import api, fields, models
 
 
 class MemberSpaceConversation(models.Model):
     _name = "memberspace.conversation"
+    _description = "Memberspace Conversation"
     _inherit = ["mail.thread"]
 
-    name = fields.Char("Name", required=True)
+    name = fields.Char(required=True)
     memberspace_alias_id = fields.Many2one(
         "memberspace.alias", "Shift Alias", required=True
     )
 
-    @api.model
-    def create(self, vals):
-        res = super(MemberSpaceConversation, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super().create(vals_list)
         alias = res.memberspace_alias_id
         partners = alias.shift_id.user_ids
         if alias.type == "team":

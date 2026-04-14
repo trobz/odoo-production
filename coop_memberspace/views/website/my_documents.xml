@@ -1,12 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data noupdate="1">
-        <template id="coop_memberspace.documents">
-            <t t-call="website.layout">
-                <t t-set="title">Member area | Documents</t>
-                <div class="container oe_structure">
-                </div>
-            </t>
-        </template>
-    </data>
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <template id="coop_memberspace.documents">
+        <t t-call="website.layout">
+            <t t-set="title">Member area | Documents</t>
+            <div id="oe_structure_documents_1" class="container oe_structure" />
+        </t>
+    </template>
 </odoo>

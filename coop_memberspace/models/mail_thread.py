@@ -7,9 +7,8 @@
 import logging
 from email.message import Message
 
-from odoo import models, api
-from odoo import tools
-from odoo.tools import decode_message_header
+from odoo import api, models, tools
+from odoo.tools.mail import decode_message_header
 
 _logger = logging.getLogger(__name__)
 
@@ -29,26 +28,21 @@ class MailThread(models.AbstractModel):
         if header not in message:
             return alias_error, alias_pass
         rcpt_tos = ",".join([decode_message_header(message, header)])
-        local_parts = [
-            e.split("@")[0].lower() for e in tools.email_split(rcpt_tos)
-        ]
+        local_parts = [e.split("@")[0].lower() for e in tools.email_split(rcpt_tos)]
         aliases = Alias.search([("alias_name", "in", local_parts)])
-        memberspace_aliases = MemberSpaceAlias.search(
-            [("alias_id", "in", aliases.ids)]
-        )
+        memberspace_aliases = MemberSpaceAlias.search([("alias_id", "in", aliases.ids)])
         for memberspace_alias in memberspace_aliases:
             if not user_sent:
                 alias_error |= memberspace_aliases
                 break
             coordinators = memberspace_alias.shift_id.user_ids
-            members = coordinators |\
-                memberspace_alias.shift_id.registration_ids.filtered(
+            members = (
+                coordinators
+                | memberspace_alias.shift_id.registration_ids.filtered(
                     lambda r: r.is_current_participant
                 ).mapped("partner_id")
-            if (
-                memberspace_alias.type == "team"
-                and user_sent not in coordinators
-            ):
+            )
+            if memberspace_alias.type == "team" and user_sent not in coordinators:
                 alias_error |= memberspace_alias
                 if user_sent in members and mail_tmpl:
                     email_add = (
@@ -69,10 +63,7 @@ class MailThread(models.AbstractModel):
                         self.env.user.id, force_send=True
                     )
                 continue
-            elif (
-                memberspace_alias.type == "coordinator"
-                and user_sent not in members
-            ):
+            elif memberspace_alias.type == "coordinator" and user_sent not in members:
                 alias_error |= memberspace_alias
                 continue
             alias_pass |= memberspace_alias
@@ -93,14 +84,13 @@ class MailThread(models.AbstractModel):
         custom_values=None,
     ):
         if not isinstance(message, Message):
-            raise TypeError(
-                "message must be an email.message.Message at this point"
-            )
-        icp_sudo = self.env['ir.config_parameter'].sudo()
-        force_message_route = bool(icp_sudo.get_param(
-            'coop_memberspace.force.message_route', False))
+            raise TypeError("message must be an email.message.Message at this point")
+        icp_sudo = self.env["ir.config_parameter"].sudo()
+        force_message_route = bool(
+            icp_sudo.get_param("coop_memberspace.force.message_route", False)
+        )
         if force_message_route:
-            return super(MailThread, self).message_route(
+            return super().message_route(
                 message,
                 message_dict,
                 model=model,
@@ -149,7 +139,7 @@ class MailThread(models.AbstractModel):
 
         if not pass_memberspace_aliases:
             return []
-        return super(MailThread, self).message_route(
+        return super().message_route(
             message,
             message_dict,
             model=model,

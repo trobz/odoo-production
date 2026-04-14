@@ -6,10 +6,10 @@
 
 {
     "name": "Coop Memberspace",
-    "version": "12.0.1.1.8",
+    "version": "18.0.1.0.0",
     "category": "Custom",
     "author": "La Louve, Druidoo",
-    "website": "http://www.lalouve.net",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": [
         "website",
@@ -31,10 +31,8 @@
         "views/res_partner_view.xml",
         "views/memberspace_alias_view.xml",
         "views/memberspace_conversation_view.xml",
-        "views/assets.xml",
         "views/view_pos_config_settings.xml",
         "views/website_views.xml",
-        "views/website/proposal_confirm.xml",
         "views/website/my_work.xml",
         "views/website/my_team.xml",
         "views/website/my_profile.xml",
@@ -43,9 +41,21 @@
         "views/website/website_homepage.xml",
         "views/website/website_template.xml",
         "views/res_config_view.xml",
+        "views/assets.xml",
     ],
-    'qweb': [
-        "static/src/xml/*.xml",
-    ],
+    "assets": {
+        "web.assets_frontend": [
+            "coop_memberspace/static/src/scss/style.scss",
+            "coop_memberspace/static/src/scss/iconmoon.scss",
+            "coop_memberspace/static/src/scss/togglebutton.scss",
+            "coop_memberspace/static/src/js/style.esm.js",
+            "coop_memberspace/static/src/js/programmer_un_extra.esm.js",
+            "coop_memberspace/static/src/js/programmer_une_vacation.esm.js",
+            "coop_memberspace/static/src/js/my_profile.esm.js",
+            "coop_memberspace/static/src/js/statistics.esm.js",
+            "coop_memberspace/static/src/js/exchange_shift.esm.js",
+            "coop_memberspace/static/src/js/mywork_ftop.esm.js",
+        ],
+    },
     "installable": True,
 }

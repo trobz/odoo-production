@@ -1,20 +1,58 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <!-- Invisible Menu if user don't login -->
-    <template id="coop_memberspace.layout" inherit_id="website.layout" name="Main layout">
-        <xpath expr="//ul[@id='top_menu']/t" position="replace">
-            <t t-foreach="website.menu_id.child_id" t-as="submenu">
-                <t t-if="submenu and website.user_id != user_id">
-                    <t t-call="website.submenu" />
-                </t>
-            </t>
+    <!--
+        Inject Google Fonts directly into <head> so the browser always loads
+        them as stylesheets, regardless of how ir.asset handles external URLs.
+    -->
+    <template
+        id="coop_memberspace.external_fonts"
+        inherit_id="website.layout"
+        name="Coop Memberspace - External Fonts"
+    >
+        <xpath expr="//head" position="inside">
+            <link
+                rel="stylesheet"
+                type="text/css"
+                href="https://fonts.googleapis.com/css?family=Raleway:700"
+            />
+            <link
+                rel="stylesheet"
+                type="text/css"
+                href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            />
         </xpath>
     </template>
 
-    <template id="coop_memberspace.layout" inherit_id="portal.frontend_layout" name="Main layout">
-        <xpath expr="//div[@id='top_menu_collapse']//ul[@id='top_menu']//a[@id='o_logout']" position="before">
-            <a href="/profile" class="dropdown-item" role="menuitem">Profile</a>
+    <!--
+        Hide website navigation menu items for guest/public users.
+        In 18.0 the menu is rendered inside website.template_header_default,
+        not in website.layout itself.
+    -->
+    <template
+        id="coop_memberspace.layout_website"
+        inherit_id="website.template_header_default"
+        name="Hide menu for guests"
+    >
+        <xpath expr="//t[@t-foreach='website.menu_id.child_id']" position="attributes">
+            <attribute name="t-if">website.user_id != user_id</attribute>
         </xpath>
     </template>
 
+    <!--
+        Add a "Profile" link in the user dropdown (portal layout).
+    -->
+    <template
+        id="coop_memberspace.layout_portal"
+        inherit_id="portal.user_dropdown"
+        name="Add Profile link"
+    >
+        <xpath expr="//*[@id='o_logout_divider']" position="before">
+            <a href="/profile" class="dropdown-item ps-3" role="menuitem">
+                <i
+                class="fa fa-fw fa-user me-1 small text-primary text-primary-emphasis"
+            />
+                Profile
+            </a>
+        </xpath>
+    </template>
 </odoo>
