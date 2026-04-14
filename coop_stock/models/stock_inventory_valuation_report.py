@@ -7,6 +7,11 @@ from odoo import api, fields, models
 from odoo.osv import expression
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
 
+from odoo.addons.report_xlsx_helper.report.report_xlsx_format import (
+    FORMATS,
+    XLS_HEADERS,
+)
+
 _logger = logging.getLogger(__name__)
 
 
@@ -119,7 +124,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                 },
                 "data": {
                     "value": self._render("qty_at_date"),
-                    "format": self.format_tcell_amount_conditional_right,
+                    "format": FORMATS["format_tcell_amount_conditional_right"],
                 },
                 "width": 18,
             },
@@ -129,7 +134,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                 },
                 "data": {
                     "value": self._render("standard_price"),
-                    "format": self.format_tcell_amount_conditional_right,
+                    "format": FORMATS["format_tcell_amount_conditional_right"],
                 },
                 "width": 18,
             },
@@ -139,7 +144,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                 },
                 "data": {
                     "value": self._render("stock_value"),
-                    "format": self.format_tcell_amount_conditional_right,
+                    "format": FORMATS["format_tcell_amount_conditional_right"],
                 },
                 "width": 18,
             },
@@ -178,8 +183,8 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
     def _inventory_valuation_report(self, wb, ws, ws_params, data, objects):
         ws.set_portrait()
         ws.fit_to_pages(1, 0)
-        ws.set_header(self.xls_headers["standard"])
-        ws.set_footer(self.xls_footers["standard"])
+        ws.set_header(XLS_HEADERS["xls_headers"]["standard"])
+        ws.set_footer(XLS_HEADERS["xls_footers"]["standard"])
         self._set_column_width(ws, ws_params)
 
         row_pos = 0
@@ -190,7 +195,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                 row_pos,
                 0,
                 [self.env._("Date"), self.env._("Partner"), self.env._("Tax ID")],
-                self.format_theader_blue_center,
+                FORMATS["format_theader_blue_center"],
             )
             report_date = o.get_date_context()
             ws.write_row(row_pos + 1, 0, [report_date or ""])
@@ -198,7 +203,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                 row_pos + 1,
                 1,
                 [o.company_id.name or "", o.company_id.vat or ""],
-                self.format_tcell_center,
+                FORMATS["format_tcell_center"],
             )
 
             row_pos += 3
@@ -207,7 +212,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                 row_pos,
                 ws_params,
                 col_specs_section="header",
-                default_format=self.format_theader_blue_center,
+                default_format=FORMATS["format_theader_blue_center"],
             )
             ws.freeze_panes(row_pos, 0)
 
@@ -219,7 +224,7 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                     ws_params,
                     col_specs_section="data",
                     render_space=self._get_render_space(row_pos, line),
-                    default_format=self.format_tcell_left,
+                    default_format=FORMATS["format_tcell_left"],
                 )
                 total += line.stock_value
 
@@ -227,5 +232,5 @@ class ReportStockInventoryValuationReportXlsx(models.TransientModel):
                 row_pos,
                 self._get_column_total_index(),
                 total,
-                self.format_theader_blue_amount_right,
+                FORMATS["format_theader_blue_amount_right"],
             )
