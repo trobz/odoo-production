@@ -24,22 +24,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:coop_membership_coop_amount.field_res_partner__coop_amount
 #: model:ir.model.fields,field_description:coop_membership_coop_amount.field_res_users__coop_amount
 msgid "Coop Amount"
-msgstr "Solde coop"
+msgstr ""
 
 #. module: coop_membership_coop_amount
 #: model:ir.model.fields,field_description:coop_membership_coop_amount.field_res_partner__fundraising_invoice_ids
 #: model:ir.model.fields,field_description:coop_membership_coop_amount.field_res_users__fundraising_invoice_ids
 msgid "Fundraising Invoice"
-msgstr "Facture de levée de fonds"
+msgstr ""
 
 #. module: coop_membership_coop_amount
 #: model:ir.model.fields,field_description:coop_membership_coop_amount.field_res_partner__fundraising_journal_item_ids
 #: model:ir.model.fields,field_description:coop_membership_coop_amount.field_res_users__fundraising_journal_item_ids
 msgid "Fundraising Journal Item"
-msgstr "Écriture comptable de levée de fonds"
+msgstr ""
 
 #. module: coop_membership_coop_amount
 #: model:ir.model.fields,field_description:coop_membership_coop_amount.field_res_partner__amount_subscription
 #: model:ir.model.fields,field_description:coop_membership_coop_amount.field_res_users__amount_subscription
 msgid "Total Subscribed Amount"
-msgstr "Montant total souscrit"
+msgstr ""
