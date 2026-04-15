@@ -422,14 +422,12 @@ manually adds receipt lines.</li>
 <p>Key areas to review:</p>
 <ul class="simple">
 <li><tt class="docutils literal">purchase.order</tt> / <tt class="docutils literal">purchase.order.line</tt><ul>
-<li>Adds display fields: <tt class="docutils literal">product_default_code</tt>,
-<tt class="docutils literal">price_discounted</tt>, <tt class="docutils literal">price_unit_tax</tt>, and shows
-<tt class="docutils literal">price_total</tt>.</li>
+<li>Adds helper fields: <tt class="docutils literal">product_default_code</tt>, <tt class="docutils literal">price_discounted</tt>,
+<tt class="docutils literal">price_unit_tax</tt>, and shows <tt class="docutils literal">price_total</tt>.</li>
 <li>The <tt class="docutils literal">Upd. Prices</tt> button opens the vendor price update wizard.</li>
 </ul>
 </li>
-<li><tt class="docutils literal">account.move</tt> / <tt class="docutils literal">account.move.line</tt> (Vendor Bill / Vendor
-Refund)<ul>
+<li><tt class="docutils literal">account.move</tt> / <tt class="docutils literal">account.move.line</tt> (Vendor Bill / Vendor Refund)<ul>
 <li>Blocks bill creation from a PO if at least one related picking is
 not <tt class="docutils literal">Done</tt>/<tt class="docutils literal">Cancelled</tt>.</li>
 <li>Product onchange on bill lines: auto-fills <tt class="docutils literal">discount</tt>,
@@ -447,8 +445,8 @@ back.</li>
 </ul>
 </li>
 <li>Wizard <tt class="docutils literal">supplier.info.update</tt><ul>
-<li>Collects lines from the PO or Vendor Bill and allows writing
-updates back to <tt class="docutils literal">product.supplierinfo</tt>.</li>
+<li>Collects lines from the PO or Vendor Bill and allows writing updates
+back to <tt class="docutils literal">product.supplierinfo</tt>.</li>
 </ul>
 </li>
 </ul>
@@ -472,8 +470,8 @@ configured accordingly.</li>
 <li>Add products to order lines.</li>
 <li>Expected:<ul>
 <li>The <tt class="docutils literal">Internal Reference</tt> column is displayed.</li>
-<li>The <tt class="docutils literal">Discounted Price</tt> column is displayed and <tt class="docutils literal">price_total</tt>
-is shown on lines.</li>
+<li>The <tt class="docutils literal">Discounted Price</tt> column is displayed and <tt class="docutils literal">price_total</tt> is
+shown on lines.</li>
 </ul>
 </li>
 <li>Click <tt class="docutils literal">Upd. Prices</tt>.</li>
@@ -531,8 +529,8 @@ again.</li>
 <h3><a class="toc-backref" href="#toc-entry-10">5) Access rights (read-only fields on Vendor Bill)</a></h3>
 <ul class="simple">
 <li>With a user not in the accounting manager group:<ul>
-<li>Open a Vendor Bill and check some header fields are forced
-read-only as designed.</li>
+<li>Open a Vendor Bill and check some header fields are forced read-only
+as designed.</li>
 </ul>
 </li>
 <li>With a user in the accounting manager group:<ul>
@@ -573,7 +571,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <div class="section" id="contributors">
 <h2><a class="toc-backref" href="#toc-entry-15">Contributors</a></h2>
 <ul class="simple">
-<li>La Louve (&lt;<a class="reference external" href="http://www.lalouve.net/">http://www.lalouve.net/</a>&gt;)</li>
+<li>La Louve (&lt;<a class="reference external" href="http://www.lalouve.net/&gt;">http://www.lalouve.net/\&gt;</a>)</li>
 <li>Druidoo (<a class="reference external" href="https://www.druidoo.io">https://www.druidoo.io</a>)</li>
 </ul>
 </div>
