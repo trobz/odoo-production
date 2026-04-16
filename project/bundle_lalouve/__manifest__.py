@@ -13,6 +13,9 @@
         # oca/bank-statement-import
         "account_statement_import_caisse_epargne",
 
+        # oca/edi-framework
+        "edi_purchase_diapar_oca",
+
         # oca/pos
         "pos_payment_change_account",
         "pos_payment_credit_amount",
