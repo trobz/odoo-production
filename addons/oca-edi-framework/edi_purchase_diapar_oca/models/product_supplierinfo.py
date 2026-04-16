@@ -24,6 +24,9 @@ class SupplierInfo(models.Model):
         else:
             return partner
 
+    def _get_price_field(self):
+        return "price"
+
     @api.model
     def update_purchase_price(self, vals):
         """
@@ -49,7 +52,8 @@ class SupplierInfo(models.Model):
                 order="apply_date DESC",
             )
             if price:
-                vals.update({"price": price[0].price})
+                price_field = self._get_price_field()
+                vals.update({price_field: price[0].price})
                 price.sudo().write({"price_updated": True})
         return vals
 

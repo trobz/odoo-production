@@ -32,6 +32,14 @@ class SupplierPriceList(models.Model):
     barcode = fields.Char(string="Ean")
     price_updated = fields.Boolean()
 
+    def _get_price_field(self):
+        return "price"
+
+    def _create_supplierinfo_with_price(self, vals):
+        price_field = self._get_price_field()
+        vals.update({price_field: self.price})
+        return self.env["product.supplierinfo"].create(vals)
+
     def button_create_product(self):
         self.ensure_one()
         # create new product
@@ -48,10 +56,9 @@ class SupplierPriceList(models.Model):
         # link product with current supplier price list
         self.sudo().product_tmpl_id = product_tmpl_id.id
         # create product supplier info
-        self.env["product.supplierinfo"].create(
+        self._create_supplierinfo_with_price(
             {
                 "partner_id": self.supplier_id.id,
-                "price": self.price,
                 "product_code": self.supplier_code,
                 "product_tmpl_id": product_tmpl_id.id,
             }
@@ -89,13 +96,17 @@ class SupplierPriceList(models.Model):
         ]
         supplierinfos = self.env["product.supplierinfo"].search(args, limit=1)
         if supplierinfos:
-            if supplierinfos.price != price:
-                supplierinfos.price = price
+            price_field = self._get_price_field()
+            if getattr(supplierinfos, price_field) != price:
+                supplierinfos.write(
+                    {
+                        price_field: price,
+                    }
+                )
         else:
-            self.env["product.supplierinfo"].create(
+            self._create_supplierinfo_with_price(
                 {
                     "partner_id": splist.supplier_id.id,
-                    "price": price,
                     "product_code": splist.supplier_code,
                     "product_tmpl_id": product.id,
                 }
