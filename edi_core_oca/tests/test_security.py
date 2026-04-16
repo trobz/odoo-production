@@ -11,65 +11,57 @@ from .common import EDIBackendCommonTestCase
 
 
 class TestEDIExchangeRecordSecurity(EDIBackendCommonTestCase):
-    @classmethod
-    def _setup_env(cls):
-        # Load fake models ->/
-        cls.loader = FakeModelLoader(cls.env, cls.__module__)
-        cls.loader.backup_registry()
+    def setUp(self):
+        super().setUp()
+        self.loader = FakeModelLoader(self.env, self.__module__)
+        self.loader.backup_registry()
         from .fake_models import EdiExchangeConsumerTest
 
-        cls.loader.update_registry((EdiExchangeConsumerTest,))
-        return super()._setup_env()
-
-    # pylint: disable=W8110
-    @classmethod
-    def _setup_records(cls):
-        super()._setup_records()
-        cls.group = cls.env["res.groups"].create({"name": "Demo Group"})
-        cls.ir_access = cls.env["ir.model.access"].create(
+        self.loader.update_registry((EdiExchangeConsumerTest,))
+        self.group = self.env["res.groups"].create({"name": "Demo Group"})
+        self.ir_access = self.env["ir.model.access"].create(
             {
                 "name": "model access",
-                "model_id": cls.env.ref(
+                "model_id": self.env.ref(
                     "edi_core_oca.model_edi_exchange_consumer_test"
                 ).id,
-                "group_id": cls.group.id,
+                "group_id": self.group.id,
                 "perm_read": True,
                 "perm_write": True,
                 "perm_create": True,
                 "perm_unlink": True,
             }
         )
-        cls.rule = cls.env["ir.rule"].create(
+        self.rule = self.env["ir.rule"].create(
             {
                 "name": "Exchange Record rule demo",
-                "model_id": cls.env.ref(
+                "model_id": self.env.ref(
                     "edi_core_oca.model_edi_exchange_consumer_test"
                 ).id,
                 "domain_force": "[('name', '=', 'test')]",
-                "groups": [(4, cls.group.id)],
+                "groups": [(4, self.group.id)],
             }
         )
-        cls.user = (
-            cls.env["res.users"]
+        self.user = (
+            self.env["res.users"]
             .with_context(no_reset_password=True, mail_notrack=True)
             .create(
                 {
                     "name": "Poor Partner (not integrating one)",
                     "email": "poor.partner@ododo.com",
                     "login": "poorpartner",
-                    "groups_id": [(6, 0, [cls.env.ref("base_edi.group_edi_user").id])],
+                    "groups_id": [(6, 0, [self.env.ref("base_edi.group_edi_user").id])],
                 }
             )
         )
-        cls.consumer_record = cls.env["edi.exchange.consumer.test"].create(
+        self.consumer_record = self.env["edi.exchange.consumer.test"].create(
             {"name": "test"}
         )
-        cls.exchange_type_out.exchange_filename_pattern = "{record.id}"
+        self.exchange_type_out.exchange_filename_pattern = "{record.id}"
 
-    @classmethod
-    def tearDownClass(cls):
-        cls.loader.restore_registry()
-        super().tearDownClass()
+    def tearDown(self):
+        self.loader.restore_registry()
+        super().tearDown()
 
     def create_record(self, user=False):
         vals = {
@@ -238,3 +230,76 @@ class TestEDIExchangeRecordSecurity(EDIBackendCommonTestCase):
         msg = rf"not allowed to access '{model._description}' \({model._name}\)"
         with self.assertRaisesRegex(AccessError, msg):
             child_exchange_record.with_user(self.user).read()
+
+    def test_search_pagination_with_inaccessible_middle_records(self):
+        """
+        Regression test:
+        If some records in the first page are filtered out due to access rules,
+        _search must fetch additional records from next pages without truncating them.
+        """
+
+        self.user.write({"groups_id": [(4, self.group.id)]})
+
+        # Two different companies are used to trigger multi-company access filtering
+        company_1 = self.env.ref("base.main_company")
+        company_2 = self.env["res.company"].create({"name": "Other Company"})
+
+        # Three target records:
+        # - consumer_c1 and consumer_c3 belong to the active company and are readable
+        # - consumer_c2 belongs to another company and will be filtered out
+        # by access rules
+        consumer_c1 = self.env["res.partner"].create(
+            {"name": "c1-a", "company_id": company_1.id}
+        )
+        consumer_c2 = self.env["res.partner"].create(
+            {"name": "c2", "company_id": company_2.id}
+        )
+        consumer_c3 = self.env["res.partner"].create(
+            {"name": "c1-b", "company_id": company_1.id}
+        )
+
+        # One EDI records pointing to readable target records
+        self.backend.create_record(
+            "test_csv_output",
+            {"model": consumer_c1._name, "res_id": consumer_c1.id},
+        )
+
+        # One EDI records pointing to records from another company
+        self.backend.create_record(
+            "test_csv_output",
+            {"model": consumer_c2._name, "res_id": consumer_c2.id},
+        )
+
+        # One EDI records pointing to readable target records
+        visible_id_2 = self.backend.create_record(
+            "test_csv_output",
+            {"model": consumer_c3._name, "res_id": consumer_c3.id},
+        ).id
+
+        # Restrict the environment to company_1 only, activating the multi-company rule
+        # that will hide records pointing to consumer_c2
+        env_company_1 = self.env(
+            context=dict(self.env.context, allowed_company_ids=[company_1.id])
+        )
+
+        # Execute the search as a non-superuser:
+        # - super()._search returns the first 2 IDs (1 visible + 1 hidden)
+        # - custom logic removes the 1 hidden
+        # - pagination logic fetches 1 more record from the next page
+        records = (
+            env_company_1["edi.exchange.record"]
+            .with_user(self.user)
+            .search([], limit=2, order="id asc")
+        )
+
+        # The result must NOT be truncated: the search should still return `
+        # limit` records
+        self.assertEqual(
+            len(records),
+            2,
+            "Search results were truncated when inaccessible records were "
+            "present in the first page",
+        )
+
+        # The records fetched from the second page must be present in the final result
+        self.assertIn(visible_id_2, records.ids)

@@ -373,6 +373,15 @@ class EDIBackend(models.Model):
         ]
         if record_ids:
             domain.append(("id", "in", record_ids))
+        # By default, it's pointless to consider records with quick_exec
+        # because they will be executed right away when created.
+        domain.append(
+            (
+                "type_id.quick_exec",
+                "=",
+                self.env.context.get("edi__quick_exec", False),
+            )
+        )
         return domain
 
     def _output_pending_records_domain(self, skip_sent=True, record_ids=None):
@@ -427,6 +436,7 @@ class EDIBackend(models.Model):
         old_state = state = exchange_record.edi_exchange_state
         error = traceback = False
         message = None
+        res = None
         try:
             res = self._exchange_process(exchange_record)
         except self._swallable_exceptions() as err:
