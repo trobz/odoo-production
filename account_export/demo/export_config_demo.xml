@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="demo_account_export_config_sage" model="account.export.config">
+        <field name="name">Export Sage</field>
+        <field name="is_default">True</field>
+        <field name="credit_debit_format">01</field>
+    </record>
+</odoo>

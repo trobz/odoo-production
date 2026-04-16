@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="report_xls" model="ir.actions.report">
+        <field name="model">account.export</field>
+        <field name="name">Account Export XLS</field>
+        <field name="report_type">xlsx</field>
+        <field name="report_name">account_export.report_xls</field>
+        <field name="report_file">account_export.report_xls</field>
+        <field name="binding_model_id" ref="model_account_export" />
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

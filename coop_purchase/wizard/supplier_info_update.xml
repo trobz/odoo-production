@@ -46,6 +46,11 @@
                                             optional="hide"
                                             column_invisible="not parent.show_discount"
                                         />
+                                        <field
+                                            name="seller_id"
+                                            column_invisible="1"
+                                            force_save="1"
+                                        />
                                     </list>
                                 </field>
                             </group>

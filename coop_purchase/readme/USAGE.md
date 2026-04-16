@@ -12,7 +12,7 @@ The `coop_purchase` module adds a few utilities to the purchasing flow, focusing
 Key areas to review:
 
 - `purchase.order` / `purchase.order.line`
-  - Adds display fields: `product_default_code`, `price_discounted`, `price_unit_tax`, and shows `price_total`.
+  - Adds helper fields: `product_default_code`, `price_discounted`, `price_unit_tax`, and shows `price_total`.
   - The `Upd. Prices` button opens the vendor price update wizard.
 - `account.move` / `account.move.line` (Vendor Bill / Vendor Refund)
   - Blocks bill creation from a PO if at least one related picking is not `Done`/`Cancelled`.
