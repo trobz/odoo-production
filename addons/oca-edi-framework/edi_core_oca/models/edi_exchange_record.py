@@ -113,6 +113,7 @@ class EDIExchangeRecord(models.Model):
     parent_id = fields.Many2one(
         comodel_name="edi.exchange.record",
         help="Original exchange which originated this record",
+        index=True,
     )
     related_exchange_ids = fields.One2many(
         string="Related exchanges",
@@ -133,6 +134,7 @@ class EDIExchangeRecord(models.Model):
         help="ACK generated for current exchange.",
         compute="_compute_ack_exchange_id",
         store=True,
+        index=True,
     )
     ack_received_on = fields.Datetime(
         string="ACK received on", related="ack_exchange_id.exchanged_on"
@@ -379,10 +381,11 @@ class EDIExchangeRecord(models.Model):
         # The backend already knows how to handle records
         # according to their direction and status.
         # Let it decide.
+        backend = self.backend_id.with_context(edi__quick_exec=True)
         if self.type_id.direction == "output":
-            self.backend_id._check_output_exchange_sync(record_ids=self.ids)
+            backend._check_output_exchange_sync(record_ids=self.ids)
         else:
-            self.backend_id._check_input_exchange_sync(record_ids=self.ids)
+            backend._check_input_exchange_sync(record_ids=self.ids)
 
     @api.constrains("backend_id", "type_id")
     def _constrain_backend(self):
@@ -635,8 +638,6 @@ class EDIExchangeRecord(models.Model):
             extend_ids = list(extend_query)
             result.extend(extend_ids[: limit - len(result)])
 
-        # Restore original ordering
-        result = [x for x in orig_ids if x in result]
         if set(orig_ids) != set(result):
             # Create a virgin query
             query = self.browse(result)._as_query()

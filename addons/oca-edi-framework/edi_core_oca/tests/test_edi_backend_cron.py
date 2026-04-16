@@ -16,49 +16,39 @@ LOGGERS = (
 
 
 class EDIBackendTestCronCase(EDIBackendCommonTestCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.partner2 = cls.env.ref("base.res_partner_10")
-        cls.partner3 = cls.env.ref("base.res_partner_12")
-        cls.record1 = cls.backend.create_record(
-            "test_csv_output", {"model": cls.partner._name, "res_id": cls.partner.id}
-        )
-        cls.record2 = cls.backend.create_record(
-            "test_csv_output", {"model": cls.partner._name, "res_id": cls.partner2.id}
-        )
-        cls.record3 = cls.backend.create_record(
-            "test_csv_output", {"model": cls.partner._name, "res_id": cls.partner3.id}
-        )
-        cls.records = cls.record1 + cls.record1 + cls.record3
-
-    @classmethod
-    def _setup_records(cls):  # pylint:disable=missing-return
-        super()._setup_records()
-        # Load fake models ->/
-        cls.loader = FakeModelLoader(cls.env, cls.__module__)
-        cls.loader.backup_registry()
-        from .fake_models import EdiTestExecution
-
-        cls.loader.update_registry((EdiTestExecution,))
-        cls.ExecutionAbstractModel = cls.env["edi.framework.test.execution"]
-        cls.model = cls.env["ir.model"].search(
-            [("model", "=", "edi.framework.test.execution")]
-        )
-        cls.exchange_type_out.generate_model_id = cls.model
-        cls.exchange_type_out.send_model_id = cls.model
-        cls.exchange_type_out.output_validate_model_id = cls.model
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.loader.restore_registry()
-        super().tearDownClass()
-
     def setUp(self):
         super().setUp()
+        self.loader = FakeModelLoader(self.env, self.__module__)
+        self.loader.backup_registry()
+        from .fake_models import EdiTestExecution
+
+        self.loader.update_registry((EdiTestExecution,))
+        self.ExecutionAbstractModel = self.env["edi.framework.test.execution"]
+        self.model = self.env["ir.model"].search(
+            [("model", "=", "edi.framework.test.execution")]
+        )
+        self.exchange_type_out.generate_model_id = self.model
+        self.exchange_type_out.send_model_id = self.model
+        self.exchange_type_out.output_validate_model_id = self.model
+        self.partner2 = self.env.ref("base.res_partner_10")
+        self.partner3 = self.env.ref("base.res_partner_12")
+        self.record1 = self.backend.create_record(
+            "test_csv_output", {"model": self.partner._name, "res_id": self.partner.id}
+        )
+        self.record2 = self.backend.create_record(
+            "test_csv_output", {"model": self.partner._name, "res_id": self.partner2.id}
+        )
+        self.record3 = self.backend.create_record(
+            "test_csv_output", {"model": self.partner._name, "res_id": self.partner3.id}
+        )
+        self.records = self.record1 + self.record1 + self.record3
         self.ExecutionAbstractModel.reset_faked("generate")
         self.ExecutionAbstractModel.reset_faked("send")
         self.ExecutionAbstractModel.reset_faked("check")
+
+    def tearDown(self):
+        self.loader.restore_registry()
+        super().tearDown()
 
     @mute_logger(*LOGGERS)
     def test_exchange_generate_new_no_auto(self):
@@ -87,14 +77,8 @@ class EDIBackendTestCronCase(EDIBackendCommonTestCase):
             # TODO: test better?
             self.assertFalse(rec.ack_exchange_id)
 
-    @mute_logger(*LOGGERS)
-    def test_exchange_generate_new_auto_send(self):
-        self.exchange_type_out.exchange_file_auto_generate = True
-        # No content ready to be sent, will get the content and send it
-        for rec in self.records:
-            self.assertEqual(rec.edi_exchange_state, "new")
-        self.backend._cron_check_output_exchange_sync()
-        for rec in self.records:
+    def _test_generate_new_auto_send(self, records):
+        for rec in records:
             self.assertEqual(rec.edi_exchange_state, "output_sent")
             self.assertTrue(
                 self.ExecutionAbstractModel.check_called_for(rec, "generate")
@@ -103,6 +87,26 @@ class EDIBackendTestCronCase(EDIBackendCommonTestCase):
                 rec._get_file_content(), self.ExecutionAbstractModel._call_key(rec)
             )
             self.assertTrue(self.ExecutionAbstractModel.check_called_for(rec, "send"))
+
+    @mute_logger(*LOGGERS)
+    def test_exchange_generate_new_auto_send(self):
+        self.exchange_type_out.exchange_file_auto_generate = True
+        # No content ready to be sent, will get the content and send it
+        for rec in self.records:
+            self.assertEqual(rec.edi_exchange_state, "new")
+        self.backend._cron_check_output_exchange_sync()
+        self._test_generate_new_auto_send(self.records)
+
+    @mute_logger(*LOGGERS)
+    def test_exchange_generate_new_quick_exec_skip_cron(self):
+        self.exchange_type_out.exchange_file_auto_generate = True
+        self.exchange_type_out.quick_exec = True
+        for rec in self.records:
+            self.assertEqual(rec.edi_exchange_state, "new")
+        # Records w/ quick exec should be skipped by the cron
+        self.backend._cron_check_output_exchange_sync()
+        for rec in self.records:
+            self.assertEqual(rec.edi_exchange_state, "new")
 
     @mute_logger(*LOGGERS)
     def test_exchange_generate_output_ready_auto_send(self):
