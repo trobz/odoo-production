@@ -135,9 +135,9 @@ subtrees: !!python/object/new:emoi.config.repo.SubtreeCollection
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
         alias: oca-edi
-        branch: '18.0'
+        branch: 'merge-branch-foodcoop-18.0'
         prefix: addons/oca-edi
-        repository: git@github.com:OCA/edi.git
+        repository: git@github.com:trobz/edi.git
         squash: true
         watch-contributions: false
     - !!python/object:emoi.config.repo.Subtree
