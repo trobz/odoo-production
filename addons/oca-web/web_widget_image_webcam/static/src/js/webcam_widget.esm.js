@@ -4,6 +4,7 @@ import {Component, onMounted, onWillStart, useState} from "@odoo/owl";
 import {ImageField, imageField} from "@web/views/fields/image/image_field";
 import {Dialog} from "@web/core/dialog/dialog";
 import {_t} from "@web/core/l10n/translation";
+import {debounce} from "@web/core/utils/timing";
 import {loadJS} from "@web/core/assets";
 import {patch} from "@web/core/utils/patch";
 import {useService} from "@web/core/utils/hooks";
@@ -72,8 +73,9 @@ patch(ImageField.prototype, {
     setup() {
         super.setup();
         this.dialogService = useService("dialog");
+        this.debounceOnWebcamClicked = debounce(this.onWebcamClicked, 1000);
     },
-    async onWebcamClicked() {
+    onWebcamClicked() {
         if (window.QUnit) {
             // QUnit tests don't have access to the webcam, so we skip the dialog
             return;

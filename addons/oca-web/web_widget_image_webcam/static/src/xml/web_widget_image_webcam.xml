@@ -14,7 +14,7 @@
                 data-tooltip="WebCam"
                 aria-label="WebCam"
             >
-                <i class="fa fa-eye" t-on-click="onWebcamClicked" />
+                <i class="fa fa-eye" t-on-click="debounceOnWebcamClicked" />
             </button>
         </xpath>
     </t>
