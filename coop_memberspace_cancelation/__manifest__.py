@@ -1,19 +1,22 @@
 {
     "name": "Coop Memberspace Cancelation",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Custom",
-    "description": """
-Standard member can cancel his shifts    """,
-    "author": "Trobz",
+    "summary": "Standard member can cancel his shifts",
+    "author": "La Louve, Trobz",
+    "license": "AGPL-3",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "depends": [
         "coop_memberspace",
     ],
     "data": [
         "views/website_view.xml",
-        "views/assets.xml",
     ],
-    "test": [],
+    "assets": {
+        "web.assets_frontend": [
+            "coop_memberspace_cancelation/static/src/js/exchange_shift.esm.js",
+        ],
+    },
     "installable": True,
     "application": False,
 }
