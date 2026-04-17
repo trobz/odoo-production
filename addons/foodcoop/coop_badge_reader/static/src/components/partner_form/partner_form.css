@@ -1,59 +1,56 @@
-.partner-success {
-    background-color: #5cb85c;
-}
+.coop_badge_reader_app {
+    .partner-success {
+        background-color: #5cb85c;
+    }
+    .partner-warning {
+        background-color: #f0ad4e;
+    }
+    .partner-danger {
+        background-color: #780300;
+    }
 
-.partner-warning {
-    background-color: #f0ad4e;
-}
-
-.partner-danger {
-    background-color: #780300;
-}
-
-.partner-error {
-    background-color: #000000;
-}
-.label {
-    padding: 5px 10px;
-    margin: 0px 5px;
-    border-radius: 3px;
-    display: inline-block;
-}
-
-.label-success {
-    background-color: #149014;
-    color: white;
-}
-
-.label-warning {
-    background-color: #b9791e;
-    color: white;
-}
-
-.label-danger {
-    background-color: #b32d28;
-    color: white;
-}
-.text-message-warning {
-    padding: 8px 15px;
-    background-color: #ecd3af;
-    border-radius: 4px;
-}
-.text-message-danger {
-    padding: 8px 15px;
-    background-color: #f5b7b1;
-    border-radius: 4px;
-}
-.text-message-contact {
-    padding: 8px 15px;
-    background-color: #aed6f1;
-    border-radius: 4px;
-}
-.img-badge-partner-form {
-    width: 280px;
-    height: 280px;
-}
-.img-partner-list {
-    width: 64px;
-    height: 64px;
+    .partner-error {
+        background-color: #000000;
+    }
+    .label {
+        padding: 5px 10px;
+        margin: 0px 5px;
+        border-radius: 3px;
+        display: inline-block;
+    }
+    .label-success {
+        background-color: #149014;
+        color: white;
+    }
+    .label-warning {
+        background-color: #b9791e;
+        color: white;
+    }
+    .label-danger {
+        background-color: #b32d28;
+        color: white;
+    }
+    .text-message-warning {
+        padding: 8px 15px;
+        background-color: #ecd3af;
+        border-radius: 4px;
+    }
+    .text-message-danger {
+        padding: 8px 15px;
+        background-color: #f5b7b1;
+        border-radius: 4px;
+    }
+    .text-message-contact {
+        padding: 8px 15px;
+        background-color: #aed6f1;
+        border-radius: 4px;
+    }
+    .img-badge-partner-form {
+        width: 280px;
+        height: 280px;
+    }
+    .img-partner-list {
+        width: 64px;
+        height: 64px;
+    }
 }

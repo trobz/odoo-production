@@ -12,6 +12,9 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <group>
+                        <field name="partner_id" readonly="1" />
+                    </group>
                     <notebook>
                         <page string="Lines">
                             <group>
@@ -44,7 +47,6 @@
                                             name="discount"
                                             default_focus="1"
                                             optional="hide"
-                                            column_invisible="not parent.show_discount"
                                         />
                                         <field
                                             name="seller_id"
