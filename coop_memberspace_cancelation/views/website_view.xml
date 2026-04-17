@@ -11,8 +11,8 @@
                         class="fa fa-times button-icon confirm-cancel-registration"
                         t-att-registration-id="shift.id"
                         t-att-registration-name="date_begin and ' '.join(date_begin) or ''"
-                        data-toggle="modal"
-                        t-attf-data-target="#modal_confirm_cancel_registration_{{shift.shift_type or 'standard'}}"
+                        data-bs-toggle="modal"
+                        t-attf-data-bs-target="#modal_confirm_cancel_registration_{{shift.shift_type or 'standard'}}"
                     />
                 </td>
             </t>
@@ -56,7 +56,7 @@
                             <div class="text-center">
                                 <span
                                     class="fa fa-times"
-                                    data-dismiss="modal"
+                                    data-bs-dismiss="modal"
                                     style="margin-right: 40px;font-size: 3em;"
                                 />
                                 <span
@@ -94,7 +94,7 @@
                             <div class="text-center">
                                 <span
                                     class="fa fa-times"
-                                    data-dismiss="modal"
+                                    data-bs-dismiss="modal"
                                     style="margin-right: 40px;font-size: 3em;"
                                 />
                                 <span

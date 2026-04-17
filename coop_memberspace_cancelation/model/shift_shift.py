@@ -1,16 +1,15 @@
-from odoo import _, api, models
+from odoo import _, models
 
 
 class ShiftShift(models.Model):
     _inherit = "shift.shift"
 
-    @api.multi
     def button_done(self):
         """
         @Overide the function to create -1 point counter for standard registration
         which is canceled
         """
-        super().button_done()
+        res = super().button_done()
         SCEvent = (
             self.env["shift.counter.event"]
             .sudo()
@@ -31,3 +30,4 @@ class ShiftShift(models.Model):
                     if record.partner_id.final_ftop_point > 0:
                         vals["type"] = "ftop"
                     SCEvent.create(vals)
+        return res
