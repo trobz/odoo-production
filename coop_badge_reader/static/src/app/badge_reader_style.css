@@ -1,26 +1,26 @@
 .coop_badge_reader_app {
     min-height: 100vh;
-}
-.jumbotron {
-    background: #fff;
-    border-radius: 12px;
-    padding: 30px 40px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-}
-.search-card {
-    width: 100%;
-    max-width: 600px;
-}
-.input-label {
-    font-weight: bold;
-    color: #333;
-}
-.form-control {
-    border-radius: 8px;
-    padding: 8px 12px;
-}
-.btn-primary {
-    border-radius: 8px;
-    font-weight: bold;
-    padding: 10px 20px;
+    .jumbotron {
+        background: #fff;
+        border-radius: 12px;
+        padding: 30px 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    .search-card {
+        width: 100%;
+        max-width: 600px;
+    }
+    .input-label {
+        font-weight: bold;
+        color: #333;
+    }
+    .form-control {
+        border-radius: 8px;
+        padding: 8px 12px;
+    }
+    .btn-primary {
+        border-radius: 8px;
+        font-weight: bold;
+        padding: 10px 20px;
+    }
 }
