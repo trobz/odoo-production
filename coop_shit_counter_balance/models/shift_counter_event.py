@@ -1,4 +1,4 @@
-from odoo import _, api, models
+from odoo import api, models
 
 
 class ShiftCounterEvent(models.Model):
@@ -20,13 +20,13 @@ class ShiftCounterEvent(models.Model):
             SCEvent.create(
                 [
                     {
-                        "name": _("Equilibrage compteur Volant >>> Fixe"),
+                        "name": self.env._("Equilibrage compteur Volant >>> Fixe"),
                         "type": "standard",
                         "partner_id": partner.id,
                         "point_qty": points,
                     },
                     {
-                        "name": _("Equilibrage compteur Volant >>> Fixe"),
+                        "name": self.env._("Equilibrage compteur Volant >>> Fixe"),
                         "type": "ftop",
                         "partner_id": partner.id,
                         "point_qty": points * -1,

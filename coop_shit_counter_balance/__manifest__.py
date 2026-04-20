@@ -20,10 +20,10 @@
 {
     "name": "Coop Shift - Balance Counter Event",
     "summary": "Balance The Counter Event",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Tools",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
-    "author": "Trobz",
+    "author": "Trobz, La Louve",
     "license": "AGPL-3",
     "depends": [
         "coop_shift",
