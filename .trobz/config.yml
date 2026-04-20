@@ -1,20 +1,23 @@
 common:
 
   modules:
-    - capital_subscription
-    - coop_account_check_deposit
-    - coop_account_product_fiscal_classification
-    - coop_capital_certificate
-    - coop_default_pricetag
+    # - capital_subscription
+    # - coop_account_check_deposit
+    # - coop_account_product_fiscal_classification
+    # - coop_capital_certificate
+    # - coop_default_pricetag
+    - coop_purchase
     # - coop_shift
-    # - foodcoop18_module
     # - delivery
+    - foodcoop18_module
+    
     # - pos_automatic_validation
     # - pos_order_return
     # - pos_order_return_scrap
     # - pos_order_report
     # - pos_payment_terminal
     # - pos_payment_terminal_return
+
 
   load:
     - base
