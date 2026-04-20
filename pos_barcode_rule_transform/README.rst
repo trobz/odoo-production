@@ -60,6 +60,7 @@ Authors
 -------
 
 * Druidoo
+* La Louve
 
 Contributors
 ------------
