@@ -18,18 +18,18 @@
 ##############################################################################
 
 {
-    'name': 'Coop Shift - Balance Counter Event',
-    'summary': 'Balance The Counter Event',
-    'version': '12.0.1.0.0',
-    'category': 'Tools',
-    'website': 'https://trobz.com',
-    'author': 'Trobz',
-    'license': 'AGPL-3',
-    'depends': [
-        'coop_shift',
+    "name": "Coop Shift - Balance Counter Event",
+    "summary": "Balance The Counter Event",
+    "version": "12.0.1.0.0",
+    "category": "Tools",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
+    "author": "Trobz",
+    "license": "AGPL-3",
+    "depends": [
+        "coop_shift",
     ],
-    'data': [
-        'data/ir_cron.xml',
+    "data": [
+        "data/ir_cron.xml",
     ],
-    'installable': True,
+    "installable": True,
 }
