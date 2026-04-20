@@ -1,25 +1,23 @@
-///*
+// /*
 //    Copyright (C) 2019-Today: Druidoo (https://www.druidoo.io)
 //    @author: Iván Todorovich <ivan.todorovich@druidoo.io>
 //    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-//*/
+//* /
 
-odoo.define('pos_barcode_rule_transform.BarcodeParser', function (require) {
+odoo.define("pos_barcode_rule_transform.BarcodeParser", function (require) {
     "use strict";
 
-    var BarcodeParser = require('barcodes.BarcodeParser');
-    // var Model = require('web.Model');
-    var rpc = require('web.rpc');
-
+    var BarcodeParser = require("barcodes.BarcodeParser");
+    // Var Model = require('web.Model');
+    var rpc = require("web.rpc");
 
     /*
     Include some hooks. Nothing more
     Could be moved to a standalone module
     */
     BarcodeParser.include({
-
         _barcode_rule_query_fields: function () {
-            return ['name', 'sequence', 'type', 'encoding', 'pattern', 'alias'];
+            return ["name", "sequence", "type", "encoding", "pattern", "alias"];
         },
 
         /*
@@ -33,24 +31,25 @@ odoo.define('pos_barcode_rule_transform.BarcodeParser', function (require) {
             }
             var id = this.nomenclature_id[0];
             rpc.query({
-                    model: 'barcode.nomenclature',
-                    method: 'read',
-                    args: [[id], ['name', 'rule_ids', 'upc_ean_conv']],
-                })
+                model: "barcode.nomenclature",
+                method: "read",
+                args: [[id], ["name", "rule_ids", "upc_ean_conv"]],
+            })
                 .then(function (nomenclatures) {
                     self.nomenclature = nomenclatures[0];
 
                     var args = [
-                        [['barcode_nomenclature_id', '=', self.nomenclature.id]],
+                        [["barcode_nomenclature_id", "=", self.nomenclature.id]],
                         // ['name', 'sequence', 'type', 'encoding', 'pattern', 'alias'],
-                        self._barcode_rule_query_fields()
+                        self._barcode_rule_query_fields(),
                     ];
                     return rpc.query({
-                        model: 'barcode.rule',
-                        method: 'search_read',
+                        model: "barcode.rule",
+                        method: "search_read",
                         args: args,
                     });
-                }).then(function (rules) {
+                })
+                .then(function (rules) {
                     rules = rules.sort(function (a, b) {
                         return a.sequence - b.sequence;
                     });
@@ -58,15 +57,14 @@ odoo.define('pos_barcode_rule_transform.BarcodeParser', function (require) {
                 });
         },
 
-
         /*
         Overload to add hooks:
             _apply_rule_parsed_result
         */
         parse_barcode: function (barcode) {
             var parsed_result = {
-                encoding: '',
-                type: 'error',
+                encoding: "",
+                type: "error",
                 code: barcode,
                 base_code: barcode,
                 value: 0,
@@ -89,32 +87,36 @@ odoo.define('pos_barcode_rule_transform.BarcodeParser', function (require) {
 
         try_rule: function (parsed_result, barcode, rule) {
             var cur_barcode = barcode;
-            if (rule.encoding === 'ean13' &&
-                    this.check_encoding(barcode,'upca') &&
-                    this.nomenclature.upc_ean_conv in {'upc2ean': '', 'always': ''}) {
-                cur_barcode = '0' + cur_barcode;
-            } else if (rule.encoding === 'upca' &&
-                    this.check_encoding(barcode,'ean13') &&
-                    barcode[0] === '0' &&
-                    this.upc_ean_conv in {'ean2upc': '', 'always': ''}) {
-                cur_barcode = cur_barcode.substr(1,12);
+            if (
+                rule.encoding === "ean13" &&
+                this.check_encoding(barcode, "upca") &&
+                this.nomenclature.upc_ean_conv in {upc2ean: "", always: ""}
+            ) {
+                cur_barcode = "0" + cur_barcode;
+            } else if (
+                rule.encoding === "upca" &&
+                this.check_encoding(barcode, "ean13") &&
+                barcode[0] === "0" &&
+                this.upc_ean_conv in {ean2upc: "", always: ""}
+            ) {
+                cur_barcode = cur_barcode.substr(1, 12);
             }
 
-            if (!this.check_encoding(cur_barcode,rule.encoding)) {
+            if (!this.check_encoding(cur_barcode, rule.encoding)) {
                 return false;
             }
 
             var match = this.match_pattern(cur_barcode, rule.pattern, rule.encoding);
             if (match.match) {
-                if (rule.type === 'alias') {
+                if (rule.type === "alias") {
                     barcode = rule.alias;
                     parsed_result.code = barcode;
-                    parsed_result.type = 'alias';
+                    parsed_result.type = "alias";
                 } else {
-                    parsed_result.encoding  = rule.encoding;
-                    parsed_result.type      = rule.type;
-                    parsed_result.value     = match.value;
-                    parsed_result.code      = cur_barcode;
+                    parsed_result.encoding = rule.encoding;
+                    parsed_result.type = rule.type;
+                    parsed_result.value = match.value;
+                    parsed_result.code = cur_barcode;
                     if (rule.encoding === "ean13") {
                         parsed_result.base_code = this.sanitize_ean(match.base_code);
                     } else {
@@ -124,9 +126,7 @@ odoo.define('pos_barcode_rule_transform.BarcodeParser', function (require) {
                 }
             }
         },
-
     });
-
 
     /*
     Actual implementation of barcode transform
@@ -134,7 +134,7 @@ odoo.define('pos_barcode_rule_transform.BarcodeParser', function (require) {
     BarcodeParser.include({
         _barcode_rule_query_fields: function () {
             var res = this._super.apply(this, arguments);
-            res.push('transform_expr');
+            res.push("transform_expr");
             return res;
         },
 
@@ -149,11 +149,21 @@ odoo.define('pos_barcode_rule_transform.BarcodeParser', function (require) {
                         barcode: res.code,
                     });
                     if (typeof new_value !== "number") {
-                        throw new TypeError('Transformed value should be a Number. Got this instead: ' + new_value + ' (' + typeof new_value + ')')
+                        throw new TypeError(
+                            "Transformed value should be a Number. Got this instead: " +
+                                new_value +
+                                " (" +
+                                typeof new_value +
+                                ")"
+                        );
                     }
                     res.value = new_value;
-                } catch(err) {
-                    console.error('Unable to apply transform expression:', rule.transform_expr, err)
+                } catch (err) {
+                    console.error(
+                        "Unable to apply transform expression:",
+                        rule.transform_expr,
+                        err
+                    );
                 }
             }
             return res;
@@ -161,5 +171,4 @@ odoo.define('pos_barcode_rule_transform.BarcodeParser', function (require) {
     });
 
     return BarcodeParser;
-
 });
