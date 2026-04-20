@@ -1,3 +1,0 @@
-- Thien (Vo Hong) \<thienvh@trobz.com\>
-- Mathias Francke \<mathias.francke@initos.com\>
-- Phuc (Phan Hong) \<phucph@trobz.com\>
