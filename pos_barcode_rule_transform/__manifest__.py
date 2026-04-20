@@ -8,7 +8,7 @@
     "category": "Point Of Sale",
     "summary": "Transforms the value read in the barcode with a JS expression",
     "author": "Druidoo, Odoo Community Association (OCA)",
-    "website": "https://www.druidoo.io/",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": ["point_of_sale"],
     "data": ["views/assets.xml", "views/barcode_rule.xml"],
