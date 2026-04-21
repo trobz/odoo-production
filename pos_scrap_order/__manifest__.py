@@ -7,19 +7,16 @@
     "category": "Point Of Sale",
     "summary": """Create scrap order from POS screen""",
     "author": "Trobz",
-    "website": "https://trobz.com",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
-    "depends": [
-        "point_of_sale",
-        "stock"
-    ],
+    "depends": ["point_of_sale", "stock"],
     "data": [
         "security/ir.model.access.csv",
         "views/assets.xml",
         "views/pos_config.xml",
     ],
-    'qweb': [
-        'static/src/xml/screen_show_scrap_list.xml',
-        'static/src/xml/screen.xml',
+    "qweb": [
+        "static/src/xml/screen_show_scrap_list.xml",
+        "static/src/xml/screen.xml",
     ],
 }

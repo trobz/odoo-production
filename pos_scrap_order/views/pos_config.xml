@@ -1,19 +1,17 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo>
-
     <record id="pos_config_view_form_inherit" model="ir.ui.view">
         <field name="name">pos_config_view_form_inherit</field>
         <field name="model">pos.config</field>
         <field name="inherit_id" ref="point_of_sale.pos_config_view_form" />
         <field name="arch" type="xml">
-            <xpath expr="//div[@id='inventory_location']"
-                position="after">
+            <xpath expr="//div[@id='inventory_location']" position="after">
                 <div class="row mt16 o_settings_container" name="inventory_scrap">
                     <div class="col-12 col-lg-6 o_setting_box">
                         <div class="o_setting_right_pane">
-                            <label for="scrap_order_option"/>
+                            <label for="scrap_order_option" />
                             <div class="content-group mt16">
-                                <field name="scrap_order_option"/>
+                                <field name="scrap_order_option" />
                             </div>
                         </div>
                     </div>
@@ -21,5 +19,4 @@
             </xpath>
         </field>
     </record>
-
 </odoo>
