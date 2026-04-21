@@ -46,5 +46,5 @@ class TestFECExportGroupSalePurchase(TestFECExport):
             "OUV|Balance initiale|OUVERTURE/2020|20200101|999999|Undistributed Profits/Losses|||-|20200101|/|0,00| 000000000003000,00|||20200101||\r\n"  # noqa: E501
             f"OUV|Balance initiale|OUVERTURE/2020|20200101|121000|Account Receivable|{self.partner_a.id}|partner_a|-|20200101|/| 000000000003000,00|0,00|||20200101||\r\n"  # noqa: E501
             f"INV|Customer Invoices|INV/2020/00001|20200101|121000|Account Receivable|{self.partner_a.id}|partner_a|-|20200101|INV/2020/00001| 000000000003000,00|0,00|||20200101| 000000000003000,00|USD\r\n"  # noqa: E501
-            "INV|Customer Invoices|INV/2020/00001|20200101|400000|Product Sales|||-|20200101|test line|0,00| 000000000003000,00|||20200101|-000000000002000,00|USD",  # noqa: E501
+            "INV|Customer Invoices|INV/2020/00001|20200101|400000|Product Sales|||-|20200101|test line|0,00| 000000000003000,00|||20200101|-000000000003000,00|USD",  # noqa: E501
         )
