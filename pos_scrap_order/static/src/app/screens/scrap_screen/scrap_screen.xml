@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_scrap_order.ScrapScreen">
+        <div class="scrap-screen screen h-100 d-flex flex-column">
+            <div
+                class="scrap-top-bar d-flex align-items-center justify-content-between px-3"
+            >
+                <span class="scrap-btn" t-on-click="clickBack">
+                    <i class="fa fa-angle-double-left" />
+                    Back
+                </span>
+                <h1 class="m-0">Scrap Order</h1>
+                <span class="scrap-btn scrap-btn-highlight" t-on-click="makeScrap">
+                    Create Scrap Order
+                    <i class="fa fa-angle-double-right" />
+                </span>
+            </div>
+            <div class="scrap-body d-flex flex-row flex-grow-1 overflow-hidden">
+                <div class="scrap-left overflow-y-auto" />
+                <div class="scrap-right overflow-y-auto">
+                    <div class="pos-scrap-note">
+                        <div>ATTENTION</div>
+                        <span
+                        >This action will move these products below into the scrap location</span>
+                    </div>
+                    <div class="pos-scrap-container">
+                        <div class="pos-scraps">
+                            <div class="pos-center-align">
+                                <t t-out="order.name" />
+                            </div>
+                            <br />
+                            <table class="scrap-orderlines">
+                                <colgroup>
+                                    <col width="50%" />
+                                    <col width="25%" />
+                                    <col width="25%" />
+                                </colgroup>
+                                <t t-foreach="orderlines" t-as="line" t-key="line.uuid">
+                                    <tr>
+                                        <td>
+                                            <t t-out="line.product_id.display_name" />
+                                        </td>
+                                        <td class="pos-right-align">
+                                            <t t-out="line.qty" />
+                                            <t t-if="line.product_id.uom_id">
+                                                <t
+                                                    t-out="' ' + line.product_id.uom_id.name"
+                                                />
+                                            </t>
+                                        </td>
+                                        <td class="pos-right-align">
+                                            <t
+                                                t-out="env.utils.formatCurrency(line.get_display_price())"
+                                            />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

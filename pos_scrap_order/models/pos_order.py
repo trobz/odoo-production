@@ -3,7 +3,7 @@
 
 import logging
 
-from odoo import _, api, models
+from odoo import api, models
 from odoo.exceptions import AccessError, UserError
 
 _logger = logging.getLogger(__name__)
@@ -23,76 +23,83 @@ class PosOrder(models.Model):
     def _get_scrap_vals(self, order, line, default_vals):
         vals = {}
         session = self.env["pos.session"].browse(order.get("pos_session_id"))
-        location = session.config_id.stock_location_id
+        location = session.config_id.picking_type_id.default_location_src_id
         if len(line) == 3:
             product = self.env["product.product"].browse(line[2].get("product_id"))
             vals = {
                 "product_id": product.id,
                 "scrap_qty": line[2].get("qty"),
-                "location_id": location.id,
                 "product_uom_id": product.uom_id.id,
-                "origin": _("POS Session: ") + session.display_name,
+                "origin": self.env._("POS Session: ") + session.display_name,
             }
+            if location:
+                vals["location_id"] = location.id
             vals.update(default_vals)
         return vals
 
     @api.model
-    def create_scrap_from_ui(self, order, default_vals={}):
+    def create_scrap_from_ui(self, order, default_vals=None):
         scrap_ids = []
         msg = {}
-        vals = []
+        if default_vals is None:
+            default_vals = {}
         session = self.env["pos.session"].browse(order.get("pos_session_id"))
         scrap_order_option = session.config_id.scrap_order_option
         lines = order.get("lines")
         Scrap = self.env["stock.scrap"]
         try:
-            if scrap_order_option == "no":
-                raise AccessError("")
-            for line in lines:
-                if len(line) == 3:
-                    vals.append(self._get_scrap_vals(order, line, default_vals))
-            if len(vals) == len(lines):
-                scraps = Scrap.create(vals)
-                if scrap_order_option == "force":
-                    scraps.do_scrap()
-                else:
-                    for scrap in scraps:
-                        res = scrap.action_validate()
-                        if scrap_order_option == "onhand" and res is not True:
-                            raise OutofStockError(
-                                _("The product {} has no enough stock.").format(
-                                    scrap.product_id.display_name
+            with self.env.cr.savepoint():
+                if scrap_order_option == "no":
+                    raise AccessError(self.env._("Scrap order is disabled."))
+                vals = []
+                for line in lines:
+                    if len(line) == 3:
+                        vals.append(self._get_scrap_vals(order, line, default_vals))
+                if len(vals) == len(lines):
+                    scraps = Scrap.create(vals)
+                    if scrap_order_option == "force":
+                        scraps.do_scrap()
+                    else:
+                        for scrap in scraps:
+                            res = scrap.action_validate()
+                            if scrap_order_option == "onhand" and res is not True:
+                                raise OutofStockError(
+                                    self.env._(
+                                        "The product {} has no enough stock."
+                                    ).format(scrap.product_id.display_name)
                                 )
-                            )
-                scrap_ids = scraps.ids
-            msg = {
-                "title": _("Successful!"),
-                "body": _("The product(s) has been sent to scrap location"),
-            }
+                    scrap_ids = scraps.ids
+                msg = {
+                    "title": self.env._("Successful!"),
+                    "body": self.env._(
+                        "The product(s) has been sent to scrap location"
+                    ),
+                }
         except OutofStockError as e:
-            self.env.cr.rollback()
             scrap_ids = []
-            msg = {"title": _("No Enough Stock!"), "body": e.args[0]}
+            msg = {"title": self.env._("No Enough Stock!"), "body": e.args[0]}
         except AccessError:
-            self.env.cr.rollback()
             scrap_ids = []
             msg = {
-                "title": _("Access Error!"),
-                "body": _("You have no right to make the scrap order."),
+                "title": self.env._("Access Error!"),
+                "body": self.env._("You have no right to make the scrap order."),
             }
         except UserError as err:
-            self.env.cr.rollback()
             scrap_ids = []
             _logger.error("====================================")
             _logger.error(str(err))
             msg = {
-                "title": _("User Error!"),
-                "body": _("Stock data is incorrect. Please contact the administrator."),
+                "title": self.env._("User Error!"),
+                "body": self.env._(
+                    "Stock data is incorrect. Please contact the administrator."
+                ),
             }
         except Exception as err:
-            self.env.cr.rollback()
             scrap_ids = []
             _logger.error("====================================")
             _logger.error(str(err))
-            msg = {"title": _("Error!"), "body": _("Data is incorrect.")}
+            msg = {
+                "title": self.env._("Error!"),
+                "body": self.env._("Data is incorrect."),
+            }
         return {"scrap_ids": scrap_ids, "msg": msg}
