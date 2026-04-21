@@ -7,12 +7,9 @@
     "category": "Point Of Sale",
     "summary": """Create scrap order from POS screen with Origin""",
     "author": "Trobz",
-    "website": "https://trobz.com",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
-    "depends": [
-        "pos_scrap_order",
-        "stock_scrap_origin"
-    ],
+    "depends": ["pos_scrap_order", "stock_scrap_origin"],
     "data": [
         "views/assets.xml",
         "views/pos_config.xml",
