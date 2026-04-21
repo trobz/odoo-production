@@ -39,8 +39,6 @@
     "data": [
         "data/res_groups.xml",
         "data/res_users_role.xml",
-        "data/res_users.xml",
-        "data/res.users.role.line.csv",
         "data/ir.model.access.csv",
         "security/ir.model.access.csv",
         "views/mass_mailing_views.xml",
@@ -51,6 +49,10 @@
         "views/res_partner_views.xml",
         "views/menu.xml",
         "report/coop_print_badge_report.xml",
+    ],
+    "demo": [
+        "demo/res_users.xml",
+        "demo/res.users.role.line.csv",
     ],
     "assets": {
         "web.assets_backend": [
