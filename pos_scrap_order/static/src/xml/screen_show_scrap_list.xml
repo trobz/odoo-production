@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <templates id="template" xml:space="preserve">
 
     <t t-name="ShowScrapListButton">
@@ -11,20 +11,22 @@
             <div class='screen-content'>
                 <section class='top-content'>
                     <span class='button back'>
-                        <i class='fa fa-angle-double-left'></i>
+                        <i class='fa fa-angle-double-left' />
                         Back
                     </span>
                     <h1>Scrap Orders</h1>
                     <span class='button next highlight'>
                         Make Scrap Order
-                        <i class='fa fa-angle-double-right'></i>
+                        <i class='fa fa-angle-double-right' />
                     </span>
                 </section>
                 <section class="full-content">
                     <div class="window">
                         <section class="subwindow">
                             <div class="subwindow-container">
-                                <div class="subwindow-container-fix touch-scrollable scrollable-y">
+                                <div
+                                    class="subwindow-container-fix touch-scrollable scrollable-y"
+                                >
                                     <table class="container-list">
                                         <thead>
                                             <tr>
@@ -35,8 +37,7 @@
                                                 <th>Origin</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="scrap-list-contents">
-                                        </tbody>
+                                        <tbody class="scrap-list-contents" />
                                     </table>
                                 </div>
                             </div>
@@ -50,19 +51,19 @@
     <t t-name="ScrapListLine">
         <tr class="container-line" t-att-data-id="scrapOrder.id">
             <td>
-                <t t-esc="scrapOrder.name"/>
+                <t t-esc="scrapOrder.name" />
             </td>
             <td>
-                <t t-esc="scrapOrder.product_display_name"/>
+                <t t-esc="scrapOrder.product_display_name" />
             </td>
             <td>
-                <t t-esc="scrapOrder.qty_str"/>
+                <t t-esc="scrapOrder.qty_str" />
             </td>
             <td>
-                <t t-esc="scrapOrder.date"/>
+                <t t-esc="scrapOrder.date" />
             </td>
             <td>
-                <t t-esc="scrapOrder.origin"/>
+                <t t-esc="scrapOrder.origin" />
             </td>
         </tr>
     </t>

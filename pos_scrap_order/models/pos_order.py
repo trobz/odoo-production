@@ -1,16 +1,20 @@
 # Copyright (C) Nguyen Minh Chien (chien@trobz.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import models, api, _
-from odoo.exceptions import AccessError, UserError
 import logging
+
+from odoo import _, api, models
+from odoo.exceptions import AccessError, UserError
 
 _logger = logging.getLogger(__name__)
 
+
 class OutofStockError(AccessError):
-    """ Out of stock exception """
+    """Out of stock exception"""
+
     def __init__(self, msg):
         super().__init__(msg)
+
 
 class PosOrder(models.Model):
     _inherit = "pos.order"
@@ -27,7 +31,7 @@ class PosOrder(models.Model):
                 "scrap_qty": line[2].get("qty"),
                 "location_id": location.id,
                 "product_uom_id": product.uom_id.id,
-                "origin": _("POS Session: ") + session.display_name
+                "origin": _("POS Session: ") + session.display_name,
             }
             vals.update(default_vals)
         return vals
@@ -55,26 +59,26 @@ class PosOrder(models.Model):
                     for scrap in scraps:
                         res = scrap.action_validate()
                         if scrap_order_option == "onhand" and res is not True:
-                            raise OutofStockError(_("The product {} has no enough stock.").format(
-                                scrap.product_id.display_name))
+                            raise OutofStockError(
+                                _("The product {} has no enough stock.").format(
+                                    scrap.product_id.display_name
+                                )
+                            )
                 scrap_ids = scraps.ids
             msg = {
                 "title": _("Successful!"),
-                "body": _("The product(s) has been sent to scrap location")
+                "body": _("The product(s) has been sent to scrap location"),
             }
         except OutofStockError as e:
             self.env.cr.rollback()
             scrap_ids = []
-            msg = {
-                "title": _("No Enough Stock!"),
-                "body": e.args[0]
-            }
-        except AccessError as e:
+            msg = {"title": _("No Enough Stock!"), "body": e.args[0]}
+        except AccessError:
             self.env.cr.rollback()
             scrap_ids = []
             msg = {
                 "title": _("Access Error!"),
-                "body": _("You have no right to make the scrap order.")
+                "body": _("You have no right to make the scrap order."),
             }
         except UserError as err:
             self.env.cr.rollback()
@@ -83,15 +87,12 @@ class PosOrder(models.Model):
             _logger.error(str(err))
             msg = {
                 "title": _("User Error!"),
-                "body": _("Stock data is incorrect. Please contact the administrator.")
+                "body": _("Stock data is incorrect. Please contact the administrator."),
             }
         except Exception as err:
             self.env.cr.rollback()
             scrap_ids = []
             _logger.error("====================================")
             _logger.error(str(err))
-            msg = {
-                "title": _("Error!"),
-                "body": _("Data is incorrect.")
-            }
+            msg = {"title": _("Error!"), "body": _("Data is incorrect.")}
         return {"scrap_ids": scrap_ids, "msg": msg}

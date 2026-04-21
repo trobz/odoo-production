@@ -2,23 +2,23 @@
  * putting this inside subwindow-container fixes it.
  */
 .pos .scraplist-screen .window,
-.pos .scraplist-screen .full-content .subwindow{
+.pos .scraplist-screen .full-content .subwindow {
     display: block;
 }
-.pos .scraplist-screen .full-content .subwindow-container{
+.pos .scraplist-screen .full-content .subwindow-container {
     display: block;
     height: 100%;
 }
 .pos .scraplist-screen .full-content .subwindow.collapsed,
-.pos .scraplist-screen .full-content .subwindow-container.collapsed{
+.pos .scraplist-screen .full-content .subwindow-container.collapsed {
     height: auto;
 }
 
 /* The Scale Container Screen */
-.pos .scale-screen .add-container{
+.pos .scale-screen .add-container {
     text-align: center;
     font-size: 32px;
-    background: rgb(110,200,155);
+    background: rgb(110, 200, 155);
     color: white;
     border-radius: 3px;
     padding: 16px;
@@ -26,18 +26,20 @@
     cursor: pointer;
 }
 
-.pos .scale-screen .container-name,.container-barcode,.deposit-value {
+.pos .scale-screen .container-name,
+.container-barcode,
+.deposit-value {
     text-align: center;
     font-size: 25px;
     border-radius: 3px;
     padding-top: 10px;
-    padding-bottom:10px;
+    padding-bottom: 10px;
     margin-top: 5px;
 }
 
 /* e) The Container List Screen */
 
-.pos .scraplist-screen .container-list{
+.pos .scraplist-screen .container-list {
     font-size: 16px;
     width: 100%;
     line-height: 40px;
@@ -46,32 +48,32 @@
 .pos .scraplist-screen .container-list td {
     padding: 0px 8px;
 }
-.pos .scraplist-screen .container-list tr{
+.pos .scraplist-screen .container-list tr {
     transition: all 150ms linear;
-    background: rgb(230,230,230);
+    background: rgb(230, 230, 230);
 }
 .pos .scraplist-screen .container-list thead > tr,
 .pos .scraplist-screen .container-list tr:nth-child(even) {
-    background: rgb(247,247,247);
+    background: rgb(247, 247, 247);
 }
-.pos .scraplist-screen .container-list tr.highlight{
+.pos .scraplist-screen .container-list tr.highlight {
     transition: all 150ms linear;
-    background: rgb(110,200,155) !important;
+    background: rgb(110, 200, 155) !important;
     color: white;
 }
-.pos .scraplist-screen .container-list tr.lowlight{
+.pos .scraplist-screen .container-list tr.lowlight {
     transition: all 150ms linear;
     background: rgb(216, 238, 227);
 }
-.pos .scraplist-screen .container-list tr.lowlight:nth-child(even){
+.pos .scraplist-screen .container-list tr.lowlight:nth-child(even) {
     transition: all 150ms linear;
     background: rgb(227, 246, 237);
 }
-.pos .scraplist-screen .container-details{
+.pos .scraplist-screen .container-details {
     padding: 16px;
-    border-bottom: solid 5px rgb(110,200,155);
+    border-bottom: solid 5px rgb(110, 200, 155);
 }
-.pos .scraplist-screen .container-picture{
+.pos .scraplist-screen .container-picture {
     height: 64px;
     width: 64px;
     border-radius: 32px;
@@ -105,39 +107,39 @@
     opacity: 0;
     cursor: pointer;
 }
-.pos .scraplist-screen .container-name{
+.pos .scraplist-screen .container-name {
     font-size: 32px;
     line-height: 64px;
-    margin-bottom:16px;
+    margin-bottom: 16px;
 }
 .pos .scraplist-screen .edit-buttons {
     position: absolute;
     right: 16px;
     top: 10px;
 }
-.pos .scraplist-screen .edit-buttons .button{
+.pos .scraplist-screen .edit-buttons .button {
     display: inline-block;
     margin-left: 16px;
-    color: rgb(128,128,128);
+    color: rgb(128, 128, 128);
     cursor: pointer;
     font-size: 36px;
 }
-.pos .scraplist-screen .container-details-box{
+.pos .scraplist-screen .container-details-box {
     position: relative;
     font-size: 16px;
 }
-.pos .scraplist-screen .container-details-left{
+.pos .scraplist-screen .container-details-left {
     width: 50%;
     float: left;
 }
-.pos .scraplist-screen .container-details-right{
+.pos .scraplist-screen .container-details-right {
     width: 50%;
     float: left;
 }
-.pos .scraplist-screen .container-detail{
+.pos .scraplist-screen .container-detail {
     line-height: 24px;
 }
-.pos .scraplist-screen .container-detail > .label{
+.pos .scraplist-screen .container-detail > .label {
     font-weight: bold;
     display: inline-block;
     width: 75px;
@@ -145,35 +147,34 @@
     margin-right: 8px;
 }
 .pos .scraplist-screen .container-details input,
-.pos .scraplist-screen .container-details select
-{
+.pos .scraplist-screen .container-details select {
     padding: 4px;
     border-radius: 3px;
     border: solid 1px #cecbcb;
     margin-bottom: 4px;
     background: white;
-    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    font-family: "Lato", "Lucida Grande", Helvetica, Verdana, Arial;
     color: #555555;
     width: 340px;
     font-size: 14px;
     box-sizing: border-box;
 }
-.pos .scraplist-screen .container-details input.container-name{
+.pos .scraplist-screen .container-details input.container-name {
     font-size: 24px;
     line-height: 24px;
     margin: 18px 6px;
     width: 340px;
 }
-.pos .scraplist-screen .container-detail > .empty{
+.pos .scraplist-screen .container-detail > .empty {
     opacity: 0.3;
 }
-.pos .scraplist-screen .searchbox{
+.pos .scraplist-screen .searchbox {
     right: auto;
     margin-left: -90px;
-    margin-top:8px;
+    margin-top: 8px;
     left: 45%;
 }
-.pos .scraplist-screen .searchbox input{
+.pos .scraplist-screen .searchbox input {
     width: 120px;
 }
 .pos .scraplist-screen .button.delete-container {
