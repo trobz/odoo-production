@@ -1,7 +1,7 @@
 # Copyright (C) Nguyen Minh Chien (chien@trobz.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import models, api, _
+from odoo import _, api, models
 
 
 class PosOrder(models.Model):
@@ -12,7 +12,7 @@ class PosOrder(models.Model):
         if not order.get("scrap_origin_id"):
             msg = {
                 "title": _("Error!"),
-                "body": _("You have to add the default scrap origin first.")
+                "body": _("You have to add the default scrap origin first."),
             }
             return {"scrap_ids": [], "msg": msg}
         default_vals.update({"scrap_origin_id": order.get("scrap_origin_id")})
