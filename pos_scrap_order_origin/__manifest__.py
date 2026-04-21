@@ -1,19 +1,24 @@
-# Copyright (C) Nguyen Minh Chien (chien@trobz.com)
+# Copyright (C) Trobz (<https://trobz.com/>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
-    "name": "Pos Scrap Order Origin",
-    "version": "12.0.1.0.0",
+    "name": "POS Scrap Order Origin",
+    "version": "18.0.1.0.0",
     "category": "Point Of Sale",
-    "summary": """Create scrap order from POS screen with Origin""",
-    "author": "Trobz",
+    "summary": "Create scrap order from POS screen with Reason Tag",
+    "author": "Trobz, La Louve",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
-    "depends": ["pos_scrap_order", "stock_scrap_origin"],
+    "depends": ["pos_scrap_order"],
     "data": [
-        "views/assets.xml",
         "views/pos_config.xml",
     ],
-    "qweb": ["static/src/xml/screen.xml"],
+    "assets": {
+        "point_of_sale._assets_pos": [
+            "pos_scrap_order_origin/static/src/scss/**/*",
+            "pos_scrap_order_origin/static/src/app/**/*",
+        ]
+    },
     "auto_install": True,
+    "installable": True,
 }
