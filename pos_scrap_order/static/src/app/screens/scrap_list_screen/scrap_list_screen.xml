@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="pos_scrap_order.ScrapListScreen">
+        <div class="scraplist-screen screen h-100 d-flex flex-column">
+            <div
+                class="scrap-top-bar d-flex align-items-center justify-content-between px-3"
+            >
+                <span class="scrap-btn" t-on-click="clickBack">
+                    <i class="fa fa-angle-double-left" />
+                    Back
+                </span>
+                <h1 class="m-0">Scrap Orders</h1>
+                <span class="scrap-btn scrap-btn-highlight" t-on-click="clickNext">
+                    Make Scrap Order
+                    <i class="fa fa-angle-double-right" />
+                </span>
+            </div>
+            <div class="scraplist-body flex-grow-1 overflow-y-auto">
+                <table class="container-list">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Create Date</th>
+                            <th>Origin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t
+                            t-foreach="state.scrapOrders"
+                            t-as="scrap"
+                            t-key="scrap.name"
+                        >
+                            <tr class="container-line">
+                                <td>
+                                    <t t-out="scrap.name" />
+                                </td>
+                                <td>
+                                    <t t-out="scrap.product_display_name" />
+                                </td>
+                                <td>
+                                    <t t-out="scrap.qty_str" />
+                                </td>
+                                <td>
+                                    <t t-out="scrap.date" />
+                                </td>
+                                <td>
+                                    <t t-out="scrap.origin" />
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </t>
+</templates>

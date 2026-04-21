@@ -1,6 +1,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class StockScrap(models.Model):
@@ -12,7 +12,7 @@ class StockScrap(models.Model):
         records = self.sudo().search(
             [
                 "|",
-                ("origin", "like", _("POS Session: ")),
+                ("origin", "like", self.env._("POS Session: ")),
                 ("origin", "like", "POS Session: "),
             ],
             order="id DESC",
@@ -34,7 +34,7 @@ class StockScrap(models.Model):
                     "qty_str": quantity_str,
                     "state_label": state_label,
                     "origin": scrap.origin.replace("POS Session: ", "").replace(
-                        _("POS Session: "), ""
+                        self.env._("POS Session: "), ""
                     ),
                     "date": scrap.create_date
                     and fields.Datetime.to_string(scrap.create_date)

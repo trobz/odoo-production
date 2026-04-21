@@ -1,14 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* pos_scrap_order
+# 	* pos_scrap_order
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-26 05:28+0000\n"
-"PO-Revision-Date: 2023-09-26 05:28+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2026-04-21 10:50+0000\n"
+"PO-Revision-Date: 2026-04-21 10:50+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,143 +16,132 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/xml/screen.xml:30
-#, python-format
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_screen/scrap_screen.xml:0
 msgid "ATTENTION"
-msgstr ""
+msgstr "ATTENTION"
 
 #. module: pos_scrap_order
-#: code:addons/pos_scrap_order/models/pos_order.py:70
-#, python-format
+#. odoo-python
+#: code:addons/pos_scrap_order/models/pos_order.py:0
 msgid "Access Error!"
-msgstr ""
+msgstr "Erreur d'accès!"
 
 #. module: pos_scrap_order
-#: selection:pos.config,scrap_order_option:0
+#: model:ir.model.fields.selection,name:pos_scrap_order.selection__pos_config__scrap_order_option__always
 msgid "Always create Scrap Order, validate if has stock"
 msgstr "Toujours créer la mise au rebut, valider seulement si le produit est en stock"
 
 #. module: pos_scrap_order
-#: selection:pos.config,scrap_order_option:0
+#: model:ir.model.fields.selection,name:pos_scrap_order.selection__pos_config__scrap_order_option__force
 msgid "Always create Scrap Order, validate regardless of no stock"
 msgstr "Toujours créer la mise au rebut, valider même si le produit n'est pas en stock"
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/xml/screen.xml:15
-#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:14
-#, python-format
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_list_screen/scrap_list_screen.xml:0
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_screen/scrap_screen.xml:0
 msgid "Back"
 msgstr "Retour"
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:34
-#, python-format
+#: model_terms:ir.ui.view,arch_db:pos_scrap_order.pos_config_view_form_inherit
+msgid "Configure how scrap orders are created from the POS screen"
+msgstr "Configurer comment les ordres de rebut sont créés depuis l'écran du point de vente"
+
+#. module: pos_scrap_order
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_list_screen/scrap_list_screen.xml:0
 msgid "Create Date"
 msgstr "Date de création"
 
 #. module: pos_scrap_order
-#: model:ir.model,name:pos_scrap_order.model_res_config_settings
-msgid "Config Settings"
-msgstr "Paramètres de config"
-
-#. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/xml/screen.xml:19
-#, python-format
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_screen/scrap_screen.xml:0
 msgid "Create Scrap Order"
-msgstr "Valider la mise au rebut"
+msgstr "Créer la mise au rebut"
 
 #. module: pos_scrap_order
-#: selection:pos.config,scrap_order_option:0
+#: model:ir.model.fields.selection,name:pos_scrap_order.selection__pos_config__scrap_order_option__onhand
 msgid "Create and validate Scrap Order for product has stock only"
 msgstr "Créer et valider la mise au rebut seulement pour les produit en stock"
 
 #. module: pos_scrap_order
-#: code:addons/pos_scrap_order/models/pos_order.py:78
-#, python-format
+#. odoo-python
+#: code:addons/pos_scrap_order/models/pos_order.py:0
 msgid "Data is incorrect."
-msgstr ""
+msgstr "Les données sont incorrectes."
 
 #. module: pos_scrap_order
-#: code:addons/pos_scrap_order/models/pos_order.py:77
-#, python-format
+#. odoo-python
+#: code:addons/pos_scrap_order/models/pos_order.py:0
 msgid "Error!"
-msgstr ""
+msgstr "Erreur!"
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/js/screen.js:72
-#, python-format
-msgid "It seems that you do not have a network connection at the moment. Try again later."
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_list_screen/scrap_list_screen.js:0
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_screen/scrap_screen.js:0
+msgid ""
+"It seems that you do not have a network connection at the moment. Try again "
+"later."
 msgstr ""
+"Il semble que vous n'ayez pas de connexion réseau pour le moment. Veuillez réessayer plus tard."
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:5
-#, python-format
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/overrides/components/scrap_buttons/scrap_buttons.xml:0
 msgid "List"
 msgstr "Liste"
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/xml/screen.xml:6
-#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:18
-#, python-format
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/overrides/components/scrap_buttons/scrap_buttons.xml:0
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_list_screen/scrap_list_screen.xml:0
 msgid "Make Scrap Order"
-msgstr "Envoyer au rebut"
+msgstr "Créer un ordre de rebut"
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/js/screen.js:71
-#, python-format
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_list_screen/scrap_list_screen.js:0
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_screen/scrap_screen.js:0
 msgid "Network Connection Lost"
-msgstr ""
+msgstr "Connexion réseau perdue"
 
 #. module: pos_scrap_order
-#: code:addons/pos_scrap_order/models/pos_order.py:65
-#, python-format
+#. odoo-python
+#: code:addons/pos_scrap_order/models/pos_order.py:0
 msgid "No Enough Stock!"
-msgstr ""
+msgstr "Stock insuffisant!"
 
 #. module: pos_scrap_order
-#: selection:pos.config,scrap_order_option:0
+#: model:ir.model.fields.selection,name:pos_scrap_order.selection__pos_config__scrap_order_option__no
 msgid "No Scrap Order"
-msgstr "Pas de rebut"
+msgstr "Aucun ordre de rebut"
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/js/screen.js:86
-#, python-format
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_screen/scrap_screen.js:0
 msgid "Not available"
-msgstr ""
+msgstr "Non disponible"
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/js/screen.js:126
-#, python-format
-msgid "Nothing to Scrap"
-msgstr ""
-
-#. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:35
-#, python-format
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_list_screen/scrap_list_screen.xml:0
 msgid "Origin"
 msgstr "Origine"
 
 #. module: pos_scrap_order
-#: code:addons/pos_scrap_order/models/pos_order.py:30
-#, python-format
+#. odoo-python
+#: code:addons/pos_scrap_order/models/pos_order.py:0
+#: code:addons/pos_scrap_order/models/stock_scrap.py:0
 msgid "POS Session: "
-msgstr ""
+msgstr "Session POS:"
 
 #. module: pos_scrap_order
 #: model:ir.model,name:pos_scrap_order.model_pos_config
 msgid "Point of Sale Configuration"
-msgstr ""
+msgstr "Configuration du point de vente"
 
 #. module: pos_scrap_order
 #: model:ir.model,name:pos_scrap_order.model_pos_order
@@ -160,87 +149,96 @@ msgid "Point of Sale Orders"
 msgstr "Commandes du point de vente"
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:32
-#, python-format
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_list_screen/scrap_list_screen.xml:0
 msgid "Product"
-msgstr "Article"
+msgstr "Produit"
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:33
-#, python-format
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_list_screen/scrap_list_screen.xml:0
 msgid "Quantity"
 msgstr "Quantité"
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/xml/screen.xml:18
-#, python-format
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_list_screen/scrap_list_screen.xml:0
+msgid "Reference"
+msgstr "Référence"
+
+#. module: pos_scrap_order
+#: model:ir.model,name:pos_scrap_order.model_stock_scrap
+msgid "Scrap"
+msgstr "Rebut"
+
+#. module: pos_scrap_order
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_screen/scrap_screen.xml:0
 msgid "Scrap Order"
-msgstr "Récapitulatif de la liste de rebuts"
+msgstr "Ordre de rebut"
 
 #. module: pos_scrap_order
 #: model:ir.model.fields,field_description:pos_scrap_order.field_pos_config__scrap_order_option
+#: model_terms:ir.ui.view,arch_db:pos_scrap_order.pos_config_view_form_inherit
 msgid "Scrap Order Option"
-msgstr "Mises au rebut"
+msgstr "Option d'ordre de rebut"
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:17
-#, python-format
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_list_screen/scrap_list_screen.xml:0
 msgid "Scrap Orders"
-msgstr "Bons de mise au rebut"
+msgstr "Ordres de rebut"
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/xml/screen_show_scrap_list.xml:34
-#, python-format
-msgid "State"
-msgstr "Statut"
+#. odoo-python
+#: code:addons/pos_scrap_order/models/pos_order.py:0
+msgid "Scrap order is disabled."
+msgstr "L'ordre de rebut est désactivé."
 
 #. module: pos_scrap_order
-#: code:addons/pos_scrap_order/models/pos_order.py:59
-#, python-format
+#. odoo-python
+#: code:addons/pos_scrap_order/models/pos_order.py:0
+msgid "Stock data is incorrect. Please contact the administrator."
+msgstr "Les données de stock sont incorrectes. Veuillez contacter l'administrateur."
+
+#. module: pos_scrap_order
+#. odoo-python
+#: code:addons/pos_scrap_order/models/pos_order.py:0
 msgid "Successful!"
-msgstr ""
+msgstr "Réussi!"
 
 #. module: pos_scrap_order
-#: code:addons/pos_scrap_order/models/pos_order.py:55
-#, python-format
+#. odoo-python
+#: code:addons/pos_scrap_order/models/pos_order.py:0
 msgid "The product {} has no enough stock."
-msgstr ""
+msgstr "Le produit {} n'a pas assez de stock."
 
 #. module: pos_scrap_order
-#: code:addons/pos_scrap_order/models/pos_order.py:60
-#, python-format
+#. odoo-python
+#: code:addons/pos_scrap_order/models/pos_order.py:0
 msgid "The product(s) has been sent to scrap location"
-msgstr "Le(s) produit(s) a/ont été mis au rebut"
+msgstr "Le(s) produit(s) a(ont) été envoyé(s) vers l'emplacement de rebut"
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/js/screen.js:127
-#, python-format
-msgid "There is no product to scrap."
-msgstr ""
-
-#. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/xml/screen.xml:31
-#, python-format
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_screen/scrap_screen.xml:0
 msgid "This action will move these products below into the scrap location"
-msgstr "Cette option jettera l'ensemble des produits listés ci-dessous de l'inventaire"
+msgstr "Cette action va déplacer ces produits ci-dessous vers l'emplacement de rebut"
 
 #. module: pos_scrap_order
-#. openerp-web
-#: code:addons/pos_scrap_order/static/src/js/screen.js:87
-#, python-format
+#. odoo-javascript
+#: code:addons/pos_scrap_order/static/src/app/screens/scrap_screen/scrap_screen.js:0
 msgid "This order has been paid or has no line."
-msgstr ""
+msgstr "Cette commande a été payée ou n'a pas de ligne."
 
 #. module: pos_scrap_order
-#: code:addons/pos_scrap_order/models/pos_order.py:71
-#, python-format
-msgid "You have no right to make the scrap order."
-msgstr ""
+#. odoo-python
+#: code:addons/pos_scrap_order/models/pos_order.py:0
+msgid "User Error!"
+msgstr "Erreur d'utilisateur!"
 
+#. module: pos_scrap_order
+#. odoo-python
+#: code:addons/pos_scrap_order/models/pos_order.py:0
+msgid "You have no right to make the scrap order."
+msgstr "Vous n'avez pas le droit de faire un ordre de rebut."
