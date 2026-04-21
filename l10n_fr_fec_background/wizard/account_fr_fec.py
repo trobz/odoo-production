@@ -55,7 +55,7 @@ class AccountFrFecOca(models.TransientModel):
         email_template.send_mail(
             self.id,
             force_send=True,
-            email_values={"attachment_ids": Command.set(attachments.ids)},
+            email_values={"attachment_ids": [Command.set(attachments.ids)]},
         )
         return True
 

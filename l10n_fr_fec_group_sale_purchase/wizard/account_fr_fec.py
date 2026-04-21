@@ -16,6 +16,25 @@ class AccountFrFecOca(models.TransientModel):
         default=True,
     )
 
+    def _get_siren(self, company):
+        # If the company does not have a SIRET,
+        # fallback to using VAT instead.
+        if company.siret:
+            return super()._get_siren(company)
+
+        dom_tom_group = self.env.ref("l10n_fr.dom-tom")
+        is_dom_tom = company.country_id.code in dom_tom_group.country_ids.mapped("code")
+        if not is_dom_tom and not company.vat:
+            raise UserError(
+                self.env._("Missing VAT number for company %s", company.display_name)
+            )
+        vat = company.vat.upper().replace(" ", "")
+        if not is_dom_tom and vat[0:2] != "FR":
+            raise UserError(self.env._("FEC is for French companies only!"))
+
+        siren = vat[4:13] if not is_dom_tom else ""
+        return siren
+
     def _sql_query_fec_lines(self, query, **kwargs):
         columns = SQL(
             """
@@ -287,12 +306,12 @@ class AccountFrFecOca(models.TransientModel):
                 TO_CHAR(MIN(%(move_alias)s.date), 'YYYYMMDD') AS ValidDate,
                 CASE
                     WHEN
-                        MIN(account_move_line.amount_currency) IS NULL OR
-                        MIN(account_move_line.amount_currency) = 0
+                        SUM(account_move_line.amount_currency) IS NULL OR
+                        SUM(account_move_line.amount_currency) = 0
                     THEN ''
                     ELSE replace(
                         TO_CHAR(
-                            MIN(account_move_line.amount_currency),
+                            SUM(account_move_line.amount_currency),
                             '000000000000000D99'
                         ),
                         '.',
@@ -439,7 +458,7 @@ class AccountFrFecOca(models.TransientModel):
     def generate_fec(self):
         if not self.group_sale_purchase:
             return super().generate_fec()
-        if self.date_from >= self.date_to:
+        if self.date_from > self.date_to:
             raise UserError(self.env._("The start date must be before the end date."))
 
         company = self.company_id
