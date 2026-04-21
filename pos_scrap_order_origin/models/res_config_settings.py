@@ -4,10 +4,10 @@
 from odoo import fields, models
 
 
-class PosConfig(models.Model):
-    _inherit = "pos.config"
+class ResConfigSettings(models.TransientModel):
+    _inherit = "res.config.settings"
 
     scrap_reason_tag_ids = fields.Many2many(
-        comodel_name="stock.scrap.reason.tag",
-        string="Scrap Reason Tags",
+        related="pos_config_id.scrap_reason_tag_ids",
+        readonly=False,
     )
