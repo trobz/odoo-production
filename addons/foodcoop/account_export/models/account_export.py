@@ -2,7 +2,7 @@ from datetime import date
 
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools import SQL
+from odoo.tools.sql import SQL
 
 
 class AccountExport(models.Model):
@@ -126,17 +126,20 @@ class AccountExport(models.Model):
     def get_report_line_data(self, groupings, move_line_ids):
         res = []
         if groupings:
+            columns = ", ".join(groupings)
+            sql_group_by = SQL("GROUP BY %s", columns)
             sql_query = SQL(
                 """
                 SELECT
-                    %(groupings)s,
-                    array_agg(aml.id) as move_line_ids
+                    %(columns)s,
+                    ARRAY_AGG(DISTINCT aml.id) as move_line_ids
                 FROM account_move_line aml
                 WHERE aml.id IN %(move_line_ids)s
-                GROUP BY %(groupings)s
+                %(group_by)s
                 """,
-                groupings=", ".join(groupings),
+                columns=columns,
                 move_line_ids=tuple(move_line_ids),
+                group_by=sql_group_by,
             )
             self.env.cr.execute(sql_query)
             grouped_move_lines = self.env.cr.dictfetchall()
@@ -267,7 +270,7 @@ class AccountExport(models.Model):
             """
             SELECT
                 aml.journal_id AS journal_id,
-                array_agg(aml.id) AS move_line_ids
+                ARRAY_AGG(DISTINCT aml.id) AS move_line_ids
             FROM account_move_line aml
             LEFT JOIN account_move am ON aml.move_id = am.id
             %s
@@ -279,7 +282,7 @@ class AccountExport(models.Model):
         move_line_grouped_journal = self._cr.dictfetchall()
         aml_moves_query = SQL(
             """
-            SELECT array_agg(DISTINCT am.id) as account_moves
+            SELECT ARRAY_AGG(DISTINCT am.id) as account_moves
             FROM
                 account_move_line aml
                 INNER JOIN account_move am ON aml.move_id = am.id
