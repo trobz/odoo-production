@@ -49,6 +49,12 @@ class AccountFrFecOca(models.TransientModel):
             limit=1,
             order="create_date desc",
         )
+        attachments.write(
+            {
+                "name": self.filename,
+                "mimetype": "text/plain",
+            }
+        )
         email_template = self.env.ref(
             "l10n_fr_fec_background.send_fec_file_mail_template"
         )
