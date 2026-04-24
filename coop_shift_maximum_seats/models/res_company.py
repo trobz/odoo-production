@@ -11,7 +11,8 @@ class ResCompany(models.Model):
             ("manual", "Add Maximum available ABCD/FTOP seats manually"),
             (
                 "auto",
-                "Calculate Maximum available ABCD/FTOP seats automatically based on Maximum Attendees Number",
+                "Calculate Maximum available ABCD/FTOP seats"
+                " automatically based on Maximum Attendees Number",
             ),
         ],
         string="Maximum available ABCD/FTOP seats",

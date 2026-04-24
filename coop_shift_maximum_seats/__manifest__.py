@@ -3,14 +3,15 @@
 
 {
     "name": "Shift: Maximum Available Seats",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Tools",
-    "summary": """Policy to set the Maximum Available Seats for Shift and Shift Template""",
-    "author": "Trobz",
+    "summary": "Policy to set the Maximum Available Seats for Shift and Shift Template",
+    "author": "Trobz, La Louve",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": [
         "coop_membership",
+        "coop_memberspace",
     ],
     "data": [
         "views/shift_template_view.xml",

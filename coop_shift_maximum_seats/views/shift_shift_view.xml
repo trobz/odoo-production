@@ -4,25 +4,19 @@
         <field name="model">shift.shift</field>
         <field name="inherit_id" ref="coop_membership.view_shift_form_inherit" />
         <field name="arch" type="xml">
-            <field name="seats_availability" position="after">
-                <field name="shift_max_available_seats" invisible="1" />
-            </field>
             <field name="seats_availability" position="attributes">
                 <attribute
-                    name="attrs"
-                >{'readonly': [('shift_max_available_seats', '=', 'auto')]}</attribute>
+                    name="readonly"
+                >shift_max_available_seats == 'auto'</attribute>
             </field>
             <!-- Tickets -->
-            <xpath expr="//field[@name='shift_ticket_ids']/tree" position="inside">
-                <field name="shift_max_available_seats" invisible="1" />
-            </xpath>
             <xpath
-                expr="//field[@name='shift_ticket_ids']/tree/field[@name='seats_max']"
+                expr="//field[@name='shift_ticket_ids']/list/field[@name='seats_max']"
                 position="attributes"
             >
                 <attribute
-                    name="attrs"
-                >{'readonly': [('shift_max_available_seats', '=', 'auto')]}</attribute>
+                    name="readonly"
+                >shift_max_available_seats == 'auto'</attribute>
             </xpath>
         </field>
     </record>

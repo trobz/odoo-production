@@ -7,13 +7,14 @@ from odoo import api, models
 class ShiftTemplateRegistration(models.Model):
     _inherit = "shift.template.registration"
 
-    @api.model
-    def create(self, vals):
-        record = super().create(vals)
-        record.shift_ticket_id.shift_template_id._update_ticket_seats_max()
-        return record
+    @api.model_create_multi
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        records.mapped("shift_ticket_id").mapped(
+            "shift_template_id"
+        )._update_ticket_seats_max()
+        return records
 
-    @api.multi
     def write(self, vals):
         tickets = self.env["shift.template.ticket"]
         if vals.get("shift_ticket_id") or vals.get("state"):
@@ -25,7 +26,6 @@ class ShiftTemplateRegistration(models.Model):
             tickets.mapped("shift_template_id")._update_ticket_seats_max()
         return res
 
-    @api.multi
     def unlink(self):
         tickets = self.mapped("shift_ticket_id")
         res = super().unlink()

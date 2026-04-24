@@ -8,13 +8,6 @@ class ShiftTemplateTicket(models.Model):
     _inherit = "shift.template.ticket"
 
     shift_max_available_seats = fields.Selection(
-        selection=[
-            ("manual", "Add Maximum available ABCD/FTOP seats manually"),
-            (
-                "auto",
-                "Calculate Maximum available ABCD/FTOP seats automatically based on Maximum Attendees Number",
-            ),
-        ],
         string="Maximum available ABCD/FTOP seats",
         related="shift_template_id.shift_max_available_seats",
     )
