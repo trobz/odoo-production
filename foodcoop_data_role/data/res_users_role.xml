@@ -119,8 +119,6 @@
         />
     </record>
 
-    <!-- # ref('account_export.group_account_export'), -->
-    <!-- # ref('foodcoop_module.functional_admin'), -->
     <record id="res_users_role_Foodcoop_Admin" model="res.users.role">
         <field name="name">Foodcoop Admin</field>
         <field name="group_id" ref="group_Foodcoop_Admin" />
@@ -157,6 +155,8 @@
             ref('maintenance.group_equipment_manager'),
             ref('mass_mailing_access.group_manager'),
             ref('coop_membership.group_create_related_user'),
+            ref('account_export.group_account_export'),
+            ref('foodcoop_module.functional_admin'),
         ])]"
         />
     </record>
