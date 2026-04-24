@@ -1,33 +1,40 @@
 # Copyright (C) Nguyen Minh Chien (chien@trobz.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, models, fields
+from odoo import api, fields, models
 
 
 class ShiftShift(models.Model):
-    _inherit = 'shift.shift'
+    _inherit = "shift.shift"
 
     shift_max_available_seats = fields.Selection(
         selection=[
             ("manual", "Add Maximum available ABCD/FTOP seats manually"),
-            ("auto", "Calculate Maximum available ABCD/FTOP seats automatically based on Maximum Attendees Number")
+            (
+                "auto",
+                "Calculate Maximum available ABCD/FTOP seats automatically based on Maximum Attendees Number",
+            ),
         ],
         string="Maximum available ABCD/FTOP seats",
         # compute="_compute_shift_max_available_seats",
         # store=True,
     )
-    seats_max = fields.Integer(
-        inverse="_inverse_seats_max"
-    )
+    seats_max = fields.Integer(inverse="_inverse_seats_max")
 
     @api.model
     def default_get(self, fs):
         res = super().default_get(fs)
-        shift_max_available_seats = self.env.user.company_id.shift_max_available_seats or "manual"
-        res.update({
-            'shift_max_available_seats': shift_max_available_seats,
-            'seats_availability': shift_max_available_seats == 'manual' and 'unlimited' or 'limited'
-        })
+        shift_max_available_seats = (
+            self.env.user.company_id.shift_max_available_seats or "manual"
+        )
+        res.update(
+            {
+                "shift_max_available_seats": shift_max_available_seats,
+                "seats_availability": shift_max_available_seats == "manual"
+                and "unlimited"
+                or "limited",
+            }
+        )
         return res
 
     def _inverse_seats_max(self):
@@ -37,7 +44,9 @@ class ShiftShift(models.Model):
         # records = self.filtered(lambda r: r.state in ("draft", "confirm", "entry"))
         records = self
         for record in records:
-            record.shift_max_available_seats = record.company_id.shift_max_available_seats
+            record.shift_max_available_seats = (
+                record.company_id.shift_max_available_seats
+            )
             if record.company_id.shift_max_available_seats == "auto":
                 record.seats_availability = "limited"
 
@@ -48,7 +57,9 @@ class ShiftShift(models.Model):
             seats_reserved = sum(record.mapped("shift_ticket_ids.seats_reserved"))
             seats_max = record.seats_max
             for ticket in record.shift_ticket_ids:
-                new_seats_max = max(seats_max - seats_reserved + ticket.seats_reserved, 0)
+                new_seats_max = max(
+                    seats_max - seats_reserved + ticket.seats_reserved, 0
+                )
                 if ticket.seats_max != new_seats_max:
                     ticket.seats_max = new_seats_max
 
