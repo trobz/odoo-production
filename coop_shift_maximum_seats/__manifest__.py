@@ -7,7 +7,7 @@
     "category": "Tools",
     "summary": """Policy to set the Maximum Available Seats for Shift and Shift Template""",
     "author": "Trobz",
-    "website": "https://trobz.com",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": [
         "coop_membership",
