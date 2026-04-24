@@ -74,6 +74,9 @@ class EDIInputProcessDiaparPurchasePrice(models.AbstractModel):
         product_codes = []
         today = datetime.date.today()
         for line in lines:
+            if not line or not isinstance(line, str):
+                continue
+            line = line.lstrip()
             # check if this line is already imported.
             pos_from, pos_to = self._get_mapping_field_position(
                 edi_exchange_type, "supplier_code"
