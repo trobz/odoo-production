@@ -12,12 +12,11 @@ class ShiftTemplate(models.Model):
             ("manual", "Add Maximum available ABCD/FTOP seats manually"),
             (
                 "auto",
-                "Calculate Maximum available ABCD/FTOP seats automatically based on Maximum Attendees Number",
+                "Calculate Maximum available ABCD/FTOP seats"
+                " automatically based on Maximum Attendees Number",
             ),
         ],
         string="Maximum available ABCD/FTOP seats",
-        # compute="_compute_shift_max_available_seats",
-        # store=True,
     )
     seats_max = fields.Integer(inverse="_inverse_seats_max")
 
