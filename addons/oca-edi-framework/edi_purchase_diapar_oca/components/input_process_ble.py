@@ -128,12 +128,15 @@ class EDIInputProcessDiaparDespatchAdvice(models.AbstractModel):
         proposition_vals = dict()
         values_list = []
         for line in lines:
+            if not line or not isinstance(line, str):
+                continue
             # This condition ensures that this job
             # consider only one picking per EDI File
-            if line[0] == edi_exchange_type.header_code and not delivery_date:
+            line = line.lstrip()
+            if line.startswith(edi_exchange_type.header_code) and not delivery_date:
                 # Header processing
                 delivery_date = self._reprepare_delivery_date(line, edi_exchange_type)
-            elif line[0] == edi_exchange_type.lines_code:
+            elif line.startswith(edi_exchange_type.lines_code):
                 # Look if it's a first delivery
                 delivery_sign = edi_exchange_type.delivery_sign
                 if delivery_sign == "-":
