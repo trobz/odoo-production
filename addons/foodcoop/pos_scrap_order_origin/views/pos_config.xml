@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="pos_config_view_form_origin_inherit" model="ir.ui.view">
+        <field name="name">pos_config_view_form_origin_inherit</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="pos_scrap_order.pos_config_view_form_inherit" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='scrap_order_option']/.." position="after">
+                <setting
+                    string="Scrap Origin"
+                    help="Configure scrap reason tags for POS scrap orders"
+                >
+                    <field name="scrap_reason_tag_ids" widget="many2many_tags" />
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
