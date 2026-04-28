@@ -29,13 +29,6 @@
                     name="decoration-danger"
                 >quantity!=product_uom_qty</attribute>
             </xpath>
-            <xpath expr="//field[@name='origin']" position="after">
-                <button
-                    name="copy_expected_qtys"
-                    string="Copy expected qtys"
-                    type="object"
-                />
-            </xpath>
         </field>
     </record>
 

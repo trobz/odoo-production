@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from odoo.tests import Form
 from odoo.tests.common import TransactionCase
 
 
@@ -39,32 +38,6 @@ class CoopStockTest(TransactionCase):
                 product_a, self.stock_location
             ),
             20.0,
-        )
-
-    def test_02_stock_picking(self):
-        picking_form = Form(self.env["stock.picking"])
-        self.picking_type = self.env.ref("stock.picking_type_out")
-        self.product = self.env.ref("product.product_delivery_01")
-        picking_form.partner_id = self.partner_3
-        picking_form.picking_type_id = self.picking_type
-        self.picking = picking_form.save()
-        self.picking._onchange_picking_type()
-        self.move = self.env["stock.move"].create(
-            {
-                "picking_id": self.picking.id,
-                "product_id": self.product.id,
-                "name": "Test",
-                "product_uom_qty": 20,
-                "product_uom": self.env.ref("uom.product_uom_unit").id,
-                "location_id": self.picking.location_id.id,
-                "location_dest_id": self.picking.location_dest_id.id,
-            }
-        )
-        self.picking.copy_expected_qtys()
-        self.assertEqual(
-            self.move.quantity,
-            self.move.product_uom_qty,
-            "copy_expected_qtys should set quantity = product_uom_qty",
         )
 
     def test_03_inventory_move_date_from_context(self):
