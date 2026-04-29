@@ -1,14 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* pos_receipt_attachment
+# 	* pos_receipt_attachment
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-05 07:23+0000\n"
-"PO-Revision-Date: 2023-09-05 07:23+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2026-04-29 07:59+0000\n"
+"PO-Revision-Date: 2026-04-29 07:59+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,9 +16,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: pos_receipt_attachment
-#: model:ir.model.fields,field_description:pos_receipt_attachment.field_pos_order__body_from_ui
-msgid "Body From Ui"
-msgstr ""
+#: model:ir.actions.report,print_report_name:pos_receipt_attachment.action_report_pos_receipt
+msgid "'Receipt - %s' % (object.name)"
+msgstr "Reçu - %s' % (object.name)"
+
+#. module: pos_receipt_attachment
+#: model:ir.model.fields,field_description:pos_receipt_attachment.field_pos_order__image_receipt
+msgid "Image Receipt"
+msgstr "Reçu image"
 
 #. module: pos_receipt_attachment
 #: model:ir.model,name:pos_receipt_attachment.model_pos_order
@@ -26,13 +31,11 @@ msgid "Point of Sale Orders"
 msgstr "Commandes du point de vente"
 
 #. module: pos_receipt_attachment
+#: model:ir.actions.server,name:pos_receipt_attachment.cron_update_image_receipt_ir_actions_server
+msgid "Pos Order: Update image receipt attachment"
+msgstr "Commande POS : Mettre à jour la pièce jointe du reçu image"
+
+#. module: pos_receipt_attachment
 #: model:ir.actions.report,name:pos_receipt_attachment.action_report_pos_receipt
 msgid "Receipt from POS UI"
 msgstr "Reçu depuis l'écran du point de vente"
-
-#. module: pos_receipt_attachment
-#: code:addons/pos_receipt_attachment/models/pos_order.py:163
-#, python-format
-msgid "Receipt_{}.pdf"
-msgstr "Receipt_{}.pdf"
-

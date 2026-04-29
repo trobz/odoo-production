@@ -14,82 +14,73 @@ class PosOrder(models.Model):
 
     image_receipt = fields.Binary(attachment=True)
 
-    @api.model
     def cron_update_image_receipt(self, limit=None):
-        args = [
-            ("res_field", "=", "image_receipt"),
-            ("res_model", "=", "pos.order"),
-            ("res_id", "=", False),
-        ]
-        attachments = self.env["ir.attachment"].search(args, limit=limit)
+        attachments = self.env["ir.attachment"].search(
+            [
+                ("res_field", "=", "image_receipt"),
+                ("res_model", "=", "pos.order"),
+                ("res_id", "in", [False, 0]),
+            ],
+            limit=limit,
+        )
+        if not attachments:
+            return
+        orders = self.search([("uuid", "in", attachments.mapped("name"))])
+        uuid_to_id = {o.uuid: o.id for o in orders}
         for attachment in attachments:
-            order = self.search(
-                [
-                    ("pos_reference", "=", attachment.datas_fname),
-                ],
-                limit=1,
-            )
-            if order:
-                attachment.res_id = order.id
-
-    @api.model
-    def _prepare_attachment(self, name, data):
-        vals = {
-            "datas_fname": name,
-            "name": "image_receipt",
-            "res_field": "image_receipt",
-            "res_model": "pos.order",
-            "datas": data,
-        }
-        return vals
+            order_id = uuid_to_id.get(attachment.name)
+            if order_id:
+                attachment.res_id = order_id
 
     @api.model
     def add_image_receipt(self, name, data):
         if not name or not data:
             return False
-        order = self.env["pos.order"].search([("pos_reference", "=", name)], limit=1)
+        order = self.search([("uuid", "=", name)], limit=1)
         if order:
             order.write({"image_receipt": data})
             return True
-        else:
-            # Store as an attachment
-            Attachment = self.env["ir.attachment"]
-            exist = Attachment.search(
-                [
-                    ("datas_fname", "=", name),
-                    ("res_field", "=", "image_receipt"),
-                    ("res_model", "=", "pos.order"),
-                ],
-                limit=1,
+        Attachment = self.env["ir.attachment"]
+        if not Attachment.search(
+            [
+                ("name", "=", name),
+                ("res_field", "=", "image_receipt"),
+                ("res_model", "=", "pos.order"),
+            ],
+            limit=1,
+        ):
+            Attachment.create(
+                {
+                    "name": name,
+                    "res_field": "image_receipt",
+                    "res_model": "pos.order",
+                    "datas": data,
+                }
             )
-            if not exist:
-                vals = self._prepare_attachment(name, data)
-                Attachment.create(vals)
         return False
 
-    @api.model
-    def add_image_receipt_patch(self, receipts):
-        for receipt in receipts:
-            self.add_image_receipt(receipt["id"], receipt["data"])
-        return True
-
-    @api.model
-    def _order_fields(self, ui_order):
-        vals = super()._order_fields(ui_order)
-        if ui_order.get("image_receipt"):
-            vals["image_receipt"] = ui_order['image_receipt']
-        return vals
-
-    @api.model
     def _send_order_cron(self):
+        """Only send tickets that have an image_receipt attachment.
+        Binary(attachment=True) fields are not searchable via domain in Odoo 18,
+        so we query ir.attachment directly.
         """
-        Only send the ticket which order's linked to a receipt attachment
-        """
-        _logger.info("------------------------------------------------------")
-        _logger.info("Start to send ticket")
+        order_ids = [
+            r["res_id"]
+            for r in self.env["ir.attachment"]
+            .sudo()
+            .search_read(
+                [
+                    ("res_model", "=", "pos.order"),
+                    ("res_field", "=", "image_receipt"),
+                    ("res_id", "!=", False),
+                ],
+                fields=["res_id"],
+            )
+        ]
         orders = self.search(
-            [('email_status', '=', 'to_send'), ('image_receipt', '!=', False)]
+            [("email_status", "=", "to_send"), ("id", "in", order_ids)]
         )
+        _logger.info("Sending receipts for %d orders", len(orders))
         orders.send_receipt_by_body_from_ui()
 
     def send_receipt_by_body_from_ui(self):
@@ -97,23 +88,29 @@ class PosOrder(models.Model):
             "pos_ticket_send_by_mail.email_send_pos_receipt", False
         )
         if not mail_template:
+            _logger.warning("No mail template found for sending ticket")
             return
-        receipt_report = self.env.ref(
-            "pos_receipt_attachment.action_report_pos_receipt"
-        )
-        report_service = receipt_report.report_name
         for order in self:
-            report_name = mail_template._render_template(
-                mail_template.report_name, mail_template.model, order.id
-            )
-            if not report_name:
-                report_name = 'report.' + report_service
-            receipt_pdf, format = receipt_report.render_qweb_pdf([order.id])
-            receipt_raw = base64.b64encode(receipt_pdf)
-            email_values = {"attachments": [(report_name, receipt_raw)]}
-            mail_template.send_mail(
-                order.id, email_values=email_values, force_send=True
-            )
-            order.email_status = 'sent'
-            # Make sure we commit the change to not send ticket twice
-            self.env.cr.commit()
+            try:
+                receipt_pdf, _ = self.env["ir.actions.report"]._render_qweb_pdf(
+                    "pos_receipt_attachment.action_report_pos_receipt", [order.id]
+                )
+                mail_template.send_mail(
+                    order.id,
+                    email_values={
+                        "attachments": [
+                            (
+                                "Receipt - %s.pdf" % order.name,
+                                base64.b64encode(receipt_pdf),
+                            )
+                        ]
+                    },
+                    force_send=True,
+                )
+                order.email_status = "sent"
+                # Commit immediately to prevent duplicate sends on partial failure
+                self.env.cr.commit()
+            except Exception:
+                _logger.exception(
+                    "Failed to send receipt email for order %s", order.name
+                )

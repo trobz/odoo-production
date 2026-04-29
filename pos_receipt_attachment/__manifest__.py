@@ -5,18 +5,25 @@
 {
     "name": "Point of Sale - Attach Receipt to Backend",
     "summary": "Send receipt to backend as an attachment",
-    "version": "12.0.1.0.1",
+    "version": "18.0.1.0.1",
     "category": "Sales/Point Of Sale",
-    "website": "https://trobz.com",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "author": "Trobz",
     "license": "AGPL-3",
     "depends": ["point_of_sale", "pos_ticket_send_by_mail"],
     "data": [
         "data/ir_cron.xml",
-        "views/templates.xml",
         "views/report_paperformat.xml",
         "views/report_receipt.xml",
     ],
-    "qweb": [],
+    "assets": {
+        "point_of_sale._assets_pos": [
+            "pos_receipt_attachment/static/src/js/pos_store.esm.js",
+            "pos_receipt_attachment/static/src/js/receipt_screen.esm.js",
+        ],
+        "web.report_assets_common": [
+            "pos_receipt_attachment/static/src/css/print.scss",
+        ],
+    },
     "installable": True,
 }
