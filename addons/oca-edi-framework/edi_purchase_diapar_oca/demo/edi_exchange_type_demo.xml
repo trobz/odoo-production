@@ -41,8 +41,8 @@
         <field name="exchange_filename_pattern">BLE.*</field>
         <field name="exchange_file_ext">txt</field>
         <field name="encoding">iso-8859-1</field>
-        <field name="header_code">H</field>
-        <field name="lines_code">L</field>
+        <field name="header_code">1</field>
+        <field name="lines_code">2</field>
         <field name="delivery_sign">+</field>
         <field name="advanced_settings_edit" />
         <field

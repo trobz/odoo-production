@@ -54,11 +54,14 @@ class EDIInputProcessDiaparDespatchAdvice(models.AbstractModel):
         # should be just one even if there is more than one
         # supplier associated to product
         if supplier_ids:
+            sdate = f"{delivery_date} 00:00:00"
+            edate = f"{delivery_date} 23:59:59"
             purchase_order = self.env["purchase.order"].search(
                 [
                     ("partner_id", "in", supplier_ids),
                     ("state", "in", ["purchase", "done"]),
-                    ("date_planned", "=", delivery_date),
+                    ("date_planned", ">=", sdate),
+                    ("date_planned", "<=", edate),
                 ],
                 limit=1,
             )
