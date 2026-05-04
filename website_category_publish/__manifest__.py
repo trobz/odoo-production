@@ -5,10 +5,10 @@
     "author": "Trobz Consulting",
     "license": "AGPL-3",
     "category": "Website",
-    "website": "https://trobz.com",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "summary": "Allow user to publish/unpublish product by its category",
     "depends": [
-        'website_snippet_product_category',
+        "website_snippet_product_category",
     ],
     "data": [
         "views/website_sale_templates.xml",
