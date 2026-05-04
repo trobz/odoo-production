@@ -1,18 +1,19 @@
 # Copyright 2020 Tecnativa - Alexandre Díaz
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import api, models
+from odoo import models
 
 
 class ProductPublicCategory(models.Model):
-    _inherit = "product.public.category"
+    _name = "product.public.category"
+    _inherit = ["product.public.category", "website.published.mixin"]
 
-    @api.multi
     def write(self, vals):
         res = super().write(vals)
-        if "website_published" in vals:
-            for categ in self:
-                childs = categ.child_id.filtered(
-                    lambda c: c.website_published != categ.website_published
+        if "is_published" in vals:
+            for category in self:
+                children_to_sync = category.child_id.filtered(
+                    lambda child, category=category: child.is_published
+                    != category.is_published
                 )
-                childs.write({"website_published": categ.website_published})
+                children_to_sync.write({"is_published": category.is_published})
         return res
