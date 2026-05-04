@@ -20,13 +20,10 @@
         inherit_id="website_sale.option_collapse_categories_recursive"
         id="website_category_option_collapse_publish_recursive"
     >
-        <xpath
-            expr="//t[@t-if='not search or categ.id in search_categories_ids']"
-            position="attributes"
-        >
+        <xpath expr="//t[@t-set='children']" position="attributes">
             <attribute
-                name="t-if"
-            >(not search or categ.id in search_categories_ids) and categ.is_published</attribute>
+                name="t-value"
+            >not search and c.child_id.filtered('is_published') or c.child_id.filtered(lambda c: c.id in search_categories_ids and c.is_published)</attribute>
         </xpath>
     </template>
 </odoo>
