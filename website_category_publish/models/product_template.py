@@ -1,14 +1,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import models, api, fields
+from odoo import api, fields, models
 
 
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     is_categ_published = fields.Boolean(
-        'Is Categ published',
-        store=True,
-        compute="_compute_is_categ_published"
+        "Is Categ published", store=True, compute="_compute_is_categ_published"
     )
 
     @api.depends("public_categ_ids", "public_categ_ids.is_published")
