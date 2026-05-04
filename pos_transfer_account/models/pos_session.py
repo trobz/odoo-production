@@ -22,3 +22,15 @@ class PosSession(models.Model):
             counterpart_account = self.config_id.company_id.transfer_account_id
         extras["counterpart_account_id"] = counterpart_account.id
         return super().try_cash_in_out(_type, amount, reason, extras)
+
+    def show_cash_register(self):
+        action = super().show_cash_register()
+        if self.config_id.suspense_account_id:
+            counterpart_account = self.config_id.suspense_account_id
+        else:
+            counterpart_account = self.config_id.company_id.transfer_account_id
+        action["context"] = {
+            "default_pos_session_id": self.id,
+            "default_counterpart_account_id": counterpart_account.id,
+        }
+        return action

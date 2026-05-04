@@ -114,7 +114,6 @@ export class PaymentCredit extends PaymentInterface {
             }
             return false;
         } catch (error) {
-            // eslint-disable-next-line no-undef
             console.error("Error processing credit payment reversal:", error);
             return false;
         }

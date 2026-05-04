@@ -69,7 +69,7 @@ patch(PosStore.prototype, {
                       );
 
                 // Clear message after 3 seconds
-                // eslint-disable-next-line no-undef
+
                 setTimeout(() => {
                     this.paymentCreditInProgress = false;
                     this.paymentCreditText = "";

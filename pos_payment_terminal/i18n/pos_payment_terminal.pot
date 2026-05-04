@@ -6,8 +6,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-23 02:51+0000\n"
-"PO-Revision-Date: 2025-12-23 02:51+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,8 +14,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: pos_payment_terminal
+#: model:ir.model.fields,help:pos_payment_terminal.field_pos_config__iface_payment_terminal
+#: model:ir.model.fields,help:pos_payment_terminal.field_res_config_settings__pos_iface_payment_terminal
+msgid "A payment terminal is available on the Proxy"
+msgstr ""
+
+#. module: pos_payment_terminal
 #. odoo-javascript
-#: code:addons/pos_payment_terminal/static/src/js/payment_terminal.esm.js:0
+#: code:addons/pos_payment_terminal/static/src/app/payment_terminal.esm.js:0
 msgid "Cannot process transactions with negative amount."
 msgstr ""
 
@@ -32,17 +36,35 @@ msgid "Check"
 msgstr ""
 
 #. module: pos_payment_terminal
-#. odoo-javascript
-#: code:addons/pos_payment_terminal/static/src/js/payment_terminal.esm.js:0
-msgid "Connecting to the payment terminal failed"
+#: model:ir.model,name:pos_payment_terminal.model_res_config_settings
+msgid "Config Settings"
 msgstr ""
 
 #. module: pos_payment_terminal
 #. odoo-javascript
-#: code:addons/pos_payment_terminal/static/src/js/payment_terminal.esm.js:0
+#: code:addons/pos_payment_terminal/static/src/app/payment_terminal.esm.js:0
 msgid ""
 "Failed to send the amount to pay to the payment terminal.Press the red "
 "button on the payment terminal and try again."
+msgstr ""
+
+#. module: pos_payment_terminal
+#: model:ir.model.fields,field_description:pos_payment_terminal.field_pos_payment_method__oca_fast_payment
+msgid "Fast Payment"
+msgstr ""
+
+#. module: pos_payment_terminal
+#: model:ir.model.fields,field_description:pos_payment_terminal.field_pos_config__payment_terminal_hide_back_btn
+#: model:ir.model.fields,field_description:pos_payment_terminal.field_res_config_settings__pos_payment_terminal_hide_back_btn
+#: model_terms:ir.ui.view,arch_db:pos_payment_terminal.res_config_settings_view_form
+msgid "Hide Back Button"
+msgstr ""
+
+#. module: pos_payment_terminal
+#: model:ir.model.fields,field_description:pos_payment_terminal.field_pos_config__iface_payment_terminal
+#: model:ir.model.fields,field_description:pos_payment_terminal.field_res_config_settings__pos_iface_payment_terminal
+#: model_terms:ir.ui.view,arch_db:pos_payment_terminal.res_config_settings_view_form
+msgid "OCA Payment Terminal"
 msgstr ""
 
 #. module: pos_payment_terminal
@@ -52,21 +74,26 @@ msgstr ""
 
 #. module: pos_payment_terminal
 #. odoo-javascript
-#: code:addons/pos_payment_terminal/static/src/js/payment_terminal.esm.js:0
+#: code:addons/pos_payment_terminal/static/src/app/payment_terminal.esm.js:0
 msgid "Payment Terminal Error"
 msgstr ""
 
 #. module: pos_payment_terminal
-#. odoo-javascript
-#: code:addons/pos_payment_terminal/static/src/js/payment_terminal.esm.js:0
-msgid ""
-"Please press the red button on the payment terminal to cancel the "
-"transaction."
+#: model:ir.model,name:pos_payment_terminal.model_pos_config
+msgid "Point of Sale Configuration"
 msgstr ""
 
 #. module: pos_payment_terminal
 #: model:ir.model,name:pos_payment_terminal.model_pos_payment_method
 msgid "Point of Sale Payment Methods"
+msgstr ""
+
+#. module: pos_payment_terminal
+#: model:ir.model.fields,help:pos_payment_terminal.field_pos_config__payment_terminal_hide_back_btn
+#: model:ir.model.fields,help:pos_payment_terminal.field_res_config_settings__pos_payment_terminal_hide_back_btn
+msgid ""
+"Prevent from returning to basket from payment screen as soon as a payment "
+"line exists"
 msgstr ""
 
 #. module: pos_payment_terminal
@@ -76,7 +103,5 @@ msgstr ""
 
 #. module: pos_payment_terminal
 #: model:ir.model.fields,help:pos_payment_terminal.field_pos_payment_method__oca_payment_terminal_id
-msgid ""
-"The identifier of the terminal as known by the hardware proxy. Leave empty "
-"if the proxy has only one terminal connected."
+msgid "The identifier of the terminal as known by the hardware proxy. "
 msgstr ""
