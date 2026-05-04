@@ -127,21 +127,16 @@ class AccountExport(models.Model):
         res = []
         if groupings:
             columns = ", ".join(groupings)
-            sql_group_by = SQL("GROUP BY %s", columns)
-            sql_query = SQL(
-                """
+            sql_group_by = f"GROUP BY {columns}"
+            sql_query = f"""
                 SELECT
-                    %(columns)s,
+                    {columns},
                     ARRAY_AGG(DISTINCT aml.id) as move_line_ids
                 FROM account_move_line aml
-                WHERE aml.id IN %(move_line_ids)s
-                %(group_by)s
-                """,
-                columns=columns,
-                move_line_ids=tuple(move_line_ids),
-                group_by=sql_group_by,
-            )
-            self.env.cr.execute(sql_query)
+                WHERE aml.id IN {tuple(move_line_ids)}
+                {sql_group_by}
+                """
+            self.env.cr.execute(SQL(sql_query))
             grouped_move_lines = self.env.cr.dictfetchall()
             for g_mv_line in grouped_move_lines:
                 if not g_mv_line["move_line_ids"]:
