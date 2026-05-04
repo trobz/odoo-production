@@ -112,24 +112,25 @@ class TestEdiPurchaseDiaparOCA(TransactionCase):
     def _generate_fake_input_ble_content(self, order, new_quantity):
         """
         Example:
-            H20260305PO00001
-            L987654000007
+            1AAAAABBBBBCCDDD2026030420260305EEEE
+            2AAAAABBBBBCCDDD987654UUUUUUUUUUUUUUUUUUUUUUUUUVVVVV00007-GG
         (where:
-            - H is the header code, L is the lines code
+            - 1 is the header code, 2 is the lines code
             - 20260305 is the planned date
-            - PO00001 is the purchase order name
             - 987654 is the product code
             - 000007 is the new quantity)
         """
         partner_id = order.partner_id.id
         date_planned = order.date_planned.strftime("%Y%m%d")
-        order_name = order.name
-        header = f"H{date_planned}{order_name}"
+        header = f"1AAAAABBBBBCCDDD20260304{date_planned}EEEEEE"
         lines = []
         for order_line in order.order_line:
             product = order_line.product_id
             code, _origin_code = product._get_supplier_code_or_ean(partner_id)
-            line = "L" + code + str(new_quantity).zfill(6) + ""
+            line = (
+                f"2AAAAABBBBBCCDDD{code}UUUUUUUUUUUUUUUUUUUUUUUUU"
+                + f"VVVVV{str(new_quantity).zfill(5)}-GG"
+            )
             lines.append(line)
         return "\n".join([header] + lines)
 
