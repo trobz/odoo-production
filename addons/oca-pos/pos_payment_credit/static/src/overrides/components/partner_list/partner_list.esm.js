@@ -12,7 +12,7 @@ patch(PartnerList.prototype, {
         const currentScreen = this.pos.get_order()?.get_screen_data();
         if (currentScreen && currentScreen.name === "PaymentScreen") {
             // Give a small delay to ensure order updates are complete
-            // eslint-disable-next-line no-undef
+
             setTimeout(() => {
                 const paymentScreen = this.pos.mainScreen?.component;
                 if (

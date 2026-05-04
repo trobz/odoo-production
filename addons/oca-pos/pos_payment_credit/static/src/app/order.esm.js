@@ -36,7 +36,7 @@ patch(PosOrder.prototype, {
                 const currentScreen = this.pos.mainScreen;
                 if (currentScreen && currentScreen.component?.autoApplyCreditPayment) {
                     // Small delay to ensure all updates are processed
-                    // eslint-disable-next-line no-undef
+
                     setTimeout(() => {
                         currentScreen.component.autoApplyCreditPayment();
                     }, 50);

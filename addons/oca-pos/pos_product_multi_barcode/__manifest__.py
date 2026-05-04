@@ -15,10 +15,7 @@
     ],
     "assets": {
         "point_of_sale._assets_pos": [
-            "pos_product_multi_barcode/static/src/js/overrides/models/**",
-            "pos_product_multi_barcode/static/src/js/overrides/screens/**",
+            "pos_product_multi_barcode/static/src/app/store/product_product.esm.js",
         ]
     },
-    "demo": [],
-    "qweb": [],
 }
