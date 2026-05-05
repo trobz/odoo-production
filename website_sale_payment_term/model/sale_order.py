@@ -1,12 +1,17 @@
-from odoo import api, models
+from odoo import models
 
 
 class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _inherit = "sale.order"
 
-    @api.multi
-    @api.onchange('partner_id')
-    def onchange_partner_id(self):
-        super().onchange_partner_id()
-        if not self.payment_term_id and self.website_id.payment_term_id:
-            self.payment_term_id = self.website_id.payment_term_id
+    def _compute_payment_term_id(self):
+        super()._compute_payment_term_id()
+        orders = self.filtered(
+            lambda o: o.website_id
+            and o.website_id.payment_term_id
+            and not o.partner_id.property_payment_term_id
+        )
+        if not orders:
+            return
+        for order in orders:
+            order.payment_term_id = order.website_id.payment_term_id
