@@ -36,8 +36,8 @@ msgid "Point of Sale Session"
 msgstr ""
 
 #. module: pos_transfer_account
-#: model:ir.model.fields,field_description:pos_transfer_account.field_pos_config__transfer_account_id
-#: model:ir.model.fields,field_description:pos_transfer_account.field_res_config_settings__pos_transfer_account_id
+#: model:ir.model.fields,field_description:pos_transfer_account.field_pos_config__suspense_account_id
+#: model:ir.model.fields,field_description:pos_transfer_account.field_res_config_settings__pos_suspense_account_id
 #: model_terms:ir.ui.view,arch_db:pos_transfer_account.pos_config_view_form
-msgid "Transfer Account"
+msgid "Suspense Account"
 msgstr ""
