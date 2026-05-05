@@ -1,6 +1,6 @@
 {
     "name": "Website Sale Show Pricetag",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Website",
     "author": "Trobz",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",

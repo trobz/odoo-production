@@ -11,7 +11,7 @@
                         <span
                 class="oe_price"
                 style="white-space: nowrap;"
-                t-esc="product.price_weight"
+                t-out="product.price_weight"
                 t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
             />/kg
                     </t>
@@ -20,7 +20,7 @@
                         <span
                 class="oe_price"
                 style="white-space: nowrap;"
-                t-esc="product.price_volume"
+                t-out="product.price_volume"
                 t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
             />/L
                     </t>
