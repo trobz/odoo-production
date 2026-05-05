@@ -32,5 +32,6 @@ class PosSession(models.Model):
         action["context"] = {
             "default_pos_session_id": self.id,
             "default_counterpart_account_id": counterpart_account.id,
+            "default_journal_id": self.cash_journal_id.id,
         }
         return action
