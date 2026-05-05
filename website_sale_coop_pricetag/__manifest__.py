@@ -2,7 +2,7 @@
     "name": "Website Sale Show Pricetag",
     "version": "18.0.1.0.0",
     "category": "Website",
-    "author": "Trobz",
+    "author": "Trobz, La Louve",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "summary": "Show Pricetag on the shop",
