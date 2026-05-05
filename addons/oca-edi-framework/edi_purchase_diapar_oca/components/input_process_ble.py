@@ -17,9 +17,16 @@ class EDIInputProcessDiaparDespatchAdvice(models.AbstractModel):
 
     def process(self, exchange_record):
         _logger.info(">>>>>>>>>>>>>>>>>> Reading BLE file >>>>>>>>>>>>>>>>>>>>>")
-        picking_update = self._handle_create_picking_update(exchange_record)
+        picking_update, purchase_order = self._handle_create_picking_update(
+            exchange_record
+        )
+
+        exchange_record = self.env["edi.exchange.record"]
         if picking_update:
             picking_update.button_update_picking_order()
+            exchange_record.write(
+                {"res_id": purchase_order.id, "model": "purchase.order"}
+            )
             return self.env._("Stock Picking %s updated", picking_update.name.name)
         return self.env._("No picking update created for this file.")
 
@@ -38,9 +45,6 @@ class EDIInputProcessDiaparDespatchAdvice(models.AbstractModel):
     def _get_picking_order_and_supplier_info(
         self, line, edi_exchange_type, picking_order, supplier_info, delivery_date
     ):
-        if picking_order:
-            return picking_order, supplier_info
-
         pos_from, pos_to = self._get_mapping_field_position(
             edi_exchange_type, "product_code"
         )
@@ -49,6 +53,10 @@ class EDIInputProcessDiaparDespatchAdvice(models.AbstractModel):
             [("product_code", "=", product_code)],
             limit=1,
         )
+
+        if picking_order:
+            return picking_order, supplier_info
+
         supplier_ids = supplier_info.mapped("partner_id").ids
         # Look for corresponding purchase order, normally it
         # should be just one even if there is more than one
@@ -68,7 +76,7 @@ class EDIInputProcessDiaparDespatchAdvice(models.AbstractModel):
             # Assuming purchase order has only one picking order associated.
             if purchase_order.exists():
                 picking_order = purchase_order.picking_ids[0]
-        return picking_order, supplier_info
+        return picking_order, supplier_info, purchase_order
 
     def _get_updated_quantity_values(
         self, line, edi_exchange_type, picking_order, supplier_info
@@ -128,6 +136,7 @@ class EDIInputProcessDiaparDespatchAdvice(models.AbstractModel):
         delivery_date = delivery_sign = ""
         picking_order = self.env["stock.picking"]
         supplier_info = self.env["product.supplierinfo"]
+        purchase_order = self.env["purchase.order"]
         proposition_vals = dict()
         values_list = []
         for line in lines:
@@ -146,7 +155,7 @@ class EDIInputProcessDiaparDespatchAdvice(models.AbstractModel):
                     break
 
                 # Look for picking_order, supplier_info
-                picking_order, supplier_info = (
+                picking_order, supplier_info, purchase_order = (
                     self._get_picking_order_and_supplier_info(
                         line,
                         edi_exchange_type,
@@ -168,11 +177,13 @@ class EDIInputProcessDiaparDespatchAdvice(models.AbstractModel):
                     "values_proposed_ids": values_list,
                 }
             )
-        return proposition_vals
+        return proposition_vals, purchase_order
 
     def _handle_create_picking_update(self, exchange_record):
         picking_update = self.env["picking.update"]
-        proposition_vals = self._prepare_picking_update_values(exchange_record)
+        proposition_vals, purchase_order = self._prepare_picking_update_values(
+            exchange_record
+        )
         if proposition_vals:
             picking_update = picking_update.create(proposition_vals)
-        return picking_update
+        return picking_update, purchase_order
