@@ -4,7 +4,6 @@
         <field name="name">Member Example</field>
         <field name="login">member@example.com</field>
         <field name="email">member@example.com</field>
-        <field eval="[(4, ref('base.group_portal'))]"
-                   name="groups_id"/>
+        <field name="groups_id" eval="[Command.link(ref('base.group_portal'))]" />
     </record>
 </odoo>

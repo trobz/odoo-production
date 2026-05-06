@@ -4,8 +4,8 @@
         <field name="name">Member</field>
         <field name="group_id" ref="foodcoop_data_role_memberspace.group_Member"/>
         <field name="implied_ids" eval="[
-            (4, ref('foodcoop_data_role_memberspace.group_member_restrict')),
-            (4, ref('coop_memberspace.group_memberspace')),
+            Command.link(ref('foodcoop_data_role_memberspace.group_member_restrict')),
+            Command.link(ref('coop_memberspace.group_memberspace')),
         ]"/>
     </record>
 </odoo>
