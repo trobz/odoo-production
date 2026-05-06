@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="confirmation_total_fix"
+        inherit_id="website_sale.confirmation"
+        priority="99"
+    >
+        <xpath expr="//strong[@t-field='tx_sudo.amount']" position="replace">
+            <strong
+                t-if="not website.checkout_skip_payment"
+                t-field="tx_sudo.amount"
+                t-options="{'widget': 'monetary', 'display_currency': order.currency_id}"
+            />
+            <strong
+                t-if="website.checkout_skip_payment"
+                t-field="order.amount_total"
+                t-options="{'widget': 'monetary', 'display_currency': order.currency_id}"
+            />
+        </xpath>
+    </template>
+</odoo>

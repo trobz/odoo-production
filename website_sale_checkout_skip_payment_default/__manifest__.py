@@ -1,13 +1,16 @@
 {
     "name": "Skip Website Checkout Payment by Default",
-    "version": "12.0.1.0.1",
+    "version": "18.0.1.0.0",
     "category": "Custom",
-    "description": """
-Superquinquin Custom    """,
-    "author": "Trobz",
+    "summary": "Superquinquin Custom",
+    "license": "AGPL-3",
+    "author": "Trobz, La Louve",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "depends": [
         "website_sale_checkout_skip_payment",
+    ],
+    "data": [
+        "views/website_sale_template.xml",
     ],
     "installable": True,
 }
