@@ -1,5 +1,0 @@
-- Aurelien Dumaine
-- Alexis de Lattre \<alexis.delattre@akretion.com\>
-- Sylvain LE GAL (<https://twitter.com/legalsylvain>)
-- [Trobz](https://www.trobz.com)
-  - Phan Hong Phuc \<phucph@trobz.com\>

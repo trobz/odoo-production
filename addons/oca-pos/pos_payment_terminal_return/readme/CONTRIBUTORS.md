@@ -1,5 +1,0 @@
-- Julius Network Solutions
-- Druidoo
-- Mathieu Vatel \<mathieu@julius.fr\>
-- [Trobz](https://www.trobz.com)
-  - Phan Hong Phuc \<phucph@trobz.com\>

@@ -1,2 +1,0 @@
-- [Trobz](https://www.trobz.com):
-    - Nguyen Minh Chien \<<chien@trobz.com>\>

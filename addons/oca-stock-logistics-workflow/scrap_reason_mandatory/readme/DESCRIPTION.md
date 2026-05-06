@@ -1,1 +1,0 @@
-This module adds a setting which could make the Scrap Reason required on Scrap Order form

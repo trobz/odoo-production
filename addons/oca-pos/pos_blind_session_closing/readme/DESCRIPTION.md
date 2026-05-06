@@ -1,1 +1,0 @@
-This module hides the expected amounts during POS session closing to allow blind cash control.

@@ -1,1 +1,0 @@
-Prevents receiving consumable products

@@ -1,3 +1,0 @@
-# generated from manifests external_dependencies
-pycountry
-schwifty==2024.4.0

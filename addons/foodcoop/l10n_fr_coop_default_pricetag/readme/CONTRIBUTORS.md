@@ -1,3 +1,0 @@
-- La Louve
-- Druidoo \<<https://www.druidoo.io>\>
-- Phan Hong Phuc \<<phucph@trobz.com>\>

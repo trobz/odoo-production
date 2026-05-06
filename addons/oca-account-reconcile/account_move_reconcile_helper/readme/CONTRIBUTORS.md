@@ -1,7 +1,0 @@
-- Benjamin Willig \<<benjamin.willig@acsone.eu>\>
-- Kitti U. \<<kittiu@ecosoft.co.th>\>
-- [APSL-Nagarro](https://apsl.tech):
-  - Antoni Marroig \<<amarroig@apsl.net>\>
-  - Miquel Pascual \<<mpascual@apsl.net>\>
-- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
-  - Bhavesh Heliconia

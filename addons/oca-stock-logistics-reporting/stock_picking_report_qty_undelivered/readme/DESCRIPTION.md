@@ -1,1 +1,0 @@
-This module extends the stock functionality and allows you to display a summary of undeliverable products.

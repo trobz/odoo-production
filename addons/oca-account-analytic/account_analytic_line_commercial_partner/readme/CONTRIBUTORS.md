@@ -1,3 +1,0 @@
-- David Vidal ([Moduon](https://www.moduon.team/))
-- Rafael Blasco ([Moduon](https://www.moduon.team/))
-- Andrii Kompaniiets ([Moduon](https://www.moduon.team/))

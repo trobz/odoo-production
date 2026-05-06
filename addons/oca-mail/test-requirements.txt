@@ -1,3 +1,0 @@
-cryptography==3.4.8
-pyopenssl==21.0.0
-odoo_test_helper

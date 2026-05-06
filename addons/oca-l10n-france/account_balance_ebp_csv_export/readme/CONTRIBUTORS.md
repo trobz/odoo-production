@@ -1,2 +1,0 @@
-- Sébastien Beau \<<sebastien.beau@akretion.com\>
-- Alexis de Lattre \<<alexis.delattre@akretion.com>\>

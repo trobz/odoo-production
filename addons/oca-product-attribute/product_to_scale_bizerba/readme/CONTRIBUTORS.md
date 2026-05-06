@@ -1,4 +1,0 @@
-- GRAP
-- Druidoo
-- [Trobz] (https://trobz.com/):
-  - Phan Hong Phuc \<<phucph@trobz.com>\>

@@ -1,5 +1,0 @@
-- Sylvain LE GAL (<https://twitter.com/legalsylvain>)
-- Dave Lasley \<dave@laslabs.com\>
-- Druidoo (<https://druidoo.io>)
-- [Trobz](https://trobz.com):
-  - Linh (Nguyen Ngoc) \<<linhnn@trobz.com>\>

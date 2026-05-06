@@ -1,1 +1,0 @@
-The `coop_parental_leave` module extends the shift leave functionality to manage parental leaves for cooperative members. It handles member status management, birth certificate tracking, and automated email communications.
