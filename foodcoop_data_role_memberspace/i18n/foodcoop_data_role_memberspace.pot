@@ -23,9 +23,9 @@ msgstr ""
 #. module: foodcoop_data_role_memberspace
 #: model:res.groups,name:foodcoop_data_role_memberspace.group_Member
 msgid "Member"
-msgstr "Membre"
+msgstr ""
 
 #. module: foodcoop_data_role_memberspace
 #: model:res.groups,name:foodcoop_data_role_memberspace.group_member_restrict
 msgid "Restrict rights for Member"
-msgstr "Restreindre les droits pour les membres"
+msgstr ""
