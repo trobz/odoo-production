@@ -5,13 +5,13 @@ from odoo import api, models
 
 
 class Partner(models.Model):
-    _inherit = 'res.partner'
+    _inherit = "res.partner"
 
     @api.multi
     def check_makeup_shift(self):
         self.ensure_one()
         return (
-            self.shift_type == "standard" and
-            self.cooperative_state != "up_to_date" and
-            self.final_standard_point < 0
+            self.shift_type == "standard"
+            and self.cooperative_state != "up_to_date"
+            and self.final_standard_point < 0
         )

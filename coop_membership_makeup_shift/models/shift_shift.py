@@ -1,11 +1,11 @@
 # Copyright (C) Nguyen Minh Chien (chien@trobz.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import api, models, _
+from odoo import _, api, models
 
 
 class ShiftShift(models.Model):
-    _inherit = 'shift.shift'
+    _inherit = "shift.shift"
 
     @api.multi
     def register_makeup_shift(self):
@@ -17,18 +17,22 @@ class ShiftShift(models.Model):
             return 0, _("No seat is available for this shift.")
         partner = self.env.user.partner_id
         if not partner.check_makeup_shift():
-            return 0, _("Warning! You can't register to a make-up shift because your actual status is `{}`. "
-                        "Make-up shift registration are dedicated to members who were priviously absent."
-                        ).format(partner._fields["cooperative_state"].convert_to_export(
-                            partner.cooperative_state, partner))
+            return 0, _(
+                "Warning! You can't register to a make-up shift because your actual status is `{}`. "
+                "Make-up shift registration are dedicated to members who were priviously absent."
+            ).format(
+                partner._fields["cooperative_state"].convert_to_export(
+                    partner.cooperative_state, partner
+                )
+            )
 
         vals = {
-            'state': 'draft',
-            'partner_id': partner.id,
-            'shift_id': self.id,
-            'shift_ticket_id': tickets[0].id,
-            'related_extension_id': False,
-            'is_makeup': True,
+            "state": "draft",
+            "partner_id": partner.id,
+            "shift_id": self.id,
+            "shift_ticket_id": tickets[0].id,
+            "related_extension_id": False,
+            "is_makeup": True,
         }
         self.env["shift.registration"].sudo().create(vals)
         return 1, ""
