@@ -1,20 +1,29 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <!-- MYWORK STANDARD MEMBER -->
-    <template id="coop_membership_makeup_shift.mywork_standard" inherit_id="coop_memberspace.mywork_standard">
+    <template
+        id="coop_membership_makeup_shift.mywork_standard"
+        inherit_id="coop_memberspace.mywork_standard"
+    >
         <xpath expr="div[last()]" position="inside">
             <div t-if="user.company_id.shift_makeup" class="col-md-6">
-                <div style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;">
-                    <p style="font-size: 25px;font-weight: 600">Schedule a make-up shift</p>
+                <div
+                    style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;"
+                >
+                    <p
+                        style="font-size: 25px;font-weight: 600"
+                    >Schedule a make-up shift</p>
                     <p class="text-center">
                         If you've been absent to a shift and are now in state alert, suspended or delay, you have to schedule a make-up shift.
                     </p>
                     <div class="text-center">
-                        <a href="/standard/programmer_makeup" class="btn btn-default btn-warning">Schedule</a>
+                        <a
+                            href="/standard/programmer_makeup"
+                            class="btn btn-default btn-warning"
+                        >Schedule</a>
                     </div>
                 </div>
             </div>
         </xpath>
     </template>
-
 </odoo>

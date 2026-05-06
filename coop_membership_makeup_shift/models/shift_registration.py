@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ShiftRegistration(models.Model):
-    _inherit = 'shift.registration'
+    _inherit = "shift.registration"
 
     is_makeup = fields.Boolean()
 
