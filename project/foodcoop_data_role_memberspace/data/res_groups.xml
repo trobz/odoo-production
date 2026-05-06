@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="group_Member" model="res.groups">
+        <field name="name">Member</field>
+    </record>
+    <record id="group_member_restrict" model="res.groups">
+        <field name="name">Restrict rights for Member</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+</odoo>
