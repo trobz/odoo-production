@@ -20,14 +20,20 @@ class EDIInputProcessDiaparDespatchAdvice(models.AbstractModel):
         picking_update, purchase_order = self._handle_create_picking_update(
             exchange_record
         )
-
-        exchange_record = self.env["edi.exchange.record"]
         if picking_update:
             picking_update.button_update_picking_order()
-            exchange_record.write(
-                {"res_id": purchase_order.id, "model": "purchase.order"}
+            _related = self.env["edi.exchange.related.record"].create(
+                {
+                    "exchange_record_id": exchange_record.id,
+                    "res_id": purchase_order.id,
+                    "model": "purchase.order",
+                }
             )
-            return self.env._("Stock Picking %s updated", picking_update.name.name)
+            return self.env._(
+                "Stock Picking %s updated. Related Order: %s",
+                picking_update.name.name,
+                purchase_order.name,
+            )
         return self.env._("No picking update created for this file.")
 
     def _parse_file_content_ble(self, exchange_record):
