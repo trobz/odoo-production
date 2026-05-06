@@ -49,14 +49,11 @@ class EDIInputProcessDiaparDespatchAdvice(models.AbstractModel):
             edi_exchange_type, "product_code"
         )
         product_code = line[pos_from:pos_to]
+        purchase_order = self.env["purchase.order"]
         supplier_info = self.env["product.supplierinfo"].search(
             [("product_code", "=", product_code)],
             limit=1,
         )
-
-        if picking_order:
-            return picking_order, supplier_info
-
         supplier_ids = supplier_info.mapped("partner_id").ids
         # Look for corresponding purchase order, normally it
         # should be just one even if there is more than one
