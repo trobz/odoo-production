@@ -31,7 +31,7 @@ class PosSession(models.Model):
             counterpart_account = self.config_id.company_id.transfer_account_id
         action["context"] = {
             "default_pos_session_id": self.id,
-            "default_counterpart_account_id": counterpart_account.id,
+            "counterpart_account_id": counterpart_account.id,
             "default_journal_id": self.cash_journal_id.id,
         }
         return action
