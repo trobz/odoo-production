@@ -6,7 +6,7 @@
     "category": "Tools",
     "summary": """""",
     "author": "Trobz",
-    "website": "https://trobz.com",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": [
         "coop_memberspace",
