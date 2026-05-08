@@ -5,16 +5,16 @@
         id="programmer_un_extra_inherit"
         inherit_id="coop_memberspace.programmer_un_extra"
     >
-        <xpath expr="//th[3]" position="after">
+        <xpath expr="//th[@name='hour']" position="after">
             <th>Expected attendees</th>
         </xpath>
-        <xpath expr="//td[3]" position="after">
+        <xpath expr="//td[@name='hour']" position="after">
             <td>
                 <t t-esc="shift.seats_reserved" />
                 <span
                     t-if="shift.seats_reserved > 0"
-                    data-toggle="modal"
-                    data-target="#modal_list_expected_attendee"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modal_list_expected_attendee"
                     t-att-shift-id="shift.id"
                     class="fa fa-external-link browse-expected-attendee"
                 />
@@ -41,7 +41,7 @@
                             <div class="text-center">
                                 <span
                                     class="fa fa-times"
-                                    data-dismiss="modal"
+                                    data-bs-dismiss="modal"
                                     style="margin-right: 40px;font-size: 3em;"
                                 />
                             </div>
@@ -53,22 +53,8 @@
     </template>
 
     <template id="mywork_ftop_inherit" inherit_id="coop_memberspace.mywork_ftop">
-        <!-- <xpath expr="//table[1]//thead//tr/th[3]" position="after">
-            <th>Expected attendees</th>
-        </xpath>
-        <xpath expr="//table[1]//tbody//tr/td[3]" position="after">
-            <td>
-                <t t-esc="shift.seats_reserved"/>
-                <span t-if="shift.seats_reserved > 0"
-                    data-toggle="modal" data-target="#modal_list_expected_attendee"
-                    t-att-shift-id="shift.id"
-                    class="fa fa-external-link browse-expected-attendee"/>
-            </td>
-        </xpath> -->
-
-        <!-- Model-->
         <xpath
-            expr="//div[@id='ftop_programmer_modal']//thead//tr//th[3]"
+            expr="//div[@id='ftop_programmer_modal']//thead//tr//th[@name='hour']"
             position="after"
         >
             <th>Expected attendees</th>
