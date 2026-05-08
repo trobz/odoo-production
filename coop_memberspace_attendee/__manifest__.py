@@ -2,10 +2,10 @@
 
 {
     "name": "Show Attendees on Memberspace",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Tools",
     "summary": """""",
-    "author": "Trobz",
+    "author": "Trobz, La Louve",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": [
@@ -13,6 +13,12 @@
     ],
     "data": [
         "views/my_work.xml",
-        "views/assets.xml",
     ],
+    "assets": {
+        "web.assets_frontend": [
+            "coop_memberspace_attendee/static/src/scss/coop_memberspace_attendee.scss",
+            "coop_memberspace_attendee/static/src/js/programmer_un_extra.esm.js",
+            "coop_memberspace_attendee/static/src/js/programmer_une_vacation.esm.js",
+        ],
+    },
 }
