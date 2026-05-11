@@ -2,16 +2,18 @@
 {
     "name": "Point Of Sale - Meal Voucher: customization",
     "summary": "Handle meal vouchers in Point of Sale: Set payment amount",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Point of Sale",
-    "author": "Trobz",
-    "website": "https://trobz.com",
+    "author": "Trobz, La Louve",
+    "website": "https://github.com/OCA/pos",
     "license": "AGPL-3",
     "depends": [
         "pos_meal_voucher",
     ],
-    "data": [
-        "views/templates.xml",
-    ],
+    "assets": {
+        "point_of_sale._assets_pos": [
+            "pos_meal_voucher_custom/static/src/payment_screen/**/*",    
+        ],
+    },
     "installable": True,
 }
