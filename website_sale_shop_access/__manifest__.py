@@ -1,16 +1,13 @@
 {
     "name": "Website Site: Show Shop for logged in user only",
-    "version": "12.0.1.0.1",
+    "version": "18.0.1.0.0",
     "category": "Website",
-    "description": """Website Site: Show Shop for logged in user only""",
-    "author": "Trobz",
+    "author": "Trobz, La Louve",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "depends": [
         "website_sale",
     ],
-    "data": [
-        "view/website_menu_view.xml",
-    ],
-    "test": [],
+    "data": [],
     "installable": True,
+    "license": "LGPL-3",
 }
