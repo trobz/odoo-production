@@ -1,21 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="stock_inventory_barcode_form_inherit" model="ir.ui.view">
-        <field name="inherit_id" ref="stock_inventory_barcode.stock_inventory_barcode_form"/>
+        <field
+            name="inherit_id"
+            ref="stock_inventory_barcode.stock_inventory_barcode_form"
+        />
         <field name="model">stock.inventory.barcode</field>
         <field name="arch" type="xml">
             <field name="product_code" position="after">
-                <field name="prev_product_id" invisible="1"/>
-                <field name="scan_barcode_mode" invisible="1"/>
+                <field name="prev_product_id" invisible="1" />
+                <field name="scan_barcode_mode" invisible="1" />
             </field>
             <field name="change_qty" position="attributes">
-                <attribute name="attrs">{'invisible': [('scan_barcode_mode', '=', 'add')]}</attribute>
+                <attribute
+                    name="attrs"
+                >{'invisible': [('scan_barcode_mode', '=', 'add')]}</attribute>
             </field>
             <field name="change_qty" position="after">
-                <field name="new_change_qty" class="oe_inline" attrs="{'invisible': [('scan_barcode_mode', '!=', 'add')]}"/>
+                <field
+                    name="new_change_qty"
+                    class="oe_inline"
+                    attrs="{'invisible': [('scan_barcode_mode', '!=', 'add')]}"
+                />
             </field>
             <group name="product" position="inside">
-                <field name="use_latest_qty"/>
+                <field name="use_latest_qty" />
             </group>
         </field>
     </record>
