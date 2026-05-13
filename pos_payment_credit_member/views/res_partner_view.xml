@@ -5,9 +5,9 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="coop_membership.view_bdm_tree"/>
         <field name="arch" type="xml">
-            <tree position="inside">
+            <list position="inside">
                 <field name="credit_amount"/>
-            </tree>
+            </list>
         </field>
     </record>
 
