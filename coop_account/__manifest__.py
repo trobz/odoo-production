@@ -15,7 +15,6 @@
         "account_tax_balance",
         "account_reconcile_oca",
         "account_statement_base",
-        "purchase_unreconciled",
         "barcodes_generator_partner",
     ],
     "data": [
