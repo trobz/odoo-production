@@ -13,3 +13,6 @@ from . import purchase_order
 from . import product_product
 from . import product_supplierinfo
 from . import supplier_price_list
+from . import res_company
+from . import res_config_settings
+from . import stock_move

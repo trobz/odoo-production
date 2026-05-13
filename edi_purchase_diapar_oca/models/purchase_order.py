@@ -5,6 +5,23 @@ from odoo.exceptions import ValidationError
 class PurchaseOrder(models.Model):
     _inherit = "purchase.order"
 
+    def _should_apply_receipt_qty_policy(self):
+        """Condition to apply the policy of using the quantity from
+        the EDI file instead of the one in the order line."""
+        self.ensure_one()
+        exchange_types = self.env["edi.exchange.type"].search(
+            [
+                ("partner_ids", "in", self.partner_id.ids),
+                ("direction", "=", "input"),
+            ]
+        )
+        return (
+            not self.edi_disable_auto
+            and self.partner_id.is_edi
+            and self.partner_id.edi_purchase_conf_ids
+            and exchange_types
+        )
+
     def _consolidate_product_qty(self, order_line):
         return order_line.product_qty
 
@@ -54,3 +71,13 @@ class PurchaseOrder(models.Model):
             order_lines=self._consolidate_products(),
             env=self.env,
         )
+
+
+class PurchaseOrderLine(models.Model):
+    _inherit = "purchase.order.line"
+
+    def _create_stock_moves(self, picking):
+        if self.order_id._should_apply_receipt_qty_policy():
+            if self.company_id.edi_receipt_qty_policy == "received_file":
+                self = self.with_context(qty_from_file_policy=True)
+        return super()._create_stock_moves(picking)

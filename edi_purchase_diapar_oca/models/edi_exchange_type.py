@@ -30,5 +30,25 @@ class EDIExchangeType(models.Model):
         return self.env["ir.http"]._slugify(now.strftime(time_pattern))
 
     def _make_exchange_filename(self, exchange_record):
-        res = super()._make_exchange_filename(exchange_record)
-        return res.format(time=self._make_exchange_filename_time())
+        pattern = self.exchange_filename_pattern
+        if "{time}" in pattern:
+            ext = self.exchange_file_ext
+            if ext:
+                pattern += ".{ext}"
+            dt = self._make_exchange_filename_datetime()
+            seq = self._make_exchange_filename_sequence()
+            record_name = self._get_record_name(exchange_record)
+            record = exchange_record
+            if exchange_record.model and exchange_record.res_id:
+                record = exchange_record.record
+            return pattern.format(
+                exchange_record=exchange_record,
+                record=record,
+                record_name=record_name,
+                type=self,
+                dt=dt,
+                seq=seq,
+                ext=ext,
+                time=self._make_exchange_filename_time(),
+            )
+        return super()._make_exchange_filename(exchange_record)

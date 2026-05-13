@@ -24,6 +24,7 @@
         "views/res_partner_views.xml",
         "views/exchange_type_views.xml",
         "views/edi_exchange_template_output.xml",
+        "views/res_config_settings_views.xml",
         "views/menus.xml",
         "templates/exchange_template_output_diapar.xml",
     ],
