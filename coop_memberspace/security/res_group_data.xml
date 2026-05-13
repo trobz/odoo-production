@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Memberspace Group -->
+    <record id="group_memberspace" model="res.groups">
+        <field name="name">Memberspace Group</field>
+    </record>
+
+    <!-- Portal users inherit Memberspace Group to access shift records on the website -->
+    <record id="base.group_portal" model="res.groups">
+        <field
+            name="implied_ids"
+            eval="[(4, ref('coop_memberspace.group_memberspace'))]"
+        />
+    </record>
+</odoo>

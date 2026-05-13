@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    External CDN resources.
+    Google Fonts are injected directly via a <link> tag in the layout head
+    (see website_template.xml) because ir.asset cannot reliably distinguish
+    external CSS URLs that have no .css extension.
+    Chart.js is loaded here as a plain <script> src — Odoo detects .js correctly.
+-->
+<odoo>
+    <record id="asset_chartjs" model="ir.asset">
+        <field name="name">Coop Memberspace - Chart.js</field>
+        <field name="bundle">web.assets_frontend</field>
+        <field
+            name="path"
+        >https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js</field>
+    </record>
+</odoo>

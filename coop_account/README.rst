@@ -27,14 +27,14 @@ accounting operations.
 
 Features:
 
--  Enhanced account move search with year, month, and day filters
--  Bank statement matching and unmatching wizards
--  Payment operation types (SEPA Direct Debit/Credit, Check, Credit
-   Card, LCR)
--  Partner barcode integration for payment tracking
--  Invoice line merging for draft invoices
--  Bank statement line reconciliation wizard
--  Prevents reconciliation with non-bank journals
+- Enhanced account move search with year, month, and day filters
+- Bank statement matching and unmatching wizards
+- Payment operation types (SEPA Direct Debit/Credit, Check, Credit Card,
+  LCR)
+- Partner barcode integration for payment tracking
+- Invoice line merging for draft invoices
+- Bank statement line reconciliation wizard
+- Prevents reconciliation with non-bank journals
 
 **Table of contents**
 
@@ -52,9 +52,9 @@ Search by Date
 
 Account moves include computed search fields:
 
--  **Year (Search)**: Filter by year (e.g., "2024")
--  **Month (Search)**: Filter by year-month (e.g., "2024-06")
--  **Day (Search)**: Filter by exact date (e.g., "2024-06-15")
+- **Year (Search)**: Filter by year (e.g., "2024")
+- **Month (Search)**: Filter by year-month (e.g., "2024-06")
+- **Day (Search)**: Filter by exact date (e.g., "2024-06-15")
 
 Merge Invoice Lines
 ~~~~~~~~~~~~~~~~~~~
@@ -82,12 +82,12 @@ Operation Types
 
 When creating payments, select an operation type:
 
--  **SEPA Direct Debit**: For incoming SEPA debits
--  **SEPA Direct Credit**: For outgoing SEPA credits
--  **Check**: With optional check code
--  **Credit Card**: For card payments
--  **LCR**: For Letter of Credit Remittance
--  **Other**: For other payment methods
+- **SEPA Direct Debit**: For incoming SEPA debits
+- **SEPA Direct Credit**: For outgoing SEPA credits
+- **Check**: With optional check code
+- **Credit Card**: For card payments
+- **LCR**: For Letter of Credit Remittance
+- **Other**: For other payment methods
 
 The memo field auto-populates based on the operation type and associated
 invoice.
@@ -133,11 +133,11 @@ Authors
 Contributors
 ------------
 
--  La Louve
--  Druidoo
--  `Trobz <https://www.trobz.com>`__
+- La Louve
+- Druidoo
+- `Trobz <https://www.trobz.com>`__
 
-   -  Phan Hong Phuc <phucph@trobz.com>
+  - Phan Hong Phuc <phucph@trobz.com>
 
 Maintainers
 -----------

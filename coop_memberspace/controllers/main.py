@@ -1,0 +1,400 @@
+import locale
+import logging
+from datetime import date, datetime, timedelta
+
+import pytz
+
+from odoo import http
+from odoo.http import request
+
+from odoo.addons.website.controllers.main import Website as WebsiteController
+
+_logger = logging.getLogger(__name__)
+
+
+class Website(WebsiteController):
+    @http.route("/", type="http", auth="public", website=True)
+    def index(self, **kw):
+        user = request.env.user
+        # Get members
+        members = (
+            request.env["res.partner"]
+            .sudo()
+            .search(
+                [
+                    ("is_member", "=", True),
+                    (
+                        "cooperative_state",
+                        "not in",
+                        [
+                            "blocked",
+                            "unpayed",
+                            "not_concerned",
+                            "unsubscribed",
+                        ],
+                    ),
+                ]
+            )
+        )
+        # Get member status
+        member_status = user.partner_id.get_warning_member_state()
+        # Get next shift
+        shift_registration_env = request.env["shift.registration"]
+        shift_registration = shift_registration_env.sudo().search(
+            [
+                ("shift_id.shift_template_id.is_technical", "=", False),
+                ("partner_id", "=", user.partner_id.id),
+                ("state", "not in", ("cancel", "waiting", "replaced")),  # F#T59459
+                (
+                    "date_begin",
+                    ">=",
+                    datetime.now(),
+                ),
+            ],
+            order="date_begin",
+            limit=1,
+        )
+        default_lang = user.lang or user.company_id.partner_id.lang
+        # Get Turnover of the day
+        lang = f"{default_lang}.utf8"
+        try:
+            locale.setlocale(locale.LC_TIME, lang)
+        except Exception as e:
+            _logger.debug("Can't set locale: %s", e)
+        user_tz = user.tz or "Europe/Paris"
+        local = pytz.timezone(user_tz)
+        date_begin = (
+            shift_registration
+            and datetime.strftime(
+                pytz.utc.localize(shift_registration.date_begin).astimezone(local),
+                "%A, %d %B %Hh%M",
+            )
+            or False
+        )
+        week_number = request.env["shift.template"]._get_week_number(date.today())
+        week_name = request.env["shift.template"]._number_to_letters(week_number)
+        values = {
+            "date_begin": date_begin and date_begin.capitalize() or False,
+            "week_number": week_number,
+            "week_name": week_name,
+            "num_of_members": len(members),
+            "member_status": member_status,
+        }
+        return http.request.render("coop_memberspace.homepage", values)
+
+    @http.route(website=True, auth="public")
+    def web_login(self, redirect=None, **kw):
+        r = super().web_login(redirect=redirect, **kw)
+        if not redirect and request.params.get("login_success"):
+            return request.redirect("/")
+        return r
+
+    @http.route("/mywork", type="http", auth="user", website=True)
+    def page_mywork(self, **kwargs):
+        user = request.env.user
+        partner = user.partner_id
+        # Get next shift
+        shift_registration_env = request.env["shift.registration"]
+        member_status = partner.get_warning_member_state()
+        shift_upcomming = shift_registration_env.sudo().get_upcoming(
+            user.partner_id,
+            [
+                ("shift_id.shift_template_id.is_technical", "=", False),
+            ],
+        )
+        # check standard member or ftop member
+        datas = {
+            "is_standard_member": user.partner_id.shift_type == "standard",
+            "is_ftop_member": user.partner_id.shift_type == "ftop",
+            "shift_upcomming": shift_upcomming,
+            "user": user,
+            "member_status": member_status,
+        }
+        if user.partner_id.shift_type == "standard":
+            d = datetime.now()
+            next_registrations = (
+                partner.sudo()
+                .registration_ids.filtered(lambda r, d=d: r.date_begin >= d)
+                .sorted(lambda r: r.date_begin)
+            )
+            partner.upcoming_registration_count = len(next_registrations)
+            next_registrations = next_registrations.sorted(lambda r: r.date_begin)
+            datas.update(
+                {
+                    "standard_point": user.partner_id.display_std_points,
+                    "ftop_point": user.partner_id.display_ftop_points,
+                    "next_registrations": next_registrations,
+                }
+            )
+        elif user.partner_id.shift_type == "ftop":
+            datas.update({"ftop_point": user.partner_id.display_ftop_points})
+        return request.render("coop_memberspace.mywork", datas)
+
+    @http.route("/standard/counter_classic", type="http", auth="user", website=True)
+    def page_counter_classic(self, **kwargs):
+        user = request.env.user
+        shift_counter_event_env = request.env["shift.counter.event"]
+        shift_counter_events = shift_counter_event_env.sudo().search(
+            [
+                ("partner_id", "=", user.partner_id.id),
+                ("type", "=", "standard"),
+            ]
+        )
+        return request.render(
+            "coop_memberspace.counter",
+            {
+                "classic": True,
+                "shift_counter_events": shift_counter_events,
+                "user": user,
+            },
+        )
+
+    @http.route("/standard/counter_extra", type="http", auth="user", website=True)
+    def page_counter_extra(self, **kwargs):
+        user = request.env.user
+        shift_counter_event_env = request.env["shift.counter.event"]
+        shift_counter_events = shift_counter_event_env.sudo().search(
+            [("partner_id", "=", user.partner_id.id), ("type", "=", "ftop")]
+        )
+        return request.render(
+            "coop_memberspace.counter",
+            {
+                "extra": True,
+                "shift_counter_events_extra": shift_counter_events,
+                "user": user,
+            },
+        )
+
+    @http.route("/standard/programmer_un_extra", type="http", auth="user", website=True)
+    def page_programmer_un_extra(self, **kwargs):
+        user = request.env.user
+        shift_env = request.env["shift.shift"]
+        shifts_available = shift_env
+        domain = shift_env.get_domain_programmer_un_extra()
+        if domain:
+            shifts_available = shift_env.sudo().search(domain, order="date_begin")
+            shifts_available = shifts_available.filtered(
+                lambda t: t.seats_availability == "unlimited"
+                or t.seats_reserved < t.seats_max
+            )
+        return request.render(
+            "coop_memberspace.counter",
+            {
+                "programmer_un_extra": True,
+                "shifts_available": shifts_available,
+                "user": user,
+            },
+        )
+
+    @http.route("/standard/echange_de_services", type="http", auth="user", website=True)
+    def page_echange_de_services(self, **kwargs):
+        user = request.env.user
+        icp_sudo = request.env["ir.config_parameter"].sudo()
+        shift_replacement_duration = int(
+            icp_sudo.get_param("coop.shift.shift_replacement_duration", 90)
+        )
+        today = datetime.now()
+        tomorrow = today + timedelta(days=shift_replacement_duration)
+
+        # Get next shift
+        shift_registration_env = request.env["shift.registration"]
+        shift_upcomming = shift_registration_env.sudo().get_upcoming(
+            user.partner_id,
+            [
+                ("shift_id.shift_type_id.is_ftop", "=", False),
+            ],
+        )
+        args = [
+            ("partner_id", "!=", user.partner_id.id),
+            # ("state", "!=", "cancel"),
+            # ("exchange_state", "=", "in_progress"),
+            # ("exchange_replacing_reg_id", '!=', False),
+            ("date_begin", ">=", today),
+            ("date_begin", "<=", tomorrow),
+        ]
+        args = shift_registration_env.get_extra_domain_on_market(args)
+        shifts_on_market = shift_registration_env.sudo().search(
+            args,
+            order="date_begin",
+        )
+        # Shifts of my own but cancel by mistake
+        shifts_on_market2 = shift_registration_env.sudo().search(
+            [
+                ("partner_id", "=", user.partner_id.id),
+                ("state", "=", "waiting"),
+                ("exchange_state", "=", "in_progress"),
+                ("exchange_replacing_reg_id", "!=", False),
+                ("date_begin", ">=", today),
+                ("date_begin", "<=", tomorrow),
+            ],
+            order="date_begin",
+        )
+        shifts_on_market |= shifts_on_market2
+        counted_shift_ids = (
+            shift_upcomming.filtered(lambda s: s.state != "cancel") | shifts_on_market
+        ).mapped("shift_id.id")
+        shift_exchange_policy = icp_sudo.get_param(
+            "coop.shift.shift_exchange_policy", "registraion"
+        )
+        args = [
+            ("id", "not in", counted_shift_ids),
+            ("date_begin", ">=", today),
+            ("date_begin", "<=", tomorrow),
+            ("state", "not in", ("cancel", "done")),
+        ]
+        if shift_exchange_policy != "registraion_standard_ftop":
+            args.append(("shift_type_id.is_ftop", "=", False))
+
+        avaible_shifts = (
+            request.env["shift.shift"]
+            .with_context(shift_exchange_policy=shift_exchange_policy)
+            .search(
+                args,
+                order="date_begin",
+            )
+        )
+        avaible_shifts = avaible_shifts.filtered(lambda t: t.ticket_seats_available > 0)
+        avaible_shifts |= shifts_on_market.mapped("shift_id")
+        avaible_shifts = avaible_shifts.filtered(
+            lambda t: t.seats_availability == "unlimited"
+            or t.seats_reserved < t.seats_max
+        )
+        avaible_shifts = avaible_shifts.sorted(lambda s: s.date_begin)
+        shifts_on_market_dict = {}  # {shift_id: shift_registration_object}
+        for registration in shifts_on_market:
+            shifts_on_market_dict.update({registration.shift_id: registration})
+        return request.render(
+            "coop_memberspace.counter",
+            {
+                "echange_de_services": True,
+                "shift_upcomming": shift_upcomming,
+                "shifts_on_market": shifts_on_market,
+                "shifts_on_market_dict": shifts_on_market_dict,
+                "avaible_shifts": avaible_shifts,
+                "user": user,
+            },
+        )
+
+    @http.route("/ftop/my_counter", type="http", auth="user", website=True)
+    def page_ftop_my_counter(self, **kwargs):
+        user = request.env.user
+        shift_counter_event_env = request.env["shift.counter.event"]
+        shift_counter_events = shift_counter_event_env.sudo().search(
+            [("partner_id", "=", user.partner_id.id), ("type", "=", "ftop")]
+        )
+        return request.render(
+            "coop_memberspace.ftop_my_counter",
+            {
+                "is_ftop_member": True,
+                "shift_counter_events": shift_counter_events,
+                "user": user,
+            },
+        )
+
+    @http.route("/myteam", type="http", auth="user", website=True)
+    def page_myteam(self, **kwargs):
+        user = request.env.user
+        tmpl_lines = user.partner_id.tmpl_reg_line_ids.filtered(lambda r: r.is_current)
+        shift_tmpl = tmpl_lines and tmpl_lines[0].shift_template_id or False
+        coordinators = (
+            shift_tmpl and shift_tmpl.user_ids.sorted(key=lambda r: r.name) or []
+        )
+        members = (
+            shift_tmpl
+            and shift_tmpl.registration_ids.filtered(lambda r: r.is_current_participant)
+            .mapped("partner_id")
+            .filtered(lambda r: r.shift_type == "standard")
+            .sorted(key=lambda r: r.name)
+            or []
+        )
+
+        alias_leader = (
+            shift_tmpl
+            and request.env["memberspace.alias"].search(
+                [
+                    ("shift_id", "=", shift_tmpl.id),
+                    ("type", "=", "coordinator"),
+                ],
+                limit=1,
+            )
+            or False
+        )
+        alias_leader = alias_leader and alias_leader[0].alias_id.display_name or ""
+
+        alias_team = (
+            shift_tmpl
+            and request.env["memberspace.alias"].search(
+                [("shift_id", "=", shift_tmpl.id), ("type", "=", "team")],
+                limit=1,
+            )
+            or False
+        )
+        alias_team = alias_team and alias_team[0].alias_id.display_name or ""
+
+        is_leader = user.partner_id in coordinators
+
+        return request.render(
+            "coop_memberspace.myteam",
+            {
+                "coordinators": coordinators,
+                "members": members,
+                "alias_team": alias_team,
+                "alias_leader": alias_leader,
+                "is_leader": is_leader,
+                "current_member": user.partner_id,
+            },
+        )
+
+    @http.route("/profile", type="http", auth="user", website=True)
+    def page_myprofile(self, **kwargs):
+        return request.render("coop_memberspace.myprofile", {"user": request.env.user})
+
+    @http.route("/statistics", type="http", auth="user", website=True)
+    def page_statistics(self, **kwargs):
+        first_day_of_year = datetime.now().strftime("%Y-01-01 00:00:00")
+        end_day_of_year = datetime.now().strftime("%Y-12-31 23:59:59")
+        sales_count = (
+            request.env["pos.order"]
+            .sudo()
+            .search_count(
+                [
+                    ("state", "in", ["paid", "done", "invoiced"]),
+                    ("date_order", ">=", first_day_of_year),
+                    ("date_order", "<=", end_day_of_year),
+                ]
+            )
+        )
+        pos_session = (
+            request.env["pos.session"]
+            .sudo()
+            .search(
+                [
+                    ("stop_at", ">=", first_day_of_year),
+                    ("stop_at", "<=", end_day_of_year),
+                    ("state", "=", "closed"),
+                ]
+            )
+        )
+        if pos_session:
+            total_with_tax = sum(pos_session.mapped("order_ids.amount_total"))
+            total_tax = sum(pos_session.mapped("order_ids.amount_tax"))
+            datas = [(total_with_tax - total_tax), total_with_tax]
+        else:
+            datas = [0, 0]
+
+        return request.render(
+            "coop_memberspace.statistics",
+            {
+                "user": request.env.user,
+                "num_of_sales": sales_count,
+                "turnover_year_wo_tax": int(datas[0]),
+                "turnover_year_tax": int(datas[1]),
+                "average_basket": (int(datas[1]) / sales_count)
+                if sales_count > 0
+                else 0,
+            },
+        )
+
+    @http.route("/documents", type="http", auth="user", website=True)
+    def page_documents(self, **kwargs):
+        return request.render("coop_memberspace.documents", {})

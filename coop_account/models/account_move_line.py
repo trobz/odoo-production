@@ -47,17 +47,6 @@ class AccountMoveLine(models.Model):
                 rec.search_month = False
                 rec.search_day = False
 
-    def _create_writeoff(self, vals):
-        move_lines = super()._create_writeoff(vals)
-        partner = self.mapped("partner_id")
-        for line in move_lines:
-            line.partner_id = (
-                partner.id
-                if len(partner) == 1 and not any(not line.partner_id for line in self)
-                else False
-            )
-        return move_lines
-
     def unmatch_bankstatement_wizard(self):
         active_ids = self._context.get("active_ids", [])
         active_model = self._context.get("active_model", [])
