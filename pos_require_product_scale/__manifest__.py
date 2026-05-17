@@ -5,7 +5,7 @@
     "name": "Require Product To Be Scaled in POS",
     "version": "12.0.1.0.0",
     "author": "Trobz",
-    "website": "https://www.trobz.com",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "category": "Point of Sale",
     "summary": """
@@ -13,11 +13,11 @@
         lines when clicking on "Payment" button.
     """,
     "depends": [
-        'point_of_sale',
+        "point_of_sale",
     ],
-    'data': [
-        'views/pos_config.xml',
-        'views/assets.xml',
+    "data": [
+        "views/pos_config.xml",
+        "views/assets.xml",
     ],
-    'installable': True,
+    "installable": True,
 }

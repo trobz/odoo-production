@@ -4,11 +4,11 @@
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 */
 
-odoo.define('pos_require_product_scale.screens', function (require) {
+odoo.define("pos_require_product_scale.screens", function (require) {
     "use strict";
 
     var screens = require("point_of_sale.screens");
-    var core = require('web.core');
+    var core = require("web.core");
     var _t = core._t;
 
     screens.ActionpadWidget.include({
@@ -17,35 +17,44 @@ odoo.define('pos_require_product_scale.screens', function (require) {
             this._super();
 
             if (self.pos.config.require_product_scale) {
-                this.$('.pay').click(function () {
-                    if (self.gui.current_popup !== null){
+                this.$(".pay").click(function () {
+                    if (self.gui.current_popup !== null) {
                         return;
                     }
                     var lines = _.filter(
                         self.pos.get_order().get_orderlines(),
-                        function(line) { return Number.isInteger(line.quantity) && line.product.to_weight}
+                        function (line) {
+                            return (
+                                Number.isInteger(line.quantity) &&
+                                line.product.to_weight
+                            );
+                        }
                     );
                     if (lines.length > 0) {
                         self.gui.back();
-                        self.gui.show_popup(
-                            'confirm',
-                            {
-                                'title': _t('Attention: One or more items to be weighed show a round weight (1 kg, 2 kg, 3 kg…)'),
-                                'body': (
-                                    _t('The product(s) may need to be weighted with scale: ')
-                                    + _.map(lines, function(line) { return line.product.display_name }).join(', ')
-                                    + ". "
-                                    + _t('Are you sure that you want to continue the payment?')
+                        self.gui.show_popup("confirm", {
+                            title: _t(
+                                "Attention: One or more items to be weighed show a round weight (1 kg, 2 kg, 3 kg…)"
+                            ),
+                            body:
+                                _t(
+                                    "The product(s) may need to be weighted with scale: "
+                                ) +
+                                _.map(lines, function (line) {
+                                    return line.product.display_name;
+                                }).join(", ") +
+                                ". " +
+                                _t(
+                                    "Are you sure that you want to continue the payment?"
                                 ),
-                                confirm: function(){
-                                    self.gui.show_screen('payment');
-                                },
+                            confirm: function () {
+                                self.gui.show_screen("payment");
                             },
-                        );
+                        });
                     }
                 });
             }
-        }
+        },
     });
 
     return screens;
