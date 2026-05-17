@@ -1,17 +1,17 @@
 {
     "name": "Stock Inventory Barcode - Update Qty",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Custom",
-    "description": """""",
-    "author": "Trobz",
+    "license": "AGPL-3",
+    "author": "Trobz, La Louve",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "depends": [
         "stock_inventory_barcode",
+        "stock_inventory",
     ],
     "data": [
         "view/view_stock_inventory.xml",
         "wizard/stock_inventory_barcode.xml",
     ],
-    "test": [],
     "installable": True,
 }

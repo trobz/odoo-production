@@ -7,25 +7,37 @@
         />
         <field name="model">stock.inventory.barcode</field>
         <field name="arch" type="xml">
-            <field name="product_code" position="after">
-                <field name="prev_product_id" invisible="1" />
-                <field name="scan_barcode_mode" invisible="1" />
-            </field>
-            <field name="change_qty" position="attributes">
-                <attribute
-                    name="attrs"
-                >{'invisible': [('scan_barcode_mode', '=', 'add')]}</attribute>
-            </field>
-            <field name="change_qty" position="after">
+            <!-- Show scan_barcode_mode radio in place of the zero_count checkbox -->
+            <field name="zero_count" position="before">
                 <field
-                    name="new_change_qty"
-                    class="oe_inline"
-                    attrs="{'invisible': [('scan_barcode_mode', '!=', 'add')]}"
+                    name="scan_barcode_mode"
+                    widget="radio"
+                    options="{'horizontal': true}"
+                    nolabel="1"
                 />
+                <field name="prev_product_id" invisible="1" />
             </field>
-            <group name="product" position="inside">
-                <field name="use_latest_qty" />
-            </group>
+            <field name="zero_count" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <!-- use_latest_qty sits next to auto_save in the mode group -->
+            <field name="auto_save" position="after">
+                <field name="use_latest_qty" invisible="not zero_count" />
+            </field>
+            <!-- Hide add_qty; show new_change_qty instead -->
+            <xpath expr="//label[@for='add_qty']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//div[@name='add_qty']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//div[@name='add_qty']" position="after">
+                <label for="new_change_qty" invisible="not zero_count" />
+                <div name="new_change_qty" invisible="not zero_count" class="o_row">
+                    <field name="new_change_qty" />
+                    <field name="uom_name" groups="uom.group_uom" />
+                </div>
+            </xpath>
         </field>
     </record>
 </odoo>
