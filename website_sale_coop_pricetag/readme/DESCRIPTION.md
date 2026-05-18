@@ -1,0 +1,1 @@
+- Display price per kilogram (€/kg) and/or price per liter (€/L) next to the product price on the e-commerce shop.

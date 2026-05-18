@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="product_public_category_form_view_publish" model="ir.ui.view">
+        <field name="name">product.public.category.form.publish</field>
+        <field name="model">product.public.category</field>
+        <field name="inherit_id" ref="website_sale.product_public_category_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='image_1920']" position="before">
+                <div class="oe_button_box" name="button_box">
+                    <button
+                        name="website_publish_button"
+                        type="object"
+                        class="oe_stat_button"
+                        icon="fa-globe"
+                    >
+                        <div class="d-flex flex-column align-items-start">
+                            <field
+                                name="website_published"
+                                widget="website_publish_button"
+                            />
+                        </div>
+                    </button>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
