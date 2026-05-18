@@ -3,8 +3,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Require Product To Be Scaled in POS",
-    "version": "12.0.1.0.0",
-    "author": "Trobz",
+    "version": "18.0.1.0.0",
+    "author": "Trobz, La Louve",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "category": "Point of Sale",
@@ -17,7 +17,14 @@
     ],
     "data": [
         "views/pos_config.xml",
-        "views/assets.xml",
     ],
+    "assets": {
+        "point_of_sale._assets_pos": [
+            "pos_require_product_scale/static/src/js/screens.esm.js",
+        ],
+        "web.assets_tests": [
+            "pos_require_product_scale/static/tests/tours/pos_require_product_scale_tour.esm.js",
+        ],
+    },
     "installable": True,
 }
