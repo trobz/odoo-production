@@ -2,7 +2,7 @@ import publicWidget from "@web/legacy/js/public/public_widget";
 import {rpc} from "@web/core/network/rpc";
 import {session} from "@web/session";
 
-publicWidget.registry.my_profile = publicWidget.Widget.extend({
+export default publicWidget.registry.my_profile = publicWidget.Widget.extend({
     selector: ".my_profile",
     start() {
         const self = this;

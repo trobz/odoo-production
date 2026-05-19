@@ -61,6 +61,79 @@ virtual mail address (alias)
 Note: Make sure you set your created mailbox of Incoming Mail Server as
 the catch-all.
 
+JavaScript Widget Extensibility
+-------------------------------
+
+All public widgets in this module are exported with ``export default``,
+allowing other modules to import and extend them.
+
+The following widgets and utilities are available for inheritance:
+
++--------------------------------------------------+---------------------------------------------------+
+| File                                             | Export                                            |
++==================================================+===================================================+
+| ``static/src/js/exchange_shift.esm.js``          | ``publicWidget.registry.exchange_shift``          |
++--------------------------------------------------+---------------------------------------------------+
+| ``static/src/js/my_profile.esm.js``              | ``publicWidget.registry.my_profile``              |
++--------------------------------------------------+---------------------------------------------------+
+| ``static/src/js/mywork_ftop.esm.js``             | ``publicWidget.registry.mywork_ftop``             |
++--------------------------------------------------+---------------------------------------------------+
+| ``static/src/js/programmer_un_extra.esm.js``     | ``publicWidget.registry.programmer_un_extra``     |
++--------------------------------------------------+---------------------------------------------------+
+| ``static/src/js/programmer_une_vacation.esm.js`` | ``publicWidget.registry.programmer_une_vacation`` |
++--------------------------------------------------+---------------------------------------------------+
+| ``static/src/js/statistics.esm.js``              | ``publicWidget.registry.statistics``              |
++--------------------------------------------------+---------------------------------------------------+
+| ``static/src/js/style.esm.js``                   | ``showErrorMsg`` (utility function)               |
++--------------------------------------------------+---------------------------------------------------+
+
+Extending a widget from another module
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Use ``include()`` to patch a widget in-place (all instances are
+affected):
+
+.. code:: js
+
+   import ProgrammerUneVacation from "@coop_memberspace/static/src/js/programmer_une_vacation.esm";
+
+   ProgrammerUneVacation.include({
+       // Override the method that builds each shift row HTML
+       parse_body_ftop_programmer(shift) {
+           // Add custom logic before/after the base implementation
+           const baseHtml = this._super(shift);
+           return baseHtml; // or return a customized version
+       },
+
+       // Hook called after a shift is successfully created
+       post_create_shift() {
+           this._super();
+           // e.g. refresh a custom counter or send an analytics event
+       },
+   });
+
+Use ``extend()`` to create a new widget class (original is unchanged):
+
+.. code:: js
+
+   import ProgrammerUneVacation from "@coop_memberspace/static/src/js/programmer_une_vacation.esm";
+   import { registry } from "@web/core/registry";
+
+   publicWidget.registry.my_custom_programmer = ProgrammerUneVacation.extend({
+       selector: ".my-custom-programmer",
+       // Override or add methods here
+   });
+
+Reusing the shared utility
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: js
+
+   import { showErrorMsg } from "@coop_memberspace/static/src/js/style.esm";
+
+   // Displays a dismissible Bootstrap warning flash at the top of the page
+   showErrorMsg("Something went wrong.");
+
 **Table of contents**
 
 .. contents::

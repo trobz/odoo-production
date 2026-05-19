@@ -2,7 +2,7 @@ import publicWidget from "@web/legacy/js/public/public_widget";
 import {rpc} from "@web/core/network/rpc";
 import {session} from "@web/session";
 
-publicWidget.registry.programmer_un_extra = publicWidget.Widget.extend({
+export default publicWidget.registry.programmer_un_extra = publicWidget.Widget.extend({
     selector: ".programmer_un_extra",
     start() {
         const self = this;
