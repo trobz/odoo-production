@@ -64,8 +64,8 @@
                                             <a>
                                                 <span
                                                     class="fa fa-user-plus"
-                                                    data-toggle="modal"
-                                                    t-attf-data-target="{{eligible and '#programmer_modal' or '#programmer_modal_uneligible' }}"
+                                                    data-bs-toggle="modal"
+                                                    t-attf-data-bs-target="{{eligible and '#programmer_modal' or '#programmer_modal_uneligible' }}"
                                                     t-attf-id="btn-add-{{shift.id}}"
                                                     t-att-data-shift-id="shift.id"
                                                 />
@@ -87,7 +87,6 @@
     <template id="coop_membership_makeup_shift.programmer_modal_uneligible">
         <div id="programmer_modal_uneligible" class="modal fade" role="dialog">
             <div class="modal-dialog">
-                <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-body">
                         <p
@@ -97,9 +96,9 @@
                         />". Make-up shift registration are dedicated to members who were priviously absent</p>
                         <div class="text-center">
                             <button
-                                type="object"
+                                type="button"
                                 class="fa fa-times"
-                                data-dismiss="modal"
+                                data-bs-dismiss="modal"
                                 style="margin-right: 40px;font-size: 3em;background-color: transparent;border: 0px;"
                             />
                         </div>

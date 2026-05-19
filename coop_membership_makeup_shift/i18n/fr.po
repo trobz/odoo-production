@@ -1,14 +1,14 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* coop_membership_makeup_shift
+# 	* coop_membership_makeup_shift
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-13 08:47+0000\n"
-"PO-Revision-Date: 2023-12-13 08:47+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2026-05-07 05:48+0000\n"
+"PO-Revision-Date: 2026-05-07 05:48+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,8 +17,17 @@ msgstr ""
 
 #. module: coop_membership_makeup_shift
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_modal_uneligible
-msgid "\". Make-up shift registration are dedicated to members who were priviously absent"
-msgstr "\". Les services de rattrapages sont réservés aux membres qui ont été absent à un service"
+msgid ""
+"\". Make-up shift registration are dedicated to members who were priviously "
+"absent"
+msgstr ""
+"\". Les services de rattrapage sont réservés aux membres qui ont été absent "
+"à un service"
+
+#. module: coop_membership_makeup_shift
+#: model:ir.model,name:coop_membership_makeup_shift.model_shift_registration
+msgid "Attendee"
+msgstr "Participant"
 
 #. module: coop_membership_makeup_shift
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_makeup_shift
@@ -36,9 +45,14 @@ msgid "Config Settings"
 msgstr "Paramètres de config"
 
 #. module: coop_membership_makeup_shift
+#: model:ir.model,name:coop_membership_makeup_shift.model_res_partner
+msgid "Contact"
+msgstr "Contact"
+
+#. module: coop_membership_makeup_shift
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_makeup_shift
 msgid "Date"
-msgstr "Date "
+msgstr "Date"
 
 #. module: coop_membership_makeup_shift
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_makeup_shift
@@ -47,54 +61,83 @@ msgstr "Heure"
 
 #. module: coop_membership_makeup_shift
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.mywork_standard
-msgid "If you've been absent to a shift and are now in state alert, suspended or delay, you have to schedule a make-up shift."
-msgstr "Si vous avez été absent à un service et que vous êtes en statut alerte, suspendu(e) ou délai, vous devez programmer un service de rattrapage."
+msgid ""
+"If you've been absent to a shift and are now in state alert, suspended or "
+"delay, you have to schedule a make-up shift."
+msgstr ""
+"Si vous avez été absent à un service et que vous êtes actuellement en état "
+"d'alerte, suspendu ou en retard, vous devez programmer un service de "
+"rattrapage."
 
 #. module: coop_membership_makeup_shift
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_makeup_shift
 msgid "Inscription"
-msgstr ""
+msgstr "Inscription"
+
+#. module: coop_membership_makeup_shift
+#: model:ir.model.fields,field_description:coop_membership_makeup_shift.field_shift_registration__is_makeup
+msgid "Is Makeup"
+msgstr "Est un service de rattrapage"
 
 #. module: coop_membership_makeup_shift
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.counter
 msgid "Member area | Schedule a make-up"
-msgstr "Programmer un rattrapage"
+msgstr "Espace membre | Planifier un service de rattrapage"
 
 #. module: coop_membership_makeup_shift
-#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:17
-#, python-format
+#. odoo-python
+#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:0
 msgid "No seat is available for this shift."
-msgstr ""
+msgstr "Aucune place disponible pour ce service."
 
 #. module: coop_membership_makeup_shift
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.mywork_standard
 msgid "Schedule"
-msgstr "Programmer"
+msgstr "Planifier"
 
 #. module: coop_membership_makeup_shift
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_makeup_shift
 msgid "Schedule a make-up"
-msgstr "Programmer un rattrapage"
+msgstr "Planifier un service de rattrapage"
+
+#. module: coop_membership_makeup_shift
+#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.mywork_standard
+msgid "Schedule a make-up shift"
+msgstr "Planifier un service de rattrapage"
+
+#. module: coop_membership_makeup_shift
+#: model:ir.model,name:coop_membership_makeup_shift.model_shift_shift
+msgid "Shift"
+msgstr "Service"
 
 #. module: coop_membership_makeup_shift
 #: model:ir.model.fields,field_description:coop_membership_makeup_shift.field_res_company__shift_makeup
 #: model:ir.model.fields,field_description:coop_membership_makeup_shift.field_res_config_settings__shift_makeup
-#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.mywork_standard
 msgid "Show schedule a make-up shift"
-msgstr "Afficher programmer un service de rattrapage"
+msgstr "Afficher planifier un service de rattrapage"
+
+#. module: coop_membership_makeup_shift
+#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_modal_uneligible
+msgid ""
+"Warning! You can't register to a make-up shift because your actual status is"
+" \""
+msgstr ""
+"Attention! Vous ne pouvez pas vous inscrire à un service de rattrapage car "
+"votre statut actuel est \""
+
+#. module: coop_membership_makeup_shift
+#. odoo-python
+#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:0
+msgid ""
+"Warning! You can't register to a make-up shift because your actual status is"
+" `{}`. Make-up shift registration are dedicated to members who were "
+"priviously absent."
+msgstr ""
+"Attention! Vous ne pouvez pas vous inscrire à un service de rattrapage car "
+"votre statut actuel est `{}`. Les inscriptions aux services de rattrapage "
+"sont réservées aux membres qui étaient précédemment absents."
 
 #. module: coop_membership_makeup_shift
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_makeup_shift
 msgid "Week"
 msgstr "Semaine"
-
-#. module: coop_membership_makeup_shift
-#: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_modal_uneligible
-msgid "Warning! You can't register to a make-up shift because your actual status is \""
-msgstr "Vous ne pouvez pas programmer un service de rattrapage car votre statut actuel est \""
-
-#. module: coop_membership_makeup_shift
-#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:22
-#, python-format
-msgid "Warning! You can't register to a make-up shift because your actual status is `{}`. Make-up shift registration are dedicated to members who were priviously absent."
-msgstr "Vous ne pouvez pas programmer un service de rattrapage car votre statut actuel est `{}`. Les services de rattrapages sont réservés aux membres qui ont été absent à un service"
