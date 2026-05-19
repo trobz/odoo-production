@@ -9,6 +9,11 @@ class ShiftRegistration(models.Model):
 
     is_makeup = fields.Boolean()
 
+    def confirm_registration(self):
+        if self.env.context.get("makeup_registration") and self.is_makeup:
+            return
+        return super().confirm_registration()
+
     def _is_replacing_makeup_shift(self):
         self.ensure_one()
         return (

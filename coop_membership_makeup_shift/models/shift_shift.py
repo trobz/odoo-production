@@ -1,25 +1,25 @@
 # Copyright (C) Nguyen Minh Chien (chien@trobz.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, models
+from odoo import models
 
 
 class ShiftShift(models.Model):
     _inherit = "shift.shift"
 
-    @api.multi
     def register_makeup_shift(self):
         self.ensure_one()
         tickets = self.shift_ticket_ids.filtered(
             lambda t: t.shift_type == "standard" and t.seats_available > 0
         )
         if not tickets:
-            return 0, _("No seat is available for this shift.")
+            return 0, self.env._("No seat is available for this shift.")
         partner = self.env.user.partner_id
         if not partner.check_makeup_shift():
-            return 0, _(
-                "Warning! You can't register to a make-up shift because your actual status is `{}`. "
-                "Make-up shift registration are dedicated to members who were priviously absent."
+            return 0, self.env._(
+                "Warning! You can't register to a make-up shift because"
+                " your actual status is `{}`. Make-up shift registration"
+                " are dedicated to members who were priviously absent."
             ).format(
                 partner._fields["cooperative_state"].convert_to_export(
                     partner.cooperative_state, partner
@@ -34,5 +34,7 @@ class ShiftShift(models.Model):
             "related_extension_id": False,
             "is_makeup": True,
         }
-        self.env["shift.registration"].sudo().create(vals)
+        self.env["shift.registration"].sudo().with_context(
+            makeup_registration=True
+        ).create(vals)
         return 1, ""
