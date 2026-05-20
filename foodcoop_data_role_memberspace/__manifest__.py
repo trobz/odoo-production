@@ -20,5 +20,6 @@
     ],
 
     "installable": True,
-    "application": False
+    "application": False,
+    "license": "AGPL-3",
 }
