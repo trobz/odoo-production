@@ -853,18 +853,18 @@
                             <tr>
                                 <t
                                     t-set="date_begin"
-                                    t-value="user.get_time_by_user_lang(shift.date_begin, [‘%A, %d %B’, ‘%HH%M’], lang=user.lang + ‘.utf8’)"
+                                    t-value="user.get_time_by_user_lang(shift.date_begin, ['%A, %d %B', '%HH%M'], lang=user.lang + '.utf8')"
                                 />
                                 <td name="date" scope="row">
                                     <t
                                         t-if="date_begin"
-                                        t-esc="date_begin and date_begin[0] or ‘’"
+                                        t-esc="date_begin and date_begin[0] or ''"
                                     />
                                 </td>
                                 <td name="hour">
                                     <t
                                         t-if="date_begin"
-                                        t-esc="date_begin and date_begin[1] or ‘’"
+                                        t-esc="date_begin and date_begin[1] or ''"
                                     />
                                 </td>
                                 <t
@@ -878,14 +878,14 @@
                                             data-bs-toggle="tooltip"
                                             data-container="body"
                                             t-attf-title="You can contact your coordinators by writing to
-                                    #{coordinators[1]} (cliquez pour copier l’adresse)"
+                                    #{coordinators[1]} (cliquez pour copier l'adresse)"
                                             class="fa fa-question-circle js-copy"
                                             t-att-data-copy="coordinators[1]"
                                         />
                                     </span>
                                 </td>
                                 <td name="cancellation">
-                                    <t t-if="shift.state == ‘cancel’">
+                                    <t t-if="shift.state == 'cancel'">
                                         Canceled
                                     </t>
                                     <t t-else="">
@@ -896,7 +896,7 @@
                                                 class="fa fa-times cancel-ftop-shift"
                                                 data-bs-toggle="modal"
                                                 t-att-registration-id="shift.id"
-                                                t-att-registration-name="date_begin and date_begin[0] + ‘ ‘ + date_begin[1] or ‘’"
+                                                t-att-registration-name="date_begin and date_begin[0] + ' ' + date_begin[1] or ''"
                                             />
                                         </a>
                                     </t>
