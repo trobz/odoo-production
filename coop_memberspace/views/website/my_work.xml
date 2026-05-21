@@ -894,7 +894,6 @@
                                                 type="button"
                                                 style="border: 0px; background-color: transparent"
                                                 class="fa fa-times cancel-ftop-shift"
-                                                data-bs-toggle="modal"
                                                 t-att-registration-id="shift.id"
                                                 t-att-registration-name="date_begin and date_begin[0] + ' ' + date_begin[1] or ''"
                                             />
