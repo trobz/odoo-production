@@ -1,0 +1,48 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* pos_barcode_rule_transform
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-04-20 11:35+0000\n"
+"PO-Revision-Date: 2026-04-20 11:35+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: pos_barcode_rule_transform
+#: model:ir.model,name:pos_barcode_rule_transform.model_barcode_rule
+msgid "Barcode Rule"
+msgstr "Règle de code-barres"
+
+#. module: pos_barcode_rule_transform
+#: model:product.template,name:pos_barcode_rule_transform.product_price_transform_barcode_product_template
+msgid "Product with Price Transform Barcode"
+msgstr "Produit avec code-barres de transformation de prix"
+
+#. module: pos_barcode_rule_transform
+#: model:ir.model.fields,help:pos_barcode_rule_transform.field_barcode_rule__transform_expr
+msgid ""
+"Python Expression used to transform the value read in the barcode.\n"
+"ie: value / 0.15\n"
+"\n"
+"Available variables:\n"
+"- value: the original value read in the barcode.\n"
+"- code: the simplified barcode code\n"
+"- barcode: the complete barcode.\n"
+msgstr "Expression Python utilisée pour transformer la valeur lue dans le code-barres.\nie: value / 0.15\n\nVariables disponibles:\n- value: la valeur originale lue dans le code-barres.\n- code: le code-barres simplifié\n- barcode: le code-barres complet."
+
+#. module: pos_barcode_rule_transform
+#: model:ir.model.fields,field_description:pos_barcode_rule_transform.field_barcode_rule__transform_expr
+msgid "Transform Expression"
+msgstr "Expression de transformation"
+
+#. module: pos_barcode_rule_transform
+#: model_terms:ir.ui.view,arch_db:pos_barcode_rule_transform.view_barcode_rule_form
+msgid "value * 1.15"
+msgstr "value * 1.15"

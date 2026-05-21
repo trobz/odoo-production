@@ -1,14 +1,6 @@
 import publicWidget from "@web/legacy/js/public/public_widget";
 import {rpc} from "@web/core/network/rpc";
-
-function showErrorMsg(msg) {
-    const el = document.createElement("div");
-    el.className =
-        "alert alert-warning alert-dismissible fade show ms-memberspace-flash";
-    el.innerHTML = `${msg}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>`;
-    document.body.prepend(el);
-    setTimeout(() => el.remove(), 5000);
-}
+import {showErrorMsg} from "./style.esm";
 
 function bsModal(id) {
     const el = document.getElementById(id);
@@ -19,7 +11,7 @@ function bsModal(id) {
     return BS_Modal.getOrCreateInstance(el);
 }
 
-publicWidget.registry.exchange_shift = publicWidget.Widget.extend({
+export default publicWidget.registry.exchange_shift = publicWidget.Widget.extend({
     selector: ".exchange-shift",
     start() {
         const self = this;

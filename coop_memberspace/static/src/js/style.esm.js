@@ -53,3 +53,12 @@ $(function () {
         copyToClipboard($(this).attr("data-copy"), this);
     });
 });
+
+export async function showErrorMsg(msg) {
+    const el = document.createElement("div");
+    el.className =
+        "alert alert-warning alert-dismissible fade show ms-memberspace-flash";
+    el.innerHTML = `${msg}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>`;
+    document.body.prepend(el);
+    setTimeout(() => el.remove(), 5000);
+}

@@ -1,17 +1,9 @@
 import {_t} from "@web/core/l10n/translation";
 import publicWidget from "@web/legacy/js/public/public_widget";
 import {rpc} from "@web/core/network/rpc";
+import {showErrorMsg} from "./style.esm";
 
-function showErrorMsg(msg) {
-    const el = document.createElement("div");
-    el.className =
-        "alert alert-warning alert-dismissible fade show ms-memberspace-flash";
-    el.innerHTML = `${msg}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>`;
-    document.body.prepend(el);
-    setTimeout(() => el.remove(), 5000);
-}
-
-publicWidget.registry.mywork_ftop = publicWidget.Widget.extend({
+export default publicWidget.registry.mywork_ftop = publicWidget.Widget.extend({
     selector: ".mywork_ftop",
     start() {
         const self = this;

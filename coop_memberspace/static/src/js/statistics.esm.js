@@ -1,7 +1,7 @@
 import publicWidget from "@web/legacy/js/public/public_widget";
 import {rpc} from "@web/core/network/rpc";
 
-publicWidget.registry.statistics = publicWidget.Widget.extend({
+export default publicWidget.registry.statistics = publicWidget.Widget.extend({
     selector: ".chart-statistics",
     async start() {
         const datas = await rpc("/web/dataset/call_kw", {
