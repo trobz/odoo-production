@@ -4,6 +4,8 @@
         <field name="model">account.export</field>
         <field name="name">Account Export XLS</field>
         <field name="report_type">xlsx</field>
+        <field name="attachment">object.name</field>
+        <field name="print_report_name">object.name</field>
         <field name="report_name">account_export.report_xls</field>
         <field name="report_file">account_export.report_xls</field>
         <field name="binding_model_id" ref="model_account_export" />

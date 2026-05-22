@@ -1,6 +1,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -56,7 +56,7 @@ class ResConfigSettings(models.TransientModel):
         for res in self:
             if res.shift_exchange_duration <= 0:
                 raise ValidationError(
-                    _("Shift exchange duration has to be bigger than 0.")
+                    self.env._("Shift exchange duration has to be bigger than 0.")
                 )
 
     @api.constrains("shift_replacement_duration")
@@ -64,5 +64,5 @@ class ResConfigSettings(models.TransientModel):
         for res in self:
             if res.shift_replacement_duration <= 0:
                 raise ValidationError(
-                    _("Shift replacement duration has to be bigger than 0.")
+                    self.env._("Shift replacement duration has to be bigger than 0.")
                 )

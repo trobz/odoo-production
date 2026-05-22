@@ -1,6 +1,5 @@
 import publicWidget from "@web/legacy/js/public/public_widget";
 import {rpc} from "@web/core/network/rpc";
-import {session} from "@web/session";
 
 export default publicWidget.registry.my_profile = publicWidget.Widget.extend({
     selector: ".my_profile",
@@ -71,8 +70,8 @@ export default publicWidget.registry.my_profile = publicWidget.Widget.extend({
         $("input[name=public_avatar]").change(function () {
             rpc("/web/dataset/call_kw", {
                 model: "res.partner",
-                method: "write",
-                args: [[session.partner_id], {public_avatar: this.checked}],
+                method: "set_profile_visibility",
+                args: ["public_avatar", this.checked],
                 kwargs: {},
             });
         });
@@ -80,8 +79,8 @@ export default publicWidget.registry.my_profile = publicWidget.Widget.extend({
         $("input[name=public_mobile]").change(function () {
             rpc("/web/dataset/call_kw", {
                 model: "res.partner",
-                method: "write",
-                args: [[session.partner_id], {public_mobile: this.checked}],
+                method: "set_profile_visibility",
+                args: ["public_mobile", this.checked],
                 kwargs: {},
             });
         });
@@ -89,8 +88,8 @@ export default publicWidget.registry.my_profile = publicWidget.Widget.extend({
         $("input[name=public_email]").change(function () {
             rpc("/web/dataset/call_kw", {
                 model: "res.partner",
-                method: "write",
-                args: [[session.partner_id], {public_email: this.checked}],
+                method: "set_profile_visibility",
+                args: ["public_email", this.checked],
                 kwargs: {},
             });
         });

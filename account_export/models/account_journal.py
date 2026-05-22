@@ -12,7 +12,11 @@ class AccountJournal(models.Model):
     group_fields = fields.Many2many(
         string="Group export by",
         comodel_name="ir.model.fields",
-        domain=[("model", "=", "account.move.line")],
+        domain=[
+            ("model", "=", "account.move.line"),
+            ("store", "=", True),
+            ("relation", "=", False),
+        ],
         help="If you specify fields here, they will be used to group the "
         "move lines in the generated exported file.",
     )

@@ -101,6 +101,32 @@ class ShiftShift(models.Model):
         return ticket.ids, msg
 
     @api.model
+    def register_ftop_shift(self, shift_id):
+        """Create a ftop shift registration for the current user.
+
+        Returns (registration_id, [coordinators_name, coordinators_alias], msg).
+        registration_id is False when no ticket is available or an error occurs.
+        """
+        ticket_ids, msg = self.sudo().fetch_ftop_ticket(shift_id)
+        if not ticket_ids:
+            return False, [], msg
+        registration = self.env["shift.registration"].create(
+            {
+                "state": "draft",
+                "partner_id": self.env.user.partner_id.id,
+                "shift_id": shift_id,
+                "shift_ticket_id": ticket_ids[0],
+                "related_extension_id": False,
+            }
+        )
+        coordinators = (
+            self.env["shift.registration"]
+            .sudo()
+            .get_coordinators(registration.id, get_alias_coordinator=True)
+        )
+        return registration.id, list(coordinators), msg
+
+    @api.model
     def get_domain_programmer_un_extra(self, days=1):
         user = self.env.user
         tmpl = user.partner_id.tmpl_reg_line_ids.filtered(lambda r: r.is_current)

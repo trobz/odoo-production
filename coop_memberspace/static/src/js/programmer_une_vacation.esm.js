@@ -1,7 +1,6 @@
 import {copyToClipboard} from "./style.esm";
 import publicWidget from "@web/legacy/js/public/public_widget";
 import {rpc} from "@web/core/network/rpc";
-import {session} from "@web/session";
 
 export default publicWidget.registry.programmer_une_vacation =
     publicWidget.Widget.extend({
@@ -71,96 +70,59 @@ export default publicWidget.registry.programmer_une_vacation =
                 const btn_check = this;
                 $(btn_check).attr("disabled", "disabled");
                 try {
-                    const resp = await rpc("/web/dataset/call_kw", {
-                        model: "shift.shift",
-                        method: "fetch_ftop_ticket",
-                        args: [parseInt(self.shift_id, 10)],
-                        kwargs: {},
-                    });
-                    const data = resp[0];
-                    const msg = resp[1];
-                    if (data.length > 0) {
-                        const vals = {
-                            state: "draft",
-                            partner_id: parseInt(session.partner_id, 10),
-                            shift_id: parseInt(self.shift_id, 10),
-                            shift_ticket_id: parseInt(data[0], 10),
-                            related_extension_id: false,
-                        };
-                        try {
-                            const result = await rpc("/web/dataset/call_kw", {
-                                model: "shift.registration",
-                                method: "create",
-                                args: [vals],
-                                kwargs: {},
-                            });
-                            self.post_create_shift();
-                            const coordinators = await rpc("/web/dataset/call_kw", {
-                                model: "shift.registration",
-                                method: "get_coordinators",
-                                args: [result, true],
-                                kwargs: {},
-                            });
-                            const time = $(`#time-${self.shift_id}`).html();
-                            const hour = $(`#hour-${self.shift_id}`).html();
-                            const new_shift = `
-                            <tr>
-                                <td scope="row">${time + " "}</td>
-                                <td>${hour}</td>
-                                <td>
-                                    <span>
-                                        <span>${coordinators[0] + " "}</span>
-                                        <i data-bs-toggle="tooltip"
-                                           title="You can contact your coordinators by writing to ${coordinators[1] + " "} (cliquez pour copier l'adresse)"
-                                           class="fa fa-question-circle js-copy"
-                                           data-copy="${coordinators[1]}"></i>
-                                    </span>
-                                </td>
-                                <td>
-                                    <a><button type="button" style="border: 0px; background-color: transparent"
-                                        class="fa fa-times cancel-ftop-shift"
-                                        registration-id="${result}"
-                                        registration-name="${time + " " + hour}"></button></a>
-                                </td>
-                            </tr>`;
-                            const $newRow = $(new_shift);
-                            $(".ftop-programmer-une-vacation-body").append($newRow);
-                            // Init Bootstrap 5 tooltips on new row
-                            $newRow
-                                .find('[data-bs-toggle="tooltip"]')
-                                .each(function () {
-                                    const BS_Tooltip =
-                                        window.Tooltip || window.bootstrap?.Tooltip;
-                                    if (BS_Tooltip) {
-                                        BS_Tooltip.getOrCreateInstance(this);
-                                    }
-                                });
-
-                            $(`#btn-add-${self.shift_id}`)
-                                .removeAttr("data-bs-toggle")
-                                .removeAttr("data-bs-target")
-                                .css({color: "grey"});
-                            const $seats = $(`#avalable-seats-${self.shift_id}`);
-                            $seats.text(parseInt($seats.text(), 10) - 1);
-                            (window.Modal || window.bootstrap?.Modal)
-                                ?.getInstance(
-                                    document.getElementById("programmer_modal")
-                                )
-                                ?.hide();
-                        } catch (error) {
-                            $("#error_header").text(error.message || "");
-                            $("#error_body").text(
-                                (error.data && error.data.message) || ""
-                            );
-                            (window.Modal || window.bootstrap?.Modal)
-                                ?.getInstance(
-                                    document.getElementById("programmer_modal")
-                                )
-                                ?.hide();
-                            new (window.Modal || window.bootstrap?.Modal)(
-                                document.getElementById("error_modal")
-                            ).show();
+                    const [result, coordinators, msg] = await rpc(
+                        "/web/dataset/call_kw",
+                        {
+                            model: "shift.shift",
+                            method: "register_ftop_shift",
+                            args: [parseInt(self.shift_id, 10)],
+                            kwargs: {},
                         }
+                    );
+                    if (result) {
+                        self.post_create_shift();
+                        const time = $(`#time-${self.shift_id}`).html();
+                        const hour = $(`#hour-${self.shift_id}`).html();
+                        const new_shift = `
+                        <tr>
+                            <td scope="row">${time + " "}</td>
+                            <td>${hour}</td>
+                            <td>
+                                <span>
+                                    <span>${coordinators[0] + " "}</span>
+                                    <i data-bs-toggle="tooltip"
+                                       title="You can contact your coordinators by writing to ${coordinators[1] + " "} (cliquez pour copier l'adresse)"
+                                       class="fa fa-question-circle js-copy"
+                                       data-copy="${coordinators[1]}"></i>
+                                </span>
+                            </td>
+                            <td>
+                                <a><button type="button" style="border: 0px; background-color: transparent"
+                                    class="fa fa-times cancel-ftop-shift"
+                                    registration-id="${result}"
+                                    registration-name="${time + " " + hour}"></button></a>
+                            </td>
+                        </tr>`;
+                        const $newRow = $(new_shift);
+                        $(".ftop-programmer-une-vacation-body").append($newRow);
+                        // Init Bootstrap 5 tooltips on new row
+                        $newRow.find('[data-bs-toggle="tooltip"]').each(function () {
+                            const BS_Tooltip =
+                                window.Tooltip || window.bootstrap?.Tooltip;
+                            if (BS_Tooltip) {
+                                BS_Tooltip.getOrCreateInstance(this);
+                            }
+                        });
+
+                        $(`#btn-add-${self.shift_id}`)
+                            .removeAttr("data-bs-toggle")
+                            .removeAttr("data-bs-target")
+                            .css({color: "grey"});
+                        const $seats = $(`#avalable-seats-${self.shift_id}`);
+                        $seats.text(parseInt($seats.text(), 10) - 1);
+                        (window.Modal || window.bootstrap?.Modal)
+                            ?.getInstance(document.getElementById("programmer_modal"))
+                            ?.hide();
                     } else if (msg) {
                         $("#error_body").text(msg);
                         (window.Modal || window.bootstrap?.Modal)
@@ -170,6 +132,15 @@ export default publicWidget.registry.programmer_une_vacation =
                             document.getElementById("error_modal")
                         ).show();
                     }
+                } catch (error) {
+                    $("#error_header").text(error.message || "");
+                    $("#error_body").text((error.data && error.data.message) || "");
+                    (window.Modal || window.bootstrap?.Modal)
+                        ?.getInstance(document.getElementById("programmer_modal"))
+                        ?.hide();
+                    new (window.Modal || window.bootstrap?.Modal)(
+                        document.getElementById("error_modal")
+                    ).show();
                 } finally {
                     $(btn_check).removeAttr("disabled");
                 }

@@ -1,6 +1,7 @@
 import logging
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
+from odoo.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval
 
 _logger = logging.getLogger(__name__)
@@ -36,8 +37,8 @@ class ResPartner(models.Model):
         else:
             member_state = warning_member_state.get(self.cooperative_state, {})
         return (
-            _(member_state.get("alert", "")),
-            _(member_state.get("message", "")),
+            self.env._(member_state.get("alert", "")),
+            self.env._(member_state.get("message", "")),
             member_state.get("css-class", ""),
         )
 
@@ -128,7 +129,16 @@ class ResPartner(models.Model):
     @api.model
     def get_partner_gender_website(self):
         if self.gender == "male":
-            return _("Man")
+            return self.env._("Man")
         elif self.gender == "female":
-            return _("Female")
-        return _("Other")
+            return self.env._("Female")
+        return self.env._("Other")
+
+    @api.model
+    def set_profile_visibility(self, field, value):
+        """Update a visibility flag on the current user's partner."""
+        allowed = {"public_avatar", "public_mobile", "public_email"}
+        if field not in allowed:
+            raise UserError(self.env._("Invalid field: %s") % field)
+        self.env.user.partner_id.write({field: value})
+        return True

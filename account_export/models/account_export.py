@@ -104,7 +104,8 @@ class AccountExport(models.Model):
     def action_create_report(self):
         self.ensure_one()
         report_action = self.env.ref("account_export.report_xls").report_action(
-            self.ids
+            self.ids,
+            config=False,
         )
         self.last_export_date = fields.Datetime.now()
         return report_action
@@ -292,4 +293,8 @@ class AccountExport(models.Model):
     @api.model
     def get_journal_groupings(self, journal_id):
         grouping_fields = self.env["account.journal"].browse(journal_id).group_fields
-        return ["aml." + g_field.name for g_field in grouping_fields]
+        return [
+            "aml." + g_field.name
+            for g_field in grouping_fields
+            if g_field.store and not g_field.relation
+        ]
