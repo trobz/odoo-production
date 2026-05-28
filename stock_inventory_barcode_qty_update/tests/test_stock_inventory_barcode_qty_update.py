@@ -10,31 +10,34 @@ class TestStockInventoryBarcodeQtyUpdate(TransactionCase):
         self.location = self.env["stock.location"].create(
             {"name": "Test Location", "usage": "internal"}
         )
-        self.product = self.env["product.product"].create(
-            {
-                "name": "Test Product",
-                "type": "consu",
-                "is_storable": True,
-                "barcode": "BARCODE001",
-                "default_code": "REF001",
-            }
+        # website_sale adds base_unit_count as a required stored field with no
+        # DB default on both product_template and product_product. The ORM omits
+        # it from INSERT, leaving the column NULL → NOT NULL violation. Set a
+        # transient DB default so INSERT uses 1 when the column is absent.
+        # Uses pg catalog (not ORM _fields) since the field may not appear there.
+        self.env.cr.execute(
+            """
+            DO $$
+            BEGIN
+                IF EXISTS (
+                    SELECT 1 FROM information_schema.columns
+                    WHERE table_name = 'product_template'
+                      AND column_name = 'base_unit_count'
+                ) THEN
+                    ALTER TABLE product_template
+                        ALTER COLUMN base_unit_count SET DEFAULT 1;
+                    ALTER TABLE product_product
+                        ALTER COLUMN base_unit_count SET DEFAULT 1;
+                END IF;
+            END $$
+        """
         )
-        self.product2 = self.env["product.product"].create(
-            {
-                "name": "Test Product 2",
-                "type": "consu",
-                "is_storable": True,
-                "barcode": "BARCODE002",
-            }
+        self.product = self._make_product(
+            "Test Product", barcode="BARCODE001", default_code="REF001"
         )
-        self.product_lot = self.env["product.product"].create(
-            {
-                "name": "Lot Tracked Product",
-                "type": "consu",
-                "is_storable": True,
-                "barcode": "LOTPROD001",
-                "tracking": "lot",
-            }
+        self.product2 = self._make_product("Test Product 2", barcode="BARCODE002")
+        self.product_lot = self._make_product(
+            "Lot Tracked Product", barcode="LOTPROD001", tracking="lot"
         )
         self.lot = self.env["stock.lot"].create(
             {
@@ -51,6 +54,21 @@ class TestStockInventoryBarcodeQtyUpdate(TransactionCase):
             }
         )
         self.inventory.action_state_to_in_progress()
+
+    def _make_product(self, name, barcode=None, default_code=None, tracking="none"):
+        tmpl_vals = {"name": name, "type": "consu", "is_storable": True}
+        if tracking != "none":
+            tmpl_vals["tracking"] = tracking
+        tmpl = self.env["product.template"].create(tmpl_vals)
+        product = tmpl.product_variant_ids[0]
+        extra = {}
+        if barcode:
+            extra["barcode"] = barcode
+        if default_code:
+            extra["default_code"] = default_code
+        if extra:
+            product.write(extra)
+        return product
 
     def _make_wizard(self, **kwargs):
         defaults = {
