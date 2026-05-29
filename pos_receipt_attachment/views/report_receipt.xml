@@ -1,11 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <template id="report_receipt">
         <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <div>
-                    <img t-if="o.image_receipt" t-att-src="image_data_uri(o.image_receipt)"/>
+                    <img
+                        t-if="o.image_receipt"
+                        t-att-src="image_data_uri(o.image_receipt)"
+                    />
                 </div>
             </t>
         </t>
@@ -17,8 +19,10 @@
         <field name="report_name">pos_receipt_attachment.report_receipt</field>
         <field name="report_file">pos_receipt_attachment.report_receipt</field>
         <field name="print_report_name">'Receipt - %s' % (object.name)</field>
-        <field name="paperformat_id" ref="pos_receipt_attachment.paperformat_posreceipt"/>
-        <field name="binding_model_id" ref="point_of_sale.model_pos_order"/>
+        <field
+            name="paperformat_id"
+            ref="pos_receipt_attachment.paperformat_posreceipt"
+        />
+        <field name="binding_model_id" ref="point_of_sale.model_pos_order" />
     </record>
-
 </odoo>

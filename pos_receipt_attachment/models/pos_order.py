@@ -100,7 +100,7 @@ class PosOrder(models.Model):
                     email_values={
                         "attachments": [
                             (
-                                "Receipt - %s.pdf" % order.name,
+                                f"Receipt - {order.name}.pdf",
                                 base64.b64encode(receipt_pdf),
                             )
                         ]

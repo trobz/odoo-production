@@ -4,6 +4,49 @@ from unittest.mock import MagicMock, patch
 from odoo.tests import common
 
 
+class TestLogoWebField(common.TransactionCase):
+    """Verify that logo_web is DB-stored so the receipt logo survives a
+    DB-only restore (no filestore required)."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.company = cls.env.company
+
+    def test_logo_web_not_stored_as_attachment(self):
+        """logo_web must have attachment=False so it lives in the DB column."""
+        field = self.env["res.company"]._fields["logo_web"]
+        self.assertFalse(
+            field.attachment,
+            "logo_web must be stored in the DB column, not in the filestore.",
+        )
+
+    def test_logo_web_readable_via_sql(self):
+        """logo_web data must be directly readable from the DB column without
+        going through ir.attachment or the filestore."""
+        self.env.cr.execute(
+            "SELECT logo_web FROM res_company WHERE id = %s", [self.company.id]
+        )
+        row = self.env.cr.fetchone()
+        self.assertIsNotNone(row, "res_company row must exist")
+
+    def test_logo_web_consistent_with_logo(self):
+        """logo_web should be non-empty when the company has a logo set."""
+        # Minimal 1x1 white PNG — valid image accepted by Odoo's Image field
+        minimal_png = (
+            b"\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01"
+            b"\x00\x00\x00\x01\x08\x02\x00\x00\x00\x90wS\xde\x00\x00"
+            b"\x00\x0cIDATx\x9cc\xf8\x0f\x00\x00\x01\x01\x00\x05\x18"
+            b"\xd8N\x00\x00\x00\x00IEND\xaeB`\x82"
+        )
+        self.company.logo = base64.b64encode(minimal_png)
+        self.env.flush_all()
+        self.assertTrue(
+            self.company.logo_web,
+            "logo_web must be populated when company.logo is set.",
+        )
+
+
 class TestAddImageReceipt(common.TransactionCase):
     """Tests for PosOrder.add_image_receipt"""
 
@@ -263,14 +306,16 @@ class TestSendReceiptByBodyFromUi(common.TransactionCase):
         def pos_iter(self_model):
             return iter([fake_order])
 
-        with patch.object(type(self.PosOrder), "__iter__", pos_iter), \
-             patch.object(self.env, "ref", return_value=mock_template), \
-             patch.object(
-                 type(self.env["ir.actions.report"]),
-                 "_render_qweb_pdf",
-                 return_value=(fake_pdf, "application/pdf"),
-             ), \
-             patch.object(self.env.cr, "commit"):
+        with (
+            patch.object(type(self.PosOrder), "__iter__", pos_iter),
+            patch.object(self.env, "ref", return_value=mock_template),
+            patch.object(
+                type(self.env["ir.actions.report"]),
+                "_render_qweb_pdf",
+                return_value=(fake_pdf, "application/pdf"),
+            ),
+            patch.object(self.env.cr, "commit"),
+        ):
             self.PosOrder.send_receipt_by_body_from_ui()
 
         mock_template.send_mail.assert_called_once()
@@ -305,14 +350,16 @@ class TestSendReceiptByBodyFromUi(common.TransactionCase):
         def pos_iter(self_model):
             return iter([fake_order_1, fake_order_2])
 
-        with patch.object(type(self.PosOrder), "__iter__", pos_iter), \
-             patch.object(self.env, "ref", return_value=mock_template), \
-             patch.object(
-                 type(self.env["ir.actions.report"]),
-                 "_render_qweb_pdf",
-                 side_effect=failing_render,
-             ), \
-             patch.object(self.env.cr, "commit"):
+        with (
+            patch.object(type(self.PosOrder), "__iter__", pos_iter),
+            patch.object(self.env, "ref", return_value=mock_template),
+            patch.object(
+                type(self.env["ir.actions.report"]),
+                "_render_qweb_pdf",
+                side_effect=failing_render,
+            ),
+            patch.object(self.env.cr, "commit"),
+        ):
             # Should not propagate the exception
             self.PosOrder.send_receipt_by_body_from_ui()
 

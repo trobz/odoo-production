@@ -1,10 +1,10 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <odoo noupdate="0">
     <record model="ir.cron" id="cron_update_image_receipt">
         <field name="name">Pos Order: Update image receipt attachment</field>
         <field name="interval_number">5</field>
         <field name="interval_type">minutes</field>
-        <field name="model_id" ref="pos_receipt_attachment.model_pos_order"/>
+        <field name="model_id" ref="pos_receipt_attachment.model_pos_order" />
         <field name="code">model.cron_update_image_receipt()</field>
         <field name="state">code</field>
     </record>
