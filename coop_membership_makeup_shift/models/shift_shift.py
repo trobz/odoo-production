@@ -16,14 +16,27 @@ class ShiftShift(models.Model):
             return 0, self.env._("No seat is available for this shift.")
         partner = self.env.user.partner_id
         if not partner.check_makeup_shift():
+            english_label = dict(partner.WORKING_STATE_SELECTION).get(
+                partner.cooperative_state, partner.cooperative_state
+            )
+            state_label = self.env._(english_label)
             return 0, self.env._(
                 "Warning! You can't register to a make-up shift because"
                 " your actual status is `{}`. Make-up shift registration"
                 " are dedicated to members who were priviously absent."
-            ).format(
-                partner._fields["cooperative_state"].convert_to_export(
-                    partner.cooperative_state, partner
-                )
+            ).format(state_label)
+
+        already_registered = (
+            self.env["shift.registration"]
+            .sudo()
+            .search(
+                [("shift_id", "=", self.id), ("partner_id", "=", partner.id)],
+                limit=1,
+            )
+        )
+        if already_registered:
+            return 0, self.env._(
+                "Warning! This member is already registered on this shift."
             )
 
         vals = {
