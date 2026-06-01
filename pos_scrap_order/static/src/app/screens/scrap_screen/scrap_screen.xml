@@ -26,7 +26,7 @@
                     <div class="pos-scrap-container">
                         <div class="pos-scraps">
                             <div class="pos-center-align">
-                                <t t-out="order.name" />
+                                <t t-out="order?.name" />
                             </div>
                             <br />
                             <table class="scrap-orderlines">
