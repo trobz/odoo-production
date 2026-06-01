@@ -24,11 +24,15 @@ patch(ScrapScreen.prototype, {
     async _loadReasonTags() {
         const configTagIds = this.pos.config.raw?.scrap_reason_tag_ids || [];
         if (!configTagIds.length) return;
-        this.originState.reasonTags = await this.orm.searchRead(
-            "stock.scrap.reason.tag",
-            [["id", "in", configTagIds]],
-            ["name"]
-        );
+        try {
+            this.originState.reasonTags = await this.orm.searchRead(
+                "stock.scrap.reason.tag",
+                [["id", "in", configTagIds]],
+                ["name"]
+            );
+        } catch (error) {
+            console.warn("pos_scrap_order_origin: Failed to load reason tags:", error);
+        }
     },
 
     selectReasonTag(id) {

@@ -3,7 +3,7 @@
 
 {
     "name": "POS Scrap Order Origin",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Point Of Sale",
     "summary": "Create scrap order from POS screen with Reason Tag",
     "author": "Trobz, La Louve",
@@ -11,6 +11,7 @@
     "license": "AGPL-3",
     "depends": ["pos_scrap_order"],
     "data": [
+        "security/ir.model.access.csv",
         "views/pos_config.xml",
     ],
     "assets": {
