@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-07 05:48+0000\n"
-"PO-Revision-Date: 2026-05-07 05:48+0000\n"
+"POT-Creation-Date: 2026-06-01 04:05+0000\n"
+"PO-Revision-Date: 2026-06-01 04:05+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -87,8 +87,64 @@ msgstr "Espace membre | Planifier un service de rattrapage"
 #. module: coop_membership_makeup_shift
 #. odoo-python
 #: code:addons/coop_membership_makeup_shift/models/shift_shift.py:0
+#: code:addons/coop_membership_makeup_shift/controllers/main.py:0
+msgid "Alert"
+msgstr "Alerte"
+
+#. module: coop_membership_makeup_shift
+#. odoo-python
+#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:0
+#: code:addons/coop_membership_makeup_shift/controllers/main.py:0
+msgid "Blocked"
+msgstr "Bloqué"
+
+#. module: coop_membership_makeup_shift
+#. odoo-python
+#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:0
+#: code:addons/coop_membership_makeup_shift/controllers/main.py:0
+msgid "Delay"
+msgstr "Délai"
+
+#. module: coop_membership_makeup_shift
+#. odoo-python
+#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:0
+#: code:addons/coop_membership_makeup_shift/controllers/main.py:0
+msgid "Exempted"
+msgstr "Exempté"
+
+#. module: coop_membership_makeup_shift
+#. odoo-python
+#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:0
+#: code:addons/coop_membership_makeup_shift/controllers/main.py:0
 msgid "No seat is available for this shift."
 msgstr "Aucune place disponible pour ce service."
+
+#. module: coop_membership_makeup_shift
+#. odoo-python
+#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:0
+#: code:addons/coop_membership_makeup_shift/controllers/main.py:0
+msgid "On Vacation"
+msgstr "En vacances"
+
+#. module: coop_membership_makeup_shift
+#. odoo-python
+#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:0
+#: code:addons/coop_membership_makeup_shift/controllers/main.py:0
+msgid "Suspended"
+msgstr "Suspendu"
+
+#. module: coop_membership_makeup_shift
+#. odoo-python
+#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:0
+#: code:addons/coop_membership_makeup_shift/controllers/main.py:0
+msgid "Up to date"
+msgstr "A jour"
+
+#. module: coop_membership_makeup_shift
+#. odoo-python
+#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:0
+msgid "Warning! This member is already registered on this shift."
+msgstr "Attention ! Ce membre est déjà inscrit sur ce service."
 
 #. module: coop_membership_makeup_shift
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.mywork_standard

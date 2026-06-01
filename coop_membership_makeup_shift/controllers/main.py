@@ -49,8 +49,10 @@ class Website(WebsiteController):
                 "shifts_available": shifts_available,
                 "user": user,
                 "eligible": eligible,
-                "partner_state": partner._fields["cooperative_state"].convert_to_export(
-                    partner.cooperative_state, partner
+                "partner_state": request.env._(
+                    dict(partner.WORKING_STATE_SELECTION).get(
+                        partner.cooperative_state, partner.cooperative_state
+                    )
                 ),
             },
         )
