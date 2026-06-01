@@ -8,6 +8,7 @@ import {useService} from "@web/core/utils/hooks";
 export class ScrapScreen extends Component {
     static template = "pos_scrap_order.ScrapScreen";
     static props = {};
+    static storeOnOrder = false;
 
     setup() {
         this.pos = usePos();

@@ -8,6 +8,7 @@ import {useService} from "@web/core/utils/hooks";
 export class ScrapListScreen extends Component {
     static template = "pos_scrap_order.ScrapListScreen";
     static props = {};
+    static storeOnOrder = false;
 
     setup() {
         this.pos = usePos();
@@ -34,10 +35,6 @@ export class ScrapListScreen extends Component {
 
     clickBack() {
         this.pos.showScreen("ProductScreen");
-    }
-
-    clickNext() {
-        this.pos.showScreen("ScrapScreen");
     }
 }
 
