@@ -3,6 +3,10 @@ from unittest.mock import MagicMock, patch
 
 from odoo.tests import common
 
+VALID_JPEG = base64.b64encode(b'\xff\xd8\xff' + b'x' * 100).decode()
+VALID_PNG = base64.b64encode(b'\x89PNG' + b'x' * 100).decode()
+INVALID_IMAGE = base64.b64encode(b'notanimage').decode()
+
 
 class TestLogoWebField(common.TransactionCase):
     """Verify that logo_web is DB-stored so the receipt logo survives a
@@ -55,20 +59,15 @@ class TestAddImageReceipt(common.TransactionCase):
         super().setUpClass()
         cls.PosOrder = cls.env["pos.order"]
         cls.Attachment = cls.env["ir.attachment"]
-        cls.dummy_data = base64.b64encode(b"fake_image_data").decode()
 
-    def _orphan_attachment_count(self, uuid):
-        return self.Attachment.search_count(
-            [
-                ("name", "=", uuid),
-                ("res_field", "=", "image_receipt"),
-                ("res_model", "=", "pos.order"),
-                ("res_id", "=", False),
-            ]
-        )
+    def _fake_order(self, uid=None):
+        order = MagicMock()
+        order.__bool__ = lambda self: True
+        order.session_id.user_id.id = uid if uid is not None else self.env.uid
+        return order
 
     def test_returns_false_when_name_is_none(self):
-        self.assertFalse(self.PosOrder.add_image_receipt(None, self.dummy_data))
+        self.assertFalse(self.PosOrder.add_image_receipt(None, VALID_JPEG))
 
     def test_returns_false_when_data_is_none(self):
         self.assertFalse(self.PosOrder.add_image_receipt("some-uuid", None))
@@ -79,60 +78,57 @@ class TestAddImageReceipt(common.TransactionCase):
     def test_returns_false_when_empty_strings(self):
         self.assertFalse(self.PosOrder.add_image_receipt("", ""))
 
-    def test_creates_orphan_attachment_when_no_matching_order(self):
-        uuid = "test-add-uuid-001"
-        self.assertEqual(self._orphan_attachment_count(uuid), 0)
-
-        result = self.PosOrder.add_image_receipt(uuid, self.dummy_data)
-
+    def test_returns_false_when_order_not_found(self):
+        with patch.object(type(self.PosOrder), "search", return_value=self.PosOrder.browse([])):
+            result = self.PosOrder.add_image_receipt("unknown-uuid", VALID_JPEG)
         self.assertFalse(result)
-        self.assertEqual(self._orphan_attachment_count(uuid), 1)
 
-    def test_does_not_create_duplicate_orphan_attachment(self):
-        uuid = "test-add-uuid-002"
+    def test_returns_false_when_order_belongs_to_different_user(self):
+        with patch.object(type(self.PosOrder), "search", return_value=self._fake_order(uid=self.env.uid + 9999)):
+            result = self.PosOrder.add_image_receipt("some-uuid", VALID_JPEG)
+        self.assertFalse(result)
 
-        self.PosOrder.add_image_receipt(uuid, self.dummy_data)
-        self.PosOrder.add_image_receipt(uuid, self.dummy_data)
+    def test_returns_false_for_invalid_base64(self):
+        with patch.object(type(self.PosOrder), "search", return_value=self._fake_order()):
+            result = self.PosOrder.add_image_receipt("some-uuid", "not-valid-base64!!!")
+        self.assertFalse(result)
 
-        self.assertEqual(self._orphan_attachment_count(uuid), 1)
+    def test_returns_false_when_payload_too_large(self):
+        large_data = base64.b64encode(b'\xff\xd8\xff' + b'x' * (6 * 1024 * 1024)).decode()
+        with patch.object(type(self.PosOrder), "search", return_value=self._fake_order()):
+            result = self.PosOrder.add_image_receipt("some-uuid", large_data)
+        self.assertFalse(result)
 
-    def test_orphan_attachment_has_correct_fields(self):
-        uuid = "test-add-uuid-003"
-        self.PosOrder.add_image_receipt(uuid, self.dummy_data)
+    def test_returns_false_for_invalid_image_type(self):
+        with patch.object(type(self.PosOrder), "search", return_value=self._fake_order()):
+            result = self.PosOrder.add_image_receipt("some-uuid", INVALID_IMAGE)
+        self.assertFalse(result)
 
-        attachment = self.Attachment.search(
-            [
-                ("name", "=", uuid),
-                ("res_field", "=", "image_receipt"),
-                ("res_model", "=", "pos.order"),
-            ],
-            limit=1,
-        )
-        self.assertTrue(attachment)
-        self.assertFalse(attachment.res_id)
-        self.assertEqual(attachment.datas.decode(), self.dummy_data)
-
-    def test_writes_to_existing_order_and_returns_true(self):
-        uuid = "test-add-uuid-order-001"
-        fake_order = MagicMock()
-        fake_order.__bool__ = lambda self: True
-
+    def test_writes_jpeg_to_order_and_returns_true(self):
+        fake_order = self._fake_order()
         with patch.object(type(self.PosOrder), "search", return_value=fake_order):
-            result = self.PosOrder.add_image_receipt(uuid, self.dummy_data)
-
+            result = self.PosOrder.add_image_receipt("some-uuid", VALID_JPEG)
         self.assertTrue(result)
-        fake_order.write.assert_called_once_with({"image_receipt": self.dummy_data})
+        fake_order.write.assert_called_once_with({"image_receipt": VALID_JPEG})
 
-    def test_does_not_create_attachment_when_order_found(self):
-        """When an existing order is found, no orphan attachment should be created."""
-        uuid = "test-add-uuid-order-002"
-        fake_order = MagicMock()
-        fake_order.__bool__ = lambda self: True
-
+    def test_writes_png_to_order_and_returns_true(self):
+        fake_order = self._fake_order()
         with patch.object(type(self.PosOrder), "search", return_value=fake_order):
-            self.PosOrder.add_image_receipt(uuid, self.dummy_data)
+            result = self.PosOrder.add_image_receipt("some-uuid", VALID_PNG)
+        self.assertTrue(result)
+        fake_order.write.assert_called_once_with({"image_receipt": VALID_PNG})
 
-        self.assertEqual(self._orphan_attachment_count(uuid), 0)
+    def test_no_orphan_attachment_created_for_unknown_uuid(self):
+        """Unknown UUIDs must not create orphan attachments."""
+        uuid = "no-orphan-uuid"
+        with patch.object(type(self.PosOrder), "search", return_value=self.PosOrder.browse([])):
+            self.PosOrder.add_image_receipt(uuid, VALID_JPEG)
+        count = self.Attachment.search_count([
+            ("name", "=", uuid),
+            ("res_field", "=", "image_receipt"),
+            ("res_model", "=", "pos.order"),
+        ])
+        self.assertEqual(count, 0)
 
 
 class TestCronUpdateImageReceipt(common.TransactionCase):
