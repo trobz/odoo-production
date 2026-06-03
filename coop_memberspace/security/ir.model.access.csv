@@ -8,6 +8,7 @@ access_registration_mail_scheduler_memberspace,MemberSpace Access Registration M
 access_shift_type_memberspace,MemberSpace Access Shift Type,coop_shift.model_shift_type,coop_memberspace.group_memberspace,1,0,0,0
 access_shift_leave_memberspace,MemberSpace Access Shift Leave,coop_shift.model_shift_leave,coop_memberspace.group_memberspace,1,0,0,0
 access_shift_leave_type_memberspace,MemberSpace Access Shift Leave Type,coop_shift.model_shift_leave_type,coop_memberspace.group_memberspace,1,0,0,0
+access_shift_holiday_memberspace,MemberSpace Access Shift Holiday,coop_membership.model_shift_holiday,coop_memberspace.group_memberspace,1,0,0,0
 access_product_product_memberspace,MemberSpace Access Product Product,product.model_product_product,coop_memberspace.group_memberspace,1,0,0,0
 access_product_template_memberspace,MemberSpace Access Product Template,product.model_product_template,coop_memberspace.group_memberspace,1,0,0,0
 access_mail_template_memberspace,MemberSpace Access Mail Template,mail.model_mail_template,coop_memberspace.group_memberspace,1,0,0,0
