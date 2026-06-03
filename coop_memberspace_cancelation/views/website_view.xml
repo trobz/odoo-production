@@ -10,7 +10,7 @@
                     <button
                         class="fa fa-times button-icon confirm-cancel-registration"
                         t-att-registration-id="shift.id"
-                        t-att-registration-name="date_begin and ' '.join(date_begin) or ''"
+                        t-att-registration-name="(row.get('date', '') + ' ' + row.get('hour', '')).strip()"
                         data-bs-toggle="modal"
                         t-attf-data-bs-target="#modal_confirm_cancel_registration_{{shift.shift_type or 'standard'}}"
                     />
