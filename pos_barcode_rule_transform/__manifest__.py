@@ -4,7 +4,7 @@
 
 {
     "name": "Point of Sale - Barcode Rule Transform",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Point Of Sale",
     "summary": "Transforms the value read in the barcode with a JS expression",
     "author": "Druidoo, Odoo Community Association (OCA), La Louve",
