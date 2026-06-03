@@ -1,12 +1,12 @@
 import publicWidget from "@web/legacy/js/public/public_widget";
 import {rpc} from "@web/core/network/rpc";
+import {session} from "@web/session";
 
 publicWidget.registry.programmer_makeup_shift = publicWidget.Widget.extend({
     selector: ".programmer_makeup_shift",
 
     start() {
         const self = this;
-
         $(".fa.fa-user-plus").on("click", function () {
             const shift_id = $(this).attr("data-shift-id");
             self.shift_id = shift_id;
@@ -29,11 +29,17 @@ publicWidget.registry.programmer_makeup_shift = publicWidget.Widget.extend({
                 ).show();
             };
             try {
+                const lang = document.documentElement.lang?.replace(/-/g, "_");
                 const resp = await rpc("/web/dataset/call_kw", {
                     model: "shift.shift",
                     method: "register_makeup_shift",
                     args: [[parseInt(self.shift_id, 10)]],
-                    kwargs: {},
+                    kwargs: {
+                        context: {
+                            ...session.user_context,
+                            ...(lang ? {lang} : {}),
+                        },
+                    },
                 });
                 const code = resp[0];
                 const msg = resp[1];
