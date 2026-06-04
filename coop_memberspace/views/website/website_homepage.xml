@@ -23,9 +23,9 @@
                     >
                         <h3 style="margin-bottom: 0px;margin-top: 0px;">
                             <strong>
-                                <span t-esc="member_status[0] + ' '" />
+                                <span t-out="member_status[0] + ' '" />
                             </strong>
-                            <span t-esc="member_status[1]" />
+                            <span t-out="member_status[1]" />
                         </h3>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                                             >alarm</i>
                                         </div>
                                         <div class="col-md-4 col-xs-6">
-                                            <p class="text-right" t-esc="date_begin" />
+                                            <p class="text-right" t-out="date_begin" />
                                         </div>
                                         <div
                                             class="col-md-4 col-xs-12"
@@ -74,7 +74,7 @@
                                 style="border: 1px solid #b2b7bb;padding: 10px;"
                             >
                                 <p
-                                    t-esc="'{0:,.0f}'.format(num_of_members).replace(',', ' ')"
+                                    t-out="'{0:,.0f}'.format(num_of_members).replace(',', ' ')"
                                 />
                                 <i
                                     class="material-icons"
@@ -95,7 +95,7 @@
                                         >
                                             <span
                                                 style="font-size: 3em;font-weight: 600;"
-                                                t-esc="week_name"
+                                                t-out="week_name"
                                             />
                                         </div>
                                         <div class="col-md-4 col-xs-6" />
