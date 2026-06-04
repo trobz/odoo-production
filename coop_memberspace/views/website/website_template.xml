@@ -28,7 +28,7 @@
         In 18.0 the menu is rendered inside website.template_header_default,
         not in website.layout itself.
     -->
-    <template
+    <!-- <template
         id="coop_memberspace.layout_website"
         inherit_id="website.template_header_default"
         name="Hide menu for guests"
@@ -36,7 +36,7 @@
         <xpath expr="//t[@t-foreach='website.menu_id.child_id']" position="attributes">
             <attribute name="t-if">website.user_id != user_id</attribute>
         </xpath>
-    </template>
+    </template> -->
 
     <!--
         Add a "Profile" link in the user dropdown (portal layout).
