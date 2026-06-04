@@ -1,0 +1,22 @@
+@media (min-width: 992px) {
+    .coop_header_wrap #o_main_nav {
+        flex-wrap: wrap;
+        align-items: center;
+
+        // The brand (logo) stays at natural width; the nav list
+        // fills the remainder and wraps as needed.
+        > .navbar-nav.top_menu {
+            flex-wrap: wrap !important;
+            flex: 1 1 0;
+            width: 0;          // flex item: grow to fill, allow wrapping
+            min-width: 0;
+        }
+
+        // Keep the right-side utility bar from pushing to a new line
+        // (it will typically be empty after our template overrides, but
+        // we preserve the rule in case search or language selector is re-enabled).
+        > .navbar-nav:not(.top_menu) {
+            flex-shrink: 0;
+        }
+    }
+}

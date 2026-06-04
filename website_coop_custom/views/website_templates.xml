@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="header_visibility_standard" inherit_id="website.header_visibility_standard">
+        <xpath expr="//header" position="attributes">
+            <attribute name="t-attf-class" add="o_no_autohide_menu coop_header_wrap" separator=" "/>
+        </xpath>
+    </template>
+</odoo>
