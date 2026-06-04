@@ -14,7 +14,7 @@
                                 t-att-name="header['key']"
                                 t-att-class="header.get('css_class', '')"
                             >
-                                <t t-esc="header['label']" />
+                                <t t-out="header['label']" />
                             </th>
                         </t>
                     </tr>
@@ -40,7 +40,7 @@
                                         t-att-data-col="header['key']"
                                         t-att-class="header.get('css_class', '')"
                                     >
-                                        <t t-esc="row.get(header['key'], '')" />
+                                        <t t-out="row.get(header['key'], '')" />
                                     </td>
                                 </t>
                             </t>
@@ -130,15 +130,15 @@
                 >
                     <h3 style="margin-bottom: 0px;margin-top: 0px;">
                         <strong>
-                            <span t-esc="member_status[0] + ' '" />
+                            <span t-out="member_status[0] + ' '" />
                         </strong>
-                        <span t-esc="member_status[1]" />
+                        <span t-out="member_status[1]" />
                     </h3>
                 </div>
             </div>
             <div class="container">
                 <t t-if="is_standard_member">
-                    <t t-call="coop_memberspace.mywork_standard" />
+                    <t t-call="coop_memberspace.mywork_standard" t-lang="lang" />
                 </t>
                 <t t-if="is_ftop_member">
                     <t t-call="coop_memberspace.mywork_ftop" />
@@ -164,7 +164,7 @@
                                 />
                                 <span
                                     style="font-size: 35px;border: 1px solid green;padding: 0px 31px;margin-left: 15px;"
-                                    t-esc="standard_point"
+                                    t-out="standard_point"
                                 />
                             </div>
                             <div>
@@ -208,7 +208,7 @@
                                 />
                                 <span
                                     style="font-size: 35px;border: 1px solid green;padding: 0px 31px;margin-left: 15px;"
-                                    t-esc="ftop_point"
+                                    t-out="ftop_point"
                                 />
                             </div>
                             <div>
@@ -368,17 +368,17 @@
                                 <tr>
                                     <td name="service">
                                         <span
-                                            t-esc="item.shift_id.display_name if item.shift_id else ''"
+                                            t-out="item.shift_id.display_name if item.shift_id else ''"
                                         />
                                     </td>
                                     <td name="description">
-                                        <t t-esc="item.name" />
+                                        <t t-out="item.name" />
                                     </td>
                                     <td name="points">
-                                        <t t-esc="item.point_qty" />
+                                        <t t-out="item.point_qty" />
                                     </td>
                                     <td name="balance">
-                                        <t t-esc="item.sum_current_qty" />
+                                        <t t-out="item.sum_current_qty" />
                                     </td>
                                 </tr>
                             </t>
@@ -414,17 +414,17 @@
                                 <tr>
                                     <td name="service">
                                         <span
-                                            t-esc="item.shift_id.display_name if item.shift_id else ''"
+                                            t-out="item.shift_id.display_name if item.shift_id else ''"
                                         />
                                     </td>
                                     <td name="description">
-                                        <t t-esc="item.name" />
+                                        <t t-out="item.name" />
                                     </td>
                                     <td name="points">
-                                        <t t-esc="item.point_qty" />
+                                        <t t-out="item.point_qty" />
                                     </td>
                                     <td name="balance">
-                                        <t t-esc="item.sum_current_qty" />
+                                        <t t-out="item.sum_current_qty" />
                                     </td>
                                 </tr>
                             </t>
@@ -528,23 +528,23 @@
                                             t-value="user.get_time_by_user_lang(shift.date_begin, ['%A, %d %B', '%HH%M'], lang=user.lang + '.utf8')"
                                         />
                                         <td name="week" t-attf-id="week-{{shift.id}}">
-                                            <t t-esc="shift.week_name or ''" />
+                                            <t t-out="shift.week_name or ''" />
                                         </td>
                                         <td name="date" scope="row">
                                             <span
                                                 t-attf-id="time-{{shift.id}}"
-                                                t-esc="(date_begin and date_begin[0] or '') + ' '"
+                                                t-out="(date_begin and date_begin[0] or '') + ' '"
                                             />
                                         </td>
                                         <td name="hour" t-attf-id="hour-{{shift.id}}">
                                             <t
-                                                t-esc="date_begin and date_begin[1] or ''"
+                                                t-out="date_begin and date_begin[1] or ''"
                                             />
                                         </td>
                                         <td name="available_seats">
                                             <span
                                                 t-attf-id="avalable-seats-{{shift.id}}"
-                                                t-esc="seats_avail"
+                                                t-out="seats_avail"
                                             />
                                         </td>
                                         <td name="inscription">
@@ -614,17 +614,17 @@
                                     <td name="date" scope="row">
                                         <t
                                             t-if="date_begin"
-                                            t-esc="date_begin and date_begin[0] or ''"
+                                            t-out="date_begin and date_begin[0] or ''"
                                         />
                                     </td>
                                     <td name="hour">
                                         <t
                                             t-if="date_begin"
-                                            t-esc="date_begin and date_begin[1] or ''"
+                                            t-out="date_begin and date_begin[1] or ''"
                                         />
                                     </td>
                                     <td name="expected_attendees">
-                                        <t t-esc="shift.seats_reserved" />
+                                        <t t-out="shift.seats_reserved" />
                                         <span
                                             t-if="shift.seats_reserved > 0"
                                             data-bs-toggle="modal"
@@ -634,10 +634,10 @@
                                         />
                                     </td>
                                     <td name="available_seats">
-                                        <t t-esc="shift.ticket_seats_available" />
+                                        <t t-out="shift.ticket_seats_available" />
                                     </td>
                                     <td name="participation">
-                                        <t t-esc="shift_reg and shift_reg.name or ''" />
+                                        <t t-out="shift_reg and shift_reg.name or ''" />
                                     </td>
                                     <td name="exchange">
                                         <span
@@ -772,7 +772,7 @@
                                 />
                                 <span
                                     style="font-size: 35px;border: 1px solid green;padding: 0px 31px;margin-left: 15px;"
-                                    t-esc="ftop_point"
+                                    t-out="ftop_point"
                                 />
                             </div>
                             <div>
@@ -858,13 +858,13 @@
                                 <td name="date" scope="row">
                                     <t
                                         t-if="date_begin"
-                                        t-esc="date_begin and date_begin[0] or ''"
+                                        t-out="date_begin and date_begin[0] or ''"
                                     />
                                 </td>
                                 <td name="hour">
                                     <t
                                         t-if="date_begin"
-                                        t-esc="date_begin and date_begin[1] or ''"
+                                        t-out="date_begin and date_begin[1] or ''"
                                     />
                                 </td>
                                 <t
@@ -873,7 +873,7 @@
                                 />
                                 <td name="coordinators">
                                     <span>
-                                        <t t-esc="coordinators[0]" />
+                                        <t t-out="coordinators[0]" />
                                         <i
                                             data-bs-toggle="tooltip"
                                             data-container="body"
@@ -994,17 +994,17 @@
                                     <tr>
                                         <td name="service">
                                             <span
-                                                t-esc="item.shift_id.display_name if item.shift_id else ''"
+                                                t-out="item.shift_id.display_name if item.shift_id else ''"
                                             />
                                         </td>
                                         <td name="description">
-                                            <t t-esc="item.name" />
+                                            <t t-out="item.name" />
                                         </td>
                                         <td name="points">
-                                            <t t-esc="item.point_qty" />
+                                            <t t-out="item.point_qty" />
                                         </td>
                                         <td name="balance">
-                                            <t t-esc="item.sum_current_qty" />
+                                            <t t-out="item.sum_current_qty" />
                                         </td>
                                     </tr>
                                 </t>

@@ -50,6 +50,17 @@ class ResPartner(models.Model):
         default=False,
     )
 
+    show_email_receipt = fields.Boolean(compute="_compute_show_email_receipt")
+
+    def _compute_show_email_receipt(self):
+        has_email_config = bool(
+            self.env["pos.config"]
+            .sudo()
+            .search([("receipt_options", "in", ("3", "4"))], limit=1)
+        )
+        for record in self:
+            record.show_email_receipt = has_email_config
+
     def create_memberspace_user(self):
         """
         This function is used to create user for existing partner when installing

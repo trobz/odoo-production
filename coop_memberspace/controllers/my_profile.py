@@ -14,7 +14,7 @@ class Website(odoo.addons.website.controllers.main.Website):
         for field in list(x for x in UPDATE_PHONE if x in kw):
             new_value.update({field: kw.get(field, False)})
         request.env.user.partner_id.write(new_value)
-        return http.local_redirect("/profile")
+        return request.redirect("/profile")
 
     @http.route(
         "/edit-address",
@@ -28,7 +28,7 @@ class Website(odoo.addons.website.controllers.main.Website):
         for field in list(x for x in UPDATE_ADDRESS if x in kw):
             new_value.update({field: kw.get(field, False)})
         request.env.user.partner_id.write(new_value)
-        return http.local_redirect("/profile")
+        return request.redirect("/profile")
 
     @http.route(
         "/edit-email-pos-receipt",
@@ -38,7 +38,10 @@ class Website(odoo.addons.website.controllers.main.Website):
         methods=["POST"],
     )
     def edit_email_pos_receipt(self, **kw):
-        request.env.user.partner_id.write(
-            {"pos_email_receipt": kw.get("pos_email_receipt", False)}
+        pos_email_receipt = (
+            "email_pos_receipt"
+            if kw.get("pos_email_receipt")
+            else "no_email_pos_receipt"
         )
-        return http.local_redirect("/profile")
+        request.env.user.partner_id.write({"pos_email_receipt": pos_email_receipt})
+        return request.redirect("/profile")
