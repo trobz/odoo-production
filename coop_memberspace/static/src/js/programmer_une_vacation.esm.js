@@ -6,6 +6,11 @@ export default publicWidget.registry.programmer_une_vacation =
     publicWidget.Widget.extend({
         selector: ".programmer_une_vacation",
 
+        _getLangContext() {
+            const lang = document.documentElement.lang?.replace(/-/g, "_");
+            return lang ? {lang} : {};
+        },
+
         parse_body_ftop_programmer(shift) {
             return `
         <tr style="${shift.css_style || ""}">
@@ -76,7 +81,7 @@ export default publicWidget.registry.programmer_une_vacation =
                             model: "shift.shift",
                             method: "register_ftop_shift",
                             args: [parseInt(self.shift_id, 10)],
-                            kwargs: {},
+                            kwargs: {context: self._getLangContext()},
                         }
                     );
                     if (result) {
