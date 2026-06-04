@@ -16,11 +16,22 @@ export function savePending(items) {
 }
 
 patch(PosStore.prototype, {
-    // Called by syncAllOrders after each batch of orders is successfully synced.
-    // Equivalent of v12's _save_to_server patch — flush offline receipt queue once
-    // the server has confirmed the orders exist.
+    async setup(...args) {
+        await super.setup(...args);
+        // Flush any receipt images that were saved offline in a previous session.
+        // This covers the case where the server was unreachable during the receipt
+        // screen (so no orphan attachment was created) and the browser was never
+        // technically "offline" (so the "online" event never fired to re-trigger sync).
+        this._flushPendingReceipts().catch(() => {});
+    },
+
+    // Called by syncAllOrders after each order is successfully synced.
     async postSyncAllOrders(...args) {
         await super.postSyncAllOrders(...args);
+        await this._flushPendingReceipts();
+    },
+
+    async _flushPendingReceipts() {
         const pending = loadPending();
         if (!pending.length) return;
         const remaining = [];
