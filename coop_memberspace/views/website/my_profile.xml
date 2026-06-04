@@ -29,7 +29,7 @@
                             <div class="col-xs-8 col-sm-8 col-md-8">
                                 <p
                                     style="margin-top:10px;margin-bottom:10px;font-size:17px;"
-                                    t-esc="user.partner_id and user.partner_id.get_partner_gender_website() or ''"
+                                    t-out="user.partner_id and user.partner_id.get_partner_gender_website() or ''"
                                 />
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                             <div class="col-xs-8 col-sm-8 col-md-8">
                                 <p
                                     style="margin-top:10px;margin-bottom:10px;font-size:17px;"
-                                    t-esc="user.partner_id.name"
+                                    t-out="user.partner_id.name"
                                 />
                             </div>
                         </div>
@@ -184,10 +184,10 @@
                             <div class="row address-no-edit">
                                 <div class="col-xs-4 col-sm-4 col-md-4" />
                                 <div class="col-xs-8 col-sm-8 col-md-8">
-                                    <span t-esc="user.partner_id.street" />
+                                    <span t-out="user.partner_id.street" />
                                     <br />
-                                    <span t-esc="user.partner_id.zip" />
-                                    <span t-esc="user.partner_id.city" />
+                                    <span t-out="user.partner_id.zip" />
+                                    <span t-out="user.partner_id.city" />
                                 </div>
                             </div>
                             <div class="row">
@@ -200,9 +200,9 @@
                                 </div>
                             </div>
                             <!-- <div class="row text-center address-no-edit">
-                                <span t-esc="user.partner_id.street" /> <br/>
-                                <span t-esc="user.partner_id.zip" />
-                                <span t-esc="user.partner_id.city" />
+                                <span t-out="user.partner_id.street" /> <br/>
+                                <span t-out="user.partner_id.zip" />
+                                <span t-out="user.partner_id.city" />
                             </div>
                             <div class="row text-center">
                                 <button type="button" class="btn btn-warning btn-edit-address">Modifier</button>
@@ -262,7 +262,7 @@
                             <div class="col-xs-4 col-sm-4 col-md-4">
                                 <p
                                     style="margin-top:10px;margin-bottom:10px;font-size:17px;"
-                                    t-esc="user.partner_id.mobile"
+                                    t-out="user.partner_id.mobile"
                                 />
                             </div>
                             <div class="col-xs-4 col-sm-4 col-md-4">
@@ -283,7 +283,7 @@
                             <div class="col-xs-4 col-sm-4 col-md-4">
                                 <p
                                     style="margin-top:10px;margin-bottom:10px;font-size:17px;"
-                                    t-esc="user.partner_id.email"
+                                    t-out="user.partner_id.email"
                                 />
                             </div>
                             <div class="col-xs-4 col-sm-4 col-md-4">
@@ -298,15 +298,12 @@
                             </div>
                         </div>
                         <h4
-                            t-if="user.partner_id.config_receipt_options in (3, 4)"
+                            t-if="user.partner_id.show_email_receipt"
                             style="margin-left: 15px;font-size: 25px;"
                         >
                             Ticket par email
                         </h4>
-                        <div
-                            t-if="user.partner_id.config_receipt_options in (3, 4)"
-                            class="row"
-                        >
+                        <div t-if="user.partner_id.show_email_receipt" class="row">
                             <div class="col-xs-4 col-sm-4 col-md-4 text-right">
                                 <h4>Activate :</h4>
                             </div>
@@ -326,7 +323,7 @@
                                         <input
                                             type="checkbox"
                                             name="pos_email_receipt"
-                                            t-att-checked="user.partner_id.pos_email_receipt"
+                                            t-att-checked="user.partner_id.pos_email_receipt == 'email_pos_receipt'"
                                             onchange="this.form.submit();"
                                         />
                                         <span class="slider round" />

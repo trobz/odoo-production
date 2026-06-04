@@ -289,7 +289,6 @@ class ShiftRegistration(models.Model):
         args += [
             ("partner_id", "=", partner.id),
             ("state", "not in", ["cancel"]),
-            # ("exchange_state", "!=", "replacing"),
             (
                 "date_begin",
                 ">=",
@@ -347,7 +346,7 @@ class ShiftRegistration(models.Model):
         date_begin = user.get_time_by_user_lang(
             self.date_begin,
             ["%A, %d %B", "%HH%M"],
-            lang=(user.lang or "fr_FR") + ".utf8",
+            lang=(self.env.lang or user.lang or "fr_FR") + ".utf8",
         )
         line_through = self.state in ("waiting", "cancel")
         return {

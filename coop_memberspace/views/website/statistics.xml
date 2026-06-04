@@ -13,14 +13,14 @@
                         >
                             <p>
                                 <span
-                                    t-esc="'{0:,.2f}'.format(average_basket).replace(',', ' ').replace('.', ',')"
+                                    t-out="'{0:,.2f}'.format(average_basket).replace(',', ' ').replace('.', ',')"
                                 />
                                 <t
                                     t-set="company"
                                     t-value="request.env['res.company']._company_default_get()"
                                 />
                                 <span
-                                    t-esc="company and company.currency_id.symbol or '&#8364;'"
+                                    t-out="company and company.currency_id.symbol or '&#8364;'"
                                 />
                             </p>
                             <i
@@ -36,7 +36,7 @@
                             style="border: 1px solid #b2b7bb;padding: 10px;"
                         >
                             <p
-                                t-esc="'{0:,.0f}'.format(num_of_sales).replace(',', ' ')"
+                                t-out="'{0:,.0f}'.format(num_of_sales).replace(',', ' ')"
                             />
                             <i
                                 class="material-icons"
@@ -60,7 +60,7 @@
                             style="border: 1px solid #b2b7bb;padding: 10px;"
                         >
                             <p
-                                t-esc="'{0:,.0f}'.format(turnover_year_wo_tax).replace(',', ' ')"
+                                t-out="'{0:,.0f}'.format(turnover_year_wo_tax).replace(',', ' ')"
                             />
                             <div style="display: inline-flex">
                                 <div>
@@ -83,7 +83,7 @@
                             style="border: 1px solid #b2b7bb;padding: 10px;"
                         >
                             <p
-                                t-esc="'{0:,.0f}'.format(turnover_year_tax).replace(',', ' ')"
+                                t-out="'{0:,.0f}'.format(turnover_year_tax).replace(',', ' ')"
                             />
                             <div style="display: inline-flex">
                                 <div>
