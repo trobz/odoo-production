@@ -3,7 +3,7 @@
 
     <!-- Inject reason tag selector into ScrapScreen -->
     <t t-inherit="pos_scrap_order.ScrapScreen" t-inherit-mode="extension">
-        <xpath expr="//div[hasclass('pos-scrap-note')]" position="before">
+        <xpath expr="//div[hasclass('scrap-left')]" position="inside">
             <t t-if="originState.reasonTags.length">
                 <div class="mb-3 px-3 pt-3">
                     <label class="form-label fw-bold">Scrap Reason</label>

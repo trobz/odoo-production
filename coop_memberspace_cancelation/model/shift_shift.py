@@ -1,4 +1,4 @@
-from odoo import _, models
+from odoo import models
 
 
 class ShiftShift(models.Model):
@@ -21,7 +21,7 @@ class ShiftShift(models.Model):
             for record in shift.registration_ids:
                 if record.state == "cancel" and record.shift_type == "standard":
                     vals = {
-                        "name": _("Annuler votre participation"),
+                        "name": self.env._("Annuler votre participation"),
                         "type": "standard",
                         "partner_id": record.partner_id.id,
                         "point_qty": -1,

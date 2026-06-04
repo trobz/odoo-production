@@ -14,6 +14,11 @@ function bsModal(id) {
 export default publicWidget.registry.programmer_un_extra = publicWidget.Widget.extend({
     selector: ".programmer_un_extra",
 
+    _getLangContext() {
+        const lang = document.documentElement.lang?.replace(/-/g, "_");
+        return lang ? {lang} : {};
+    },
+
     _hideProgrammerModal() {
         bsModal("programmer_modal")?.getInstance()?.hide();
     },
@@ -44,7 +49,7 @@ export default publicWidget.registry.programmer_un_extra = publicWidget.Widget.e
                     model: "shift.shift",
                     method: "register_ftop_shift",
                     args: [parseInt(self.shift_id, 10)],
-                    kwargs: {},
+                    kwargs: {context: self._getLangContext()},
                 });
                 if (registration_id) {
                     $(`#btn-add-${self.shift_id}`)

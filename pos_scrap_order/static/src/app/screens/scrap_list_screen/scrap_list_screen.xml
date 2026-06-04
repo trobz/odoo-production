@@ -10,10 +10,7 @@
                     Back
                 </span>
                 <h1 class="m-0">Scrap Orders</h1>
-                <span class="scrap-btn scrap-btn-highlight" t-on-click="clickNext">
-                    Make Scrap Order
-                    <i class="fa fa-angle-double-right" />
-                </span>
+                <span />
             </div>
             <div class="scraplist-body flex-grow-1 overflow-y-auto">
                 <table class="container-list">
