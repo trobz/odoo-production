@@ -18,23 +18,11 @@ class ReportTimesheet(models.TransientModel):
         if shift_ids:
             return shift_ids
 
-    @api.onchange("date_report")
-    def _onchange_date_report(self):
-        res = {}
-        if self.date_report:
-            date2 = self.date_report - timedelta(days=1)
-            res["domain"] = {
-                "shift_ids": [
-                    "&",
-                    ("date_begin", "<=", self.date_report),
-                    ("date_end", ">", date2),
-                ]
-            }
-        else:
-            res["domain"] = {"shift_ids": []}
-        return res
-
-    date_report = fields.Date(string="Date")
+    date_report = fields.Date(string="Report Date", default=fields.Date.context_today)
+    date_report_prior = fields.Date(
+        string="Previous Date",
+        compute="_compute_date_report_prior",
+    )
     shift_ids = fields.Many2many(
         "shift.shift",
         "shift_timeshift_rel",
@@ -43,6 +31,15 @@ class ReportTimesheet(models.TransientModel):
         string="Shifts",
         default=_get_selected_shifts,
     )
+
+    @api.depends("date_report")
+    def _compute_date_report_prior(self):
+        for rec in self:
+            if rec.date_report:
+                # Subtract 1 day using Python's standard timedelta
+                rec.date_report_prior = rec.date_report - timedelta(days=1)
+            else:
+                rec.date_report_prior = False
 
     def check_report(self):
         self.ensure_one()
