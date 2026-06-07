@@ -14,6 +14,7 @@ class PosOrder(models.Model):
 
     image_receipt = fields.Binary(attachment=True)
 
+    @api.model
     def cron_update_image_receipt(self, limit=None):
         attachments = self.env["ir.attachment"].search(
             [
@@ -59,6 +60,7 @@ class PosOrder(models.Model):
             )
         return False
 
+    @api.model
     def _send_order_cron(self):
         """Only send tickets that have an image_receipt attachment.
         Binary(attachment=True) fields are not searchable via domain in Odoo 18,

@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
+    <!--
+        Use the pre-cached base64 logo when available (data-URI, works offline
+        and avoids html-to-image's broken cache-key that collapses all
+        /web/image URLs to one slot). Fall back to the live URL for cases where
+        the cache hasn't populated yet (first render, fresh session).
+    -->
     <t t-name="point_of_sale.ReceiptHeader" t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
-        <xpath expr="//img[@class='pos-receipt-logo']" position="attributes">
-            <attribute name="t-attf-src">/web/image?model=res.company&amp;id={{props.data.company.id}}&amp;field=logo_web</attribute>
+        <xpath expr="//img[@class='pos-receipt-logo']" position="replace">
+            <img
+                t-if="props.data.company_logo"
+                t-att-src="props.data.company_logo"
+                alt="Logo"
+                class="pos-receipt-logo"
+            />
+            <img
+                t-else=""
+                t-attf-src="/web/image?model=res.company&amp;id={{props.data.company.id}}&amp;field=logo_web"
+                alt="Logo"
+                class="pos-receipt-logo"
+            />
         </xpath>
     </t>
 </templates>

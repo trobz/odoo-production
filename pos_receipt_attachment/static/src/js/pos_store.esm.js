@@ -18,11 +18,41 @@ export function savePending(items) {
 patch(PosStore.prototype, {
     async setup(...args) {
         await super.setup(...args);
+        // Pre-fetch the company logo while online so it is available for receipt
+        // image capture even when the device goes offline later.
+        this._cacheCompanyLogo().catch(() => {});
         // Flush any receipt images that were saved offline in a previous session.
-        // This covers the case where the server was unreachable during the receipt
-        // screen (so no orphan attachment was created) and the browser was never
-        // technically "offline" (so the "online" event never fired to re-trigger sync).
         this._flushPendingReceipts().catch(() => {});
+    },
+
+    async _cacheCompanyLogo() {
+        if (this.company_logo_base64) return;
+        const url = `/web/image?model=res.company&id=${this.company.id}&field=logo_web`;
+        try {
+            const res = await fetch(url);
+            if (!res.ok) return;
+            const blob = await res.blob();
+            this.company_logo_base64 = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            });
+        } catch (e) {
+            console.warn("[pos_receipt_attachment] Failed to cache company logo:", e);
+        }
+    },
+
+    // Inject the pre-cached base64 logo into receipt data so the template can
+    // use it as an inline src. html-to-image skips data-URI images (no re-fetch
+    // needed), which avoids the library's broken cache-key bug (strips query
+    // params, so all /web/image URLs share one cache slot).
+    getReceiptHeaderData(order) {
+        const result = super.getReceiptHeaderData(...arguments);
+        if (this.company_logo_base64) {
+            result.company_logo = this.company_logo_base64;
+        }
+        return result;
     },
 
     // Called by syncAllOrders after each order is successfully synced.
