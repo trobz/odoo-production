@@ -117,7 +117,6 @@ class Website(WebsiteController):
                 .registration_ids.filtered(lambda r, d=d: r.date_begin >= d)
                 .sorted(lambda r: r.date_begin)
             )
-            partner.upcoming_registration_count = len(next_registrations)
             next_registrations = next_registrations.sorted(lambda r: r.date_begin)
             datas.update(
                 {

@@ -5,15 +5,29 @@
     margin: 16px 0;
 
     .origin-btn {
+        display: block;
+        width: 100%;
         line-height: 74px;
         font-size: 16px;
         border: solid 1px rgb(202, 202, 202);
+        border-top-width: 0;
         cursor: pointer;
         text-align: center;
         background: #e2e2e2;
         color: #555;
-        border-radius: 3px;
+        border-radius: 0;
         padding: 0 16px;
+
+        &:first-child {
+            border-top-width: 1px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+        }
+
+        &:last-child {
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
 
         &:active {
             background: black;

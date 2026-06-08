@@ -7,12 +7,12 @@
             <t t-if="originState.reasonTags.length">
                 <div class="mb-3 px-3 pt-3">
                     <label class="form-label fw-bold">Scrap Reason</label>
-                    <div class="scrap-origins d-flex flex-wrap gap-2">
+                    <div class="scrap-origins">
                         <button
                             t-foreach="originState.reasonTags"
                             t-as="tag"
                             t-key="tag.id"
-                            t-att-class="'origin-btn btn btn-outline-primary' + (originState.selectedReasonTagId === tag.id ? ' active' : '')"
+                            t-att-class="'origin-btn' + (originState.selectedReasonTagId === tag.id ? ' active' : '')"
                             t-on-click="() => this.selectReasonTag(tag.id)"
                             t-esc="tag.name"
                         />
