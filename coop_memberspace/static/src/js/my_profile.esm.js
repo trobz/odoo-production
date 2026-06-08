@@ -18,7 +18,7 @@ export default publicWidget.registry.my_profile = publicWidget.Widget.extend({
                 .append(
                     '<div class="row">' +
                         '<div class="col-xs-6 col-sm-6 col-md-6 pd-l-20 pd-r-20"><button type="button" class="btn btn-default btn-cancel-edit-phone">Annuler</button></div>' +
-                        '<div class="col-xs-6 col-sm-6 col-md-6 pd-l-20 pd-r-20"><button class="btn btn-primary">Submit</button></div>' +
+                        '<div class="col-xs-6 col-sm-6 col-md-6 pd-l-20 pd-r-20"><button class="btn btn-primary">Valider</button></div>' +
                         "</div>"
                 );
             $(".btn-cancel-edit-phone").on("click", function () {
@@ -51,7 +51,7 @@ export default publicWidget.registry.my_profile = publicWidget.Widget.extend({
                         <button type="button" class="btn btn-default btn-cancel-edit-address">Annuler</button>
                     </div>
                     <div class="col-xs-6 col-sm-6 col-md-6 pd-l-20 pd-r-20">
-                        <button class="btn btn-primary">Submit</button>
+                        <button class="btn btn-primary">Valider</button>
                     </div>
                 </div>`
                 );

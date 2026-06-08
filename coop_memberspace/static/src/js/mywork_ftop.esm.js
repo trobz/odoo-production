@@ -10,11 +10,16 @@ export default publicWidget.registry.mywork_ftop = publicWidget.Widget.extend({
         $(".mywork_ftop").on("click", ".cancel-ftop-shift", async function () {
             const registration_id = parseInt($(this).attr("registration-id"), 10);
             const registration_name = $(this).attr("registration-name");
+            const lang = document.documentElement.lang?.replace(/-/g, "_");
             const res = await rpc("/web/dataset/call_kw", {
                 model: "shift.registration",
                 method: "check_cancel_ftop_shift",
                 args: [[registration_id]],
-                kwargs: {},
+                kwargs: {
+                    context: {
+                        ...(lang ? {lang} : {}),
+                    },
+                },
             });
             if (res.code === 0) {
                 showErrorMsg(res.msg);
