@@ -20,7 +20,6 @@ export default publicWidget.registry.programmer_une_vacation =
             <td id="avalable-seats-${shift.id}"><span>${shift.seats_avail}</span></td>
             <td>
                 <a><span class="fa fa-user-plus"
-                    data-bs-toggle="modal" data-bs-target="#programmer_modal"
                     id="btn-add-${shift.id}" shift-id="${shift.id}"></span></a>
             </td>
         </tr>`;
@@ -56,6 +55,12 @@ export default publicWidget.registry.programmer_une_vacation =
                             self.shift_id = $(this).attr("shift-id");
                             $(`#modal_time`).text($(`#time-${self.shift_id}`).text());
                             $(`#modal_hour`).text($(`#hour-${self.shift_id}`).text());
+                            const BS = window.Modal || window.bootstrap?.Modal;
+                            if (BS) {
+                                BS.getOrCreateInstance(
+                                    document.getElementById("programmer_modal")
+                                ).show();
+                            }
                         });
                     });
                     new (window.Modal || window.bootstrap?.Modal)(

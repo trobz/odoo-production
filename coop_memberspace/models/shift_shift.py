@@ -109,7 +109,7 @@ class ShiftShift(models.Model):
         """
         if "lang" not in self.env.context:
             self = self.with_context(lang=self.env.user.lang)
-        
+
         ticket_ids, msg = self.sudo().fetch_ftop_ticket(shift_id)
         if not ticket_ids:
             return False, [], msg

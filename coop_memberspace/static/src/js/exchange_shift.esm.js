@@ -29,11 +29,16 @@ export default publicWidget.registry.exchange_shift = publicWidget.Widget.extend
             "click",
             ".cancel-proposal",
             async function () {
+                const lang = document.documentElement.lang?.replace(/-/g, "_");
                 await rpc("/web/dataset/call_kw", {
                     model: "shift.registration",
                     method: "remove_shift_regis_from_market",
                     args: [[self.registration_id]],
-                    kwargs: {},
+                    kwargs: {
+                        context: {
+                            ...(lang ? {lang} : {}),
+                        },
+                    },
                 });
                 const parent = $(self.btn_remove).parent();
                 parent.empty().append(self.get_swap_btn_html(self.registration_id));
@@ -138,6 +143,7 @@ export default publicWidget.registry.exchange_shift = publicWidget.Widget.extend
                 const btn = this;
                 $(btn).prop("disabled", true);
                 try {
+                    const lang = document.documentElement.lang?.replace(/-/g, "_");
                     await rpc("/web/dataset/call_kw", {
                         model: "shift.registration",
                         method: "create_proposal",
@@ -146,7 +152,11 @@ export default publicWidget.registry.exchange_shift = publicWidget.Widget.extend
                             des_registration_id,
                             self.shift_available,
                         ],
-                        kwargs: {},
+                        kwargs: {
+                            context: {
+                                ...(lang ? {lang} : {}),
+                            },
+                        },
                     });
                     bsModal("modal_confirm_exchange_shift")?.hide();
                     window.location.reload();
@@ -161,11 +171,16 @@ export default publicWidget.registry.exchange_shift = publicWidget.Widget.extend
 
     async go_to_market(btn) {
         const registration_id = parseInt($(btn).attr("registration-id"), 10);
+        const lang = document.documentElement.lang?.replace(/-/g, "_");
         const res = await rpc("/web/dataset/call_kw", {
             model: "shift.registration",
             method: "add_shift_regis_to_market",
             args: [[registration_id]],
-            kwargs: {},
+            kwargs: {
+                context: {
+                    ...(lang ? {lang} : {}),
+                },
+            },
         });
         if (res.code === 0) {
             showErrorMsg(res.msg);
@@ -198,11 +213,16 @@ export default publicWidget.registry.exchange_shift = publicWidget.Widget.extend
         src_shift,
         des_registration_id
     ) {
+        const lang = document.documentElement.lang?.replace(/-/g, "_");
         const resp = await rpc("/web/dataset/call_kw", {
             model: "shift.registration",
             method: "shifts_to_confirm",
             args: [src_registration_id, des_registration_id, src_shift],
-            kwargs: {},
+            kwargs: {
+                context: {
+                    ...(lang ? {lang} : {}),
+                },
+            },
         });
         const code = resp[0];
         const mesg = resp[1];

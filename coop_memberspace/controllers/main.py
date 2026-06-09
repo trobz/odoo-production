@@ -309,7 +309,9 @@ class Website(WebsiteController):
 
         alias_leader = (
             shift_tmpl
-            and request.env["memberspace.alias"].sudo().search(
+            and request.env["memberspace.alias"]
+            .sudo()
+            .search(
                 [
                     ("shift_id", "=", shift_tmpl.id),
                     ("type", "=", "coordinator"),
@@ -322,7 +324,9 @@ class Website(WebsiteController):
 
         alias_team = (
             shift_tmpl
-            and request.env["memberspace.alias"].sudo().search(
+            and request.env["memberspace.alias"]
+            .sudo()
+            .search(
                 [("shift_id", "=", shift_tmpl.id), ("type", "=", "team")],
                 limit=1,
             )
