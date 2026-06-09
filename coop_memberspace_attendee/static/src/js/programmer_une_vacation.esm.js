@@ -7,8 +7,6 @@ publicWidget.registry.programmer_une_vacation.include({
             return "";
         }
         return `<span
-            data-bs-toggle="modal"
-            data-bs-target="#modal_list_expected_attendee"
             shift-id="${shift.id}"
             class="fa fa-external-link browse-expected-attendee"></span>`;
     },
@@ -25,7 +23,6 @@ publicWidget.registry.programmer_une_vacation.include({
             </td>
             <td id="avalable-seats-${shift.id}"><span>${shift.seats_avail}</span></td>
             <td><a><span class="fa fa-user-plus"
-                data-bs-toggle="modal" data-bs-target="#programmer_modal"
                 id="btn-add-${shift.id}" shift-id="${shift.id}"></span></a></td>
         </tr>`;
     },
@@ -45,6 +42,12 @@ publicWidget.registry.programmer_une_vacation.include({
                 $(".modal_list_expected_attendee_body").append(
                     `<tr><td>${partner}</td></tr>`
                 );
+            }
+            const BS = window.Modal || window.bootstrap?.Modal;
+            if (BS) {
+                BS.getOrCreateInstance(
+                    document.getElementById("modal_list_expected_attendee")
+                ).show();
             }
         });
     },
