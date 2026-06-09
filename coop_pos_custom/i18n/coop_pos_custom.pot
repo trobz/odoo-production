@@ -1,0 +1,62 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* coop_pos_custom
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-09 10:30+0000\n"
+"PO-Revision-Date: 2026-06-09 10:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: coop_pos_custom
+#: model_terms:ir.ui.view,arch_db:coop_pos_custom.view_computed_purchase_order_form_inherit
+msgid "Discount (%)"
+msgstr ""
+
+#. module: coop_pos_custom
+#. odoo-javascript
+#: code:addons/coop_pos_custom/static/src/xml/partner_list.xml:0
+msgid "Nom"
+msgstr ""
+
+#. module: coop_pos_custom
+#. odoo-javascript
+#: code:addons/coop_pos_custom/static/src/xml/partner_list.xml:0
+msgid "N° Coop"
+msgstr ""
+
+#. module: coop_pos_custom
+#: model:res.groups,name:coop_pos_custom.pos_access_control_buttons_group
+msgid "PoS Access Control Buttons Group"
+msgstr ""
+
+#. module: coop_pos_custom
+#: model:ir.model,name:coop_pos_custom.model_pos_order
+msgid "Point of Sale Orders"
+msgstr ""
+
+#. module: coop_pos_custom
+#. odoo-javascript
+#: code:addons/coop_pos_custom/static/src/xml/partner_list.xml:0
+msgid "Statut"
+msgstr ""
+
+#. module: coop_pos_custom
+#. odoo-python
+#: code:addons/coop_pos_custom/models/pos_order.py:0
+msgid ""
+"To return product(s), you need to open a session that will be used to "
+"register the refund"
+msgstr ""
+
+#. module: coop_pos_custom
+#: model:ir.model,name:coop_pos_custom.model_res_users
+msgid "User"
+msgstr ""
