@@ -735,7 +735,7 @@ msgstr "Participants attendus"
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.my_next_shift_exchange_cell
 msgid "Extra"
-msgstr "Extra"
+msgstr "Supplémentaire"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_res_config_settings__ftop_shift_cancellation_duration
