@@ -214,3 +214,23 @@ msgstr "Code produit fournisseur"
 #: model:ir.model.fields.selection,name:coop_stock.selection__product_category__type__view
 msgid "View"
 msgstr "Vue"
+
+#. module: coop_stock
+#: model_terms:ir.ui.view,arch_db:coop_stock.view_picking_packaging_labels
+msgid "Number of Packages"
+msgstr "Nombre de colis"
+
+#. module: coop_stock
+#: model_terms:ir.ui.view,arch_db:coop_stock.view_picking_packaging_labels
+msgid "Received Quantity"
+msgstr "Qtés reçues"
+
+#. module: coop_stock
+#: model_terms:ir.ui.view,arch_db:coop_stock.view_picking_packaging_qty_labels
+msgid "Packaging"
+msgstr "Cond."
+
+#. module: coop_stock
+#: model_terms:ir.ui.view,arch_db:coop_stock.view_picking_packaging_qty_labels
+msgid "Received Packages"
+msgstr "Colis reçus"

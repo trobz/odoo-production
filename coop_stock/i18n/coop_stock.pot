@@ -211,3 +211,23 @@ msgstr ""
 #: model:ir.model.fields.selection,name:coop_stock.selection__product_category__type__view
 msgid "View"
 msgstr ""
+
+#. module: coop_stock
+#: model_terms:ir.ui.view,arch_db:coop_stock.view_picking_packaging_labels
+msgid "Number of Packages"
+msgstr ""
+
+#. module: coop_stock
+#: model_terms:ir.ui.view,arch_db:coop_stock.view_picking_packaging_labels
+msgid "Received Quantity"
+msgstr ""
+
+#. module: coop_stock
+#: model_terms:ir.ui.view,arch_db:coop_stock.view_picking_packaging_qty_labels
+msgid "Packaging"
+msgstr ""
+
+#. module: coop_stock
+#: model_terms:ir.ui.view,arch_db:coop_stock.view_picking_packaging_qty_labels
+msgid "Received Packages"
+msgstr ""
