@@ -57,7 +57,7 @@ class ProductSupplierinfo(models.Model):
         required=True,
         default=0.0,
         digits="Product Price",
-        help="The price to purchase a product",
+        help="The base price to purchase a product",
     )
 
     @api.model_create_multi

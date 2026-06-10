@@ -233,7 +233,7 @@ msgstr "Ligne de commande"
 #. module: coop_purchase
 #: model:ir.model.fields,field_description:coop_purchase.field_product_supplierinfo__base_price
 msgid "Price"
-msgstr "Prix"
+msgstr "Prix de base"
 
 #. module: coop_purchase
 #: model:ir.model.fields,field_description:coop_purchase.field_supplier_info_update_line__price_policy
@@ -376,7 +376,7 @@ msgstr "L'action \"Mise à jour des prix des fournisseurs\" définit le fourniss
 #. module: coop_purchase
 #: model:ir.model.fields,help:coop_purchase.field_product_supplierinfo__base_price
 msgid "The price to purchase a product"
-msgstr "Le prix d'achat d'un produit"
+msgstr "Le prix de base d'achat d'un produit"
 
 #. module: coop_purchase
 #: model:ir.model.fields.selection,name:coop_purchase.selection__res_partner__discount_computation__total
