@@ -35,6 +35,9 @@
             <xpath expr="//list" position="attributes">
                 <attribute name="editable">top</attribute>
             </xpath>
+            <xpath expr="//field[@name='discount']" position="attributes">
+                <attribute name="optional">show</attribute>
+            </xpath>
         </field>
     </record>
 
