@@ -11,6 +11,7 @@
                         name="shift_ids"
                         label="Shifts"
                         options="{'no_create': True}"
+                        domain="[('date_begin', '&lt;=', date_report), ('date_end', '&gt;', date_report_prior)]"
                     >
                         <list>
                             <field name="name" />

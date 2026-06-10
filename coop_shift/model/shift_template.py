@@ -735,6 +735,9 @@ class ShiftTemplate(models.Model):
         leader on shift template
         """
         user_ids = vals.get("user_ids", False)
+        shift_fields = self.env["shift.shift"]._fields
+        vals = {k: v for k, v in vals.items() if k in shift_fields}
+
         if user_ids:
             for record in self:
                 if len(record.shift_ids):
@@ -744,10 +747,6 @@ class ShiftTemplate(models.Model):
 
                     # update directly to shifts
                     shifts.with_context(tracking_disable=True).write(vals)
-
-                    # remove user_ids from update_fields,
-                    # keep remain values of other fields
-                    vals.update({"updated_fields": ""})
         return True
 
     def act_template_shift_from_template(self):
