@@ -5,9 +5,21 @@
         <xpath expr="//thead/tr/th[1]" position="before">
             <th class="py-2" />
         </xpath>
+        <xpath expr="//thead/tr/th[1]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//thead/tr/th[1]" position="after">
+            <th class="py-2">Nom</th>
+        </xpath>
+        <xpath expr="//thead/tr/th[2]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
         <xpath expr="//th[hasclass('partner-line-email')]" position="after">
             <th class="py-2">Cooperative Number</th>
             <th class="py-2">Cooperative State</th>
+        </xpath>
+        <xpath expr="//th[hasclass('partner-line-email')]" position="attributes">
+            <attribute name="t-if">False</attribute>
         </xpath>
     </t>
 
@@ -21,6 +33,12 @@
                     class="partner-avatar"
                 />
             </td>
+        </xpath>
+        <xpath expr="//td[hasclass('partner-line-email')]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//td/div[hasclass('partner-line-adress')]" position="attributes">
+            <attribute name="t-if">False</attribute>
         </xpath>
         <xpath expr="//td[hasclass('partner-line-email')]" position="after">
             <td class="partner-line-barcode-base p-1">
