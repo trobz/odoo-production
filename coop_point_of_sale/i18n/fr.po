@@ -106,13 +106,13 @@ msgstr "Contact"
 #. odoo-javascript
 #: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
 msgid "Cooperative Number"
-msgstr "Numéro de coopérateur"
+msgstr "N° Coop"
 
 #. module: coop_point_of_sale
 #. odoo-javascript
 #: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
 msgid "Cooperative State"
-msgstr "État coopératif"
+msgstr "Statut"
 
 #. module: coop_point_of_sale
 #: model_terms:ir.ui.view,arch_db:coop_point_of_sale.view_pos_session_tree_inherit
