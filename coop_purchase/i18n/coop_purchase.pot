@@ -111,6 +111,11 @@ msgid "Discount"
 msgstr ""
 
 #. module: coop_purchase
+#: model_terms:ir.ui.view,arch_db:coop_purchase.view_computed_purchase_order_form_inherit
+msgid "Discount (%)"
+msgstr ""
+
+#. module: coop_purchase
 #: model:ir.model.fields,field_description:coop_purchase.field_res_partner__discount_computation
 #: model:ir.model.fields,field_description:coop_purchase.field_res_users__discount_computation
 msgid "Discount Computation"

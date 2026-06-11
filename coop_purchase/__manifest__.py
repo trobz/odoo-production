@@ -34,6 +34,7 @@
         "views/stock_picking_view.xml",
         "views/stock_quant_views.xml",
         "views/res_partner_view.xml",
+        "views/purchase_compute_order_views.xml",
     ],
     "installable": True,
 }
