@@ -68,6 +68,7 @@
                                 name="partner_id"
                                 domain="[('is_member', '=', True)]"
                                 readonly="state == 'closed'"
+                                context="{'tree_view_ref': 'coop_membership.view_bdm_tree_no_create'}"
                             />
                             <field name="show_partner_state" invisible="1" />
                             <field
