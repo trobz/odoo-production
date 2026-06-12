@@ -48,3 +48,5 @@ coop_shift.access_shift_leave_wizard,access_shift_leave_wizard,coop_shift.model_
 coop_shift.access_add_template_registration_wizard,access_add_template_registration_wizard,coop_shift.model_add_template_registration_wizard,base.group_user,1,1,1,1
 coop_shift.access_report_timesheet,access_report_timesheet,coop_shift.model_report_timesheet,base.group_user,1,1,1,1
 coop_shift.access_report_wallchart,access_report_wallchart,coop_shift.model_report_wallchart,base.group_user,1,1,1,1
+coop_access_ir_ui_view_group_user,coop_access_ir_ui_view_group_user,base.model_ir_ui_view,base.group_user,1,0,0,0
+coop_access_ir_model_fields_user,coop_access_ir_model_fields_user,base.model_ir_model_fields,base.group_user,1,0,0,0
