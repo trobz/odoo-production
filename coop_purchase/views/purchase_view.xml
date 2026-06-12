@@ -80,26 +80,6 @@
         </field>
     </record>
 
-    <record
-        id="purchase_compute_order.action_purchase_order_line_tree"
-        model="ir.actions.act_window"
-    >
-        <field name="view_id" ref="view_purchase_order_line_tree" />
-    </record>
-
-    <record id="view_computed_purchase_order_form_inherit" model="ir.ui.view">
-        <field
-            name="inherit_id"
-            ref="purchase_compute_order.view_computed_purchase_order_form"
-        />
-        <field name="model">computed.purchase.order</field>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='line_ids']/list" position="attributes">
-                <attribute name="limit">500</attribute>
-            </xpath>
-        </field>
-    </record>
-
     <record id="purchase.menu_purchase_rfq" model="ir.ui.menu">
         <field name="sequence" eval="2" />
     </record>

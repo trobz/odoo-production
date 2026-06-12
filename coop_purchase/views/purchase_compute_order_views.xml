@@ -11,6 +11,15 @@
             <field name="discount" position="attributes">
                 <attribute name="string">Discount (%)</attribute>
             </field>
+            <xpath expr="//field[@name='line_ids']/list" position="attributes">
+                <attribute name="limit">500</attribute>
+            </xpath>
         </field>
+    </record>
+    <record
+        id="purchase_compute_order.action_purchase_order_line_tree"
+        model="ir.actions.act_window"
+    >
+        <field name="view_id" ref="view_purchase_order_line_tree" />
     </record>
 </odoo>
