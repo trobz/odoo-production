@@ -2,17 +2,11 @@
 <templates id="template" xml:space="preserve">
 
     <t t-inherit="point_of_sale.PartnerList" t-inherit-mode="extension">
-        <xpath expr="//thead/tr/th[1]" position="before">
-            <th class="py-2" />
-        </xpath>
-        <xpath expr="//thead/tr/th[1]" position="attributes">
-            <attribute name="t-if">False</attribute>
-        </xpath>
-        <xpath expr="//thead/tr/th[1]" position="after">
-            <th class="py-2">Nom</th>
-        </xpath>
         <xpath expr="//thead/tr/th[2]" position="attributes">
             <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//thead/tr/th[1]" position="before">
+            <th class="py-2" />
         </xpath>
         <xpath expr="//th[hasclass('partner-line-email')]" position="after">
             <th class="py-2">Cooperative Number</th>
@@ -24,6 +18,9 @@
     </t>
 
     <t t-inherit="point_of_sale.PartnerLine" t-inherit-mode="extension">
+        <xpath expr="//tr[hasclass('partner-line')]/td[2]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
         <xpath expr="//tr[hasclass('partner-line')]/td[1]" position="before">
             <td class="partner-line-avatar p-1" valign="middle">
                 <img
