@@ -973,7 +973,7 @@ class OrderWeekPlanningLine(models.Model):
                 "product_id": line.product_id.id,
                 "name": line.product_id.description_purchase or line.product_id.name,
                 "product_qty": line.supplier_packaging * line[DAYS_NUMM[day]],
-                "product_packaging_qty": line[DAYS_NUMM[day]],
+                "product_qty_package": line[DAYS_NUMM[day]],
                 "package_qty": line.supplier_packaging,
                 "product_uom": line.product_id.uom_po_id.id,
                 "price_unit": line.price_unit,

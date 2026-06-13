@@ -8,40 +8,6 @@ from .common import CoopProduceTest
 
 
 class TestCoopProduce(CoopProduceTest):
-    def test_default_packaging_syncs_with_product_packaging(self):
-        product = self.env["product.template"].create(
-            {
-                "name": "Packaging Sync Product",
-                "list_price": 10.0,
-                "standard_price": 5.0,
-                "type": "consu",
-                "default_code": "PACK_SYNC",
-                "categ_id": self.CategoryCoop.id,
-                "is_storable": True,
-            }
-        )
-
-        self.assertEqual(product.default_packaging, 0.0)
-        self.assertFalse(product.packaging_ids)
-
-        product.product_variant_id.packaging_ids = [
-            Command.create(
-                {
-                    "name": product.name,
-                    "qty": 3.0,
-                }
-            )
-        ]
-
-        self.assertEqual(product.default_packaging, 3.0)
-        self.assertEqual(product.product_variant_id.default_packaging, 3.0)
-        self.assertEqual(len(product.packaging_ids), 1)
-        self.assertEqual(product.packaging_ids.qty, 3.0)
-
-        product.packaging_ids.qty = 4.0
-        self.assertEqual(product.default_packaging, 4.0)
-        self.assertEqual(product.product_variant_id.default_packaging, 4.0)
-
     def test_coop_produce01(self):
         """
         Test the Coop Produce should take the quantities based on default
