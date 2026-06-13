@@ -205,11 +205,6 @@ msgid "Lines"
 msgstr "Lignes"
 
 #. module: coop_purchase
-#: model:ir.model.fields,field_description:coop_purchase.field_product_supplierinfo__product_packaging_id
-msgid "Packaging"
-msgstr "Conditionnement"
-
-#. module: coop_purchase
 #: model:ir.model.fields,field_description:coop_purchase.field_supplier_info_update__partner_id
 msgid "Partner"
 msgstr "Partenaire"
