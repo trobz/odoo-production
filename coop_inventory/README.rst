@@ -32,9 +32,9 @@ Prevents receiving consumable products
 Usage
 =====
 
--  This module extends the features of purchase_stock module.
--  Overriden the native method to prevent from receiving consumable
-   products after approved purchase orders.
+- This module extends the features of purchase_stock module.
+- Overriden the native method to prevent from receiving consumable
+  products after approved purchase orders.
 
 Bug Tracker
 ===========
@@ -57,8 +57,8 @@ Authors
 Contributors
 ------------
 
--  La Louve <http://www.lalouve.net/>
--  Druidoo <https://www.druidoo.io>
+- La Louve <`http://www.lalouve.net/\\> <http://www.lalouve.net/\>>`__
+- Druidoo <`https://www.druidoo.io\\> <https://www.druidoo.io\>>`__
 
 Maintainers
 -----------
