@@ -3,7 +3,7 @@ This module is automatically installed and configured when installing the edi_pu
 **Package Quantity Calculation:**
 
 When processing purchase orders with a "package" price policy:
-1. The module returns the `product_packaging_qty` instead of the standard quantity during consolidation
+1. The module returns the `product_qty_package` instead of the standard quantity during consolidation
 2. This ensures accurate quantity handling for products sold in packages
 
 **Base Price Configuration:**

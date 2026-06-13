@@ -6,5 +6,5 @@ class PurchaseOrder(models.Model):
 
     def _consolidate_product_qty(self, order_line):
         if order_line.price_policy == "package":
-            return order_line.product_packaging_qty
+            return order_line.product_qty_package
         return super()._consolidate_product_qty(order_line)
