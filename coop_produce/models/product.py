@@ -5,12 +5,6 @@ from odoo.exceptions import UserError
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    default_packaging = fields.Float(
-        compute="_compute_default_packaging",
-        store=True,
-        digits="Product Price",
-    )
-
     @api.constrains("barcode")
     def _check_barcode_uniq(self):
         for product in self:
@@ -40,28 +34,18 @@ class ProductProduct(models.Model):
             for record in self:
                 record.display_name = record.name
 
-    @api.depends("packaging_ids", "packaging_ids.qty", "packaging_ids.sequence")
-    def _compute_default_packaging(self):
-        for product in self:
-            default_packaging = product.packaging_ids.sorted(
-                key=lambda packaging: (packaging.sequence, packaging.id)
-            )[:1].qty
-            product.default_packaging = default_packaging or 0.0
-
-
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     default_packaging = fields.Float(
-        compute="_compute_default_packaging",
-        store=True,
+        default=1.0,
         digits="Product Price",
     )
 
-    @api.depends(
-        "product_variant_ids",
-        "product_variant_ids.default_packaging",
-    )
-    def _compute_default_packaging(self):
+    @api.constrains('default_packaging')
+    def check_default_packaging(self):
         for product in self:
-            product.default_packaging = product.product_variant_id.default_packaging
+            if product.default_packaging <= 0.0:
+                raise UserError(
+                    self.env._("Default packaging of %s must be positive ! " % (
+                        product.name,)))

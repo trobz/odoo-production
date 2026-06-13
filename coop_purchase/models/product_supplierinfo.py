@@ -4,15 +4,6 @@ from odoo import api, fields, models
 class ProductSupplierinfo(models.Model):
     _inherit = "product.supplierinfo"
 
-    product_packaging_id = fields.Many2one(
-        "product.packaging",
-        string="Packaging",
-        domain=(
-            "['|', ('product_id', '=', product_id), "
-            "('product_id.product_tmpl_id', '=', product_tmpl_id)]"
-        ),
-    )
-
     is_product_active = fields.Boolean(
         "Active",
         related="product_tmpl_id.active",
@@ -59,24 +50,6 @@ class ProductSupplierinfo(models.Model):
         digits="Product Price",
         help="The base price to purchase a product",
     )
-
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            if not vals.get("base_price"):
-                if vals.get("price"):
-                    vals["base_price"] = vals["price"]
-                    del vals["price"]
-                else:
-                    vals["base_price"] = 0.0
-        return super().create(vals_list)
-
-    def write(self, vals):
-        if not vals.get("base_price") and vals.get("price"):
-            vals = dict(vals)
-            vals["base_price"] = vals["price"]
-            del vals["price"]
-        return super().write(vals)
 
     def _compute_get_prices(self):
         for psi in self:

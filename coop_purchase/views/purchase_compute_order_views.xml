@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_computed_purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">view.compute.purchase.order.for.inherit.discount</field>
+        <field name="model">computed.purchase.order</field>
+        <field
+            name="inherit_id"
+            ref="purchase_compute_order.view_computed_purchase_order_form"
+        />
+        <field name="arch" type="xml">
+            <field name="discount" position="attributes">
+                <attribute name="string">Discount (%)</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

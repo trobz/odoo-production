@@ -62,7 +62,7 @@
                     groups="analytic.group_analytic_accounting"
                     invisible="1"
                 />
-                <field name="product_packaging_qty" />
+                <field name="product_qty_package" />
                 <field name="package_qty" />
                 <field name="indicative_package" invisible="1" />
                 <field name="product_qty" />

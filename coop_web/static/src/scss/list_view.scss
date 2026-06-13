@@ -1,9 +1,16 @@
 // Wrap text in list view column headers and data cells
 .o_list_table {
-    thead > tr > th:not(.o_list_record_selector) .text-truncate {
-        white-space: normal;
-        text-overflow: clip;
+    thead > tr > th:not(.o_list_record_selector) {
         overflow: visible;
+        white-space: normal;
+
+        .o_column_header,
+        .text-truncate {
+            white-space: normal;
+            text-overflow: clip;
+            overflow: visible;
+            word-break: break-word;
+        }
     }
     .o_data_row:not(.o_selected_row) {
         .o_list_char,

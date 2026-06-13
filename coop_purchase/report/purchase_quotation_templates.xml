@@ -22,7 +22,7 @@
             position="replace"
         >
             <td class="text-end">
-                <span t-field="order_line.product_packaging_qty" />
+                <span t-field="order_line.product_qty_package" />
             </td>
             <td class="text-end">
                 <span t-field="order_line.package_qty" />

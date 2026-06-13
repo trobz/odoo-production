@@ -111,6 +111,11 @@ msgid "Discount"
 msgstr "Remise"
 
 #. module: coop_purchase
+#: model_terms:ir.ui.view,arch_db:coop_purchase.view_computed_purchase_order_form_inherit
+msgid "Discount (%)"
+msgstr "Remise (%)"
+
+#. module: coop_purchase
 #: model:ir.model.fields,field_description:coop_purchase.field_res_partner__discount_computation
 #: model:ir.model.fields,field_description:coop_purchase.field_res_users__discount_computation
 msgid "Discount Computation"
@@ -198,11 +203,6 @@ msgstr "Ligne"
 #: model_terms:ir.ui.view,arch_db:coop_purchase.view_supplier_info_update
 msgid "Lines"
 msgstr "Lignes"
-
-#. module: coop_purchase
-#: model:ir.model.fields,field_description:coop_purchase.field_product_supplierinfo__product_packaging_id
-msgid "Packaging"
-msgstr "Conditionnement"
 
 #. module: coop_purchase
 #: model:ir.model.fields,field_description:coop_purchase.field_supplier_info_update__partner_id

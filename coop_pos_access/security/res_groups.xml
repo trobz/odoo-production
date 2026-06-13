@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="pos_access_control_buttons_group" model="res.groups">
+        <field name="name">PoS Access Control Buttons Group</field>
+    </record>
+</odoo>
