@@ -1,7 +1,9 @@
 # Copyright (C) Nguyen Minh Chien (chien@trobz.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import models
+from datetime import datetime, timedelta
+
+from odoo import fields, models
 
 
 class ShiftShift(models.Model):
@@ -9,12 +11,33 @@ class ShiftShift(models.Model):
 
     def register_makeup_shift(self):
         self.ensure_one()
+        partner = self.env.user.partner_id
+        current_templates = partner.tmpl_reg_line_ids.filtered(
+            lambda r: r.is_current
+        ).mapped("shift_template_id")
+        template = self.shift_template_id
+        if (
+            self.state == "cancel"
+            or not current_templates
+            or template.is_technical
+            or template.shift_type_id.is_ftop
+            or template in current_templates
+        ):
+            return 0, self.env._("This shift is not available for registration.")
+        if self.date_begin <= fields.Datetime.now():
+            return 0, self.env._(
+                "You cannot register for a shift that has already started."
+            )
+        tomorrow_start = fields.Datetime.from_string(
+            (datetime.now() + timedelta(days=1)).strftime("%Y-%m-%d 00:00:00")
+        )
+        if self.date_begin < tomorrow_start:
+            return 0, self.env._("This shift is not available for registration.")
         tickets = self.shift_ticket_ids.filtered(
             lambda t: t.shift_type == "standard" and t.seats_available > 0
         )
         if not tickets:
             return 0, self.env._("No seat is available for this shift.")
-        partner = self.env.user.partner_id
         if not partner.check_makeup_shift():
             english_label = dict(partner.WORKING_STATE_SELECTION).get(
                 partner.cooperative_state, partner.cooperative_state
