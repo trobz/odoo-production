@@ -148,21 +148,25 @@ class ShiftTicket(models.Model):
     def _check_seats_limit(self):
         return True
 
-    @api.constrains('registration_ids', 'seats_max')
+    @api.constrains("registration_ids", "seats_max")
     def _check_seats_availability(self, minimal_availability=0):
         sold_out_tickets = []
         for ticket in self:
-            print (ticket.shift_id, ticket.shift_id.name)
             if ticket.seats_max and ticket.seats_available < minimal_availability:
-                sold_out_tickets.append(self.env._(
-                    '- the ticket "%(ticket_name)s" (%(event_name)s) (Shift ID: %(shift_id)s): Missing %(nb_too_many)i seats.',
-                    ticket_name=ticket.name,
-                    event_name=ticket.shift_id.name,
-                    shift_id=ticket.shift_id.id,
-                    nb_too_many=minimal_availability - ticket.seats_available,
-                ))
+                sold_out_tickets.append(
+                    self.env._(
+                        '- The ticket "%(ticket_name)s" (%(event_name)s) '
+                        "Shift ID: %(shift_id)s): Missing %(nb_too_many)i seats.",
+                        ticket_name=ticket.name,
+                        event_name=ticket.shift_id.name,
+                        shift_id=ticket.shift_id.id,
+                        nb_too_many=minimal_availability - ticket.seats_available,
+                    )
+                )
         if sold_out_tickets:
             raise ValidationError(
-                self.env._('There are not enough seats available for:')
-                                  + '\n%s\n' % '\n'.join(sold_out_tickets)
+                self.env._(
+                    "There are not enough seats available for:\n%s\n",
+                    "\n".join(sold_out_tickets),
                 )
+            ) from None

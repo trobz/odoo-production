@@ -182,6 +182,12 @@ msgid "Month (Search)"
 msgstr ""
 
 #. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
+msgid "Name"
+msgstr ""
+
+#. module: coop_point_of_sale
 #: model_terms:ir.ui.view,arch_db:coop_point_of_sale.product_template_form_view_inherit
 msgid "No"
 msgstr ""

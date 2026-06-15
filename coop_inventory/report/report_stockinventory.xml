@@ -6,10 +6,13 @@
                 name="t-call"
             >coop_inventory.external_layout_standard_inventory</attribute>
         </xpath>
+        <xpath expr="//div[hasclass('page')]/h2" position="attributes">
+            <attribute name="style">font-size: 18px;</attribute>
+        </xpath>
 
         <xpath expr="//div[hasclass('page')]/table[1]" position="attributes">
             <attribute name="class">table table-bordered</attribute>
-            <attribute name="style">font-size: 15px</attribute>
+            <attribute name="style">font-size: 11px</attribute>
         </xpath>
 
         <!-- Add G.F. Qty and UG. Qty fields -->
@@ -49,7 +52,7 @@
                         <span t-field="line.product_id.default_code" />
                     </td>
                     <td>
-                        <span t-field="line.product_id.name" />
+                        <span class="text-truncate" t-field="line.product_id.name" />
                     </td>
                     <td class="text-right" />
                     <td class="text-right" />
