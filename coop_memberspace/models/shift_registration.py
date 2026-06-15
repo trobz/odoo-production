@@ -74,6 +74,22 @@ class ShiftRegistration(models.Model):
                     + "Destination Shift Registration must be different."
                 )
             )
+        current_partner = self.env.user.partner_id
+        if src_registration_id:
+            src_reg = self.browse(src_registration_id)
+            if src_reg.partner_id != current_partner:
+                raise UserError(
+                    self.env._("You can only create proposals for your own shift registrations.")
+                )
+        des_reg = self.browse(des_registration_id)
+        if des_reg.partner_id == current_partner:
+            raise UserError(
+                self.env._("You cannot create a proposal with your own registration as destination.")
+            )
+        if des_reg.exchange_state != "in_progress":
+            raise UserError(
+                self.env._("The destination shift registration is not available for exchange.")
+            )
         proposal = self.env["proposal"].create(
             {
                 "src_shift_id": src_shift_id,
@@ -86,7 +102,12 @@ class ShiftRegistration(models.Model):
         proposal.sudo().with_context(user_partner=user_partner).do_proposal()
 
     def remove_shift_regis_from_market(self):
+        current_partner = self.env.user.partner_id
         for record in self:
+            if record.partner_id != current_partner:
+                raise UserError(
+                    self.env._("You can only modify your own shift registrations.")
+                )
             proposals = self.env["proposal"].search(
                 [
                     "|",
@@ -107,7 +128,12 @@ class ShiftRegistration(models.Model):
             record.write({"exchange_state": exchange_state})
 
     def add_shift_regis_to_market(self):
+        current_partner = self.env.user.partner_id
         for record in self:
+            if record.partner_id != current_partner:
+                raise UserError(
+                    self.env._("You can only modify your own shift registrations.")
+                )
             if not record.check_exchangable():
                 icp_sudo = self.env["ir.config_parameter"].sudo()
                 shift_exchange_duration = int(
@@ -275,8 +301,13 @@ class ShiftRegistration(models.Model):
         }
 
     def do_cancel_ftop_shift(self):
+        current_partner = self.env.user.partner_id
         mail_template = self.env.ref("coop_memberspace.shift_registration_cancel_email")
         for registration in self:
+            if registration.partner_id != current_partner:
+                raise UserError(
+                    self.env._("You can only cancel your own shift registrations.")
+                )
             if registration.check_cancellable_ftop_shift():
                 registration.button_reg_cancel()
                 mail_template.send_mail(registration.id)

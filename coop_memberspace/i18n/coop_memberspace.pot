@@ -454,6 +454,14 @@ msgid "Confirm"
 msgstr ""
 
 #. module: coop_memberspace
+#: model:mail.template,subject:coop_memberspace.inform_exchange_done
+msgid ""
+"Confirmation of exchange of your service from {{ "
+"user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B"
+" %Y'])[0].lower() }}"
+msgstr ""
+
+#. module: coop_memberspace
 #: model:ir.model,name:coop_memberspace.model_res_partner
 msgid "Contact"
 msgstr ""
@@ -744,6 +752,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.mywork_ftop
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.programmer_un_extra
 msgid "Inscription"
+msgstr ""
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/res_partner.py:0
+msgid "Invalid field: %s"
 msgstr ""
 
 #. module: coop_memberspace
@@ -1284,6 +1298,12 @@ msgid "Shift replacement list contains"
 msgstr ""
 
 #. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_res_partner__show_email_receipt
+#: model:ir.model.fields,field_description:coop_memberspace.field_res_users__show_email_receipt
+msgid "Show Email Receipt"
+msgstr ""
+
+#. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_res_company__show_advance_service
 #: model:ir.model.fields,field_description:coop_memberspace.field_res_config_settings__show_advance_service
 msgid "Show schedule an advance service"
@@ -1348,6 +1368,12 @@ msgid "Team"
 msgstr ""
 
 #. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid "The destination shift registration is not available for exchange."
+msgstr ""
+
+#. module: coop_memberspace
 #: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__alias_id
 msgid ""
 "The email address associated with this alias.            New emails received"
@@ -1390,6 +1416,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/coop_memberspace/models/proposal.py:0
 msgid "The source shift registration not ready on the market."
+msgstr ""
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_shift.py:0
+msgid "This shift is not available for registration."
 msgstr ""
 
 #. module: coop_memberspace
@@ -1508,6 +1540,12 @@ msgid "You are about to cancel your participation to the shift"
 msgstr ""
 
 #. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_shift.py:0
+msgid "You are already registered for this shift."
+msgstr ""
+
+#. module: coop_memberspace
 #: model:mail.template,subject:coop_memberspace.email_inform_cannot_send_to_memberspace_alias
 msgid "You are not authorized to send messages to this alias"
 msgstr ""
@@ -1531,9 +1569,34 @@ msgstr ""
 #. module: coop_memberspace
 #. odoo-python
 #: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid "You can only cancel your own shift registrations."
+msgstr ""
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid "You can only create proposals for your own shift registrations."
+msgstr ""
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid "You can only modify your own shift registrations."
+msgstr ""
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
 msgid ""
 "You cannot cancel the shift within {} hours before the beginning of the "
 "shift"
+msgstr ""
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid ""
+"You cannot create a proposal with your own registration as destination."
 msgstr ""
 
 #. module: coop_memberspace
