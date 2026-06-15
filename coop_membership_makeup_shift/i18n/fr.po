@@ -173,6 +173,18 @@ msgid "Show schedule a make-up shift"
 msgstr "Afficher planifier un service de rattrapage"
 
 #. module: coop_membership_makeup_shift
+#. odoo-python
+#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:0
+msgid "This shift is not available for registration."
+msgstr "Ce créneau n'est pas disponible pour l'inscription"
+
+#. module: coop_membership_makeup_shift
+#. odoo-python
+#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:0
+msgid "Warning! This member is already registered on this shift."
+msgstr "Attention ! Ce membre est déjà inscrit sur ce service."
+
+#. module: coop_membership_makeup_shift
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_modal_uneligible
 msgid ""
 "Warning! You can't register to a make-up shift because your actual status is"
@@ -197,3 +209,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:coop_membership_makeup_shift.programmer_makeup_shift
 msgid "Week"
 msgstr "Semaine"
+
+#. module: coop_membership_makeup_shift
+#. odoo-python
+#: code:addons/coop_membership_makeup_shift/models/shift_shift.py:0
+msgid "You cannot register for a shift that has already started."
+msgstr "Vous ne pouvez pas vous inscrire à un créneau qui a déjà commencé."
