@@ -7,9 +7,7 @@ patch(ProductScreen.prototype, {
         const words = unaccent(searchWord.toLowerCase(), false);
         const filteredProducts = super.getProductsBySearchWord(searchWord);
         const numberString = words.replace(/[+\s()-]/g, "");
-        const isSearchWordNumber =
-            numberString.length >= 5 && /^[0-9]+$/.test(numberString);
-
+        const isSearchWordNumber = /^[0-9]+$/.test(numberString);
         if (isSearchWordNumber) {
             return filteredProducts.filter((product) => product.exactMatch(words));
         }
