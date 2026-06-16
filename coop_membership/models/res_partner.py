@@ -180,7 +180,6 @@ class ResPartner(models.Model):
     )
 
     event_event_id = fields.Many2one("event.event")
-    display_name = fields.Char(compute="_compute_display_name", store=True, index=True)
 
     def get_working_state_selection(self):
         return EXTRA_COOPERATIVE_STATE_SELECTION
@@ -572,7 +571,7 @@ class ResPartner(models.Model):
                 domain,
             )
             for barcode_base_clause in barcode_base_clauses:
-                barcode_base_clause[0] = "display_name"
+                barcode_base_clause[0] = "name"
                 barcode_base_clause[1] = "ilike"
         return super()._search(domain, *args, **kwargs)
 
@@ -584,7 +583,7 @@ class ResPartner(models.Model):
                 domain,
             )
             for barcode_base_clause in barcode_base_clauses:
-                barcode_base_clause[0] = "display_name"
+                barcode_base_clause[0] = "name"
                 barcode_base_clause[1] = "ilike"
         return super().read_group(domain, *args, **kwargs)
 
