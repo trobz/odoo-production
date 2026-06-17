@@ -118,56 +118,67 @@ class ProductTemplate(models.Model):
     )
     alternative_base_price_sale = fields.Float(
         string="Alternative Base Price for Sale Price",
+        digits="Product Price Coefficients",
         help="This alternative base price will be used instead of the Base"
         " Price, if defined.",
     )
     alternative_base_price_standard = fields.Float(
         string="Alternative Base Price for Standard Price",
+        digits="Product Price Coefficients",
         help="This alternative base price will be used instead of the Base"
         " Price, if defined.",
     )
     coeff1_inter = fields.Float(
         string="With Coefficient 1",
         compute="_compute_coeff1_inter",
+        digits="Product Price Coefficients",
         store=True,
     )
     coeff2_inter = fields.Float(
         string="With Coefficient 2",
+        digits="Product Price Coefficients",
         compute="_compute_coeff2_inter",
         store=True,
     )
     coeff3_inter = fields.Float(
         string="With Coefficient 3",
+        digits="Product Price Coefficients",
         compute="_compute_coeff3_inter",
         store=True,
     )
     coeff4_inter = fields.Float(
         string="With Coefficient 4",
+        digits="Product Price Coefficients",
         compute="_compute_coeff4_inter",
         store=True,
     )
     coeff5_inter = fields.Float(
         string="With Coefficient 5",
+        digits="Product Price Coefficients",
         compute="_compute_coeff5_inter",
         store=True,
     )
     coeff6_inter = fields.Float(
         string="With Coefficient 6",
+        digits="Product Price Coefficients",
         compute="_compute_coeff6_inter",
         store=True,
     )
     coeff7_inter = fields.Float(
         string="With Coefficient 7",
+        digits="Product Price Coefficients",
         compute="_compute_coeff7_inter",
         store=True,
     )
     coeff8_inter = fields.Float(
         string="With Coefficient 8",
+        digits="Product Price Coefficients",
         compute="_compute_coeff8_inter",
         store=True,
     )
     coeff9_inter = fields.Float(
         string="With Coefficient 9",
+        digits="Product Price Coefficients",
         compute="_compute_coeff9_inter",
         store=True,
     )
@@ -176,61 +187,61 @@ class ProductTemplate(models.Model):
         string="With Supplier Discount Coefficient",
         compute="_compute_coeff1_inter",
         store=True,
-        digits="Product Sale Price",
+        digits="Product Price Coefficients",
     )
     coeff2_inter_sp = fields.Float(
         string="With Shipping Coefficient",
         compute="_compute_coeff2_inter",
         store=True,
-        digits="Product Sale Price",
+        digits="Product Price Coefficients",
     )
     coeff3_inter_sp = fields.Float(
         string="With Loss Coefficient",
         compute="_compute_coeff3_inter",
         store=True,
-        digits="Product Sale Price",
+        digits="Product Price Coefficients",
     )
     coeff4_inter_sp = fields.Float(
         string="With Coefficient 4 (Cost)",
         compute="_compute_coeff4_inter",
         store=True,
-        digits="Product Sale Price",
+        digits="Product Price Coefficients",
     )
     coeff5_inter_sp = fields.Float(
         string="With Coefficient 5 (Cost)",
         compute="_compute_coeff5_inter",
         store=True,
-        digits="Product Sale Price",
+        digits="Product Price Coefficients",
     )
     coeff6_inter_sp = fields.Float(
         string="With Coefficient 6 (Cost)",
         compute="_compute_coeff6_inter",
         store=True,
-        digits="Product Sale Price",
+        digits="Product Price Coefficients",
     )
     coeff7_inter_sp = fields.Float(
         string="With Coefficient 7 (Cost)",
         compute="_compute_coeff7_inter",
         store=True,
-        digits="Product Sale Price",
+        digits="Product Price Coefficients",
     )
     coeff8_inter_sp = fields.Float(
         string="With Coefficient 8 (Cost)",
         compute="_compute_coeff8_inter",
         store=True,
-        digits="Product Sale Price",
+        digits="Product Price Coefficients",
     )
     coeff9_inter_sp = fields.Float(
         string="With Margin Coefficient",
         compute="_compute_coeff9_inter",
         store=True,
-        digits="Product Sale Price",
+        digits="Product Price Coefficients",
     )
     theoritical_price = fields.Float(
         string="Theoritical Price VAT Incl.",
         compute="_compute_theoritical_price",
         store=True,
-        digits="Product Sale Price",
+        digits="Product Price Coefficients",
     )
     has_theoritical_price_different = fields.Boolean(
         store=True,
