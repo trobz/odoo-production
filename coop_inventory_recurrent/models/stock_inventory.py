@@ -76,6 +76,7 @@ class StockInventory(models.Model):
             [
                 ("categ_id", "=", self.category_id.id),
                 ("id", "not in", existing_product_ids),
+                ("is_storable", "=", "True"),
             ]
         )
         if not missing_products:
