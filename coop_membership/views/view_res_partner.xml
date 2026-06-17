@@ -299,6 +299,11 @@
                     separator=","
                     add="coop_membership.group_membership_access_user"
                 />
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="!coop_membership.group_membership_bdm_lecture"
+                />
                 <attribute name="required">is_member</attribute>
             </field>
 
@@ -1007,12 +1012,22 @@
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
                 />
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="!coop_membership.group_membership_bdm_lecture"
+                />
             </field>
             <field name="street2" position="attributes">
                 <attribute
                     name="groups"
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
+                />
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="!coop_membership.group_membership_bdm_lecture"
                 />
             </field>
             <field name="city" position="attributes">
@@ -1021,12 +1036,22 @@
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
                 />
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="!coop_membership.group_membership_bdm_lecture"
+                />
             </field>
             <field name="state_id" position="attributes">
                 <attribute
                     name="groups"
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
+                />
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="!coop_membership.group_membership_bdm_lecture"
                 />
             </field>
             <field name="zip" position="attributes">
@@ -1035,12 +1060,22 @@
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
                 />
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="!coop_membership.group_membership_bdm_lecture"
+                />
             </field>
             <field name="country_id" position="attributes">
                 <attribute
                     name="groups"
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
+                />
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="!coop_membership.group_membership_bdm_lecture"
                 />
             </field>
             <field name="function" position="attributes">
@@ -1049,6 +1084,11 @@
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
                 />
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="!coop_membership.group_membership_bdm_lecture"
+                />
             </field>
             <field name="phone" position="attributes">
                 <attribute
@@ -1056,12 +1096,22 @@
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
                 />
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="!coop_membership.group_membership_bdm_lecture"
+                />
             </field>
             <field name="mobile" position="attributes">
                 <attribute
                     name="groups"
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
+                />
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="!coop_membership.group_membership_bdm_lecture"
                 />
             </field>
             <field name="birthdate_date" position="attributes">
@@ -1093,13 +1143,64 @@
                 </group>
             </group>
 
-            <field name="mobile" position="after">
+            <field name="category_id" position="before">
                 <field
                     name="opt_out"
                     string="Mailing Opt-Out"
                     groups="coop_membership.group_membership_bdm_lecture"
                 />
             </field>
+
+            <xpath expr="//field[@name='email'][@widget='email']" position="attributes">
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="!coop_membership.group_membership_bdm_lecture"
+                />
+            </xpath>
+            <xpath expr="//field[@name='child_ids']/kanban" position="attributes">
+                <attribute name="create">false</attribute>
+            </xpath>
+            <xpath
+                expr="//kanban/templates//field[@name='email']"
+                position="attributes"
+            >
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="!coop_membership.group_membership_bdm_lecture"
+                />
+            </xpath>
+            <xpath
+                expr="//kanban/templates//field[@name='phone']/.."
+                position="attributes"
+            >
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="!coop_membership.group_membership_bdm_lecture"
+                />
+            </xpath>
+            <xpath
+                expr="//kanban/templates//field[@name='mobile']/.."
+                position="attributes"
+            >
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="!coop_membership.group_membership_bdm_lecture"
+                />
+            </xpath>
+            <xpath
+                expr="//kanban/templates//field[@name='zip']/../.."
+                position="attributes"
+            >
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="!coop_membership.group_membership_bdm_lecture"
+                />
+            </xpath>
         </field>
     </record>
 

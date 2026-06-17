@@ -216,7 +216,7 @@
         name="Attendance Entry"
         parent="coop_shift.shift_menu"
         sequence="9"
-        groups="coop_shift.group_shift_user,coop_membership.group_membership_access_user,coop_membership.group_membership_bdm_presence,coop_membership.group_membership_bdm_saisie"
+        groups="coop_shift.group_shift_user,coop_membership.group_membership_bdm_presence,coop_membership.group_membership_bdm_saisie"
     />
 
     <menuitem
