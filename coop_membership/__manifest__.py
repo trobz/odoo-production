@@ -27,6 +27,7 @@
         "partner_contact_birthdate",
         "partner_contact_gender",
         "sms",
+        "spreadsheet_dashboard",
         # "web_widget_image_webcam_portrait",
     ],
     "data": [

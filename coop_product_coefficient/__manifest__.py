@@ -25,6 +25,7 @@
         "data/ir_cron.xml",
         "data/sale_config_settings.xml",
         "data/product_data.xml",
+        "data/decimal_precision.xml",
     ],
     "demo": [
         "demo/res_groups.xml",
