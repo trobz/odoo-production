@@ -131,14 +131,14 @@ class ResPartner(models.Model):
     )
 
     working_state = fields.Selection(
-        selection=lambda self: self.get_working_state_selection(),
+        selection=WORKING_STATE_SELECTION,
         help="This state depends on the" " shifts realized by the partner.",
         compute="_compute_working_state",
         compute_sudo=True,
         store=True,
     )
     cooperative_state = fields.Selection(
-        selection=lambda self: self.get_cooperative_state_selection(),
+        selection=WORKING_STATE_SELECTION,
         store=True,
         compute="_compute_cooperative_state",
         help="This state" " depends on the 'Working State' and extra custom settings.",
