@@ -52,7 +52,7 @@ msgstr ""
 #. module: coop_shift
 #: model_terms:ir.ui.view,arch_db:coop_shift.report_timesheet
 msgid "<b>**--- Vacations ---**</b>"
-msgstr "<b>**--- Conges ---**</b>"
+msgstr "<b>**--- Vacations ---**</b>"
 
 #. module: coop_shift
 #: model_terms:ir.ui.view,arch_db:coop_shift.report_timesheet
