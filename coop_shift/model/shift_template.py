@@ -966,6 +966,8 @@ class ShiftTemplate(models.Model):
     def get_recurrent_dates(self, after=None, before=None):
         # TODO: this should ensure_one.
         for template in self:
+            if not template.rrule:
+                return []
             start = fields.Datetime.from_string(after or template.start_date)
             stop = fields.Datetime.from_string(before or template.final_date)
             cycle_interval = max(template.interval or 0, 1)
