@@ -7,45 +7,57 @@
             >coop_inventory.external_layout_standard_inventory</attribute>
         </xpath>
         <xpath expr="//div[hasclass('page')]/h2" position="attributes">
-            <attribute name="style">font-size: 18px;</attribute>
+            <attribute name="style">font-size: 18px;font-weight: 700</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]/br" position="attributes">
+            <attribute name="t-if">False</attribute>
         </xpath>
 
-        <xpath expr="//div[hasclass('page')]/table[1]" position="attributes">
-            <attribute name="class">table table-bordered</attribute>
+        <xpath
+            expr="//div[hasclass('page')]/table[hasclass('table-borderless')]"
+            position="attributes"
+        >
+            <attribute name="class">table table-bordered main-table</attribute>
             <attribute name="style">font-size: 11px</attribute>
         </xpath>
 
         <!-- Add G.F. Qty and UG. Qty fields -->
-        <xpath expr="//div[hasclass('page')]/table[1]/thead/tr" position="replace">
+        <xpath
+            expr="//div[hasclass('page')]/table[hasclass('main-table')]/thead/tr"
+            position="replace"
+        >
             <tr>
-                <th class="text-right">
+                <th class="text-end" style="width: 40px;font-weight:700;">
                     <strong>Package Qty</strong>
                 </th>
-                <th>
+                <th style="font-weight:700;width: 70px;">
                     <strong>Internal Reference</strong>
                 </th>
-                <th>
+                <th style="font-weight:700;">
                     <strong>Product</strong>
                 </th>
-                <th class="text-right">
+                <th class="text-end" style="width: 45px;font-weight:700;">
                     <strong>G.F. Qty</strong>
                 </th>
-                <th class="text-right">
+                <th class="text-end" style="width: 40px;font-weight:700;">
                     <strong>UG. Qty</strong>
                 </th>
-                <th class="text-center">
+                <th class="text-end" style="width: 60px;font-weight:700;">
                     <strong>Total</strong>
                 </th>
-                <th class="text-right">
+                <th class="text-end" style="width: 60px;font-weight:700;">
                     <strong>Theoretical Qty</strong>
                 </th>
             </tr>
         </xpath>
 
-        <xpath expr="//div[hasclass('page')]/table[1]/tbody" position="replace">
+        <xpath
+            expr="//div[hasclass('page')]/table[hasclass('main-table')]/tbody"
+            position="replace"
+        >
             <tbody>
                 <tr t-foreach="docs.sorted(key=lambda l: l.product_name)" t-as="line">
-                    <td class="text-right">
+                    <td class="text-end">
                         <span t-field="line.package_qty" />
                     </td>
                     <td>
@@ -54,19 +66,43 @@
                     <td>
                         <span class="text-truncate" t-field="line.product_id.name" />
                     </td>
-                    <td class="text-right" />
-                    <td class="text-right" />
-                    <td class="text-right" />
-                    <td class="text-right">
-                        <span class="text-right" t-field="line.quantity" />
+                    <td class="text-end" />
+                    <td class="text-end" />
+                    <td class="text-end" />
+                    <td class="text-end">
+                        <span class="text-end" t-field="line.quantity" />
                         <span
-                            class="text-right"
+                            class="text-end"
                             t-field="line.product_uom_id"
-                            groups="product.group_uom"
+                            groups="uom.group_uom"
                         />
                     </td>
                 </tr>
             </tbody>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]/h2" position="after">
+            <table class="table table-sm" style="font-size: 14px">
+                <thead>
+                    <tr>
+                        <th>
+                            <strong>Date</strong>
+                        </th>
+                        <th style="width: 60%;">
+                            <strong>Inventoried by:</strong>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <span
+                                t-out="context_timestamp(report_date).strftime('%Y-%m-%d %H:%M:%S')"
+                            />
+                        </td>
+                        <td />
+                    </tr>
+                </tbody>
+            </table>
         </xpath>
     </template>
 
@@ -95,7 +131,7 @@
                     />
                 </div>
                 <div
-                    class="col-9 text-right"
+                    class="col-9 text-end"
                     style="margin-top:22px;"
                     t-field="company.report_header"
                     name="moto"

@@ -43,7 +43,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        <span t-out="time.strftime('%d/%m/%Y')" />
+                                        <span t-out="docs and context_timestamp(docs[0].date).strftime('%Y-%m-%d %H:%M:%S')" />
                                     </td>
                                     <td />
                                 </tr>
@@ -55,7 +55,7 @@
                         >
                             <thead>
                                 <tr>
-                                    <th class="text-right" style="width: 40px;">
+                                    <th class="text-end" style="width: 40px;">
                                         <strong>Package Qty</strong>
                                     </th>
                                     <th style="width: 70px;">
@@ -64,16 +64,16 @@
                                     <th>
                                         <strong>Product</strong>
                                     </th>
-                                    <th class="text-right" style="width: 45px;">
+                                    <th class="text-end" style="width: 45px;">
                                         <strong>G.F. Qty</strong>
                                     </th>
-                                    <th class="text-right" style="width: 40px;">
+                                    <th class="text-end" style="width: 40px;">
                                         <strong>UG. Qty</strong>
                                     </th>
-                                    <th class="text-right" style="width: 60px;">
+                                    <th class="text-end" style="width: 60px;">
                                         <strong>Total</strong>
                                     </th>
-                                    <th class="text-right" style="width: 60px;">
+                                    <th class="text-end" style="width: 60px;">
                                         <strong>Theoretical Qty</strong>
                                     </th>
                                 </tr>
@@ -83,7 +83,7 @@
                                     t-foreach="quants.sorted(key=lambda l: l.product_name)"
                                     t-as="line"
                                 >
-                                    <td class="text-right">
+                                    <td class="text-end">
                                         <span t-field="line.package_qty" />
                                     </td>
                                     <td>
@@ -94,18 +94,18 @@
                                     >
                                         <span t-field="line.product_id.name" />
                                     </td>
-                                    <td class="text-right" />
-                                    <td class="text-right" />
-                                    <td class="text-right" />
-                                    <td class="text-right">
+                                    <td class="text-end" />
+                                    <td class="text-end" />
+                                    <td class="text-end" />
+                                    <td class="text-end">
                                         <span
-                                            class="text-right"
+                                            class="text-end"
                                             t-field="line.quantity"
                                         />
                                         <span
-                                            class="text-right"
+                                            class="text-end"
                                             t-field="line.product_uom_id"
-                                            groups="product.group_uom"
+                                            groups="uom.group_uom"
                                         />
                                     </td>
                                 </tr>
@@ -131,6 +131,7 @@
             name="report_file"
         >coop_inventory_recurrent.report_inventory_new_layout</field>
         <field name="print_report_name">'Inventory - %s' % object.name</field>
+        <field name="paperformat_id" ref="coop_inventory.paperformat_inventory_adjust"></field>
     </record>
 
     <template
@@ -138,8 +139,8 @@
         inherit_id="coop_inventory.external_layout_standard_inventory"
         priority="99"
     >
-        <xpath expr="//t[@t-call='web.address_layout']" position="replace">
-            <t />
+        <xpath expr="//t[@t-call='web.address_layout']" position="attributes">
+            <attribute name="t-if">False</attribute>
         </xpath>
     </template>
 </odoo>

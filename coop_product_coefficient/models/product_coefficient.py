@@ -18,7 +18,9 @@ class ProductCoefficient(models.Model):
     ]
 
     name = fields.Char(required=True)
-    value = fields.Float()
+    value = fields.Float(
+        digits="Product Price Coefficients",
+    )
     operation_type = fields.Selection(
         selection=_SELECT_OPERATION_TYPE,
         required=True,
