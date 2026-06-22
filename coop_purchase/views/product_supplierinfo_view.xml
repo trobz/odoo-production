@@ -109,10 +109,10 @@
 
     <record model="ir.ui.view" id="product_template_form_view_inherit">
         <field name="model">product.template</field>
-        <field name="inherit_id" ref="product.product_template_form_view" />
+        <field name="inherit_id" ref="purchase.view_product_supplier_inherit" />
         <field name="arch" type="xml">
             <xpath expr="//page[@name='purchase']" position="attributes">
-                <attribute name="attrs" />
+                <attribute name="invisible">type == 'combo'</attribute>
             </xpath>
         </field>
     </record>
