@@ -1,4 +1,5 @@
 from . import account_move
+from . import ir_ui_menu
 from . import barcode_rule
 from . import capital_fundraising_category
 from . import event

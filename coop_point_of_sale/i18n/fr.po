@@ -31,7 +31,7 @@ msgstr "Actif"
 #. odoo-javascript
 #: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
 msgid "Alert"
-msgstr "Alerte"
+msgstr "En alerte"
 
 #. module: coop_point_of_sale
 #: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_config__enable_popup_verify_payment
@@ -149,7 +149,7 @@ msgstr "Jour (Recherche)"
 #. odoo-javascript
 #: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
 msgid "Delayed"
-msgstr "Délai"
+msgstr "En retard"
 
 #. module: coop_point_of_sale
 #: model_terms:ir.ui.view,arch_db:coop_point_of_sale.pos_config_view_form_pos_inherit
@@ -199,7 +199,7 @@ msgstr "Non"
 #. odoo-javascript
 #: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
 msgid "Not concerned"
-msgstr "Non concerné"
+msgstr "Non concerné(e)"
 
 #. module: coop_point_of_sale
 #. odoo-javascript
@@ -390,13 +390,13 @@ msgstr "Impayé"
 #. odoo-javascript
 #: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
 msgid "Unsubscribed"
-msgstr "Désinscrit"
+msgstr "Désabonné"
 
 #. module: coop_point_of_sale
 #. odoo-javascript
 #: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
 msgid "Up to date"
-msgstr "A jour"
+msgstr "À jour"
 
 #. module: coop_point_of_sale
 #. odoo-javascript

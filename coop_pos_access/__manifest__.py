@@ -10,7 +10,6 @@
     ],
     "data": [
         "security/res_groups.xml",
-        "security/ir.model.access.csv",
     ],
     "assets": {
         "point_of_sale._assets_pos": [

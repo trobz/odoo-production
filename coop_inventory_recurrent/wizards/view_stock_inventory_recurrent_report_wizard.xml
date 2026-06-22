@@ -8,8 +8,7 @@
                 <group>
                     <field
                         name="inventory_ids"
-                        nolabel="1"
-                        context="{'list_view_ref': 'stock_inventory.view_stock_inventory_list'}"
+                        context="{'tree_view_ref': 'stock_inventory.view_stock_inventory_list'}"
                     />
                 </group>
                 <footer>
