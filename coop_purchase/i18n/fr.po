@@ -233,7 +233,7 @@ msgstr "Ligne de commande"
 #. module: coop_purchase
 #: model:ir.model.fields,field_description:coop_purchase.field_product_supplierinfo__base_price
 msgid "Price"
-msgstr "Prix de base"
+msgstr "Prix d'achat"
 
 #. module: coop_purchase
 #: model:ir.model.fields,field_description:coop_purchase.field_supplier_info_update_line__price_policy
