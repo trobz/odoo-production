@@ -166,14 +166,14 @@
                 <field name="is_related_shift_ftop" column_invisible="1" />
                 <button
                     name="button_reg_close"
-                    string="Attended the Shift"
+                    title="Attended the Shift"
                     type="object"
                     icon="fa-thumbs-o-up fa-lg"
                     invisible="state != 'open' or is_related_shift_ftop == True"
                 />
                 <button
                     name="confirm_registration"
-                    string="Confirm Registration"
+                    title="Confirm Registration"
                     type="object"
                     icon="fa-check fa-lg"
                     groups="coop_shift.group_shift_manager"
@@ -181,14 +181,14 @@
                 />
                 <button
                     name="button_reg_absent"
-                    string="Absent"
+                    title="Absent"
                     type="object"
                     icon="fa-user-secret fa-lg"
                     invisible="state != 'open' or is_related_shift_ftop == True"
                 />
                 <button
                     name="button_reg_cancel"
-                    string="Cancel Registration"
+                    title="Cancel Registration"
                     type="object"
                     icon="fa-times-circle fa-lg"
                     groups="coop_shift.group_shift_manager"
@@ -196,14 +196,14 @@
                 />
                 <button
                     name="button_reg_excused"
-                    string="Excused"
+                    title="Excused"
                     type="object"
                     icon="fa-hand-o-right fa-lg"
                     invisible="state != 'open' or is_related_shift_ftop == True"
                 />
                 <button
                     name="do_draft"
-                    string="Set To Unconfirmed"
+                    title="Set To Unconfirmed"
                     type="object"
                     icon="fa-backward fa-lg"
                     groups="coop_shift.group_shift_manager"
@@ -211,9 +211,9 @@
                 />
                 <button
                     name="%(coop_shift.action_replace_registration)d"
+                    title="Replace Member"
                     type="action"
                     icon="fa-users fa-lg"
-                    string="Replace Member"
                     invisible="state != 'open' or is_related_shift_ftop == True"
                 />
             </list>
