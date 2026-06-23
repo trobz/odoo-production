@@ -1341,8 +1341,10 @@ msgstr "Âge"
 #. module: coop_membership
 #. odoo-python
 #: code:addons/coop_membership/models/shift_change_team.py:0
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__cooperative_state__alert
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__working_state__alert
 msgid "Alert"
-msgstr "En alerte"
+msgstr "Alerte"
 
 #. module: coop_membership
 #: model:ir.model.fields,field_description:coop_membership.field_shift_leave__alert_message
@@ -1569,6 +1571,8 @@ msgstr "Règle de code-barres"
 #. module: coop_membership
 #. odoo-python
 #: code:addons/coop_membership/models/shift_change_team.py:0
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__cooperative_state__blocked
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__working_state__blocked
 msgid "Blocked"
 msgstr "Bloqué(e)"
 
@@ -2075,6 +2079,8 @@ msgstr "Durée par défaut (en jours)"
 #. module: coop_membership
 #. odoo-python
 #: code:addons/coop_membership/models/shift_change_team.py:0
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__cooperative_state__delay
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__working_state__delay
 msgid "Delay"
 msgstr "Délai"
 
@@ -2246,6 +2252,8 @@ msgstr ""
 #. module: coop_membership
 #. odoo-python
 #: code:addons/coop_membership/models/shift_change_team.py:0
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__cooperative_state__exempted
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__working_state__exempted
 msgid "Exempted"
 msgstr "Exempté"
 
@@ -3063,6 +3071,8 @@ msgstr ""
 #. module: coop_membership
 #. odoo-python
 #: code:addons/coop_membership/models/shift_change_team.py:0
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__cooperative_state__not_concerned
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__working_state__not_concerned
 msgid "Not Concerned"
 msgstr "Non concerné"
 
@@ -3163,6 +3173,12 @@ msgstr ""
 #: code:addons/coop_membership/models/event_registration.py:0
 msgid "October"
 msgstr "octobre"
+
+#. module: coop_membership
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__cooperative_state__vacation
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__working_state__vacation
+msgid "On Vacation"
+msgstr "En congés"
 
 #. module: coop_membership
 #: model:ir.model.fields.selection,name:coop_membership.selection__shift_shift__state_in_holiday__open
@@ -3905,6 +3921,8 @@ msgstr ""
 #. module: coop_membership
 #. odoo-python
 #: code:addons/coop_membership/models/shift_change_team.py:0
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__cooperative_state__suspended
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__working_state__suspended
 msgid "Suspended"
 msgstr "Suspendu(e)"
 
@@ -4133,7 +4151,15 @@ msgstr ""
 "personnalisés supplémentaires."
 
 #. module: coop_membership
+#: model:ir.model.fields,help:coop_membership.field_res_partner__working_state
+#: model:ir.model.fields,help:coop_membership.field_res_users__working_state
+msgid "This state depends on the shifts realized by the partner."
+msgstr "Cet état est calculé sur la base des présences du coopérateur."
+
+#. module: coop_membership
+#: model:ir.model.fields,help:coop_membership.field_res_partner__barcode_base
 #: model:ir.model.fields,help:coop_membership.field_res_partner__parent_member_num
+#: model:ir.model.fields,help:coop_membership.field_res_users__barcode_base
 #: model:ir.model.fields,help:coop_membership.field_res_users__parent_member_num
 msgid ""
 "This value is used to generate barcode according to the setting of the "
@@ -4189,6 +4215,8 @@ msgstr "Illimité"
 #. module: coop_membership
 #. odoo-python
 #: code:addons/coop_membership/models/shift_change_team.py:0
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__cooperative_state__unpayed
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__working_state__unpayed
 msgid "Unpayed"
 msgstr "Impayé"
 
@@ -4200,6 +4228,8 @@ msgstr ""
 #. module: coop_membership
 #. odoo-python
 #: code:addons/coop_membership/models/shift_change_team.py:0
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__cooperative_state__unsubscribed
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__working_state__unsubscribed
 #: model:ir.model.fields.selection,name:coop_membership.selection__shift_change_team__partner_state__unsubscribed
 msgid "Unsubscribed"
 msgstr "Désinscrit"
@@ -4213,6 +4243,8 @@ msgstr "Désinscription"
 #. module: coop_membership
 #. odoo-python
 #: code:addons/coop_membership/models/shift_change_team.py:0
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__cooperative_state__up_to_date
+#: model:ir.model.fields.selection,name:coop_membership.selection__res_partner__working_state__up_to_date
 msgid "Up to date"
 msgstr "A jour"
 

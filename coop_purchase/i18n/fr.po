@@ -56,7 +56,7 @@ msgstr "Actif"
 #. module: coop_purchase
 #: model:ir.model.fields,field_description:coop_purchase.field_account_move_line__base_price
 msgid "Base Price"
-msgstr "Prix de base"
+msgstr "Prix d'achat"
 
 #. module: coop_purchase
 #: model_terms:ir.ui.view,arch_db:coop_purchase.view_supplier_info_update
