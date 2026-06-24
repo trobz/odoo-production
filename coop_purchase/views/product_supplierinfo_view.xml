@@ -38,6 +38,9 @@
             <xpath expr="//field[@name='discount']" position="attributes">
                 <attribute name="optional">show</attribute>
             </xpath>
+            <xpath expr="//field[@name='indicative_package']" position="attributes">
+                <attribute name="width">150px</attribute>
+            </xpath>
         </field>
     </record>
 
