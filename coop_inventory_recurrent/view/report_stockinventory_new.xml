@@ -20,7 +20,7 @@
                             t-value="variant.get('color') and 'color: ' + variant['color'] + ';' or ''"
                         />
                         <div
-                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 18px;"
+                            style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 22px; font-weight:700;"
                         >
                             <span t-att-style="style">
                                 <span t-out="o.product_id.categ_id.name if o else ''" />
@@ -29,9 +29,14 @@
                                 />
                             </span>
                         </div>
-                        <table class="table table-sm" style="font-size: 14px">
+                        <table
+                            class="table table-sm table-borderless"
+                            style="font-size: 14px;"
+                        >
                             <thead>
-                                <tr>
+                                <tr
+                                    style="border-bottom:1px solid #ccc;border-top:1px solid #ccc;"
+                                >
                                     <th>
                                         <strong>Date</strong>
                                     </th>
@@ -41,39 +46,58 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <tr
+                                    style="border-bottom:1px solid #ccc;border-top:1px solid #ccc;"
+                                >
                                     <td>
-                                        <span t-out="docs and context_timestamp(docs[0].date).strftime('%Y-%m-%d %H:%M:%S')" />
+                                        <span
+                                            t-out="docs and context_timestamp(docs[0].date).strftime('%Y-%m-%d %H:%M:%S')"
+                                        />
                                     </td>
                                     <td />
                                 </tr>
                             </tbody>
                         </table>
                         <table
-                            class="table table-sm table-bordered"
-                            style="font-size: 11px"
+                            class="table table-bordered"
+                            style="font-size: 12px;border:1px solid #ccc;"
                         >
                             <thead>
                                 <tr>
-                                    <th class="text-end" style="width: 40px;">
+                                    <th
+                                        class="text-end"
+                                        style="width: 40px;font-weight:700;"
+                                    >
                                         <strong>Package Qty</strong>
                                     </th>
-                                    <th style="width: 70px;">
+                                    <th style="width: 70px;font-weight:700;">
                                         <strong>Internal Reference</strong>
                                     </th>
-                                    <th>
+                                    <th style="font-weight:700;">
                                         <strong>Product</strong>
                                     </th>
-                                    <th class="text-end" style="width: 45px;">
+                                    <th
+                                        class="text-end"
+                                        style="width: 45px;font-weight:700;"
+                                    >
                                         <strong>G.F. Qty</strong>
                                     </th>
-                                    <th class="text-end" style="width: 40px;">
+                                    <th
+                                        class="text-end"
+                                        style="width: 40px;font-weight:700;"
+                                    >
                                         <strong>UG. Qty</strong>
                                     </th>
-                                    <th class="text-end" style="width: 60px;">
+                                    <th
+                                        class="text-end"
+                                        style="width: 60px;font-weight:700;"
+                                    >
                                         <strong>Total</strong>
                                     </th>
-                                    <th class="text-end" style="width: 60px;">
+                                    <th
+                                        class="text-end"
+                                        style="white-space:nowrap;width:100px;font-weight:700;"
+                                    >
                                         <strong>Theoretical Qty</strong>
                                     </th>
                                 </tr>
@@ -131,7 +155,10 @@
             name="report_file"
         >coop_inventory_recurrent.report_inventory_new_layout</field>
         <field name="print_report_name">'Inventory - %s' % object.name</field>
-        <field name="paperformat_id" ref="coop_inventory.paperformat_inventory_adjust"></field>
+        <field
+            name="paperformat_id"
+            ref="coop_inventory.paperformat_inventory_adjust"
+        />
     </record>
 
     <template
