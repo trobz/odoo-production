@@ -98,7 +98,7 @@ class ShiftShift(models.Model):
             (i for i, state in enumerate(state_selection) if state[0] == "done"), None
         )
         if done_index is not None:
-            state_selection.insert(done_index, ("entry", "Entry"))
+            state_selection.insert(done_index, ("entry", self.env._("Entry")))
         return state_selection
 
     @api.depends("long_holiday_id", "single_holiday_id")

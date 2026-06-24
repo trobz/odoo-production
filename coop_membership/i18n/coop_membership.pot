@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-11 03:18+0000\n"
-"PO-Revision-Date: 2026-03-11 03:18+0000\n"
+"POT-Creation-Date: 2026-06-23 08:16+0000\n"
+"PO-Revision-Date: 2026-06-23 08:16+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1283,6 +1283,12 @@ msgid "Barcode"
 msgstr ""
 
 #. module: coop_membership
+#: model:ir.model.fields,field_description:coop_membership.field_res_partner__barcode_base
+#: model:ir.model.fields,field_description:coop_membership.field_res_users__barcode_base
+msgid "Barcode Base"
+msgstr ""
+
+#. module: coop_membership
 #: model:ir.model,name:coop_membership.model_barcode_rule
 msgid "Barcode Rule"
 msgstr ""
@@ -1542,6 +1548,7 @@ msgstr ""
 
 #. module: coop_membership
 #: model:ir.model,name:coop_membership.model_res_partner
+#: model:ir.model.fields,field_description:coop_membership.field_shift_registration__partner_id
 msgid "Contact"
 msgstr ""
 
@@ -1909,6 +1916,8 @@ msgid "Employee Limit"
 msgstr ""
 
 #. module: coop_membership
+#. odoo-python
+#: code:addons/coop_membership/models/shift_shift.py:0
 #: model_terms:ir.ui.view,arch_db:coop_membership.view_shift_search_inherit
 msgid "Entry"
 msgstr ""
@@ -2637,6 +2646,11 @@ msgstr ""
 #. module: coop_membership
 #: model:res.groups,name:coop_membership.group_membership_access_user
 msgid "Membership Viewer"
+msgstr ""
+
+#. module: coop_membership
+#: model:ir.model,name:coop_membership.model_ir_ui_menu
+msgid "Menu"
 msgstr ""
 
 #. module: coop_membership
@@ -4381,6 +4395,11 @@ msgstr ""
 #. module: coop_membership
 #: model_terms:ir.ui.view,arch_db:coop_membership.member_contract_template
 msgid "ÉQUIPE"
+msgstr ""
+
+#. module: coop_membership
+#: model_terms:ir.ui.view,arch_db:coop_membership.register_event_selector
+msgid "à"
 msgstr ""
 
 #. module: coop_membership
