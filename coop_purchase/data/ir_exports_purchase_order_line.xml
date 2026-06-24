@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (C) 2016-Today: La Louve (<http://www.cooplalouve.fr/>)
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html) -->
+<odoo noupdate="0">
+    <!-- 1. AZADE -->
+    <record id="ir_exports_pol_azade" model="ir.exports">
+        <field name="name">AZADE</field>
+        <field name="resource">purchase.order.line</field>
+    </record>
+    <record id="ir_exports_pol_azade_1" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_azade" />
+        <field name="name">product_id/name</field>
+    </record>
+    <record id="ir_exports_pol_azade_2" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_azade" />
+        <field name="name">product_id/seller_ids/product_code</field>
+    </record>
+    <record id="ir_exports_pol_azade_3" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_azade" />
+        <field name="name">product_qty_package</field>
+    </record>
+    <record id="ir_exports_pol_azade_4" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_azade" />
+        <field name="name">product_qty</field>
+    </record>
+    <record id="ir_exports_pol_azade_5" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_azade" />
+        <field name="name">product_id/uom_id/name</field>
+    </record>
+
+    <!-- 2. COMMANDES A POINTER -->
+    <record id="ir_exports_pol_commandes_a_pointer" model="ir.exports">
+        <field name="name">COMMANDE A POULET</field>
+        <field name="resource">purchase.order.line</field>
+    </record>
+    <record id="ir_exports_pol_commandes_a_pointer_1" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_commandes_a_pointer" />
+        <field name="name">order_id/display_name</field>
+    </record>
+    <record id="ir_exports_pol_commandes_a_pointer_2" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_commandes_a_pointer" />
+        <field name="name">product_id/seller_ids/product_code</field>
+    </record>
+    <record id="ir_exports_pol_commandes_a_pointer_3" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_commandes_a_pointer" />
+        <field name="name">product_id/display_name</field>
+    </record>
+    <record id="ir_exports_pol_commandes_a_pointer_4" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_commandes_a_pointer" />
+        <field name="name">product_qty_package</field>
+    </record>
+    <record id="ir_exports_pol_commandes_a_pointer_5" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_commandes_a_pointer" />
+        <field name="name">product_id/seller_ids/package_qty</field>
+    </record>
+    <record id="ir_exports_pol_commandes_a_pointer_6" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_commandes_a_pointer" />
+        <field name="name">product_qty</field>
+    </record>
+    <record id="ir_exports_pol_commandes_a_pointer_7" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_commandes_a_pointer" />
+        <field name="name">product_id/seller_ids/price</field>
+    </record>
+    <record id="ir_exports_pol_commandes_a_pointer_8" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_commandes_a_pointer" />
+        <field name="name">price_subtotal</field>
+    </record>
+
+    <!-- 3. DE BUYER OK -->
+    <record id="ir_exports_pol_de_buyer_ok" model="ir.exports">
+        <field name="name">DE BUYER OK</field>
+        <field name="resource">purchase.order.line</field>
+    </record>
+    <record id="ir_exports_pol_de_buyer_ok_1" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_de_buyer_ok" />
+        <field name="name">product_id/seller_ids/product_code</field>
+    </record>
+    <record id="ir_exports_pol_de_buyer_ok_2" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_de_buyer_ok" />
+        <field name="name">product_qty</field>
+    </record>
+    <record id="ir_exports_pol_de_buyer_ok_3" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_de_buyer_ok" />
+        <field name="name">product_id/display_name</field>
+    </record>
+
+    <!-- 4. DIGOIN -->
+    <record id="ir_exports_pol_digoin" model="ir.exports">
+        <field name="name">DIGOIN</field>
+        <field name="resource">purchase.order.line</field>
+    </record>
+    <record id="ir_exports_pol_digoin_1" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_digoin" />
+        <field name="name">product_id/seller_ids/product_code</field>
+    </record>
+    <record id="ir_exports_pol_digoin_2" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_digoin" />
+        <field name="name">product_id/name</field>
+    </record>
+    <record id="ir_exports_pol_digoin_3" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_digoin" />
+        <field name="name">product_qty</field>
+    </record>
+    <record id="ir_exports_pol_digoin_4" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_digoin" />
+        <field name="name">price_unit</field>
+    </record>
+    <record id="ir_exports_pol_digoin_5" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_digoin" />
+        <field name="name">price_total</field>
+    </record>
+
+    <!-- 5. GRATIOT -->
+    <record id="ir_exports_pol_gratiot" model="ir.exports">
+        <field name="name">GRATIOT</field>
+        <field name="resource">purchase.order.line</field>
+    </record>
+    <record id="ir_exports_pol_gratiot_1" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_gratiot" />
+        <field name="name">product_id/name</field>
+    </record>
+    <record id="ir_exports_pol_gratiot_2" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_gratiot" />
+        <field name="name">product_qty</field>
+    </record>
+    <record id="ir_exports_pol_gratiot_3" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_gratiot" />
+        <field name="name">product_id/seller_ids/product_code</field>
+    </record>
+    <record id="ir_exports_pol_gratiot_4" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_gratiot" />
+        <field name="name">product_qty_package</field>
+    </record>
+
+    <!-- 6. LE PARFAIT -->
+    <record id="ir_exports_pol_le_parfait" model="ir.exports">
+        <field name="name">LE PARFAIT</field>
+        <field name="resource">purchase.order.line</field>
+    </record>
+    <record id="ir_exports_pol_le_parfait_1" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_le_parfait" />
+        <field name="name">product_id/seller_ids/product_code</field>
+    </record>
+    <record id="ir_exports_pol_le_parfait_2" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_le_parfait" />
+        <field name="name">product_id/name</field>
+    </record>
+    <record id="ir_exports_pol_le_parfait_3" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_le_parfait" />
+        <field name="name">product_qty_package</field>
+    </record>
+    <record id="ir_exports_pol_le_parfait_4" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_le_parfait" />
+        <field name="name">product_qty</field>
+    </record>
+
+    <!-- 7. MOUNLIN DES MOINES -->
+    <record id="ir_exports_pol_mounlin_des_moines" model="ir.exports">
+        <field name="name">MOUNLIN DES MOINES</field>
+        <field name="resource">purchase.order.line</field>
+    </record>
+    <record id="ir_exports_pol_mounlin_des_moines_1" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_mounlin_des_moines" />
+        <field name="name">product_id/seller_ids/product_code</field>
+    </record>
+    <record id="ir_exports_pol_mounlin_des_moines_2" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_mounlin_des_moines" />
+        <field name="name">product_id/name</field>
+    </record>
+    <record id="ir_exports_pol_mounlin_des_moines_3" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_mounlin_des_moines" />
+        <field name="name">product_qty_package</field>
+    </record>
+    <record id="ir_exports_pol_mounlin_des_moines_4" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_mounlin_des_moines" />
+        <field name="name">product_qty</field>
+    </record>
+    <record id="ir_exports_pol_mounlin_des_moines_4" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_mounlin_des_moines" />
+        <field name="name">product_id/uom_id/name</field>
+    </record>
+
+    <!-- 8. PROVINCE BIO -->
+    <record id="ir_exports_pol_province_bio" model="ir.exports">
+        <field name="name">PROVINCE BIO</field>
+        <field name="resource">purchase.order.line</field>
+    </record>
+    <record id="ir_exports_pol_province_bio_1" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_province_bio" />
+        <field name="name">product_id/seller_ids/product_code</field>
+    </record>
+    <record id="ir_exports_pol_province_bio_2" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_province_bio" />
+        <field name="name">name</field>
+    </record>
+    <record id="ir_exports_pol_province_bio_3" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_province_bio" />
+        <field name="name">product_qty</field>
+    </record>
+    <record id="ir_exports_pol_province_bio_4" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_province_bio" />
+        <field name="name">product_qty_package</field>
+    </record>
+
+    <!-- 9. SEMENCE BIO -->
+    <record id="ir_exports_pol_semence_bio" model="ir.exports">
+        <field name="name">SEMENCE BIO</field>
+        <field name="resource">purchase.order.line</field>
+    </record>
+    <record id="ir_exports_pol_semence_bio_1" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_semence_bio" />
+        <field name="name">product_id/code</field>
+    </record>
+    <record id="ir_exports_pol_semence_bio_2" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_semence_bio" />
+        <field name="name">product_id/.id</field>
+    </record>
+    <record id="ir_exports_pol_semence_bio_3" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_semence_bio" />
+        <field name="name">product_qty_package</field>
+    </record>
+    <record id="ir_exports_pol_semence_bio_4" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_semence_bio" />
+        <field name="name">product_qty</field>
+    </record>
+
+    <!-- 10. VITAFRAIS -->
+    <record id="ir_exports_pol_vitafrais" model="ir.exports">
+        <field name="name">VITAFRAIS</field>
+        <field name="resource">purchase.order.line</field>
+    </record>
+    <record id="ir_exports_pol_vitafrais_1" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_vitafrais" />
+        <field name="name">product_id/seller_ids/product_code</field>
+    </record>
+    <record id="ir_exports_pol_vitafrais_2" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_vitafrais" />
+        <field name="name">product_id/name</field>
+    </record>
+    <record id="ir_exports_pol_vitafrais_3" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_vitafrais" />
+        <field name="name">product_qty_package</field>
+    </record>
+    <record id="ir_exports_pol_vitafrais_4" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_vitafrais" />
+        <field name="name">product_qty</field>
+    </record>
+
+    <!-- 11. VITAFRAIS AMBIANT-->
+    <record id="ir_exports_pol_vitafrais_ambiant" model="ir.exports">
+        <field name="name">VITAFRAIS AMBIANT</field>
+        <field name="resource">purchase.order.line</field>
+    </record>
+    <record id="ir_exports_pol_vitafrais_ambiant_1" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_vitafrais_ambiant" />
+        <field name="name">product_id/seller_ids/product_code</field>
+    </record>
+    <record id="ir_exports_pol_vitafrais_ambiant_2" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_vitafrais_ambiant" />
+        <field name="name">product_id/name</field>
+    </record>
+    <record id="ir_exports_pol_vitafrais_ambiant_3" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_vitafrais_ambiant" />
+        <field name="name">product_qty_package</field>
+    </record>
+    <record id="ir_exports_pol_vitafrais_ambiant_4" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_vitafrais_ambiant" />
+        <field name="name">product_qty</field>
+    </record>
+    <record id="ir_exports_pol_vitafrais_ambiant_5" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_vitafrais_ambiant" />
+        <field name="name">product_id/uom_id/display_name</field>
+    </record>
+
+    <!-- 12. VITAGERMINE -->
+    <record id="ir_exports_pol_vitagermine" model="ir.exports">
+        <field name="name">VITAGERMINE</field>
+        <field name="resource">purchase.order.line</field>
+    </record>
+    <record id="ir_exports_pol_vitagermine_1" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_vitagermine" />
+        <field name="name">product_id/seller_ids/product_code</field>
+    </record>
+    <record id="ir_exports_pol_vitagermine_2" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_vitagermine" />
+        <field name="name">product_id/name</field>
+    </record>
+    <record id="ir_exports_pol_vitagermine_3" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_vitagermine" />
+        <field name="name">product_qty_package</field>
+    </record>
+    <record id="ir_exports_pol_vitagermine_4" model="ir.exports.line">
+        <field name="export_id" ref="ir_exports_pol_vitagermine" />
+        <field name="name">product_qty</field>
+    </record>
+</odoo>

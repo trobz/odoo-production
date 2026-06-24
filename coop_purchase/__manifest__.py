@@ -24,6 +24,7 @@
         "security/res_group.xml",
         "security/ir.model.access.csv",
         "data/ir_actions_server.xml",
+        "data/ir_exports_purchase_order_line.xml",
         "report/purchase_order_templates.xml",
         "report/purchase_quotation_templates.xml",
         "wizard/supplier_info_update.xml",
