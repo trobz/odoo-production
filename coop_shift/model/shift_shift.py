@@ -171,13 +171,12 @@ class ShiftShift(models.Model):
     color = fields.Integer("Kanban Color Index")
 
     def _get_state_selection(self):
-        state_selection = [
-            ("draft", "Unconfirmed"),
-            ("cancel", "Cancelled"),
-            ("confirm", "Confirmed"),
-            ("done", "Done"),
+        return [
+            ("draft", self.env._("Unconfirmed")),
+            ("cancel", self.env._("Cancelled")),
+            ("confirm", self.env._("Confirmed")),
+            ("done", self.env._("Done")),
         ]
-        return state_selection
 
     @api.constrains("shift_template_id", "date_begin", "company_id")
     def _check_uniq_date_shift(self):
