@@ -1242,7 +1242,7 @@ msgstr "Participant(s) attendu(s)"
 #: model:ir.model.fields,field_description:coop_shift.field_res_users__extension_ids
 #: model:ir.ui.menu,name:coop_shift.menu_shift_extension
 msgid "Extensions"
-msgstr "Prolongations"
+msgstr "Extensions"
 
 #. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_res_partner__extension_qty
