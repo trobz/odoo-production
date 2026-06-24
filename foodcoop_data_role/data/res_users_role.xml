@@ -157,6 +157,7 @@
             ref('coop_membership.group_create_related_user'),
             ref('account_export.group_account_export'),
             ref('foodcoop_module.functional_admin'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
