@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="view_partner_form_edi_page" model="ir.ui.view">
+        <field name="name">edi_purchase_diapar_qty.partner.form.edi</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <page name="edi" position="attributes">
+                <attribute name="groups">base_edi.group_edi_manager</attribute>
+            </page>
+        </field>
+    </record>
+</odoo>

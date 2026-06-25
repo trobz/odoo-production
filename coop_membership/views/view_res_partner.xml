@@ -110,7 +110,7 @@
                 <page
                     name="membership"
                     string="Membership"
-                    groups="coop_membership.group_membership_see_associated_people,coop_membership.group_membership_access_user"
+                    groups="coop_membership.group_membership_bdm_presence"
                     invisible="(not is_member) and (not is_former_member) and (not is_former_associated_people) and (not is_associated_people) and (not is_interested_people)"
                 >
                     <button
@@ -298,11 +298,6 @@
                     name="groups"
                     separator=","
                     add="coop_membership.group_membership_bdm_presence"
-                />
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="!coop_membership.group_membership_bdm_lecture"
                 />
                 <attribute name="required">is_member</attribute>
             </field>
@@ -919,7 +914,7 @@
                 >
                     <field
                         name="temp_coop_number"
-                        groups="coop_membership.group_membership_see_associated_people,coop_membership.group_membership_access_user"
+                        groups="coop_membership.group_membership_bdm_presence"
                     />
                     <field
                         name="age"
@@ -1029,22 +1024,12 @@
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
                 />
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="!coop_membership.group_membership_bdm_lecture"
-                />
             </field>
             <field name="street2" position="attributes">
                 <attribute
                     name="groups"
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
-                />
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="!coop_membership.group_membership_bdm_lecture"
                 />
             </field>
             <field name="city" position="attributes">
@@ -1053,22 +1038,12 @@
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
                 />
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="!coop_membership.group_membership_bdm_lecture"
-                />
             </field>
             <field name="state_id" position="attributes">
                 <attribute
                     name="groups"
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
-                />
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="!coop_membership.group_membership_bdm_lecture"
                 />
             </field>
             <field name="zip" position="attributes">
@@ -1077,22 +1052,12 @@
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
                 />
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="!coop_membership.group_membership_bdm_lecture"
-                />
             </field>
             <field name="country_id" position="attributes">
                 <attribute
                     name="groups"
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
-                />
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="!coop_membership.group_membership_bdm_lecture"
                 />
             </field>
             <field name="function" position="attributes">
@@ -1101,11 +1066,6 @@
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
                 />
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="!coop_membership.group_membership_bdm_lecture"
-                />
             </field>
             <field name="phone" position="attributes">
                 <attribute
@@ -1113,22 +1073,12 @@
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
                 />
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="!coop_membership.group_membership_bdm_lecture"
-                />
             </field>
             <field name="mobile" position="attributes">
                 <attribute
                     name="groups"
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
-                />
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="!coop_membership.group_membership_bdm_lecture"
                 />
             </field>
             <field name="birthdate_date" position="attributes">
@@ -1172,7 +1122,7 @@
                 <attribute
                     name="groups"
                     separator=","
-                    add="!coop_membership.group_membership_bdm_lecture"
+                    add="coop_membership.group_membership_bdm_presence"
                 />
             </xpath>
             <xpath expr="//field[@name='child_ids']/kanban" position="attributes">
@@ -1185,7 +1135,7 @@
                 <attribute
                     name="groups"
                     separator=","
-                    add="!coop_membership.group_membership_bdm_lecture"
+                    add="coop_membership.group_membership_bdm_presence"
                 />
             </xpath>
             <xpath
@@ -1195,7 +1145,7 @@
                 <attribute
                     name="groups"
                     separator=","
-                    add="!coop_membership.group_membership_bdm_lecture"
+                    add="coop_membership.group_membership_bdm_presence"
                 />
             </xpath>
             <xpath
@@ -1205,7 +1155,7 @@
                 <attribute
                     name="groups"
                     separator=","
-                    add="!coop_membership.group_membership_bdm_lecture"
+                    add="coop_membership.group_membership_bdm_presence"
                 />
             </xpath>
             <xpath
@@ -1215,7 +1165,7 @@
                 <attribute
                     name="groups"
                     separator=","
-                    add="!coop_membership.group_membership_bdm_lecture"
+                    add="coop_membership.group_membership_bdm_presence"
                 />
             </xpath>
         </field>

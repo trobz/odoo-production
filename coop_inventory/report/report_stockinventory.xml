@@ -18,7 +18,7 @@
             position="attributes"
         >
             <attribute name="class">table table-bordered main-table</attribute>
-            <attribute name="style">font-size: 11px</attribute>
+            <attribute name="style">font-size: 12px;border:1px solid #ccc;</attribute>
         </xpath>
 
         <!-- Add G.F. Qty and UG. Qty fields -->
@@ -45,7 +45,10 @@
                 <th class="text-end" style="width: 60px;font-weight:700;">
                     <strong>Total</strong>
                 </th>
-                <th class="text-end" style="width: 60px;font-weight:700;">
+                <th
+                    class="text-end"
+                    style="white-space:nowrap;width:100px;font-weight:700;"
+                >
                     <strong>Theoretical Qty</strong>
                 </th>
             </tr>
@@ -81,9 +84,9 @@
             </tbody>
         </xpath>
         <xpath expr="//div[hasclass('page')]/h2" position="after">
-            <table class="table table-sm" style="font-size: 14px">
+            <table class="table table-sm table-borderless" style="font-size: 14px;">
                 <thead>
-                    <tr>
+                    <tr style="border-bottom:1px solid #ccc;border-top:1px solid #ccc;">
                         <th>
                             <strong>Date</strong>
                         </th>
@@ -93,7 +96,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr style="border-bottom:1px solid #ccc;">
                         <td>
                             <span
                                 t-out="context_timestamp(report_date).strftime('%Y-%m-%d %H:%M:%S')"

@@ -161,7 +161,12 @@ class ShiftShift(models.Model):
 
     # TODO: consider to replace it by stage_id as event.event
     state = fields.Selection(
-        selection=lambda self: self._get_state_selection(),
+        selection=[
+            ("draft", "Unconfirmed"),
+            ("cancel", "Cancelled"),
+            ("confirm", "Confirmed"),
+            ("done", "Done"),
+        ],
         string="Status",
         default="draft",
         required=True,
@@ -169,15 +174,6 @@ class ShiftShift(models.Model):
     )
     question_ids = fields.One2many(compute=False)
     color = fields.Integer("Kanban Color Index")
-
-    def _get_state_selection(self):
-        state_selection = [
-            ("draft", "Unconfirmed"),
-            ("cancel", "Cancelled"),
-            ("confirm", "Confirmed"),
-            ("done", "Done"),
-        ]
-        return state_selection
 
     @api.constrains("shift_template_id", "date_begin", "company_id")
     def _check_uniq_date_shift(self):

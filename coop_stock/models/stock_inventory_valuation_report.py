@@ -52,8 +52,8 @@ class StockInventoryValuationReport(models.TransientModel):
                 "uom_id": product.uom_id,
                 "currency_id": product.currency_id,
                 "cost_currency_id": product.cost_currency_id,
-                "standard_price": product.avg_cost,
-                "stock_value": product.value_svl,
+                "standard_price": product.standard_price,
+                "stock_value": product.quantity_svl * product.standard_price,
                 "cost_method": product.cost_method,
                 "categ_name": product.categ_id.name,
             }

@@ -17,7 +17,7 @@
             <button name="%(coop_shift.action_replace_registration)d" position="after">
                 <button
                     name="action_create_extension"
-                    string="Create Extension until next regular shift"
+                    title="Create Extension until next regular shift"
                     type="object"
                     icon="fa-expand fa-lg"
                     groups="coop_membership.group_shift_create_extension_from_attendance"
@@ -116,7 +116,7 @@
             >
                 <button
                     name="action_create_extension"
-                    string="Create Extension until next regular shift"
+                    title="Create Extension until next regular shift"
                     type="object"
                     icon="fa-expand fa-lg"
                     groups="coop_membership.group_shift_create_extension_from_attendance"

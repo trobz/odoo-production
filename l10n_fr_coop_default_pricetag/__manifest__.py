@@ -9,9 +9,11 @@
     "depends": [
         "l10n_fr_department",
         "coop_default_pricetag",
+        "coop_membership",
     ],
     "data": [
         "views/view_product_template.xml",
+        "views/view_res_partner.xml",
     ],
     "auto_install": True,
 }
