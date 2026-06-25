@@ -1877,6 +1877,7 @@ msgstr ""
 
 #. module: coop_membership
 #: model:ir.model.fields.selection,name:coop_membership.selection__shift_holiday__state__done
+#: model:ir.model.fields.selection,name:coop_membership.selection__shift_shift__state__done
 #: model:ir.model.fields.selection,name:coop_membership.selection__shift_template_operation__state__done
 #: model_terms:ir.ui.view,arch_db:coop_membership.view_shift_change_team_search
 msgid "Done"
@@ -1918,6 +1919,7 @@ msgstr ""
 #. module: coop_membership
 #. odoo-python
 #: code:addons/coop_membership/models/shift_shift.py:0
+#: model:ir.model.fields.selection,name:coop_membership.selection__shift_shift__state__entry
 #: model_terms:ir.ui.view,arch_db:coop_membership.view_shift_search_inherit
 msgid "Entry"
 msgstr ""

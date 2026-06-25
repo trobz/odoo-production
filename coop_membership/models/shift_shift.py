@@ -99,6 +99,10 @@ class ShiftShift(models.Model):
             ("entry", "Entry"),
             ("done", "Done"),
         ],
+        ondelete={
+            "draft": "set default", "cancel": "set default", "confirm": "set default", 
+            "entry": "set default", "done": "set default"
+        },
     )
 
     @api.depends("long_holiday_id", "single_holiday_id")
