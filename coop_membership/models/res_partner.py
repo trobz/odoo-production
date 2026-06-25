@@ -127,8 +127,13 @@ class ResPartner(models.Model):
         store=True,
         readonly=True,
     )
+    
+    working_state = fields.Selection(
+        selection_add=EXTRA_COOPERATIVE_STATE_SELECTION,
+    )
 
     cooperative_state = fields.Selection(
+        selection_add=EXTRA_COOPERATIVE_STATE_SELECTION,
         default="not_concerned",
         recursive=True,
     )
