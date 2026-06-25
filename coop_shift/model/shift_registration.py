@@ -43,6 +43,7 @@ class ShiftRegistration(models.Model):
     )
     state = fields.Selection(
         selection_add=[
+            ("open", "Registered"),
             ("absent", "Absent"),
             ("waiting", "Waiting"),
             ("excused", "Excused"),

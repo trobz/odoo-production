@@ -319,6 +319,7 @@ msgstr ""
 #. module: coop_shift
 #: model:ir.model.fields.selection,name:coop_shift.selection__add_template_registration_wizard__state__done
 #: model:ir.model.fields.selection,name:coop_shift.selection__shift_template_registration_line__state__done
+#: model:ir.model.fields.selection,name:event.selection__shift_registration__state__done
 #: model_terms:ir.ui.view,arch_db:coop_shift.view_shift_registration_form
 msgid "Attended"
 msgstr ""
@@ -538,11 +539,11 @@ msgstr ""
 
 #. module: coop_shift
 #. odoo-python
-#: code:addons/coop_shift/model/shift_shift.py:0
 #: model:ir.model.fields.selection,name:coop_shift.selection__add_template_registration_wizard__state__cancel
 #: model:ir.model.fields.selection,name:coop_shift.selection__shift_shift__state__cancel
 #: model:ir.model.fields.selection,name:coop_shift.selection__shift_template_registration_line__state__cancel
 #: model:ir.model.fields.selection,name:coop_shift.selection__update_shifts_wizard_line__state__cancel
+#: model:ir.model.fields.selection,name:event.selection__shift_registration__state__cancel
 msgid "Cancelled"
 msgstr ""
 
@@ -676,7 +677,6 @@ msgstr ""
 
 #. module: coop_shift
 #. odoo-python
-#: code:addons/coop_shift/model/shift_shift.py:0
 #: model:ir.model.fields.selection,name:coop_shift.selection__add_template_registration_wizard__state__open
 #: model:ir.model.fields.selection,name:coop_shift.selection__shift_shift__state__confirm
 #: model:ir.model.fields.selection,name:coop_shift.selection__shift_template_registration_line__state__open
@@ -992,7 +992,6 @@ msgstr ""
 
 #. module: coop_shift
 #. odoo-python
-#: code:addons/coop_shift/model/shift_shift.py:0
 #: model:ir.model.fields.selection,name:coop_shift.selection__shift_leave__state__done
 #: model:ir.model.fields.selection,name:coop_shift.selection__shift_shift__state__done
 #: model:ir.model.fields.selection,name:coop_shift.selection__update_shifts_wizard_line__state__done
@@ -2501,6 +2500,11 @@ msgid "Register with this template"
 msgstr ""
 
 #. module: coop_shift
+#: model:ir.model.fields.selection,name:coop_shift.selection__shift_registration__state__open
+msgid "Registered"
+msgstr ""
+
+#. module: coop_shift
 #: model:ir.model.fields,field_description:coop_shift.field_replace_registration_wizard__registration_id
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_registration_line__registration_id
 #: model_terms:ir.ui.view,arch_db:coop_shift.view_shift_registration_form
@@ -3726,10 +3730,11 @@ msgstr ""
 
 #. module: coop_shift
 #. odoo-python
-#: code:addons/coop_shift/model/shift_shift.py:0
 #: model:ir.model.fields.selection,name:coop_shift.selection__add_template_registration_wizard__state__draft
+#: model:ir.model.fields.selection,name:coop_shift.selection__shift_shift__state__draft
 #: model:ir.model.fields.selection,name:coop_shift.selection__shift_template_registration_line__state__draft
 #: model:ir.model.fields.selection,name:coop_shift.selection__update_shifts_wizard_line__state__draft
+#: model:ir.model.fields.selection,name:event.selection__shift_registration__state__draft
 #: model_terms:ir.ui.view,arch_db:coop_shift.view_shift_search
 msgid "Unconfirmed"
 msgstr ""
