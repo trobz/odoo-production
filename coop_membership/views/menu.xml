@@ -190,7 +190,7 @@
             name="groups_id"
             eval="[
             (4, ref('coop_shift.group_shift_user')),
-            (4, ref('coop_membership.group_membership_access_user'))
+            (4, ref('coop_membership.group_membership_bdm_presence'))
             ]"
         />
     </record>
