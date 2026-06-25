@@ -91,15 +91,15 @@ class ShiftShift(models.Model):
         readonly=True,
     )
 
-    def _get_state_selection(self):
-        state_selection = super()._get_state_selection()
-        # insert entry state before done state
-        done_index = next(
-            (i for i, state in enumerate(state_selection) if state[0] == "done"), None
-        )
-        if done_index is not None:
-            state_selection.insert(done_index, ("entry", self.env._("Entry")))
-        return state_selection
+    state = fields.Selection(
+        selection_add=[
+            ("draft", "Unconfirmed"),
+            ("cancel", "Cancelled"),
+            ("confirm", "Confirmed"),
+            ("entry", "Entry"),
+            ("done", "Done"),
+        ],
+    )
 
     @api.depends("long_holiday_id", "single_holiday_id")
     def _compute_holiday_id(self):
