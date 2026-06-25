@@ -29,6 +29,10 @@
         "edi_purchase_diapar_oca",
         "purchase_package_qty",
         "coop_purchase",
+        "base_edi",
+    ],
+    "data": [
+        "views/view_res_partner.xml",
     ],
     "installable": True,
     "auto_install": True,
