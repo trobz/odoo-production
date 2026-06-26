@@ -9,6 +9,7 @@
             ref('base.group_user'),
             ref('pos_access_right.group_payment'),
             ref('point_of_sale.group_pos_user'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
@@ -29,6 +30,7 @@
             ref('product_print_category.manager'),
             ref('product_to_scale_bizerba.group_manager'),
             ref('maintenance.group_equipment_manager'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
@@ -45,6 +47,7 @@
             ref('barcodes_generator_abstract.generate_barcode'),
             ref('project.group_project_user'),
             ref('maintenance.group_equipment_manager'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
@@ -60,6 +63,7 @@
             ref('stock.group_stock_manager'),
             ref('project.group_project_user'),
             ref('maintenance.group_equipment_manager'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
@@ -71,6 +75,7 @@
             eval="[Command.set([
             ref('base.group_user'),
             ref('coop_shift.group_shift_manager'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
@@ -92,6 +97,7 @@
             ref('project.group_project_user'),
             ref('maintenance.group_equipment_manager'),
             ref('coop_membership.group_membership_bdm_saisie'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
@@ -115,6 +121,7 @@
             ref('maintenance.group_equipment_manager'),
             ref('account.group_account_user'),
             ref('account.group_account_manager'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
@@ -209,6 +216,7 @@
             ref('group_member_Subscription_restrict'),
             ref('account.group_account_user'),
             ref('group_member_WelMTeam_restrict'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
@@ -221,6 +229,7 @@
             ref('base.group_user'),
             ref('mass_mailing.group_mass_mailing_user'),
             ref('group_member_Communications_Officer_restrict'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
@@ -233,6 +242,7 @@
             ref('base.group_user'),
             ref('mass_mailing_access.group_manager'),
             ref('group_member_Communications_Manager_restrict'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
@@ -243,6 +253,7 @@
             name="implied_ids"
             eval="[Command.set([ref('base.group_user'),
             ref('event.group_event_manager'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
@@ -257,6 +268,7 @@
             ref('pos_access_right.group_payment'),
             ref('point_of_sale.group_pos_user'),
             ref('account.group_account_user'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
@@ -276,6 +288,7 @@
             ref('pos_access_right.group_negative_qty'),
             ref('project.group_project_user'),
             ref('maintenance.group_equipment_manager'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
@@ -300,6 +313,7 @@
             ref('base.group_user'),
             ref('project.group_project_manager'),
             ref('maintenance.group_equipment_manager'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
