@@ -90,7 +90,10 @@
         <field name="action" ref="action_res_partner_former_member" />
         <field name="parent_id" ref="menu_coop_member_submain" />
         <field name="sequence">4</field>
-        <field name="groups_id" eval="[(4, ref('coop_shift.group_shift_manager'))]" />
+        <field
+            name="groups_id"
+            eval="[(6, 0, [ref('coop_shift.group_shift_manager'), ref('coop_membership.group_membership_bdm_presence')])]"
+        />
     </record>
 
     <!-- Interested People -->
@@ -111,7 +114,7 @@
         <field name="sequence">6</field>
         <field
             name="groups_id"
-            eval="[(4, ref('coop_membership.group_membership_see_associated_people'))]"
+            eval="[(6, 0, [ref('coop_shift.group_shift_user'), ref('coop_membership.group_membership_bdm_presence')])]"
         />
     </record>
 
@@ -168,7 +171,7 @@
     <record model="ir.ui.menu" id="coop_shift.shift_menu">
         <field
             name="groups_id"
-            eval="[(6, 0, [ref('coop_shift.group_shift_user'), ref('coop_membership.group_membership_bdm_presence')])]"
+            eval="[(6, 0, [ref('coop_shift.group_shift_user'), ref('coop_membership.group_membership_bdm_presence'), ref('coop_membership.group_membership_bdm_lecture')])]"
         />
     </record>
 
@@ -196,13 +199,7 @@
     </record>
 
     <record id="coop_shift.menu_shift_counter_event" model="ir.ui.menu">
-        <field
-            name="groups_id"
-            eval="[
-            (4, ref('coop_shift.group_shift_user')),
-            (4, ref('coop_membership.group_membership_access_user'))
-            ]"
-        />
+        <field name="groups_id" eval="[(6, 0, [ref('coop_shift.group_shift_user')])]" />
     </record>
 
     <menuitem
@@ -211,7 +208,7 @@
         name="Attendance Entry"
         parent="coop_shift.shift_menu"
         sequence="9"
-        groups="coop_shift.group_shift_user,coop_membership.group_membership_bdm_presence,coop_membership.group_membership_bdm_saisie"
+        groups="coop_shift.group_shift_user,coop_membership.group_membership_bdm_presence"
     />
 
     <menuitem
@@ -220,7 +217,7 @@
         name="FTOP Seats"
         parent="coop_shift.shift_menu"
         sequence="9"
-        groups="coop_shift.group_shift_user,coop_membership.group_membership_access_user,coop_membership.group_membership_bdm_presence"
+        groups="coop_shift.group_shift_user,coop_membership.group_membership_bdm_presence"
     />
 
     <menuitem

@@ -924,7 +924,7 @@
                     <field
                         name="contact_origin_id"
                         widget="many2many_tags"
-                        groups="coop_membership.group_membership_see_associated_people,coop_membership.group_membership_access_user"
+                        groups="coop_shift.group_shift_user,coop_membership.group_membership_bdm_presence"
                     >
                         <list>
                             <field name="event_id" />
