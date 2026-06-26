@@ -100,8 +100,11 @@ class ShiftShift(models.Model):
             ("done", "Done"),
         ],
         ondelete={
-            "draft": "set default", "cancel": "set default", "confirm": "set default", 
-            "entry": "set default", "done": "set default"
+            "draft": "set default",
+            "cancel": "set default",
+            "confirm": "set default",
+            "entry": "set default",
+            "done": "set default",
         },
     )
 
