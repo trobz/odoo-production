@@ -137,4 +137,15 @@
             </tr>
         </t>
     </template>
+    <template id="external_layout_standard" inherit_id="web.external_layout_standard">
+        <xpath expr="//li[@t-if='not forced_vat']" position="attributes">
+            <attribute name="t-if" add="False" separator="and" />
+        </xpath>
+        <xpath expr="//li[@t-else='']/t[@t-esc]" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+        <xpath expr="//li[@t-else='']/span[@t-esc='forced_vat']" position="attributes">
+            <attribute name="t-if">False</attribute>
+        </xpath>
+    </template>
 </odoo>
