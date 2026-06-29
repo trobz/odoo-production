@@ -21,8 +21,22 @@
                     overflow: visible !important;
                     text-overflow: clip !important;
                     white-space: normal !important;
+                    height: auto !important;
                 }
             }
+        }
+        .o_field_product_label_section_and_note_cell {
+            height: auto !important;
+            > a {
+                height: auto !important;
+            }
+            > textarea {
+                field-sizing: content;
+                min-height: 0;
+            }
+        }
+        .o_field_widget:has(.o_field_product_label_section_and_note_cell) {
+            height: auto !important;
         }
     }
 }
