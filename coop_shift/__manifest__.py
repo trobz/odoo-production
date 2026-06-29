@@ -13,6 +13,7 @@
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": [
+        "calendar",
         "event_sale",
         "barcodes_generator_partner",
         "barcodes_generator_product",
@@ -30,6 +31,7 @@
         "data/report_paperformat.xml",
         "data/email_template.xml",
         "views/action.xml",
+        "views/calendar_view.xml",
         "views/product_view.xml",
         "views/shift_mail_view.xml",
         "views/shift_registration_view.xml",
