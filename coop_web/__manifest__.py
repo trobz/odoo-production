@@ -8,6 +8,7 @@
     "license": "AGPL-3",
     "depends": [
         "web",
+        "web_chatter_position"
     ],
     "assets": {
         "web.assets_backend": [
