@@ -6,4 +6,8 @@
             eval="[Command.unlink(ref('base.group_user')), Command.link(ref('website.group_website_designer'))]"
         />
     </record>
+
+    <record model="ir.ui.menu" id="website.header_call_to_action">
+        <field name="active" eval="False" />
+    </record>
 </odoo>

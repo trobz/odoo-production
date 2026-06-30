@@ -66,37 +66,37 @@
                                 <tr>
                                     <th
                                         class="text-end"
-                                        style="width: 40px;font-weight:700;"
+                                        style="width: 40px;font-weight:700;border:1px solid #ccc;"
                                     >
                                         <strong>Package Qty</strong>
                                     </th>
-                                    <th style="width: 70px;font-weight:700;">
+                                    <th style="width: 70px;font-weight:700;border:1px solid #ccc;">
                                         <strong>Internal Reference</strong>
                                     </th>
-                                    <th style="font-weight:700;">
+                                    <th style="font-weight:700;border:1px solid #ccc;">
                                         <strong>Product</strong>
                                     </th>
                                     <th
                                         class="text-end"
-                                        style="width: 45px;font-weight:700;"
+                                        style="width: 45px;font-weight:700;border:1px solid #ccc;"
                                     >
                                         <strong>G.F. Qty</strong>
                                     </th>
                                     <th
                                         class="text-end"
-                                        style="width: 40px;font-weight:700;"
+                                        style="width: 40px;font-weight:700;border:1px solid #ccc;"
                                     >
                                         <strong>UG. Qty</strong>
                                     </th>
                                     <th
                                         class="text-end"
-                                        style="width: 60px;font-weight:700;"
+                                        style="width: 60px;font-weight:700;border:1px solid #ccc;"
                                     >
                                         <strong>Total</strong>
                                     </th>
                                     <th
                                         class="text-end"
-                                        style="white-space:nowrap;width:100px;font-weight:700;"
+                                        style="white-space:nowrap;width:120px;font-weight:700;border:1px solid #ccc;"
                                     >
                                         <strong>Theoretical Qty</strong>
                                     </th>
@@ -107,21 +107,21 @@
                                     t-foreach="quants.sorted(key=lambda l: l.product_name)"
                                     t-as="line"
                                 >
-                                    <td class="text-end">
+                                    <td class="text-end" style="border:1px solid #ccc;">
                                         <span t-field="line.package_qty" />
                                     </td>
-                                    <td>
+                                    <td style="border:1px solid #ccc;">
                                         <span t-field="line.product_id.default_code" />
                                     </td>
                                     <td
-                                        style="white-space: nowrap; max-width: 150px; overflow: hidden; text-overflow: ellipsis;"
+                                        style="white-space: nowrap; max-width: 150px; overflow: hidden; text-overflow: ellipsis;border:1px solid #ccc;"
                                     >
                                         <span t-field="line.product_id.name" />
                                     </td>
-                                    <td class="text-end" />
-                                    <td class="text-end" />
-                                    <td class="text-end" />
-                                    <td class="text-end">
+                                    <td class="text-end" style="border:1px solid #ccc;" />
+                                    <td class="text-end" style="border:1px solid #ccc;"  />
+                                    <td class="text-end" style="border:1px solid #ccc;"  />
+                                    <td class="text-end" style="border:1px solid #ccc;" >
                                         <span
                                             class="text-end"
                                             t-field="line.quantity"
