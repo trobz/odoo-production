@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<odoo>
+    <!-- Make Point of Sale the first root app menu, so a user with no Home
+         Action configured (res.users.action_id) lands on the PoS dashboard
+         when opening the backend instead of another app. -->
+    <record id="point_of_sale.menu_point_root" model="ir.ui.menu">
+        <field name="sequence">1</field>
+    </record>
+</odoo>
