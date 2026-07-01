@@ -52,3 +52,28 @@ def migrate(cr, version):
         )
 
     logger.info("Migrated project.category to project.tags")
+
+    env.cr.execute(
+        """
+        SELECT 1 FROM information_schema.columns
+        WHERE table_name = 'project_task' AND column_name = 'project_categ_id'
+        """
+    )
+    if not env.cr.fetchone():
+        return
+
+    env.cr.execute(
+        """
+        INSERT INTO project_tags_project_task_rel (
+            project_tags_id,
+            project_task_id
+        )
+        SELECT DISTINCT pt.id, task.id
+        FROM project_task task
+        JOIN project_category pc ON pc.id = task.project_categ_id
+        JOIN project_tags pt ON pt.name->>'en_US' = pc.name
+        ON CONFLICT DO NOTHING
+        """
+    )
+
+    logger.info("Migrated project.task.project_categ_id to tag_ids")
