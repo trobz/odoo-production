@@ -217,7 +217,7 @@
         name="FTOP Seats"
         parent="coop_shift.shift_menu"
         sequence="9"
-        groups="coop_shift.group_shift_user,coop_membership.group_membership_bdm_presence"
+        groups="coop_shift.group_shift_user,coop_membership.group_membership_bdm_presence,coop_membership.group_membership_bdm_saisie"
     />
 
     <menuitem
