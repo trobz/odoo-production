@@ -1,9 +1,9 @@
-import {KanbanRenderer} from "@web/views/kanban/kanban_renderer";
+import {ProjectTaskKanbanRenderer} from "@project/views/project_task_kanban/project_task_kanban_renderer";
 import {onMounted} from "@odoo/owl";
 import {renderToString} from "@web/core/utils/render";
 import {useService} from "@web/core/utils/hooks";
 
-export class KanbanProjectRenderer extends KanbanRenderer {
+export class KanbanProjectRenderer extends ProjectTaskKanbanRenderer {
     setup() {
         super.setup();
         this.orm = useService("orm");
@@ -48,9 +48,12 @@ export class KanbanProjectRenderer extends KanbanRenderer {
     _filterByTag(tagId, tagName) {
         const searchModel = this.env.searchModel;
 
-        // Find any existing coop category filter
+        // Find any currently active coop category filter. Inactive ones (e.g.
+        // removed via the search bar's "x") must be ignored: toggling them
+        // again would reactivate them instead of leaving them removed.
+        const activeIds = new Set(searchModel.query.map((queryElem) => queryElem.searchItemId));
         const existingFilters = Object.values(searchModel.searchItems).filter(
-            (item) => item.type === "filter" && item.isCoopCategFilter
+            (item) => item.type === "filter" && item.isCoopCategFilter && activeIds.has(item.id)
         );
         const sameFilter = existingFilters.find((item) => item.coopCategId === tagId);
 
