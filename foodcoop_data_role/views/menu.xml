@@ -28,13 +28,19 @@
     <record model="ir.ui.menu" id="coop_shift.template_menu">
         <field
             name="groups_id"
-            eval="[Command.unlink(ref('coop_membership.group_membership_bdm_presence'))]"
+            eval="[
+            Command.unlink(ref('coop_membership.group_membership_bdm_presence')),
+            Command.link(ref('foodcoop_data_role.group_BDMSaisie')),
+        ]"
         />
     </record>
     <record model="ir.ui.menu" id="coop_membership.menu_res_partner_former_member">
         <field
             name="groups_id"
-            eval="[Command.link(ref('foodcoop_data_role.group_BDMSaisie'))]"
+            eval="[
+            Command.link(ref('foodcoop_data_role.group_BDMSaisie')),
+            Command.unlink(ref('coop_membership.group_membership_bdm_presence')),
+        ]"
         />
     </record>
     <record
@@ -43,7 +49,10 @@
     >
         <field
             name="groups_id"
-            eval="[Command.link(ref('foodcoop_data_role.group_BDMSaisie'))]"
+            eval="[
+            Command.link(ref('foodcoop_data_role.group_BDMSaisie')),
+            Command.unlink(ref('coop_membership.group_membership_bdm_presence')),
+        ]"
         />
     </record>
     <record model="ir.ui.menu" id="coop_membership.menu_res_partner_all_partners">
@@ -55,7 +64,10 @@
     <record model="ir.ui.menu" id="coop_shift.menu_shift_shift">
         <field
             name="groups_id"
-            eval="[Command.link(ref('foodcoop_data_role.group_BDMSaisie'))]"
+            eval="[
+            Command.link(ref('foodcoop_data_role.group_BDMSaisie')),
+            Command.unlink(ref('coop_membership.group_membership_bdm_presence')),
+        ]"
         />
     </record>
     <record model="ir.ui.menu" id="coop_shift.menu_shift_extension">

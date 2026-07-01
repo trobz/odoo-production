@@ -21,20 +21,13 @@
             ref="coop_membership.view_personal_information_gender"
         />
         <field name="arch" type="xml">
-            <field name="gender" position="attributes">
+            <xpath expr="//field[@name='gender'][2]" position="attributes">
                 <attribute
                     name="groups"
                     separator=","
                     add="foodcoop_data_role.group_Subscription"
                 />
-            </field>
-            <field name="gender" position="attributes">
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="foodcoop_data_role.group_Subscription"
-                />
-            </field>
+            </xpath>
         </field>
     </record>
 </odoo>
