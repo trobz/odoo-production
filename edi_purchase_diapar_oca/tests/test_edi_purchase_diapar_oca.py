@@ -105,7 +105,7 @@ class TestEdiPurchaseDiaparOCA(TransactionCase):
         )
         self.assertEqual(
             str(file_content).strip(),
-            f"{constant_file_start}A{vrp_code}B{customer_code}"
+            f"{constant_file_start} A{vrp_code}B{customer_code}"
             f"{mapping_line_1}{mapping_line_2}{constant_file_end}",
         )
 
