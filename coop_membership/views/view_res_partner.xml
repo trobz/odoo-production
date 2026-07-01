@@ -297,7 +297,7 @@
                 <attribute
                     name="groups"
                     separator=","
-                    add="coop_membership.group_membership_bdm_presence"
+                    add="coop_membership.group_membership_bdm_saisie"
                 />
                 <attribute name="required">is_member</attribute>
             </field>
@@ -448,7 +448,7 @@
                 <field
                     name="birthdate_date"
                     widget="date"
-                    groups="coop_shift.group_shift_user,coop_membership.group_membership_bdm_presence,coop_membership.group_membership_bdm_saisie"
+                    groups="coop_shift.group_shift_user,coop_membership.group_membership_bdm_saisie"
                     required="is_minor_child"
                 />
                 <field
@@ -1075,13 +1075,6 @@
                 />
             </field>
             <field name="mobile" position="attributes">
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="coop_membership.group_membership_bdm_saisie"
-                />
-            </field>
-            <field name="birthdate_date" position="attributes">
                 <attribute
                     name="groups"
                     separator=","
