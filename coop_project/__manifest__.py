@@ -21,7 +21,6 @@
             "coop_project/static/src/xml/kanban.xml",
             "coop_project/static/src/js/calendar_renderer.esm.js",
             "coop_project/static/src/js/kanban_project_renderer.esm.js",
-            "coop_project/static/src/js/kanban_project_view.esm.js",
         ],
     },
     "test": [],
