@@ -201,6 +201,7 @@
             ref('coop_shift.group_shift_cancel_shifts'),
             ref('coop_membership.group_membership_access_photo'),
             ref('coop_membership.group_membership_see_associated_people'),
+            ref('base.group_allow_export'),
         ])]"
         />
     </record>
