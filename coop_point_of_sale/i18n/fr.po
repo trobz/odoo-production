@@ -341,7 +341,7 @@ msgstr "La date"
 #. odoo-javascript
 #: code:addons/coop_point_of_sale/static/src/overrides/screens/payment_screen/payment_screen.esm.js:0
 msgid "The order: "
-msgstr "La commande : "
+msgstr "L'ordre: "
 
 #. module: coop_point_of_sale
 #. odoo-javascript
