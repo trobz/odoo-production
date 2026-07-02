@@ -35,6 +35,7 @@ patch(PartnerList.prototype, {
                 "=",
                 field === "barcode_base" ? Number(numberString) : numberString,
             ]),
+            ["customer", "=", true],
         ];
         return await this.pos.data.searchRead("res.partner", domain, [], {
             limit: 1,
