@@ -12,19 +12,19 @@
             word-break: break-word;
         }
     }
-    .o_data_row:not(.o_selected_row) {
-        .o_list_char,
-        .o_list_many2one {
-            white-space: normal !important;
-            .o_field_widget {
-                span:not(.o_m2o_avatar) {
-                    overflow: visible !important;
-                    text-overflow: clip !important;
-                    white-space: normal !important;
-                }
-            }
-        }
-    }
+    // .o_data_row:not(.o_selected_row) {
+    //     .o_list_char,
+    //     .o_list_many2one {
+    //         white-space: normal !important;
+    //         .o_field_widget {
+    //             span:not(.o_m2o_avatar) {
+    //                 overflow: visible !important;
+    //                 text-overflow: clip !important;
+    //                 white-space: normal !important;
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 .o_form_renderer.flex-column > .o_form_sheet_bg.o_fullwidth {
