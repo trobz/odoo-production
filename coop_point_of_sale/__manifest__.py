@@ -24,6 +24,7 @@
     "data": [
         "security/ir.model.access.csv",
         "data/barcode_rule.xml",
+        "data/menu.xml",
         "views/view_pos_order.xml",
         "views/view_pos_session.xml",
         "views/view_pos_order_line.xml",
