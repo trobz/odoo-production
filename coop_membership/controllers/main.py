@@ -237,13 +237,13 @@ class WebsiteRegisterMeeting(http.Controller):
             partner_val = self._prepare_partner_val(partner_val, **post)
             # Create contact partner
             partner = self.create_contact_partner(partner_val, user)
-            website = "/discovery"
+            register_success_url = user_company.website or "/discovery"
 
             if partner:
                 attendee.partner_id = partner.id
 
                 if partner.company_id.website:
-                    website = partner.company_id.website
+                    register_success_url = partner.company_id.website
 
                 if social_registration == "yes":
                     partner.set_underclass_population()
@@ -260,7 +260,7 @@ class WebsiteRegisterMeeting(http.Controller):
                     #     (6, 0, (contract.ids))]
                     template_email.sudo().send_mail(attendee.id)
 
-            value = {"website": website}
+            value = {"register_success_url": register_success_url}
 
             return request.render("coop_membership.register_submit_form_success", value)
 
