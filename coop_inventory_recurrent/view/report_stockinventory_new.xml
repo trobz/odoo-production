@@ -96,7 +96,7 @@
                                     </th>
                                     <th
                                         class="text-end"
-                                        style="white-space:nowrap;width:120px;font-weight:700;border:1px solid #ccc;"
+                                        style="white-space:nowrap;width:60px;font-weight:700;border:1px solid #ccc;"
                                     >
                                         <strong>Theoretical Qty</strong>
                                     </th>
@@ -114,7 +114,7 @@
                                         <span t-field="line.product_id.default_code" />
                                     </td>
                                     <td
-                                        style="white-space: nowrap; max-width: 150px; overflow: hidden; text-overflow: ellipsis;border:1px solid #ccc;"
+                                        style="padding-right: 5px; white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis;border:1px solid #ccc;"
                                     >
                                         <span t-field="line.product_id.name" />
                                     </td>
@@ -126,7 +126,9 @@
                                             class="text-end"
                                             t-field="line.quantity"
                                         />
+                                        <!-- UoM should be hidden?? -->
                                         <span
+                                            t-if="False" 
                                             class="text-end"
                                             t-field="line.product_uom_id"
                                             groups="uom.group_uom"
