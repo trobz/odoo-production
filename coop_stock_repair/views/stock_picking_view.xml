@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="repair_view_picking_form_access_fix" model="ir.ui.view">
+        <field name="name">stock.picking.form.repair.access.fix</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="repair.repair_view_picking_form" />
+        <field name="arch" type="xml">
+            <!-- The 'repair' module adds this field/button without any
+                 'groups' restriction, so opening a picking form computes
+                 nbr_repairs (reads repair.order) for every user, even
+                 those without Inventory access (e.g. POS cashiers),
+                 raising an Access Error instead of just hiding the button. -->
+            <field name="repair_ids" position="attributes">
+                <attribute name="groups">stock.group_stock_user</attribute>
+            </field>
+            <button name="action_view_repairs" position="attributes">
+                <attribute name="groups">stock.group_stock_user</attribute>
+            </button>
+        </field>
+    </record>
+</odoo>
