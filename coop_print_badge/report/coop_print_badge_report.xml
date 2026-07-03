@@ -8,8 +8,7 @@
         <field
             name="groups_id"
             eval="[
-            (4, ref('coop_membership.group_membership_access_user')),
-            (4, ref('coop_membership.group_membership_see_associated_people'))
+            (6, 0, [ref('coop_shift.group_shift_user')])
         ]"
         />
         <field name="attachment_use" eval="False" />

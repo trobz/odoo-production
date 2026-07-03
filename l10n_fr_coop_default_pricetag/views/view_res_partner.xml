@@ -11,11 +11,6 @@
                     separator=","
                     add="coop_shift.group_shift_user"
                 />
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="coop_membership.group_membership_bdm_presence"
-                />
             </field>
         </field>
     </record>

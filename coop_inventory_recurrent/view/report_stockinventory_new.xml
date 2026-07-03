@@ -47,7 +47,7 @@
                             </thead>
                             <tbody>
                                 <tr
-                                    style="border-bottom:1px solid #ccc;border-top:1px solid #ccc;"
+                                    style="border-top:1px solid #ccc;"
                                 >
                                     <td>
                                         <span
@@ -159,6 +159,11 @@
             name="paperformat_id"
             ref="coop_inventory.paperformat_inventory_adjust"
         />
+        <field name="binding_model_id" ref="stock_inventory.model_stock_inventory" />
+    </record>
+
+    <record id="coop_inventory.action_report_stock_inventory_group" model="ir.actions.report">
+        <field name="binding_model_id" eval="False" />
     </record>
 
     <template

@@ -7,15 +7,18 @@
     <t t-name="coop_project.ProjectKanban.Category">
         <div class="o_kanban_project_panel_section">
             <t t-foreach="categories" t-as="category" t-key="category.id">
-                <div class="o_kanban_project_panel_value list-group-item">
+                <div
+                    class="o_kanban_project_panel_value list-group-item block-color-act"
+                    t-att-data-id="category.id"
+                    t-att-data-categ-name="category.name"
+                    style="cursor: pointer;"
+                >
                     <div class="o_kanban_project_panel_label_title">
-                        <t t-out="category.name" /> =
+                        <t t-out="category.name" /><span class="mx-1">=</span>
                     </div>
                     <div
-                        class="ml-2 block-color-act"
-                        t-att-data-id="category.id"
-                        t-att-data-categ-name="category.name"
-                        t-att-style="'cursor: pointer;width: 50px;height: 20px;background-color:' + category.color"
+                        class="block-color-swatch"
+                        t-att-style="'width: 50px;height: 20px;background-color:' + category.color"
                     />
                 </div>
             </t>

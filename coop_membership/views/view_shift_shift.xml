@@ -97,24 +97,24 @@
                 <attribute name="readonly">state != 'draft'</attribute>
                 <attribute
                     name="groups"
-                >coop_shift.group_shift_user,coop_membership.group_membership_access_user</attribute>
+                >coop_shift.group_shift_user,coop_membership.group_membership_bdm_saisie</attribute>
             </field>
 
             <button name="button_confirm" position="attributes">
                 <attribute
                     name="groups"
-                >coop_membership.group_employee_native_menu</attribute>
+                >coop_shift.group_shift_user,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
             <button name="button_draft" position="attributes">
                 <attribute
                     name="groups"
-                >coop_membership.group_employee_native_menu</attribute>
+                >coop_shift.group_shift_user,coop_membership.group_membership_bdm_saisie</attribute>
             </button>
 
             <xpath expr="//div[hasclass('oe_title')]" position="attributes">
                 <attribute
                     name="groups"
-                >coop_shift.group_shift_user,coop_membership.group_membership_access_user,coop_membership.group_membership_bdm_saisie</attribute>
+                >coop_shift.group_shift_user,coop_membership.group_membership_bdm_saisie</attribute>
             </xpath>
             <xpath expr="//div[@name='button_box']" position="after">
                 <div

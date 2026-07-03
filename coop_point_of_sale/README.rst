@@ -22,16 +22,16 @@ Coop - Point of Sale Custom views
 
 |badge1| |badge2| |badge3|
 
--  Affiche la photo des clients en format grand (champ
-   'res_partner.image') au lieu d'afficher l'image petite.
-   ('res_partner.image_small')
+- Affiche la photo des clients en format grand (champ
+  'res_partner.image') au lieu d'afficher l'image petite.
+  ('res_partner.image_small')
 
 Note: pour un fonctionnement correct, il faut donc que l'image du client
 soit carré dans son format d'origine, pour éviter les distorsions.
 
--  Améliore l'affichage du détail de la fiche client.
--  Stocke le montant total des commandes en bdd pour pouvoir filtrer
-   dessus
+- Améliore l'affichage du détail de la fiche client.
+- Stocke le montant total des commandes en bdd pour pouvoir filtrer
+  dessus
 
 |image|
 
@@ -66,13 +66,14 @@ Authors
 Contributors
 ------------
 
--  Sylvain LE GAL <https://twitter.com/legalsylvain>
--  Julien Weste
--  Iván Todorovich
--  Druidoo <https://www.druidoo.io>
--  Trobz <https://www.trobz.com>
+- Sylvain LE GAL
+  <`https://twitter.com/legalsylvain\\> <https://twitter.com/legalsylvain\>>`__
+- Julien Weste
+- Iván Todorovich
+- Druidoo <`https://www.druidoo.io\\> <https://www.druidoo.io\>>`__
+- Trobz <`https://www.trobz.com\\> <https://www.trobz.com\>>`__
 
-   -  Phan Hong Phuc <<phucph@trobz.com>>
+  - Phan Hong Phuc <<phucph@trobz.com>>
 
 Maintainers
 -----------

@@ -14,7 +14,7 @@ class ResPartner(models.Model):
     def _load_pos_data_domain(self, data):
         domain = super()._load_pos_data_domain(data)
         domain += [
-            ("customer_rank", ">=", 1),
+            ("customer", "=", True),
             ("is_deceased", "=", False),
         ]
         return domain

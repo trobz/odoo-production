@@ -48,7 +48,6 @@
             <xpath expr="//kanban" position="attributes">
                 <attribute name="on_create" />
                 <attribute name="quick_create">0</attribute>
-                <attribute name="js_class">project_legend_kanban</attribute>
             </xpath>
             <xpath expr="//field[@name='color']" position="attributes">
                 <attribute name="invisible">1</attribute>
