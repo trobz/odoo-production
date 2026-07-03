@@ -40,6 +40,7 @@
             eval="[
             Command.link(ref('foodcoop_data_role.group_BDMSaisie')),
             Command.link(ref('foodcoop_data_role.group_Subscription')),
+            Command.link(ref('foodcoop_data_role.group_Accountant')),
             Command.unlink(ref('coop_membership.group_membership_bdm_presence')),
         ]"
         />

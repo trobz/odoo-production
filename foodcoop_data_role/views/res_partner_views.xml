@@ -8,14 +8,14 @@
                 <attribute
                     name="groups"
                     separator=","
-                    add="foodcoop_data_role.group_Subscription,foodcoop_data_role.group_Teamleader"
+                    add="foodcoop_data_role.group_Subscription,foodcoop_data_role.group_Teamleader,foodcoop_data_role.group_Accountant"
                 />
             </xpath>
             <group name="membership" position="attributes">
                 <attribute
                     name="groups"
                     separator=","
-                    add="coop_membership.group_membership_bdm_saisie,foodcoop_data_role.group_Subscription"
+                    add="coop_membership.group_membership_bdm_saisie,foodcoop_data_role.group_Subscription,foodcoop_data_role.group_Accountant"
                 />
             </group>
         </field>
