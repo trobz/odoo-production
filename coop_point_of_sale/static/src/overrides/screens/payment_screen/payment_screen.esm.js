@@ -18,7 +18,7 @@ patch(PaymentScreen.prototype, {
         const thanks_message = _t("Please check the cheque: ");
         const amount = _t("The amount");
         const date = _t("The date");
-        const order_messages = _t("The order: " + payableTo);
+        const order_messages = _t("The order: ") + payableTo;
         const signature = _t("The presence of a signature");
         return {
             thanks_message: thanks_message,
