@@ -35,6 +35,7 @@
         "maintenance",
         "account_mass_reconcile",
         "coop_delivery_category",
+        "product_history",
     ],
     "data": [
         "data/res_groups.xml",

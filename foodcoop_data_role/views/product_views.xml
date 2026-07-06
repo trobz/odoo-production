@@ -14,4 +14,17 @@
             </page>
         </field>
     </record>
+
+    <!-- Hide the "History" tab from Inventory Manager. -->
+    <record id="view_template_history_form_restrict" model="ir.ui.view">
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product_history.view_template_history_form" />
+        <field name="arch" type="xml">
+            <page name="history" position="attributes">
+                <attribute
+                    name="groups"
+                >foodcoop_data_role.group_Purchaser,foodcoop_data_role.group_Purchase_Manager,foodcoop_data_role.group_Accountant,foodcoop_data_role.group_Foodcoop_Admin,base.group_system</attribute>
+            </page>
+        </field>
+    </record>
 </odoo>
