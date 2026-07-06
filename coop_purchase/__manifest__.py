@@ -28,6 +28,7 @@
         "report/purchase_quotation_templates.xml",
         "wizard/supplier_info_update.xml",
         "views/purchase_view.xml",
+        "views/stock_move_views.xml",
         "views/res_config_settings_view.xml",
         "views/account_move_views.xml",
         "views/product_supplierinfo_view.xml",
