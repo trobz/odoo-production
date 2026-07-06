@@ -240,4 +240,7 @@
         name="Mail Templates"
         parent="coop_shift.menu_shift_configuration"
     />
+    <record model="ir.ui.menu" id="purchase.menu_purchase_uom_form_action">
+        <field name="parent_id" ref="purchase.menu_product_in_config_purchase" />
+    </record>
 </odoo>
