@@ -144,6 +144,7 @@
             ref('group_Member_Accountant'),
             ref('group_Accountant'),
             ref('base.group_system'),
+            ref('point_of_sale.group_pos_user'),
         ])]"
         />
     </record>
@@ -169,5 +170,28 @@
     </record>
     <record model="res.groups" id="account.group_account_user">
         <field name="users" eval="[Command.link(ref('base.user_admin'))]" />
+    </record>
+
+    <!-- Remove Todo menu for all roles (Apps already restricted to base.group_system) -->
+    <record model="ir.ui.menu" id="project_todo.menu_todo_todos">
+        <field name="groups_id" eval="[Command.set([ref('base.group_system')])]"/>
+    </record>
+
+    <!-- Remove 'Employees / Employee Limit' from Employee and Dashboard HR menus;
+         add 'Employees / Manager' to Dashboard -->
+    <record model="ir.ui.menu" id="hr.menu_hr_root">
+        <field
+            name="groups_id"
+            eval="[Command.unlink(ref('coop_membership.group_employee_native_menu'))]"
+        />
+    </record>
+    <record model="ir.ui.menu" id="hr.menu_hr_main">
+        <field
+            name="groups_id"
+            eval="[
+            Command.unlink(ref('coop_membership.group_employee_native_menu')),
+            Command.link(ref('hr.group_hr_manager')),
+        ]"
+        />
     </record>
 </odoo>
