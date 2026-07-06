@@ -5,61 +5,80 @@
             <tr t-foreach="docs['Wallcharts']" t-as="wallchart">
                 <t t-call="web.external_layout">
                     <div class="page" style="page-break-after:always">
-                        <div class="row mt8 mb8 ">
+                        <div class="row mt8 mb8">
                             <div class="col-6">
-                                <h3>Template Inscriptions: <span
-                                    t-esc="wallchart['day']"
+                                <h3
+                                    style="font-weight: 700;"
+                                >Template Inscriptions: <span
+                                    t-out="wallchart['day']"
                                 /></h3>
                             </div>
                             <div class="col-6 text-right">
-                                <h4>Regular workers sign-ups as of<br /><span
-                                    t-esc="date.strftime(date.today(),'%d/%m/%Y')"
+                                <h4
+                                    style="font-weight: 700;"
+                                >Regular workers sign-ups as of<br /><span
+                                    t-out="date.strftime(date.today(),'%d/%m/%Y')"
                                 /></h4>
                             </div>
                         </div>
                         <table class="table table-bordered" style="font-size: 11px;">
                             <thead>
                                 <tr>
-                                    <th width="8%">Time</th>
-                                    <th t-foreach="wallchart['weeks']" t-as="week">
-                                    Week <t t-esc="week[1]" /> <span
-                                        t-esc="wallchart['next_dates']['week%s' % week[1]]"
+                                    <th
+                                        class="text-center"
+                                        width="8%"
+                                        style="font-weight:700;border:1px solid #ccc;"
+                                    >Time</th>
+                                    <th
+                                        class="text-center"
+                                        t-foreach="wallchart['weeks']"
+                                        t-as="week"
+                                        style="font-weight:700;border:1px solid #ccc;"
+                                    >
+                                        Week <t t-out="week[1]" /> <span
+                                        t-out="wallchart['next_dates']['week%s' % week[1]]"
                                     />
-                                </th>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr
                                     t-foreach="wallchart['times']"
                                     t-as="time"
-                                    style="page-break-inside:avoid; page-break-after:auto"
+                                    style="page-break-inside:avoid; page-break-after:auto;border:1px solid #ccc;"
                                 >
-                                    <td><span t-esc="time['start_time']" /> - <span
-                                        t-esc="time['end_time']"
+                                    <td
+                                        style="border:1px solid #ccc;padding-left:6px;"
+                                    ><span t-out="time['start_time']" /> - <span
+                                        t-out="time['end_time']"
                                     /></td>
-                                    <td t-foreach="wallchart['weeks']" t-as="week">
+                                    <td
+                                        style="border:1px solid #ccc;"
+                                        t-foreach="wallchart['weeks']"
+                                        t-as="week"
+                                    >
                                         <t t-set="num" t-value="1" />
                                         <t
                                             t-foreach="time['partners%s' % week[1]]"
                                             t-as="partner"
                                         >
                                             <t t-if="partner['dates']">
-                                            <span t-esc="num" /> - <span
-                                                t-esc="partner['dates']"
+                                                <span t-out="num" /> - <span
+                                                t-out="partner['dates']"
                                             /><br /><br />
-                                            <t t-set="num" t-value="num + 1" />
-                                        </t>
+                                                <t t-set="num" t-value="num + 1" />
+                                            </t>
                                         </t>
                                         <t
                                             t-foreach="time['free_seats%s' % week[1]]"
                                             t-as="free_seat"
                                         >
-                                        <t
+                                            <t
                                             t-set="number"
                                             t-value="free_seat_index + num"
                                         />
-                                        <span t-esc="number" /> - <br /><br />
-                                    </t>
+                                            <span t-out="number" /> - <br /><br />
+                                        </t>
                                     </td>
                                 </tr>
                             </tbody>
@@ -76,26 +95,35 @@
                     <div class="page" style="page-break-after:always">
                         <div class="row mt8 mb8 ">
                             <div class="col-6">
-                                <h3>Shift Inscriptions: <span
-                                    t-esc="wallchart['day']"
+                                <h3 style="font-weight: 700;">Shift Inscriptions: <span
+                                    t-out="wallchart['day']"
                                 /></h3>
                             </div>
                             <br />
                             <div class="col-6 text-right">
-                                <h4>FTOP Workers sign-ups as of<br /><span
-                                    t-esc="date.strftime(date.today(),'%d/%m/%Y')"
+                                <h4
+                                    style="font-weight: 700;"
+                                >FTOP Workers sign-ups as of<br /><span
+                                    t-out="date.strftime(date.today(),'%d/%m/%Y')"
                                 /></h4>
                             </div>
                         </div>
                         <table class="table table-bordered" style="font-size: 11px;">
                             <thead>
                                 <tr>
-                                    <th width="8%">Time</th>
+                                    <th
+                                        class="text-center"
+                                        width="8%"
+                                        style="font-weight:700;border:1px solid #ccc;"
+                                    >Time</th>
                                     <t t-foreach="wallchart['header']" t-as="header">
-                                        <th>Week <span
-                                            t-esc="header['week_letter']"
+                                        <th
+                                            class="text-center"
+                                            style="font-weight:700;border:1px solid #ccc;"
+                                        >Week <span
+                                            t-out="header['week_letter']"
                                         /> - <span
-                                            t-esc="date.strftime(header['date'],'%d/%m/%Y')"
+                                            t-out="date.strftime(header['date'],'%d/%m/%Y')"
                                         /></th>
                                     </t>
                                 </tr>
@@ -103,30 +131,35 @@
                             <tbody>
                                 <tr t-foreach="wallchart['times']" t-as="time">
                                     <t t-set="num" t-value="1" />
-                                    <td><span t-esc="time['start_time']" /> - <span
-                                        t-esc="time['end_time']"
+                                    <td
+                                        style="border:1px solid #ccc;padding-left:6px;"
+                                    ><span t-out="time['start_time']" /> - <span
+                                        t-out="time['end_time']"
                                     /></td>
                                     <t t-foreach="time['shift_list']" t-as="shift">
-                                        <td>
+                                        <td style="border:1px solid #ccc;">
                                             <t
                                                 t-foreach="shift['partners']"
                                                 t-as="partner"
                                             >
-                                            <span t-esc="partner_index + 1" /> - <span
-                                                t-esc="partner.name"
-                                            /><br />
-                                            <t t-set="num" t-value="partner_size + 1" />
-                                        </t>
+                                                <span
+                                                t-out="partner_index + 1"
+                                            /> - <span t-out="partner.name" /><br />
+                                                <t
+                                                t-set="num"
+                                                t-value="partner_size + 1"
+                                            />
+                                            </t>
                                             <t
                                                 t-foreach="shift['free_seats']"
                                                 t-as="free_seat"
                                             >
-                                            <t
+                                                <t
                                                 t-set="number"
                                                 t-value="free_seat_index + num"
                                             />
-                                            <span t-esc="number" /> - <br /><br />
-                                        </t>
+                                                <span t-out="number" /> - <br /><br />
+                                            </t>
                                         </td>
                                     </t>
                                 </tr>
@@ -138,13 +171,17 @@
         </t>
     </template>
     <template id="external_layout_standard" inherit_id="web.external_layout_standard">
+        <xpath
+            expr="//img[hasclass('o_company_logo_small')]/parent::div"
+            position="after"
+        >
+            <div style="border-bottom:1px solid #ccc; width:100%; margin-bottom:5px;" />
+        </xpath>
         <xpath expr="//li[@t-if='not forced_vat']" position="attributes">
             <attribute name="t-if" add="False" separator="and" />
         </xpath>
-        <xpath expr="//li[@t-else='']/t[@t-esc]" position="attributes">
-            <attribute name="t-if">False</attribute>
-        </xpath>
-        <xpath expr="//li[@t-else='']/span[@t-esc='forced_vat']" position="attributes">
+        <xpath expr="//li[@t-else='']/t[@t-esc]/parent::li" position="attributes">
+            <attribute name="t-else" remove="" />
             <attribute name="t-if">False</attribute>
         </xpath>
     </template>
