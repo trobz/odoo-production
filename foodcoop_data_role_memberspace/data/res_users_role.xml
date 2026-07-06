@@ -8,4 +8,12 @@
             Command.link(ref('coop_memberspace.group_memberspace')),
         ]"/>
     </record>
+
+    <!-- Add memberspace group to Foodcoop Admin for coops where memberspace is installed -->
+    <record id="foodcoop_data_role.res_users_role_Foodcoop_Admin" model="res.users.role">
+        <field
+            name="implied_ids"
+            eval="[Command.link(ref('coop_memberspace.group_memberspace'))]"
+        />
+    </record>
 </odoo>
