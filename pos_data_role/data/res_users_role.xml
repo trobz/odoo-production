@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<odoo>
+    <!-- Add Cashlogy config group to POS Manager and Foodcoop Admin -->
+    <record id="foodcoop_data_role.res_users_role_POS_Manager" model="res.users.role">
+        <field
+            name="implied_ids"
+            eval="[Command.link(ref('pos_automatic_cashdrawer_cashlogy.group_pos_automatic_cashlogy_config'))]"
+        />
+    </record>
+    <record id="foodcoop_data_role.res_users_role_Foodcoop_Admin" model="res.users.role">
+        <field
+            name="implied_ids"
+            eval="[Command.link(ref('pos_automatic_cashdrawer_cashlogy.group_pos_automatic_cashlogy_config'))]"
+        />
+    </record>
+</odoo>
