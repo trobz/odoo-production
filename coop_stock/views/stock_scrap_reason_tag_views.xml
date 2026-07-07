@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_stock_scrap_reason_tag_list" model="ir.ui.view">
+        <field name="name">stock.scrap.reason.tag.list</field>
+        <field name="model">stock.scrap.reason.tag</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+            </list>
+        </field>
+    </record>
+
+    <record id="action_stock_scrap_reason_tag" model="ir.actions.act_window">
+        <field name="name">Stock Scrap Origin</field>
+        <field name="res_model">stock.scrap.reason.tag</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
