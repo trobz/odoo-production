@@ -97,7 +97,7 @@
                 <attribute name="readonly">state != 'draft'</attribute>
                 <attribute
                     name="groups"
-                >coop_shift.group_shift_user,coop_membership.group_membership_bdm_saisie</attribute>
+                >coop_shift.group_shift_user</attribute>
             </field>
 
             <button name="button_confirm" position="attributes">
