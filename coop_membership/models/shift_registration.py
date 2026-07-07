@@ -599,7 +599,9 @@ class ShiftRegistration(models.Model):
             if registration.date_begin:
                 date_begin = fields.Date.to_string(registration.date_begin)
             shift_name = registration.shift_id.name or ""
-            registration.display_name = shift_name + (" " + date_begin if date_begin else "")
+            registration.display_name = shift_name + (
+                " " + date_begin if date_begin else ""
+            )
 
     def checking_shift_attendance(self):
         """
