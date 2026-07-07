@@ -394,13 +394,18 @@ reason tags.</li>
 </div>
 <div class="section" id="configuration">
 <h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
-<ol class="arabic simple">
-<li>Go to <strong>Inventory → Configuration → Stock Scrap Origin</strong> and create
-the reason tags you want to make available in POS.</li>
-<li>Go to <strong>Point of Sale → Configuration → Point of Sale</strong>, open your
-POS and:<ul>
+<ol class="arabic">
+<li><p class="first">Go to <strong>Inventory → Configuration → Scrap Reason Codes</strong> and create
+the reason codes you want to make available in POS.</p>
+<p>Each reason code can optionally define a <strong>Scrap Location</strong>
+(overrides the default destination) and restrict usage to specific
+<strong>Product Categories</strong>.</p>
+</li>
+<li><p class="first">Go to <strong>Point of Sale → Configuration → Point of Sale</strong>, open your
+POS and:</p>
+<ul class="simple">
 <li>Set <strong>Scrap Order Option</strong> (e.g. <em>Always create Scrap Order</em>).</li>
-<li>Add the allowed reason tags in the <strong>Scrap Origin</strong> field.</li>
+<li>Add the allowed reason codes in the <strong>Scrap Origin</strong> field.</li>
 </ul>
 </li>
 </ol>
