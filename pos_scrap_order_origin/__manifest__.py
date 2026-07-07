@@ -13,6 +13,7 @@
     "data": [
         "security/ir.model.access.csv",
         "views/pos_config.xml",
+        "views/stock_scrap_reason_tag_views.xml",
     ],
     "assets": {
         "point_of_sale._assets_pos": [

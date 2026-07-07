@@ -12,17 +12,10 @@ class StockQuant(models.Model):
         compute="_compute_category_group_line_id",
     )
 
-    @api.depends("product_id.categ_id", "current_inventory_id")
+    @api.depends("current_inventory_id")
     def _compute_category_group_line_id(self):
-        GroupLine = self.env["stock.inventory.category.group.line"]
         for quant in self:
-            inv_line = quant.current_inventory_id.category_group_line_id
-            if inv_line:
-                quant.category_group_line_id = inv_line
-            else:
-                quant.category_group_line_id = GroupLine.search(
-                    [("category_id", "=", quant.product_id.categ_id.id)], limit=1
-                )
+            quant.category_group_line_id = quant.current_inventory_id.category_group_line_id
 
     def get_copi_variants(self):
         res0 = []

@@ -103,4 +103,30 @@
     <record id="purchase.menu_purchase_rfq" model="ir.ui.menu">
         <field name="sequence" eval="2" />
     </record>
+
+    <record id="purchase.menu_product_pricelist_action2_purchase" model="ir.ui.menu">
+        <field name="parent_id" ref="purchase.menu_procurement_management" />
+        <field name="sequence" eval="120" />
+    </record>
+
+    <menuitem
+        id="menu_purchase_control"
+        name="Control"
+        parent="purchase.menu_purchase_root"
+        sequence="4"
+    />
+    <menuitem
+        id="menu_purchase_control_bills"
+        name="Vendor Bills"
+        action="account.action_move_in_invoice"
+        parent="menu_purchase_control"
+        sequence="13"
+    />
+    <menuitem
+        id="menu_purchase_control_refunds"
+        name="Vendor Refunds"
+        action="account.action_move_in_refund_type"
+        parent="menu_purchase_control"
+        sequence="15"
+    />
 </odoo>

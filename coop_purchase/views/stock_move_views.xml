@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="view_move_tree_receipt_picking_inherit" model="ir.ui.view">
+        <field name="name">stock.move.tree2.inherit</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_tree_receipt_picking" />
+        <field name="arch" type="xml">
+            <field name="date" position="attributes">
+                <attribute name="column_invisible">0</attribute>
+                <attribute name="string">Expected Date</attribute>
+                <attribute name="widget">datetime</attribute>
+                <attribute name="options">{'show_time': False}</attribute>
+            </field>
+            <field name="date" position="after">
+                <field
+                    name="create_date"
+                    string="Date"
+                    widget="datetime"
+                    options="{'show_time': False}"
+                />
+            </field>
+            <field name="product_uom_qty" position="attributes">
+                <attribute name="string">Initial Demand</attribute>
+            </field>
+        </field>
+    </record>
+    <record id="action_receipt_picking_move" model="ir.actions.act_window">
+        <field name="name">Incoming Products</field>
+        <field name="res_model">stock.move</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field
+            name="domain"
+        >[('picking_id.picking_type_id.code', '=', 'incoming'), ('location_id.usage', '!=', 'internal'), ('location_dest_id.usage', '=', 'internal')]</field>
+        <field name="context">{'search_default_future': True}</field>
+        <field
+            name="view_ids"
+            eval="[
+            (5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('stock.view_move_tree_receipt_picking')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('stock.view_move_kandan')}),
+        ]"
+        />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Register a product receipt</p>
+            <p>
+                Here you can receive individual products, no matter what
+                purchase order or picking order they come from. You will find
+                the list of all products you are waiting for.
+            </p>
+            <p>
+                Once you receive an order, you can filter based on the name of
+                the vendor or the purchase order reference. Then you can confirm
+                all products received using the buttons on the right of each line.
+            </p>
+        </field>
+    </record>
+    <menuitem
+        id="menu_purchase_control_incoming"
+        action="action_receipt_picking_move"
+        parent="menu_purchase_control"
+        sequence="11"
+    />
+</odoo>
