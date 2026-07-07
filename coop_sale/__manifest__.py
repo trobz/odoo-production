@@ -1,0 +1,17 @@
+# Copyright (C) 2026-Today: La Louve (<http://www.lalouve.fr/>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html
+
+
+{
+    "name": "Coop Sale",
+    "version": "18.0.1.0.0",
+    "category": "Sales",
+    "author": "La Louve, Trobz",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
+    "license": "AGPL-3",
+    "depends": ["sale"],
+    "data": [
+        "views/sale_order_view.xml",
+    ],
+    "installable": True,
+}
