@@ -15,4 +15,12 @@
         parent="stock.menu_stock_root"
         sequence="0"
     />
+
+    <menuitem
+        id="menu_stock_scrap_reason_tag"
+        name="Stock Scrap Origin"
+        parent="stock.menu_stock_config_settings"
+        action="action_stock_scrap_reason_tag"
+        sequence="20"
+    />
 </odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<odoo>
+    <record id="product_print_category.menu_product_print_category" model="ir.ui.menu">
+        <field name="parent_id" ref="sale.menu_sale_config" />
+        <field name="sequence">41</field>
+    </record>
+    <record
+        id="product_print_category.menu_product_print_category_rule"
+        model="ir.ui.menu"
+    >
+        <field name="parent_id" ref="sale.menu_sale_config" />
+        <field name="sequence">42</field>
+    </record>
+</odoo>

@@ -21,7 +21,7 @@ class StockInventoryValuationReport(models.TransientModel):
     @api.depends("inventory_datetime")
     def _compute_results(self):
         self.ensure_one()
-        domain = [("type", "=", "consu"),("is_storable", "=", True)]
+        domain = [("type", "=", "consu"), ("is_storable", "=", True)]
         product_id = self.env.context.get("product_id")
         product_tmpl_id = self.env.context.get("product_tmpl_id")
         if product_id:

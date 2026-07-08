@@ -23,6 +23,12 @@
             >
                 <attribute name="style">display: none;</attribute>
             </xpath>
+            <xpath expr="//t[@t-name='menu']" position="attributes">
+                <attribute name="groups">project.group_project_manager</attribute>
+            </xpath>
+            <xpath expr="//field[@name='activity_ids']" positions="attributes">
+                <attribute name="group">project.group_project_manger</attribute>
+            </xpath>
         </field>
     </record>
     <record id="edit_project_inherit" model="ir.ui.view">

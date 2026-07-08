@@ -40,7 +40,7 @@
                 <attribute name="limit">10000</attribute>
             </xpath>
             <xpath expr="//list[@name='registration_list']" position="attributes">
-                <attribute name="editable">bottom</attribute>
+                <attribute name="editable"></attribute>
                 <attribute name="decoration-bf">False</attribute>
             </xpath>
             <field name="message_needaction" position="attributes">

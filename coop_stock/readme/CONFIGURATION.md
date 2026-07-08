@@ -49,6 +49,11 @@ otherwise function normally.
 No additional configuration is needed for `purchase_package_qty` beyond its
 installation.
 
+## Stock Scrap Origin
+
+Go to **Inventory > Configuration > Stock Scrap Origin** to create the
+reason tags used to categorize scrap orders (e.g. from POS).
+
 ## Other Features
 
 No additional configuration is required for the following features. They are

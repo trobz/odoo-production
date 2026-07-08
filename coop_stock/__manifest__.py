@@ -19,6 +19,7 @@
     ],
     "data": [
         "views/action.xml",
+        "views/stock_scrap_reason_tag_views.xml",
         "views/menu.xml",
         "views/stock_picking_view.xml",
         "views/stock_inventory_valuation_report.xml",
