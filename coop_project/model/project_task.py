@@ -34,6 +34,14 @@ class ProjectTask(models.Model):
     estimated_cost = fields.Float()
     ticket_description = fields.Html()
     ticket_number = fields.Char()
+    project_categ_ids = fields.Many2many(
+        "project.category",
+        string="Categories",
+        related="project_id.project_categ_ids",
+    )
+    project_categ_id = fields.Many2one("project.category", string="Category")
+    project_category_name = fields.Char(related="project_categ_id.name", store=True)
+    color = fields.Integer(related="project_categ_id.color", store=True)
 
     def _track_subtype(self, init_values):
         self.ensure_one()

@@ -18,7 +18,10 @@ patch(ProjectTaskKanbanRenderer.prototype, {
         onMounted(() => this._renderProjectLegend());
         onWillUnmount(() => {
             if (this._onSearchModelUpdate) {
-                this.env.searchModel.removeEventListener("update", this._onSearchModelUpdate);
+                this.env.searchModel.removeEventListener(
+                    "update",
+                    this._onSearchModelUpdate
+                );
             }
         });
     },
@@ -75,9 +78,14 @@ patch(ProjectTaskKanbanRenderer.prototype, {
         // ones (e.g. removed via the search bar's "x") must be ignored:
         // toggling them again would reactivate them instead of leaving them
         // removed.
-        const activeIds = new Set(searchModel.query.map((queryElem) => queryElem.searchItemId));
+        const activeIds = new Set(
+            searchModel.query.map((queryElem) => queryElem.searchItemId)
+        );
         const existingFilter = Object.values(searchModel.searchItems).find(
-            (item) => item.type === "filter" && item.isCoopCategFilter && activeIds.has(item.id)
+            (item) =>
+                item.type === "filter" &&
+                item.isCoopCategFilter &&
+                activeIds.has(item.id)
         );
 
         const selected = new Map(existingFilter ? existingFilter.coopCategTags : []);
@@ -96,7 +104,7 @@ patch(ProjectTaskKanbanRenderer.prototype, {
             searchModel.createNewFilters([
                 {
                     description: [...selected.values()].join(", "),
-                    domain: [["tag_ids", "in", [...selected.keys()]]],
+                    domain: [["project_categ_id", "in", [...selected.keys()]]],
                     isCoopCategFilter: true,
                     coopCategTags: [...selected.entries()],
                 },
@@ -106,11 +114,18 @@ patch(ProjectTaskKanbanRenderer.prototype, {
 
     _syncLegendSelection(panel) {
         const searchModel = this.env.searchModel;
-        const activeIds = new Set(searchModel.query.map((queryElem) => queryElem.searchItemId));
-        const existingFilter = Object.values(searchModel.searchItems).find(
-            (item) => item.type === "filter" && item.isCoopCategFilter && activeIds.has(item.id)
+        const activeIds = new Set(
+            searchModel.query.map((queryElem) => queryElem.searchItemId)
         );
-        const selectedIds = new Set(existingFilter ? existingFilter.coopCategTags.map(([id]) => id) : []);
+        const existingFilter = Object.values(searchModel.searchItems).find(
+            (item) =>
+                item.type === "filter" &&
+                item.isCoopCategFilter &&
+                activeIds.has(item.id)
+        );
+        const selectedIds = new Set(
+            existingFilter ? existingFilter.coopCategTags.map(([id]) => id) : []
+        );
 
         panel.querySelectorAll(".block-color-act").forEach((el) => {
             const tagId = parseInt(el.dataset.id, 10);

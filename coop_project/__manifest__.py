@@ -10,10 +10,12 @@
         "project",
     ],
     "data": [
+        "security/ir.model.access.csv",
         "data/project_data.xml",
         "data/mail_template.xml",
         "view/mail_message_view.xml",
         "view/project_view.xml",
+        "view/project_category_view.xml",
     ],
     "assets": {
         "web.assets_backend": [
