@@ -37,6 +37,7 @@
         "coop_delivery_category",
         "product_history",
         "base_import_security_group",
+        "spreadsheet_dashboard",
     ],
     "data": [
         "data/res_groups.xml",

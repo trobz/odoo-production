@@ -181,7 +181,10 @@
     <record model="ir.ui.menu" id="hr.menu_hr_root">
         <field
             name="groups_id"
-            eval="[Command.unlink(ref('coop_membership.group_employee_native_menu'))]"
+            eval="[
+                Command.unlink(ref('coop_membership.group_employee_native_menu')),
+                Command.link(ref('hr.group_hr_manager')),
+            ]"
         />
     </record>
     <record model="ir.ui.menu" id="hr.menu_hr_main">
@@ -191,6 +194,18 @@
             Command.unlink(ref('coop_membership.group_employee_native_menu')),
             Command.link(ref('hr.group_hr_manager')),
         ]"
+        />
+    </record>
+    <record model="ir.ui.menu" id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root">
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('hr.group_hr_manager'))]"
+        />
+    </record>
+    <record model="ir.ui.menu" id="base.menu_management">
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('base.group_system'))]"
         />
     </record>
 </odoo>
