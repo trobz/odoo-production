@@ -2,13 +2,16 @@
 <odoo>
     <record id="product_print_category.menu_product_print_category" model="ir.ui.menu">
         <field name="parent_id" ref="sale.menu_sale_config" />
-        <field name="sequence">41</field>
+        <field name="sequence">21</field>
     </record>
     <record
         id="product_print_category.menu_product_print_category_rule"
         model="ir.ui.menu"
     >
         <field name="parent_id" ref="sale.menu_sale_config" />
-        <field name="sequence">42</field>
+        <field name="sequence">22</field>
+    </record>
+    <record id="sale.sales_team_config" model="ir.ui.menu">
+        <field name="sequence">23</field>
     </record>
 </odoo>
