@@ -1285,4 +1285,13 @@
             </xpath>
         </field>
     </record>
+
+    <record id="view_partner_id_numbers_form_inherit" model="ir.ui.view">
+        <field name="name">res.partner.id_number.form.inherit</field>
+        <field name="model">res.partner.id_number</field>
+        <field name="inherit_id" ref="partner_identification.view_partner_id_numbers_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//chatter" position="replace" />
+        </field>
+    </record>
 </odoo>
