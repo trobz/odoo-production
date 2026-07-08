@@ -14,7 +14,8 @@
                     style="cursor: pointer;"
                 >
                     <div class="o_kanban_project_panel_label_title">
-                        <t t-out="category.name" /><span class="mx-1">=</span>
+                        <t t-out="category.name" />
+                        <span class="mx-1">=</span>
                     </div>
                     <div
                         class="block-color-swatch"

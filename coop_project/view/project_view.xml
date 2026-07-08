@@ -26,8 +26,8 @@
             <xpath expr="//t[@t-name='menu']" position="attributes">
                 <attribute name="groups">project.group_project_manager</attribute>
             </xpath>
-            <xpath expr="//field[@name='activity_ids']" positions="attributes">
-                <attribute name="group">project.group_project_manger</attribute>
+            <xpath expr="//field[@name='activity_ids']" position="attributes">
+                <attribute name="groups">project.group_project_manager</attribute>
             </xpath>
         </field>
     </record>
@@ -38,13 +38,22 @@
             <button name="action_open_share_project_wizard" position="attributes">
                 <attribute name="invisible">1</attribute>
             </button>
+            <field name="partner_id" position="after">
+                <field
+                    name="project_categ_ids"
+                    widget="many2many_tags"
+                    options="{'color_field': 'color'}"
+                />
+            </field>
         </field>
     </record>
     <record id="view_task_search_form_inherit" model="ir.ui.view">
         <field name="model">project.task</field>
         <field name="inherit_id" ref="project.view_task_search_form" />
         <field name="arch" type="xml">
-            <field name="stage_id" position="after" />
+            <field name="stage_id" position="after">
+                <field name="project_categ_id" />
+            </field>
         </field>
     </record>
     <record id="view_task_kanban_inherit" model="ir.ui.view">
@@ -58,6 +67,16 @@
             <xpath expr="//field[@name='color']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
+            <xpath expr="//field[@name='stage_id']" position="after">
+                <field name="project_category_name" />
+            </xpath>
+            <field name="tag_ids" position="before">
+                <t t-if="record.project_category_name.raw_value">
+                    <span style="font-size: 11px;">
+                        <t t-esc="record.project_category_name.raw_value" />
+                    </span>
+                </t>
+            </field>
             <xpath expr="//a[@type='set_cover']" position="attributes">
                 <attribute name="style">display: none;</attribute>
             </xpath>
@@ -172,7 +191,14 @@
                     </page>
                 </notebook>
             </xpath>
-            <field name="tag_ids" position="before" />
+            <field name="tag_ids" position="before">
+                <field name="project_categ_ids" invisible="1" />
+                <field
+                    name="project_categ_id"
+                    options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
+                    domain="[('id', 'in', project_categ_ids)]"
+                />
+            </field>
         </field>
     </record>
     <record id="view_task_tree2_inherit" model="ir.ui.view">
