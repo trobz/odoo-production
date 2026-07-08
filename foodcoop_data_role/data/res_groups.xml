@@ -144,7 +144,6 @@
             ref('group_Member_Accountant'),
             ref('group_Accountant'),
             ref('base.group_system'),
-            ref('point_of_sale.group_pos_user'),
         ])]"
         />
     </record>
