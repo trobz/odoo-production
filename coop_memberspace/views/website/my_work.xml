@@ -128,7 +128,7 @@
                     style="text-align: center;margin-top: 10px;margin-left: -15px;margin-right: -15px;"
                     t-att-class="member_status[2]"
                 >
-                    <h3 style="margin-bottom: 0px;margin-top: 0px;">
+                    <h3 style="margin-bottom: 0px;margin-top: 0px;font-size: 24px !important;">
                         <strong>
                             <span t-out="member_status[0] + ' '" />
                         </strong>
@@ -245,7 +245,7 @@
             class="row exchange-shift"
             style="padding-left: 15px;padding-right:15px;margin-top: 30px"
         >
-            <p style="font-size: 25px;font-weight: 600">My next services</p>
+            <p style="font-size: 18px;font-weight: 600">My next services</p>
             <t t-call="coop_memberspace.my_next_shift" />
             <div id="modal_confirm_cancel_proposal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
@@ -274,7 +274,7 @@
                 <div
                     style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;min-height: 205px;"
                 >
-                    <p style="font-size: 25px;font-weight: 600">Exchange of services</p>
+                    <p style="font-size: 18px;font-weight: 600">Exchange of services</p>
                     <p
                         class="text-center"
                     >Will you be available to perform your next service? You can try to exchange
@@ -293,7 +293,7 @@
                     style="border: 1px solid #b2b7bb;padding: 10px;margin-bottom:10px;"
                 >
                     <p
-                        style="font-size: 25px;font-weight: 600"
+                        style="font-size: 18px;font-weight: 600"
                     >Schedule an advance service</p>
                     <p
                         class="text-center"
