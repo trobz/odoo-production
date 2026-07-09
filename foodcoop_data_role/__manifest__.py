@@ -16,6 +16,7 @@
         "barcodes_generator_abstract",
         "coop_shift",
         "coop_membership",
+        "hr",
         "coop_badge_reader",
         "sales_team",
         "account_export",

@@ -184,6 +184,7 @@
             eval="[
                 Command.unlink(ref('coop_membership.group_employee_native_menu')),
                 Command.link(ref('hr.group_hr_manager')),
+                Command.link(ref('group_Member_Manager')),
             ]"
         />
     </record>
@@ -195,6 +196,13 @@
             Command.link(ref('hr.group_hr_manager')),
         ]"
         />
+    </record>
+
+    <!-- Member Manager: read-only access to the Employees list only, not
+         Reporting/Configuration/Departments (those still require hr.group_hr_user
+         or hr.group_hr_manager). -->
+    <record model="ir.ui.menu" id="hr.menu_hr_employee_payroll">
+        <field name="groups_id" eval="[Command.link(ref('group_Member_Manager'))]" />
     </record>
     <record model="ir.ui.menu" id="spreadsheet_dashboard.spreadsheet_dashboard_menu_root">
         <field
