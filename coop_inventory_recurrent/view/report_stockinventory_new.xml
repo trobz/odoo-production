@@ -96,7 +96,7 @@
                                     </th>
                                     <th
                                         class="text-end"
-                                        style="white-space:nowrap;width:60px;font-weight:700;border:1px solid #ccc;"
+                                        style="width:60px;font-weight:700;border:1px solid #ccc;"
                                     >
                                         <strong>Theoretical Qty</strong>
                                     </th>
@@ -113,10 +113,17 @@
                                     <td style="border:1px solid #ccc;">
                                         <span t-field="line.product_id.default_code" />
                                     </td>
-                                    <td
-                                        style="padding-right: 5px; white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis;border:1px solid #ccc;"
-                                    >
-                                        <span t-field="line.product_id.name" />
+                                    <td style="border:1px solid #ccc;max-width:200px;">
+                                        <div style="
+                                            width:100%;
+                                            box-sizing:border-box;
+                                            padding-right:10px;
+                                            white-space:nowrap;
+                                            overflow:hidden;
+                                            text-overflow:ellipsis;
+                                        ">
+                                            <span t-field="line.product_id.name"/>
+                                        </div>
                                     </td>
                                     <td class="text-end" style="border:1px solid #ccc;" />
                                     <td class="text-end" style="border:1px solid #ccc;"  />
