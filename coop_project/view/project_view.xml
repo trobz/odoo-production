@@ -148,7 +148,6 @@
                     </field>
                 </page>
             </xpath>
-            <xpath expr="//chatter" position="replace" />
             <field name="partner_id" position="before">
                 <field name="estimated_cost" />
             </field>
