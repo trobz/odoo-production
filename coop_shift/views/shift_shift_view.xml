@@ -209,9 +209,9 @@
                 <templates>
                     <t t-name="card" class="p-0 row">
                         <aside
-                            class="col-4 text-bg-primary p-2 text-center d-flex flex-column"
+                            class="col-3 text-bg-primary p-2 text-center d-flex flex-column"
                         >
-                            <div class="fs-4">
+                            <div class="fs-4 fw-bold">
                                 <field name="name" />
                             </div>
                         </aside>
@@ -222,7 +222,7 @@
                                         class="fa fa-clock-o mt-1 me-2 text-center ps-1"
                                         title="From"
                                     />
-                                    <b>From</b>
+                                    <b class="me-1">From</b>
                                     <t
                                         t-esc="luxon.DateTime.fromISO(record.date_begin.raw_value).toFormat('LLL d, yyyy h:mm a')"
                                     />
@@ -232,25 +232,25 @@
                                         class="fa fa-clock-o mt-1 me-2 text-center ps-1"
                                         title="To"
                                     />
-                                    <b>To</b>
+                                    <b class="me-1">To</b>
                                     <t
                                         t-esc="luxon.DateTime.fromISO(record.date_end.raw_value).toFormat('LLL d, yyyy h:mm a')"
                                     />
                                 </div>
+                                <div class="d-flex o_text_overflow fw-bold text-info">
+                                    <i
+                                        class="fa fa-user-o mt-1 me-2 text-center ps-1"
+                                        title="Expected attendees"
+                                    />
+                                    <b style="color: 'blue';"><field name="seats_reserved" class="me-1" /> Expected attendees</b>
+                                </div>
                                 <div class="d-flex o_text_overflow">
-                        <i
-                                    class="fa fa-user-o mt-1 me-2 text-center ps-1"
-                                    title="Expected attendees"
-                                />
-                        <field name="seats_reserved" class="me-1" /> Expected attendees
-                    </div>
-                                <div class="d-flex o_text_overflow">
-                        <i
-                                    class="fa fa-check-circle mt-1 me-2 text-center ps-1"
-                                    title="Available seats"
-                                />
-                        <field name="seats_available" class="me-1" /> Available seats
-                    </div>
+                                    <i
+                                        class="fa fa-check-circle mt-1 me-2 text-center ps-1"
+                                        title="Available seats"
+                                    />
+                                    <b><field name="seats_available" class="me-1" /> Available seats</b>
+                                </div>
                             </div>
                         </main>
                     </t>
