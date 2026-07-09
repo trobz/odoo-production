@@ -261,7 +261,6 @@
                     separator=","
                     add="coop_membership.group_membership_bdm_saisie"
                 />
-                <attribute name="required">is_member</attribute>
             </field>
 
             <xpath expr="//group/field[@name='title']" position="attributes">
