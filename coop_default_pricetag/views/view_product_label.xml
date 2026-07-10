@@ -68,7 +68,8 @@
                                 <div class="product_label_kanban_image">
                                     <img
                                         t-att-src="'/web/image/product.label/' + record.id.raw_value + '/image'"
-                                        alt="product label"
+                                        class="o_image_64_cover"
+                                        alt="Product Label"
                                     />
                                 </div>
                             </div>

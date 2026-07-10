@@ -19,7 +19,7 @@
         <field name="name">res.partner.badge.to_distribute.tree</field>
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
-            <list create="false" editable="top">
+            <list create="false" editable="top" class="o_badge_to_distribute">
                 <field name="barcode_base" readonly="1" />
                 <field name="name" readonly="1" />
                 <field name="is_associated_people" readonly="1" />

@@ -29,6 +29,9 @@
         "demo/res_partner.xml",
     ],
     "assets": {
+        "web.assets_backend": [
+            "coop_print_badge/static/src/scss/badge_to_distribute.scss",
+        ],
         "web.report_assets_common": [
             "coop_print_badge/static/src/css/badge.css",
         ],

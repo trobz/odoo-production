@@ -5,8 +5,8 @@
         <field name="model">shift.ticket</field>
         <field name="arch" type="xml">
             <list editable="top" class="ftop_seats">
-                <field name="shift_id" readonly="1" />
-                <field name="state" invisible="1" />
+                <field name="shift_id" readonly="1" class="o_shift_id_col" />
+                <field name="state" column_invisible="1" />
                 <field name="max_available_seat_standard" type="char" />
                 <field name="available_seat_standard" type="char" />
                 <field

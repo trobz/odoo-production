@@ -2,3 +2,13 @@
 td[data-field="available_seat_ftop"] {
     color: green;
 }
+
+.ftop_seats th[data-name="shift_id"],
+.ftop_seats td[data-field="shift_id"] {
+    max-width: 200px;
+}
+
+.ftop_seats th.o_list_record_selector,
+.ftop_seats td.o_list_record_selector {
+    width: 10px;
+}

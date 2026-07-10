@@ -5,7 +5,7 @@ class MailMessage(models.Model):
     _inherit = "mail.message"
 
     task_description = fields.Html(
-        compute="_compute_task_description", string="Description"
+        compute="_compute_task_description", string="Task Description"
     )
 
     def _compute_task_description(self):

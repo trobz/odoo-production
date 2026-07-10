@@ -98,3 +98,15 @@ class TestProjectTask(TransactionCase):
         task._compute_comment_ids()
         self.assertIn(msg_comment, task.comment_ids)
         self.assertIn(msg_note, task.comment_ids)
+
+    def test_project_categ_id_drives_name_and_color(self):
+        categ = self.env["project.category"].create({"name": "Urgent", "color": 2})
+        task = self.Task.create(
+            {
+                "name": "Task With Category",
+                "project_id": self.project.id,
+                "project_categ_id": categ.id,
+            }
+        )
+        self.assertEqual(task.project_category_name, "Urgent")
+        self.assertEqual(task.color, 2)
