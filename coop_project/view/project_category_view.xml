@@ -17,6 +17,7 @@
             <list string="Categories" editable="top">
                 <field name="name" />
                 <field name="project_ids" widget="many2many_tags" />
+                <field name="color_code" widget="color" readonly="1" />
                 <field name="color" />
             </list>
         </field>
@@ -29,6 +30,7 @@
                 <group>
                     <field name="name" />
                     <field name="project_ids" widget="many2many_tags" />
+                    <field name="color_code" widget="color" readonly="1" />
                     <field name="color" />
                 </group>
             </form>
