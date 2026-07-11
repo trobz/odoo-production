@@ -38,6 +38,13 @@ patch(ListController.prototype, {
         super.setup();
         this.resultAccessButtons = await getResultAccessButtons(this);
     },
+    getStaticActionMenuItems() {
+        const items = super.getStaticActionMenuItems();
+        if (this.resultAccessButtons === "saisie_group_partner" && items.export) {
+            items.export.isAvailable = () => false;
+        }
+        return items;
+    },
     get actionMenuItems() {
         const {actionMenus} = this.props.info;
         const res = super.actionMenuItems;
