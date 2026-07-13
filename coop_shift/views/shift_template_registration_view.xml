@@ -32,11 +32,6 @@
                 />
                 <field name="name" />
                 <field name="email" />
-                <field name="message_needaction" invisible="1" />
-                <field name="state" invisible="1" />
-                <field name="is_current" invisible="1" />
-                <field name="is_future" invisible="1" />
-                <field name="is_past" invisible="1" />
             </list>
         </field>
     </record>
