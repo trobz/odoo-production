@@ -45,21 +45,21 @@
                 <field name="message_needaction" column_invisible="1" />
                 <button
                     name="confirm_registration"
-                    string="Confirm Registration"
+                    title="Confirm Registration"
                     invisible="state != 'draft'"
                     type="object"
                     icon="fa-check fa-lg"
                 />
                 <button
                     name="button_reg_cancel"
-                    string="Cancel Registration"
+                    title="Cancel Registration"
                     invisible="state != 'draft'"
                     type="object"
                     icon="fa-times-circle fa-lg"
                 />
                 <button
                     name="do_draft"
-                    string="Set To Unconfirmed"
+                    title="Set To Unconfirmed"
                     invisible="state not in ['cancel', 'done', 'absent', 'excused', 'replaced', 'replacing', 'open']"
                     type="object"
                     icon="fa-backward"

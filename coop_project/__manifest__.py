@@ -16,6 +16,7 @@
         "view/mail_message_view.xml",
         "view/project_view.xml",
         "view/project_category_view.xml",
+        "view/calendar_event_view.xml",
     ],
     "assets": {
         "web.assets_backend": [

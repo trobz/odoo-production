@@ -5,7 +5,7 @@ patch(CalendarCommonRenderer.prototype, {
     eventClassNames({event}) {
         const classesToAdd = super.eventClassNames(...arguments);
         const record = this.props.model.records[event.id];
-        if (record && record.from_task) {
+        if (record && record.rawRecord.from_task) {
             classesToAdd.push("o_event_from_task");
         }
         return classesToAdd;

@@ -13,8 +13,6 @@
                 <field name="next_current_shift_date" />
                 <field name="new_shift_template_id" />
                 <field name="new_next_shift_date" />
-                <field name="is_abcd_to_abcd" invisible="1" />
-                <field name="has_delayed_execution_errors" invisible="1" />
                 <field name="state" />
             </list>
         </field>
