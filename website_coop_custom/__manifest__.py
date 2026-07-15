@@ -12,6 +12,7 @@
     "data": [
         "views/website_templates.xml",
     ],
+    "post_init_hook": "post_init_hook",
     "assets": {
         "web.assets_frontend": [
             "website_coop_custom/static/src/scss/website_coop_custom.scss",
