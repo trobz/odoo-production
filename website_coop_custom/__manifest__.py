@@ -1,6 +1,6 @@
 {
     "name": "Website Coop Custom",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Website",
     "summary": "Customise the website header layout for food-coop sites",
     "author": "Trobz",
