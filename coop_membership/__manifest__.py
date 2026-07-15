@@ -86,6 +86,7 @@
             "coop_membership/static/src/js/chatter_patch.esm.js",
             "coop_membership/static/lib/scss/coop_membership_customs.scss",
             "coop_membership/static/src/scss/ftop_seats.scss",
+            "coop_membership/static/src/scss/shift_change_team.scss",
         ],
     },
     "demo": [
