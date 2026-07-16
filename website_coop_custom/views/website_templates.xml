@@ -13,13 +13,4 @@
         </xpath>
     </template>
 
-    <!-- Hide contactus in footer -->
-    <template id="footer_custom_hide_contactus" inherit_id="website.footer_custom" name="Footer Custom - Hide contactus links">
-        <xpath expr="//a[contains(@href, 'contactus')]" position="attributes">
-            <attribute name="t-if">False</attribute>
-        </xpath>
-        <xpath expr="//div[@id='connect']//a[contains(@href, 'contactus')]/../.." position="attributes">
-            <attribute name="t-if">False</attribute>
-        </xpath>
-    </template>
 </odoo>
