@@ -19,3 +19,4 @@ from . import product_template
 from . import shift_leave
 from . import shift_leave_type
 from . import shift_counter_event
+from . import stock_move_line
