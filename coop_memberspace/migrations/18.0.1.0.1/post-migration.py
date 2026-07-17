@@ -37,17 +37,28 @@ def update_myteam_template(env):
     # Find all member_image divs and replace their content
     updated = False
     for div in root.xpath("//div[@class='member_image']"):
+        # Get the div's XML content to determine which variable to use
+        div_content = etree.tostring(div, encoding="unicode")
+        
+        # Determine if this is for coordinator or member
+        if "coordinator.image" in div_content:
+            variable = "coordinator"
+        elif "member.image" in div_content:
+            variable = "member"
+        else:
+            continue
+        
         # Clear existing content
         div.clear()
         div.set("class", "member_image")
 
         # Create new img element with t-att-src attribute
         img = etree.SubElement(div, "img")
-        # Set the t-att-src attribute directly
-        img.set("t-att-src", "'/web/image/res.partner/%d/avatar_128' % member.id")
+        # Set the t-att-src attribute with the appropriate variable
+        img.set("t-att-src", f"'/web/image/res.partner/%d/avatar_128' % {variable}.id")
 
         updated = True
-        logger.info("Updated member_image div in template")
+        logger.info("Updated member_image div in template for %s", variable)
 
     if updated:
         new_arch = etree.tostring(root, encoding="unicode", pretty_print=True)

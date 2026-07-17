@@ -373,7 +373,7 @@ class ShiftShift(models.Model):
             self.date_begin = cur_date + timedelta(
                 hours=self.shift_template_id.start_time
             )
-            self.end_time = cur_date + timedelta(hours=self.shift_template_id.end_time)
+            self.end_time = self.shift_template_id.end_time
             cur_attendees = [r.partner_id.id for r in self.registration_ids]
             vals = []
             for attendee in self.shift_template_id.registration_ids:

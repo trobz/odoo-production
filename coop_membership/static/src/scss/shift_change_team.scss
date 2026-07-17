@@ -1,0 +1,14 @@
+.shift_change_team th.o_list_record_selector,
+.shift_change_team td.o_list_record_selector {
+    max-width: 10px;
+}
+.shift_change_team th[data-name="partner_id"],
+.shift_change_team td[data-field="partner_id"],
+.shift_change_team th[data-name="current_shift_template_id"],
+.shift_change_team td[data-field="current_shift_template_id"],
+.shift_change_team th[data-name="new_shift_template_id"],
+.shift_change_team td[data-field="new_shift_template_id"],
+.shift_change_team th[data-name="state"],
+.shift_change_team td[data-field="state"] {
+    max-width: 100px;
+}
