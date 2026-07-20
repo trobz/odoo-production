@@ -36,7 +36,7 @@
                     <div class="row" style="margin-top: 20px">
                         <div class="col-md-4">
                             <div>
-                                <h3>My next service</h3>
+                                <h3 style="font-size: 18px !important;">My next service</h3>
                                 <div
                                     style="border: 1px solid #b2b7bb;padding: 10px;min-height: 115px;"
                                 >
@@ -70,7 +70,7 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <h3>Active cooperators</h3>
+                            <h3 style="font-size: 18px !important;">Active cooperators</h3>
                             <div
                                 class="text-center"
                                 style="border: 1px solid #b2b7bb;padding: 10px;"
@@ -86,7 +86,7 @@
                         </div>
                         <div class="col-md-4">
                             <div>
-                                <h3>Current week</h3>
+                                <h3 style="font-size: 18px !important;">Current week</h3>
                                 <div
                                     style="border: 1px solid #b2b7bb;padding: 10px;min-height: 115px;"
                                 >
