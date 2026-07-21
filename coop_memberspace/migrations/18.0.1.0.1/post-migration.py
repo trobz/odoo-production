@@ -1,6 +1,7 @@
 import logging
 
 from lxml import etree
+
 from odoo import SUPERUSER_ID, api
 
 logger = logging.getLogger(__name__)
@@ -39,7 +40,7 @@ def update_myteam_template(env):
     for div in root.xpath("//div[@class='member_image']"):
         # Get the div's XML content to determine which variable to use
         div_content = etree.tostring(div, encoding="unicode")
-        
+
         # Determine if this is for coordinator or member
         if "coordinator.image" in div_content:
             variable = "coordinator"
@@ -47,7 +48,7 @@ def update_myteam_template(env):
             variable = "member"
         else:
             continue
-        
+
         # Clear existing content
         div.clear()
         div.set("class", "member_image")
