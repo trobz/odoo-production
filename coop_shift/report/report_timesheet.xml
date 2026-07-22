@@ -5,9 +5,9 @@
         <t t-call="web.html_container">
             <tr t-foreach="Shifts" t-as="shift">
                 <t t-call="web.basic_layout">
-                    <div class="page" style="page-break-after:always">
+                    <div class="page" style="page-break-after:always;font-family: 'Open Sans', sans-serif;">
                         <div class="row mt0 mb0">
-                            <div class="col-1" style="font-size:60px">
+                            <div class="col-1" style="font-size:60px;">
                                 <bold>1</bold>
                             </div>
                             <div class="col-11 text-end" style="font-size:20px">
@@ -20,27 +20,27 @@
                             </div>
                         </div>
 
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" style="border: 1px solid #ddd;">
                             <thead>
-                                <tr style="font-size:9px;background:#DDDDDD">
-                                    <th width="6%">Statut</th>
-                                    <th width="6%">Rattrapages</th>
-                                    <th width="8%">Qualité</th>
-                                    <th width="8%">Numéro</th>
-                                    <th width="22%">Nom</th>
-                                    <th width="6%" class="text-center">Échange</th>
-                                    <th width="8%">Numéro</th>
-                                    <th width="28%">Nom</th>
-                                    <th width="8%">Signature<br />départ</th>
+                                <tr style="font-size:9px;background:#DDDDDD;font-weight:700;border: 1px solid #ddd;">
+                                    <th width="6%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Statut</th>
+                                    <th width="6%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Rattrapages</th>
+                                    <th width="8%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Qualité</th>
+                                    <th width="8%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Numéro</th>
+                                    <th width="22%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Nom</th>
+                                    <th width="6%" class="text-center" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Échange</th>
+                                    <th width="8%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Numéro</th>
+                                    <th width="28%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Nom</th>
+                                    <th width="8%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Signature<br />départ</th>
                                 </tr>
                                 <tr>
                                     <th
-                                        style="text-align:center"
+                                        style="text-align:center;font-weight:700;border: 1px solid #ddd;"
                                         colspan="5"
                                     >MEMBRE PROGRAMMÉ</th>
                                     <th
                                         class="text-center"
-                                        style="border-left: 4px solid #ddd;"
+                                        style="border-left: 4px solid #ddd;font-weight:700;"
                                         colspan="4"
                                     >MEMBRE PRÉSENT</th>
                                 </tr>
@@ -51,7 +51,7 @@
                                     t-as="registration"
                                     style="font-size:13px"
                                 >
-                                    <td>
+                                    <td style="border: 1px solid #ddd;">
                                         <t t-if="registration['is_on_leave']">CONG</t>
                                         <t t-if="not registration['is_on_leave']">
                                             <t
@@ -71,23 +71,23 @@
                                             >B</t>
                                         </t>
                                     </td>
-                                    <td>
+                                    <td style="border: 1px solid #ddd;">
                                         <span
                                             t-if="registration['registration'].partner_id.final_standard_point &lt; 0"
                                             t-esc="-1 * registration['registration'].partner_id.final_standard_point"
                                         />
                                     </td>
-                                    <td>
+                                    <td style="border: 1px solid #ddd;">
                                         <t
                                             t-if="registration['registration'].partner_id.is_squadleader"
                                         >CRDO</t>
                                     </td>
-                                    <td style="padding: 4px">
+                                    <td style="padding: 4px;border: 1px solid #ddd;">
                                         <span
                                             t-esc="registration['registration'].partner_id.barcode_base"
                                         />
                                     </td>
-                                    <td style="font-size:11px; padding: 4px">
+                                    <td style="font-size:11px; padding: 4px;border: 1px solid #ddd;">
                                         <span
                                             t-if="registration['registration'].name"
                                             t-esc="registration['registration'].name"
@@ -99,10 +99,10 @@
                                     </td>
                                     <td style="border-left: 4px solid #ddd" />
                                     <td />
-                                    <td>
+                                    <td style="border: 1px solid #ddd;">
                                         <t t-if="registration['is_on_leave']">CONG</t>
                                     </td>
-                                    <td />
+                                    <td style="border: 1px solid #ddd;"/>
                                 </tr>
 
                                 <!-- Helpers -->
@@ -135,23 +135,23 @@
                                     t-as="i"
                                     style="font-size:13px"
                                 >
-                                    <td style="padding: 4px">
+                                    <td style="padding: 4px;border: 1px solid #ddd;">
                                         <font color="white">_</font>
                                     </td>
-                                    <td />
-                                    <td />
-                                    <td />
-                                    <td />
+                                    <td style="border: 1px solid #ddd;" />
+                                    <td style="border: 1px solid #ddd;"/>
+                                    <td style="border: 1px solid #ddd;" />
+                                    <td style="border: 1px solid #ddd;" />
                                     <td style="border-left: 4px solid #ddd" />
-                                    <td />
-                                    <td />
-                                    <td />
+                                    <td style="border: 1px solid #ddd;" />
+                                    <td style="border: 1px solid #ddd;" />
+                                    <td style="border: 1px solid #ddd;" />
                                 </tr>
                                 <tr>
                                     <td
                                         colspan="9"
                                         class="text-center"
-                                        style="font-size: 18px;"
+                                        style="font-size: 18px;border: 1px solid #ddd;"
                                     >
                                         <b>**--- Vacations ---**</b>
                                     </td>
@@ -163,7 +163,7 @@
                                 >
                                     <t t-value="ftop_data[0]" t-set="ftop" />
                                     <t t-value="ftop_data[1]" t-set="is_on_leave" />
-                                    <td>
+                                    <td style="border: 1px solid #ddd;">
                                         <t t-if="is_on_leave">CONG</t>
                                         <t t-if="not is_on_leave">
                                             <t
@@ -183,25 +183,25 @@
                                             >B</t>
                                         </t>
                                     </td>
-                                    <td>
+                                    <td style="border: 1px solid #ddd;">
                                         <span
                                             t-if="ftop.partner_id.final_standard_point &lt; 0"
                                             t-esc="-1 * ftop.partner_id.final_ftop_point"
                                         />
                                     </td>
-                                    <td />
-                                    <td style="padding: 4px">
+                                    <td style="border: 1px solid #ddd;" />
+                                    <td style="padding: 4px;border: 1px solid #ddd;">
                                         <span t-esc="ftop.partner_id.barcode_base" />
                                     </td>
-                                    <td style="font-size:11px; padding: 4px">
+                                    <td style="font-size:11px; padding: 4px;border: 1px solid #ddd;">
                                         <span t-esc="ftop.partner_id.name" />
                                     </td>
                                     <td style="border-left: 4px solid #ddd" />
                                     <td />
-                                    <td>
+                                    <td style="border: 1px solid #ddd;">
                                         <t t-if="is_on_leave">CONG</t>
                                     </td>
-                                    <td />
+                                    <td style="border: 1px solid #ddd;" />
                                 </tr>
                                 <t t-set="nb_lines_ftop" t-value="int(nb_lines*1/3)" />
                                 <tr
@@ -209,17 +209,17 @@
                                     t-as="i"
                                     style="font-size:13px"
                                 >
-                                    <td style="padding: 4px">
+                                    <td style="padding: 4px;border: 1px solid #ddd;">
                                         <font color="white">_</font>
                                     </td>
-                                    <td />
-                                    <td />
-                                    <td />
-                                    <td />
+                                    <td style="border: 1px solid #ddd;" />
+                                    <td style="border: 1px solid #ddd;" />
+                                    <td style="border: 1px solid #ddd;" />
+                                    <td style="border: 1px solid #ddd;" />
                                     <td style="border-left: 4px solid #ddd" />
-                                    <td />
-                                    <td />
-                                    <td />
+                                    <td style="border: 1px solid #ddd;" />
+                                    <td style="border: 1px solid #ddd;" />
+                                    <td style="border: 1px solid #ddd;" />
                                 </tr>
                             </tbody>
                         </table>
@@ -241,7 +241,7 @@
                         </div>
                         <div class="row mt0 mb0">
                             <h2
-                                style="background:#DDDDDD;margin-left:15px;margin-right:15px;padding:20px"
+                                style="background:#DDDDDD;padding:20px"
                             >
                                 <strong>RATTRAPAGES</strong>
                             </h2>
@@ -249,36 +249,36 @@
 
                         <table class="table table-bordered">
                             <thead>
-                                <tr style="font-size:9px;background:#DDDDDD">
-                                    <th width="15%">Numéro</th>
-                                    <th width="35%">Nom</th>
-                                    <th width="6%" class="text-center">Échange</th>
-                                    <th width="8%">Numéro</th>
-                                    <th width="28%">Nom</th>
-                                    <th width="7%">Signature<br />départ</th>
+                                <tr style="font-size:9px;background:#DDDDDD;font-weight:700;">
+                                    <th width="15%" style="border: 1px solid #ddd;font-weight:700;">Numéro</th>
+                                    <th width="35%" style="border: 1px solid #ddd;font-weight:700;">Nom</th>
+                                    <th width="6%" style="border: 1px solid #ddd;font-weight:700;" class="text-center">Échange</th>
+                                    <th width="8%" style="border: 1px solid #ddd;font-weight:700;">Numéro</th>
+                                    <th width="28%" style="border: 1px solid #ddd;font-weight:700;" >Nom</th>
+                                    <th width="7%" style="border: 1px solid #ddd;font-weight:700;">Signature<br />départ</th>
                                 </tr>
                                 <tr>
                                     <th
-                                        style="text-align:center"
+                                        style="text-align:center;font-weight:700;border: 1px solid #ddd;"
                                         colspan="2"
                                     >MEMBRE CRÉDITÉ</th>
                                     <th
                                         class="text-center"
-                                        style="border-left: 4px solid #ddd;"
+                                        style="border-left: 4px solid #ddd;font-weight:700;border: 1px solid #ddd;"
                                         colspan="4"
                                     >MEMBRE PRÉSENT</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr t-foreach="15" t-as="i">
-                                    <td style="padding: 2px">
+                                    <td style="border: 1px solid #ddd;">
                                         <font color="white">_</font>
                                     </td>
-                                    <td />
-                                    <td style="border-left: 4px solid #ddd" />
-                                    <td />
-                                    <td />
-                                    <td />
+                                    <td style="border: 1px solid #ddd;" />
+                                    <td style="border-left: 4px solid #ddd;border: 1px solid #ddd;" />
+                                    <td style="border: 1px solid #ddd;" />
+                                    <td style="border: 1px solid #ddd;" />
+                                    <td style="border: 1px solid #ddd;" />
                                 </tr>
                             </tbody>
                         </table>
@@ -286,8 +286,8 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th width="100%">
-                                        <strong>
+                                    <th width="100%" style="border: 1px solid #ddd;">
+                                        <strong style="font-weight:700;">
                                         Coordinateurs, notez ci-dessous : Toute demande d’extension, tout cas d’attribution d’un seul rattrapage, toute autre info utile pour le Bureau des membres.
                                         </strong>
                                     </th>
@@ -295,7 +295,7 @@
                             </thead>
                             <tbody>
                                 <tr t-foreach="11" t-as="i">
-                                    <td style="padding: 2px">
+                                    <td style="border: 1px solid #ddd;">
                                         <font color="white">_</font>
                                     </td>
                                 </tr>
