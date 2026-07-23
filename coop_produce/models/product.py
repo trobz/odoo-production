@@ -34,6 +34,7 @@ class ProductProduct(models.Model):
             for record in self:
                 record.display_name = record.name
 
+
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
@@ -42,10 +43,13 @@ class ProductTemplate(models.Model):
         digits="Product Price",
     )
 
-    @api.constrains('default_packaging')
+    @api.constrains("default_packaging")
     def check_default_packaging(self):
         for product in self:
             if product.default_packaging <= 0.0:
                 raise UserError(
-                    self.env._("Default packaging of %s must be positive ! " % (
-                        product.name,)))
+                    self.env._(
+                        "Default packaging of %s must be positive !",
+                        product.name,
+                    )
+                )
