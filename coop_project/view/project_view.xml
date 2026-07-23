@@ -131,7 +131,7 @@
                         name="btn_show_comment_history"
                         type="object"
                         invisible="show_comment_type == 'comment'"
-                        class="btn-secondary ml4"
+                        class="oe_highlight ml4"
                     ><i class="fa fa-plus" /> Full History</button>
                     <button
                         name="btn_add_comment"

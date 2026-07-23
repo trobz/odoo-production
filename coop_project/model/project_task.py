@@ -85,7 +85,9 @@ class ProjectTask(models.Model):
             args = [
                 ("model", "=", "project.task"),
                 ("res_id", "=", task.id),
+                "|",
                 ("body", "!=", False),
+                ("message_type", "=", "notification"),
             ]
             if task.show_comment_type == "comment":
                 args += [
