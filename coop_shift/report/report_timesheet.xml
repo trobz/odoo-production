@@ -5,7 +5,10 @@
         <t t-call="web.html_container">
             <tr t-foreach="Shifts" t-as="shift">
                 <t t-call="web.basic_layout">
-                    <div class="page" style="page-break-after:always;font-family: 'Open Sans', sans-serif;">
+                    <div
+                        class="page"
+                        style="page-break-after:always;font-family: 'Open Sans', sans-serif;"
+                    >
                         <div class="row mt0 mb0">
                             <div class="col-1" style="font-size:60px;">
                                 <bold>1</bold>
@@ -20,18 +23,51 @@
                             </div>
                         </div>
 
-                        <table class="table table-bordered" style="border: 1px solid #ddd;">
+                        <table
+                            class="table table-bordered"
+                            style="border: 1px solid #ddd;"
+                        >
                             <thead>
-                                <tr style="font-size:9px;background:#DDDDDD;font-weight:700;border: 1px solid #ddd;">
-                                    <th width="6%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Statut</th>
-                                    <th width="6%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Rattrapages</th>
-                                    <th width="8%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Qualité</th>
-                                    <th width="8%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Numéro</th>
-                                    <th width="22%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Nom</th>
-                                    <th width="6%" class="text-center" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Échange</th>
-                                    <th width="8%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Numéro</th>
-                                    <th width="28%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Nom</th>
-                                    <th width="8%" style="text-align:center;font-weight:700;border: 1px solid #ddd;">Signature<br />départ</th>
+                                <tr
+                                    style="font-size:9px;background:#DDDDDD;font-weight:700;border: 1px solid #ddd;"
+                                >
+                                    <th
+                                        width="6%"
+                                        style="text-align:center;font-weight:700;border: 1px solid #ddd;"
+                                    >Statut</th>
+                                    <th
+                                        width="6%"
+                                        style="text-align:center;font-weight:700;border: 1px solid #ddd;"
+                                    >Rattrapages</th>
+                                    <th
+                                        width="8%"
+                                        style="text-align:center;font-weight:700;border: 1px solid #ddd;"
+                                    >Qualité</th>
+                                    <th
+                                        width="8%"
+                                        style="text-align:center;font-weight:700;border: 1px solid #ddd;"
+                                    >Numéro</th>
+                                    <th
+                                        width="22%"
+                                        style="text-align:center;font-weight:700;border: 1px solid #ddd;"
+                                    >Nom</th>
+                                    <th
+                                        width="6%"
+                                        class="text-center"
+                                        style="text-align:center;font-weight:700;border: 1px solid #ddd;"
+                                    >Échange</th>
+                                    <th
+                                        width="8%"
+                                        style="text-align:center;font-weight:700;border: 1px solid #ddd;"
+                                    >Numéro</th>
+                                    <th
+                                        width="28%"
+                                        style="text-align:center;font-weight:700;border: 1px solid #ddd;"
+                                    >Nom</th>
+                                    <th
+                                        width="8%"
+                                        style="text-align:center;font-weight:700;border: 1px solid #ddd;"
+                                    >Signature<br />départ</th>
                                 </tr>
                                 <tr>
                                     <th
@@ -87,7 +123,9 @@
                                             t-esc="registration['registration'].partner_id.barcode_base"
                                         />
                                     </td>
-                                    <td style="font-size:11px; padding: 4px;border: 1px solid #ddd;">
+                                    <td
+                                        style="font-size:11px; padding: 4px;border: 1px solid #ddd;"
+                                    >
                                         <span
                                             t-if="registration['registration'].name"
                                             t-esc="registration['registration'].name"
@@ -102,7 +140,7 @@
                                     <td style="border: 1px solid #ddd;">
                                         <t t-if="registration['is_on_leave']">CONG</t>
                                     </td>
-                                    <td style="border: 1px solid #ddd;"/>
+                                    <td style="border: 1px solid #ddd;" />
                                 </tr>
 
                                 <!-- Helpers -->
@@ -139,7 +177,7 @@
                                         <font color="white">_</font>
                                     </td>
                                     <td style="border: 1px solid #ddd;" />
-                                    <td style="border: 1px solid #ddd;"/>
+                                    <td style="border: 1px solid #ddd;" />
                                     <td style="border: 1px solid #ddd;" />
                                     <td style="border: 1px solid #ddd;" />
                                     <td style="border-left: 4px solid #ddd" />
@@ -193,7 +231,9 @@
                                     <td style="padding: 4px;border: 1px solid #ddd;">
                                         <span t-esc="ftop.partner_id.barcode_base" />
                                     </td>
-                                    <td style="font-size:11px; padding: 4px;border: 1px solid #ddd;">
+                                    <td
+                                        style="font-size:11px; padding: 4px;border: 1px solid #ddd;"
+                                    >
                                         <span t-esc="ftop.partner_id.name" />
                                     </td>
                                     <td style="border-left: 4px solid #ddd" />
@@ -240,22 +280,41 @@
                             </div>
                         </div>
                         <div class="row mt0 mb0">
-                            <h2
-                                style="background:#DDDDDD;padding:20px"
-                            >
+                            <h2 style="background:#DDDDDD;padding:20px">
                                 <strong>RATTRAPAGES</strong>
                             </h2>
                         </div>
 
                         <table class="table table-bordered">
                             <thead>
-                                <tr style="font-size:9px;background:#DDDDDD;font-weight:700;">
-                                    <th width="15%" style="border: 1px solid #ddd;font-weight:700;">Numéro</th>
-                                    <th width="35%" style="border: 1px solid #ddd;font-weight:700;">Nom</th>
-                                    <th width="6%" style="border: 1px solid #ddd;font-weight:700;" class="text-center">Échange</th>
-                                    <th width="8%" style="border: 1px solid #ddd;font-weight:700;">Numéro</th>
-                                    <th width="28%" style="border: 1px solid #ddd;font-weight:700;" >Nom</th>
-                                    <th width="7%" style="border: 1px solid #ddd;font-weight:700;">Signature<br />départ</th>
+                                <tr
+                                    style="font-size:9px;background:#DDDDDD;font-weight:700;"
+                                >
+                                    <th
+                                        width="15%"
+                                        style="border: 1px solid #ddd;font-weight:700;"
+                                    >Numéro</th>
+                                    <th
+                                        width="35%"
+                                        style="border: 1px solid #ddd;font-weight:700;"
+                                    >Nom</th>
+                                    <th
+                                        width="6%"
+                                        style="border: 1px solid #ddd;font-weight:700;"
+                                        class="text-center"
+                                    >Échange</th>
+                                    <th
+                                        width="8%"
+                                        style="border: 1px solid #ddd;font-weight:700;"
+                                    >Numéro</th>
+                                    <th
+                                        width="28%"
+                                        style="border: 1px solid #ddd;font-weight:700;"
+                                    >Nom</th>
+                                    <th
+                                        width="7%"
+                                        style="border: 1px solid #ddd;font-weight:700;"
+                                    >Signature<br />départ</th>
                                 </tr>
                                 <tr>
                                     <th
@@ -275,7 +334,9 @@
                                         <font color="white">_</font>
                                     </td>
                                     <td style="border: 1px solid #ddd;" />
-                                    <td style="border-left: 4px solid #ddd;border: 1px solid #ddd;" />
+                                    <td
+                                        style="border-left: 4px solid #ddd;border: 1px solid #ddd;"
+                                    />
                                     <td style="border: 1px solid #ddd;" />
                                     <td style="border: 1px solid #ddd;" />
                                     <td style="border: 1px solid #ddd;" />

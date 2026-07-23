@@ -469,7 +469,6 @@ msgid "Blocked"
 msgstr ""
 
 #. module: coop_shift
-#: model:ir.model.fields,field_description:coop_shift.field_shift_registration__partner_id
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_registration__partner_id
 #: model:ir.model.fields,field_description:coop_shift.field_shift_template_registration_line__partner_id
 msgid "Booked by"
@@ -852,7 +851,6 @@ msgid "Current Template Registration Lines"
 msgstr ""
 
 #. module: coop_shift
-#: model:ir.model.fields,field_description:coop_shift.field_report_timesheet__date_report
 #: model:ir.model.fields,field_description:coop_shift.field_shift_shift__date_without_time
 #: model_terms:ir.ui.view,arch_db:coop_shift.view_shift_search
 #: model_terms:ir.ui.view,arch_db:coop_shift.view_shift_ticket_search
