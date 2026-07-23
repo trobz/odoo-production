@@ -9,7 +9,7 @@
                     <field name="date_report" />
                     <field
                         name="shift_ids"
-                        label="Shifts"
+                        nolabel="1"
                         options="{'no_create': True}"
                         domain="[('date_begin', '&lt;=', date_report), ('date_end', '&gt;', date_report_prior)]"
                     >
