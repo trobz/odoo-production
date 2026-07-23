@@ -6,10 +6,7 @@
     "author": "Trobz, La Louve",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
-    "depends": [
-        "web",
-        "web_chatter_position"
-    ],
+    "depends": ["web", "web_chatter_position"],
     "assets": {
         "web.assets_backend": [
             "coop_web/static/src/scss/list_view.scss",
