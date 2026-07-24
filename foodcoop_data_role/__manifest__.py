@@ -46,6 +46,7 @@
         "data/res_users.xml",
         "data/ir.model.access.csv",
         "data/ir_rule.xml",
+        "data/res.users.role.line.csv",
         "security/ir.model.access.csv",
         "views/mass_mailing_views.xml",
         "views/pos_session_views.xml",
@@ -55,9 +56,6 @@
         "views/res_partner_views.xml",
         "views/menu.xml",
         "report/coop_print_badge_report.xml",
-    ],
-    "demo": [
-        "demo/res.users.role.line.csv",
     ],
     "assets": {
         "web.assets_backend": [
