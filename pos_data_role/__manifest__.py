@@ -2,11 +2,11 @@
     "name": "Roles for Foodcoop - POS Cashlogy",
     "version": "18.0.1.0.0",
     "category": "Trobz Standard Modules",
-    "description": """
+    "summary": """
         Extends foodcoop_data_role with POS Automatic Cash Drawer (Cashlogy) access.
         Install only on coops using the Cashlogy cash drawer device.
     """,
-    "author": "Trobz",
+    "author": "Trobz, La Louve",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "depends": [
         "foodcoop_data_role",
