@@ -7,10 +7,7 @@
     "author": "Trobz, La Louve",
     "license": "AGPL-3",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
-    "depends": [
-        "pos_payment_credit",
-        "coop_membership"
-    ],
+    "depends": ["pos_payment_credit", "coop_membership"],
     "data": [
         "views/res_partner_view.xml",
     ],
