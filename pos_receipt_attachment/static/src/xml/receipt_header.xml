@@ -6,7 +6,11 @@
         /web/image URLs to one slot). Fall back to the live URL for cases where
         the cache hasn't populated yet (first render, fresh session).
     -->
-    <t t-name="point_of_sale.ReceiptHeader" t-inherit="point_of_sale.ReceiptHeader" t-inherit-mode="extension">
+    <t
+        t-name="point_of_sale.ReceiptHeader"
+        t-inherit="point_of_sale.ReceiptHeader"
+        t-inherit-mode="extension"
+    >
         <xpath expr="//img[@class='pos-receipt-logo']" position="replace">
             <img
                 t-if="props.data.company_logo"

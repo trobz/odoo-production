@@ -20,9 +20,13 @@ patch(PosStore.prototype, {
         await super.setup(...args);
         // Pre-fetch the company logo while online so it is available for receipt
         // image capture even when the device goes offline later.
-        this._cacheCompanyLogo().catch(() => {});
+        this._cacheCompanyLogo().catch(() => {
+            // Intentionally ignore errors during background cache operation
+        });
         // Flush any receipt images that were saved offline in a previous session.
-        this._flushPendingReceipts().catch(() => {});
+        this._flushPendingReceipts().catch(() => {
+            // Intentionally ignore errors during background flush operation
+        });
     },
 
     async _cacheCompanyLogo() {
@@ -48,7 +52,7 @@ patch(PosStore.prototype, {
     // needed), which avoids the library's broken cache-key bug (strips query
     // params, so all /web/image URLs share one cache slot).
     getReceiptHeaderData(order) {
-        const result = super.getReceiptHeaderData(...arguments);
+        const result = super.getReceiptHeaderData(order);
         if (this.company_logo_base64) {
             result.company_logo = this.company_logo_base64;
         }

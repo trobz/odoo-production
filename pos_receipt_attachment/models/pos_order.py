@@ -111,7 +111,7 @@ class PosOrder(models.Model):
                 )
                 order.email_status = "sent"
                 # Commit immediately to prevent duplicate sends on partial failure
-                self.env.cr.commit()
+                self.env.cr.commit()  # pylint: disable=E8102
             except Exception:
                 _logger.exception(
                     "Failed to send receipt email for order %s", order.name
