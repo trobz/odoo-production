@@ -5,14 +5,14 @@
     "version": "18.0.1.0.0",
     "category": "Point of Sale",
     "author": "Trobz, La Louve",
-    "website": "https://github.com/OCA/pos",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": [
         "pos_meal_voucher",
     ],
     "assets": {
         "point_of_sale._assets_pos": [
-            "pos_meal_voucher_custom/static/src/payment_screen/**/*",    
+            "pos_meal_voucher_custom/static/src/payment_screen/**/*",
         ],
     },
     "installable": True,
