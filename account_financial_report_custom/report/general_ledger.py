@@ -7,7 +7,7 @@ class GeneralLedgerReportCustom(models.AbstractModel):
     _inherit = "report.account_financial_report.general_ledger"
 
     def _group_move_lines_custom(self, move_lines):
-        """Group lines by date, entry, account, taxes, partner, cost center and currency.
+        """Group lines by date, entry, account, taxes, partner, cost center and currency
 
         This emulates the behaviour of the old group_by_move_partner method but on
         the dict-based structure used in account_financial_report for Odoo 18.
@@ -28,7 +28,7 @@ class GeneralLedgerReportCustom(models.AbstractModel):
                 cost_center = analytic_distribution
             matching_number = line.get("rec_name") or line.get("matching_number")
             currency_val = line.get("currency_id")
-            if isinstance(currency_val, (list, tuple)) and currency_val:
+            if isinstance(currency_val, list | tuple) and currency_val:
                 currency = currency_val[0]
             else:
                 currency = currency_val

@@ -1,6 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="internal_layout_inherit" inherit_id="account_financial_report.internal_layout">
+    <template
+        id="internal_layout_inherit"
+        inherit_id="account_financial_report.internal_layout"
+    >
         <xpath expr="//div[hasclass('article')]" position="inside">
             <style>
                 .o_account_financial_reports_page h4.mt0 {
@@ -43,8 +46,15 @@
         </xpath>
     </template>
 
-    <template id="report_general_ledger_lines_inherit" inherit_id="account_financial_report.report_general_ledger_lines">
-        <xpath expr="//t[@t-foreach=&quot;account_or_group_item_object['move_lines']&quot;]" position="replace">
+    <template
+        id="report_general_ledger_lines_inherit"
+        inherit_id="account_financial_report.report_general_ledger_lines"
+        priority="100"
+    >
+        <xpath
+            expr="//t[@t-foreach=&quot;account_or_group_item_object['move_lines']&quot;]"
+            position="replace"
+        >
             <t t-set="total_bal_curr" t-value="0" />
             <t t-foreach="account_or_group_item_object['move_lines']" t-as="line">
                 <div class="act_as_row lines">
@@ -178,8 +188,8 @@
                                                     t-if="int(line['analytic_distribution'][analytic_id]) &lt; 100"
                                                 >
                                                     <t
-                                                        t-out="int(line['analytic_distribution'][analytic_id])"
-                                                    />%
+                                                    t-out="int(line['analytic_distribution'][analytic_id])"
+                                                />%
                                                 </t>
                                             </t>
                                         </span>
@@ -254,6 +264,4 @@
             </t>
         </xpath>
     </template>
-
-
 </odoo>
