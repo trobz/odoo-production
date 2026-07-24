@@ -95,9 +95,7 @@
 
             <field name="user_ids" position="attributes">
                 <attribute name="readonly">state != 'draft'</attribute>
-                <attribute
-                    name="groups"
-                >coop_shift.group_shift_user</attribute>
+                <attribute name="groups">coop_shift.group_shift_user</attribute>
             </field>
 
             <button name="button_confirm" position="attributes">

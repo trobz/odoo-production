@@ -46,9 +46,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr
-                                    style="border-top:1px solid #ccc;"
-                                >
+                                <tr style="border-top:1px solid #ccc;">
                                     <td>
                                         <span
                                             t-out="docs and context_timestamp(docs[0].date).strftime('%Y-%m-%d %H:%M:%S')"
@@ -70,7 +68,9 @@
                                     >
                                         <strong>Package Qty</strong>
                                     </th>
-                                    <th style="width: 70px;font-weight:700;border:1px solid #ccc;">
+                                    <th
+                                        style="width: 70px;font-weight:700;border:1px solid #ccc;"
+                                    >
                                         <strong>Internal Reference</strong>
                                     </th>
                                     <th style="font-weight:700;border:1px solid #ccc;">
@@ -114,28 +114,39 @@
                                         <span t-field="line.product_id.default_code" />
                                     </td>
                                     <td style="border:1px solid #ccc;max-width:200px;">
-                                        <div style="
+                                        <div
+                                            style="
                                             width:100%;
                                             box-sizing:border-box;
                                             padding-right:10px;
                                             white-space:nowrap;
                                             overflow:hidden;
                                             text-overflow:ellipsis;
-                                        ">
-                                            <span t-field="line.product_id.name"/>
+                                        "
+                                        >
+                                            <span t-field="line.product_id.name" />
                                         </div>
                                     </td>
-                                    <td class="text-end" style="border:1px solid #ccc;" />
-                                    <td class="text-end" style="border:1px solid #ccc;"  />
-                                    <td class="text-end" style="border:1px solid #ccc;"  />
-                                    <td class="text-end" style="border:1px solid #ccc;" >
+                                    <td
+                                        class="text-end"
+                                        style="border:1px solid #ccc;"
+                                    />
+                                    <td
+                                        class="text-end"
+                                        style="border:1px solid #ccc;"
+                                    />
+                                    <td
+                                        class="text-end"
+                                        style="border:1px solid #ccc;"
+                                    />
+                                    <td class="text-end" style="border:1px solid #ccc;">
                                         <span
                                             class="text-end"
                                             t-field="line.quantity"
                                         />
                                         <!-- UoM should be hidden?? -->
                                         <span
-                                            t-if="False" 
+                                            t-if="False"
                                             class="text-end"
                                             t-field="line.product_uom_id"
                                             groups="uom.group_uom"
@@ -171,7 +182,10 @@
         <field name="binding_model_id" ref="stock_inventory.model_stock_inventory" />
     </record>
 
-    <record id="coop_inventory.action_report_stock_inventory_group" model="ir.actions.report">
+    <record
+        id="coop_inventory.action_report_stock_inventory_group"
+        model="ir.actions.report"
+    >
         <field name="binding_model_id" eval="False" />
     </record>
 

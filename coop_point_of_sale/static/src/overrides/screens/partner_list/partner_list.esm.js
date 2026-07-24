@@ -1,8 +1,8 @@
-import {PartnerList} from "@point_of_sale/app/screens/partner_list/partner_list";
 import {PartnerLine} from "@point_of_sale/app/screens/partner_list/partner_line/partner_line";
+import {PartnerList} from "@point_of_sale/app/screens/partner_list/partner_list";
+import {onWillStart} from "@odoo/owl";
 import {patch} from "@web/core/utils/patch";
 import {user} from "@web/core/user";
-import {onWillStart} from "@odoo/owl";
 
 patch(PartnerLine.prototype, {
     getPartnerImageUrl(id) {

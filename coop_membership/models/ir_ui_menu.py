@@ -9,9 +9,15 @@ BDM_HIDDEN_MENUS = {
     "coop_shift.menu_shift_shift": (GROUP_BDM_LECTURE, GROUP_BDM_SAISIE),
     "coop_membership.menu_shift_seats_available": (GROUP_BDM_LECTURE, GROUP_BDM_SAISIE),
     # Hidden for Lecture only, visible to Presence and Saisie.
-    "coop_membership.menu_shift_attendance_entry": (GROUP_BDM_LECTURE, GROUP_BDM_PRESENCE),
+    "coop_membership.menu_shift_attendance_entry": (
+        GROUP_BDM_LECTURE,
+        GROUP_BDM_PRESENCE,
+    ),
     # Hidden for Presence only, visible to Lecture (its only menu) and Saisie.
-    "coop_shift.menu_shift_registration_exchanges": (GROUP_BDM_PRESENCE, GROUP_BDM_SAISIE),
+    "coop_shift.menu_shift_registration_exchanges": (
+        GROUP_BDM_PRESENCE,
+        GROUP_BDM_SAISIE,
+    ),
 }
 
 # Only root menu BDM Lecture/Presence/Saisie are allowed to see.

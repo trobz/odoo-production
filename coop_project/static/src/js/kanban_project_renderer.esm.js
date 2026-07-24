@@ -1,5 +1,5 @@
-import {ProjectTaskKanbanRenderer} from "@project/views/project_task_kanban/project_task_kanban_renderer";
 import {onMounted, onWillUnmount} from "@odoo/owl";
+import {ProjectTaskKanbanRenderer} from "@project/views/project_task_kanban/project_task_kanban_renderer";
 import {patch} from "@web/core/utils/patch";
 import {renderToString} from "@web/core/utils/render";
 import {useService} from "@web/core/utils/hooks";

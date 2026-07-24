@@ -1302,7 +1302,6 @@ msgid "Blocked"
 msgstr ""
 
 #. module: coop_membership
-#: model:ir.model.fields,field_description:coop_membership.field_shift_registration__partner_id
 #: model:ir.model.fields,field_description:coop_membership.field_shift_template_registration__partner_id
 msgid "Booked by"
 msgstr ""

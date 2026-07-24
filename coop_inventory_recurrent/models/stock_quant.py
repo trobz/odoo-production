@@ -15,7 +15,9 @@ class StockQuant(models.Model):
     @api.depends("current_inventory_id")
     def _compute_category_group_line_id(self):
         for quant in self:
-            quant.category_group_line_id = quant.current_inventory_id.category_group_line_id
+            quant.category_group_line_id = (
+                quant.current_inventory_id.category_group_line_id
+            )
 
     def get_copi_variants(self):
         res0 = []
