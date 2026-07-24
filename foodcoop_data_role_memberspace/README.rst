@@ -13,11 +13,14 @@ Roles for Foodcoop - Memberspace
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/github-AwesomeFoodCoops%2Fodoo--production-lightgray.png?logo=github
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
+    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
+    :alt: License: AGPL-3
+.. |badge3| image:: https://img.shields.io/badge/github-AwesomeFoodCoops%2Fodoo--production-lightgray.png?logo=github
     :target: https://github.com/AwesomeFoodCoops/odoo-production/tree/18.0/foodcoop_data_role_memberspace
     :alt: AwesomeFoodCoops/odoo-production
 
-|badge1| |badge2|
+|badge1| |badge2| |badge3|
 
 This module provides role configuration for Foodcoop Memberspace.
 
@@ -31,18 +34,18 @@ members.
 Functionality
 -------------
 
-- Creates a "Member" user group for memberspace access
-- Creates a "Restrict rights for Member" group with hidden category
-- Defines a "Member" role linked to the user groups
-- Provides a demo member user account
-- Automatically assigns new memberspace users to the Member role
-- Extends res.partner to handle member role assignment
+-  Creates a "Member" user group for memberspace access
+-  Creates a "Restrict rights for Member" group with hidden category
+-  Defines a "Member" role linked to the user groups
+-  Provides a demo member user account
+-  Automatically assigns new memberspace users to the Member role
+-  Extends res.partner to handle member role assignment
 
 Dependencies
 ------------
 
-- ``foodcoop_data_role``: Base role configuration for Foodcoop
-- ``coop_memberspace``: Memberspace functionality module
+-  ``foodcoop_data_role``: Base role configuration for Foodcoop
+-  ``coop_memberspace``: Memberspace functionality module
 
 License
 -------
@@ -63,10 +66,10 @@ system.
 Features
 --------
 
-- Automatically creates "Member" user group and role
-- Restricts access rights for members through dedicated groups
-- Assigns new memberspace users to the Member role automatically
-- Provides a demo member user for testing
+-  Automatically creates "Member" user group and role
+-  Restricts access rights for members through dedicated groups
+-  Assigns new memberspace users to the Member role automatically
+-  Provides a demo member user for testing
 
 Configuration
 -------------
@@ -77,22 +80,22 @@ Configuration
    the Member role
 4. The role includes implied groups:
 
-   - Restrict rights for Member
-   - Memberspace group from coop_memberspace
+   -  Restrict rights for Member
+   -  Memberspace group from coop_memberspace
 
 Demo Data
 ---------
 
-- A demo member user is created with login: ``member@example.com``
-- This user is assigned the Member role automatically
+-  A demo member user is created with login: ``member@example.com``
+-  This user is assigned the Member role automatically
 
 Requirements
 ------------
 
-- This module depends on:
+-  This module depends on:
 
-  - ``foodcoop_data_role``
-  - ``coop_memberspace``
+   -  ``foodcoop_data_role``
+   -  ``coop_memberspace``
 
 Bug Tracker
 ===========
@@ -116,9 +119,9 @@ Authors
 Contributors
 ------------
 
-- Trobz https://www.trobz.com/
+-  Trobz https://www.trobz.com/
 
-  - Phan Hong Phuc phucph@trobz.com
+   -  Phan Hong Phuc phucph@trobz.com
 
 Maintainers
 -----------

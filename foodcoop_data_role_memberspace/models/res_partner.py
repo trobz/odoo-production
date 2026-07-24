@@ -1,4 +1,3 @@
-
 from odoo import Command, models
 
 
@@ -12,7 +11,7 @@ class ResPartner(models.Model):
         users = super().create_memberspace_user()
         role = self.env.ref(
             "foodcoop_data_role_memberspace.res_users_role_Member",
-            raise_if_not_found=False
+            raise_if_not_found=False,
         )
         if not role:
             return users
