@@ -34,16 +34,16 @@ partner configurations.
 Functionality
 -------------
 
-- Creates a credit account (511900) for POS payments and refunds
-- Configures the credit journal with default debit account
-- Customizes partner view to show credit page only for members, former
-  members, and interested people
+-  Creates a credit account (511900) for POS payments and refunds
+-  Configures the credit journal with default debit account
+-  Customizes partner view to show credit page only for members, former
+   members, and interested people
 
 Dependencies
 ------------
 
-- ``coop_membership``: Base cooperative membership module
-- ``pos_payment_credit``: POS payment credit module
+-  ``coop_membership``: Base cooperative membership module
+-  ``pos_payment_credit``: POS payment credit module
 
 License
 -------
@@ -64,9 +64,10 @@ system.
 Features
 --------
 
-- Creates a credit account for POS payments
-- Configures credit journal with default debit account
-- Customizes partner view to show credit page only for relevant partners
+-  Creates a credit account for POS payments
+-  Configures credit journal with default debit account
+-  Customizes partner view to show credit page only for relevant
+   partners
 
 Configuration
 -------------
@@ -80,10 +81,10 @@ Configuration
 Requirements
 ------------
 
-- This module depends on:
+-  This module depends on:
 
-  - ``coop_membership``
-  - ``pos_payment_credit``
+   -  ``coop_membership``
+   -  ``pos_payment_credit``
 
 Bug Tracker
 ===========
@@ -107,9 +108,9 @@ Authors
 Contributors
 ------------
 
-- Trobz https://www.trobz.com/
+-  Trobz https://www.trobz.com/
 
-  - Phan Hong Phuc phucph@trobz.com
+   -  Phan Hong Phuc phucph@trobz.com
 
 Maintainers
 -----------
