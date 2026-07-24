@@ -13,5 +13,5 @@
         "point_of_sale._assets_pos": [
             "pos_access_right_custom/static/src/js/pos_access_right.esm.js",
         ],
-    }
+    },
 }

@@ -31,17 +31,17 @@ modifications after payment.
 Functionality
 -------------
 
-- Patches the POS order line to prevent quantity changes after payment
-- Restricts users without "hasGroupDeleteOrder" permission from
-  modifying paid orders
-- Displays authorization error message when unauthorized modification is
-  attempted
-- Extends the base ``pos_access_right`` module functionality
+-  Patches the POS order line to prevent quantity changes after payment
+-  Restricts users without "hasGroupDeleteOrder" permission from
+   modifying paid orders
+-  Displays authorization error message when unauthorized modification
+   is attempted
+-  Extends the base ``pos_access_right`` module functionality
 
 Dependencies
 ------------
 
-- ``pos_access_right``: Base module for POS access right management
+-  ``pos_access_right``: Base module for POS access right management
 
 License
 -------
@@ -59,9 +59,9 @@ Usage
 Features
 --------
 
-- Prevents order line quantity changes after payments are registered
-- Restricts modification based on user group permissions
-- Shows clear error message for unauthorized actions
+-  Prevents order line quantity changes after payments are registered
+-  Restricts modification based on user group permissions
+-  Shows clear error message for unauthorized actions
 
 How it works
 ------------
@@ -69,8 +69,8 @@ How it works
 1. When a user attempts to change the quantity of an order line
 2. The system checks if:
 
-   - The user has the "hasGroupDeleteOrder" permission
-   - The order already has payments registered
+   -  The user has the "hasGroupDeleteOrder" permission
+   -  The order already has payments registered
 
 3. If both conditions are met, the quantity change is blocked
 4. An error message is displayed: "Change Order Value - Unauthorized
@@ -89,7 +89,7 @@ Configuration
 Requirements
 ------------
 
-- Depends on ``pos_access_right`` module
+-  Depends on ``pos_access_right`` module
 
 Bug Tracker
 ===========
@@ -113,9 +113,9 @@ Authors
 Contributors
 ------------
 
-- Trobz <`https://www.trobz.com\\> <https://www.trobz.com\>>`__
+-  Trobz <https://www.trobz.com>
 
-  - Phan Hong Phuc <<phucph@trobz.com>>
+   -  Phan Hong Phuc <<phucph@trobz.com>>
 
 Maintainers
 -----------
