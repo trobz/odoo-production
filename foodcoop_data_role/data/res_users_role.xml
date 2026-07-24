@@ -97,6 +97,7 @@
             ref('project.group_project_user'),
             ref('maintenance.group_equipment_manager'),
             ref('coop_membership.group_membership_bdm_saisie'),
+            ref('coop_membership.coop_group_access_res_partner_inform'),
             ref('base.group_allow_export'),
         ])]"
         />
@@ -122,6 +123,7 @@
             ref('account.group_account_user'),
             ref('account.group_account_manager'),
             ref('base.group_allow_export'),
+            ref('base_import_security_group.group_import_csv'),
         ])]"
         />
     </record>
@@ -165,6 +167,9 @@
             ref('account_export.group_account_export'),
             ref('foodcoop_module.functional_admin'),
             ref('base.group_allow_export'),
+            ref('base_import_security_group.group_import_csv'),
+            ref('coop_membership.subscriptions_can_change_fundraising_category'),
+            ref('coop_membership.coop_group_access_res_partner_inform'),
         ])]"
         />
     </record>
@@ -244,6 +249,7 @@
             ref('mass_mailing_access.group_manager'),
             ref('group_member_Communications_Manager_restrict'),
             ref('base.group_allow_export'),
+            ref('base_import_security_group.group_import_csv')
         ])]"
         />
     </record>
@@ -316,40 +322,6 @@
             ref('maintenance.group_equipment_manager'),
             ref('base.group_allow_export'),
         ])]"
-        />
-    </record>
-
-    <!-- Add Import CSV/Excel group to Communications Manager, Foodcoop Admin, Accountant -->
-    <record id="res_users_role_Communications_Manager" model="res.users.role">
-        <field
-            name="implied_ids"
-            eval="[Command.link(ref('base_import_security_group.group_import_csv'))]"
-        />
-    </record>
-    <record id="res_users_role_Accountant" model="res.users.role">
-        <field
-            name="implied_ids"
-            eval="[Command.link(ref('base_import_security_group.group_import_csv'))]"
-        />
-    </record>
-
-    <!-- Additional groups for Foodcoop Admin -->
-    <record id="res_users_role_Foodcoop_Admin" model="res.users.role">
-        <field
-            name="implied_ids"
-            eval="[
-            Command.link(ref('base_import_security_group.group_import_csv')),
-            Command.link(ref('coop_membership.subscriptions_can_change_fundraising_category')),
-            Command.link(ref('coop_membership.coop_group_access_res_partner_inform')),
-        ]"
-        />
-    </record>
-
-    <!-- Add Access Res Partner Inform to Member Manager -->
-    <record id="res_users_role_Member_Manager" model="res.users.role">
-        <field
-            name="implied_ids"
-            eval="[Command.link(ref('coop_membership.coop_group_access_res_partner_inform'))]"
         />
     </record>
 </odoo>

@@ -1,4 +1,5 @@
 from odoo import Command, api, models
+
 from odoo.addons.base_user_role.models.user import ResUsers as BURUsers
 
 
