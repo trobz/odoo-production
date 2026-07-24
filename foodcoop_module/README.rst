@@ -33,17 +33,17 @@ user groups, access rights, and menus necessary for administration.
 Functionality
 -------------
 
-- Creates the "Foodcoop Administration" group with specific permissions
-- Grants full access to res.users model for administrators
-- Provides read-only access to user roles
-- Adds custom administration menu
-- Customizes user form view with access restrictions
+-  Creates the "Foodcoop Administration" group with specific permissions
+-  Grants full access to res.users model for administrators
+-  Provides read-only access to user roles
+-  Adds custom administration menu
+-  Customizes user form view with access restrictions
 
 Dependencies
 ------------
 
-- ``auth_signup``: For user signup functionality
-- ``base_user_role``: For role-based access control
+-  ``auth_signup``: For user signup functionality
+-  ``base_user_role``: For role-based access control
 
 License
 -------
@@ -63,10 +63,10 @@ This module serves as an installer for the Foodcoop system.
 Features
 --------
 
-- Creates "Foodcoop Administration" user group
-- Provides access rights for user management
-- Adds administration menu for managing users
-- Customizes user views to restrict access rights
+-  Creates "Foodcoop Administration" user group
+-  Provides access rights for user management
+-  Adds administration menu for managing users
+-  Customizes user views to restrict access rights
 
 Configuration
 -------------
@@ -76,17 +76,17 @@ Configuration
 3. Users with this group can access the Administration menu
 4. The group has specific access rights to:
 
-   - res.users model (full access)
-   - res.users.role model (read only)
-   - res.users.role_line model (full access)
+   -  res.users model (full access)
+   -  res.users.role model (read only)
+   -  res.users.role_line model (full access)
 
 Requirements
 ------------
 
-- This module depends on:
+-  This module depends on:
 
-  - ``auth_signup``
-  - ``base_user_role``
+   -  ``auth_signup``
+   -  ``base_user_role``
 
 Bug Tracker
 ===========
@@ -110,9 +110,9 @@ Authors
 Contributors
 ------------
 
-- Trobz https://www.trobz.com/
+-  Trobz https://www.trobz.com/
 
-  - Phan Hong Phuc phucph@trobz.com
+   -  Phan Hong Phuc phucph@trobz.com
 
 Maintainers
 -----------

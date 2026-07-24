@@ -1,4 +1,5 @@
 from odoo.tests import common
+
 from odoo.addons.auth_signup.tests.test_auth_signup import TestAuthSignupFlow
 
 
@@ -56,33 +57,37 @@ class TestFoodcoopModule(common.TransactionCase):
 
 
 class TestAuthSignupFunctionalAdmin(TestAuthSignupFlow):
-
     def test_functional_admin_can_access_signup_type(self):
         group = self.env.ref(
-            "foodcoop_module.functional_admin",
-            raise_if_not_found=False
+            "foodcoop_module.functional_admin", raise_if_not_found=False
         )
         if not group:
             self.skipTest("foodcoop_module.functional_admin group not found")
 
-        partner = self.env["res.partner"].create({
-            "name": "Test Partner Signup",
-        })
+        partner = self.env["res.partner"].create(
+            {
+                "name": "Test Partner Signup",
+            }
+        )
 
-        functional_admin_user = self.env["res.users"].create({
-            "login": "functional_admin_access_test",
-            "name": "Functional Admin Access Test",
-            "email": "functional_admin_access@test.com",
-            "groups_id": [(4, group.id)],
-        })
+        functional_admin_user = self.env["res.users"].create(
+            {
+                "login": "functional_admin_access_test",
+                "name": "Functional Admin Access Test",
+                "email": "functional_admin_access@test.com",
+                "groups_id": [(4, group.id)],
+            }
+        )
 
         partner.with_user(functional_admin_user).read(["signup_type"])
 
-        user_without_group = self.env["res.users"].create({
-            "login": "regular_user_test",
-            "name": "Regular User Test",
-            "email": "regular_user@test.com",
-        })
+        user_without_group = self.env["res.users"].create(
+            {
+                "login": "regular_user_test",
+                "name": "Regular User Test",
+                "email": "regular_user@test.com",
+            }
+        )
 
-        with self.assertRaises(Exception):
+        with self.assertRaises(Exception):  # noqa: B017
             partner.with_user(user_without_group).read(["signup_type"])
