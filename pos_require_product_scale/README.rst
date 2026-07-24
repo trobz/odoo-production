@@ -31,9 +31,9 @@ If such lines are found, a confirmation dialog is shown listing the
 products concerned and asking the cashier to verify that the weight has
 been properly measured on the scale before proceeding.
 
-- If the cashier confirms, the payment flow continues normally.
-- If the cashier cancels, they are returned to the order screen to
-  correct the quantity.
+-  If the cashier confirms, the payment flow continues normally.
+-  If the cashier cancels, they are returned to the order screen to
+   correct the quantity.
 
 The check is controlled by a per-shop toggle so it can be enabled only
 for shops that have a connected scale.
@@ -72,15 +72,15 @@ Usage
 4. A warning dialog lists the products with a round weight and asks for
    confirmation.
 
-   - Click **Ok** to proceed to payment.
-   - Click **Cancel** to go back and correct the quantity (e.g. enter
-     the actual weight read from the scale such as 1.340 kg).
+   -  Click **Ok** to proceed to payment.
+   -  Click **Cancel** to go back and correct the quantity (e.g. enter
+      the actual weight read from the scale such as 1.340 kg).
 
 No dialog appears when:
 
-- the setting is disabled on the shop,
-- the product does not have *To Weigh With Scale* enabled, or
-- the quantity is already a decimal number.
+-  the setting is disabled on the shop,
+-  the product does not have *To Weigh With Scale* enabled, or
+-  the quantity is already a decimal number.
 
 Bug Tracker
 ===========

@@ -35,17 +35,17 @@ state.
 Functionality
 -------------
 
-- Adds a boolean field ``is_forbidden`` on partners
-- Automatically sets the working state to "blocked" for forbidden
-  members
-- Displays a custom error message for forbidden members
-- Provides group-based access control for managing forbidden status
+-  Adds a boolean field ``is_forbidden`` on partners
+-  Automatically sets the working state to "blocked" for forbidden
+   members
+-  Displays a custom error message for forbidden members
+-  Provides group-based access control for managing forbidden status
 
 Dependencies
 ------------
 
-- ``coop_membership``: Base cooperative membership module
-- ``coop_badge_reader``: Badge reader integration
+-  ``coop_membership``: Base cooperative membership module
+-  ``coop_badge_reader``: Badge reader integration
 
 License
 -------
@@ -66,13 +66,13 @@ the cooperative membership system.
 Features
 --------
 
-- Mark a partner as a forbidden member
-- When a partner is marked as forbidden, their working state is
-  automatically set to "blocked"
-- A custom error message is displayed for forbidden members when they
-  try to enter the store
-- Only users with the "Manage forbidden member" group can modify the
-  forbidden status
+-  Mark a partner as a forbidden member
+-  When a partner is marked as forbidden, their working state is
+   automatically set to "blocked"
+-  A custom error message is displayed for forbidden members when they
+   try to enter the store
+-  Only users with the "Manage forbidden member" group can modify the
+   forbidden status
 
 Configuration
 -------------
@@ -107,9 +107,9 @@ Authors
 Contributors
 ------------
 
-- Trobz https://www.trobz.com/
+-  Trobz https://www.trobz.com/
 
-  - Phan Hong Phuc phucph@trobz.com
+   -  Phan Hong Phuc phucph@trobz.com
 
 Maintainers
 -----------

@@ -27,12 +27,12 @@ Point of Sale screen, without leaving the POS session.
 
 Key features:
 
-- **Scrap from POS**: create scrap orders for all products in the
-  current order with one click.
-- **Scrap list**: view the 50 most recent scrap orders created from POS
-  sessions.
-- **Configurable validation mode**: choose how scrap orders are
-  validated depending on available stock.
+-  **Scrap from POS**: create scrap orders for all products in the
+   current order with one click.
+-  **Scrap list**: view the 50 most recent scrap orders created from POS
+   sessions.
+-  **Configurable validation mode**: choose how scrap orders are
+   validated depending on available stock.
 
 **Table of contents**
 
@@ -89,10 +89,10 @@ Usage
 
 **Error cases**
 
-- If the order is empty, an error dialog will appear.
-- If the option is set to *Create and validate for products with stock
-  only* and a product has insufficient stock, the scrap operation is
-  rolled back and an error message is displayed.
+-  If the order is empty, an error dialog will appear.
+-  If the option is set to *Create and validate for products with stock
+   only* and a product has insufficient stock, the scrap operation is
+   rolled back and an error message is displayed.
 
 Bug Tracker
 ===========

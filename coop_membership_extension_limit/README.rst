@@ -34,9 +34,9 @@ Features
 
 2. **Configurable Settings**:
 
-   - Enable/disable the extension limit feature
-   - Set the maximum number of extensions (default: 6)
-   - Choose which extension types are counted towards the limit
+   -  Enable/disable the extension limit feature
+   -  Set the maximum number of extensions (default: 6)
+   -  Choose which extension types are counted towards the limit
 
 3. **Automatic Warning**: When a member reaches one extension before the
    limit, an automatic email notification is sent to warn them.
@@ -47,11 +47,11 @@ Features
 Technical Details
 -----------------
 
-- Inherits from ``shift.extension`` model
-- Adds ``is_new`` boolean field to track new extensions
-- Extends ``res.company`` with extension limit settings
-- Integrates with ``res.config.settings`` for configuration
-- Depends on ``coop_membership`` and ``coop_badge_reader`` modules
+-  Inherits from ``shift.extension`` model
+-  Adds ``is_new`` boolean field to track new extensions
+-  Extends ``res.company`` with extension limit settings
+-  Integrates with ``res.config.settings`` for configuration
+-  Depends on ``coop_membership`` and ``coop_badge_reader`` modules
 
 **Table of contents**
 
@@ -76,12 +76,12 @@ Configuration
 How It Works
 ------------
 
-- When a member in alert, suspended, or delay state receives an
-  extension, the system counts the consecutive extensions
-- Once the limit is reached, no more extensions can be granted until
-  make-up sessions are completed
-- When a member reaches one extension before the limit, a warning email
-  is automatically sent
+-  When a member in alert, suspended, or delay state receives an
+   extension, the system counts the consecutive extensions
+-  Once the limit is reached, no more extensions can be granted until
+   make-up sessions are completed
+-  When a member reaches one extension before the limit, a warning email
+   is automatically sent
 
 Email Notifications
 -------------------
@@ -111,10 +111,10 @@ Authors
 Contributors
 ------------
 
-- La Louve
-- `Trobz <https://www.trobz.com>`__
+-  La Louve
+-  `Trobz <https://www.trobz.com>`__
 
-  - Phan Hong Phuc <phucph@trobz.com>
+   -  Phan Hong Phuc <phucph@trobz.com>
 
 Maintainers
 -----------

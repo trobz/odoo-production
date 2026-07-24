@@ -34,17 +34,18 @@ email with a unique validation link.
 Functionality
 -------------
 
-- Generates a unique validation string for partners with email addresses
-- Sends automatic validation emails when partners are created or email
-  is changed
-- Validates email through a web-based confirmation link
-- Shows warning on partner form for unvalidated emails
-- Allows partners to request new validation emails
+-  Generates a unique validation string for partners with email
+   addresses
+-  Sends automatic validation emails when partners are created or email
+   is changed
+-  Validates email through a web-based confirmation link
+-  Shows warning on partner form for unvalidated emails
+-  Allows partners to request new validation emails
 
 Dependencies
 ------------
 
-- ``coop_membership``: Base cooperative membership module
+-  ``coop_membership``: Base cooperative membership module
 
 License
 -------
@@ -64,11 +65,11 @@ This module provides email validation functionality for partners.
 Features
 --------
 
-- Generate a unique validation string for each partner
-- Send email validation link to partners
-- Validate email through a web link
-- Display warning when email is not validated
-- Allow resending validation email
+-  Generate a unique validation string for each partner
+-  Send email validation link to partners
+-  Validate email through a web link
+-  Display warning when email is not validated
+-  Allow resending validation email
 
 Configuration
 -------------
@@ -85,7 +86,7 @@ Configuration
 Requirements
 ------------
 
-- This module depends on ``coop_membership`` module
+-  This module depends on ``coop_membership`` module
 
 Bug Tracker
 ===========
@@ -110,9 +111,9 @@ Authors
 Contributors
 ------------
 
-- Trobz https://www.trobz.com/
+-  Trobz https://www.trobz.com/
 
-  - Phan Hong Phuc phucph@trobz.com
+   -  Phan Hong Phuc phucph@trobz.com
 
 Maintainers
 -----------

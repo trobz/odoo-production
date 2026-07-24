@@ -65,16 +65,16 @@ Authors
 Contributors
 ------------
 
-- Siddharth Bhalgami siddharth.bhalgami@gmail.com
-- Kaushal Prajapati kbprajapati@live.com
-- `Druidoo <https://www.druidoo.io>`__
+-  Siddharth Bhalgami siddharth.bhalgami@gmail.com
+-  Kaushal Prajapati kbprajapati@live.com
+-  `Druidoo <https://www.druidoo.io>`__
 
-  - Iván Todorovich
+   -  Iván Todorovich
 
-- Shivam Soni s.soni.serpentcs@gmail.com
-- `Trobz <https://www.trobz.com/>`__
+-  Shivam Soni s.soni.serpentcs@gmail.com
+-  `Trobz <https://www.trobz.com/>`__
 
-  - Phan Hong Phuc phucph@trobz.com
+   -  Phan Hong Phuc phucph@trobz.com
 
 Maintainers
 -----------
