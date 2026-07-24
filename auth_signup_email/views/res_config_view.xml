@@ -1,17 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="res_config_settings_view_form_inherit" model="ir.ui.view">
         <field name="model">res.config.settings</field>
-        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
         <field name="arch" type="xml">
             <xpath expr="//block[@id='user_default_rights']" position="inside">
-                <setting string="Prevent Signup Email"
-                         help="Tick this option to prevent sending email 'Settings: New User Invite' when signing up new user"
-                         groups="base.group_no_one">
-                    <field name="prevent_signup_email"/>
+                <setting
+                    string="Prevent Signup Email"
+                    help="Tick this option to prevent sending email 'Settings: New User Invite' when signing up new user"
+                    groups="base.group_no_one"
+                >
+                    <field name="prevent_signup_email" />
                 </setting>
             </xpath>
         </field>
     </record>
-
 </odoo>

@@ -6,8 +6,8 @@
     "version": "18.0.1.0.0",
     "category": "Custom",
     "summary": "Configure to prevent sending signup email",
-    "author": "Trobz",
-    "website": "http://www.trobz.com",
+    "author": "Trobz, La Louve",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
     "depends": ["auth_signup"],
     "data": [
