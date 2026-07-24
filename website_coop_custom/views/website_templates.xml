@@ -1,16 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="header_visibility_standard" inherit_id="website.header_visibility_standard">
+    <template
+        id="header_visibility_standard"
+        inherit_id="website.header_visibility_standard"
+    >
         <xpath expr="//header" position="attributes">
-            <attribute name="t-attf-class" add="o_no_autohide_menu coop_header_wrap" separator=" "/>
+            <attribute
+                name="t-attf-class"
+                add="o_no_autohide_menu coop_header_wrap"
+                separator=" "
+            />
         </xpath>
     </template>
 
     <!-- Hide contactus -->
-    <template id="header_call_to_action_hide_contactus" inherit_id="website.header_call_to_action" name="Header Call to Action - Hide contactus button">
+    <template
+        id="header_call_to_action_hide_contactus"
+        inherit_id="website.header_call_to_action"
+        name="Header Call to Action - Hide contactus button"
+    >
         <xpath expr="//a[contains(@href, 'contactus')]" position="attributes">
             <attribute name="t-if">False</attribute>
         </xpath>
     </template>
-
 </odoo>

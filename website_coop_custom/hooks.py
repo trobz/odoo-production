@@ -6,7 +6,8 @@ _logger = logging.getLogger(__name__)
 def post_init_hook(env):
     """Post-init hook to force invisible for contactus menu items."""
     _logger.info(
-        "Executing post_init_hook for website_coop_custom: setting force_invisible=True for contactus menu"
+        """Executing post_init_hook for website_coop_custom:
+        setting force_invisible=True for contactus menu"""
     )
 
     env.cr.execute("""

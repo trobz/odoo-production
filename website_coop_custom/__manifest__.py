@@ -3,8 +3,8 @@
     "version": "18.0.1.0.1",
     "category": "Website",
     "summary": "Customise the website header layout for food-coop sites",
-    "author": "Trobz",
-    "website": "http://www.trobz.com",
+    "author": "Trobz, La Louve",
+    "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "LGPL-3",
     "depends": [
         "website",
