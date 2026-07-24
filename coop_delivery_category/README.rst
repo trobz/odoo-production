@@ -34,16 +34,16 @@ order computation and management.
 Functionality
 -------------
 
-- Creates a new model "delivery.category" for categorizing products
-- Adds many2many field to product.template for delivery categories
-- Adds many2many field to computed.purchase.order for filtering
-- Extends get_psi_domain method to filter products by delivery category
+-  Creates a new model "delivery.category" for categorizing products
+-  Adds many2many field to product.template for delivery categories
+-  Adds many2many field to computed.purchase.order for filtering
+-  Extends get_psi_domain method to filter products by delivery category
 
 Dependencies
 ------------
 
-- ``purchase``: Base purchase module
-- ``purchase_compute_order``: Computed purchase order module
+-  ``purchase``: Base purchase module
+-  ``purchase_compute_order``: Computed purchase order module
 
 License
 -------
@@ -63,9 +63,9 @@ This module adds delivery category functionality to the purchase system.
 Features
 --------
 
-- Create and manage delivery categories
-- Assign delivery categories to products
-- Filter computed purchase orders by delivery categories
+-  Create and manage delivery categories
+-  Assign delivery categories to products
+-  Filter computed purchase orders by delivery categories
 
 Configuration
 -------------
@@ -79,10 +79,10 @@ Configuration
 Requirements
 ------------
 
-- This module depends on:
+-  This module depends on:
 
-  - ``purchase``
-  - ``purchase_compute_order``
+   -  ``purchase``
+   -  ``purchase_compute_order``
 
 Bug Tracker
 ===========
@@ -106,9 +106,9 @@ Authors
 Contributors
 ------------
 
-- Trobz https://www.trobz.com/
+-  Trobz https://www.trobz.com/
 
-  - Phan Hong Phuc phucph@trobz.com
+   -  Phan Hong Phuc phucph@trobz.com
 
 Maintainers
 -----------

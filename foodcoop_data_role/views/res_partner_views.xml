@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="membership_view_partner_form_inherit" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="coop_membership.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='membership']" position="attributes">
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="foodcoop_data_role.group_Subscription,foodcoop_data_role.group_Teamleader,foodcoop_data_role.group_Accountant"
+                />
+            </xpath>
+            <group name="membership" position="attributes">
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="coop_membership.group_membership_bdm_saisie,foodcoop_data_role.group_Subscription,foodcoop_data_role.group_Accountant"
+                />
+            </group>
+        </field>
+    </record>
+    <record id="view_personal_information_gender" model="ir.ui.view">
+        <field name="name">foodcoop_data_role.view_personal_information_gender</field>
+        <field name="model">res.partner</field>
+        <field
+            name="inherit_id"
+            ref="coop_membership.view_personal_information_gender"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='gender'][2]" position="attributes">
+                <attribute
+                    name="groups"
+                    separator=","
+                    add="foodcoop_data_role.group_Subscription"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_inventory_barcode_form_inherit" model="ir.ui.view">
+        <field
+            name="inherit_id"
+            ref="stock_inventory_barcode.stock_inventory_barcode_form"
+        />
+        <field name="model">stock.inventory.barcode</field>
+        <field name="arch" type="xml">
+            <!-- Show scan_barcode_mode radio in place of the zero_count checkbox -->
+            <field name="zero_count" position="before">
+                <field
+                    name="scan_barcode_mode"
+                    widget="radio"
+                    options="{'horizontal': true}"
+                    nolabel="1"
+                />
+                <field name="prev_product_id" invisible="1" />
+            </field>
+            <field name="zero_count" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <!-- use_latest_qty sits next to auto_save in the mode group -->
+            <field name="auto_save" position="after">
+                <field name="use_latest_qty" invisible="not zero_count" />
+            </field>
+            <!-- Hide add_qty; show new_change_qty instead -->
+            <xpath expr="//label[@for='add_qty']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//div[@name='add_qty']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//div[@name='add_qty']" position="after">
+                <label for="new_change_qty" invisible="not zero_count" />
+                <div name="new_change_qty" invisible="not zero_count" class="o_row">
+                    <field name="new_change_qty" />
+                    <field name="uom_name" groups="uom.group_uom" />
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

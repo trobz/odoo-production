@@ -379,9 +379,9 @@ members to view the full list of registered attendees.</p>
 gains an “Expected attendees” column showing the reserved seat count
 and a link to open the attendee list modal.</li>
 <li><strong>FTOP programmer modal</strong> (<tt class="docutils literal">mywork_ftop</tt>): the dynamic shift list
-inside the FTOP programmer dialog gains the same column, populated via
-the existing <tt class="docutils literal">ftop_get_shift</tt> RPC call which is extended to include
-<tt class="docutils literal">seats_reserved</tt> per shift.</li>
+inside the FTOP programmer dialog gains the same column, populated
+via the existing <tt class="docutils literal">ftop_get_shift</tt> RPC call which is extended to
+include <tt class="docutils literal">seats_reserved</tt> per shift.</li>
 </ul>
 <p>The attendee list modal fetches member names on demand via
 <tt class="docutils literal">shift.shift.get_expected_attendee()</tt> and renders them inline without

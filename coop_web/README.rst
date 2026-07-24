@@ -35,11 +35,11 @@ module forces headers to wrap at word boundaries so that labels like
 *Conditionnement indicatif hors taxes* or *Prix de vente TTC* are always
 fully readable without hovering.
 
-- Column ``<th>`` elements are set to ``overflow: visible`` and
-  ``white-space: normal``.
-- Inner ``.o_column_header`` and ``.text-truncate`` elements
-  additionally get ``word-break: break-word`` so that single long words
-  also wrap rather than overflow.
+-  Column ``<th>`` elements are set to ``overflow: visible`` and
+   ``white-space: normal``.
+-  Inner ``.o_column_header`` and ``.text-truncate`` elements
+   additionally get ``word-break: break-word`` so that single long words
+   also wrap rather than overflow.
 
 List view — text cell wrapping
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -64,10 +64,10 @@ This guide is intended for functional consultants (FC) and testers.
 Pre-conditions
 --------------
 
-- Module ``web`` is installed (standard Odoo backend).
-- Module ``coop_web`` is installed.
-- Any list view with long column headers is accessible (e.g. the
-  **Achats** tab on a product form).
+-  Module ``web`` is installed (standard Odoo backend).
+-  Module ``coop_web`` is installed.
+-  Any list view with long column headers is accessible (e.g. the
+   **Achats** tab on a product form).
 
 --------------
 

@@ -49,15 +49,15 @@ repos:
       - id: oca-update-pre-commit-excluded-addons
       - id: oca-fix-manifest-website
         args: ["https://github.com/AwesomeFoodCoops/odoo-production"]
-      # - id: oca-gen-addon-readme
-      #   args:
-      #     - --addons-dir=.
-      #     - --branch=18.0
-      #     - --org-name=AwesomeFoodCoops
-      #     - --repo-name=odoo-production
-      #     - --if-source-changed
-      #     - --keep-source-digest
-      #     - --convert-fragments-to-markdown
+      - id: oca-gen-addon-readme
+        args:
+          - --addons-dir=.
+          - --branch=18.0
+          - --org-name=AwesomeFoodCoops
+          - --repo-name=odoo-production
+          - --if-source-changed
+          - --keep-source-digest
+          - --convert-fragments-to-markdown
       - id: oca-gen-external-dependencies
   - repo: https://github.com/OCA/odoo-pre-commit-hooks
     rev: v0.0.33

@@ -28,13 +28,13 @@ members to view the full list of registered attendees.
 
 Two tables are extended:
 
-- **Programmer un extra**: the static list of available extra shifts
-  gains an "Expected attendees" column showing the reserved seat count
-  and a link to open the attendee list modal.
-- **FTOP programmer modal** (``mywork_ftop``): the dynamic shift list
-  inside the FTOP programmer dialog gains the same column, populated via
-  the existing ``ftop_get_shift`` RPC call which is extended to include
-  ``seats_reserved`` per shift.
+-  **Programmer un extra**: the static list of available extra shifts
+   gains an "Expected attendees" column showing the reserved seat count
+   and a link to open the attendee list modal.
+-  **FTOP programmer modal** (``mywork_ftop``): the dynamic shift list
+   inside the FTOP programmer dialog gains the same column, populated
+   via the existing ``ftop_get_shift`` RPC call which is extended to
+   include ``seats_reserved`` per shift.
 
 The attendee list modal fetches member names on demand via
 ``shift.shift.get_expected_attendee()`` and renders them inline without
@@ -62,11 +62,11 @@ On the ``/standard/programmer_un_extra`` page, the shift table shows a
 new **Expected attendees** column between the **Hour** and **Available
 seats** columns.
 
-- The cell displays the number of members already registered for the
-  shift (``seats_reserved``).
-- If at least one member is registered, a link icon (↗) appears next to
-  the count. Clicking it opens a modal listing the names of all
-  registered members.
+-  The cell displays the number of members already registered for the
+   shift (``seats_reserved``).
+-  If at least one member is registered, a link icon (↗) appears next to
+   the count. Clicking it opens a modal listing the names of all
+   registered members.
 
 FTOP programmer modal
 ---------------------

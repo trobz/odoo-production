@@ -27,10 +27,10 @@ Tag** when creating a scrap order from the Point of Sale screen.
 
 Key features:
 
-- **Mandatory reason tag**: cashiers must select a reason tag before the
-  scrap order is created.
-- **Per-POS configuration**: each POS can have its own list of allowed
-  reason tags.
+-  **Mandatory reason tag**: cashiers must select a reason tag before
+   the scrap order is created.
+-  **Per-POS configuration**: each POS can have its own list of allowed
+   reason tags.
 
 **Table of contents**
 
@@ -50,8 +50,8 @@ Configuration
 2. Go to **Point of Sale → Configuration → Point of Sale**, open your
    POS and:
 
-   - Set **Scrap Order Option** (e.g. *Always create Scrap Order*).
-   - Add the allowed reason codes in the **Scrap Origin** field.
+   -  Set **Scrap Order Option** (e.g. *Always create Scrap Order*).
+   -  Add the allowed reason codes in the **Scrap Origin** field.
 
 Usage
 =====
@@ -67,10 +67,10 @@ selected reason code.
 
 **Error cases**
 
-- If no reason code is selected, the scrap order is rejected with an
-  error message.
-- If the selected reason code is not allowed for the product's category,
-  a *User Error* is shown and no scrap is created.
+-  If no reason code is selected, the scrap order is rejected with an
+   error message.
+-  If the selected reason code is not allowed for the product's
+   category, a *User Error* is shown and no scrap is created.
 
 Bug Tracker
 ===========

@@ -39,9 +39,9 @@ don't have control over the barcode.
 Configuration
 =============
 
-- Go to 'Point of Sale' / 'Configuration' / 'Barcode Nomenclatures'
-- Edit your barcode rules, according to your barcodes settings
-- Add a transform expression to the rule
+-  Go to 'Point of Sale' / 'Configuration' / 'Barcode Nomenclatures'
+-  Edit your barcode rules, according to your barcodes settings
+-  Add a transform expression to the rule
 
 Bug Tracker
 ===========
@@ -65,8 +65,8 @@ Authors
 Contributors
 ------------
 
-- Iván Todorovich <ivan.todorovich@druidoo.io>
-- Druidoo <`https://www.druidoo.io\\> <https://www.druidoo.io\>>`__
+-  Iván Todorovich <ivan.todorovich@druidoo.io>
+-  Druidoo <https://www.druidoo.io>
 
 Maintainers
 -----------
