@@ -6,7 +6,7 @@
 
 {
     "name": "Coop Memberspace",
-    "version": "18.0.1.0.4",
+    "version": "18.0.1.0.5",
     "category": "Custom",
     "author": "La Louve, Druidoo",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
