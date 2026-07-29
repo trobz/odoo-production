@@ -8,6 +8,9 @@
     "depends": [
         "auth_signup",
         "base_user_role",
+        "server_environment_ir_config_parameter",
+        "web_no_bubble",
+        "web_responsive",
     ],
     "data": [
         "security/res_groups.xml",
