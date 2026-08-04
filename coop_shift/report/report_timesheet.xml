@@ -76,7 +76,7 @@
                                     >MEMBRE PROGRAMMÉ</th>
                                     <th
                                         class="text-center"
-                                        style="border-left: 4px solid #ddd;font-weight:700;"
+                                        style="border: 1px solid #ddd;border-left: 4px solid #ddd;font-weight:700;"
                                         colspan="4"
                                     >MEMBRE PRÉSENT</th>
                                 </tr>
@@ -136,7 +136,7 @@
                                         />
                                     </td>
                                     <td style="border-left: 4px solid #ddd" />
-                                    <td />
+                                    <td style="border: 1px solid #ddd" />
                                     <td style="border: 1px solid #ddd;">
                                         <t t-if="registration['is_on_leave']">CONG</t>
                                     </td>
@@ -180,7 +180,9 @@
                                     <td style="border: 1px solid #ddd;" />
                                     <td style="border: 1px solid #ddd;" />
                                     <td style="border: 1px solid #ddd;" />
-                                    <td style="border-left: 4px solid #ddd" />
+                                    <td
+                                        style="border: 1px solid #ddd;border-left: 4px solid #ddd"
+                                    />
                                     <td style="border: 1px solid #ddd;" />
                                     <td style="border: 1px solid #ddd;" />
                                     <td style="border: 1px solid #ddd;" />
@@ -236,8 +238,10 @@
                                     >
                                         <span t-esc="ftop.partner_id.name" />
                                     </td>
-                                    <td style="border-left: 4px solid #ddd" />
-                                    <td />
+                                    <td
+                                        style="border: 1px solid #ddd;border-left: 4px solid #ddd"
+                                    />
+                                    <td style="border: 1px solid #ddd;" />
                                     <td style="border: 1px solid #ddd;">
                                         <t t-if="is_on_leave">CONG</t>
                                     </td>
@@ -256,7 +260,9 @@
                                     <td style="border: 1px solid #ddd;" />
                                     <td style="border: 1px solid #ddd;" />
                                     <td style="border: 1px solid #ddd;" />
-                                    <td style="border-left: 4px solid #ddd" />
+                                    <td
+                                        style="border: 1px solid #ddd;border-left: 4px solid #ddd"
+                                    />
                                     <td style="border: 1px solid #ddd;" />
                                     <td style="border: 1px solid #ddd;" />
                                     <td style="border: 1px solid #ddd;" />
@@ -323,7 +329,7 @@
                                     >MEMBRE CRÉDITÉ</th>
                                     <th
                                         class="text-center"
-                                        style="border-left: 4px solid #ddd;font-weight:700;border: 1px solid #ddd;"
+                                        style="border: 1px solid #ddd;border-left: 4px solid #ddd;font-weight:700;"
                                         colspan="4"
                                     >MEMBRE PRÉSENT</th>
                                 </tr>
@@ -335,7 +341,7 @@
                                     </td>
                                     <td style="border: 1px solid #ddd;" />
                                     <td
-                                        style="border-left: 4px solid #ddd;border: 1px solid #ddd;"
+                                        style="border: 1px solid #ddd;border-left: 4px solid #ddd;"
                                     />
                                     <td style="border: 1px solid #ddd;" />
                                     <td style="border: 1px solid #ddd;" />
