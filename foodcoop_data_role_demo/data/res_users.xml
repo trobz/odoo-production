@@ -1,0 +1,165 @@
+<?xml version="1.0" ?>
+<odoo noupdate="1">
+    <record
+        id="demo_user_Cashier"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">Cashier Example</field>
+        <field name="login">cashier@example.com</field>
+        <field name="email">cashier@example.com</field>
+    </record>
+    <record
+        id="demo_user_Member_Manager"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">Member Manager Example</field>
+        <field name="login">member_manager@example.com</field>
+        <field name="email">member_manager@example.com</field>
+    </record>
+    <record
+        id="demo_user_Accountant"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">Accountant Example</field>
+        <field name="login">accountant@example.com</field>
+        <field name="email">accountant@example.com</field>
+    </record>
+    <record
+        id="demo_user_Inventory_Manager"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">Inventory Manager Example</field>
+        <field name="login">inventory_manager@example.com</field>
+        <field name="email">inventory_manager@example.com</field>
+    </record>
+    <record
+        id="demo_user_Teamleader"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">Teamleader Example</field>
+        <field name="login">teamleader@example.com</field>
+        <field name="email">teamleader@example.com</field>
+    </record>
+    <record
+        id="demo_user_Purchaser"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">Purchaser Example</field>
+        <field name="login">purchaser@example.com</field>
+        <field name="email">purchaser@example.com</field>
+    </record>
+    <record
+        id="demo_user_Purchase_Manager"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">Purchase Manager Example</field>
+        <field name="login">purchase_manager@example.com</field>
+        <field name="email">purchase_manager@example.com</field>
+    </record>
+    <record
+        id="demo_user_Foodcoop_Admin"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">Foodcoop Admin Example</field>
+        <field name="login">foodcoop_admin@example.com</field>
+        <field name="email">foodcoop_admin@example.com</field>
+    </record>
+    <record
+        id="demo_user_BDMLecture"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">BDMLecture Example</field>
+        <field name="login">bdmlecture@example.com</field>
+        <field name="email">bdmlecture@example.com</field>
+    </record>
+    <record
+        id="demo_user_BDMPresence"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">BDMPresence Example</field>
+        <field name="login">bdmpresence@example.com</field>
+        <field name="email">bdmpresence@example.com</field>
+    </record>
+    <record
+        id="demo_user_BDMSaisie"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">BDMSaisie Example</field>
+        <field name="login">bdmsaisie@example.com</field>
+        <field name="email">bdmsaisie@example.com</field>
+    </record>
+    <record
+        id="demo_user_Subscription"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">Subscription Example</field>
+        <field name="login">subscription@example.com</field>
+        <field name="email">subscription@example.com</field>
+    </record>
+    <record
+        id="demo_user_Communications_Officer"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">Communications Officer Example</field>
+        <field name="login">communications_officer@example.com</field>
+        <field name="email">communications_officer@example.com</field>
+    </record>
+    <record
+        id="demo_user_Communications_Manager"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">Communications Manager Example</field>
+        <field name="login">communications_manager@example.com</field>
+        <field name="email">communications_manager@example.com</field>
+    </record>
+    <record
+        id="demo_user_Welcome_Meeting_Team"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">Welcome Meeting Team Example</field>
+        <field name="login">welcome_meeting_team@example.com</field>
+        <field name="email">welcome_meeting_team@example.com</field>
+    </record>
+    <record
+        id="demo_user_Member_Accountant"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">Member Accountant Example</field>
+        <field name="login">member_accountant@example.com</field>
+        <field name="email">member_accountant@example.com</field>
+    </record>
+    <record
+        id="demo_user_POS_Manager"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">Point of Sales Manager Example</field>
+        <field name="login">pos_manager@example.com</field>
+        <field name="email">pos_manager@example.com</field>
+    </record>
+    <record
+        id="demo_user_BadgeReader"
+        model="res.users"
+        context="{'no_reset_password': True}"
+    >
+        <field name="name">BadgeReader Example</field>
+        <field name="login">badge_reader@example.com</field>
+        <field name="email">badge_reader@example.com</field>
+    </record>
+</odoo>
