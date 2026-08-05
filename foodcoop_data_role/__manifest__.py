@@ -5,7 +5,6 @@
     "author": "Trobz, La Louve",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
-    "post_init_hook": "post_init_hook",
     "depends": [
         "base_user_role",
         "pos_payment_terminal",
@@ -45,7 +44,6 @@
     "data": [
         "data/res_groups.xml",
         "data/res_users_role.xml",
-        "data/res_users.xml",
         "data/ir.model.access.csv",
         "data/ir_rule.xml",
         "security/ir.model.access.csv",
