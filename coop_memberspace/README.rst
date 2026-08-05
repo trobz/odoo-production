@@ -24,32 +24,33 @@ Coop Memberspace
 
 Email Alias feature
 
-- Each team/template will have 2 email alias:
+-  Each team/template will have 2 email alias:
 
-  - 1 for the Coordinators of the team, naming convention of alias for
-    Coordinators: coordos.[week][day][hour]@[domain]
-  - 1 for the Members of the Team (including the Coordinators): naming
-    convention of alias for Members: service.[week][day][hour]@[domain]
+   -  1 for the Coordinators of the team, naming convention of alias for
+      Coordinators: coordos.[week][day][hour]@[domain]
+   -  1 for the Members of the Team (including the Coordinators): naming
+      convention of alias for Members:
+      service.[week][day][hour]@[domain]
 
-- Alias domain is configured by parameter object:
+-  Alias domain is configured by parameter object:
 
-  - with key: mail.catchall.domain.
-  - value: your email domain (e.g: cooplaloue.fr)
+   -  with key: mail.catchall.domain.
+   -  value: your email domain (e.g: cooplaloue.fr)
 
 When installing module, there is a script to create email alias
 automatically for each template, so, mail.catchall.domain must exist
 before installing coop_memberspace module.
 
-- There are 2 main objects to store email alias for each team:
+-  There are 2 main objects to store email alias for each team:
 
-  - memberspace_alias: store all alias of team (access via Member config
-    menu: Members > Configuration > Memberspace Alias)
-  - memberspace_conversation: store all conversation of each topic
-    (access via Member config menu: Members > Configuration >
-    Memberspace Conversation). Every time a new email which sent to
-    specific alias, a new conversation will be created, then after that,
-    all reply of the conversation will be stored within this
-    conversation.
+   -  memberspace_alias: store all alias of team (access via Member
+      config menu: Members > Configuration > Memberspace Alias)
+   -  memberspace_conversation: store all conversation of each topic
+      (access via Member config menu: Members > Configuration >
+      Memberspace Conversation). Every time a new email which sent to
+      specific alias, a new conversation will be created, then after
+      that, all reply of the conversation will be stored within this
+      conversation.
 
 How Alias works?
 
@@ -69,23 +70,30 @@ allowing other modules to import and extend them.
 
 The following widgets and utilities are available for inheritance:
 
-+--------------------------------------------------+---------------------------------------------------+
-| File                                             | Export                                            |
-+==================================================+===================================================+
-| ``static/src/js/exchange_shift.esm.js``          | ``publicWidget.registry.exchange_shift``          |
-+--------------------------------------------------+---------------------------------------------------+
-| ``static/src/js/my_profile.esm.js``              | ``publicWidget.registry.my_profile``              |
-+--------------------------------------------------+---------------------------------------------------+
-| ``static/src/js/mywork_ftop.esm.js``             | ``publicWidget.registry.mywork_ftop``             |
-+--------------------------------------------------+---------------------------------------------------+
-| ``static/src/js/programmer_un_extra.esm.js``     | ``publicWidget.registry.programmer_un_extra``     |
-+--------------------------------------------------+---------------------------------------------------+
-| ``static/src/js/programmer_une_vacation.esm.js`` | ``publicWidget.registry.programmer_une_vacation`` |
-+--------------------------------------------------+---------------------------------------------------+
-| ``static/src/js/statistics.esm.js``              | ``publicWidget.registry.statistics``              |
-+--------------------------------------------------+---------------------------------------------------+
-| ``static/src/js/style.esm.js``                   | ``showErrorMsg`` (utility function)               |
-+--------------------------------------------------+---------------------------------------------------+
++----------------------------------+----------------------------------+
+| File                             | Export                           |
++==================================+==================================+
+| ``stati                          | ``public                         |
+| c/src/js/exchange_shift.esm.js`` | Widget.registry.exchange_shift`` |
++----------------------------------+----------------------------------+
+| ``s                              | ``pu                             |
+| tatic/src/js/my_profile.esm.js`` | blicWidget.registry.my_profile`` |
++----------------------------------+----------------------------------+
+| ``st                             | ``pub                            |
+| atic/src/js/mywork_ftop.esm.js`` | licWidget.registry.mywork_ftop`` |
++----------------------------------+----------------------------------+
+| ``static/src                     | ``publicWidge                    |
+| /js/programmer_un_extra.esm.js`` | t.registry.programmer_un_extra`` |
++----------------------------------+----------------------------------+
+| ``static/src/js/                 | ``publicWidget.re                |
+| programmer_une_vacation.esm.js`` | gistry.programmer_une_vacation`` |
++----------------------------------+----------------------------------+
+| ``s                              | ``pu                             |
+| tatic/src/js/statistics.esm.js`` | blicWidget.registry.statistics`` |
++----------------------------------+----------------------------------+
+| ``static/src/js/style.esm.js``   | ``showErrorMsg`` (utility        |
+|                                  | function)                        |
++----------------------------------+----------------------------------+
 
 Extending a widget from another module
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
