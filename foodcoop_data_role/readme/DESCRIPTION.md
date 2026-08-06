@@ -1,10 +1,6 @@
-## Overview
-
 The "Roles for Foodcoop" module provides a comprehensive role-based access control
 system for the Foodcoop platform. It defines multiple user roles with specific group
 memberships to ensure proper segregation of duties and access control.
-
-## Features
 
 ### Pre-defined Roles
 
@@ -48,10 +44,3 @@ This module depends on and integrates with:
 - coop_shift
 - coop_membership
 - And many other Foodcoop-specific modules
-
-## Technical Details
-
-- Version: 18.0.1.0.0
-- License: AGPL-3
-- Author: Trobz, La Louve
-- Category: Trobz Standard Modules
