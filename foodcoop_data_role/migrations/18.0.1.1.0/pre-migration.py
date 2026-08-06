@@ -1,11 +1,17 @@
 import logging
 
+from odoo import SUPERUSER_ID, api
+
 _logger = logging.getLogger(__name__)
 
 _DEMO_NAME_PREFIXES = ("demo_user_", "role_line_group_")
 
 
-def migrate(env, version):
+def migrate(cr, version):
+    if not version:
+        return
+
+    env = api.Environment(cr, SUPERUSER_ID, {})
     """Set noupdate=True on demo user and role line XML IDs.
 
     Prevents Odoo from deleting or overwriting these records during upgrade,
