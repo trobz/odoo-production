@@ -1,0 +1,111 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* foodcoop_data_role_demo
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-05 00:00+0000\n"
+"PO-Revision-Date: 2026-08-05 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: foodcoop_data_role_demo
+#: model:ir.module.module,shortdesc:base.module_foodcoop_data_role_demo
+msgid "Demo Roles for Foodcoop"
+msgstr "Démo des Rôles pour Foodcoop"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_Cashier
+msgid "Cashier Example"
+msgstr "Exemple Caissier"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_Member_Manager
+msgid "Member Manager Example"
+msgstr "Exemple Responsable des Membres"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_Accountant
+msgid "Accountant Example"
+msgstr "Exemple Comptable"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_Inventory_Manager
+msgid "Inventory Manager Example"
+msgstr "Exemple Gestionnaire des Stocks"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_Teamleader
+msgid "Teamleader Example"
+msgstr "Exemple Chef d'Équipe"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_Purchaser
+msgid "Purchaser Example"
+msgstr "Exemple Acheteur"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_Purchase_Manager
+msgid "Purchase Manager Example"
+msgstr "Exemple Responsable des Achats"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_Foodcoop_Admin
+msgid "Foodcoop Admin Example"
+msgstr "Exemple Administrateur Foodcoop"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_BDMLecture
+msgid "BDMLecture Example"
+msgstr "Exemple BDMLecture"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_BDMPresence
+msgid "BDMPresence Example"
+msgstr "Exemple BDMPrésence"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_BDMSaisie
+msgid "BDMSaisie Example"
+msgstr "Exemple BDMSaisie"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_Subscription
+msgid "Subscription Example"
+msgstr "Exemple Abonnement"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_Communications_Officer
+msgid "Communications Officer Example"
+msgstr "Exemple Chargé de Communication"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_Communications_Manager
+msgid "Communications Manager Example"
+msgstr "Exemple Responsable Communication"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_Welcome_Meeting_Team
+msgid "Welcome Meeting Team Example"
+msgstr "Exemple Équipe Réunion d'Accueil"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_Member_Accountant
+msgid "Member Accountant Example"
+msgstr "Exemple Comptable Membre"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_POS_Manager
+msgid "Point of Sales Manager Example"
+msgstr "Exemple Responsable Point de Vente"
+
+#. module: foodcoop_data_role_demo
+#: model:res.partner,name:foodcoop_data_role_demo.demo_user_BadgeReader
+msgid "BadgeReader Example"
+msgstr "Exemple Lecteur de Badge"
