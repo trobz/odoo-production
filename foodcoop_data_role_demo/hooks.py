@@ -4,32 +4,34 @@ import os
 
 _logger = logging.getLogger(__name__)
 
-_OLD_MODULE = "foodcoop_data_role"
+_OLD_MODULES = ("foodcoop_data_role", "foodcoop_data_role_memberspace")
 _NEW_MODULE = "foodcoop_data_role_demo"
 _DEMO_NAME_PREFIXES = ("demo_user_", "role_line_group_")
 
 
 def pre_init_hook(env):
-    """Migrate demo XML IDs from foodcoop_data_role to foodcoop_data_role_demo.
+    """Migrate demo XML IDs from source modules to foodcoop_data_role_demo.
 
     Must run before data files are loaded to prevent Odoo from creating
     duplicate users when res_users.xml is processed.
     """
-    _logger.info("Migrating demo XML IDs from %s to %s", _OLD_MODULE, _NEW_MODULE)
     IrModelData = env["ir.model.data"]
 
-    domain = [("module", "=", _OLD_MODULE)]
-    domain += ["|"] * (len(_DEMO_NAME_PREFIXES) - 1)
+    name_domain = ["|"] * (len(_DEMO_NAME_PREFIXES) - 1)
     for prefix in _DEMO_NAME_PREFIXES:
-        domain.append(("name", "=like", f"{prefix}%"))
+        name_domain.append(("name", "=like", f"{prefix}%"))
 
-    records = IrModelData.search(domain)
-    if records:
-        _logger.info("Found %d XML ID(s) to migrate to %s", len(records), _NEW_MODULE)
-        records.write({"module": _NEW_MODULE})
-        _logger.info("XML ID migration completed")
-    else:
-        _logger.info("No XML IDs to migrate (clean install)")
+    for old_module in _OLD_MODULES:
+        _logger.info("Migrating demo XML IDs from %s to %s", old_module, _NEW_MODULE)
+        records = IrModelData.search([("module", "=", old_module)] + name_domain)
+        if records:
+            _logger.info(
+                "Found %d XML ID(s) to migrate to %s", len(records), _NEW_MODULE
+            )
+            records.write({"module": _NEW_MODULE})
+            _logger.info("XML ID migration completed for %s", old_module)
+        else:
+            _logger.info("No XML IDs to migrate from %s (clean install)", old_module)
 
 
 def post_init_hook(env):

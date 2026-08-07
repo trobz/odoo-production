@@ -9,6 +9,7 @@
     "post_init_hook": "post_init_hook",
     "depends": [
         "foodcoop_data_role",
+        "foodcoop_data_role_memberspace",
     ],
     "data": [
         "data/res_users.xml",
