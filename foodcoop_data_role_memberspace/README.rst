@@ -34,18 +34,18 @@ members.
 Functionality
 -------------
 
--  Creates a "Member" user group for memberspace access
--  Creates a "Restrict rights for Member" group with hidden category
--  Defines a "Member" role linked to the user groups
--  Provides a demo member user account
--  Automatically assigns new memberspace users to the Member role
--  Extends res.partner to handle member role assignment
+- Creates a "Member" user group for memberspace access
+- Creates a "Restrict rights for Member" group with hidden category
+- Defines a "Member" role linked to the user groups
+- Provides a demo member user account
+- Automatically assigns new memberspace users to the Member role
+- Extends res.partner to handle member role assignment
 
 Dependencies
 ------------
 
--  ``foodcoop_data_role``: Base role configuration for Foodcoop
--  ``coop_memberspace``: Memberspace functionality module
+- ``foodcoop_data_role``: Base role configuration for Foodcoop
+- ``coop_memberspace``: Memberspace functionality module
 
 License
 -------
@@ -66,10 +66,10 @@ system.
 Features
 --------
 
--  Automatically creates "Member" user group and role
--  Restricts access rights for members through dedicated groups
--  Assigns new memberspace users to the Member role automatically
--  Provides a demo member user for testing
+- Automatically creates "Member" user group and role
+- Restricts access rights for members through dedicated groups
+- Assigns new memberspace users to the Member role automatically
+- Provides a demo member user for testing
 
 Configuration
 -------------
@@ -80,22 +80,22 @@ Configuration
    the Member role
 4. The role includes implied groups:
 
-   -  Restrict rights for Member
-   -  Memberspace group from coop_memberspace
+   - Restrict rights for Member
+   - Memberspace group from coop_memberspace
 
 Demo Data
 ---------
 
--  A demo member user is created with login: ``member@example.com``
--  This user is assigned the Member role automatically
+- A demo member user is created with login: ``member@example.com``
+- This user is assigned the Member role automatically
 
 Requirements
 ------------
 
--  This module depends on:
+- This module depends on:
 
-   -  ``foodcoop_data_role``
-   -  ``coop_memberspace``
+  - ``foodcoop_data_role``
+  - ``coop_memberspace``
 
 Bug Tracker
 ===========
@@ -119,9 +119,9 @@ Authors
 Contributors
 ------------
 
--  Trobz https://www.trobz.com/
+- Trobz https://www.trobz.com/
 
-   -  Phan Hong Phuc phucph@trobz.com
+  - Phan Hong Phuc phucph@trobz.com
 
 Maintainers
 -----------
