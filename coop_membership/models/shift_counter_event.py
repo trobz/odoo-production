@@ -12,7 +12,7 @@ class ShiftCounterEvent(models.Model):
 
     holiday_id = fields.Many2one("shift.holiday", string="Holiday")
     sum_current_qty = fields.Integer(
-        compute="_compute_sum_current_qty", string="Sum", store=True
+        compute="_compute_sum_current_qty", string="Sum", store=False
     )
 
     reason_ids = fields.Many2many(

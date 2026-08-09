@@ -157,7 +157,7 @@
                                         <img
                                             t-if="product['product'].barcode"
                                             class="barcode_image"
-                                            t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13', product['product'].barcode, 200, 40)"
+                                            t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13', product['product'].barcode, 200, 40)"
                                         />
                                     </div>
                                     <div class="pricetag_shelf_coopinfos">
@@ -217,7 +217,7 @@
                                         <img
                                             t-if="product['product'].barcode"
                                             class="simple_barcode_image"
-                                            t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13', product['product'].barcode, 200, 40)"
+                                            t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('EAN13', product['product'].barcode, 200, 40)"
                                         />
                                     </div>
                                     <div
