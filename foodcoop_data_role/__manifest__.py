@@ -40,6 +40,7 @@
         "base_import_security_group",
         "spreadsheet_dashboard",
         "base_user_role_history",
+        "project_todo",
     ],
     "data": [
         "data/res_groups.xml",
