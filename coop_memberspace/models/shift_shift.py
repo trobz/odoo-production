@@ -110,13 +110,33 @@ class ShiftShift(models.Model):
         if "lang" not in self.env.context:
             self = self.with_context(lang=self.env.user.lang)
 
+        shift = self.sudo().browse(shift_id)
+        if not shift.exists() or shift.state == "cancel":
+            return False, [], self.env._("This shift is not available for registration.")
+        if shift.date_begin <= fields.Datetime.now():
+            return False, [], self.env._("You cannot register for a shift that has already started.")
+        if shift.shift_template_id and shift.shift_template_id.is_technical:
+            return False, [], self.env._("This shift is not available for registration.")
+
+        partner = self.env.user.partner_id
+        already_registered = self.env["shift.registration"].sudo().search(
+            [
+                ("shift_id", "=", shift_id),
+                ("partner_id", "=", partner.id),
+                ("state", "!=", "cancel"),
+            ],
+            limit=1,
+        )
+        if already_registered:
+            return False, [], self.env._("You are already registered for this shift.")
+
         ticket_ids, msg = self.sudo().fetch_ftop_ticket(shift_id)
         if not ticket_ids:
             return False, [], msg
         registration = self.env["shift.registration"].create(
             {
                 "state": "draft",
-                "partner_id": self.env.user.partner_id.id,
+                "partner_id": partner.id,
                 "shift_id": shift_id,
                 "shift_ticket_id": ticket_ids[0],
                 "related_extension_id": False,

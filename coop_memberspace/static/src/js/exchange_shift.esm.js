@@ -60,9 +60,11 @@ export default publicWidget.registry.exchange_shift = publicWidget.Widget.extend
                 });
                 $(".modal_list_expected_attendee_body").empty();
                 partners.forEach((partner) => {
-                    $(".modal_list_expected_attendee_body").append(
-                        `<tr><td>${partner}</td></tr>`
-                    );
+                    const td = document.createElement("td");
+                    td.textContent = partner;
+                    const tr = document.createElement("tr");
+                    tr.appendChild(td);
+                    $(".modal_list_expected_attendee_body").append(tr);
                 });
             }
         );

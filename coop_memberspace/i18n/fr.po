@@ -572,6 +572,17 @@ msgid "Confirm"
 msgstr "Confirmer"
 
 #. module: coop_memberspace
+#: model:mail.template,subject:coop_memberspace.inform_exchange_done
+msgid ""
+"Confirmation of exchange of your service from {{ "
+"user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B"
+" %Y'])[0].lower() }}"
+msgstr ""
+"${'Confirmation de l\\'échange de votre service du ' + "
+"user.get_time_by_user_lang(object.des_registration_id.date_begin, ['%A %d %B"
+" %Y'])[0].lower()}"
+
+#. module: coop_memberspace
 #: model:ir.model,name:coop_memberspace.model_res_partner
 msgid "Contact"
 msgstr "Contact"
@@ -871,6 +882,12 @@ msgstr "Informations sur l'utilisateur qui ne peut pas envoyer d'e-mail à l'ali
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.programmer_un_extra
 msgid "Inscription"
 msgstr "Inscription"
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/res_partner.py:0
+msgid "Invalid field: %s"
+msgstr "Champ invalide: %s"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_memberspace_alias__message_is_follower
@@ -1425,6 +1442,12 @@ msgid "Shift replacement list contains"
 msgstr "La liste de remplacement du service contient"
 
 #. module: coop_memberspace
+#: model:ir.model.fields,field_description:coop_memberspace.field_res_partner__show_email_receipt
+#: model:ir.model.fields,field_description:coop_memberspace.field_res_users__show_email_receipt
+msgid "Show Email Receipt"
+msgstr "Afficher le reçu par e-mail"
+
+#. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_res_company__show_advance_service
 #: model:ir.model.fields,field_description:coop_memberspace.field_res_config_settings__show_advance_service
 msgid "Show schedule an advance service"
@@ -1495,6 +1518,12 @@ msgid "Team"
 msgstr "Équipe"
 
 #. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid "The destination shift registration is not available for exchange."
+msgstr "L'inscription au créneau de destination n'est pas disponible pour l'échange."
+
+#. module: coop_memberspace
 #: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__alias_id
 msgid ""
 "The email address associated with this alias.            New emails received"
@@ -1546,6 +1575,12 @@ msgstr "Le créneau n'est plus disponible sur le marché. Veuillez recharger la 
 #: code:addons/coop_memberspace/models/proposal.py:0
 msgid "The source shift registration not ready on the market."
 msgstr "L'enregistrement de l'équipe source n'est pas prêt sur le marché."
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_shift.py:0
+msgid "This shift is not available for registration."
+msgstr "Ce créneau n'est pas disponible pour l'inscription."
 
 #. module: coop_memberspace
 #: model:ir.model.fields,field_description:coop_memberspace.field_shift_shift__ticket_seats_available
@@ -1672,6 +1707,12 @@ msgid "You are about to cancel your participation to the shift"
 msgstr "Vous allez annuler votre participation au créneau"
 
 #. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_shift.py:0
+msgid "You are already registered for this shift."
+msgstr "Vous êtes déjà inscrit à ce créneau."
+
+#. module: coop_memberspace
 #: model:mail.template,subject:coop_memberspace.email_inform_cannot_send_to_memberspace_alias
 msgid "You are not authorized to send messages to this alias"
 msgstr "Vous n'êtes pas autorisé à envoyer des messages à cet alias"
@@ -1697,6 +1738,31 @@ msgstr ""
 "Vous pouvez faire des services en plus de vos services habituels. A partir de 2 services\n"
 "                        accumulés, si vous ne devez pas des rattrapages, vous pouvez les “dépenser” en prenant un “congé anticipé”…\n"
 "                        période pendant laquelle, vous n’avez pas à venir travailler, mais tout en continuant à faire vos courses."
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid "You can only cancel your own shift registrations."
+msgstr "Vous ne pouvez annuler que vos propres inscriptions aux créneaux."
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid "You can only create proposals for your own shift registrations."
+msgstr "Vous ne pouvez créer des propositions que pour vos propres inscriptions aux créneaux."
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid "You can only modify your own shift registrations."
+msgstr "Vous ne pouvez modifier que vos propres inscriptions aux créneaux."
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_shift.py:0
+msgid "You cannot register for a shift that has already started."
+msgstr "Vous ne pouvez pas vous inscrire à un créneau qui a déjà commencé."
+
 #. module: coop_memberspace
 #. odoo-python
 #: code:addons/coop_memberspace/models/shift_registration.py:0
@@ -1705,6 +1771,14 @@ msgid ""
 "shift"
 msgstr ""
 "Vous pouvez contacter vos coordinateurs en écrivant"
+
+#. module: coop_memberspace
+#. odoo-python
+#: code:addons/coop_memberspace/models/shift_registration.py:0
+msgid ""
+"You cannot create a proposal with your own registration as destination."
+msgstr ""
+"Vous ne pouvez pas créer une proposition avec votre propre inscription comme destination."
 
 #. module: coop_memberspace
 #. odoo-python
