@@ -7,7 +7,4 @@ class ResPartner(models.Model):
     _name = "res.partner"
     _inherit = [_name, "utm.mixin"]
 
-    utm_source_ids = fields.Many2many(
-        "utm.source",
-        string="Discovery Meeting Sources"
-    )
+    utm_source_ids = fields.Many2many("utm.source", string="Discovery Meeting Sources")
