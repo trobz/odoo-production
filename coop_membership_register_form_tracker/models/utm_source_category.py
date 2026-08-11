@@ -7,8 +7,5 @@ class UtmSourceCategory(models.Model):
     _name = "utm.source.category"
     _description = "UTM Source Category"
 
-    name = fields.Char(required=1)
-    source_ids = fields.One2many(
-        "utm.source",
-        "category_id"
-    )
+    name = fields.Char(required=True)
+    source_ids = fields.One2many("utm.source", "category_id")

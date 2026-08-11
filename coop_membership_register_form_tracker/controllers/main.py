@@ -1,7 +1,6 @@
-
-from odoo.addons.coop_membership.controllers.main import WebsiteRegisterMeeting
 from odoo.http import request
 
+from odoo.addons.coop_membership.controllers.main import WebsiteRegisterMeeting
 
 
 class WebsiteRegisterMeetingTracker(WebsiteRegisterMeeting):
@@ -16,14 +15,13 @@ class WebsiteRegisterMeetingTracker(WebsiteRegisterMeeting):
     def _prepare_register_form_vals(self, vals):
         vals = super()._prepare_register_form_vals(vals)
         # Add utm.source
-        source_datas = request.env['utm.source']._get_member_register_sources()
+        source_datas = request.env["utm.source"]._get_member_register_sources()
         vals["source_datas"] = source_datas
         vals["company_name"] = request.env.user.company_id.name
         return vals
 
     def _parse_sources(self, post):
-        """
-        """
+        """ """
         sids = []
         if not post:
             return sids
@@ -35,6 +33,6 @@ class WebsiteRegisterMeetingTracker(WebsiteRegisterMeeting):
             sids.append(int(post.get(k)))
         # Check other source
         if post.get("other_source"):
-            source = request.env['utm.source'].create({"name": post["other_source"]})
+            source = request.env["utm.source"].create({"name": post["other_source"]})
             sids.append(source.id)
         return sids
