@@ -87,6 +87,7 @@
             "coop_membership/static/lib/scss/coop_membership_customs.scss",
             "coop_membership/static/src/scss/ftop_seats.scss",
             "coop_membership/static/src/scss/shift_change_team.scss",
+            "coop_membership/static/src/scss/mailing_list_kanban.scss",
         ],
     },
     "demo": [
