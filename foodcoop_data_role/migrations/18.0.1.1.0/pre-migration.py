@@ -8,15 +8,15 @@ _DEMO_NAME_PREFIXES = ("demo_user_", "role_line_group_")
 
 
 def migrate(cr, version):
-    if not version:
-        return
-
-    env = api.Environment(cr, SUPERUSER_ID, {})
     """Set noupdate=True on demo user and role line XML IDs.
 
     Prevents Odoo from deleting or overwriting these records during upgrade,
     since they are being moved to the foodcoop_data_role_demo module.
     """
+    if not version:
+        return
+
+    env = api.Environment(cr, SUPERUSER_ID, {})
     domain = [("module", "=", "foodcoop_data_role")]
     domain += ["|"] * (len(_DEMO_NAME_PREFIXES) - 1)
     for prefix in _DEMO_NAME_PREFIXES:
