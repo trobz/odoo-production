@@ -1,0 +1,14 @@
+.o_kanban_mailing_list {
+    .o_kanban_renderer {
+        .fs-2 {
+            font-size: 18px !important;
+        }
+        .o_mailing_list_kanban_ungrouped {
+            .o_mailing_list_kanban_button {
+                &.o_mailing_list_kanban_big_nb {
+                    font-size: 170% !important;
+                }
+            }
+        }
+    }
+}
