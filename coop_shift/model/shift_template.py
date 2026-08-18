@@ -694,10 +694,26 @@ class ShiftTemplate(models.Model):
                 template.day = start_date_object_tz.day
                 template.byday = "%s" % ((start_date_object_tz.day - 1) // 7 + 1)
 
+    @api.model
+    def _normalize_vals_for_storage(self, value):
+        # x2many write commands use the ``Command`` IntEnum in Odoo 18, whose
+        # repr (e.g. ``<Command.SET: 6>``) is not parseable by ``safe_eval``.
+        # Recursively convert every ``Command`` to a plain int so the stored
+        # ``updated_fields`` string can be re-evaluated later.
+        if isinstance(value, fields.Command):
+            return int(value)
+        if isinstance(value, dict):
+            return {
+                key: self._normalize_vals_for_storage(val) for key, val in value.items()
+            }
+        if isinstance(value, list | tuple):
+            return type(value)(self._normalize_vals_for_storage(item) for item in value)
+        return value
+
     # Overload Section
     def write(self, vals):
         if "updated_fields" not in vals.keys() and len(self.shift_ids):
-            vals["updated_fields"] = str(vals)
+            vals["updated_fields"] = str(self._normalize_vals_for_storage(vals))
 
         if "user_ids" in vals and "updated_fields" in vals and len(vals.keys()) <= 2:
             self.update_shift(vals)
