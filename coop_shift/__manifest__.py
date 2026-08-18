@@ -7,7 +7,7 @@
 
 {
     "name": "Coop Shift",
-    "version": "18.0.1.0.2",
+    "version": "18.0.1.0.3",
     "category": "Tools",
     "author": ("Julien WESTE, Sylvain LE GAL, " "Cyril Gaspard, La Louve, Druidoo"),
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
