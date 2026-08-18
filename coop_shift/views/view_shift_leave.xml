@@ -52,7 +52,7 @@
     <record id="view_shift_leave_form" model="ir.ui.view">
         <field name="model">shift.leave</field>
         <field name="arch" type="xml">
-            <form>
+            <form class="shift_leave_form">
                 <header>
                     <field name="state" widget="statusbar" nolabel="1" readonly="1" />
                     <button
