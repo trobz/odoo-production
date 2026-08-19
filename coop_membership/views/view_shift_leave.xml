@@ -11,6 +11,9 @@
         <field name="arch" type="xml">
             <field name="partner_id" position="attributes">
                 <attribute name="domain">[('is_worker_member', '=', True)]</attribute>
+                <attribute name="context" operation="update">
+                    {'list_view_ref': 'coop_membership.view_bdm_tree_no_create'}
+                </attribute>
             </field>
             <xpath expr="//sheet/notebook" position="before">
                 <field name="show_alert_proposed_date" invisible="1" />
