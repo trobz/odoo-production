@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 import pytz
 from dateutil.relativedelta import relativedelta
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
 
@@ -47,9 +47,8 @@ class ShiftLeave(models.Model):
         for leave in self:
             if leave.is_absence_leave and leave.absence_less_than_15days:
                 raise ValidationError(
-                    _(
-                        """Le minimum pour une absence pour incapacité \
-                    est de 15 jours."""
+                    self.env._(
+                        "Le minimum pour une absence pour incapacité est de 15 jours."
                     )
                 )
 
@@ -121,7 +120,7 @@ class ShiftLeave(models.Model):
             in_ftop_team = partner.in_ftop_team
             if not in_ftop_team and (next_shift_date + timedelta(days=-1) > stop_date):
                 proposed_date = next_shift_date + timedelta(days=-1)
-                alert_message = _(
+                alert_message = self.env._(
                     "You have inputted <b><i>{end_date}</i></b> "
                     "as the end date of the temporary leave for "
                     "<b><i>{partner}</i></b>. But a better date"
@@ -134,7 +133,7 @@ class ShiftLeave(models.Model):
                 next_shift_date + timedelta(days=1) < stop_date + timedelta(days=7)
             ):
                 proposed_date = next_shift_date + timedelta(days=1)
-                alert_message = _(
+                alert_message = self.env._(
                     "You have inputted <b><i>{end_date}</i>"
                     "</b> as the end date of the temporary leave"
                     " for <b><i>{partner}</i></b>. But a better "
@@ -247,7 +246,7 @@ class ShiftLeave(models.Model):
                 ).days + 1
                 if leave.type_id.is_temp_leave and days_leave < 56:
                     leave.show_proceed_message = True
-                    leave.proceed_message = _("""
+                    leave.proceed_message = self.env._("""
                     Leave duration is under 8 weeks,
                     do you want to proceed?""")
 
@@ -270,27 +269,29 @@ class ShiftLeave(models.Model):
                 num_line_guess = record.calculate_number_shift_future_in_leave()
                 total_line = len(abcd_lines_in_leave) + num_line_guess
                 if record.partner_id.in_ftop_team:
-                    raise ValidationError(_("This member is not part of an ABCD team."))
+                    raise ValidationError(
+                        self.env._("This member is not part of an ABCD team.")
+                    )
                 elif record.partner_id.final_standard_point != 0:
                     raise ValidationError(
-                        _(
+                        self.env._(
                             "Normally, this member is not eligible for early"
-                            + " leave because he has to catch up"
+                            " leave because he has to catch up"
                         )
                     )
                 elif total_line < record.type_id.anticipated_month:
                     raise ValidationError(
-                        _(
+                        self.env._(
                             "The period of leave must include %s"
-                            + " minimum missed services."
+                            " minimum missed services.",
+                            record.type_id.anticipated_month,
                         )
-                        % (record.type_id.anticipated_month)
                     )
                 elif record.partner_id.final_ftop_point < total_line:
                     raise ValidationError(
-                        _(
+                        self.env._(
                             "The member does not have enough"
-                            + " credits to cover the proposed period."
+                            " credits to cover the proposed period."
                         )
                     )
 
@@ -314,9 +315,9 @@ class ShiftLeave(models.Model):
         count_point_remove = len(abcd_lines_in_leave) + num_shift_guess
         if count_point_remove > self.partner_id.final_ftop_point:
             raise ValidationError(
-                _(
+                self.env._(
                     "The member does not have enough"
-                    + " credits to cover the proposed period."
+                    " credits to cover the proposed period."
                 )
             )
         else:
@@ -326,13 +327,13 @@ class ShiftLeave(models.Model):
                 .with_context(automatic=True)
                 .create(
                     {
-                        "name": _("Anticipated Leave"),
+                        "name": self.env._("Anticipated Leave"),
                         "type": "ftop",
                         "partner_id": self.partner_id.id,
                         "point_qty": -count_point_remove,
-                        "notes": _(
+                        "notes": self.env._(
                             "This event was created to remove point base"
-                            + " on anticipated leave."
+                            " on anticipated leave."
                         ),
                     }
                 )
