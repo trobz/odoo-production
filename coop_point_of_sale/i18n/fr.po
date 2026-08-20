@@ -356,6 +356,12 @@ msgid "The product %s received should have available in pos"
 msgstr "Le produit %s reçu devrait être disponible dans le POS"
 
 #. module: coop_point_of_sale
+#. odoo-python
+#: code:addons/coop_point_of_sale/models/pos_session.py:0
+msgid "You cannot create two active sessions with the same responsible."
+msgstr "Vous ne pouvez pas créer deux sessions actives avec le même responsable."
+
+#. module: coop_point_of_sale
 #: model_terms:ir.ui.view,arch_db:coop_point_of_sale.view_pos_session_tree_inherit
 msgid "Total"
 msgstr "Total"

@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html
 
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 WEEK_DAY_MAP = {
     0: "Mon",
@@ -130,6 +131,27 @@ class PosSession(models.Model):
                 rec.search_year = False
                 rec.search_month = False
                 rec.search_day = False
+
+    @api.constrains("user_id", "state")
+    def _check_unicity(self):
+        """Prevent an user from having more than one active POS session."""
+        for session in self:
+            if session.rescue:
+                continue
+            duplicate_count = self.search_count(
+                [
+                    ("state", "not in", ("closed", "closing_control")),
+                    ("user_id", "=", session.user_id.id),
+                    ("rescue", "=", False),
+                    ("id", "!=", session.id),
+                ]
+            )
+            if duplicate_count:
+                raise ValidationError(
+                    self.env._(
+                        "You cannot create two active sessions with the same responsible."
+                    )
+                )
 
     def _recompute_week_fields_async(self):
         NUM_RECORDS_PER_JOB = 1000
