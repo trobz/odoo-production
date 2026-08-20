@@ -238,10 +238,6 @@
                     add="coop_shift.group_shift_user"
                 />
             </field>
-            <field name="vat" position="before">
-                <field name="website" position="move" />
-            </field>
-
             <field name="vat" position="attributes">
                 <attribute
                     name="groups"
@@ -1042,6 +1038,17 @@
                     add="coop_membership.group_membership_bdm_saisie"
                 />
             </xpath>
+        </field>
+    </record>
+    <record id="view_partner_base_vat_form_inherit" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="name">view.partner.base.vat.form.inherit</field>
+        <field name="priority">15</field>
+        <field name="inherit_id" ref="base_vat.view_partner_base_vat_form" />
+        <field name="arch" type="xml">
+            <field name="perform_vies_validation" position="after">
+                <field name="website" position="move" />
+            </field>
         </field>
     </record>
 

@@ -28,6 +28,7 @@
         "partner_contact_gender",
         "sms",
         "spreadsheet_dashboard",
+        "base_vat",
         # "web_widget_image_webcam_portrait",
     ],
     "data": [
