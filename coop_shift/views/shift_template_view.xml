@@ -234,10 +234,22 @@
                                         domain="[('shift_type_id','!=',False)]"
                                         options="{'no_create': True}"
                                     />
-                                    <field name="seats_max" />
-                                    <field name="seats_reserved" readonly="1" />
-                                    <field name="seats_available" readonly="1" />
-                                    <field name="seats_future" readonly="1" />
+                                    <field name="seats_max" width="200px" />
+                                    <field
+                                        name="seats_reserved"
+                                        readonly="1"
+                                        width="180px"
+                                    />
+                                    <field
+                                        name="seats_available"
+                                        readonly="1"
+                                        width="180px"
+                                    />
+                                    <field
+                                        name="seats_future"
+                                        readonly="1"
+                                        width="180px"
+                                    />
                                 </list>
                             </field>
                         </page>
