@@ -127,9 +127,9 @@
                                         decoration-muted="state == 'cancel'"
                                     >
                                         <field name="type_id" />
-                                        <field name="start_date" />
-                                        <field name="stop_date" />
-                                        <field name="duration" />
+                                        <field name="start_date" width="150px" />
+                                        <field name="stop_date" width="150px" />
+                                        <field name="duration" width="150px" />
                                         <field name="state" />
                                     </list>
                                 </field>

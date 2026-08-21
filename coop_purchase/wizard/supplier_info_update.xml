@@ -14,6 +14,7 @@
                 <sheet>
                     <group>
                         <field name="partner_id" readonly="1" />
+                        <field name="show_discount" />
                     </group>
                     <notebook>
                         <page string="Lines">
@@ -46,7 +47,7 @@
                                         <field
                                             name="discount"
                                             default_focus="1"
-                                            optional="hide"
+                                            column_invisible="not parent.show_discount"
                                         />
                                         <field
                                             name="seller_id"
