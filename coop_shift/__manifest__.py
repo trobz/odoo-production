@@ -60,11 +60,6 @@
         "wizard/report_timesheet_wizard_view.xml",
         "wizard/report_wallchart_wizard_view.xml",
     ],
-    "assets": {
-        "web.assets_backend": [
-            "coop_shift/static/src/scss/shift_template_tickets.scss",
-        ],
-    },
     "demo": [
         "demo/res_groups.xml",
         "demo/res_partner.xml",
