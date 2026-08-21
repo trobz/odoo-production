@@ -27,5 +27,8 @@ class StockQuant(models.Model):
     @api.depends("product_id")
     def _compute_package_qty(self):
         for quant in self:
-            seller = quant.product_id._select_seller(quantity=1)
-            quant.package_qty = seller.package_qty or 1.0
+            package_qty = 1
+            if quant.product_id:
+                seller = quant.product_id._select_seller(quantity=1)
+                package_qty = seller.package_qty or 1.0
+            quant.package_qty = package_qty

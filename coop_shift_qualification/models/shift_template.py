@@ -51,7 +51,7 @@ class ShiftTemplate(models.Model):
                     to_del.write(
                         {
                             "qualification_ids": [
-                                Command.remove(qid) for qid in lead_quals.ids
+                                Command.unlink(qid) for qid in lead_quals.ids
                             ]
                         }
                     )

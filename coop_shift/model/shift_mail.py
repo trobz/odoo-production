@@ -140,6 +140,14 @@ class ShiftMailScheduler(models.Model):
             vals["interval_type"] = vals["interval_type"].replace("shift", "event")
         return vals
 
+    def _send_mail(self, registrations):
+        # template_ref may be missing on old records created before the
+        # update_template_ref sync was introduced; fall back to template_id.
+        for rec in self:
+            if not rec.template_ref and rec.template_id:
+                rec.write({"template_ref": f"mail.template,{rec.template_id.id}"})
+        return super()._send_mail(registrations)
+
     def update_template_ref(self, vals):
         """Update template_ref field for backward compatibility"""
         if vals.get("template_id"):

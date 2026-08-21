@@ -36,6 +36,11 @@
         "report/report_timesheet_templates.xml",
         "views/res_config_view.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "coop_shift_qualification/static/src/scss/res_partner.scss",
+        ],
+    },
     "installable": True,
     "post_init_hook": "post_init_hook",
 }

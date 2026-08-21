@@ -37,6 +37,10 @@ class WebsiteCategoryPublish(WebsiteSale):
             ppg=ppg,
             **post,
         )
-        categories = response.qcontext["categories"]
-        response.qcontext["categories"] = categories.filtered(lambda c: c.is_published)
+
+        if "categories" in response.qcontext:
+            categories = response.qcontext["categories"]
+            response.qcontext["categories"] = categories.filtered(
+                lambda c: c.is_published
+            )
         return response
