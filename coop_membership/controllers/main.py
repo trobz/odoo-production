@@ -18,7 +18,7 @@ class WebsiteRegisterMeeting(http.Controller):
         captcha_site_key = (
             request.env["ir.config_parameter"].sudo().get_param("captcha_site_key")
         )
-        user = request.env["res.users"].browse(REGISTER_USER_ID)
+        user = request.env["res.users"].sudo().browse(REGISTER_USER_ID)
         company = user.company_id
 
         # Get event available
