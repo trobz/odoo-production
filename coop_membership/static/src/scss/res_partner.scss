@@ -1,0 +1,4 @@
+.bdm_list_view th[data-name="cooperative_state"] .text-truncate,
+.bdm_list_view th[data-name="unsubscription_date"] .text-truncate {
+    word-break: normal !important;
+}
