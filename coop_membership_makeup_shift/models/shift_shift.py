@@ -1,7 +1,7 @@
 # Copyright (C) Nguyen Minh Chien (chien@trobz.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import models
+from odoo import fields, models
 
 
 class ShiftShift(models.Model):
@@ -9,6 +9,10 @@ class ShiftShift(models.Model):
 
     def register_makeup_shift(self):
         self.ensure_one()
+        if self.state == "cancel":
+            return 0, self.env._("This shift is not available for registration.")
+        if self.date_begin <= fields.Datetime.now():
+            return 0, self.env._("You cannot register for a shift that has already started.")
         tickets = self.shift_ticket_ids.filtered(
             lambda t: t.shift_type == "standard" and t.seats_available > 0
         )
