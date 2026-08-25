@@ -2433,13 +2433,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/coop_membership/models/shift_leave.py:0
 msgid ""
-"Le minimum pour une absence pour incapacité                     est de 15 "
-"jours."
-msgstr ""
-
-#. module: coop_membership
-#: model_terms:ir.ui.view,arch_db:coop_membership.view_shift_leave_form
-msgid "Le minimum pour une absence pour incapacité est de 15 jours."
+"Le minimum pour une absence pour incapacité est de 15 jours."
 msgstr ""
 
 #. module: coop_membership

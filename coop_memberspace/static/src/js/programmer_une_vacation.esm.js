@@ -29,6 +29,15 @@ export default publicWidget.registry.programmer_une_vacation =
             return true;
         },
 
+        /* eslint-disable-next-line no-unused-vars */
+        post_new_shift_node(result, $newRow, shift) {
+            // Hook method for subclasses to customize the new shift row after it's created
+            // Receives:
+            //   - result: registration ID (created registration)
+            //   - $newRow: jQuery element of the newly created row
+            //   - shift: shift object with data (id, name_specific, etc.)
+        },
+
         start() {
             const self = this;
 
@@ -53,6 +62,8 @@ export default publicWidget.registry.programmer_une_vacation =
                         );
                         $(`#btn-add-${shift.id}`).on("click", function () {
                             self.shift_id = $(this).attr("shift-id");
+                            // Store shift object for post_new_shift_node
+                            self.current_shift = shift;
                             $(`#modal_time`).text($(`#time-${self.shift_id}`).text());
                             $(`#modal_hour`).text($(`#hour-${self.shift_id}`).text());
                             const BS = window.Modal || window.bootstrap?.Modal;
@@ -114,6 +125,8 @@ export default publicWidget.registry.programmer_une_vacation =
                             </td>
                         </tr>`;
                         const $newRow = $(new_shift);
+                        // Call hook for custom processing (passes shift object for customization)
+                        self.post_new_shift_node(result, $newRow, self.current_shift);
                         $(".ftop-programmer-une-vacation-body").append($newRow);
                         // Init Bootstrap 5 tooltips on new row
                         $newRow.find('[data-bs-toggle="tooltip"]').each(function () {
