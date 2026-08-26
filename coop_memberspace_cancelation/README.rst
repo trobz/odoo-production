@@ -28,10 +28,10 @@ Member Space website portal.
 
 When a member cancels a shift, the module:
 
--  Sends an automatic email notification to confirm the cancellation.
--  Applies a malus point deduction (-1) to the member's ABCD or FTOP
-   counter once the shift is completed, depending on the member's
-   vacation counter balance.
+- Sends an automatic email notification to confirm the cancellation.
+- Applies a malus point deduction (-1) to the member's ABCD or FTOP
+  counter once the shift is completed, depending on the member's
+  vacation counter balance.
 
 **Table of contents**
 
@@ -52,11 +52,11 @@ Cancelling a Shift Registration
 5. The dialog shows the service name and informs the member of the
    impact on their counter:
 
-   -  If the **service vacation counter is positive (FTOP)**: the
-      vacation counter will be decreased by 1 once the shift is over.
-   -  If the **service vacation counter is zero or negative (ABCD)**:
-      the ABCD counter will be decreased by 1 once the shift is over. An
-      exchange of service is recommended.
+   - If the **service vacation counter is positive (FTOP)**: the
+     vacation counter will be decreased by 1 once the shift is over.
+   - If the **service vacation counter is zero or negative (ABCD)**: the
+     ABCD counter will be decreased by 1 once the shift is over. An
+     exchange of service is recommended.
 
 6. Click the checkmark icon to confirm the cancellation. The page will
    reload and the shift will appear as cancelled.
