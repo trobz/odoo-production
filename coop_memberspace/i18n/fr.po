@@ -1657,13 +1657,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/coop_memberspace/models/shift_registration.py:0
 msgid ""
-"You are about to cancel your participation to shift {des_date} and replace "
-"it with a participation to shift {src_date}. Are you sure that you want to "
-"do them?"
+"You are about to cancel your participation to shift %s and replace it with a "
+"participation to shift %s. Are you sure that you want to do them?"
 msgstr ""
-"Vous allez annuler votre participation au créneau {des_date} et la remplacer "
-"par une participation au créneau {src_date}. Êtes-vous sûr de vouloir les "
-"faire ?"
+"Vous allez annuler votre participation au créneau %s et la remplacer par une "
+"participation au créneau %s. Êtes-vous sûr de vouloir les faire ?"
 
 #. module: coop_memberspace
 #. odoo-python
@@ -1701,19 +1699,20 @@ msgstr ""
 #. odoo-python
 #: code:addons/coop_memberspace/models/shift_registration.py:0
 msgid ""
-"You cannot cancel the shift within {} hours before the beginning of the "
+"You cannot cancel the shift within %s hours before the beginning of the "
 "shift"
 msgstr ""
-"Vous pouvez contacter vos coordinateurs en écrivant"
+"Vous ne pouvez plus annuler votre participation dans les %s heures précédant "
+"le début du service."
 
 #. module: coop_memberspace
 #. odoo-python
 #: code:addons/coop_memberspace/models/shift_registration.py:0
 msgid ""
-"You cannot propose to change the shift within {} hours before the beginning "
+"You cannot propose to change the shift within %s hours before the beginning "
 "of the shift."
 msgstr ""
-"Vous ne pouvez pas proposer de changer le créneau dans les {} heures précédant le début du créneau."
+"Vous ne pouvez pas proposer de changer le créneau dans les %s heures précédant le début du créneau."
 
 #. module: coop_memberspace
 #. odoo-python
