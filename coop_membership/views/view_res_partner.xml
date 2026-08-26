@@ -334,13 +334,23 @@
                     add="coop_membership.group_membership_bdm_saisie"
                 />
             </xpath>
+            <!-- F#T68461 add default type 'contact' and hide field -->
+            <xpath expr="//field[@name='child_ids']" position="attributes">
+                <attribute name="context" operation="update">
+                    {"default_type": "contact"}
+                </attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='child_ids']/form/sheet/div[hasclass('oe_edit_only')]"
+                position="attributes"
+            >
+                <attribute name="invisible">True</attribute>
+            </xpath>
             <xpath
                 expr="//field[@name='child_ids']/form/sheet/field[@name='type']"
                 position="attributes"
             >
-                <attribute
-                    name="invisible"
-                >(is_member) or (is_associated_people)</attribute>
+                <attribute name="invisible">True</attribute>
             </xpath>
             <xpath expr="//field[@name='child_ids']/form" position="attributes">
                 <attribute name="create">false</attribute>
@@ -363,9 +373,7 @@
                 expr="//field[@name='child_ids']/form/sheet/hr"
                 position="attributes"
             >
-                <attribute
-                    name="invisible"
-                >(is_member) or (is_associated_people)</attribute>
+                <attribute name="invisible">True</attribute>
             </xpath>
             <xpath
                 expr="//field[@name='child_ids']/form/sheet/group/group[1]"
@@ -402,19 +410,7 @@
                 expr="//field[@name='child_ids']/form/sheet/group//field[@name='function']"
                 position="attributes"
             >
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="coop_shift.group_shift_user"
-                />
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="coop_membership.group_membership_bdm_saisie"
-                />
-                <attribute
-                    name="invisible"
-                >(is_member) or (is_associated_people)</attribute>
+                <attribute name="invisible">True</attribute>
             </xpath>
             <xpath
                 expr="//field[@name='child_ids']/form/sheet/group//field[@name='email']"
@@ -465,14 +461,7 @@
                 expr="//field[@name='child_ids']/form/sheet/group//field[@name='comment']"
                 position="attributes"
             >
-                <attribute
-                    name="groups"
-                    separator=","
-                    add="coop_membership.group_membership_bdm_saisie"
-                />
-                <attribute
-                    name="invisible"
-                >(is_member) or (is_associated_people)</attribute>
+                <attribute name="invisible">True</attribute>
             </xpath>
             <xpath
                 expr="//field[@name='child_ids']/form/sheet/group//field[@name='comment']"
