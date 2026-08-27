@@ -20,6 +20,7 @@
             name="implied_ids"
             eval="[Command.set([
             ref('base.group_user'),
+            ref('account.group_account_invoice'),
             ref('coop_default_pricetag.group_food_manager'),
             ref('purchase.group_purchase_user'),
             ref('stock.group_stock_user'),
@@ -41,6 +42,7 @@
             name="implied_ids"
             eval="[Command.set([
             ref('base.group_user'),
+            ref('account.group_account_invoice'),
             ref('coop_default_pricetag.group_food_manager'),
             ref('purchase.group_purchase_manager'),
             ref('stock.group_stock_manager'),
