@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t t-inherit="l10n_fr_pos_cert.OrderReceipt" t-inherit-mode="extension">
+        <xpath
+            expr="//span[hasclass('oldPrice')]/ancestor::div[hasclass('pos-receipt-right-padding')]"
+            position="attributes"
+        >
+            <attribute name="t-if">false</attribute>
+        </xpath>
+    </t>
+
+</templates>

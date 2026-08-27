@@ -20,6 +20,7 @@
         "coop_membership",
         "pos_transfer_account",
         "pos_order_remove_line",
+        "l10n_fr_pos_cert",
     ],
     "data": [
         "security/ir.model.access.csv",
