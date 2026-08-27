@@ -28,6 +28,7 @@
         "partner_contact_gender",
         "sms",
         "spreadsheet_dashboard",
+        "base_vat",
         # "web_widget_image_webcam_portrait",
     ],
     "data": [
@@ -88,6 +89,7 @@
             "coop_membership/static/src/scss/ftop_seats.scss",
             "coop_membership/static/src/scss/shift_change_team.scss",
             "coop_membership/static/src/scss/mailing_list_kanban.scss",
+            "coop_membership/static/src/scss/res_partner.scss",
         ],
     },
     "demo": [
