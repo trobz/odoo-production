@@ -1162,7 +1162,7 @@
         <field name="arch" type="xml">
             <xpath expr="//list" position="attributes">
                 <attribute name="create">false</attribute>
-                <attribute name="class" add="bdm_list_view" saparator=" " />
+                <attribute name="class" add="bdm_list_view" separator=" " />
             </xpath>
         </field>
     </record>
