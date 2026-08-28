@@ -22,7 +22,10 @@ class ProductTemplate(models.Model):
         if fc and isinstance(fc, int):
             fc = self.env["account.product.fiscal.classification"].browse(fc)
         if not fc:
-            return vals
+            return {
+                "property_account_income_id": False,
+                "property_account_expense_id": False,
+            }
         if fc.income_account_id:
             vals.update({"property_account_income_id": fc.income_account_id.id})
         if fc.expense_account_id:
