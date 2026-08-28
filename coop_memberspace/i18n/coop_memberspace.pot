@@ -199,9 +199,9 @@ msgstr ""
 #. module: coop_memberspace
 #: model:mail.template,body_html:coop_memberspace.shift_registration_cancel_email
 msgid ""
-"<p>Dear ${object.name},</p>\n"
+"<p>Dear <t t-out=\"object.name\" />,</p>\n"
 "\n"
-"<p>You were registered has a participant to the shift ${object.shift_id.display_name} and you asked to cancel this participation.</p>\n"
+"<p>You were registered has a participant to the shift <t t-out=\"object.shift_id.display_name\" /> and you asked to cancel this participation.</p>\n"
 "<p>This is a confirmation that the cancellation was taken into account and you are no longer registered to that shift.</p>\n"
 "\n"
 "<p>Kind regards,\n"
