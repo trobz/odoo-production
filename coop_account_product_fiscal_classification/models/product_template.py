@@ -18,7 +18,6 @@ class ProductTemplate(models.Model):
 
     @api.model
     def get_fiscal_account(self, fc=False):
-        vals = {}
         if fc and isinstance(fc, int):
             fc = self.env["account.product.fiscal.classification"].browse(fc)
         if not fc:
@@ -26,11 +25,10 @@ class ProductTemplate(models.Model):
                 "property_account_income_id": False,
                 "property_account_expense_id": False,
             }
-        if fc.income_account_id:
-            vals.update({"property_account_income_id": fc.income_account_id.id})
-        if fc.expense_account_id:
-            vals.update({"property_account_expense_id": fc.expense_account_id.id})
-        return vals
+        return {
+            "property_account_income_id": fc.income_account_id.id,
+            "property_account_expense_id": fc.expense_account_id.id,
+        }
 
     @api.model_create_multi
     def create(self, vals_list):
