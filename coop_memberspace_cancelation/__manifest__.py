@@ -1,6 +1,6 @@
 {
     "name": "Coop Memberspace Cancelation",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Custom",
     "summary": "Standard member can cancel his shifts",
     "author": "La Louve, Trobz",

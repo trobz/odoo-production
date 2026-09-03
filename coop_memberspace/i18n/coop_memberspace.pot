@@ -199,9 +199,9 @@ msgstr ""
 #. module: coop_memberspace
 #: model:mail.template,body_html:coop_memberspace.shift_registration_cancel_email
 msgid ""
-"<p>Dear ${object.name},</p>\n"
+"<p>Dear <t t-out=\"object.name\" />,</p>\n"
 "\n"
-"<p>You were registered has a participant to the shift ${object.shift_id.display_name} and you asked to cancel this participation.</p>\n"
+"<p>You were registered has a participant to the shift <t t-out=\"object.shift_id.display_name\" /> and you asked to cancel this participation.</p>\n"
 "<p>This is a confirmation that the cancellation was taken into account and you are no longer registered to that shift.</p>\n"
 "\n"
 "<p>Kind regards,\n"
@@ -1496,9 +1496,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/coop_memberspace/models/shift_registration.py:0
 msgid ""
-"You are about to cancel your participation to shift {des_date} and replace "
-"it with a participation to shift {src_date}. Are you sure that you want to "
-"do them?"
+"You are about to cancel your participation to shift %s and replace it with a "
+"participation to shift %s. Are you sure that you want to do them?"
 msgstr ""
 
 #. module: coop_memberspace
@@ -1532,7 +1531,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/coop_memberspace/models/shift_registration.py:0
 msgid ""
-"You cannot cancel the shift within {} hours before the beginning of the "
+"You cannot cancel the shift within %s hours before the beginning of the "
 "shift"
 msgstr ""
 
@@ -1540,7 +1539,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/coop_memberspace/models/shift_registration.py:0
 msgid ""
-"You cannot propose to change the shift within {} hours before the beginning "
+"You cannot propose to change the shift within %s hours before the beginning "
 "of the shift."
 msgstr ""
 

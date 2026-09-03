@@ -701,6 +701,8 @@ class ShiftTemplate(models.Model):
 
         if "user_ids" in vals and "updated_fields" in vals and len(vals.keys()) <= 2:
             self.update_shift(vals)
+            # remove user_ids from update_fields
+            vals["updated_fields"] = False
         elif "seats_max" in vals:
             self.update_max_seats_related_shifts(vals.get("seats_max"))
             only_update_seats_max = all(

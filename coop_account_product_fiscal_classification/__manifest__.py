@@ -4,7 +4,7 @@
 {
     "name": "Account Product - Fiscal Classification",
     "summary": "Provide extra features for Fiscal Classification",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Accounting",
     "author": "La Louve, Druidoo",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",

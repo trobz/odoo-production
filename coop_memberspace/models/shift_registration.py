@@ -117,8 +117,9 @@ class ShiftRegistration(models.Model):
                     "code": 0,
                     "msg": self.env._(
                         "You cannot propose to change the shift within"
-                        " {} hours before the beginning of the shift."
-                    ).format(shift_exchange_duration),
+                        " %s hours before the beginning of the shift.",
+                        shift_exchange_duration,
+                    ),
                 }
             record.write(
                 {
@@ -213,12 +214,11 @@ class ShiftRegistration(models.Model):
                 )
         if datas:
             msg = self.env._(
-                "You are about to cancel your participation to shift {des_date} "
-                "and replace it with a participation to shift {src_date}. "
-                "Are you sure that you want to do them?"
-            ).format(
-                src_date=datas[0]["date"],
-                des_date=datas[1]["date"],
+                "You are about to cancel your participation to shift %s "
+                "and replace it with a participation to shift %s. "
+                "Are you sure that you want to do them?",
+                datas[1]["date"],
+                datas[0]["date"],
             )
             return 1, msg
         else:
@@ -260,8 +260,9 @@ class ShiftRegistration(models.Model):
                     "code": 0,
                     "msg": self.env._(
                         "You cannot cancel the shift within"
-                        " {} hours before the beginning of the shift"
-                    ).format(duration),
+                        " %s hours before the beginning of the shift",
+                        duration,
+                    ),
                 }
         return {
             "code": 1,

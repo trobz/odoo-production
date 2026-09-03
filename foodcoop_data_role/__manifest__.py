@@ -41,6 +41,7 @@
         "spreadsheet_dashboard",
         "base_user_role_history",
         "project_todo",
+        "coop_purchase",
     ],
     "data": [
         "data/res_groups.xml",
