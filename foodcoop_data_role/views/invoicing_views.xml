@@ -127,7 +127,7 @@
             <header position="attributes">
                 <attribute
                     name="groups"
-                >foodcoop_data_role.group_Cashier,foodcoop_data_role.group_Member_Manager,foodcoop_data_role.group_Accountant,foodcoop_data_role.group_Purchase_Manager,foodcoop_data_role.group_Foodcoop_Admin,foodcoop_data_role.group_POS_Manager,base.group_system,!foodcoop_data_role.group_member_accountant_restrict</attribute>
+                >foodcoop_data_role.group_Cashier,foodcoop_data_role.group_Member_Manager,foodcoop_data_role.group_Accountant,foodcoop_data_role.group_Purchase_Manager,foodcoop_data_role.group_Purchaser,foodcoop_data_role.group_Foodcoop_Admin,foodcoop_data_role.group_POS_Manager,base.group_system,!foodcoop_data_role.group_member_accountant_restrict</attribute>
             </header>
             <header position="after">
                 <header
