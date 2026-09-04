@@ -1,6 +1,7 @@
 import datetime
 
 from odoo import Command, api, fields, models
+from odoo.exceptions import UserError
 from odoo.osv import expression
 
 
@@ -182,6 +183,14 @@ class StockInventory(models.Model):
 
     def action_add_category_supplier(self):
         self.ensure_one()
+        if self.state != "draft":
+            raise UserError(
+                self.env._(
+                    "You can only add products in draft state. "
+                    "Reset the inventory adjustment first."
+                )
+            )
+            return False
         products = self._get_product_ids()
         if not products:
             return True
