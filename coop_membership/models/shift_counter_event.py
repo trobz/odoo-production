@@ -22,6 +22,7 @@ class ShiftCounterEvent(models.Model):
     @api.depends("point_qty", "partner_id", "type")
     def _compute_sum_current_qty(self):
         for record in self:
+            record.sum_current_qty = 0
             if record.partner_id and record.type == "ftop":
                 record_id = record.id
                 counter_event_before = record.partner_id.counter_event_ids.filtered(
