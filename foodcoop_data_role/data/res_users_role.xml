@@ -101,6 +101,7 @@
             ref('coop_membership.group_membership_bdm_saisie'),
             ref('coop_membership.coop_group_access_res_partner_inform'),
             ref('base.group_allow_export'),
+            ref('account.group_account_invoice'),
         ])]"
         />
     </record>
