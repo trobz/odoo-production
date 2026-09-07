@@ -7,64 +7,57 @@ msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-08-11 00:00+0000\n"
-"PO-Revision-Date: 2026-08-11 00:00+0000\n"
-"X-POT-Source: i18n/pos_payment_credit_pin.pot\n"
-"Last-Translator: \n"
-"Language-Team: French <>\n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
-"1000000 == 0) ? 1 : 2);\n"
 
 #. module: pos_payment_credit_pin
 #: model:ir.model.fields,field_description:pos_payment_credit_pin.field_res_users__pos_security_pin
 msgid "POS Security PIN"
-msgstr "Code PIN de sécurité PDV"
+msgstr ""
 
 #. module: pos_payment_credit_pin
 #: model:ir.model.fields,help:pos_payment_credit_pin.field_res_users__pos_security_pin
 msgid "Numeric PIN to authorize credit payment validation in the Point of Sale."
-msgstr "Code PIN numérique pour autoriser la validation des paiements à crédit dans le Point de Vente."
+msgstr ""
 
 #. module: pos_payment_credit_pin
 #: model_terms:ir.ui.view,arch_db:pos_payment_credit_pin.view_users_form_pos_pin
 msgid "POS Security"
-msgstr "Sécurité PDV"
+msgstr ""
 
 #. module: pos_payment_credit_pin
 #: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/models/res_users.py:0
 #, python-format
 msgid "POS Security PIN must contain only digits."
-msgstr "Le code PIN de sécurité PDV ne doit contenir que des chiffres."
+msgstr ""
 
 #. module: pos_payment_credit_pin
 #: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
 msgid "PIN Not Configured"
-msgstr "Code PIN non configuré"
+msgstr ""
 
 #. module: pos_payment_credit_pin
 #: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
 msgid "No user has configured a security PIN. Please set a PIN in user settings."
-msgstr "Aucun utilisateur n'a configuré de code PIN de sécurité. Veuillez définir un code PIN dans les paramètres utilisateur."
+msgstr ""
 
 #. module: pos_payment_credit_pin
 #: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
 msgid "Security PIN Required"
-msgstr "Code PIN de sécurité requis"
+msgstr ""
 
 #. module: pos_payment_credit_pin
 #: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
 msgid "Enter your PIN to confirm this credit payment."
-msgstr "Saisissez votre code PIN pour confirmer ce paiement à crédit."
+msgstr ""
 
 #. module: pos_payment_credit_pin
 #: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
 msgid "Incorrect PIN"
-msgstr "Code PIN incorrect"
+msgstr ""
 
 #. module: pos_payment_credit_pin
 #: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
 msgid "The PIN you entered is incorrect. Please try again."
-msgstr "Le code PIN saisi est incorrect. Veuillez réessayer."
+msgstr ""
