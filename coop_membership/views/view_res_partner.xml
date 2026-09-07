@@ -606,6 +606,40 @@
         </field>
     </record>
 
+    <record id="view_partner_form_partner_firstname_inherit" model="ir.ui.view">
+        <field name="name">view_partner_form_partner_firstname_inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="partner_firstname.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='child_ids']/form//div[field[@name='is_company']]/group"
+                position="attributes"
+            >
+                <attribute name="invisible">True</attribute>
+            </xpath>
+            <xpath
+                expr="//field[@name='child_ids']/form//field[@name='title']"
+                position="before"
+            >
+                <field
+                    invisible="is_company or (not is_company and not form_has_lastname_first)"
+                    name="lastname"
+                    required="form_has_lastname_first and lastname_required"
+                />
+                <field
+                    name="firstname"
+                    invisible="is_company"
+                    required="firstname_required"
+                />
+                <field
+                    invisible="is_company or (not is_company and form_has_lastname_first)"
+                    name="lastname"
+                    required="not form_has_lastname_first and lastname_required"
+                />
+            </xpath>
+        </field>
+    </record>
+
     <!-- Changes in coop shift user view -->
     <record id="view_partner_form_coop_shift" model="ir.ui.view">
         <field name="model">res.partner</field>

@@ -26,6 +26,7 @@
         "partner_account_move_line",
         "partner_contact_birthdate",
         "partner_contact_gender",
+        "partner_firstname",
         "sms",
         "spreadsheet_dashboard",
         "base_vat",
