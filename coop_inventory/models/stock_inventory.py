@@ -18,3 +18,13 @@ class ReportStockInventoryGroup(models.AbstractModel):
             "docs": quants,
             "report_date": inventories[0].date or fields.Datetime.now(),
         }
+
+
+class InventoryAdjustmentsGroup(models.Model):
+    _inherit = "stock.inventory"
+
+    def action_print_report_inventory(self):
+        self.ensure_one()
+        return self.env.ref(
+            "coop_inventory.action_report_stock_inventory_group"
+        ).report_action(self)
