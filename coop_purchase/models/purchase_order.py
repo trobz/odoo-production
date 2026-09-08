@@ -6,7 +6,9 @@ class PurchaseOrder(models.Model):
 
     def button_update_prices(self):
         self.ensure_one()
-        return self.env.ref("coop_purchase.supplier_info_update_act").read()[0]
+        return self.env["ir.actions.actions"]._for_xml_id(
+            "coop_purchase.supplier_info_update_act"
+        )
 
     def action_view_invoice(self, invoices=False):
         result = super().action_view_invoice(invoices)

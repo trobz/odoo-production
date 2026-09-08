@@ -25,4 +25,24 @@
             </field>
         </field>
     </record>
+    <record id="view_stock_inventory_form_inherit" model="ir.ui.view">
+        <field name="name">view_stock_inventory_form_inherit</field>
+        <field name="inherit_id" ref="stock_inventory.view_inventory_group_form" />
+        <field name="model">stock.inventory</field>
+        <field name="arch" type="xml">
+            <button name="action_view_inventory_adjustment" position="before">
+                <button
+                    type="object"
+                    name="action_print_report_inventory"
+                    class="oe_stat_button"
+                    icon="fa-print"
+                    invisible="state in ('cancel',)"
+                >
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_text">Print</span>
+                    </div>
+                </button>
+            </button>
+        </field>
+    </record>
 </odoo>
