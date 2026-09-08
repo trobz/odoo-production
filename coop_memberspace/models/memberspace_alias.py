@@ -32,7 +32,7 @@ class MemberSpaceAlias(models.Model):
             vals.setdefault("alias_parent_model_id", alias_parent_model_id)
         memberspace_alias = super(
             MemberSpaceAlias,
-            self.with_context(mail_create_nolog=True),
+            self.with_context(mail_create_nolog=True).sudo(),
         ).create(vals_list)
         memberspace_alias.alias_id.write(
             {
@@ -47,5 +47,5 @@ class MemberSpaceAlias(models.Model):
         # as they should not exist without the memberspace alias.
         aliases = self.mapped("alias_id")
         res = super().unlink()
-        aliases.unlink()
+        aliases.sudo().unlink()
         return res
