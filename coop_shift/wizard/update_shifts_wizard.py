@@ -82,6 +82,13 @@ class UpdateShiftsWizard(models.TransientModel):
                 wizard.template_id, date_from=wizard.date_from, date_to=wizard.date_to
             )
 
+    def validate_shift_fields(self, vals):
+        # Delete fields from vals that not present in the shift model
+        shift_fields = self.env["shift.shift"]._fields.keys()
+        for key in list(vals.keys()):
+            if key not in shift_fields:
+                del vals[key]
+
     def update_shifts(self):
         shift_obj = self.env["shift.shift"]
         for wizard in self:
@@ -118,9 +125,11 @@ class UpdateShiftsWizard(models.TransientModel):
                             )
                         )
                     vals["shift_mail_ids"] = shift_mail_vals
-                shift_obj.browse(shift_ids).with_context(
-                    tracking_disable=True, special=special
-                ).write(vals)
+                self.validate_shift_fields(vals)
+                if vals:
+                    shift_obj.browse(shift_ids).with_context(
+                        tracking_disable=True, special=special
+                    ).write(vals)
                 wizard.template_id.updated_fields = ""
         return True
 
