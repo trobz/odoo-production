@@ -1243,6 +1243,50 @@ msgid ""
 "\n"
 "        </body>"
 msgstr ""
+"<style>\n"
+"#notify-mirror-children ol {\n"
+"  counter-reset: item;\n"
+"  margin-left: 0;\n"
+"  padding-left: 0;\n"
+"}\n"
+"#notify-mirror-children &amp;gt; ol &amp;gt; li {\n"
+"  display: block;\n"
+"  margin-bottom: .5em;\n"
+"  margin-left: 2em;\n"
+"}\n"
+"#notify-mirror-children &amp;gt; ol &amp;gt; li::before {\n"
+"  display: inline-block;\n"
+"  content: counter(item) \") \";\n"
+"  counter-increment: item;\n"
+"  width: 2em;\n"
+"  margin-left: -2em;\n"
+"}\n"
+"</style>\n"
+"<body><div id=\"notify-mirror-children\">\n"
+"<p>Bonjour,</p>\n"
+"<p>\n"
+"Votre enfant rattaché aura bientôt 18 ans. Nous lui souhaitons un joyeux anniversaire par avance.\n"
+"</p>\n"
+"<p>\n"
+"Le jour de son anniversaire, il / elle sera détaché(e) de votre compte et perdra ses droits d'achat à <span t-esc=\"(object.company_id.name or '')\"/>.\n"
+"S'il / si elle souhaite continuer à faire ses courses à <span t-esc=\"(object.company_id.name or '')\"/>, il y a 2 possibilités :\n"
+"</p>\n"
+"<ol>\n"
+"<li>Il / elle devient membre de <span t-esc=\"(object.company_id.name or '')\"/>.\n"
+"Vous devez vous rendre sur notre site web et vous inscrire à une réunion d'accueil, puis suivre les étapes pour devenir membre de <span t-esc=\"(object.company_id.name or '')\"/>.\n"
+"</li>\n"
+"<li>Il / elle devient rattaché(e) à un adulte... une possibilité uniquement si vous n'avez pas déjà un autre adulte de votre foyer associé à votre compte à <span t-esc=\"(object.company_id.name or '')\"/>.\n"
+"Pour qu'il / elle devienne un adulte rattaché, vous devez tous les deux vous rendre au bureau des membres pendant les heures d'ouverture.\n"
+"Votre enfant doit apporter une pièce d'identité et un justificatif attestant qu'il / elle habite à la même adresse que vous.\n"
+"</li>\n"
+"</ol>\n"
+"<p>\n"
+"Bonne journée,\n"
+"</p>\n"
+"<p><span t-esc=\"(object.company_id.name or '')\"/></p>\n"
+"</div>\n"
+"\n"
+"        </body>"
 
 #. module: coop_membership
 #. odoo-python
@@ -3114,7 +3158,7 @@ msgstr ""
 #. module: coop_membership
 #: model:mail.template,name:coop_membership.notify_mirror_children_email
 msgid "Notify mirror children"
-msgstr ""
+msgstr "Notifier les enfants miroirs"
 
 #. module: coop_membership
 #. odoo-python
@@ -4583,7 +4627,7 @@ msgstr ""
 #. module: coop_membership
 #: model:mail.template,subject:coop_membership.notify_mirror_children_email
 msgid "Your child attached"
-msgstr ""
+msgstr "Votre enfant rattaché"
 
 #. module: coop_membership
 #: model_terms:ir.ui.view,arch_db:coop_membership.member_contract_template
