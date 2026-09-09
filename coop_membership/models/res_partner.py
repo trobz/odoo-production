@@ -359,7 +359,7 @@ class ResPartner(models.Model):
 
                 tmpl_reg_lines = partner.tmpl_reg_line_ids.filtered(
                     lambda tmpl_rgl: tmpl_rgl.date_end
-                ).sorted(lambda tmpl_rgl: tmpl_rgl.id)
+                ).sorted(lambda tmpl_rgl: tmpl_rgl.date_end)
 
                 if tmpl_reg_lines:
                     partner.unsubscription_date = fields.Date.from_string(
