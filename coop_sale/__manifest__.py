@@ -9,10 +9,11 @@
     "author": "La Louve, Trobz",
     "website": "https://github.com/AwesomeFoodCoops/odoo-production",
     "license": "AGPL-3",
-    "depends": ["sale", "product_print_category"],
+    "depends": ["sale", "sale_timesheet", "product_print_category"],
     "data": [
         "views/sale_order_view.xml",
         "views/product_print_category_menu.xml",
+        "views/product_template_views.xml",
     ],
     "installable": True,
 }
