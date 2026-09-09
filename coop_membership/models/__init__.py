@@ -5,7 +5,6 @@ from . import event
 from . import res_config_settings
 from . import event_event_ticket
 from . import event_registration
-from . import ir_ui_menu
 from . import mailing_contact
 from . import res_company
 from . import res_partner
