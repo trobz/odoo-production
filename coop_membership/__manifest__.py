@@ -90,6 +90,7 @@
             "coop_membership/static/src/scss/shift_change_team.scss",
             "coop_membership/static/src/scss/mailing_list_kanban.scss",
             "coop_membership/static/src/scss/res_partner.scss",
+            "coop_membership/static/src/scss/shift_registration.scss",
         ],
     },
     "demo": [
