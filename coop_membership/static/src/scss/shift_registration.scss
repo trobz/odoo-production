@@ -1,0 +1,17 @@
+.shift_registration_tree_one2many {
+    th.o_list_button {
+        min-width: 300px !important;
+    }
+    th[data-name="shift_ticket_id"] {
+        max-width: 300px;
+    }
+    th[data-name="partner_id"] {
+        max-width: 500px;
+    }
+    th[data-name="state"] {
+        max-width: 200px;
+    }
+    th[data-name="replacing_partner_id"] {
+        max-width: 300px;
+    }
+}
