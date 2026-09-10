@@ -1231,6 +1231,13 @@ msgid "Back to Draft"
 msgstr ""
 
 #. module: coop_membership
+#: code:addons/coop_membership/models/shift_leave.py:0
+msgid ""
+"Begin date of the leave should be greater or equal than Begin date of the "
+"work"
+msgstr ""
+
+#. module: coop_membership
 #: model:ir.model.fields,field_description:coop_membership.field_res_partner__badge_distribution_date
 #: model:ir.model.fields,field_description:coop_membership.field_res_users__badge_distribution_date
 msgid "Badge Distribution Date"
