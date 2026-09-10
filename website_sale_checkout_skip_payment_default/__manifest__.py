@@ -1,6 +1,6 @@
 {
     "name": "Skip Website Checkout Payment by Default",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "category": "Custom",
     "summary": "Superquinquin Custom",
     "license": "AGPL-3",
