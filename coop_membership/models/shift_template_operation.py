@@ -298,9 +298,23 @@ class ShiftTemplateOperation(models.Model):
             # Create destination templates
             child_template_ids = self.env["shift.template"]
             # Get date of next shift, starting from date
-            next_date = template.get_recurrent_dates(
+            recurrent_dates = template.get_recurrent_dates(
                 after=self.date, before=self.date + relativedelta(days=90)
-            )[0]
+            )
+            if not recurrent_dates:
+                # The template's recurrence has ended (or has no rrule), so
+                # there is no upcoming date in the next 90 days. Raise a clear
+                # error instead of crashing with an IndexError.
+                raise UserError(
+                    self.env._(
+                        'The template "%(template)s" is not recurrent (or its '
+                        "recurrence has ended), so no upcoming date could be "
+                        "found in the next 90 days. Please check its recurrence "
+                        "settings before running this operation.",
+                        template=template.display_name,
+                    )
+                )
+            next_date = recurrent_dates[0]
             for i in range(0, self.quantity):
                 # Computes the template date
                 # considering the offset and rrule_type
