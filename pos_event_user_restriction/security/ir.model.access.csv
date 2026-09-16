@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_event_registration_assigned_pos_user,event.registration assigned pos user,event.model_event_registration,pos_user_restriction.group_assigned_points_of_sale_user,1,1,1,0
+access_event_registration_answer_assigned_pos_user,event.registration.answer assigned pos user,event.model_event_registration_answer,pos_user_restriction.group_assigned_points_of_sale_user,1,1,1,1
+access_event_event_assigned_pos_user,event.event assigned pos user,event.model_event_event,pos_user_restriction.group_assigned_points_of_sale_user,1,0,0,0
+access_event_event_ticket_assigned_pos_user,event.event.ticket assigned pos user,event.model_event_event_ticket,pos_user_restriction.group_assigned_points_of_sale_user,1,0,0,0
+access_event_question_assigned_pos_user,event.question assigned pos user,event.model_event_question,pos_user_restriction.group_assigned_points_of_sale_user,1,0,0,0
+access_event_question_answer_assigned_pos_user,event.question.answer assigned pos user,event.model_event_question_answer,pos_user_restriction.group_assigned_points_of_sale_user,1,0,0,0
