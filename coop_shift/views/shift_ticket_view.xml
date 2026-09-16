@@ -75,11 +75,14 @@
                     help="Upcoming shifts from today"
                 />
                 <field name="user_ids" filter_domain="[('user_ids','ilike',self)]" />
-                <field name="product_id" filter_domain="[('user_ids','ilike',self)]" />
+                <field
+                    name="product_id"
+                    filter_domain="[('product_id','ilike',self)]"
+                />
                 <field
                     name="begin_date_string"
                     string="Date"
-                    filter_domain="[('user_ids','ilike',self)]"
+                    filter_domain="[('begin_date_string','ilike',self)]"
                 />
                 <separator />
                 <filter
