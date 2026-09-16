@@ -19,6 +19,7 @@
         "mass_mailing",
         "capital_subscription",
         "coop_shift",
+        "base_view_inheritance_extension",
         "purchase_compute_order",
         # "account_export",
         "account_partner_journal",
