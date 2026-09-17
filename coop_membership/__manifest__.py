@@ -29,6 +29,7 @@
         "sms",
         "spreadsheet_dashboard",
         "base_vat",
+        "base_view_inheritance_extension",
         # "web_widget_image_webcam_portrait",
     ],
     "data": [
