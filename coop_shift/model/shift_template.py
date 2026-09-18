@@ -694,10 +694,30 @@ class ShiftTemplate(models.Model):
                 template.day = start_date_object_tz.day
                 template.byday = "%s" % ((start_date_object_tz.day - 1) // 7 + 1)
 
+    def _normalize_vals_for_storage(self, vals):
+        result = {}
+        for k, v in vals.items():
+            if isinstance(v, list):
+                items = []
+                for item in v:
+                    if isinstance(item, tuple) and item:
+                        items.append(
+                            tuple(
+                                int(e) if isinstance(e, fields.Command) else e
+                                for e in item
+                            )
+                        )
+                    else:
+                        items.append(item)
+                result[k] = items
+            else:
+                result[k] = v
+        return result
+
     # Overload Section
     def write(self, vals):
         if "updated_fields" not in vals.keys() and len(self.shift_ids):
-            vals["updated_fields"] = str(vals)
+            vals["updated_fields"] = str(self._normalize_vals_for_storage(vals))
 
         if "user_ids" in vals and "updated_fields" in vals and len(vals.keys()) <= 2:
             self.update_shift(vals)
