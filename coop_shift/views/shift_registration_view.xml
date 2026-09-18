@@ -380,7 +380,7 @@
                 <field
                     name="name"
                     string="Participant"
-                    filter_domain="['|', '|', ('name', 'ilike', self), ('email', 'ilike', self), ('origin', 'ilike', self)]"
+                    filter_domain="['|', ('name', 'ilike', self), ('email', 'ilike', self)]"
                 />
 
                 <filter

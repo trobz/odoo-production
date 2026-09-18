@@ -531,35 +531,6 @@
                     <field name="purchase_target" />
                     <field name="target_type" nolabel="1" />
                 </div>
-                <field
-                    name="property_product_pricelist"
-                    groups="product.group_product_pricelist"
-                    invisible="(not is_company) and (parent_id != False)"
-                />
-                <div
-                    name="parent_pricelists"
-                    groups="product.group_product_pricelist"
-                    colspan="2"
-                    invisible="(is_company) or (not parent_id)"
-                >
-                    <p>Pricelists are managed on
-                        <button
-                        name="open_commercial_entity"
-                        type="object"
-                        string="the parent company"
-                        class="oe_link"
-                    />
-                    </p>
-                </div>
-            </xpath>
-            <xpath
-                expr="//page[@name='sales_purchases']//group[@name='purchase']"
-                position="inside"
-            >
-                <field
-                    name="property_purchase_currency_id"
-                    groups="base.group_multi_currency"
-                />
             </xpath>
             <xpath expr="//notebook" position="inside">
                 <page
