@@ -7,7 +7,7 @@ class ResPartner(models.Model):
     @api.model
     def _load_pos_data_fields(self, config_id):
         params = super()._load_pos_data_fields(config_id)
-        params += ["barcode_base", "cooperative_state"]
+        params += ["barcode_base", "cooperative_state", "customer", "is_deceased"]
         return params
 
     @api.model
