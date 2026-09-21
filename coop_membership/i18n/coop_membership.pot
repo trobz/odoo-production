@@ -2471,7 +2471,7 @@ msgstr ""
 
 #. module: coop_membership
 #: model:ir.model.fields,field_description:coop_membership.field_res_config_settings__shift_leave_remind_days
-msgid "Leve Reminder Days"
+msgid "Leave Reminder Days"
 msgstr ""
 
 #. module: coop_membership
