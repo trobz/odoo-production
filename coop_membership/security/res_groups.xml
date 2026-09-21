@@ -245,4 +245,12 @@
             eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"
         />
     </record>
+
+    <!-- Hide the "Apps" menu from normal users: restrict it to
+         "Administration / Settings" (base.group_system). The v12->v18
+         migration dropped the core group restriction on this menu, so it
+         became visible to everyone. Enforced here for all coops. -->
+    <record model="ir.ui.menu" id="base.menu_management">
+        <field name="groups_id" eval="[Command.link(ref('base.group_system'))]" />
+    </record>
 </odoo>
