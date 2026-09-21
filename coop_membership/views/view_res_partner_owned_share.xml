@@ -28,7 +28,10 @@
                     </group>
                     <group>
                         <group>
-                            <field name="partner_id" />
+                            <field
+                                name="partner_id"
+                                context="{'list_view_ref': 'coop_membership.view_bdm_tree_no_create'}"
+                            />
                             <field name="category_id" />
                         </group>
                         <group>

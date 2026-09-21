@@ -96,6 +96,10 @@
             <field name="user_ids" position="attributes">
                 <attribute name="readonly">state != 'draft'</attribute>
                 <attribute name="groups">coop_shift.group_shift_user</attribute>
+                <attribute
+                    name="context"
+                    operation="update"
+                >{'list_view_ref': 'coop_membership.view_bdm_tree_no_create'}</attribute>
             </field>
 
             <button name="button_confirm" position="attributes">

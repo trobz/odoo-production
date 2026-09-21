@@ -12,20 +12,26 @@ patch(PartnerList.prototype, {
         return /^[0-9]+$/.test(digits) ? digits : null;
     },
 
+    _filterPartners(partners) {
+        return partners.filter((partner) => partner.customer && !partner.is_deceased);
+    },
+
     getPartners() {
         const numberString = this._queryAsNumber;
+        let partners = [];
         if (numberString) {
-            return this.pos.models["res.partner"]
+            partners = this.pos.models["res.partner"]
                 .getAll()
                 .filter((partner) => partner.exactMatch(numberString));
-        }
-        return super.getPartners();
+        } else partners = super.getPartners();
+        return this._filterPartners(partners);
     },
 
     async getNewPartners() {
         const numberString = this._queryAsNumber;
         if (!numberString) {
-            return await super.getNewPartners();
+            const partners = await super.getNewPartners();
+            return this._filterPartners(partners);
         }
         const searchFields = [...this.getPhoneSearchTerms(), "barcode", "barcode_base"];
         const domain = [
@@ -36,6 +42,7 @@ patch(PartnerList.prototype, {
                 field === "barcode_base" ? Number(numberString) : numberString,
             ]),
             ["customer", "=", true],
+            ["is_deceased", "=", false],
         ];
         return await this.pos.data.searchRead("res.partner", domain, [], {
             limit: 1,

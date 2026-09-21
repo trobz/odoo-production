@@ -53,6 +53,7 @@
                 <field
                     name="partner_id"
                     options="{'no_create_edit': True, 'no_create': True}"
+                    context="{'list_view_ref': 'coop_membership.view_bdm_tree_no_create'}"
                 />
             </field>
             <field name="date_begin" position="attributes">

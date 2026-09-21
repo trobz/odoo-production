@@ -32,6 +32,12 @@
                     />
                 </group>
             </page>
+            <field name="user_ids" position="attributes">
+                <attribute
+                    name="context"
+                    operation="update"
+                >{'list_view_ref': 'coop_membership.view_bdm_tree_no_create'}</attribute>
+            </field>
         </field>
     </record>
 
