@@ -2,6 +2,9 @@ import {PartnerList} from "@point_of_sale/app/screens/partner_list/partner_list"
 import {patch} from "@web/core/utils/patch";
 import {unaccent} from "@web/core/utils/strings";
 
+// Only search by phone/mobile once the number query has at least this many digits.
+const MIN_PHONE_SEARCH_LENGTH = 3;
+
 patch(PartnerList.prototype, {
     get _queryAsNumber() {
         const normalized = unaccent(
@@ -33,7 +36,13 @@ patch(PartnerList.prototype, {
             const partners = await super.getNewPartners();
             return this._filterPartners(partners);
         }
-        const searchFields = [...this.getPhoneSearchTerms(), "barcode", "barcode_base"];
+        const searchFields = [
+            ...(numberString.length >= MIN_PHONE_SEARCH_LENGTH
+                ? this.getPhoneSearchTerms()
+                : []),
+            "barcode",
+            "barcode_base",
+        ];
         const domain = [
             ...Array(searchFields.length - 1).fill("|"),
             ...searchFields.map((field) => [
