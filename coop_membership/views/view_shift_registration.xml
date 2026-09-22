@@ -285,4 +285,25 @@
             </xpath>
         </field>
     </record>
+
+    <record id="view_replace_registration_wizard_form_inherit" model="ir.ui.view">
+        <field name="name">replace.registration.wizard.form.inherit</field>
+        <field name="model">replace.registration.wizard</field>
+        <field
+            name="inherit_id"
+            ref="coop_shift.view_replace_registration_wizard_form"
+        />
+        <field name="arch" type="xml">
+            <field name="partner_id" position="attributes">
+                <attribute name="context" operation="update">
+                    {'list_view_ref': 'coop_membership.view_bdm_tree_no_create'}
+                </attribute>
+            </field>
+            <field name="new_partner_id" position="attributes">
+                <attribute name="context" operation="update">
+                    {'list_view_ref': 'coop_membership.view_bdm_tree_no_create'}
+                </attribute>
+            </field>
+        </field>
+    </record>
 </odoo>
