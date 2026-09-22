@@ -103,6 +103,7 @@ class StockPicking(models.Model):
                 {
                     "product_qty": diff_pack_op.product_uom_qty,
                     "package_qty": diff_pack_op.package_qty,
+                    "product_qty_package": diff_pack_op.product_qty_package,
                     "date_planned": self.purchase_id.date_planned,
                 }
             )

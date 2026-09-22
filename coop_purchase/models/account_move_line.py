@@ -22,6 +22,7 @@ class AccountInvoiceLine(models.Model):
                 lambda x: x.partner_id == self.partner_id
             )
             if suppliers:
+                self.package_qty = suppliers[0].package_qty
                 self.discount = suppliers[0].discount
                 self.base_price = suppliers[0].base_price
                 self.price_unit = suppliers[0].price
