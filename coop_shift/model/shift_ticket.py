@@ -134,9 +134,15 @@ class ShiftTicket(models.Model):
                 ticket[state_field[state]] += num
         # compute seats_available
         for ticket in self:
-            ticket.seats_available = ticket.seats_max - (
-                ticket.seats_reserved + ticket.seats_used
-            )
+            # Only limited tickets (seats_max > 0) have a meaningful available
+            # count. Guarding here keeps this consistent with shift.template.
+            # ticket and shift.shift, and prevents an invalid negative seats_max
+            # from producing a negative seats_available that would wrongly flag
+            # the ticket as sold out in _check_seats_availability.
+            if ticket.seats_max > 0:
+                ticket.seats_available = ticket.seats_max - (
+                    ticket.seats_reserved + ticket.seats_used
+                )
         return res
 
     @api.onchange("product_id")
