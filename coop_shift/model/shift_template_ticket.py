@@ -57,7 +57,6 @@ class ShiftTemplateTicket(models.Model):
     def _compute_seats(self):
         """Determine reserved, available, reserved but unconfirmed and used
         seats."""
-        res = super()._compute_seats()
         # initialize fields to 0 + compute seats availability
         for ticket in self:
             ticket.seats_availability = (
@@ -87,7 +86,7 @@ class ShiftTemplateTicket(models.Model):
                 ticket.seats_available = ticket.seats_max - (
                     ticket.seats_reserved + ticket.seats_used
                 )
-        return res
+            ticket.seats_taken = ticket.seats_reserved + ticket.seats_used
 
     # Overload Section
     def write(self, vals):

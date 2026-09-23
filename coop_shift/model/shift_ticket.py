@@ -105,17 +105,14 @@ class ShiftTicket(models.Model):
     def _compute_seats(self):
         """Determine reserved, available, reserved but unconfirmed and used
         seats."""
-        res = super()._compute_seats()
-        # Break if called from shift template ticket compute seats
-        if self._name == "shift.template.ticket":
-            return res
-
+        # Copy the idea from event.ticket
         # initialize fields to 0 + compute seats availability
         for ticket in self:
             ticket.seats_unconfirmed = ticket.seats_reserved = ticket.seats_used = (
                 ticket.seats_available
             ) = 0
         # aggregate registrations by ticket and by state
+        results = {}
         if self.ids:
             state_field = {
                 "draft": "seats_reserved",
@@ -125,19 +122,25 @@ class ShiftTicket(models.Model):
             query = """ SELECT shift_ticket_id, state, count(shift_id)
                         FROM shift_registration
                         WHERE shift_ticket_id IN %s
-                        AND state IN ('draft', 'open', 'done')
+                            AND state IN ('draft', 'open', 'done')
+                            AND active = true
                         GROUP BY shift_ticket_id, state
-                    """
-            self._cr.execute(query, (tuple(self.ids),))
-            for shift_ticket_id, state, num in self._cr.fetchall():
-                ticket = self.browse(shift_ticket_id)
-                ticket[state_field[state]] += num
+            """
+            self.env["shift.registration"].flush_model(
+                ["shift_id", "shift_ticket_id", "state", "active"]
+            )
+            self.env.cr.execute(query, (tuple(self.ids),))
+            for shift_ticket_id, state, num in self.env.cr.fetchall():
+                results.setdefault(shift_ticket_id, {})[state_field[state]] = num
+
         # compute seats_available
         for ticket in self:
-            ticket.seats_available = ticket.seats_max - (
-                ticket.seats_reserved + ticket.seats_used
-            )
-        return res
+            ticket.update(results.get(ticket._origin.id or ticket.id, {}))
+            if ticket.seats_max > 0:
+                ticket.seats_available = ticket.seats_max - (
+                    ticket.seats_reserved + ticket.seats_used
+                )
+            ticket.seats_taken = ticket.seats_reserved + ticket.seats_used
 
     @api.onchange("product_id")
     def onchange_product_id(self):
