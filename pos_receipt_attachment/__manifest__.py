@@ -20,7 +20,6 @@
         "point_of_sale._assets_pos": [
             "pos_receipt_attachment/static/src/js/pos_store.esm.js",
             "pos_receipt_attachment/static/src/js/receipt_screen.esm.js",
-            "pos_receipt_attachment/static/src/xml/receipt_header.xml",
         ],
         "web.report_assets_common": [
             "pos_receipt_attachment/static/src/css/print.scss",
