@@ -39,7 +39,7 @@ def update_myteam_template(env):
             search_text = "member.image and member.public_avatar"
             if root_content.count(search_text) < 2:
                 logger.info(
-                    "Expected 2 matches for %s in template content for view id=%s, found %s. Skipping",
+                    "Skipping: %s in template content for view id=%s, found %s.",
                     search_text,
                     view.id,
                     root_content.count(search_text),

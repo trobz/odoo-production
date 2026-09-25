@@ -154,10 +154,11 @@ class ShiftLeave(models.Model):
                     # On 33rd day after leave's expected birth date
                     # If he/she still does not provide birth certificate:
                     # + Update forced status of member to unsubscribed
-                    # + Set leave state to not_finished
-                    # + Abandon his/her leave
+                    # The leave's state is switched to "not_finished" by the
+                    # daily cron (cron_update_member_forced_status), not here,
+                    # so that validating a leave does not prematurely flip its
+                    # state (v12 behaviour).
                     if not leave.provided_birth_certificate:
-                        leave.state = "not_finished"
                         if leave.non_defined_leave:
                             forced_member_status = "unsubscribed"
             leave.forced_member_status = forced_member_status
@@ -212,6 +213,16 @@ class ShiftLeave(models.Model):
             ]
         )
         to_update_leaves._compute_forced_member_status()
+        # Once the 33-day deadline to provide the birth certificate has passed
+        # (and it still hasn't been provided), mark the leave as not finished.
+        # Done here (time-based) rather than in the compute so that validating
+        # a leave does not flip its state prematurely.
+        to_close_leaves = to_update_leaves.filtered(
+            lambda leave: leave.expected_birthdate
+            and (today - leave.expected_birthdate).days > 32
+            and not leave.exempted_until_end
+        )
+        to_close_leaves.write({"state": "not_finished"})
 
     @api.model
     def cron_send_mail_birth_certificate(self):

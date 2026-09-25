@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <!--
+        Add spacing between the struck-through old unit price and the new unit
+        price in the order summary so they no longer read as a single number
+        (e.g. "2.42€ 2.06€" instead of "2.42€2.06€").
+    -->
+    <t
+        t-name="point_of_sale.Orderline"
+        t-inherit="point_of_sale.Orderline"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//s[@t-esc='line.oldUnitPrice']" position="attributes">
+            <attribute name="class">me-2</attribute>
+        </xpath>
+    </t>
+</templates>

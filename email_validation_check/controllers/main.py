@@ -11,7 +11,7 @@ class WebsiteValidationEmail(http.Controller):
     @http.route(
         ["/validate/<int:partner_id>/<string:email_validation_string>"],
         type="http",
-        auth="none",
+        auth="public",
         website=True,
     )
     def validate_string_email(self, partner_id, email_validation_string, **kwargs):

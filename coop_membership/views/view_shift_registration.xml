@@ -38,6 +38,11 @@
         <field name="arch" type="xml">
             <xpath expr="//list" position="attributes">
                 <attribute name="limit">10000</attribute>
+                <attribute
+                    name="class"
+                    add="shift_registration_tree_one2many"
+                    separator=" "
+                />
             </xpath>
             <xpath expr="//list[@name='registration_list']" position="attributes">
                 <attribute name="editable" />
