@@ -143,3 +143,11 @@ class PosSession(models.Model):
 
     def _job_recompute_week_fields_async(self):
         self._compute_week_number()
+
+    def _get_sale_vals(self, key, sale_vals):
+        res = super()._get_sale_vals(key, sale_vals)
+        _account_id, _sign, tax_ids, _base_tag_ids, product_id = key
+        if product_id and not tax_ids:
+            product = self.env["product.product"].browse(product_id)
+            res["name"] = product.display_name
+        return res
