@@ -2765,8 +2765,8 @@ msgstr ""
 
 #. module: coop_membership
 #: model:ir.model.fields,field_description:coop_membership.field_res_config_settings__shift_leave_remind_days
-msgid "Leve Reminder Days"
-msgstr ""
+msgid "Leave Reminder Days"
+msgstr "Jours de rappel de congé"
 
 #. module: coop_membership
 #: model:ir.model.fields.selection,name:coop_membership.selection__res_config_settings__associated_people_available__limited
