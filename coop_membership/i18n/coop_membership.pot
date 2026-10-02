@@ -28,6 +28,15 @@ msgstr ""
 
 #. module: coop_membership
 #. odoo-python
+#: code:addons/coop_membership/models/shift_template_operation.py:0
+msgid ""
+"The template \"%(template)s\" is not recurrent (or its recurrence has ended),"
+" so no upcoming date could be found in the next 90 days. Please check its "
+"recurrence settings before running this operation."
+msgstr ""
+
+#. module: coop_membership
+#. odoo-python
 #: code:addons/coop_membership/models/shift_change_team.py:0
 msgid ""
 "\n"

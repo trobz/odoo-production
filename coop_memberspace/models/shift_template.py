@@ -29,7 +29,7 @@ class ShiftTemplate(models.Model):
             {
                 "name": leader_alias_prefix,
                 "shift_id": self.id,
-                "alias_name": leader_alias_prefix,
+                "alias_name": self._find_unique_alias_name(leader_alias_prefix),
                 "type": "coordinator",
             }
         )
@@ -39,7 +39,30 @@ class ShiftTemplate(models.Model):
             {
                 "name": team_alias_prefix,
                 "shift_id": self.id,
-                "alias_name": team_alias_prefix,
+                "alias_name": self._find_unique_alias_name(team_alias_prefix),
                 "type": "team",
             }
         )
+
+    def _find_unique_alias_name(self, name):
+        """Find a unique alias name similar to ``name``, appending an integer
+        suffix until an unused one is found.
+
+        Reproduces the behaviour Odoo core had up to v12
+        (``_clean_and_make_unique`` / ``_find_unique``), dropped in v18 where
+        ``mail.alias.create`` now raises a UserError on collision instead of
+        silently making the name unique.
+        """
+        mail_alias = self.env["mail.alias"]
+        sanitized = mail_alias._sanitize_alias_name(name)
+        alias_domain = self.env.company.alias_domain_id
+        sequence = None
+        while True:
+            candidate = f"{sanitized}{sequence}" if sequence is not None else sanitized
+            domain = [("alias_name", "=", candidate)]
+            if alias_domain:
+                domain += [("alias_domain_id", "=", alias_domain.id)]
+            if not mail_alias.search(domain, limit=1):
+                break
+            sequence = (sequence + 1) if sequence else 2
+        return candidate
