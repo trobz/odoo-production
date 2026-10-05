@@ -391,7 +391,7 @@ msgstr "<span style=\"font-size: 25px;font-weight: 600\">Mon compteur volant</sp
 #. module: coop_memberspace
 #: model_terms:ir.ui.view,arch_db:coop_memberspace.my_next_shift_exchange_cell
 msgid "<span>In progress</span>"
-msgstr "<span>En cours</span>"
+msgstr "<span>Déplacement en cours</span>"
 
 #. module: coop_memberspace
 #: model:ir.model.fields,help:coop_memberspace.field_memberspace_alias__alias_defaults
