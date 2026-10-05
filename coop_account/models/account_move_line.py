@@ -28,6 +28,14 @@ class AccountMoveLine(models.Model):
         index=True,
     )
 
+    @api.depends("display_type")
+    def _compute_quantity(self):
+        res = super()._compute_quantity()
+        for line in self:
+            if line.display_type == "product" and not line.quantity:
+                line.quantity = 1
+        return res
+
     @api.depends("credit", "debit")
     def _compute_other_balance(self):
         for record in self:
