@@ -205,7 +205,7 @@ export default publicWidget.registry.exchange_shift = publicWidget.Widget.extend
     },
 
     get_cancel_label() {
-        return "En cours";
+        return "Déplacement en cours";
     },
 
     async show_shift_proposal_confirmation(
