@@ -159,6 +159,13 @@ class ShiftShift(models.Model):
     user_id = fields.Many2one("res.partner", default=False)
     seats_max = fields.Integer()
 
+    # Use shift.stage instead of event.stage; default NULL to skip event.stage.
+    stage_id = fields.Many2one(
+        comodel_name="shift.stage",
+        copy=False,
+        default=False,
+    )
+
     # TODO: consider to replace it by stage_id as event.event
     state = fields.Selection(
         selection=[
