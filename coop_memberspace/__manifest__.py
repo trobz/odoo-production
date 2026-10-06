@@ -47,6 +47,7 @@
         "web.assets_frontend": [
             "coop_memberspace/static/src/scss/style.scss",
             "coop_memberspace/static/src/scss/iconmoon.scss",
+            "coop_memberspace/static/src/scss/material_icons.scss",
             "coop_memberspace/static/src/scss/togglebutton.scss",
             "coop_memberspace/static/src/js/style.esm.js",
             "coop_memberspace/static/src/js/programmer_un_extra.esm.js",
