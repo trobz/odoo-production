@@ -3,6 +3,10 @@
     <!--
         Inject Google Fonts directly into <head> so the browser always loads
         them as stylesheets, regardless of how ir.asset handles external URLs.
+
+        Note: Material Icons is now self-hosted (see scss/material_icons.scss)
+        so its glyph ligatures render even when the Google CDN / gstatic font
+        file is blocked by CSP or network. Only Raleway is still loaded here.
     -->
     <template
         id="coop_memberspace.external_fonts"
@@ -14,11 +18,6 @@
                 rel="stylesheet"
                 type="text/css"
                 href="https://fonts.googleapis.com/css?family=Raleway:700"
-            />
-            <link
-                rel="stylesheet"
-                type="text/css"
-                href="https://fonts.googleapis.com/icon?family=Material+Icons"
             />
         </xpath>
     </template>
