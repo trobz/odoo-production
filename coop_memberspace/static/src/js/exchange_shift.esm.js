@@ -40,10 +40,10 @@ export default publicWidget.registry.exchange_shift = publicWidget.Widget.extend
                         },
                     },
                 });
-                const parent = $(self.btn_remove).parent();
-                parent.empty().append(self.get_swap_btn_html(self.registration_id));
-                bsModal("modal_confirm_cancel_proposal")?.hide();
                 self.post_cancel_proposal();
+
+                // Reload the page to reflect the changes
+                window.location.reload();
             }
         );
 
@@ -185,7 +185,13 @@ export default publicWidget.registry.exchange_shift = publicWidget.Widget.extend
         if (res.code === 0) {
             showErrorMsg(res.msg);
         } else {
-            $(btn).parent().empty().append(`
+            const $parent = $(btn).parent();
+            const prefix = $parent.find(".exchange-prefix")[0];
+            $parent.empty();
+            if (prefix) {
+                $parent.append(prefix).append(" ");
+            }
+            $parent.append(`
                 <span>${this.get_cancel_label()} </span>
                 <button class="material-icons button-icon remove-proposal"
                     registration-id="${registration_id}"

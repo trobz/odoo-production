@@ -105,12 +105,12 @@
         </t>
         <t t-elif="shift.exchange_state == 'replacing'">
             <td name="exchange" data-col="exchange" class="text-center">
-                Remplaçant
+                <span class="exchange-prefix">Remplaçant</span>
                 <button
-                class="material-icons button-icon go-to-market"
-                style="margin-right: 10px;"
-                t-att-registration-id="shift.id"
-            >swap_horiz
+                    class="material-icons button-icon go-to-market"
+                    style="margin-right: 10px;"
+                    t-att-registration-id="shift.id"
+                >swap_horiz
                 </button>
             </td>
         </t>
