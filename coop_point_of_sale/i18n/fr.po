@@ -173,9 +173,27 @@ msgid "Force Unavailable In Pos"
 msgstr "Forcer l'indisponibilité dans le POS"
 
 #. module: coop_point_of_sale
+#: model:ir.model.fields,help:coop_point_of_sale.field_pos_config__customer_invoicing
+#: model:ir.model.fields,help:coop_point_of_sale.field_res_config_settings__customer_invoicing
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.pos_config_view_form_pos_inherit
+msgid ""
+"If disabled, the Invoice button is hidden in the POS and orders are never "
+"invoiced."
+msgstr ""
+"Si désactivé, le bouton Facture est masqué dans le POS et les commandes ne "
+"sont jamais facturées."
+
+#. module: coop_point_of_sale
 #: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order_line__product_default_code
 msgid "Internal Reference"
 msgstr "Référence interne"
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_config__customer_invoicing
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_res_config_settings__customer_invoicing
+#: model_terms:ir.ui.view,arch_db:coop_point_of_sale.pos_config_view_form_pos_inherit
+msgid "Invoicing"
+msgstr "Facturation"
 
 #. module: coop_point_of_sale
 #: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_order__search_month

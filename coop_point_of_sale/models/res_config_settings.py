@@ -20,6 +20,10 @@ class ResConfigSettings(models.TransientModel):
         related="pos_config_id.enable_popup_verify_payment",
         readonly=False,
     )
+    customer_invoicing = fields.Boolean(
+        related="pos_config_id.customer_invoicing",
+        readonly=False,
+    )
 
     def action_recompute_shift_weeks(self):
         res = super().action_recompute_shift_weeks()
