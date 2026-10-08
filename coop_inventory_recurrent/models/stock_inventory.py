@@ -18,6 +18,14 @@ class StockInventory(models.Model):
         "included in the inventory adjustment.",
     )
 
+    def action_print_report_inventory(self):
+        self.ensure_one()
+        if self.category_group_line_id:
+            return self.env.ref(
+                "coop_inventory_recurrent.action_report_inventory_recurrent"
+            ).report_action(self)
+        return super().action_print_report_inventory()
+
     def action_state_to_in_progress(self):
         if self.product_selection != "category" or not self.category_id:
             return super().action_state_to_in_progress()
