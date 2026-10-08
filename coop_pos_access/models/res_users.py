@@ -13,7 +13,9 @@ class ResUsers(models.Model):
         access_ctrl_buttons_group = self.env.ref(
             "coop_pos_access.pos_access_control_buttons_group"
         )
+        edit_payment_group = self.env.ref("coop_pos_access.pos_edit_payment_group")
         res["data"][0].update(
             hasGroupAccessControlButtons=access_ctrl_buttons_group.id in user_groups,
+            hasGroupEditPayment=edit_payment_group.id in user_groups,
         )
         return res
