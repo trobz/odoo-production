@@ -21,6 +21,17 @@
                     <field name="enable_popup_verify_payment" />
                 </setting>
             </xpath>
+            <xpath
+                expr="//block[@id='pos_bills_and_receipts_section']"
+                position="inside"
+            >
+                <setting
+                    string="Invoicing"
+                    help="If disabled, the Invoice button is hidden in the POS and orders are never invoiced."
+                >
+                    <field name="customer_invoicing" />
+                </setting>
+            </xpath>
             <xpath expr="//block[@id='product_and_category_block']" position="inside">
                 <setting
                     string="Remove Zero Qty Line"
