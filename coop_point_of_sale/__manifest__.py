@@ -36,6 +36,7 @@
         "point_of_sale._assets_pos": [
             "coop_point_of_sale/static/src/overrides/components/**/*",
             "coop_point_of_sale/static/src/overrides/screens/**/*",
+            "coop_point_of_sale/static/src/overrides/models/**/*",
         ],
         "web.assets_tests": [
             "coop_point_of_sale/static/tests/tours/**/*",

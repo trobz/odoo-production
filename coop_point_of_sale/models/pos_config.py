@@ -26,6 +26,12 @@ class PosConfig(models.Model):
         string="Allow execution of script popup_verify_payment",
         default=True,
     )
+    customer_invoicing = fields.Boolean(
+        string="Invoicing",
+        default=True,
+        help="If disabled, the Invoice button is hidden in the POS "
+        "and orders are never invoiced.",
+    )
 
     @api.model
     def default_get(self, fields):
