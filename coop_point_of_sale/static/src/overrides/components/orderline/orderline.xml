@@ -13,5 +13,9 @@
         <xpath expr="//s[@t-esc='line.oldUnitPrice']" position="attributes">
             <attribute name="class">me-2</attribute>
         </xpath>
+        <!-- Hide the customer note shown under each order line -->
+        <xpath expr="//li[hasclass('customer-note')]" position="attributes">
+            <attribute name="t-if">false</attribute>
+        </xpath>
     </t>
 </templates>
