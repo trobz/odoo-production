@@ -8,6 +8,10 @@
         >
             <attribute name="class">'d-none'</attribute>
         </xpath>
+        <!-- Hide the barcode scanner button in the navbar -->
+        <xpath expr="//button[@t-on-click='onClickScan']" position="attributes">
+            <attribute name="t-if">false</attribute>
+        </xpath>
     </t>
 
 </templates>
