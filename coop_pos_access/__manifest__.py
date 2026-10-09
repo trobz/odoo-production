@@ -16,6 +16,8 @@
         "point_of_sale._assets_pos": [
             "coop_pos_access/static/src/js/control_buttons.esm.js",
             "coop_pos_access/static/src/xml/control_buttons.xml",
+            "coop_pos_access/static/src/js/receipt_screen.esm.js",
+            "coop_pos_access/static/src/xml/receipt_screen.xml",
         ],
     },
     "installable": True,

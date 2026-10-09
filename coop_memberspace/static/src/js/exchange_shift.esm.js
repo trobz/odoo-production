@@ -40,10 +40,9 @@ export default publicWidget.registry.exchange_shift = publicWidget.Widget.extend
                         },
                     },
                 });
-                const parent = $(self.btn_remove).parent();
-                parent.empty().append(self.get_swap_btn_html(self.registration_id));
-                bsModal("modal_confirm_cancel_proposal")?.hide();
                 self.post_cancel_proposal();
+                // Reload the page to reflect the changes
+                window.location.reload();
             }
         );
 
