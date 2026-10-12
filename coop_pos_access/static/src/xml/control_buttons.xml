@@ -12,7 +12,7 @@
             expr="//button[@t-on-click='() => this.clickRefund()']"
             position="attributes"
         >
-            <attribute name="t-att-disabled">!allowControlButtons</attribute>
+            <attribute name="t-if">allowRefund</attribute>
         </xpath>
         <xpath
             expr="//button[hasclass('o_fiscal_position_button')]"

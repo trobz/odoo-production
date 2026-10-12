@@ -6,4 +6,7 @@
     <record id="pos_edit_payment_group" model="res.groups">
         <field name="name">PoS Edit Payment Group</field>
     </record>
+    <record id="pos_refund_group" model="res.groups">
+        <field name="name">PoS Refund Group</field>
+    </record>
 </odoo>

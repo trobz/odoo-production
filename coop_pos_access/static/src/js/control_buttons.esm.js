@@ -6,5 +6,6 @@ patch(ControlButtons.prototype, {
         super.setup();
         this.allowControlButtons =
             this.pos.user.raw.hasGroupAccessControlButtons || false;
+        this.allowRefund = this.pos.user.raw.hasGroupRefund || false;
     },
 });
