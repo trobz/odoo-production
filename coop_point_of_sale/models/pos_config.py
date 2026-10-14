@@ -27,7 +27,6 @@ class PosConfig(models.Model):
         default=True,
     )
     customer_invoicing = fields.Boolean(
-        string="Invoicing",
         default=True,
         help="If disabled, the Invoice button is hidden in the POS "
         "and orders are never invoiced.",
