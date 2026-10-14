@@ -10,6 +10,7 @@
         "pos_payment_terminal",
         "pos_access_right",
         "point_of_sale",
+        "coop_pos_access",
         "coop_default_pricetag",
         "purchase",
         "stock",
