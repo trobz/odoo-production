@@ -215,6 +215,12 @@ msgstr "Non"
 
 #. module: coop_point_of_sale
 #. odoo-javascript
+#: code:addons/point_of_sale/static/src/app/screens/ticket_screen/ticket_screen.xml:0
+msgid "No orders found"
+msgstr "Aucune commande trouvée"
+
+#. module: coop_point_of_sale
+#. odoo-javascript
 #: code:addons/coop_point_of_sale/static/src/overrides/screens/partner_list/partner_list.xml:0
 msgid "Not concerned"
 msgstr "Non concerné(e)"
