@@ -210,7 +210,7 @@ msgstr ""
 
 #. module: coop_point_of_sale
 #. odoo-javascript
-#: code:addons/point_of_sale/static/src/app/screens/ticket_screen/ticket_screen.xml:0
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/ticket_screen/ticket_screen.esm.js:0
 msgid "No orders found"
 msgstr ""
 
