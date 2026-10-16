@@ -18,6 +18,8 @@
             "coop_pos_access/static/src/xml/control_buttons.xml",
             "coop_pos_access/static/src/js/receipt_screen.esm.js",
             "coop_pos_access/static/src/xml/receipt_screen.xml",
+            "coop_pos_access/static/src/js/ticket_screen.esm.js",
+            "coop_pos_access/static/src/xml/ticket_screen.xml",
         ],
     },
     "installable": True,

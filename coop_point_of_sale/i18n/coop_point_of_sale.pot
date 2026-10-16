@@ -184,8 +184,12 @@ msgid "Internal Reference"
 msgstr ""
 
 #. module: coop_point_of_sale
-#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_config__customer_invoicing
 #: model:ir.model.fields,field_description:coop_point_of_sale.field_res_config_settings__customer_invoicing
+msgid "Customer Invoicing"
+msgstr ""
+
+#. module: coop_point_of_sale
+#: model:ir.model.fields,field_description:coop_point_of_sale.field_pos_config__customer_invoicing
 #: model_terms:ir.ui.view,arch_db:coop_point_of_sale.pos_config_view_form_pos_inherit
 msgid "Invoicing"
 msgstr ""
@@ -206,6 +210,12 @@ msgstr ""
 #. module: coop_point_of_sale
 #: model_terms:ir.ui.view,arch_db:coop_point_of_sale.product_template_form_view_inherit
 msgid "No"
+msgstr ""
+
+#. module: coop_point_of_sale
+#. odoo-javascript
+#: code:addons/coop_point_of_sale/static/src/overrides/screens/ticket_screen/ticket_screen.esm.js:0
+msgid "No orders found"
 msgstr ""
 
 #. module: coop_point_of_sale
