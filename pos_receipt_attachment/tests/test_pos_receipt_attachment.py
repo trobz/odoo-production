@@ -3,9 +3,9 @@ from unittest.mock import MagicMock, patch
 
 from odoo.tests import common
 
-VALID_JPEG = base64.b64encode(b'\xff\xd8\xff' + b'x' * 100).decode()
-VALID_PNG = base64.b64encode(b'\x89PNG' + b'x' * 100).decode()
-INVALID_IMAGE = base64.b64encode(b'notanimage').decode()
+VALID_JPEG = base64.b64encode(b"\xff\xd8\xff" + b"x" * 100).decode()
+VALID_PNG = base64.b64encode(b"\x89PNG" + b"x" * 100).decode()
+INVALID_IMAGE = base64.b64encode(b"notanimage").decode()
 
 
 class TestLogoWebField(common.TransactionCase):
@@ -79,28 +79,42 @@ class TestAddImageReceipt(common.TransactionCase):
         self.assertFalse(self.PosOrder.add_image_receipt("", ""))
 
     def test_returns_false_when_order_not_found(self):
-        with patch.object(type(self.PosOrder), "search", return_value=self.PosOrder.browse([])):
+        with patch.object(
+            type(self.PosOrder), "search", return_value=self.PosOrder.browse([])
+        ):
             result = self.PosOrder.add_image_receipt("unknown-uuid", VALID_JPEG)
         self.assertFalse(result)
 
     def test_returns_false_when_order_belongs_to_different_user(self):
-        with patch.object(type(self.PosOrder), "search", return_value=self._fake_order(uid=self.env.uid + 9999)):
+        with patch.object(
+            type(self.PosOrder),
+            "search",
+            return_value=self._fake_order(uid=self.env.uid + 9999),
+        ):
             result = self.PosOrder.add_image_receipt("some-uuid", VALID_JPEG)
         self.assertFalse(result)
 
     def test_returns_false_for_invalid_base64(self):
-        with patch.object(type(self.PosOrder), "search", return_value=self._fake_order()):
+        with patch.object(
+            type(self.PosOrder), "search", return_value=self._fake_order()
+        ):
             result = self.PosOrder.add_image_receipt("some-uuid", "not-valid-base64!!!")
         self.assertFalse(result)
 
     def test_returns_false_when_payload_too_large(self):
-        large_data = base64.b64encode(b'\xff\xd8\xff' + b'x' * (6 * 1024 * 1024)).decode()
-        with patch.object(type(self.PosOrder), "search", return_value=self._fake_order()):
+        large_data = base64.b64encode(
+            b"\xff\xd8\xff" + b"x" * (6 * 1024 * 1024)
+        ).decode()
+        with patch.object(
+            type(self.PosOrder), "search", return_value=self._fake_order()
+        ):
             result = self.PosOrder.add_image_receipt("some-uuid", large_data)
         self.assertFalse(result)
 
     def test_returns_false_for_invalid_image_type(self):
-        with patch.object(type(self.PosOrder), "search", return_value=self._fake_order()):
+        with patch.object(
+            type(self.PosOrder), "search", return_value=self._fake_order()
+        ):
             result = self.PosOrder.add_image_receipt("some-uuid", INVALID_IMAGE)
         self.assertFalse(result)
 
@@ -121,13 +135,17 @@ class TestAddImageReceipt(common.TransactionCase):
     def test_no_orphan_attachment_created_for_unknown_uuid(self):
         """Unknown UUIDs must not create orphan attachments."""
         uuid = "no-orphan-uuid"
-        with patch.object(type(self.PosOrder), "search", return_value=self.PosOrder.browse([])):
+        with patch.object(
+            type(self.PosOrder), "search", return_value=self.PosOrder.browse([])
+        ):
             self.PosOrder.add_image_receipt(uuid, VALID_JPEG)
-        count = self.Attachment.search_count([
-            ("name", "=", uuid),
-            ("res_field", "=", "image_receipt"),
-            ("res_model", "=", "pos.order"),
-        ])
+        count = self.Attachment.search_count(
+            [
+                ("name", "=", uuid),
+                ("res_field", "=", "image_receipt"),
+                ("res_model", "=", "pos.order"),
+            ]
+        )
         self.assertEqual(count, 0)
 
 

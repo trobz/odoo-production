@@ -34,33 +34,42 @@ class PosOrder(models.Model):
                 attachment.res_id = order_id
 
     _IMAGE_MAX_BYTES = 5 * 1024 * 1024  # 5 MB
-    _IMAGE_MAGIC = (b'\xff\xd8\xff', b'\x89PNG')  # JPEG, PNG
+    _IMAGE_MAGIC = (b"\xff\xd8\xff", b"\x89PNG")  # JPEG, PNG
 
     @api.model
     def add_image_receipt(self, name, data):
         if not name or not data:
             return False
 
-        order = self.search([('uuid', '=', name)], limit=1)
+        order = self.search([("uuid", "=", name)], limit=1)
         if not order or order.session_id.user_id.id != self.env.uid:
             _logger.warning(
                 "add_image_receipt: UUID %s not found or not owned by user %s",
-                name, self.env.uid,
+                name,
+                self.env.uid,
             )
             return False
 
         try:
             raw = base64.b64decode(data, validate=True)
         except Exception:
-            _logger.warning("add_image_receipt: invalid base64 payload for UUID %s", name)
+            _logger.warning(
+                "add_image_receipt: invalid base64 payload for UUID %s", name
+            )
             return False
 
         if len(raw) > self._IMAGE_MAX_BYTES:
-            _logger.warning("add_image_receipt: payload too large (%d bytes) for UUID %s", len(raw), name)
+            _logger.warning(
+                "add_image_receipt: payload too large (%d bytes) for UUID %s",
+                len(raw),
+                name,
+            )
             return False
 
         if not any(raw.startswith(magic) for magic in self._IMAGE_MAGIC):
-            _logger.warning("add_image_receipt: unsupported image type for UUID %s", name)
+            _logger.warning(
+                "add_image_receipt: unsupported image type for UUID %s", name
+            )
             return False
 
         order.write({"image_receipt": data})
