@@ -1,24 +1,84 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * pos_payment_credit_pin
+# 	* pos_payment_credit_pin
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-11 00:00+0000\n"
+"POT-Creation-Date: 2026-10-19 09:09+0000\n"
+"PO-Revision-Date: 2026-10-19 09:09+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: pos_payment_credit_pin
-#: model:ir.model.fields,field_description:pos_payment_credit_pin.field_res_users__pos_security_pin
-msgid "POS Security PIN"
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "Authentication failed!"
+msgstr ""
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.js:0
+msgid "Cancel"
+msgstr ""
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.js:0
+msgid "Confirm"
+msgstr ""
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "Incorrect PIN"
+msgstr ""
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "Manager Authentication Unavailable"
+msgstr ""
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "Manager Login Required"
+msgstr ""
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.js:0
+msgid "Manager PIN"
+msgstr ""
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.js:0
+msgid "Manager login"
+msgstr ""
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "No manager was found with that login."
+msgstr ""
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "No manager with a POS Security PIN is available for authorization."
 msgstr ""
 
 #. module: pos_payment_credit_pin
 #: model:ir.model.fields,help:pos_payment_credit_pin.field_res_users__pos_security_pin
-msgid "Numeric PIN to authorize credit payment validation in the Point of Sale."
+msgid ""
+"Numeric PIN to authorize credit payment validation in the Point of Sale."
 msgstr ""
 
 #. module: pos_payment_credit_pin
@@ -27,42 +87,29 @@ msgid "POS Security"
 msgstr ""
 
 #. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/models/res_users.py:0
-#, python-format
+#: model:ir.model.fields,field_description:pos_payment_credit_pin.field_res_users__pos_security_pin
+msgid "POS Security PIN"
+msgstr ""
+
+#. module: pos_payment_credit_pin
+#. odoo-python
+#: code:addons/pos_payment_credit_pin/models/res_users.py:0
 msgid "POS Security PIN must contain only digits."
 msgstr ""
 
 #. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "Authentication failed!"
-msgstr ""
-
-#. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "PIN Not Configured"
-msgstr ""
-
-#. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "You have not configured a security PIN. Please set a PIN in your user settings."
-msgstr ""
-
-#. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "Security PIN Required"
-msgstr ""
-
-#. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "Enter your PIN to confirm this credit payment."
-msgstr ""
-
-#. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "Incorrect PIN"
-msgstr ""
-
-#. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
 msgid "The PIN you entered is incorrect. Please try again."
+msgstr ""
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "Unknown Manager Login"
+msgstr ""
+
+#. module: pos_payment_credit_pin
+#: model:ir.model,name:pos_payment_credit_pin.model_res_users
+msgid "User"
 msgstr ""
