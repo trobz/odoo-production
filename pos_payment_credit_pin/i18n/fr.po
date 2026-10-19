@@ -1,32 +1,87 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * pos_payment_credit_pin
+# 	* pos_payment_credit_pin
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-11 00:00+0000\n"
-"PO-Revision-Date: 2026-08-11 00:00+0000\n"
-"X-POT-Source: i18n/pos_payment_credit_pin.pot\n"
+"POT-Creation-Date: 2026-10-19 09:09+0000\n"
+"PO-Revision-Date: 2026-10-19 09:09+0000\n"
 "Last-Translator: \n"
-"Language-Team: French <>\n"
-"Language: fr\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
-"1000000 == 0) ? 1 : 2);\n"
+"Plural-Forms: \n"
 
 #. module: pos_payment_credit_pin
-#: model:ir.model.fields,field_description:pos_payment_credit_pin.field_res_users__pos_security_pin
-msgid "POS Security PIN"
-msgstr "Code PIN de sécurité PDV"
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "Authentication failed!"
+msgstr "Échec de l'authentification !"
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.js:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.js:0
+msgid "Confirm"
+msgstr "Confirmer"
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "Incorrect PIN"
+msgstr "Code PIN incorrect"
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "Manager Authentication Unavailable"
+msgstr "Authentification du responsable indisponible"
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "Manager Login Required"
+msgstr "Identifiant du responsable requis"
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.js:0
+msgid "Manager PIN"
+msgstr "Code PIN du responsable"
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.js:0
+msgid "Manager login"
+msgstr "Identifiant du responsable"
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "No manager was found with that login."
+msgstr "Aucun responsable n'a été trouvé avec cet identifiant."
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "No manager with a POS Security PIN is available for authorization."
+msgstr "Aucun responsable disposant d'un code PIN de sécurité PDV n'est disponible pour l'autorisation."
 
 #. module: pos_payment_credit_pin
 #: model:ir.model.fields,help:pos_payment_credit_pin.field_res_users__pos_security_pin
-msgid "Numeric PIN to authorize credit payment validation in the Point of Sale."
-msgstr "Code PIN numérique pour autoriser la validation des paiements à crédit dans le Point de Vente."
+msgid ""
+"Numeric PIN to authorize credit payment validation in the Point of Sale."
+msgstr ""
+"Code PIN numérique pour autoriser la validation des paiements à crédit dans "
+"le Point de Vente."
 
 #. module: pos_payment_credit_pin
 #: model_terms:ir.ui.view,arch_db:pos_payment_credit_pin.view_users_form_pos_pin
@@ -34,42 +89,29 @@ msgid "POS Security"
 msgstr "Sécurité PDV"
 
 #. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/models/res_users.py:0
-#, python-format
+#: model:ir.model.fields,field_description:pos_payment_credit_pin.field_res_users__pos_security_pin
+msgid "POS Security PIN"
+msgstr "Code PIN de sécurité PDV"
+
+#. module: pos_payment_credit_pin
+#. odoo-python
+#: code:addons/pos_payment_credit_pin/models/res_users.py:0
 msgid "POS Security PIN must contain only digits."
 msgstr "Le code PIN de sécurité PDV ne doit contenir que des chiffres."
 
 #. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "Authentication failed!"
-msgstr "Échec de l'authentification !"
-
-#. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "PIN Not Configured"
-msgstr "Code PIN non configuré"
-
-#. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "You have not configured a security PIN. Please set a PIN in your user settings."
-msgstr "Vous n'avez pas configuré de code PIN de sécurité. Veuillez définir un code PIN dans vos paramètres utilisateur."
-
-#. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "Security PIN Required"
-msgstr "Code PIN de sécurité requis"
-
-#. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "Enter your PIN to confirm this credit payment."
-msgstr "Saisissez votre code PIN pour confirmer ce paiement à crédit."
-
-#. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "Incorrect PIN"
-msgstr "Code PIN incorrect"
-
-#. module: pos_payment_credit_pin
-#: code:addons/foodcoop18/addons/oca-pos/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
 msgid "The PIN you entered is incorrect. Please try again."
 msgstr "Le code PIN saisi est incorrect. Veuillez réessayer."
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "Unknown Manager Login"
+msgstr "Identifiant responsable inconnu"
+
+#. module: pos_payment_credit_pin
+#: model:ir.model,name:pos_payment_credit_pin.model_res_users
+msgid "User"
+msgstr "Utilisateurs"

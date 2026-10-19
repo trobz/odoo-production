@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="pos_payment_credit_pin.ManagerAuthPopup">
+        <Dialog title="props.title">
+            <div class="d-flex flex-column gap-2">
+                <input
+                    class="form-control form-control-lg"
+                    type="text"
+                    t-model="state.login"
+                    t-ref="login"
+                    t-on-keydown="onKeydown"
+                    t-att-placeholder="props.loginPlaceholder"
+                />
+                <input
+                    class="form-control form-control-lg"
+                    type="password"
+                    t-model="state.pin"
+                    t-on-keydown="onKeydown"
+                    t-att-placeholder="props.pinPlaceholder"
+                />
+            </div>
+            <t t-set-slot="footer">
+                <button
+                    class="btn btn-primary btn-lg lh-lg o-default-button"
+                    t-att-disabled="!canConfirm"
+                    t-on-click="confirm"
+                >
+                    <t t-esc="props.confirmLabel" />
+                </button>
+                <button
+                    class="btn btn-secondary btn-lg lh-lg o-default-button"
+                    t-on-click="close"
+                >
+                    <t t-esc="props.cancelLabel" />
+                </button>
+            </t>
+        </Dialog>
+    </t>
+
+</templates>

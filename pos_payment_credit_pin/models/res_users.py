@@ -1,6 +1,7 @@
 import hashlib
 
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class ResUsers(models.Model):
@@ -16,15 +17,45 @@ class ResUsers(models.Model):
     def _check_pos_security_pin(self):
         for user in self:
             if user.pos_security_pin and not user.pos_security_pin.isdigit():
-                raise models.ValidationError(
+                raise ValidationError(
                     self.env._("POS Security PIN must contain only digits.")
                 )
 
     def _load_pos_data(self, data):
         result = super()._load_pos_data(data)
-        # Credit payment is confirmed with the current cashier's own PIN.
+        # Keep current user PIN for compatibility with existing POS flows.
         pin = self.env.user.pos_security_pin or False
         result["data"][0]["_pin"] = (
             hashlib.sha1(pin.encode("utf-8")).hexdigest() if pin else False
         )
+
+        # Provide manager credentials metadata used by frontend manager validation.
+        managers = (
+            self.sudo()
+            .search(
+                [
+                    (
+                        "groups_id",
+                        "in",
+                        self.env.ref("point_of_sale.group_pos_manager").id,
+                    ),
+                    ("active", "=", True),
+                    ("pos_security_pin", "!=", False),
+                ]
+            )
+            .read(["id", "name", "login", "pos_security_pin"], load=False)
+        )
+
+        result["data"][0]["_manager_auth_users"] = [
+            {
+                "id": manager["id"],
+                "name": manager["name"],
+                "login": manager["login"],
+                "_pin": hashlib.sha1(
+                    manager["pos_security_pin"].encode("utf-8")
+                ).hexdigest(),
+            }
+            for manager in managers
+            if manager.get("pos_security_pin")
+        ]
         return result
