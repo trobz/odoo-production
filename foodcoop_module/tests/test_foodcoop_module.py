@@ -105,83 +105,111 @@ class TestResUsersRoleLinePrivilege(common.TransactionCase):
         cls.functional_admin_group = cls.env.ref("foodcoop_module.functional_admin")
 
         # functional_admin user — not sysadmin
-        cls.fa_user = cls.env["res.users"].create({
-            "name": "Test Functional Admin User",
-            "login": "test_fa_privilege@test.com",
-            "groups_id": [(4, cls.functional_admin_group.id)],
-        })
+        cls.fa_user = cls.env["res.users"].create(
+            {
+                "name": "Test Functional Admin User",
+                "login": "test_fa_privilege@test.com",
+                "groups_id": [(4, cls.functional_admin_group.id)],
+            }
+        )
 
         # Target user for role assignment
-        cls.target_user = cls.env["res.users"].create({
-            "name": "Test Target User",
-            "login": "test_target_role@test.com",
-            "groups_id": [(4, cls.env.ref("base.group_user").id)],
-        })
+        cls.target_user = cls.env["res.users"].create(
+            {
+                "name": "Test Target User",
+                "login": "test_target_role@test.com",
+                "groups_id": [(4, cls.env.ref("base.group_user").id)],
+            }
+        )
 
         # Safe role — no functional_admin in implied_ids
         safe_group = cls.env["res.groups"].create({"name": "Test Safe Group FA"})
-        cls.safe_role = cls.env["res.users.role"].create({
-            "name": "Test Safe Role FA",
-            "group_id": safe_group.id,
-        })
+        cls.safe_role = cls.env["res.users.role"].create(
+            {
+                "name": "Test Safe Role FA",
+                "group_id": safe_group.id,
+            }
+        )
 
         # Restricted role — has functional_admin in implied_ids
-        restricted_group = cls.env["res.groups"].create({"name": "Test Restricted Group FA"})
-        cls.restricted_role = cls.env["res.users.role"].create({
-            "name": "Test Restricted Role FA",
-            "group_id": restricted_group.id,
-        })
+        restricted_group = cls.env["res.groups"].create(
+            {"name": "Test Restricted Group FA"}
+        )
+        cls.restricted_role = cls.env["res.users.role"].create(
+            {
+                "name": "Test Restricted Role FA",
+                "group_id": restricted_group.id,
+            }
+        )
         cls.restricted_role.write({"implied_ids": [(4, cls.functional_admin_group.id)]})
 
     def test_functional_admin_cannot_assign_restricted_role(self):
         """functional_admin cannot assign a role that includes functional_admin in implied_ids."""
         with self.assertRaises(AccessError):
-            self.env["res.users.role.line"].with_user(self.fa_user).create({
-                "role_id": self.restricted_role.id,
-                "user_id": self.target_user.id,
-            })
+            self.env["res.users.role.line"].with_user(self.fa_user).create(
+                {
+                    "role_id": self.restricted_role.id,
+                    "user_id": self.target_user.id,
+                }
+            )
 
     def test_functional_admin_cannot_self_escalate(self):
         """functional_admin cannot assign a restricted role to themselves."""
         with self.assertRaises(AccessError):
-            self.env["res.users.role.line"].with_user(self.fa_user).create({
-                "role_id": self.restricted_role.id,
-                "user_id": self.fa_user.id,
-            })
+            self.env["res.users.role.line"].with_user(self.fa_user).create(
+                {
+                    "role_id": self.restricted_role.id,
+                    "user_id": self.fa_user.id,
+                }
+            )
 
     def test_functional_admin_can_assign_safe_role(self):
         """functional_admin can assign roles that don't include elevated privileges."""
-        line = self.env["res.users.role.line"].with_user(self.fa_user).create({
-            "role_id": self.safe_role.id,
-            "user_id": self.target_user.id,
-        })
+        line = (
+            self.env["res.users.role.line"]
+            .with_user(self.fa_user)
+            .create(
+                {
+                    "role_id": self.safe_role.id,
+                    "user_id": self.target_user.id,
+                }
+            )
+        )
         self.assertTrue(line.id)
 
     def test_functional_admin_cannot_update_role_line_to_restricted(self):
         """functional_admin cannot change an existing role line to a restricted role."""
-        line = self.env["res.users.role.line"].create({
-            "role_id": self.safe_role.id,
-            "user_id": self.target_user.id,
-        })
+        line = self.env["res.users.role.line"].create(
+            {
+                "role_id": self.safe_role.id,
+                "user_id": self.target_user.id,
+            }
+        )
         with self.assertRaises(AccessError):
             line.with_user(self.fa_user).write({"role_id": self.restricted_role.id})
 
     def test_sysadmin_can_assign_restricted_role(self):
         """System admin (base.group_system) can assign any role including restricted ones."""
-        line = self.env["res.users.role.line"].create({
-            "role_id": self.restricted_role.id,
-            "user_id": self.target_user.id,
-        })
+        line = self.env["res.users.role.line"].create(
+            {
+                "role_id": self.restricted_role.id,
+                "user_id": self.target_user.id,
+            }
+        )
         self.assertTrue(line.id)
 
     def test_role_with_functional_admin_as_group_id_is_blocked(self):
         """Assigning a role whose group_id IS functional_admin is also blocked."""
-        fa_direct_role = self.env["res.users.role"].create({
-            "name": "Test FA Direct Role",
-            "group_id": self.functional_admin_group.id,
-        })
+        fa_direct_role = self.env["res.users.role"].create(
+            {
+                "name": "Test FA Direct Role",
+                "group_id": self.functional_admin_group.id,
+            }
+        )
         with self.assertRaises(AccessError):
-            self.env["res.users.role.line"].with_user(self.fa_user).create({
-                "role_id": fa_direct_role.id,
-                "user_id": self.target_user.id,
-            })
+            self.env["res.users.role.line"].with_user(self.fa_user).create(
+                {
+                    "role_id": fa_direct_role.id,
+                    "user_id": self.target_user.id,
+                }
+            )
