@@ -58,9 +58,9 @@ Authors
 Contributors
 ------------
 
-- `Trobz <https://www.trobz.com>`__
+-  `Trobz <https://www.trobz.com>`__
 
-  - Phan Hong Phuc <phucph@trobz.com>
+   -  Phan Hong Phuc <phucph@trobz.com>
 
 Maintainers
 -----------
