@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Open the report on the current month instead of the whole sales history -->
+    <record
+        id="point_of_sale.action_report_pos_order_all"
+        model="ir.actions.act_window"
+    >
+        <field
+            name="context"
+        >{'group_by': [], 'search_default_not_cancelled': 1, 'search_default_filter_date': 1}</field>
+    </record>
+</odoo>
