@@ -144,7 +144,6 @@ class TestResUsersRoleLinePrivilege(common.TransactionCase):
         cls.restricted_role.write({"implied_ids": [(4, cls.functional_admin_group.id)]})
 
     def test_functional_admin_cannot_assign_restricted_role(self):
-        """functional_admin cannot assign a role that includes functional_admin in implied_ids."""
         with self.assertRaises(AccessError):
             self.env["res.users.role.line"].with_user(self.fa_user).create(
                 {
@@ -178,7 +177,6 @@ class TestResUsersRoleLinePrivilege(common.TransactionCase):
         self.assertTrue(line.id)
 
     def test_functional_admin_cannot_update_role_line_to_restricted(self):
-        """functional_admin cannot change an existing role line to a restricted role."""
         line = self.env["res.users.role.line"].create(
             {
                 "role_id": self.safe_role.id,
@@ -189,7 +187,6 @@ class TestResUsersRoleLinePrivilege(common.TransactionCase):
             line.with_user(self.fa_user).write({"role_id": self.restricted_role.id})
 
     def test_sysadmin_can_assign_restricted_role(self):
-        """System admin (base.group_system) can assign any role including restricted ones."""
         line = self.env["res.users.role.line"].create(
             {
                 "role_id": self.restricted_role.id,
