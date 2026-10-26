@@ -7,10 +7,13 @@
     "license": "LGPL-3",
     "depends": [
         "point_of_sale",
+        "pos_sale",
+        "pos_order_return",
     ],
     "data": [
         "security/res_groups.xml",
         "security/ir.model.access.csv",
+        "views/pos_order_view.xml",
     ],
     "assets": {
         "point_of_sale._assets_pos": [
@@ -18,7 +21,6 @@
             "coop_pos_access/static/src/xml/control_buttons.xml",
             "coop_pos_access/static/src/js/receipt_screen.esm.js",
             "coop_pos_access/static/src/xml/receipt_screen.xml",
-            "coop_pos_access/static/src/js/ticket_screen.esm.js",
             "coop_pos_access/static/src/xml/ticket_screen.xml",
         ],
     },
