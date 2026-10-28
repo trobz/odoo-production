@@ -35,6 +35,12 @@ class PurchaseOrderLine(models.Model):
         for pol in self:
             pol.price_discounted = pol._get_discounted_price_unit()
 
+    @api.depends("product_packaging_id", "product_uom", "product_qty")
+    def _compute_product_packaging_qty(self):
+        valid = self.filtered(lambda line: line.product_packaging_id.qty)
+        (self - valid).product_packaging_qty = 0
+        return super(PurchaseOrderLine, valid)._compute_product_packaging_qty()
+
     def _create_or_update_picking(self):
         if self.env.context.get("skip_move_create"):
             return
