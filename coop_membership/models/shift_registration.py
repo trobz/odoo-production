@@ -219,7 +219,9 @@ class ShiftRegistration(models.Model):
 
                         if reg.tmpl_reg_line_id:
                             tz_name = self._context.get("tz") or self.env.user.tz
-                            utc_timestamp = pytz.utc.localize(reg.date_end, is_dst=False)
+                            utc_timestamp = pytz.utc.localize(
+                                reg.date_end, is_dst=False
+                            )
                             context_tz = pytz.timezone(tz_name)
                             reg_date_end_tz = utc_timestamp.astimezone(context_tz)
                             final_date_end = reg_date_end_tz.strftime("%Y-%m-%d")
