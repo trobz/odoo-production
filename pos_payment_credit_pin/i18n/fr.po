@@ -18,32 +18,37 @@ msgstr ""
 #. module: pos_payment_credit_pin
 #. odoo-javascript
 #: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "Authentication Failed"
+msgstr "Échec de l'authentification"
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
 msgid "Authentication failed!"
 msgstr "Échec de l'authentification !"
 
 #. module: pos_payment_credit_pin
 #. odoo-javascript
-#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.js:0
+#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.esm.js:0
 msgid "Cancel"
 msgstr "Annuler"
 
 #. module: pos_payment_credit_pin
 #. odoo-javascript
-#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.js:0
+#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.esm.js:0
 msgid "Confirm"
 msgstr "Confirmer"
 
 #. module: pos_payment_credit_pin
 #. odoo-javascript
 #: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "Incorrect PIN"
-msgstr "Code PIN incorrect"
-
-#. module: pos_payment_credit_pin
-#. odoo-javascript
-#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "Manager Authentication Unavailable"
-msgstr "Authentification du responsable indisponible"
+msgid ""
+"Could not reach the server to verify the manager PIN. A network connection is "
+"required to authorize a credit payment. Check the connection and try again."
+msgstr ""
+"Impossible de joindre le serveur pour vérifier le code PIN du responsable. Une "
+"connexion réseau est requise pour autoriser un paiement à crédit. Vérifiez la "
+"connexion et réessayez."
 
 #. module: pos_payment_credit_pin
 #. odoo-javascript
@@ -53,27 +58,26 @@ msgstr "Identifiant du responsable requis"
 
 #. module: pos_payment_credit_pin
 #. odoo-javascript
-#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.js:0
+#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.esm.js:0
 msgid "Manager PIN"
 msgstr "Code PIN du responsable"
 
 #. module: pos_payment_credit_pin
 #. odoo-javascript
-#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.js:0
+#: code:addons/pos_payment_credit_pin/static/src/js/manager_auth_popup.esm.js:0
 msgid "Manager login"
 msgstr "Identifiant du responsable"
 
 #. module: pos_payment_credit_pin
 #. odoo-javascript
 #: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "No manager was found with that login."
-msgstr "Aucun responsable n'a été trouvé avec cet identifiant."
-
-#. module: pos_payment_credit_pin
-#. odoo-javascript
-#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "No manager with a POS Security PIN is available for authorization."
-msgstr "Aucun responsable disposant d'un code PIN de sécurité PDV n'est disponible pour l'autorisation."
+msgid ""
+"No active Point of Sale manager matches this login, or the PIN is incorrect. "
+"Check the manager login and PIN, then try again."
+msgstr ""
+"Aucun responsable de Point de Vente actif ne correspond à cet identifiant, ou "
+"le code PIN est incorrect. Vérifiez l'identifiant et le code PIN du "
+"responsable, puis réessayez."
 
 #. module: pos_payment_credit_pin
 #: model:ir.model.fields,help:pos_payment_credit_pin.field_res_users__pos_security_pin
@@ -100,18 +104,12 @@ msgid "POS Security PIN must contain only digits."
 msgstr "Le code PIN de sécurité PDV ne doit contenir que des chiffres."
 
 #. module: pos_payment_credit_pin
-#. odoo-javascript
-#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "The PIN you entered is incorrect. Please try again."
-msgstr "Le code PIN saisi est incorrect. Veuillez réessayer."
-
-#. module: pos_payment_credit_pin
-#. odoo-javascript
-#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
-msgid "Unknown Manager Login"
-msgstr "Identifiant responsable inconnu"
-
-#. module: pos_payment_credit_pin
 #: model:ir.model,name:pos_payment_credit_pin.model_res_users
 msgid "User"
 msgstr "Utilisateurs"
+
+#. module: pos_payment_credit_pin
+#. odoo-javascript
+#: code:addons/pos_payment_credit_pin/static/src/js/pos_store.esm.js:0
+msgid "Verification Unavailable"
+msgstr "Vérification indisponible"

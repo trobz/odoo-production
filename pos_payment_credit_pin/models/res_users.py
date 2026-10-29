@@ -1,7 +1,6 @@
-import hashlib
-
 from odoo import api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools import consteq
 
 
 class ResUsers(models.Model):
@@ -10,6 +9,7 @@ class ResUsers(models.Model):
     pos_security_pin = fields.Char(
         string="POS Security PIN",
         help="Numeric PIN to authorize credit payment validation in the Point of Sale.",
+        groups="point_of_sale.group_pos_manager",
         copy=False,
     )
 
@@ -21,41 +21,25 @@ class ResUsers(models.Model):
                     self.env._("POS Security PIN must contain only digits.")
                 )
 
-    def _load_pos_data(self, data):
-        result = super()._load_pos_data(data)
-        # Keep current user PIN for compatibility with existing POS flows.
-        pin = self.env.user.pos_security_pin or False
-        result["data"][0]["_pin"] = (
-            hashlib.sha1(pin.encode("utf-8")).hexdigest() if pin else False
-        )
+    @api.model
+    def verify_pos_manager_pin(self, login, pin):
+        """Verify a POS manager PIN server-side, returning only a boolean.
 
-        # Provide manager credentials metadata used by frontend manager validation.
-        managers = (
-            self.sudo()
-            .search(
-                [
-                    (
-                        "groups_id",
-                        "in",
-                        self.env.ref("point_of_sale.group_pos_manager").id,
-                    ),
-                    ("active", "=", True),
-                    ("pos_security_pin", "!=", False),
-                ]
-            )
-            .read(["id", "name", "login", "pos_security_pin"], load=False)
+        The PIN is never sent to the client; comparison is constant-time.
+        """
+        if not login or not pin:
+            return False
+        manager = self.sudo().search(
+            [
+                ("login", "=", login),
+                ("active", "=", True),
+                (
+                    "groups_id",
+                    "in",
+                    self.env.ref("point_of_sale.group_pos_manager").id,
+                ),
+                ("pos_security_pin", "!=", False),
+            ],
+            limit=1,
         )
-
-        result["data"][0]["_manager_auth_users"] = [
-            {
-                "id": manager["id"],
-                "name": manager["name"],
-                "login": manager["login"],
-                "_pin": hashlib.sha1(
-                    manager["pos_security_pin"].encode("utf-8")
-                ).hexdigest(),
-            }
-            for manager in managers
-            if manager.get("pos_security_pin")
-        ]
-        return result
+        return bool(manager) and consteq(manager.pos_security_pin, pin)
