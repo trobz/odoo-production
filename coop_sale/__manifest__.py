@@ -13,6 +13,7 @@
     "data": [
         "views/sale_order_view.xml",
         "views/product_print_category_menu.xml",
+        "views/product_print_wizard_view.xml",
     ],
     "installable": True,
 }
