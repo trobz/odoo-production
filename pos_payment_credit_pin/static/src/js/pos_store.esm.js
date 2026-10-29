@@ -1,4 +1,3 @@
-/* global Sha1 */
 /* License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 import {AlertDialog} from "@web/core/confirmation_dialog/confirmation_dialog";
 import {ManagerAuthPopup} from "./manager_auth_popup.esm";
@@ -23,24 +22,6 @@ patch(PosStore.prototype, {
     },
 
     async _borrowManagerRole() {
-        const managers = this.get_cashier().raw._manager_auth_users || [];
-
-        if (!managers.length) {
-            await new Promise((resolve) => {
-                this.dialog.add(
-                    AlertDialog,
-                    {
-                        title: _t("Manager Authentication Unavailable"),
-                        body: _t(
-                            "No manager with a POS Security PIN is available for authorization."
-                        ),
-                    },
-                    {onClose: resolve}
-                );
-            });
-            return false;
-        }
-
         while (true) {
             const auth = await makeAwaitable(this.dialog, ManagerAuthPopup, {
                 title: _t("Manager Login Required"),
@@ -51,22 +32,33 @@ patch(PosStore.prototype, {
                 return false;
             }
 
-            const manager = managers.find((user) => user.login === auth.login);
-            if (!manager) {
+            let verified = false;
+            try {
+                verified = await this.data.call("res.users", "verify_pos_manager_pin", [
+                    auth.login,
+                    auth.pin,
+                ]);
+            } catch {
+                // The server round-trip failed (e.g. offline): verification
+                // cannot be performed, so authorization must be refused.
                 await new Promise((resolve) => {
                     this.dialog.add(
                         AlertDialog,
                         {
-                            title: _t("Unknown Manager Login"),
-                            body: _t("No manager was found with that login."),
+                            title: _t("Verification Unavailable"),
+                            body: _t(
+                                "Could not reach the server to verify the manager PIN. " +
+                                    "A network connection is required to authorize a credit payment. " +
+                                    "Check the connection and try again."
+                            ),
                         },
                         {onClose: resolve}
                     );
                 });
-                continue;
+                return false;
             }
 
-            if (Sha1.hash(auth.pin) === manager._pin) {
+            if (verified) {
                 return true;
             }
 
@@ -74,8 +66,11 @@ patch(PosStore.prototype, {
                 this.dialog.add(
                     AlertDialog,
                     {
-                        title: _t("Incorrect PIN"),
-                        body: _t("The PIN you entered is incorrect. Please try again."),
+                        title: _t("Authentication Failed"),
+                        body: _t(
+                            "No active Point of Sale manager matches this login, or the PIN is incorrect. " +
+                                "Check the manager login and PIN, then try again."
+                        ),
                     },
                     {onClose: resolve}
                 );

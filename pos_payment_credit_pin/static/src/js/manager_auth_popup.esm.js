@@ -1,7 +1,7 @@
 /* License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). */
 import {Component, onMounted, useRef, useState} from "@odoo/owl";
-import {_t} from "@web/core/l10n/translation";
 import {Dialog} from "@web/core/dialog/dialog";
+import {_t} from "@web/core/l10n/translation";
 
 export class ManagerAuthPopup extends Component {
     static template = "pos_payment_credit_pin.ManagerAuthPopup";
