@@ -7,8 +7,8 @@
         <field name="priority">16</field>
         <field name="arch" type="xml">
             <field name="type_id" position="after">
-                <field name="reduce_deduction" invisible="1" />
-                <field name="current_extension" invisible="1" />
+                <field name="reduce_deduction" column_invisible="1" />
+                <field name="current_extension" column_invisible="1" />
             </field>
             <xpath expr="//list[@name='shift_extensions']" position="attributes">
                 <attribute name="decoration-danger">reduce_deduction</attribute>
