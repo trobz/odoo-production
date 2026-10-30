@@ -3,7 +3,10 @@
     <record id="view_product_print_wizard_form_inherit_coop_sale" model="ir.ui.view">
         <field name="name">product.print.wizard.form.inherit.coop.sale</field>
         <field name="model">product.print.wizard</field>
-        <field name="inherit_id" ref="product_print_category.view_product_print_wizard_form" />
+        <field
+            name="inherit_id"
+            ref="product_print_category.view_product_print_wizard_form"
+        />
         <field name="arch" type="xml">
             <xpath expr="//form/p[@class='oe_grey']" position="attributes">
                 <attribute name="invisible">1</attribute>
