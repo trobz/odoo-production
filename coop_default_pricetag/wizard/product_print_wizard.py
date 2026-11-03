@@ -29,5 +29,5 @@ class ProductPrintWizard(models.TransientModel):
         data = self._prepare_data()
         report = self._get_pricetag_report()
         # Mark products as printed
-        self.line_ids.mapped("product_id").write({"to_print": False})
+        self.line_ids.mapped("product_id").sudo().write({"to_print": False})
         return report.report_action(self, data=data)
