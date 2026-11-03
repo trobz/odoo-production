@@ -10,6 +10,7 @@
             ref('pos_access_right.group_payment'),
             ref('point_of_sale.group_pos_user'),
             ref('base.group_allow_export'),
+            ref('coop_pos_access.pos_refund_group'),
         ])]"
         />
     </record>
