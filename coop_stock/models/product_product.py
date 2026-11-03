@@ -1,9 +1,10 @@
-from odoo import models
+from odoo import api, models
 
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
+    @api.model
     def search(self, domain, *args, **kwargs):
         allow_inactive_search_fields = ["barcode"]
         not_allow_inactive = ["name"]
