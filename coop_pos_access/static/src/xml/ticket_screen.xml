@@ -15,7 +15,7 @@
             <attribute name="t-if">false</attribute>
         </xpath>
         <xpath expr="//button[hasclass('edit-order-payment')]" position="attributes">
-            <attribute name="t-if">false</attribute>
+            <attribute name="class" add="d-none" separator=" " />
         </xpath>
     </t>
 </templates>
