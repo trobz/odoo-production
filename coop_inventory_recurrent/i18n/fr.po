@@ -274,13 +274,3 @@ msgid ""
 msgstr ""
 "Les inventaires suivants sont déjà en cours : %(names)s. Veuillez les "
 "valider ou les annuler avant d'en générer de nouveaux."
-
-#. module: coop_inventory_recurrent
-#. odoo-python
-#: code:addons/coop_inventory_recurrent/models/stock_inventory.py:0
-msgid ""
-"There's already an Adjustment in Process using one requested Location: "
-"%(names)s. Blocking adjustments: %(blocking_names)s"
-msgstr ""
-"Il y a déjà un ajustement en cours utilisant l'un des emplacements demandés "
-": %(names)s. Ajustements bloquants : %(blocking_names)s"

@@ -1,7 +1,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import fields, models
-from odoo.exceptions import ValidationError
 
 
 class StockInventory(models.Model):
@@ -27,46 +26,17 @@ class StockInventory(models.Model):
         return super().action_print_report_inventory()
 
     def action_state_to_in_progress(self):
-        if self.product_selection != "category" or not self.category_id:
-            return super().action_state_to_in_progress()
+        res = super().action_state_to_in_progress()
+        if (
+            self.product_selection != "category"
+            or not self.category_id
+            or not self.exhausted
+        ):
+            return res
 
-        self.ensure_one()
-        location_op = "child_of" if not self.exclude_sublocation else "in"
-        search_filter = [
-            ("location_id", location_op, self.location_ids.ids),
-            ("to_do", "=", True),
-            "|",
-            ("product_id.categ_id", "=", self.category_id.id),
-            ("product_id.categ_id", "in", self.category_id.child_id.ids),
-        ]
-        quants = self.env["stock.quant"].search(search_filter)
-        if quants:
-            inventory_ids = self.env["stock.inventory"].search(
-                [("stock_quant_ids", "in", quants.ids), ("state", "=", "in_progress")]
-            )
-            if inventory_ids:
-                blocking_names = ", ".join(inventory_ids.mapped("name"))
-                names = self._get_quant_joined_names(quants, "location_id")
-                raise ValidationError(
-                    self.env._(
-                        "There's already an Adjustment in Process "
-                        "using one requested Location: %(names)s. "
-                        "Blocking adjustments: %(blocking_names)s",
-                        names=names,
-                        blocking_names=blocking_names,
-                    )
-                )
-
-        quants = self._get_quants(self.location_ids)
-        if self.exhausted:
-            quants |= self._create_zero_qty_quants(quants)
-        self.write(
-            {
-                "state": "in_progress",
-                "stock_quant_ids": [(6, 0, quants.ids)],
-            }
-        )
-        quants.write(
+        quants = self.stock_quant_ids
+        new_quants = self._create_zero_qty_quants(quants)
+        new_quants.write(
             {
                 "to_do": True,
                 "user_id": self.responsible_id or self.env.user,
@@ -74,6 +44,8 @@ class StockInventory(models.Model):
                 "current_inventory_id": self.id,
             }
         )
+        self.stock_quant_ids |= new_quants
+        return res
 
     def _create_zero_qty_quants(self, existing_quants):
         """Create quants with qty=0 for active products in the category
