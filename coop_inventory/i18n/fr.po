@@ -98,6 +98,26 @@ msgid "Transfer"
 msgstr "Transfert"
 
 #. module: coop_inventory
+#. odoo-python
+#: code:addons/coop_inventory/models/stock_inventory.py:0
+msgid ""
+"There's already an Adjustment in Process using one requested Location: "
+"%(names)s. Blocking adjustments: %(blocking_names)s"
+msgstr ""
+"Il y a déjà un ajustement en cours utilisant l'un des emplacements demandés "
+": %(names)s. Ajustements bloquants : %(blocking_names)s"
+
+#. module: coop_inventory
+#. odoo-python
+#: code:addons/coop_inventory/models/stock_inventory.py:0
+msgid ""
+"There's already an Adjustment in Process using requested Category: "
+"%(names)s. Blocking adjustments: %(blocking_names)s"
+msgstr ""
+"Il y a déjà un ajustement en cours utilisant la catégorie demandée : "
+"%(names)s. Ajustements bloquants : %(blocking_names)s"
+
+#. module: coop_inventory
 #: model:ir.model.fields,field_description:coop_inventory.field_stock_picking__partner_ref
 msgid "Vendor Reference"
 msgstr "Référence fournisseur"
