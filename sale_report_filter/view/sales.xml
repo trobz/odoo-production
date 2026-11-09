@@ -7,6 +7,11 @@
             <filter name="filter_order_date" position="after">
                 <separator />
                 <filter
+                    name="this_month"
+                    string="Order Date: This Month"
+                    domain="[('date','&gt;=', datetime.datetime.combine(context_today() + relativedelta(day=1), datetime.time(0,0,0)).to_utc())]"
+                />
+                <filter
                     name="Today"
                     string="Order Date: Today"
                     domain="[('date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)).to_utc()), ('date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)).to_utc())]"
@@ -15,13 +20,8 @@
         </field>
     </record>
     <record id="sale.action_order_report_all" model="ir.actions.act_window">
-        <!-- add new context values -->
-        <!--
-        'search_default_Today': 1, 'pivot_measures': ['product_uom_qty', 'price_total',  'price_subtotal', '__count']
-        -->
-        <!-- remove: 'search_default_filter_order_date': 1 -->
         <field
             name="context"
-        >{'search_default_Sales':1,'group_by':[], 'search_default_Today': 1, 'pivot_measures': ['product_uom_qty', 'price_total',  'price_subtotal', '__count']}</field>
+        >{'search_default_Sales':1,'group_by':[], 'search_default_Today': 1, 'sale_report_require_date': True, 'pivot_measures': ['product_uom_qty', 'price_total',  'price_subtotal', '__count']}</field>
     </record>
 </odoo>
