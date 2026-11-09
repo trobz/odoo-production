@@ -1,0 +1,24 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_report_filter
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_report_filter
+#. odoo-python
+#: code:addons/sale_report_filter/models/sale_report.py:0
+msgid ""
+"Loading this report without a date filter can cause a high server load. "
+"Please filter the data by date, ideally within the last year or two."
+msgstr ""
+"Charger ce rapport sans filtre de date peut entraîner une charge serveur "
+"élevée. Veuillez filtrer les données par date, idéalement sur la dernière "
+"année ou les deux dernières."
