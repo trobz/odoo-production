@@ -4,6 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html
 
 from odoo import api, fields, models
+from odoo.exceptions import UserError
+from odoo.tools import SQL
 
 WEEK_DAY_MAP = {
     0: "Mon",
@@ -55,11 +57,84 @@ class PosSession(models.Model):
         store=True,
         index=True,
     )
-    order_count = fields.Integer(compute="_compute_orders", store=True)
-    amount_untaxed = fields.Monetary(compute="_compute_orders", store=True)
-    amount_total = fields.Monetary(compute="_compute_orders", store=True)
+    order_count = fields.Integer(
+        compute="_compute_orders", search="_search_order_count", aggregator="sum"
+    )
+    amount_untaxed = fields.Monetary(
+        compute="_compute_orders", search="_search_amount_untaxed", aggregator="sum"
+    )
+    amount_total = fields.Monetary(
+        compute="_compute_orders", search="_search_amount_total", aggregator="sum"
+    )
 
-    @api.depends("order_ids.amount_total", "order_ids.amount_tax")
+    _ORDER_TOTAL_FIELDS = ("order_count", "amount_untaxed", "amount_total")
+
+    def _order_total_sql(self, alias, fname):
+        """SQL expression of an order total of the session at ``alias``,
+        computed from pos_order (same rule as _compute_orders)."""
+        PosOrder = self.env["pos.order"]
+        po = f"{alias}__po"
+        if fname == "order_count":
+            agg = SQL("COUNT(*)")
+        elif fname == "amount_total":
+            agg = SQL(
+                "COALESCE(SUM(%s), 0)", PosOrder._field_to_sql(po, "amount_total")
+            )
+        else:
+            agg = SQL(
+                "COALESCE(SUM(%s - %s), 0)",
+                PosOrder._field_to_sql(po, "amount_total"),
+                PosOrder._field_to_sql(po, "amount_tax"),
+            )
+        return SQL(
+            "(SELECT %s FROM pos_order %s WHERE %s = %s AND %s != 'cancel')",
+            agg,
+            SQL.identifier(po),
+            PosOrder._field_to_sql(po, "session_id"),
+            SQL.identifier(alias, "id"),
+            PosOrder._field_to_sql(po, "state"),
+        )
+
+    def _field_to_sql(self, alias, fname, query=None, flush=True):
+        if fname in self._ORDER_TOTAL_FIELDS:
+            self.check_field_access_rights("read", [fname])
+            return self._order_total_sql(alias, fname)
+        return super()._field_to_sql(alias, fname, query, flush)
+
+    _SEARCH_OPERATORS = ("=", "!=", "<", "<=", ">", ">=")
+
+    def _search_order_total(self, fname, operator, value):
+        """Domain on an order total, evaluated in SQL (the field is not stored)."""
+        if operator not in self._SEARCH_OPERATORS or isinstance(value, list | tuple):
+            raise UserError(
+                self.env._("Operator %s is not supported on %s", operator, fname)
+            )
+        alias = "pos_session__search"
+        return [
+            (
+                "id",
+                "in",
+                SQL(
+                    "(SELECT %s FROM pos_session %s WHERE %s %s %s)",
+                    SQL.identifier(alias, "id"),
+                    SQL.identifier(alias),
+                    self._order_total_sql(alias, fname),
+                    SQL(operator),
+                    value or 0,
+                ),
+            )
+        ]
+
+    def _search_order_count(self, operator, value):
+        return self._search_order_total("order_count", operator, value)
+
+    def _search_amount_untaxed(self, operator, value):
+        return self._search_order_total("amount_untaxed", operator, value)
+
+    def _search_amount_total(self, operator, value):
+        return self._search_order_total("amount_total", operator, value)
+
+    @api.depends("order_ids.amount_total", "order_ids.amount_tax", "order_ids.state")
     def _compute_orders(self):
         session_data = self.env["pos.order"].read_group(
             [("state", "!=", "cancel"), ("session_id", "in", self.ids)],
