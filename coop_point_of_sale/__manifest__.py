@@ -20,6 +20,8 @@
         "coop_membership",
         "pos_transfer_account",
         "pos_order_remove_line",
+        "queue_job",
+        "l10n_fr_pos_cert",
     ],
     "data": [
         "security/ir.model.access.csv",
@@ -31,6 +33,7 @@
         "views/view_pos_config_settings.xml",
         "views/view_pos_category.xml",
         "views/view_product_template.xml",
+        "views/view_pos_inalterability_check.xml",
     ],
     "assets": {
         "point_of_sale._assets_pos": [
