@@ -9,6 +9,7 @@
     "data": [
         "data/res_groups.xml",
         "data/res_users_role.xml",
+        "views/config_settings_views.xml",
     ],
     "installable": True,
     "application": False,
