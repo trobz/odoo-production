@@ -148,7 +148,7 @@
         <field name="context">{'module' : 'coop_membership', 'bin_size': False}</field>
     </record>
     <menuitem
-        id="menu_shift_type_setting"
+        id="menu_membership_setting"
         name="Settings"
         action="action_coop_membership_config_settings"
         parent="coop_shift.menu_shift_configuration"
