@@ -56,6 +56,7 @@
         "views/shift_views.xml",
         "views/product_views.xml",
         "views/res_partner_views.xml",
+        "views/config_settings_views.xml",
         "views/menu.xml",
         "report/coop_print_badge_report.xml",
     ],

@@ -241,4 +241,20 @@
         name="Mail Templates"
         parent="coop_shift.menu_shift_configuration"
     />
+
+    <record model="ir.ui.menu" id="coop_shift.menu_shift_configuration">
+        <field
+            name="groups_id"
+            eval="[
+            Command.link(ref('foodcoop_data_role.group_Member_Manager')),
+            Command.link(ref('foodcoop_data_role.group_Foodcoop_Admin')),
+        ]"
+        />
+    </record>
+    <record model="ir.ui.menu" id="coop_membership.menu_membership_setting">
+        <field
+            name="groups_id"
+            eval="[Command.link(ref('foodcoop_data_role.group_Foodcoop_Admin'))]"
+        />
+    </record>
 </odoo>
