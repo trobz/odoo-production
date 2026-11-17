@@ -124,9 +124,6 @@
         ])]"
         />
     </record>
-    <record model="ir.ui.menu" id="coop_shift.menu_shift_configuration">
-        <field name="groups_id" eval="[Command.link(ref('group_Member_Manager'))]" />
-    </record>
     <!-- <record model="ir.ui.menu" id="coop_membership.menu_shift_type_seting">
         <field name="groups_id" eval="[Command.link(ref('base.group_system'))]" />
     </record> -->
