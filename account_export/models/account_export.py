@@ -118,26 +118,38 @@ class AccountExport(models.Model):
             journal_id = line["journal_id"]
             move_line_ids = line["move_line_ids"]
             groupings = self.get_journal_groupings(journal_id)
-            line_data = self.get_report_line_data(groupings, move_line_ids)
+            line_data = self._get_report_line_data(groupings, move_line_ids)
             output += line_data
         self.env["account.move"].browse(move_ids).write({"exported": True})
         return output
 
-    @api.model
-    def get_report_line_data(self, groupings, move_line_ids):
+    def _get_report_line_data(self, groupings, move_line_ids):
         res = []
         if groupings:
-            columns = ", ".join(groupings)
-            sql_group_by = f"GROUP BY {columns}"
-            sql_query = f"""
+            aml_fields = self.env["account.move.line"]._fields
+            columns = []
+            for grouping in groupings:
+                # groupings arrive as "aml.<field>" from get_journal_groupings
+                field_name = grouping.split(".", 1)[-1]
+                field = aml_fields.get(field_name)
+                if not field or not field.store:
+                    raise ValueError(self.env._("Invalid grouping field: %s", grouping))
+                columns.append(SQL.identifier("aml", field_name))
+            columns_sql = SQL(", ").join(columns)
+            query = SQL(
+                """
                 SELECT
-                    {columns},
+                    %s,
                     ARRAY_AGG(DISTINCT aml.id) as move_line_ids
                 FROM account_move_line aml
-                WHERE aml.id IN {tuple(move_line_ids)}
-                {sql_group_by}
-                """
-            self.env.cr.execute(SQL(sql_query))
+                WHERE aml.id IN %s
+                GROUP BY %s
+                """,
+                columns_sql,
+                tuple(move_line_ids),
+                columns_sql,
+            )
+            self.env.cr.execute(query)
             grouped_move_lines = self.env.cr.dictfetchall()
             for g_mv_line in grouped_move_lines:
                 if not g_mv_line["move_line_ids"]:

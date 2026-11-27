@@ -356,6 +356,12 @@ msgstr ""
 "ecritures comptables lors de l'export comptable."
 
 #. module: account_export
+#: code:addons/account_export/models/account_export.py:0
+#, python-format
+msgid "Invalid grouping field: %s"
+msgstr "Champ de regroupement invalide : %s"
+
+#. module: account_export
 #: model:ir.model.fields,field_description:account_export.field_account_export__invoice_ids
 #: model_terms:ir.ui.view,arch_db:account_export.view_account_export_form
 msgid "Invoices"
